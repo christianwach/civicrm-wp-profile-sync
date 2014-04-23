@@ -203,28 +203,33 @@ class CiviCRM_WP_Profile_Sync {
 			// get WP user by email
 			$user = get_user_by( 'email', $objectRef->email[0]->email );
 		
-			// update first name
-			update_user_meta( $user->ID, 'first_name', $objectRef->first_name );
-			
-			// update last name
-			update_user_meta( $user->ID, 'last_name', $objectRef->last_name );
-			
-			// compatibility with BP XProfile WordPress User Sync plugin
-			if ( defined( 'BP_XPROFILE_WP_USER_SYNC_VERSION' ) ) {
+			// check if we have a WP user
+			if ( $user ) {
+
+				// update first name
+				update_user_meta( $user->ID, 'first_name', $objectRef->first_name );
 				
-				// access object
-				global $bp_xprofile_wordpress_user_sync;
+				// update last name
+				update_user_meta( $user->ID, 'last_name', $objectRef->last_name );
 				
-				// call the relevant sync method
-				$bp_xprofile_wordpress_user_sync->intercept_wp_user_update( $user->ID );
+				// compatibility with BP XProfile WordPress User Sync plugin
+				if ( defined( 'BP_XPROFILE_WP_USER_SYNC_VERSION' ) ) {
+					
+					// access object
+					global $bp_xprofile_wordpress_user_sync;
+					
+					// call the relevant sync method
+					$bp_xprofile_wordpress_user_sync->intercept_wp_user_update( $user->ID );
+					
+				}
 				
+				$this->_debug( array( 
+					'user' => $user,
+					'first_name' => $user->first_name,
+					'last_name' => $user->last_name
+				));
+
 			}
-			
-			$this->_debug( array( 
-				'user' => $user,
-				'first_name' => $user->first_name,
-				'last_name' => $user->last_name
-			));
 			
 		}
 		
