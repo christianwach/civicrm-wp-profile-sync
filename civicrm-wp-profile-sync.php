@@ -18,6 +18,21 @@ define( 'CIVICRM_WP_PROFILE_SYNC_DEBUG', false );
 // set our version here
 define( 'CIVICRM_WP_PROFILE_SYNC_VERSION', '0.1' );
 
+// store reference to this file
+if ( !defined( 'CIVICRM_WP_PROFILE_SYNC_FILE' ) ) {
+	define( 'CIVICRM_WP_PROFILE_SYNC_FILE', __FILE__ );
+}
+
+// store URL to this plugin's directory
+if ( !defined( 'CIVICRM_WP_PROFILE_SYNC_URL' ) ) {
+	define( 'CIVICRM_WP_PROFILE_SYNC_URL', plugin_dir_url( CIVICRM_WP_PROFILE_SYNC_FILE ) );
+}
+
+// store PATH to this plugin's directory
+if ( !defined( 'CIVICRM_WP_PROFILE_SYNC_PATH' ) ) {
+	define( 'CIVICRM_WP_PROFILE_SYNC_PATH', plugin_dir_path( CIVICRM_WP_PROFILE_SYNC_FILE ) );
+}
+
 
 
 /*
@@ -44,6 +59,9 @@ class CiviCRM_WP_Profile_Sync {
 	 */
 	function __construct() {
 	
+		// use translation
+		add_action( 'plugins_loaded', array( $this, 'translation' ) );
+		
 		// post process CiviCRM contact when WP user is updated, done late to let other plugins go first
 		add_action( 'user_register', array( $this, 'wordpress_contact_updated' ), 100, 1 );
 		add_action( 'profile_update', array( $this, 'wordpress_contact_updated' ), 100, 1 );
@@ -59,6 +77,13 @@ class CiviCRM_WP_Profile_Sync {
 		add_action( 'bp_core_signup_user', array( $this, 'buddypress_contact_updated' ), 20, 3 );
 		add_action( 'bp_core_activated_user', array( $this, 'buddypress_contact_updated' ), 20, 3 );
 		
+		// add an item to the actions dropdown
+		//add_action( 'civicrm_searchTasks', array( $this, 'civi_bulk_operations' ), 10, 2 );
+		
+		// allow plugins to register php and template directories
+		//add_action( 'civicrm_config', array( $this, 'register_php_directory' ), 10, 1 );
+		//add_action( 'civicrm_config', array( $this, 'register_template_directory' ), 10, 1 );
+		
 		// --<
 		return $this;
 
@@ -70,6 +95,123 @@ class CiviCRM_WP_Profile_Sync {
 	
 	
 	
+	/** 
+	 * Load translation if present
+	 *
+	 * @return void
+	 */
+	public function translation() {
+		
+		// only use, if we have it...
+		if ( function_exists( 'load_plugin_textdomain' ) ) {
+		
+			// there are no translations as yet, but they can now be added
+			load_plugin_textdomain(
+			
+				// unique name
+				'civicrm-wp-profile-sync', 
+				
+				// deprecated argument
+				false,
+				
+				// relative path to directory containing translation files
+				dirname( plugin_basename( CIVICRM_WP_PROFILE_SYNC_FILE ) ) . '/languages/'
+				
+			);
+			
+		}
+		
+	}
+	
+	
+	
+	/**
+	 * Register directory that CiviCRM searches in for new PHP files
+	 *
+	 * This only works with *new* PHP files. One cannot override existing PHP 
+	 * with this technique - instead, the file must be placed in the path 
+	 * defined in $config->customPHPPathDir
+	 * 
+	 * @param object $config The CiviCRM config object
+	 * @return void
+	 */
+	public function register_php_directory( &$config ) {
+		
+		// kick out if no CiviCRM
+		if ( ! civi_wp()->initialize() ) return;
+		
+		// define our custom path
+		$custom_path = CIVICRM_WP_PROFILE_SYNC_PATH . 'civicrm_custom_php';
+		
+		// add to include path
+		$include_path = $custom_path . PATH_SEPARATOR . get_include_path();
+		set_include_path( $include_path );
+		
+	}
+		
+		
+		
+	/**
+	 * Register directories that CiviCRM searches for php and template files
+	 * 
+	 * @param object $config The CiviCRM config object
+	 * @return void
+	 */
+	public function register_template_directory( &$config ) {
+		
+		// define our custom path
+		$custom_path = CIVICRM_WP_PROFILE_SYNC_PATH . 'civicrm_custom_templates';
+		
+		// kick out if no CiviCRM
+		if ( ! civi_wp()->initialize() ) return;
+		
+		// get template instance
+		$template = CRM_Core_Smarty::singleton();
+		
+		// add our custom template directory
+		$template->addTemplateDir( $custom_path );
+		
+		// register template directories
+		$template_include_path = $custom_path . PATH_SEPARATOR . get_include_path();
+		set_include_path( $template_include_path );
+		
+	}
+		
+		
+		
+	/**
+	 * Add an option to the Actions dropdown
+	 *
+	 * @param str $object_name The CiviCRM object type
+	 * @param array $tasks The CiviCRM tasks array to add our option to
+	 * @return void
+	 */
+	public function civi_bulk_operations( $object_name, &$tasks ) {
+		
+		// only handle contacts
+		if ( $object_name != 'contact' ) return;
+		
+		/*
+		// sort by key for clarity
+		ksort( $tasks );
+		
+		// debug
+		print_r( array(
+			'object_name' => $object_name,
+			'tasks' => $tasks,
+		) ); die();
+		*/
+		
+		// add our item to the tasks array
+		$tasks[] = array(
+			'title' => __( 'Create WordPress Users from Contacts',  'civicrm-wp-profile-sync' ),
+			'class' => 'CRM_Contact_Form_Task_CreateWordPressUsers',
+		);
+		
+	}
+	
+	
+		
 	/**
 	 * Intercept BP core's attempt to sync to WP user profile
 	 *
