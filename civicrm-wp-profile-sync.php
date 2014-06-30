@@ -77,12 +77,14 @@ class CiviCRM_WP_Profile_Sync {
 		add_action( 'bp_core_signup_user', array( $this, 'buddypress_contact_updated' ), 20, 3 );
 		add_action( 'bp_core_activated_user', array( $this, 'buddypress_contact_updated' ), 20, 3 );
 		
+		/*
 		// add an item to the actions dropdown
-		//add_action( 'civicrm_searchTasks', array( $this, 'civi_bulk_operations' ), 10, 2 );
+		add_action( 'civicrm_searchTasks', array( $this, 'civi_bulk_operations' ), 10, 2 );
 		
 		// allow plugins to register php and template directories
-		//add_action( 'civicrm_config', array( $this, 'register_php_directory' ), 10, 1 );
-		//add_action( 'civicrm_config', array( $this, 'register_template_directory' ), 10, 1 );
+		add_action( 'civicrm_config', array( $this, 'register_php_directory' ), 10, 1 );
+		add_action( 'civicrm_config', array( $this, 'register_template_directory' ), 10, 1 );
+		*/
 		
 		// --<
 		return $this;
