@@ -98,15 +98,18 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
    */
   public function postProcess() {
     
+    /*
     // get rows again (I can't figure out how to override contactIDs)
     $rows = $this->getContactRows();
   
-    ///*
     print_r( array(
     	//'contactIDs' => $contactIDs,
     	'rows' => $rows,
     ) ); die();
-    //*/
+    */
+    
+    // create them...
+    $this->createUsers();
     
   }
 
@@ -119,28 +122,12 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
    */
   private function getContactRows() {
   
-    // get selected contact IDs
-    $contactIDs = implode( ',', $this->_contactIds );
-    
-    // construct query to get name and email of selected contact ids
-    $query = "
-		SELECT c.id as contact_id, 
-		       c.first_name as first_name, 
-		       c.last_name as last_name,
-			   c.contact_type as contact_type, 
-			   e.email as email
-		FROM   civicrm_contact c, 
-		       civicrm_email e
-		WHERE  e.contact_id = c.id
-		AND    e.is_primary = 1
-		AND    c.id IN ( $contactIDs )";
-
     // use Civi's user check
     $config = CRM_Core_Config::singleton();
     
     // process data
     $rows = array();
-    $dao = CRM_Core_DAO::executeQuery($query);
+    $dao = CRM_Core_DAO::executeQuery($this->getQuery());
     while ($dao->fetch()) {
       
       // does this contact have a WP user?
@@ -177,6 +164,42 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
    */
   private function createUsers() {
   
+    // use Civi's user check
+    $config = CRM_Core_Config::singleton();
+    
+    // process data
+    $rows = array();
+    $dao = CRM_Core_DAO::executeQuery($this->getQuery());
+    while ($dao->fetch()) {
+      
+      // does this contact have a WP user?
+      $errors = array();
+      $check_params = array(
+        'mail' => $dao->email,
+      );
+      $config->userSystem->checkUserNameEmailExists($check_params, $errors);
+      
+      // we got one - skip
+      if ( ! empty( $errors ) ) continue;
+      
+      // create WP user
+      CRM_Core_BAO_CMSUser::create($params, 'email');
+    
+    }
+    
+    CRM_Core_Session::setStatus('', ts('Users Added'), 'success');
+    
+  }
+
+  /**
+   * Get query to retrive contact data
+   *
+   * @access private
+   *
+   * @return array The contacts data array
+   */
+  private function getQuery() {
+  
     // get selected contact IDs
     $contactIDs = implode( ',', $this->_contactIds );
     
@@ -192,28 +215,10 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
 		WHERE  e.contact_id = c.id
 		AND    e.is_primary = 1
 		AND    c.id IN ( $contactIDs )";
+	
+	// --<
+	return $query;
 
-    // use Civi's user check
-    $config = CRM_Core_Config::singleton();
-    
-    // process data
-    $rows = array();
-    $dao = CRM_Core_DAO::executeQuery($query);
-    while ($dao->fetch()) {
-      
-      // does this contact have a WP user?
-      $errors = array();
-      $check_params = array(
-        'mail' => $dao->email,
-      );
-      $config->userSystem->checkUserNameEmailExists($check_params, $errors);
-      
-      // we got one - skip
-      if ( ! empty( $errors ) ) continue;
-      
-      // create WP user
-      // ..............
-    
   }
 
 }
