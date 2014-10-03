@@ -342,43 +342,78 @@ class CiviCRM_WP_Profile_Sync {
 			'objectRef' => $objectRef,
 		));
 		
-		// check if we have a contact
-		if ( isset( $objectRef->email[0]->email ) ) {
+		// check if we have a contact email
+		if ( ! isset( $objectRef->email[0]->email ) ) {
 		
-			// set flag
-			$this->direction = 'civi-to-wp';
+			// no, init CiviCRM to get WP user ID
+			if ( ! civi_wp()->initialize() ) return;
+		
+			// make sure Civi file is included
+			require_once 'CRM/Core/BAO/UFMatch.php';
 			
-			// get WP user by email
+			// search using Civi's logic
+			$user_id = CRM_Core_BAO_UFMatch::getUFId( $objectId );
+			
+			/*
+			// not much else we can do here if we get an error...
+			trigger_error( print_r( array( 
+				'method' => 'civi_contact_updated',
+				'op' => $op,
+				'objectName' => $objectName,
+				'objectId' => $objectId,
+				'objectRef' => $objectRef,
+				'user_id' => $user_id,
+			), true ), E_USER_ERROR ); die();
+			*/
+			
+			// kick out if we didn't get one
+			if ( empty( $user_id ) ) return;
+	
+		} else {
+		
+			// yes, use it to get WP user
 			$user = get_user_by( 'email', $objectRef->email[0]->email );
-		
-			// check if we have a WP user
-			if ( $user ) {
-
-				// update first name
-				update_user_meta( $user->ID, 'first_name', $objectRef->first_name );
-				
-				// update last name
-				update_user_meta( $user->ID, 'last_name', $objectRef->last_name );
-				
-				// compatibility with BP XProfile WordPress User Sync plugin
-				if ( defined( 'BP_XPROFILE_WP_USER_SYNC_VERSION' ) ) {
-					
-					// access object
-					global $bp_xprofile_wordpress_user_sync;
-					
-					// call the relevant sync method
-					$bp_xprofile_wordpress_user_sync->intercept_wp_user_update( $user->ID );
-					
-				}
-				
-				$this->_debug( array( 
-					'user' => $user,
-					'first_name' => $user->first_name,
-					'last_name' => $user->last_name
-				));
-
-			}
+	
+			// bail if not a WP user
+			if ( ! ( $user instanceof WP_User ) ) return;
 			
+			// assign ID
+			$user_id = $user->ID;
+		
+		}
+		
+		// set flag
+		$this->direction = 'civi-to-wp';
+		
+		// update first name
+		update_user_meta( $user_id, 'first_name', $objectRef->first_name );
+		
+		// update last name
+		update_user_meta( $user_id, 'last_name', $objectRef->last_name );
+		
+		// compatibility with BP XProfile WordPress User Sync plugin
+		if ( defined( 'BP_XPROFILE_WP_USER_SYNC_VERSION' ) ) {
+			
+			// access object
+			global $bp_xprofile_wordpress_user_sync;
+			
+			// call the relevant sync method
+			$bp_xprofile_wordpress_user_sync->intercept_wp_user_update( $user_id );
+			
+		}
+		
+		// avoid getting WP user unless we're debugging
+		if ( CIVICRM_WP_PROFILE_SYNC_DEBUG ) {
+		
+			// for debugging, let get WP user
+			$user = new WP_User( $user_id );
+		
+			$this->_debug( array( 
+				'user' => $user,
+				'first_name' => $user->first_name,
+				'last_name' => $user->last_name
+			));
+		
 		}
 		
 	}
