@@ -66,9 +66,9 @@ class CiviCRM_WP_Profile_Sync {
 		add_action( 'user_register', array( $this, 'wordpress_contact_updated' ), 100, 1 );
 		add_action( 'profile_update', array( $this, 'wordpress_contact_updated' ), 100, 1 );
 		
-		// set directional flag because the primary email is updated before the contact
-		add_action( 'civicrm_pre', array( $this, 'civi_primary_email_will_be_updated' ), 10, 4 );
-		
+		// configure directionality
+		add_action( 'civicrm_pre', array( $this, 'civi_contact_pre_update' ), 10, 4 );
+
 		// sync a WP user when a CiviCRM contact is updated
 		add_action( 'civicrm_post', array( $this, 'civi_contact_updated' ), 10, 4 );
 		
@@ -226,7 +226,6 @@ class CiviCRM_WP_Profile_Sync {
 		
 		$this->_debug( array( 
 			'function' => 'buddypress_contact_updated',
-			'this->direction' => isset( $this->direction ) ? $this->direction : 'direction not set',
 		));
 		
 		// get BP instance
@@ -258,18 +257,8 @@ class CiviCRM_WP_Profile_Sync {
 		
 		$this->_debug( array( 
 			'function' => 'wordpress_contact_updated',
-			'this->direction' => isset( $this->direction ) ? $this->direction : 'direction not set',
-		));
-		
-		// check flag
-		if ( isset( $this->direction ) AND $this->direction == 'civi-to-wp' ) return;
-		
-		$this->_debug( array( 
 			'user_id' => $user_id,
 		));
-		
-		// set flag
-		$this->direction = 'wp-to-civi';
 		
 		// okay, get user
 		$user = get_userdata( $user_id );
@@ -282,6 +271,13 @@ class CiviCRM_WP_Profile_Sync {
 		
 			// get user matching file
 			require_once 'CRM/Core/BAO/UFMatch.php';
+			
+			// remove CiviCRM and BuddyPress callbacks to prevent recursion
+			remove_action( 'civicrm_pre', array( $this, 'civi_primary_email_will_be_updated' ), 10 );
+			remove_action( 'civicrm_post', array( $this, 'civi_contact_updated' ), 10 );
+			remove_action( 'xprofile_updated_profile', array( $this, 'buddypress_contact_updated' ), 20 );
+			remove_action( 'bp_core_signup_user', array( $this, 'buddypress_contact_updated' ), 20 );
+			remove_action( 'bp_core_activated_user', array( $this, 'buddypress_contact_updated' ), 20 );
 
 			// get the Civi contact object
 			$civi_contact = CRM_Core_BAO_UFMatch::synchronizeUFMatch(
@@ -303,7 +299,14 @@ class CiviCRM_WP_Profile_Sync {
 			$this->_update_civi_website( $user, $civi_contact );
 		
 			// add more built-in WordPress fields here...
-		
+			
+			// add CiviCRM and BuddyPress callbacks once more
+			add_action( 'civicrm_pre', array( $this, 'civi_primary_email_will_be_updated' ), 10, 4 );
+			add_action( 'civicrm_post', array( $this, 'civi_contact_updated' ), 10, 4 );
+			add_action( 'xprofile_updated_profile', array( $this, 'buddypress_contact_updated' ), 20, 3 );
+			add_action( 'bp_core_signup_user', array( $this, 'buddypress_contact_updated' ), 20, 3 );
+			add_action( 'bp_core_activated_user', array( $this, 'buddypress_contact_updated' ), 20, 3 );
+			
 		}
 		
 	}
@@ -329,13 +332,6 @@ class CiviCRM_WP_Profile_Sync {
 		
 		$this->_debug( array( 
 			'function' => 'civi_contact_updated',
-			'this->direction' => isset( $this->direction ) ? $this->direction : 'direction not set',
-		));
-		
-		// check flag
-		if ( isset( $this->direction ) AND $this->direction == 'wp-to-civi' ) return;
-		
-		$this->_debug( array( 
 			'op' => $op,
 			'objectName' => $objectName,
 			'objectId' => $objectId,
@@ -354,18 +350,6 @@ class CiviCRM_WP_Profile_Sync {
 			// search using Civi's logic
 			$user_id = CRM_Core_BAO_UFMatch::getUFId( $objectId );
 			
-			/*
-			// not much else we can do here if we get an error...
-			trigger_error( print_r( array( 
-				'method' => 'civi_contact_updated',
-				'op' => $op,
-				'objectName' => $objectName,
-				'objectId' => $objectId,
-				'objectRef' => $objectRef,
-				'user_id' => $user_id,
-			), true ), E_USER_ERROR ); die();
-			*/
-			
 			// kick out if we didn't get one
 			if ( empty( $user_id ) ) return;
 	
@@ -381,9 +365,6 @@ class CiviCRM_WP_Profile_Sync {
 			$user_id = $user->ID;
 		
 		}
-		
-		// set flag
-		$this->direction = 'civi-to-wp';
 		
 		// update first name
 		update_user_meta( $user_id, 'first_name', $objectRef->first_name );
@@ -421,7 +402,11 @@ class CiviCRM_WP_Profile_Sync {
 	
 	
 	/**
-	 * Update a WP user when a CiviCRM contact is updated
+	 * Fires when a CiviCRM contact is updated, but prior to any operations taking place.
+	 * 
+	 * This is used as a means by which to discover the direction of the update, because
+	 * if the update is initiated from the WordPress side, this callback will have been 
+	 * unhooked and will not be called.
 	 *
 	 * @param string $op the type of database operation
 	 * @param string $objectName the type of object
@@ -429,37 +414,23 @@ class CiviCRM_WP_Profile_Sync {
 	 * @param object $objectRef the object
 	 * @return void
 	 */
-	public function civi_primary_email_will_be_updated( $op, $objectName, $objectId, $objectRef ) {
+	public function civi_contact_pre_update( $op, $objectName, $objectId, $objectRef ) {
 		
 		// target our operation
 		if ( $op != 'edit' ) return;
 		
 		// target our object type
-		if ( $objectName != 'Email' ) return;
+		if ( $objectName != 'Individual' ) return;
 		
-		$this->_debug( array( 
-			'function' => 'civi_primary_email_will_be_updated',
-			'this->direction' => isset( $this->direction ) ? $this->direction : 'direction not set',
-		));
-		
-		// check flag
-		if ( isset( $this->direction ) AND $this->direction == 'wp-to-civi' ) return;
-		
-		$this->_debug( array( 
-			'op' => $op,
-			'objectName' => $objectName,
-			'objectId' => $objectId,
-			'objectRef' => $objectRef,
-		));
-		
-		// check if we have an email
-		if ( isset( $objectRef['email'] ) ) {
-			
-			// set flag
-			$this->direction = 'civi-to-wp';
-			
-		}
-	
+		// remove WordPress callbacks to prevent recursion
+		remove_action( 'user_register', array( $this, 'wordpress_contact_updated' ), 100 );
+		remove_action( 'profile_update', array( $this, 'wordpress_contact_updated' ), 100 );
+
+		// remove BuddyPress callbacks to prevent recursion
+		remove_action( 'xprofile_updated_profile', array( $this, 'buddypress_contact_updated' ), 20 );
+		remove_action( 'bp_core_signup_user', array( $this, 'buddypress_contact_updated' ), 20 );
+		remove_action( 'bp_core_activated_user', array( $this, 'buddypress_contact_updated' ), 20 );
+
 	}
 	
 	
