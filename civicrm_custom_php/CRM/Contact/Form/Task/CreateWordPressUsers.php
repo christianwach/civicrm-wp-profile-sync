@@ -171,12 +171,15 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
     // process data
     foreach ($rows AS $row) {
       
+      // concatenate names
+      $uname = $row['first_name'] . $row['middle_name'] . $row['last_name'];
+      
+      // strip unwanted chars
+      $uname = str_replace( '.', '', $uname );
+      $uname = str_replace( ' ', '', $uname );
+      
       // construct a likely username
-      $uname = sanitize_user( 
-      	str_replace( '.', '', $row['first_name'] ) . 
-      	str_replace( '.', '', $row['middle_name'] ) . 
-      	str_replace( '.', '', $row['last_name'] )
-      );
+      $uname = sanitize_user( $uname );
       
       // does this contact have a WP user?
       $errors = array();
