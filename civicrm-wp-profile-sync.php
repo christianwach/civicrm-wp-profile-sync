@@ -426,12 +426,6 @@ class CiviCRM_WP_Profile_Sync {
 			'user_id' => $user_id,
 		));
 		
-		/*
-		trigger_error( print_r( array( 
-			'messages' => $this->messages,
-		), true ), E_USER_ERROR ); die();
-		*/
-		
 		// kick out if we didn't get one
 		if ( empty( $user_id ) ) return;
 		

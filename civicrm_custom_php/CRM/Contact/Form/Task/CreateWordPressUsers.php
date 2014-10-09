@@ -50,13 +50,6 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
     // get rows
     $rows = $this->getContactRows();
     
-    /*
-    print_r( array(
-    	'contactIDs' => $contactIDs,
-    	'rows' => $rows,
-    ) ); die();
-    */
-    
     // our array now contains all contacts who can be synced to WordPress
     $this->assign('rows', $rows);
     
@@ -101,13 +94,6 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
     // get rows again (I can't figure out how to override contactIDs)
     $rows = $this->getContactRows();
   
-    /*
-    print_r( array(
-    	'contactIDs' => $this->_contactIds,
-    	'rows' => $rows,
-    ) ); //die();
-    */
-    
     // create them...
     $this->createUsers( $rows );
     
