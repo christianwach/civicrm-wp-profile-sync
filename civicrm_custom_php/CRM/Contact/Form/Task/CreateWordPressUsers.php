@@ -98,18 +98,18 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
    */
   public function postProcess() {
     
-    /*
     // get rows again (I can't figure out how to override contactIDs)
     $rows = $this->getContactRows();
   
+    /*
     print_r( array(
-    	//'contactIDs' => $contactIDs,
+    	'contactIDs' => $this->_contactIds,
     	'rows' => $rows,
-    ) ); die();
+    ) ); //die();
     */
     
     // create them...
-    $this->createUsers();
+    $this->createUsers( $rows );
     
   }
 
@@ -144,6 +144,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
       $rows[] = array(
         'id' => $dao->contact_id,
         'first_name' => $dao->first_name,
+        'middle_name' => $dao->middle_name,
         'last_name' => $dao->last_name,
         'contact_type' => $dao->contact_type,
         'email' => $dao->email,
@@ -160,35 +161,101 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
    *
    * @access private
    *
-   * @return array The contacts data array
+   * @param array $rows The contacts data array
+   * @return void
    */
-  private function createUsers() {
+  private function createUsers( $rows ) {
   
-    // use Civi's user check
+    // get Civi config object
     $config = CRM_Core_Config::singleton();
     
+    // code for redirect grabbed from CRM_Contact_Form_Task_Delete::postProcess()
+    $context   = CRM_Utils_Request::retrieve('context', 'String', $this, FALSE, 'basic');
+    $urlParams = 'force=1';
+    $urlString = "civicrm/contact/search/$context";
+    
+    if (CRM_Utils_Rule::qfKey($this->_searchKey)) {
+      $urlParams .= "&qfKey=$this->_searchKey";
+    }
+    elseif ($context == 'search') {
+      $urlParams .= "&qfKey={$this->controller->_key}";
+      $urlString = 'civicrm/contact/search';
+    }
+    
     // process data
-    $rows = array();
-    $dao = CRM_Core_DAO::executeQuery($this->getQuery());
-    while ($dao->fetch()) {
+    foreach ($rows AS $row) {
+      
+      // construct a likely username
+      $uname = sanitize_user( 
+      	str_replace( '.', '', $row['first_name'] ) . 
+      	str_replace( '.', '', $row['middle_name'] ) . 
+      	str_replace( '.', '', $row['last_name'] )
+      );
       
       // does this contact have a WP user?
       $errors = array();
-      $check_params = array(
-        'mail' => $dao->email,
+      $params = array(
+        'name' => $uname,
+        'mail' => $row['email'],
       );
-      $config->userSystem->checkUserNameEmailExists($check_params, $errors);
+      $config->userSystem->checkUserNameEmailExists($params, $errors);
       
       // we got one - skip
       if ( ! empty( $errors ) ) continue;
       
-      // create WP user
-      CRM_Core_BAO_CMSUser::create($params, 'email');
+      /**
+       * We cannot create WP user using CRM_Core_BAO_CMSUser::create() because it
+       * will attempt to log the user in and notify them of their new account. We
+       * have to find another means to do this.
+       *
+       * In the meantime, what follows is cloned from the CiviCRM process for
+       * creating WordPress users and modified accordingly.
+       */
     
+      // create an arbitrary password
+      $password = substr( md5( uniqid( microtime() ) ), 0, 8 );
+      
+      // first name is slightly problematic
+      $first_name = $row['first_name'];
+      if ( ! empty( $row['middle_name'] ) ) {
+      	// merge first and middle names if a middle name exists
+        $first_name .= ' ' . $row['middle_name'];
+      }
+      
+      // populate user data
+      $user_data = array(
+        'ID' => '',
+        'user_login' => $params['name'],
+        'user_email' => $params['mail'],
+        'user_pass' => $password,
+        'nickname' => $params['name'],
+        'role' => get_option('default_role'),
+        'first_name' => $first_name,
+        'last_name' => $row['last_name'],
+      );
+      
+      // let WordPress plugins know what we're about to do
+      do_action( 'civicrm_wp_profile_sync_user_add_pre' );
+      
+      // add the user
+      $user_id = wp_insert_user($user_data);
+
+      // let WordPress plugins know what we've done
+      do_action( 'civicrm_wp_profile_sync_user_add_post' );
+      
+      // if contact doesn't already exist create UF Match
+      if ($user_id !== FALSE && is_numeric( $user_id ) && isset($row['id'])) {
+      	$user = get_user_by('id', $user_id);
+      	CRM_Core_BAO_UFMatch::synchronizeUFMatch( $user, $user->ID, $user->user_email, 'WordPress' );
+      }
+      
     }
     
-    CRM_Core_Session::setStatus('', ts('Users Added'), 'success');
+    CRM_Core_Session::setStatus('', ts('Users Added to WordPress'), 'success');
     
+    // redirect?
+    CRM_Utils_System::redirect(CRM_Utils_System::url($urlString, $urlParams));
+  
   }
 
   /**
@@ -207,6 +274,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
     $query = "
 		SELECT c.id as contact_id, 
 		       c.first_name as first_name, 
+		       c.middle_name as middle_name, 
 		       c.last_name as last_name,
 			   c.contact_type as contact_type, 
 			   e.email as email

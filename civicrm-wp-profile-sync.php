@@ -71,14 +71,16 @@ class CiviCRM_WP_Profile_Sync {
 		// sync a WP user when a CiviCRM contact is updated
 		$this->_add_hooks_civi();
 		
-		/*
 		// add an item to the actions dropdown
 		add_action( 'civicrm_searchTasks', array( $this, 'civi_bulk_operations' ), 10, 2 );
 		
 		// allow plugins to register php and template directories
 		add_action( 'civicrm_config', array( $this, 'register_php_directory' ), 10, 1 );
 		add_action( 'civicrm_config', array( $this, 'register_template_directory' ), 10, 1 );
-		*/
+
+		// prevent recursion when bulk adding users via CiviCRM
+		add_action( 'civicrm_wp_profile_sync_user_add_pre', array( $this, 'civi_contact_bulk_added_pre' ), 10 );
+		add_action( 'civicrm_wp_profile_sync_user_add_post', array( $this, 'civi_contact_bulk_added_post' ), 10 );
 		
 		// --<
 		return $this;
@@ -543,6 +545,40 @@ class CiviCRM_WP_Profile_Sync {
 	
 	
 	
+	//##########################################################################
+	
+	
+	
+	/**
+	 * Prevent recursion when a WordPress user is about to be bulk added
+	 *
+	 * @return void
+	 */
+	public function civi_contact_bulk_added_pre() {
+	
+		// remove WordPress and BuddyPress callbacks to prevent recursion
+		$this->_remove_hooks_wp();
+		$this->_remove_hooks_bp();
+		
+	}
+	
+	
+		
+	/**
+	 * Re-hook when a WordPress user has been bulk added
+	 *
+	 * @return void
+	 */
+	public function civi_contact_bulk_added_post() {
+	
+		// re-add WordPress and BuddyPress callbacks
+		$this->_add_hooks_wp();
+		$this->_add_hooks_bp();
+		
+	}
+	
+	
+		
 	//##########################################################################
 	
 	
