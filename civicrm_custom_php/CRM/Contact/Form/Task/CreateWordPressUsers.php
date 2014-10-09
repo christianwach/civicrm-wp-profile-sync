@@ -151,7 +151,10 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
    * @return void
    */
   private function createUsers( $rows ) {
-  
+    
+    // extend PHP's execution time
+    ini_set('max_execution_time', 300);
+    
     // get Civi config object
     $config = CRM_Core_Config::singleton();
     
@@ -168,6 +171,12 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
       $urlString = 'civicrm/contact/search';
     }
     
+    // let WordPress plugins know what we're about to do
+    do_action( 'civicrm_wp_profile_sync_user_add_pre' );
+      
+    // disable Civi's own register hook
+    remove_action( 'user_register', array( civi_wp(), 'update_user' ) );
+      
     // process data
     foreach ($rows AS $row) {
       
@@ -223,15 +232,9 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
         'last_name' => $row['last_name'],
       );
       
-      // let WordPress plugins know what we're about to do
-      do_action( 'civicrm_wp_profile_sync_user_add_pre' );
-      
       // add the user
       $user_id = wp_insert_user($user_data);
 
-      // let WordPress plugins know what we've done
-      do_action( 'civicrm_wp_profile_sync_user_add_post' );
-      
       // if contact doesn't already exist create UF Match
       if ($user_id !== FALSE && is_numeric( $user_id ) && isset($row['id'])) {
       	$user = get_user_by('id', $user_id);
@@ -240,6 +243,13 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
       
     }
     
+    // re-enable Civi's register hook
+    add_action( 'user_register', array( civi_wp(), 'update_user' ) );
+    
+    // let WordPress plugins know what we've done
+    do_action( 'civicrm_wp_profile_sync_user_add_post' );
+    
+    // set a message  
     CRM_Core_Session::setStatus('', ts('Users Added to WordPress'), 'success');
     
     // redirect?
