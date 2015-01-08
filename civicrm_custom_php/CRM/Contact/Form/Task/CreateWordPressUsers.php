@@ -33,16 +33,17 @@
  */
 
 /**
- * This class provides the functionality to save a search
- * Saved Searches are used for saving frequently used queries
+ * This class provides the functionality to bulk create WordPress users from
+ * a list of CiviCRM contacts
  */
 class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
 
   /**
-   * build all the data structures needed to build the form
+   * Build all the data structures needed to build the form
+   *
+   * @access public
    *
    * @return void
-   * @access public
    */
   function preProcess() {
     parent::preProcess();
