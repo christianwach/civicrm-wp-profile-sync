@@ -9,6 +9,7 @@ Version: 0.2.1
 Author URI: http://haystack.co.uk
 Text Domain: civicrm-wp-profile-sync
 Domain Path: /languages
+Depends: CiviCRM
 --------------------------------------------------------------------------------
 */
 
