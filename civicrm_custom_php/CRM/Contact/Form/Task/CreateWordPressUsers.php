@@ -176,7 +176,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
     // let WordPress plugins know what we're about to do
     do_action( 'civicrm_wp_profile_sync_user_add_pre' );
 
-    // disable Civi's own register hook
+    // disable Civi's own register hooks
     remove_action( 'user_register', array( civi_wp(), 'update_user' ) );
     remove_action( 'profile_update', array( $this, 'update_user' ) );
 
@@ -317,8 +317,9 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
 	  ), true ), E_USER_ERROR ); die();
 	}
 
-    // re-enable Civi's register hook
+    // re-enable Civi's register hooks
     add_action( 'user_register', array( civi_wp(), 'update_user' ) );
+    add_action( 'profile_update', array( civi_wp(), 'update_user' ) );
 
     // let WordPress plugins know what we've done
     do_action( 'civicrm_wp_profile_sync_user_add_post' );
