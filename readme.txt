@@ -39,7 +39,7 @@ For versions of *CiviCRM* prior to 4.6-alpha1, this plugin requires the correspo
 
 = 0.2.2 =
 
-Initial WordPress plugin directory release
+Minor fixes to bulk operations logic
 
 = 0.2.1 =
 

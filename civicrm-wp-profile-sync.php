@@ -79,11 +79,11 @@ class CiviCRM_WP_Profile_Sync {
 		// sync a WP user when a CiviCRM contact is updated
 		$this->_add_hooks_civi();
 
-		// add an item to the actions dropdown
-		add_action( 'civicrm_searchTasks', array( $this, 'civi_bulk_operations' ), 10, 2 );
-
 		// are we allowing bulk operations?
 		if ( CIVICRM_WP_PROFILE_SYNC_BULK ) {
+
+			// add an item to the actions dropdown
+			add_action( 'civicrm_searchTasks', array( $this, 'civi_bulk_operations' ), 10, 2 );
 
 			// register php and template directories
 			add_action( 'civicrm_config', array( $this, 'register_php_directory' ), 10, 1 );
