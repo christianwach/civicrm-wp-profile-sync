@@ -372,11 +372,11 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
    */
   private function filterName( $name ) {
 
-    $name = str_replace( '.', '', $name );
-    $name = str_replace( ' ', '', $name );
-    $name = str_replace( '-', '', $name );
-    $name = str_replace( "'", '', $name );
-    $name = str_replace( "’", '', $name );
+	// build array of replacements
+	$replacements = array( '.', ' ', '-', "'", "’" );
+
+	// do replacement
+    $name = str_replace( $replacements, '', $name );
 
 	// --<
 	return $name;
