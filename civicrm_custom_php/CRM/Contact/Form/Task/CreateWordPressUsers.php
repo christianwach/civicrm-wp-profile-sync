@@ -311,13 +311,14 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
 
     // if debugging die now
     if ( $debug ) {
-	  trigger_error( print_r( array(
-		'method' => 'createUsers',
+      error_log( print_r( array(
+        'method' => __METHOD__,
 		//'rows' => $rows,
 		'messages' => $messages,
 		'count' => count( $messages ),
 		'users' => $users,
-	  ), true ), E_USER_ERROR ); die();
+        //'backtrace' => debug_backtrace( 0 ),
+      ), true ) );
 	}
 
     // re-enable Civi's register hooks
