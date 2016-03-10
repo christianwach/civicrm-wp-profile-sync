@@ -178,7 +178,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
 
     // disable Civi's own register hooks
     remove_action( 'user_register', array( civi_wp(), 'update_user' ) );
-    remove_action( 'profile_update', array( $this, 'update_user' ) );
+    remove_action( 'profile_update', array( civi_wp(), 'update_user' ) );
 
     // process data
     foreach ($rows AS $row) {
