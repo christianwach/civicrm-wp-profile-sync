@@ -37,6 +37,10 @@ For versions of *CiviCRM* prior to 4.6-alpha1, this plugin requires the correspo
 
 == Changelog ==
 
+= 0.2.3 =
+
+Further fixes to bulk operations logic
+
 = 0.2.2 =
 
 Minor fixes to bulk operations logic
