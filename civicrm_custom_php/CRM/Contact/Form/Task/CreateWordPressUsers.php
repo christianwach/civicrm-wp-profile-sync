@@ -291,7 +291,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
           $ufmatch->domain_id  = CRM_Core_Config::domainID();
           $ufmatch->uf_id      = $user_id;
           $ufmatch->contact_id = $row['id'];
-          $ufmatch->uf_name    = $row['mail'];
+          $ufmatch->uf_name    = $row['email'];
 
           if (!$ufmatch->find(TRUE)) {
             $ufmatch->save();
