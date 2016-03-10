@@ -282,7 +282,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
         $user_id = wp_insert_user($user_data);
 
         // if contact doesn't already exist create UF Match
-        if ( $user_id !== FALSE && isset($row['id']) ) {
+        if ( ! is_wp_error($user_id) && isset($row['id'] ) ) {
 
           $transaction = new CRM_Core_Transaction();
 
