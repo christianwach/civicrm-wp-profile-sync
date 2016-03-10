@@ -173,7 +173,10 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
     $urlParams = 'force=1';
     $urlString = "civicrm/contact/search/advanced";
 
-    // let WordPress plugins know what we're about to do
+    /**
+     * Broadcast that a user is about to be added, allowing other plugins to add
+     * or remove hooks.
+     */
     do_action( 'civicrm_wp_profile_sync_user_add_pre' );
 
     // disable Civi's own register hooks
@@ -321,7 +324,10 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
     add_action( 'user_register', array( civi_wp(), 'update_user' ) );
     add_action( 'profile_update', array( civi_wp(), 'update_user' ) );
 
-    // let WordPress plugins know what we've done
+    /**
+     * Broadcast that a user has ben added, allowing other plugins to add or
+     * remove hooks.
+     */
     do_action( 'civicrm_wp_profile_sync_user_add_post' );
 
     // set a message
