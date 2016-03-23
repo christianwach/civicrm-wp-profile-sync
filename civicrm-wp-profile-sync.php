@@ -24,17 +24,17 @@ define( 'CIVICRM_WP_PROFILE_SYNC_BULK', false );
 define( 'CIVICRM_WP_PROFILE_SYNC_VERSION', '0.2.4' );
 
 // store reference to this file
-if ( !defined( 'CIVICRM_WP_PROFILE_SYNC_FILE' ) ) {
+if ( ! defined( 'CIVICRM_WP_PROFILE_SYNC_FILE' ) ) {
 	define( 'CIVICRM_WP_PROFILE_SYNC_FILE', __FILE__ );
 }
 
 // store URL to this plugin's directory
-if ( !defined( 'CIVICRM_WP_PROFILE_SYNC_URL' ) ) {
+if ( ! defined( 'CIVICRM_WP_PROFILE_SYNC_URL' ) ) {
 	define( 'CIVICRM_WP_PROFILE_SYNC_URL', plugin_dir_url( CIVICRM_WP_PROFILE_SYNC_FILE ) );
 }
 
 // store PATH to this plugin's directory
-if ( !defined( 'CIVICRM_WP_PROFILE_SYNC_PATH' ) ) {
+if ( ! defined( 'CIVICRM_WP_PROFILE_SYNC_PATH' ) ) {
 	define( 'CIVICRM_WP_PROFILE_SYNC_PATH', plugin_dir_path( CIVICRM_WP_PROFILE_SYNC_FILE ) );
 }
 
@@ -114,8 +114,6 @@ class CiviCRM_WP_Profile_Sync {
 	 * Load translation if present.
 	 *
 	 * @since 0.1
-	 *
-	 * @return void
 	 */
 	public function translation() {
 
@@ -152,7 +150,6 @@ class CiviCRM_WP_Profile_Sync {
 	 * @since 0.1
 	 *
 	 * @param object $config The CiviCRM config object
-	 * @return void
 	 */
 	public function register_php_directory( &$config ) {
 
@@ -176,7 +173,6 @@ class CiviCRM_WP_Profile_Sync {
 	 * @since 0.1
 	 *
 	 * @param object $config The CiviCRM config object
-	 * @return void
 	 */
 	public function register_template_directory( &$config ) {
 
@@ -207,7 +203,6 @@ class CiviCRM_WP_Profile_Sync {
 	 *
 	 * @param str $object_name The CiviCRM object type
 	 * @param array $tasks The CiviCRM tasks array to add our option to
-	 * @return void
 	 */
 	public function civi_bulk_operations( $object_name, &$tasks ) {
 
@@ -247,25 +242,28 @@ class CiviCRM_WP_Profile_Sync {
 	 * @param integer $user_id The numeric ID of the WordPress user
 	 * @param array $posted_field_ids The array of numeric IDs of the BuddyPress fields
 	 * @param boolean $errors True if there are errors, false otherwise
-	 * @return void
 	 */
 	public function buddypress_contact_updated( $user_id = 0, $posted_field_ids, $errors ) {
 
 		$this->_debug( array(
-			'function' => 'buddypress_contact_updated',
+			'method' => __METHOD__,
 		));
 
 		// get BP instance
 		$bp = buddypress();
 
-		if ( !empty( $bp->site_options['bp-disable-profile-sync'] ) && (int) $bp->site_options['bp-disable-profile-sync'] )
+		// bail if BuddyPress is not set to sync to WordPress
+		if ( ! empty( $bp->site_options['bp-disable-profile-sync'] ) && (int) $bp->site_options['bp-disable-profile-sync'] ) {
 			return true;
+		}
 
-		if ( empty( $user_id ) )
+		// fetch logged-in user if none set
+		if ( empty( $user_id ) ) {
 			$user_id = bp_loggedin_user_id();
+		}
 
-		if ( empty( $user_id ) )
-			return false;
+		// bail if no user ID
+		if ( empty( $user_id ) ) return false;
 
 		// pass to our sync method
 		$this->wordpress_contact_updated( $user_id );
@@ -280,23 +278,22 @@ class CiviCRM_WP_Profile_Sync {
 	 * @since 0.1
 	 *
 	 * @param integer $user_id The numeric ID of the WordPress user
-	 * @return void
 	 */
 	public function wordpress_contact_updated( $user_id ) {
 
 		$this->_debug( array(
-			'function' => 'wordpress_contact_updated',
+			'method' => __METHOD__,
 			'user_id' => $user_id,
 		));
 
-		// okay, get user
+		// okay, get user object
 		$user = get_userdata( $user_id );
 
 		// did we get one?
 		if ( $user ) {
 
 			// init CiviCRM
-			if ( !civi_wp()->initialize() ) return;
+			if ( ! civi_wp()->initialize() ) return;
 
 			// get user matching file
 			require_once 'CRM/Core/BAO/UFMatch.php';
@@ -373,7 +370,6 @@ class CiviCRM_WP_Profile_Sync {
 	 * @param string $objectName The type of object
 	 * @param integer $objectId The ID of the object
 	 * @param object $objectRef The object
-	 * @return void
 	 */
 	public function civi_contact_pre_update( $op, $objectName, $objectId, $objectRef ) {
 
@@ -384,7 +380,7 @@ class CiviCRM_WP_Profile_Sync {
 		if ( $objectName != 'Individual' ) return;
 
 		$this->_debug( array(
-			'function' => 'civi_contact_pre_update',
+			'method' => __METHOD__,
 			'op' => $op,
 			'objectName' => $objectName,
 			'objectId' => $objectId,
@@ -408,7 +404,6 @@ class CiviCRM_WP_Profile_Sync {
 	 * @param string $objectName The type of object
 	 * @param integer $objectId The ID of the object
 	 * @param object $objectRef The object
-	 * @return void
 	 */
 	public function civi_primary_email_pre_update( $op, $objectName, $objectId, $objectRef ) {
 
@@ -422,7 +417,7 @@ class CiviCRM_WP_Profile_Sync {
 		if ( ! isset( $objectRef['email'] ) ) return;
 
 		$this->_debug( array(
-			'function' => 'civi_primary_email_pre_update',
+			'method' => __METHOD__,
 			'op' => $op,
 			'objectName' => $objectName,
 			'objectId' => $objectId,
@@ -446,7 +441,6 @@ class CiviCRM_WP_Profile_Sync {
 	 * @param string $objectName The type of object
 	 * @param integer $objectId The ID of the object
 	 * @param object $objectRef The object
-	 * @return void
 	 */
 	public function civi_website_pre_update( $op, $objectName, $objectId, $objectRef ) {
 
@@ -460,7 +454,7 @@ class CiviCRM_WP_Profile_Sync {
 		if ( ! isset( $objectRef['contact_id'] ) ) return;
 
 		$this->_debug( array(
-			'function' => 'civi_website_pre_update',
+			'method' => __METHOD__,
 			'op' => $op,
 			'objectName' => $objectName,
 			'objectId' => $objectId,
@@ -477,7 +471,7 @@ class CiviCRM_WP_Profile_Sync {
 		$user_id = CRM_Core_BAO_UFMatch::getUFId( $objectRef['contact_id'] );
 
 		$this->_debug( array(
-			'function' => 'civi_website_pre_update',
+			'method' => __METHOD__,
 			'user_id' => $user_id,
 		));
 
@@ -526,7 +520,6 @@ class CiviCRM_WP_Profile_Sync {
 	 * @param string $objectName The type of object
 	 * @param integer $objectId The ID of the object
 	 * @param object $objectRef The object
-	 * @return void
 	 */
 	public function civi_contact_updated( $op, $objectName, $objectId, $objectRef ) {
 
@@ -537,7 +530,7 @@ class CiviCRM_WP_Profile_Sync {
 		if ( $objectName != 'Individual' ) return;
 
 		$this->_debug( array(
-			'function' => 'civi_contact_updated',
+			'method' => __METHOD__,
 			'op' => $op,
 			'objectName' => $objectName,
 			'objectId' => $objectId,
@@ -626,8 +619,6 @@ class CiviCRM_WP_Profile_Sync {
 	 * Prevent recursion when a WordPress user is about to be bulk added.
 	 *
 	 * @since 0.1
-	 *
-	 * @return void
 	 */
 	public function civi_contact_bulk_added_pre() {
 
@@ -643,8 +634,6 @@ class CiviCRM_WP_Profile_Sync {
 	 * Re-hook when a WordPress user has been bulk added.
 	 *
 	 * @since 0.1
-	 *
-	 * @return void
 	 */
 	public function civi_contact_bulk_added_post() {
 
@@ -664,8 +653,6 @@ class CiviCRM_WP_Profile_Sync {
 	 * Add BuddyPress sync hooks.
 	 *
 	 * @since 0.1
-	 *
-	 * @return void
 	 */
 	private function _add_hooks_bp() {
 
@@ -682,8 +669,6 @@ class CiviCRM_WP_Profile_Sync {
 	 * Remove BuddyPress sync hooks.
 	 *
 	 * @since 0.1
-	 *
-	 * @return void
 	 */
 	private function _remove_hooks_bp() {
 
@@ -700,8 +685,6 @@ class CiviCRM_WP_Profile_Sync {
 	 * Add WordPress sync hooks.
 	 *
 	 * @since 0.1
-	 *
-	 * @return void
 	 */
 	private function _add_hooks_wp() {
 
@@ -717,8 +700,6 @@ class CiviCRM_WP_Profile_Sync {
 	 * Remove WordPress sync hooks.
 	 *
 	 * @since 0.1
-	 *
-	 * @return void
 	 */
 	private function _remove_hooks_wp() {
 
@@ -734,8 +715,6 @@ class CiviCRM_WP_Profile_Sync {
 	 * Add CiviCRM sync hooks.
 	 *
 	 * @since 0.1
-	 *
-	 * @return void
 	 */
 	private function _add_hooks_civi() {
 
@@ -757,8 +736,6 @@ class CiviCRM_WP_Profile_Sync {
 	 * Remove CiviCRM sync hooks.
 	 *
 	 * @since 0.1
-	 *
-	 * @return void
 	 */
 	private function _remove_hooks_civi() {
 
@@ -779,7 +756,6 @@ class CiviCRM_WP_Profile_Sync {
 	 *
 	 * @param object $user The WP user object
 	 * @param object $civi_contact The Civi Contact object
-	 * @return void
 	 */
 	private function _update_civi_name( $user, $civi_contact ) {
 
@@ -805,7 +781,6 @@ class CiviCRM_WP_Profile_Sync {
 	 *
 	 * @param object $user The WP user object
 	 * @param object $civi_contact The Civi Contact object
-	 * @return void
 	 */
 	private function _update_civi_primary_email( $user, $civi_contact ) {
 
@@ -818,10 +793,8 @@ class CiviCRM_WP_Profile_Sync {
 
 		// did we get one?
 		if (
-			isset( $primary_email['values'] )
-			AND
-			is_array( $primary_email['values'] )
-			AND
+			isset( $primary_email['values'] ) AND
+			is_array( $primary_email['values'] ) AND
 			count( $primary_email['values'] ) > 0
 		) {
 
@@ -854,7 +827,6 @@ class CiviCRM_WP_Profile_Sync {
 	 *
 	 * @param object $user The WP user object
 	 * @param object $civi_contact The Civi Contact object
-	 * @return void
 	 */
 	private function _update_civi_website( $user, $civi_contact ) {
 
@@ -867,10 +839,8 @@ class CiviCRM_WP_Profile_Sync {
 
 		// did we get one?
 		if (
-			isset( $existing_website['values'] )
-			AND
-			is_array( $existing_website['values'] )
-			AND
+			isset( $existing_website['values'] ) AND
+			is_array( $existing_website['values'] ) AND
 			count( $existing_website['values'] ) > 0
 		) {
 
