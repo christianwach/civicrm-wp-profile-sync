@@ -49,15 +49,6 @@ if ( ! defined( 'CIVICRM_WP_PROFILE_SYNC_PATH' ) ) {
  */
 class CiviCRM_WP_Profile_Sync {
 
-	/**
-	 * Error messages.
-	 *
-	 * @since 0.1
-	 * @access public
-	 * @var array $messages The error messages array
-	 */
-	public $messages = array();
-
 
 
 	/**
@@ -908,11 +899,16 @@ class CiviCRM_WP_Profile_Sync {
 	 */
 	private function _debug( $msg ) {
 
-		// add to internal array
-		$this->messages[] = $msg;
-
 		// do we want output?
-		if ( CIVICRM_WP_PROFILE_SYNC_DEBUG ) print_r( $msg );
+		if ( CIVICRM_WP_PROFILE_SYNC_DEBUG ) {
+
+			// uncomment this to add a backtrace
+			//$msg['backtrace'] = wp_debug_backtrace_summary();
+
+			// log the message
+			error_log( print_r( $msg ), true ) );
+
+		}
 
 	}
 
