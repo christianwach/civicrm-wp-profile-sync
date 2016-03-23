@@ -906,7 +906,7 @@ class CiviCRM_WP_Profile_Sync {
 			//$msg['backtrace'] = wp_debug_backtrace_summary();
 
 			// log the message
-			error_log( print_r( $msg ), true ) );
+			error_log( print_r( $msg, true ) );
 
 		}
 
