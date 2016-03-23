@@ -95,6 +95,13 @@ class CiviCRM_WP_Profile_Sync {
 
 		}
 
+		/**
+		 * Broadcast that this plugin is active.
+		 *
+		 * @since 0.2.4
+		 */
+		 do_action( 'civicrm_wp_profile_sync_init' );
+
 	}
 
 
@@ -319,9 +326,29 @@ class CiviCRM_WP_Profile_Sync {
 
 			// add more built-in WordPress fields here...
 
+			/**
+			 * Allow plugins to hook into the sync process.
+			 *
+			 * @since 0.2.4
+			 *
+			 * @param WP_User $user The WordPress user object
+			 * @param array $civi_contact The array of CiviCRM contact data
+			 */
+			 do_action( 'civicrm_wp_profile_sync_wp_user_sync', $user, $civi_contact );
+
 			// add CiviCRM and BuddyPress callbacks once more
 			$this->_add_hooks_bp();
 			$this->_add_hooks_civi();
+
+			/**
+			 * Broadcast that a WordPress user has been synced.
+			 *
+			 * @since 0.2.4
+			 *
+			 * @param WP_User $user The WordPress user object
+			 * @param array $civi_contact The array of CiviCRM contact data
+			 */
+			 do_action( 'civicrm_wp_profile_sync_wp_user_synced', $user, $civi_contact );
 
 		}
 
@@ -471,6 +498,17 @@ class CiviCRM_WP_Profile_Sync {
 		$this->_add_hooks_wp();
 		$this->_add_hooks_bp();
 
+		/**
+		 * Broadcast that a CiviCRM contact's website has been synced.
+		 *
+		 * @since 0.2.4
+		 *
+		 * @param integer $user_id The ID of the WordPress user
+		 * @param integer $objectId The ID of the CiviCRM contact
+		 * @param object $objectRef The CiviCRM contact object
+		 */
+		 do_action( 'civicrm_wp_profile_sync_website_synced', $user_id, $objectId, $objectRef );
+
 	}
 
 
@@ -564,6 +602,17 @@ class CiviCRM_WP_Profile_Sync {
 			));
 
 		}
+
+		/**
+		 * Broadcast that a CiviCRM contact has been synced.
+		 *
+		 * @since 0.2.4
+		 *
+		 * @param integer $objectId The ID of the CiviCRM contact
+		 * @param object $objectRef The CiviCRM contact object
+		 * @param integer $user_id The ID of the WordPress user
+		 */
+		 do_action( 'civicrm_wp_profile_sync_civi_contact_synced', $objectId, $objectRef, $user_id );
 
 	}
 
