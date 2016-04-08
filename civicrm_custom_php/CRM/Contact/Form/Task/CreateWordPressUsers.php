@@ -179,9 +179,23 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
      */
     do_action( 'civicrm_wp_profile_sync_user_add_pre' );
 
-    // disable Civi's own register hooks
-    remove_action( 'user_register', array( civi_wp(), 'update_user' ) );
-    remove_action( 'profile_update', array( civi_wp(), 'update_user' ) );
+    // get CiviCRM instance
+    $civi = civi_wp();
+
+    // do we have the old-style plugin structure?
+    if ( method_exists( $civi, 'update_user' ) ) {
+
+      // disable Civi's own register hooks
+      remove_action( 'user_register', array( civi_wp(), 'update_user' ) );
+      remove_action( 'profile_update', array( civi_wp(), 'update_user' ) );
+
+    } else {
+
+      // disable Civi's own register hooks
+      remove_action( 'user_register', array( civi_wp()->users, 'update_user' ) );
+      remove_action( 'profile_update', array( civi_wp()->users, 'update_user' ) );
+
+    }
 
     // process data
     foreach ($rows AS $row) {
@@ -319,6 +333,21 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
         'users' => $users,
         //'backtrace' => debug_backtrace( 0 ),
       ), true ) );
+    }
+
+    // do we have the old-style plugin structure?
+    if ( method_exists( $civi, 'update_user' ) ) {
+
+      // re-add previous CiviCRM plugin filters
+      add_action( 'user_register', array( civi_wp(), 'update_user' ) );
+      add_action( 'profile_update', array( civi_wp(), 'update_user' ) );
+
+    } else {
+
+      // re-add current CiviCRM plugin filters
+      add_action( 'user_register', array( civi_wp()->users, 'update_user' ) );
+      add_action( 'profile_update', array( civi_wp()->users, 'update_user' ) );
+
     }
 
     /**
