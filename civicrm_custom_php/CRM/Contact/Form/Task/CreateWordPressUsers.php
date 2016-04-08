@@ -153,12 +153,12 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
    */
   private function createUsers( $rows ) {
 
-  	// set debug flag when testing
-  	$debug = false;
+    // set debug flag when testing
+    $debug = false;
 
-  	// init debug arrays
-  	$users = array();
-  	$messages = array();
+    // init debug arrays
+    $users = array();
+    $messages = array();
 
     // extend PHP's execution time
     ini_set('max_execution_time', 300);
@@ -205,7 +205,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
 
       // lots of first names are simply initials - if so, use both first and middle names
       if ( strlen( $first_name ) == 1 ) {
-      	$first_name .= $middle_name;
+        $first_name .= $middle_name;
       }
 
       // lets only take a maximum of 8 letters of the last name
@@ -302,8 +302,8 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
 
       } else {
 
-      	// add to debug array
-      	$users[] = $user_data;
+        // add to debug array
+        $users[] = $user_data;
 
       }
 
@@ -313,17 +313,13 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
     if ( $debug ) {
       error_log( print_r( array(
         'method' => __METHOD__,
-		//'rows' => $rows,
-		'messages' => $messages,
-		'count' => count( $messages ),
-		'users' => $users,
+        //'rows' => $rows,
+        'messages' => $messages,
+        'count' => count( $messages ),
+        'users' => $users,
         //'backtrace' => debug_backtrace( 0 ),
       ), true ) );
-	}
-
-    // re-enable Civi's register hooks
-    add_action( 'user_register', array( civi_wp(), 'update_user' ) );
-    add_action( 'profile_update', array( civi_wp(), 'update_user' ) );
+    }
 
     /**
      * Broadcast that a user has ben added, allowing other plugins to add or
@@ -353,20 +349,20 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
 
     // construct query to get name and email of selected contact ids
     $query = "
-		SELECT c.id as contact_id,
-		       c.first_name as first_name,
-		       c.middle_name as middle_name,
-		       c.last_name as last_name,
-			   c.contact_type as contact_type,
-			   e.email as email
-		FROM   civicrm_contact c,
-		       civicrm_email e
-		WHERE  e.contact_id = c.id
-		AND    e.is_primary = 1
-		AND    c.id IN ( $contactIDs )";
+      SELECT c.id as contact_id,
+             c.first_name as first_name,
+             c.middle_name as middle_name,
+             c.last_name as last_name,
+             c.contact_type as contact_type,
+             e.email as email
+      FROM   civicrm_contact c,
+             civicrm_email e
+      WHERE  e.contact_id = c.id
+      AND    e.is_primary = 1
+      AND    c.id IN ( $contactIDs )";
 
-	// --<
-	return $query;
+    // --<
+    return $query;
 
   }
 
@@ -380,14 +376,14 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
    */
   private function filterName( $name ) {
 
-	// build array of replacements
-	$replacements = array( '.', ' ', '-', "'", "’" );
+  // build array of replacements
+  $replacements = array( '.', ' ', '-', "'", "’" );
 
-	// do replacement
+    // do replacement
     $name = str_replace( $replacements, '', $name );
 
-	// --<
-	return $name;
+    // --<
+    return $name;
 
   }
 
