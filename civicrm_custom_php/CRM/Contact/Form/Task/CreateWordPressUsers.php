@@ -229,7 +229,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
       $uname = $first_name . $last_name;
 
       // construct a likely username
-      $uname = sanitize_user( $uname );
+      $uname = sanitize_title( sanitize_user( $uname ) );
 
       // skip if username not valid
       if ( ! validate_username( $uname ) ) {
@@ -247,7 +247,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
         $uname = $first_name . $middle_name . $last_name;
 
         // construct a likely username
-        $uname = sanitize_user( $uname );
+        $uname = sanitize_title( sanitize_user( $uname ) );
 
         // skip if username not valid
         if ( ! validate_username( $uname ) ) {
