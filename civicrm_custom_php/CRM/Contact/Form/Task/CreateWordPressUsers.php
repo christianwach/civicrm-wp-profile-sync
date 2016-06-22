@@ -42,8 +42,6 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
    * Build all the data structures needed to build the form
    *
    * @access public
-   *
-   * @return void
    */
   function preProcess() {
     parent::preProcess();
@@ -61,8 +59,6 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
    * necessary information to create a WordPress user
    *
    * @access public
-   *
-   * @return void
    */
   function buildQuickForm() {
 
@@ -87,8 +83,6 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
    * Process the form after the input has been submitted and validated
    *
    * @access public
-   *
-   * @return void
    */
   public function postProcess() {
 
@@ -149,7 +143,6 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
    * @access private
    *
    * @param array $rows The contacts data array
-   * @return void
    */
   private function createUsers( $rows ) {
 
