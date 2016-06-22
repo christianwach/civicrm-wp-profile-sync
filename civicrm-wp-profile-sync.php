@@ -922,8 +922,6 @@ class CiviCRM_WP_Profile_Sync {
  * Initialise our plugin after CiviCRM initialises.
  *
  * @since 0.1
- *
- * @return void
  */
 function civicrm_wp_profile_sync_init() {
 
