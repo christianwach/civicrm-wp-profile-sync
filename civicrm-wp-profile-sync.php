@@ -743,6 +743,13 @@ private function _sync_to_civicrm_addresses($_meta_key, $_meta_value){
 
 	}
 
+	//workingon
+
+	public function civi_primary_phone_update($op, $objectName, $objectId, $objectRef){
+
+
+	}
+
 
 
 
@@ -791,18 +798,16 @@ private function _sync_to_civicrm_addresses($_meta_key, $_meta_value){
 		//look up all fields that we care about in civicrm object.
     foreach (self::$_address_api_mapping_wc_to_civi as $key => $value) {
 
-      if($key == 'state' && isset($objectRef->{$value})){
+      if($key == 'state' && isset($objectRef->{$value}) && $objectRef->{$value} != 'null' ){
 
 				//civicrm and WC both use standard state and country abbrivations.
 				//But WC store and grab abbrivation of country and state in user mata data.
 				//While CiviCRM API accept full name and id of different states and countries.
 
-				//workingon
-
 				$_civi_state_id = $objectRef->{$value};
 
 				//get the country id.
-				if (isset($objectRef->country_id)){
+				if (isset($objectRef->country_id) && $objectRef->country_id != 'null'){
 					$_civi_country_id = $objectRef->country_id;
 				}else {
 					//if no country id is provided, the state can not be set.
@@ -825,7 +830,7 @@ private function _sync_to_civicrm_addresses($_meta_key, $_meta_value){
 
 					continue;
 
-      }elseif ($key == 'country' && isset($objectRef->{$value}) ) {
+      }elseif ($key == 'country' && isset($objectRef->{$value}) && $objectRef->{$value} != 'null') {
 
 					$_civi_country_id = $objectRef->{$value};
 
@@ -1215,6 +1220,9 @@ private function _sync_to_civicrm_addresses($_meta_key, $_meta_value){
     if($this->_is_woocommerce_running){
       //newadded hook into post process of address update in civicrm for synchronisation to WP/WC.
       add_action( 'civicrm_post', array( $this, 'civi_primary_n_billing_addresses_update' ), 10, 4 );
+
+			//newadded hook into post process of Phone update in civicrm for synchronisation to WP/WC.
+      add_action( 'civicrm_post', array( $this, 'civi_primary_phone_update' ), 10, 4 );
 
     }
 
