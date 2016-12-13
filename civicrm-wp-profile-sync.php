@@ -96,14 +96,6 @@ class CiviCRM_WP_Profile_Sync {
     $this->_is_woocommerce_running = (is_plugin_active( 'woocommerce/woocommerce.php' ) ) ? true : false;
 
 
-
-
-
-    // // TODO to be removed, just for debugging.
-    // if(is_plugin_active( 'kint-debugger/plugin.php') ){
-    //   require_once CIVICRM_WP_PROFILE_SYNC_PATH.'../kint-debugger/vendor/kint/Kint.class.php';
-    // }
-
 		// use translation
 		add_action( 'plugins_loaded', array( $this, 'translation' ) );
 
@@ -318,11 +310,10 @@ class CiviCRM_WP_Profile_Sync {
 	 */
 	public function wordpress_contact_updated( $user_id ) {
 
-    // TODO to be uncommented
-		// $this->_log_exception( array(
-		// 	'method' => __METHOD__,
-		// 	'user_id' => $user_id,
-		// ));
+		$this->_log_exception( array(
+			'method' => __METHOD__,
+			'user_id' => $user_id,
+		));
 
 
 		// okay, get user object
@@ -490,7 +481,7 @@ class CiviCRM_WP_Profile_Sync {
         $this->_civi_primary_email_id = $result['values'][0]['id'];
       }
 
-      // get first primary phone id, location type and phone tyepe and store them within the object.
+      // get primary phone id, location type and phone tyepe and store them within the object.
       $result = civicrm_api3('Phone', 'get', array(
         'sequential' => 1,
         'return' => array("id"),
@@ -743,29 +734,130 @@ private function _sync_to_civicrm_addresses($_meta_key, $_meta_value){
 
 	}
 
-	//workingon
 
-	public function civi_primary_phone_update($op, $objectName, $objectId, $objectRef){
+	public function civi_primary_phone_n_email_update($op, $objectName, $objectId, $objectRef){
+
+		// target our object type
+		if ( $objectName != 'Phone' &&  $objectName != 'Email' ) return;
+
+		$_entity_type = ($objectName == 'Phone' ) ? 'phone' : 'email';
+
+		$_is_deletion = false;
+
+
+		if($op == 'delete' ){
+			$result = civicrm_api3($objectName, 'get', array(
+				'sequential' => 1,
+				'id' => $objectId,
+			));
+
+			$result = $result['values'][0];
+
+			if($result['is_primary'] == 1){
+				$objectRef['contact_id'] = $result['contact_id'];
+				$_is_deletion = true;
+			}else {
+				return;
+			}
+
+		}elseif ( $op == 'edit' || $op == 'create'){
+
+			// bail if we have no contact ID
+			if ( !isset( $objectRef['contact_id'] ) ) return;
+
+			// we only care about primary phone or email
+			if ( $objectRef['is_primary'] == '0' || !isset($objectRef['is_primary']) ) return;
+
+		}
+
+
+		// //for debug
+		// $_debug_array = array(
+		// 	'op' => $op,
+		// 	'objectName' => $objectName,
+		// 	'objectId' => $objectId,
+		// 	'objectRef' => $objectRef,
+		// );
+		// CRM_Core_Session::setStatus(print_r($_debug_array,true),'','error');
+
+
+		// init CiviCRM to get WP user ID
+		if ( ! civi_wp()->initialize() ) return;
+
+		// make sure Civi file is included
+		require_once 'CRM/Core/BAO/UFMatch.php';
+
+		// search using Civi's logic
+		$user_id = CRM_Core_BAO_UFMatch::getUFId( $objectRef['contact_id'] );
+
+		// kick out if we didn't get one
+		if ( empty( $user_id ) ) return;
+
+		// remove WordPress and BuddyPress callbacks to prevent recursion
+		$this->_remove_hooks_wp();
+		$this->_remove_hooks_bp();
+
+		if($_is_deletion){
+
+		$result =	update_user_meta( $user_id,'billing_' . $_entity_type , '' );
+
+		}else {
+			update_user_meta( $user_id,'billing_' . $_entity_type , $objectRef[$_entity_type] );
+		}
+
+
+		// re-add WordPress and BuddyPress callbacks
+    $this->_add_hooks_wp();
+    $this->_add_hooks_bp();
 
 
 	}
 
 
 
-
   public function civi_primary_n_billing_addresses_update( $op, $objectName, $objectId, $objectRef ) {
 
-    // target our operation
-    if ( $op != 'edit' ) return;
 
-    // target our object type
-    if ( $objectName != 'Address' ) return;
+		// target our object type
+		if ( $objectName != 'Address') return;
 
-    // bail if we have no contact ID
-    if ( ! isset( $objectRef->contact_id ) ) return;
+		$_is_deletion = false;
 
-    // we only care about primary address and billing address
-    if ( $objectRef->is_primary == '0' && $objectRef->is_billing == '0' ) return;
+
+		if($op == 'delete' ){
+			$result = civicrm_api3($objectName, 'get', array(
+				'sequential' => 1,
+				'id' => $objectId,
+			));
+
+			$result = $result['values'][0];
+
+			if($result['is_primary'] == '1'){
+				$objectRef['is_primary'] = '1';
+				$objectRef['contact_id'] = $result['contact_id'];
+				$_is_deletion = true;
+			}
+
+			if ($result['is_billing'] == '1') {
+				$objectRef['is_billing'] = '1';
+				$objectRef['contact_id'] = $result['contact_id'];
+				$_is_deletion = true;
+			}
+
+			if(!$_is_deletion){
+				return;
+			}
+
+
+		}elseif ( $op == 'edit' || $op == 'create'){
+
+			// bail if we have no contact ID
+			if ( !isset( $objectRef['contact_id'] ) ) return;
+
+			// we only care about primary address and billing address
+			if ( $objectRef->is_primary == '0' && $objectRef->is_billing == '0' ) return;
+
+		}
 
     // //for debug
     // $_debug_array = array(
@@ -783,7 +875,7 @@ private function _sync_to_civicrm_addresses($_meta_key, $_meta_value){
     require_once 'CRM/Core/BAO/UFMatch.php';
 
     // search using Civi's logic
-    $user_id = CRM_Core_BAO_UFMatch::getUFId( $objectRef->contact_id );
+    $user_id = CRM_Core_BAO_UFMatch::getUFId( $objectRef['contact_id'] );
 
     // kick out if we didn't get one
     if ( empty( $user_id ) ) return;
@@ -792,23 +884,41 @@ private function _sync_to_civicrm_addresses($_meta_key, $_meta_value){
     $this->_remove_hooks_wp();
     $this->_remove_hooks_bp();
 
-    $_address_type = ($objectRef->is_primary != '0' ) ? 'shipping' : 'billing';
 
+			if($objectRef['is_primary'] == '1'){
+				$this->_update_address_info_civicrm($user_id,$objectRef,'shipping',$_is_deletion);
+			}
+
+			if($objectRef['is_billing'] == '1') {
+				$this->_update_address_info_civicrm($user_id,$objectRef,'billing',$_is_deletion);
+			}
+
+
+    // re-add WordPress and BuddyPress callbacks
+    $this->_add_hooks_wp();
+    $this->_add_hooks_bp();
+
+
+  }
+
+
+	private function _update_address_info_civicrm($user_id,$objectRef,$_address_type,$_is_deletion){
 
 		//look up all fields that we care about in civicrm object.
-    foreach (self::$_address_api_mapping_wc_to_civi as $key => $value) {
+		foreach (self::$_address_api_mapping_wc_to_civi as $key => $value) {
 
-      if($key == 'state' && isset($objectRef->{$value}) && $objectRef->{$value} != 'null' ){
+
+			if($key == 'state' && isset($objectRef[$value]) && $objectRef[$value] != 'null' && !$_is_deletion){
 
 				//civicrm and WC both use standard state and country abbrivations.
 				//But WC store and grab abbrivation of country and state in user mata data.
 				//While CiviCRM API accept full name and id of different states and countries.
 
-				$_civi_state_id = $objectRef->{$value};
+				$_civi_state_id = $objectRef[$value];
 
 				//get the country id.
-				if (isset($objectRef->country_id) && $objectRef->country_id != 'null'){
-					$_civi_country_id = $objectRef->country_id;
+				if (isset($objectRef['country_id']) && $objectRef['country_id'] != 'null'){
+					$_civi_country_id = $objectRef['country_id'];
 				}else {
 					//if no country id is provided, the state can not be set.
 					continue;
@@ -830,9 +940,9 @@ private function _sync_to_civicrm_addresses($_meta_key, $_meta_value){
 
 					continue;
 
-      }elseif ($key == 'country' && isset($objectRef->{$value}) && $objectRef->{$value} != 'null') {
+			}elseif ($key == 'country' && isset($objectRef[$value]) && $objectRef[$value] != 'null' && !$_is_deletion) {
 
-					$_civi_country_id = $objectRef->{$value};
+					$_civi_country_id = $objectRef[$value];
 
 					//get the country abbrivation
 					$result = civicrm_api3('Country', 'get', array(
@@ -845,18 +955,15 @@ private function _sync_to_civicrm_addresses($_meta_key, $_meta_value){
 
 					continue;
 
-      }
+			}
 
-      update_user_meta( $user_id,$_address_type.'_'.$key , $objectRef->{$value} );
+			$_value_to_write = ($_is_deletion) ? '': $objectRef[$value];
 
-    }
+			update_user_meta( $user_id,$_address_type.'_'.$key , $_value_to_write );
 
-    // re-add WordPress and BuddyPress callbacks
-    $this->_add_hooks_wp();
-    $this->_add_hooks_bp();
+		}
 
-
-  }
+	}
 
 
 
@@ -1219,10 +1326,10 @@ private function _sync_to_civicrm_addresses($_meta_key, $_meta_value){
 
     if($this->_is_woocommerce_running){
       //newadded hook into post process of address update in civicrm for synchronisation to WP/WC.
-      add_action( 'civicrm_post', array( $this, 'civi_primary_n_billing_addresses_update' ), 10, 4 );
+      add_action( 'civicrm_pre', array( $this, 'civi_primary_n_billing_addresses_update' ), 10, 4 );
 
 			//newadded hook into post process of Phone update in civicrm for synchronisation to WP/WC.
-      add_action( 'civicrm_post', array( $this, 'civi_primary_phone_update' ), 10, 4 );
+      add_action( 'civicrm_pre', array( $this, 'civi_primary_phone_n_email_update' ), 10, 4 );
 
     }
 
@@ -1246,7 +1353,11 @@ private function _sync_to_civicrm_addresses($_meta_key, $_meta_value){
 
     if($this->_is_woocommerce_running){
     //newadded hook into post process of address update in civicrm for synchronisation to WP/WC.
-    remove_action( 'civicrm_post', array( $this, 'civi_primary_n_billing_addresses_update' ), 10 );
+    remove_action( 'civicrm_pre', array( $this, 'civi_primary_n_billing_addresses_update' ), 10 );
+
+		//newadded hook into post process of Phone update in civicrm for synchronisation to WP/WC.
+		remove_action( 'civicrm_pre', array( $this, 'civi_primary_phone_n_email_update' ), 10);
+
     }
 	}
 
