@@ -387,7 +387,7 @@ class CiviCRM_WP_Profile_Sync {
 
 
 
-  /** NOTE newadded
+  /** NOTE newadded synchronise changes of address fileds of user metadata in wp&wc to civicrm
   *
   *
   *
@@ -734,7 +734,7 @@ private function _sync_to_civicrm_addresses($_meta_key, $_meta_value){
 
 	}
 
-
+	//newadded synchronise primary email and phone changes (edite, create, delete) in civicrm to wp&wc, hooked into pre process
 	public function civi_primary_phone_n_email_update($op, $objectName, $objectId, $objectRef){
 
 		// target our object type
@@ -814,7 +814,7 @@ private function _sync_to_civicrm_addresses($_meta_key, $_meta_value){
 	}
 
 
-
+	//newadded synchronise primary primary and billing addresses changes (edite, create, delete) in civicrm to wp&wc, hooked into pre process
   public function civi_primary_n_billing_addresses_update( $op, $objectName, $objectId, $objectRef ) {
 
 
@@ -901,7 +901,7 @@ private function _sync_to_civicrm_addresses($_meta_key, $_meta_value){
 
   }
 
-
+	//newadded private funtion to update correspoding different types of addresses in wp&wc
 	private function _update_address_info_civicrm($user_id,$objectRef,$_address_type,$_is_deletion){
 
 		//look up all fields that we care about in civicrm object.
@@ -1323,7 +1323,7 @@ private function _sync_to_civicrm_addresses($_meta_key, $_meta_value){
 		add_action( 'civicrm_pre', array( $this, 'civi_website_pre_update' ), 10, 4 );
 
 
-
+		//newadded
     if($this->_is_woocommerce_running){
       //newadded hook into post process of address update in civicrm for synchronisation to WP/WC.
       add_action( 'civicrm_pre', array( $this, 'civi_primary_n_billing_addresses_update' ), 10, 4 );
@@ -1351,6 +1351,7 @@ private function _sync_to_civicrm_addresses($_meta_key, $_meta_value){
 		remove_action( 'civicrm_pre', array( $this, 'civi_primary_email_pre_update' ), 10 );
 		remove_action( 'civicrm_pre', array( $this, 'civi_website_pre_update' ), 10 );
 
+		//newadded
     if($this->_is_woocommerce_running){
     //newadded hook into post process of address update in civicrm for synchronisation to WP/WC.
     remove_action( 'civicrm_pre', array( $this, 'civi_primary_n_billing_addresses_update' ), 10 );
