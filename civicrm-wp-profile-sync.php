@@ -937,4 +937,4 @@ function civicrm_wp_profile_sync_init() {
 add_action( 'civicrm_instance_loaded', 'civicrm_wp_profile_sync_init' );
 
 
-
+require_once CIVICRM_WP_PROFILE_SYNC_PATH . 'woo-sync.php';
