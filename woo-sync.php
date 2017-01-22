@@ -581,6 +581,7 @@ class CiviCRM_WP_Profile_WC_Sync {
         //  hook into meta data update process
         if ( $this->_is_woocommerce_running ) {
             add_action('updated_user_meta', array($this, 'update_civi_address_fields_woocommerce'), 100, 4);
+            add_action('added_user_meta', array($this, 'update_civi_address_fields_woocommerce'), 100, 4);
         }
 
     }
@@ -595,6 +596,7 @@ class CiviCRM_WP_Profile_WC_Sync {
         //  remove hooked function
         if ( $this->_is_woocommerce_running ) {
             remove_action('updated_user_meta', array($this, 'update_civi_address_fields_woocommerce'), 100);
+            remove_action('added_user_meta', array($this, 'update_civi_address_fields_woocommerce'), 100);
         }
 
     }
