@@ -251,9 +251,28 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
         // skip if this username already exists
         if ( username_exists( $uname ) ) {
           $messages[] = 'extra username ' . $uname . ' already exists';
-          continue;
+
+          /**
+           * Allow plugins to provide a username that does exist.
+           *
+           * @since 0.2.6
+           *
+           * @param str $uname The current username
+           * @param array $row The user data from which the username has been constructed
+           * @return str $uname The modified username
+           */
+          $uname = apply_filters( 'civicrm_wp_profile_sync_unique_username', $uname, $row );
+
+          // let's test again just to be sure
+          if ( username_exists( $uname ) ) {
+            $messages[] = 'filtered username ' . $uname . ' already exists';
+            continue;
+          } else {
+            $messages[] = 'filtered username ' . $uname . ' does not exist - we can add it';
+          }
+
         } else {
-          $messages[] = 'extra username ' . $uname . ' does not exist - we could add it';
+          $messages[] = 'extra username ' . $uname . ' does not exist - we can add it';
         }
 
       }
