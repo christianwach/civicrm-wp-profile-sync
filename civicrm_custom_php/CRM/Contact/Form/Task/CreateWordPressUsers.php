@@ -121,8 +121,8 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
       // we got one - skip
       //if ( ! empty( $errors ) ) continue;
 
-      // add to our display
-      $rows[] = array(
+      // build contact data item
+      $row = array(
         'id' => $dao->contact_id,
         'first_name' => $dao->first_name,
         'middle_name' => $dao->middle_name,
@@ -130,6 +130,20 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
         'contact_type' => $dao->contact_type,
         'email' => $dao->email,
       );
+
+      /**
+       * Filter contact data and add to array.
+       *
+       * Use this filter together with `civicrm_wp_profile_sync_contact_query` to
+       * provide further contact data from which a username can be built.
+       *
+       * @since 0.2.6
+       *
+       * @param array $row The default contact data
+       * @param obj $dao The contact data retrieved from the database
+       * @return array $row The modified contact data
+       */
+      $rows[] = apply_filters( 'civicrm_wp_profile_sync_contact_row', $row, $dao );
 
     }
 
@@ -223,6 +237,17 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
 
       // construct a likely username
       $uname = sanitize_title( sanitize_user( $uname ) );
+
+      /**
+       * Allow plugins to pre-emptively override the username.
+       *
+       * @since 0.2.6
+       *
+       * @param str $uname The current username
+       * @param array $row The user data from which the username has been constructed
+       * @return str $uname The modified username
+       */
+      $uname = apply_filters( 'civicrm_wp_profile_sync_override_username', $uname, $row );
 
       // skip if username not valid
       if ( ! validate_username( $uname ) ) {
@@ -402,8 +427,20 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
       AND    e.is_primary = 1
       AND    c.id IN ( $contactIDs )";
 
-    // --<
-    return $query;
+    /**
+     * Filter contact query.
+     *
+     * Use this filter in combination with `civicrm_wp_profile_sync_contact_row`
+     * to modify the data for each contact if, for example, you want other fields
+     * from which to determine the final username.
+     *
+     * @since 0.2.6
+     *
+     * @param str $query The default contact query
+     * @param array $contactIDs The array of contact IDs
+     * @return str $query The modified contact query
+     */
+    return apply_filters( 'civicrm_wp_profile_sync_contact_query', $query, $contactIDs );
 
   }
 
