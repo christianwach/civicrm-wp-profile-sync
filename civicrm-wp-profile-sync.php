@@ -303,6 +303,13 @@ class CiviCRM_WP_Profile_Sync {
 				'Individual' // contact type
 			);
 
+			// bail if we don't get one for some reason
+			if ( ! isset( $civi_contact->contact_id ) ) {
+				$this->_add_hooks_bp();
+				$this->_add_hooks_civi();
+				return;
+			}
+
 			// update first name and last name
 			$this->_update_civi_name( $user, $civi_contact );
 
