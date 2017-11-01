@@ -102,30 +102,18 @@ class CiviCRM_WP_Profile_Sync {
 
 
 	/**
-	 * Load translation if present.
+	 * Enable translation.
 	 *
 	 * @since 0.1
 	 */
 	public function translation() {
 
-		// only use, if we have it...
-		if ( function_exists( 'load_plugin_textdomain' ) ) {
-
-			// there are no translations as yet, but they can now be added
-			load_plugin_textdomain(
-
-				// unique name
-				'civicrm-wp-profile-sync',
-
-				// deprecated argument
-				false,
-
-				// relative path to directory containing translation files
-				dirname( plugin_basename( CIVICRM_WP_PROFILE_SYNC_FILE ) ) . '/languages/'
-
-			);
-
-		}
+		// load translations
+		load_plugin_textdomain(
+			'civicrm-wp-profile-sync', // unique name
+			false, // deprecated argument
+			dirname( plugin_basename( CIVICRM_WP_PROFILE_SYNC_FILE ) ) . '/languages/' // relative path to files
+		);
 
 	}
 
