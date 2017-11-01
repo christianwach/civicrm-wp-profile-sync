@@ -37,6 +37,16 @@ For versions of *CiviCRM* prior to 4.6-alpha1, this plugin requires the correspo
 
 == Changelog ==
 
+= 0.2.6 =
+
+* Allows plugin constants to be pre-defined
+* Allow plugins to provide a unique username
+* Provides new filters to customise bulk import process
+
+= 0.2.5 =
+
+* Makes synced usernames URL-friendly
+
 = 0.2.4 =
 
 * Adds hooks before and after sync operations
