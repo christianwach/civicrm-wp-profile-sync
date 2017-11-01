@@ -14,14 +14,18 @@ Depends: CiviCRM
 
 
 
+// set plugin version here
+define( 'CIVICRM_WP_PROFILE_SYNC_VERSION', '0.2.6' );
+
 // set our debug flag here
-define( 'CIVICRM_WP_PROFILE_SYNC_DEBUG', false );
+if ( ! defined( 'CIVICRM_WP_PROFILE_SYNC_DEBUG' ) ) {
+	define( 'CIVICRM_WP_PROFILE_SYNC_DEBUG', false );
+}
 
 // set our bulk operations flag here
-define( 'CIVICRM_WP_PROFILE_SYNC_BULK', false );
-
-// set our version here
-define( 'CIVICRM_WP_PROFILE_SYNC_VERSION', '0.2.6' );
+if ( ! defined( 'CIVICRM_WP_PROFILE_SYNC_BULK' ) ) {
+	define( 'CIVICRM_WP_PROFILE_SYNC_BULK', false );
+}
 
 // store reference to this file
 if ( ! defined( 'CIVICRM_WP_PROFILE_SYNC_FILE' ) ) {
