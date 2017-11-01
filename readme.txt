@@ -1,6 +1,6 @@
 === CiviCRM WordPress Profile Sync ===
 Contributors: needle, cuny-academic-commons
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PZSKM8T5ZP3SC
+Donate link: https://www.paypal.me/interactivist
 Tags: civicrm, buddypress, user, profile, xprofile, sync
 Requires at least: 3.9
 Tested up to: 4.9
