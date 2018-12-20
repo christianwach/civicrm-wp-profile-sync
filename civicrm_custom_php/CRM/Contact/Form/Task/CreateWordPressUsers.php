@@ -43,7 +43,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
    *
    * @access public
    */
-  function preProcess() {
+  public function preProcess() {
     parent::preProcess();
 
     // Get rows.
@@ -60,7 +60,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
    *
    * @access public
    */
-  function buildQuickForm() {
+  public function buildQuickForm() {
 
     // Add our required buttons.
     $this->addButtons(

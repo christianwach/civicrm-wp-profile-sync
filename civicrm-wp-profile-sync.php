@@ -63,7 +63,7 @@ class CiviCRM_WP_Profile_Sync {
 	public function __construct() {
 
 		// Use translation.
-		add_action( 'plugins_loaded', array( $this, 'translation' ) );
+		$this->translation();
 
 		// Post process CiviCRM contact when WP user is updated, done late to let other plugins go first.
 		$this->_add_hooks_wp();
@@ -81,8 +81,8 @@ class CiviCRM_WP_Profile_Sync {
 			add_action( 'civicrm_searchTasks', array( $this, 'civi_bulk_operations' ), 10, 2 );
 
 			// Register php and template directories.
-			add_action( 'civicrm_config', array( $this, 'register_php_directory' ), 10, 1 );
-			add_action( 'civicrm_config', array( $this, 'register_template_directory' ), 10, 1 );
+			add_action( 'civicrm_config', array( $this, 'register_php_directory' ), 10 );
+			add_action( 'civicrm_config', array( $this, 'register_template_directory' ), 10 );
 
 			// Prevent recursion when bulk adding users via CiviCRM.
 			add_action( 'civicrm_wp_profile_sync_user_add_pre', array( $this, 'civi_contact_bulk_added_pre' ), 10 );
@@ -261,72 +261,70 @@ class CiviCRM_WP_Profile_Sync {
 		// Okay, get user object.
 		$user = get_userdata( $user_id );
 
-		// Did we get one?
-		if ( $user ) {
+		// Bail if we didn't get one.
+		if ( ! ( $user instanceof WP_User ) ) return;
 
-			// Init CiviCRM.
-			if ( ! civi_wp()->initialize() ) return;
+		// Init CiviCRM.
+		if ( ! civi_wp()->initialize() ) return;
 
-			// Get user matching file.
-			require_once 'CRM/Core/BAO/UFMatch.php';
+		// Get user matching file.
+		require_once 'CRM/Core/BAO/UFMatch.php';
 
-			// Remove CiviCRM and BuddyPress callbacks to prevent recursion.
-			$this->_remove_hooks_bp();
-			$this->_remove_hooks_civi();
+		// Remove CiviCRM and BuddyPress callbacks to prevent recursion.
+		$this->_remove_hooks_bp();
+		$this->_remove_hooks_civi();
 
-			// Get the Civi contact object.
-			$civi_contact = CRM_Core_BAO_UFMatch::synchronizeUFMatch(
-				$user, // User object.
-				$user->ID, // ID.
-				$user->user_email, // Unique identifier.
-				'WordPress', // CMS.
-				null, // Status (unused).
-				'Individual' // Contact type.
-			);
+		// Get the Civi contact object.
+		$civi_contact = CRM_Core_BAO_UFMatch::synchronizeUFMatch(
+			$user, // User object.
+			$user->ID, // ID.
+			$user->user_email, // Unique identifier.
+			'WordPress', // CMS.
+			null, // Status (unused).
+			'Individual' // Contact type.
+		);
 
-			// Bail if we don't get one for some reason.
-			if ( ! isset( $civi_contact->contact_id ) ) {
-				$this->_add_hooks_bp();
-				$this->_add_hooks_civi();
-				return;
-			}
-
-			// Update first name and last name.
-			$this->_update_civi_name( $user, $civi_contact );
-
-			// Optionally update primary email.
-			$this->_update_civi_primary_email( $user, $civi_contact );
-
-			// Optionally update website.
-			$this->_update_civi_website( $user, $civi_contact );
-
-			// Add more built-in WordPress fields here...
-
-			/**
-			 * Allow plugins to hook into the sync process.
-			 *
-			 * @since 0.2.4
-			 *
-			 * @param WP_User $user The WordPress user object.
-			 * @param array $civi_contact The array of CiviCRM contact data.
-			 */
-			 do_action( 'civicrm_wp_profile_sync_wp_user_sync', $user, $civi_contact );
-
-			// Add CiviCRM and BuddyPress callbacks once more.
+		// Bail if we don't get one for some reason.
+		if ( ! isset( $civi_contact->contact_id ) ) {
 			$this->_add_hooks_bp();
 			$this->_add_hooks_civi();
-
-			/**
-			 * Broadcast that a WordPress user has been synced.
-			 *
-			 * @since 0.2.4
-			 *
-			 * @param WP_User $user The WordPress user object.
-			 * @param array $civi_contact The array of CiviCRM contact data.
-			 */
-			 do_action( 'civicrm_wp_profile_sync_wp_user_synced', $user, $civi_contact );
-
+			return;
 		}
+
+		// Update first name and last name.
+		$this->_update_civi_name( $user, $civi_contact );
+
+		// Optionally update primary email.
+		$this->_update_civi_primary_email( $user, $civi_contact );
+
+		// Optionally update website.
+		$this->_update_civi_website( $user, $civi_contact );
+
+		// Add more built-in WordPress fields here...
+
+		/**
+		 * Allow plugins to hook into the sync process.
+		 *
+		 * @since 0.2.4
+		 *
+		 * @param WP_User $user The WordPress user object.
+		 * @param array $civi_contact The array of CiviCRM contact data.
+		 */
+		 do_action( 'civicrm_wp_profile_sync_wp_user_sync', $user, $civi_contact );
+
+		// Add CiviCRM and BuddyPress callbacks once more.
+		$this->_add_hooks_bp();
+		$this->_add_hooks_civi();
+
+		/**
+		 * Broadcast that a WordPress user has been synced.
+		 *
+		 * @since 0.2.4
+		 *
+		 * @param WP_User $user The WordPress user object.
+		 * @param array $civi_contact The array of CiviCRM contact data.
+		 */
+		 do_action( 'civicrm_wp_profile_sync_wp_user_synced', $user, $civi_contact );
 
 	}
 
@@ -916,7 +914,7 @@ function civicrm_wp_profile_sync_init() {
 	global $civicrm_wp_profile_sync;
 
 	// Init plugin.
-	$civicrm_wp_profile_sync = new CiviCRM_WP_Profile_Sync;
+	$civicrm_wp_profile_sync = new CiviCRM_WP_Profile_Sync();
 
 }
 
