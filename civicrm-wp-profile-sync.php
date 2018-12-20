@@ -414,8 +414,11 @@ class CiviCRM_WP_Profile_Sync {
 		 * as the trigger to do so.
 		 *
 		 * @since 0.2.7
+		 *
+		 * @param integer $objectId The ID of the object.
+		 * @param object $objectRef The object.
 		 */
-		do_action( 'civicrm_wp_profile_sync_primary_email_pre_update' );
+		do_action( 'civicrm_wp_profile_sync_primary_email_pre_update', $objectId, $objectRef );
 
 	}
 
