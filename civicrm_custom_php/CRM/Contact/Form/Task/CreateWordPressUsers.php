@@ -25,7 +25,7 @@
  +--------------------------------------------------------------------+
 */
 
-/**
+/*
  * Not sure why this should differ from the above and I would prefer my code to
  * be released under GPL v2+ but am deferring to http://civicrm.org/what/licensing
  * Copyright (C) 2014 Christian Wach <needle@haystack.co.uk>
@@ -34,35 +34,35 @@
 
 /**
  * This class provides the functionality to bulk create WordPress users from
- * a list of CiviCRM contacts
+ * a list of CiviCRM contacts.
  */
 class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
 
   /**
-   * Build all the data structures needed to build the form
+   * Build all the data structures needed to build the form.
    *
    * @access public
    */
   function preProcess() {
     parent::preProcess();
 
-    // get rows
+    // Get rows.
     $rows = $this->getContactRows();
 
-    // our array now contains all contacts who can be synced to WordPress
+    // Our array now contains all contacts who can be synced to WordPress.
     $this->assign('rows', $rows);
 
   }
 
   /**
    * Build the form - it consists of a table listing all contacts with the
-   * necessary information to create a WordPress user
+   * necessary information to create a WordPress user.
    *
    * @access public
    */
   function buildQuickForm() {
 
-    // add our required buttons
+    // Add our required buttons.
     $this->addButtons(
       array(
         array(
@@ -80,48 +80,48 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
   }
 
   /**
-   * Process the form after the input has been submitted and validated
+   * Process the form after the input has been submitted and validated.
    *
    * @access public
    */
   public function postProcess() {
 
-    // get rows again (I can't figure out how to override contactIDs)
+    // Get rows again since I can't figure out how to override contactIDs.
     $rows = $this->getContactRows();
 
-    // create them...
+    // Create them.
     $this->createUsers( $rows );
 
   }
 
   /**
-   * Get contacts with no WordPress user
+   * Get contacts with no WordPress user.
    *
    * @access private
    *
-   * @return array The contacts data array
+   * @return array The contacts data array.
    */
   private function getContactRows() {
 
-    // use Civi's user check
+    // Use Civi's user check.
     $config = CRM_Core_Config::singleton();
 
-    // process data
+    // Process data.
     $rows = array();
     $dao = CRM_Core_DAO::executeQuery($this->getQuery());
     while ($dao->fetch()) {
 
-      // does this contact have a WP user?
+      // Does this contact have a WP user?
       $errors = array();
       $check_params = array(
         'mail' => $dao->email,
       );
       //$config->userSystem->checkUserNameEmailExists($check_params, $errors);
 
-      // we got one - skip
+      // We got one - skip.
       //if ( ! empty( $errors ) ) continue;
 
-      // build contact data item
+      // Build contact data item.
       $row = array(
         'id' => $dao->contact_id,
         'first_name' => $dao->first_name,
@@ -139,9 +139,9 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
        *
        * @since 0.2.6
        *
-       * @param array $row The default contact data
-       * @param obj $dao The contact data retrieved from the database
-       * @return array $row The modified contact data
+       * @param array $row The default contact data.
+       * @param obj $dao The contact data retrieved from the database.
+       * @return array $row The modified contact data.
        */
       $rows[] = apply_filters( 'civicrm_wp_profile_sync_contact_row', $row, $dao );
 
@@ -152,90 +152,92 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
   }
 
   /**
-   * Create WordPress user from contacts
+   * Create WordPress user from contacts.
    *
    * @access private
    *
-   * @param array $rows The contacts data array
+   * @param array $rows The contacts data array.
    */
   private function createUsers( $rows ) {
 
-    // set debug flag when testing
+    // Set debug flag when testing.
     $debug = false;
 
-    // init debug arrays
+    // Init debug arrays.
     $users = array();
     $messages = array();
 
-    // extend PHP's execution time
+    // Extend PHP's execution time.
     ini_set('max_execution_time', 300);
 
-    // get default role only once
+    // Get default role only once.
     $default_role = get_option('default_role');
 
-    // get Civi config object
+    // Get Civi config object.
     $config = CRM_Core_Config::singleton();
 
-    // code for redirect grabbed from CRM_Contact_Form_Task_Delete::postProcess()
+    // Code for redirect grabbed from CRM_Contact_Form_Task_Delete::postProcess().
     $urlParams = 'force=1';
     $urlString = "civicrm/contact/search/advanced";
 
     /**
      * Broadcast that a user is about to be added, allowing other plugins to add
      * or remove hooks.
+     *
+     * @since 0.2.3
      */
     do_action( 'civicrm_wp_profile_sync_user_add_pre' );
 
-    // get CiviCRM instance
+    // Get CiviCRM instance.
     $civi = civi_wp();
 
-    // do we have the old-style plugin structure?
+    // Do we have the old-style plugin structure?
     if ( method_exists( $civi, 'update_user' ) ) {
 
-      // disable Civi's own register hooks
+      // Disable Civi's own register hooks.
       remove_action( 'user_register', array( civi_wp(), 'update_user' ) );
       remove_action( 'profile_update', array( civi_wp(), 'update_user' ) );
 
     } else {
 
-      // disable Civi's own register hooks
+      // Disable Civi's own register hooks.
       remove_action( 'user_register', array( civi_wp()->users, 'update_user' ) );
       remove_action( 'profile_update', array( civi_wp()->users, 'update_user' ) );
 
     }
 
-    // process data
+    // Process data.
     foreach ($rows AS $row) {
 
-      // skip if no email
+      // Skip if no email.
       if ( empty( $row['email'] ) ) continue;
 
-      // skip if email is not valid
+      // Skip if email is not valid.
       if ( ! is_email( $row['email'] ) ) continue;
 
-      // skip if email already exists
+      // Skip if email already exists.
       if ( email_exists( $row['email'] ) ) {
         $messages[] = $row['email'] . ' already exists';
         continue;
       }
 
-      // filter names
+      // Filter names.
       $first_name = $this->filterName( $row['first_name'] );
       $middle_name = $this->filterName( $row['middle_name'] );
       $last_name = $this->filterName( $row['last_name'] );
 
-      // lots of first names are simply initials - if so, use both first and middle names
+      // Lots of first names are simply initials - if so, use both first and middle names.
       if ( strlen( $first_name ) == 1 ) {
         $first_name .= $middle_name;
       }
 
-      // lets only take a maximum of 8 letters of the last name
+      // Let's only take a maximum of 8 letters of the last name.
       $last_name = substr( $last_name, 0, 8 );
 
-      // concatenate first and last names
+      // Concatenate first and last names.
       $uname = $first_name . $last_name;
 
-      // construct a likely username
+      // Construct a likely username.
       $uname = sanitize_title( sanitize_user( $uname ) );
 
       /**
@@ -243,37 +245,37 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
        *
        * @since 0.2.6
        *
-       * @param str $uname The current username
-       * @param array $row The user data from which the username has been constructed
-       * @return str $uname The modified username
+       * @param str $uname The current username.
+       * @param array $row The user data from which the username has been constructed.
+       * @return str $uname The modified username.
        */
       $uname = apply_filters( 'civicrm_wp_profile_sync_override_username', $uname, $row );
 
-      // skip if username not valid
+      // Skip if username not valid.
       if ( ! validate_username( $uname ) ) {
         $messages[] = 'username ' . $uname . ' is not valid';
         continue;
       }
 
-      // does this username already exist?
+      // Does this username already exist?
       if ( username_exists( $uname ) ) {
 
         $messages[] = 'username ' . $uname . ' already exists';
         $messages[] = $row;
 
-        // let's try adding in the middle name
+        // Let's try adding in the middle name.
         $uname = $first_name . $middle_name . $last_name;
 
-        // construct a likely username
+        // Construct a likely username.
         $uname = sanitize_title( sanitize_user( $uname ) );
 
-        // skip if username not valid
+        // Skip if username not valid.
         if ( ! validate_username( $uname ) ) {
           $messages[] = 'username ' . $uname . ' is not valid';
           continue;
         }
 
-        // skip if this username already exists
+        // Skip if this username already exists.
         if ( username_exists( $uname ) ) {
           $messages[] = 'extra username ' . $uname . ' already exists';
 
@@ -282,13 +284,13 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
            *
            * @since 0.2.6
            *
-           * @param str $uname The current username
-           * @param array $row The user data from which the username has been constructed
-           * @return str $uname The modified username
+           * @param str $uname The current username.
+           * @param array $row The user data from which the username has been constructed.
+           * @return str $uname The modified username.
            */
           $uname = apply_filters( 'civicrm_wp_profile_sync_unique_username', $uname, $row );
 
-          // let's test again just to be sure
+          // Let's test again just to be sure.
           if ( username_exists( $uname ) ) {
             $messages[] = 'filtered username ' . $uname . ' already exists';
             continue;
@@ -302,7 +304,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
 
       }
 
-      /**
+      /*
        * We cannot create WP user using CRM_Core_BAO_CMSUser::create() because it
        * will attempt to log the user in and notify them of their new account. We
        * have to find another means to do this.
@@ -311,10 +313,10 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
        * creating WordPress users and modified accordingly.
        */
 
-      // create an arbitrary password
+      // Create an arbitrary password.
       $password = substr( md5( uniqid( microtime() ) ), 0, 8 );
 
-      // populate user data
+      // Populate user data.
       $user_data = array(
         'ID' => '',
         'user_login' => $uname,
@@ -326,18 +328,18 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
         'last_name' => $row['last_name'],
       );
 
-      // skip if debugging
+      // Skip if debugging.
       if ( ! $debug ) {
 
-        // add the user
+        // Add the user.
         $user_id = wp_insert_user($user_data);
 
-        // if contact doesn't already exist create UF Match
+        // If contact doesn't already exist create UF Match.
         if ( ! is_wp_error($user_id) && isset($row['id'] ) ) {
 
           $transaction = new CRM_Core_Transaction();
 
-          // create the UF Match record
+          // Create the UF Match record.
           $ufmatch             = new CRM_Core_DAO_UFMatch();
           $ufmatch->domain_id  = CRM_Core_Config::domainID();
           $ufmatch->uf_id      = $user_id;
@@ -353,14 +355,14 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
 
       } else {
 
-        // add to debug array
+        // Add to debug array.
         $users[] = $user_data;
 
       }
 
     }
 
-    // if debugging die now
+    // If debugging add log entry now.
     if ( $debug ) {
       error_log( print_r( array(
         'method' => __METHOD__,
@@ -372,16 +374,16 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
       ), true ) );
     }
 
-    // do we have the old-style plugin structure?
+    // Do we have the old-style plugin structure?
     if ( method_exists( $civi, 'update_user' ) ) {
 
-      // re-add previous CiviCRM plugin filters
+      // Re-add previous CiviCRM plugin filters.
       add_action( 'user_register', array( civi_wp(), 'update_user' ) );
       add_action( 'profile_update', array( civi_wp(), 'update_user' ) );
 
     } else {
 
-      // re-add current CiviCRM plugin filters
+      // Re-add current CiviCRM plugin filters.
       add_action( 'user_register', array( civi_wp()->users, 'update_user' ) );
       add_action( 'profile_update', array( civi_wp()->users, 'update_user' ) );
 
@@ -390,30 +392,32 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
     /**
      * Broadcast that a user has ben added, allowing other plugins to add or
      * remove hooks.
+     *
+     * @since 0.2.3
      */
     do_action( 'civicrm_wp_profile_sync_user_add_post' );
 
-    // set a message
+    // Set a message.
     CRM_Core_Session::setStatus('', ts('Users Added to WordPress'), 'success');
 
-    // redirect?
+    // Maybe redirect.
     CRM_Utils_System::redirect(CRM_Utils_System::url($urlString, $urlParams));
 
   }
 
   /**
-   * Get query to retrive contact data
+   * Get query to retrive contact data.
    *
    * @access private
    *
-   * @return array The contacts data array
+   * @return array The contacts data array.
    */
   private function getQuery() {
 
-    // get selected contact IDs
+    // Get selected contact IDs.
     $contactIDs = implode( ',', $this->_contactIds );
 
-    // construct query to get name and email of selected contact ids
+    // Construct query to get name and email of selected contact ids.
     $query = "
       SELECT c.id as contact_id,
              c.first_name as first_name,
@@ -436,28 +440,28 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
      *
      * @since 0.2.6
      *
-     * @param str $query The default contact query
-     * @param array $contactIDs The array of contact IDs
-     * @return str $query The modified contact query
+     * @param str $query The default contact query.
+     * @param array $contactIDs The array of contact IDs.
+     * @return str $query The modified contact query.
      */
     return apply_filters( 'civicrm_wp_profile_sync_contact_query', $query, $contactIDs );
 
   }
 
   /**
-   * Filter a name to remove unwanted chars
+   * Filter a name to remove unwanted chars.
    *
    * @access private
    *
-   * @param str The unfiltered name
-   * @return str The filtered name
+   * @param str The unfiltered name.
+   * @return str The filtered name.
    */
   private function filterName( $name ) {
 
-  // build array of replacements
+  // Build array of replacements.
   $replacements = array( '.', ' ', '-', "'", "’" );
 
-    // do replacement
+    // Do replacement.
     $name = str_replace( $replacements, '', $name );
 
     // --<
