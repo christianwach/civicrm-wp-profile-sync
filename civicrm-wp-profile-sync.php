@@ -405,6 +405,18 @@ class CiviCRM_WP_Profile_Sync {
 		$this->_remove_hooks_wp();
 		$this->_remove_hooks_bp();
 
+		/**
+		 * Fires when a CiviCRM contact's primary email address is about to be
+		 * synced to the linked WordPress user's email address.
+		 *
+		 * The change of email in WordPress causues a notification email to be
+		 * sent to the WordPress user. This can be suppressed using this action
+		 * as the trigger to do so.
+		 *
+		 * @since 0.2.7
+		 */
+		do_action( 'civicrm_wp_profile_sync_primary_email_pre_update' );
+
 	}
 
 
