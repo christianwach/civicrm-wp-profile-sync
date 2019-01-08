@@ -409,7 +409,7 @@ class CiviCRM_WP_Profile_Sync {
 		 * Fires when a CiviCRM contact's primary email address is about to be
 		 * synced to the linked WordPress user's email address.
 		 *
-		 * The change of email in WordPress causues a notification email to be
+		 * The change of email in WordPress causes a notification email to be
 		 * sent to the WordPress user. This can be suppressed using this action
 		 * as the trigger to do so.
 		 *
