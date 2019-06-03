@@ -17,7 +17,7 @@ The CiviCRM WordPress Profile Sync plugin keeps the "First Name", "Last Name", "
 
 ### Requirements
 
-This plugin requires a minimum of *WordPress 3.9* and *CiviCRM 4.6-alpha1*. It also requires *BuddyPress 1.8* and the [BP XProfile WordPress User Sync](http://wordpress.org/plugins/bp-xprofile-wp-user-sync/) plugin for syncing data with BuddyPress profiles. Please refer to the installation page for how to use this plugin with versions of CiviCRM prior to 4.6-alpha1.
+This plugin requires a minimum of *WordPress 3.9* and *CiviCRM 4.6*. It also requires *BuddyPress 1.8* and the [BP XProfile WordPress User Sync](http://wordpress.org/plugins/bp-xprofile-wp-user-sync/) plugin for syncing data with BuddyPress profiles.
 
 ### Plugin Development
 
@@ -31,7 +31,6 @@ This plugin is in active development. For feature requests and bug reports (or i
 1. Upload plugin files to your `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
-For versions of *CiviCRM* prior to 4.6-alpha1, this plugin requires the corresponding branch of the [CiviCRM WordPress plugin](https://github.com/civicrm/civicrm-wordpress) plus the custom WordPress.php hook file from the [CiviCRM Hook Tester repo on GitHub](https://github.com/christianwach/civicrm-wp-hook-tester) so that it overrides the built-in *CiviCRM* file. Please refer to the each repo for further instructions.
 
 
 
