@@ -919,22 +919,29 @@ class CiviCRM_WP_Profile_Sync {
 
 
 /**
- * Initialise our plugin after CiviCRM initialises.
+ * Load plugin if not yet loaded and return reference.
  *
  * @since 0.1
+ *
+ * @return CiviCRM_WP_Profile_Sync $civicrm_wp_profile_sync The plugin reference.
  */
-function civicrm_wp_profile_sync_init() {
+function civicrm_wp_profile_sync() {
 
 	// Declare as global.
 	global $civicrm_wp_profile_sync;
 
-	// Init plugin.
-	$civicrm_wp_profile_sync = new CiviCRM_WP_Profile_Sync();
+	// Instantiate plugin if not yet instantiated.
+	if ( ! isset( $civicrm_wp_profile_sync ) ) {
+		$civicrm_wp_profile_sync = new CiviCRM_WP_Profile_Sync();
+	}
+
+	// --<
+	return $civicrm_wp_profile_sync;
 
 }
 
-// Add action for plugin init
-add_action( 'civicrm_instance_loaded', 'civicrm_wp_profile_sync_init' );
+// Load only when CiviCRM has loaded.
+add_action( 'civicrm_instance_loaded', 'civicrm_wp_profile_sync' );
 
 
 
