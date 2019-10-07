@@ -206,17 +206,30 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
 
     }
 
+    // Init success and failure arrays.
+    $success = array();
+    $failure = array();
+
     // Process data.
     foreach( $rows AS $row ) {
 
       // Skip if user already exists.
-      if ( $row['user_exists'] === 'y' ) continue;
+      if ( $row['user_exists'] === 'y' ) {
+        $failure[] = $row['display_name'];
+        continue;
+      }
 
       // Skip if no email.
-      if ( empty( $row['email'] ) ) continue;
+      if ( empty( $row['email'] ) ) {
+        $failure[] = $row['display_name'];
+        continue;
+      }
 
       // Skip if email is not valid.
-      if ( ! is_email( $row['email'] ) ) continue;
+      if ( ! is_email( $row['email'] ) ) {
+        $failure[] = $row['display_name'];
+        continue;
+      }
 
       // Skip if email already exists.
       if ( email_exists( $row['email'] ) ) {
@@ -224,6 +237,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
           'method' => __METHOD__,
           'message' => sprintf( __( 'The email %s already exists.', 'civicrm-wp-profile-sync' ), $row['email'] ),
         ), true ) );
+        $failure[] = $row['display_name'];
         continue;
       }
 
@@ -236,11 +250,9 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
           'method' => __METHOD__,
           'message' => sprintf( __( 'The username %s is not valid.', 'civicrm-wp-profile-sync' ), $username ),
         ), true ) );
+        $failure[] = $row['display_name'];
         continue;
       }
-
-      // Do not assume success.
-      $success = false;
 
       // Create an arbitrary password.
       $password = substr( md5( uniqid( microtime() ) ), 0, 8 );
@@ -283,8 +295,13 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
           ), true ) );
         }
 
-        // Set user created success flag.
-        $success = true;
+        // Add user to success array.
+        $success[] = $row['display_name'];
+
+      } else {
+
+        // Add user to failure array.
+        $failure[] = $row['display_name'];
 
       }
 
@@ -314,19 +331,22 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
      */
     do_action( 'civicrm_wp_profile_sync_user_add_post' );
 
-    // Set a message.
-    if ( $success ) {
-      CRM_Core_Session::setStatus(
-        __( 'Users successfully added to WordPress.', 'civicrm-wp-profile-sync' ),
-        __( 'Users added', 'civicrm-wp-profile-sync' ),
-        'success'
+    // Build success message.
+    if ( ! empty( $success ) ) {
+      $users_added = sprintf(
+        __( 'Users successfully added to WordPress: %s', 'civicrm-wp-profile-sync' ),
+        implode( ', ', $success )
       );
-    } else {
-      CRM_Core_Session::setStatus(
-        __( 'No Users were added to WordPress. This could be for a number of reasons - perhaps WordPress Users already exist for the selected Contacts or perhaps the Contacts had no associated email address. Please review the Contacts you added and try again.', 'civicrm-wp-profile-sync' ),
-        __( 'No Users added', 'civicrm-wp-profile-sync' ),
-        'info'
+      CRM_Core_Session::setStatus( $users_added, __( 'Users added', 'civicrm-wp-profile-sync' ), 'success' );
+    }
+
+    // Build failure message.
+    if ( ! empty( $failure ) ) {
+      $users_not_added = sprintf(
+        __( 'Users not added to WordPress: %s. Please review these Contacts and try again.', 'civicrm-wp-profile-sync' ),
+        implode( ', ', $failure )
       );
+      CRM_Core_Session::setStatus( $users_not_added, __( 'Users not added', 'civicrm-wp-profile-sync' ), 'error' );
     }
 
     // Maybe redirect.
