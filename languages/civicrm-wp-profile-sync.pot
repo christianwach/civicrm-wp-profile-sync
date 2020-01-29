@@ -1,19 +1,88 @@
-# Copyright (C) 2019 CiviCRM WordPress Profile Sync
+# Copyright (C) 2020 CiviCRM WordPress Profile Sync
 # This file is distributed under the same license as the CiviCRM WordPress Profile Sync package.
 msgid ""
 msgstr ""
-"Project-Id-Version: CiviCRM WordPress Profile Sync 0.2.7\n"
+"Project-Id-Version: CiviCRM WordPress Profile Sync 0.2.8\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/civicrm-wp-profile-sync\n"
-"POT-Creation-Date: 2019-06-03 09:44:35+00:00\n"
+"POT-Creation-Date: 2020-01-29 11:50:32+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2019-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2020-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
 #: civicrm-wp-profile-sync.php:197
+#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:46
 msgid "Create WordPress Users from Contacts"
+msgstr ""
+
+#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:26
+msgid "ID"
+msgstr ""
+
+#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:27
+msgid "Type"
+msgstr ""
+
+#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:28
+msgid "Display Name"
+msgstr ""
+
+#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:29
+msgid "Email"
+msgstr ""
+
+#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:30
+msgid "User Exists"
+msgstr ""
+
+#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:31
+msgid "There are no Contacts selected to create WordPress users from."
+msgstr ""
+
+#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:52
+msgid "Create WordPress Users"
+msgstr ""
+
+#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:57
+msgid "Cancel"
+msgstr ""
+
+#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:130
+msgid "No"
+msgstr ""
+
+#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:132
+msgid "Yes"
+msgstr ""
+
+#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:238
+msgid "The email %s already exists."
+msgstr ""
+
+#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:251
+msgid "The username %s is not valid."
+msgstr ""
+
+#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:293
+msgid "Could not create UFMatch record."
+msgstr ""
+
+#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:337
+msgid "Users successfully added to WordPress: %s"
+msgstr ""
+
+#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:340
+msgid "Users added"
+msgstr ""
+
+#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:346
+msgid "Users not added to WordPress: %s. Please review these Contacts and try again."
+msgstr ""
+
+#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:349
+msgid "Users not added"
 msgstr ""
 #. Plugin Name of the plugin/theme
 msgid "CiviCRM WordPress Profile Sync"
@@ -24,7 +93,7 @@ msgid "https://github.com/christianwach/civicrm-wp-profile-sync"
 msgstr ""
 
 #. Description of the plugin/theme
-msgid "Keeps a WordPress User profile in sync with CiviCRM Contact info"
+msgid "Keeps a WordPress User profile in sync with CiviCRM Contact info."
 msgstr ""
 
 #. Author of the plugin/theme
