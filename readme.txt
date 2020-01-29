@@ -36,6 +36,10 @@ This plugin is in active development. For feature requests and bug reports (or i
 
 == Changelog ==
 
+= 0.2.8 =
+
+* "Bulk Add" functionality rewritten
+
 = 0.2.7 =
 
 * Introduces "civicrm_wp_profile_sync_primary_email_pre_update" action
