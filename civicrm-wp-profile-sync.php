@@ -758,6 +758,9 @@ class CiviCRM_WP_Profile_Sync {
 
 		// Check if this is a BuddyPress General Settings update.
 		if ( function_exists( 'bp_is_current_action' ) AND bp_is_current_action( 'general' ) ) return;
+		
+		// Bail if no name, as we don't want to overwrite Civi with blank values.
+		if (!$user->first_name && !$user->last_name) return;
 
 		// Update the CiviCRM Contact first name and last name.
 		$contact = civicrm_api( 'contact', 'create', array(
