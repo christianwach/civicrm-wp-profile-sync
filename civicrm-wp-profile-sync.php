@@ -137,7 +137,9 @@ class CiviCRM_WP_Profile_Sync {
 	public function register_php_directory( &$config ) {
 
 		// Kick out if no CiviCRM.
-		if ( ! civi_wp()->initialize() ) return;
+		if ( ! civi_wp()->initialize() ) {
+			return;
+		}
 
 		// Define our custom path.
 		$custom_path = CIVICRM_WP_PROFILE_SYNC_PATH . 'civicrm_custom_php';
@@ -163,7 +165,9 @@ class CiviCRM_WP_Profile_Sync {
 		$custom_path = CIVICRM_WP_PROFILE_SYNC_PATH . 'civicrm_custom_templates';
 
 		// Kick out if no CiviCRM.
-		if ( ! civi_wp()->initialize() ) return;
+		if ( ! civi_wp()->initialize() ) {
+			return;
+		}
 
 		// Get template instance.
 		$template = CRM_Core_Smarty::singleton();
@@ -190,7 +194,9 @@ class CiviCRM_WP_Profile_Sync {
 	public function civi_bulk_operations( $object_name, &$tasks ) {
 
 		// Only handle Contacts.
-		if ( $object_name != 'contact' ) return;
+		if ( $object_name != 'contact' ) {
+			return;
+		}
 
 		// Add our item to the tasks array.
 		$tasks[] = array(
@@ -235,7 +241,9 @@ class CiviCRM_WP_Profile_Sync {
 		}
 
 		// Bail if no User ID.
-		if ( empty( $user_id ) ) return false;
+		if ( empty( $user_id ) ) {
+			return false;
+		}
 
 		// Pass to our sync method
 		$this->wordpress_contact_updated( $user_id );
@@ -262,10 +270,14 @@ class CiviCRM_WP_Profile_Sync {
 		$user = get_userdata( $user_id );
 
 		// Bail if we didn't get one.
-		if ( ! ( $user instanceof WP_User ) ) return;
+		if ( ! ( $user instanceof WP_User ) ) {
+			return;
+		}
 
 		// Init CiviCRM.
-		if ( ! civi_wp()->initialize() ) return;
+		if ( ! civi_wp()->initialize() ) {
+			return;
+		}
 
 		// Get User matching file.
 		require_once 'CRM/Core/BAO/UFMatch.php';
@@ -274,7 +286,7 @@ class CiviCRM_WP_Profile_Sync {
 		$this->_remove_hooks_bp();
 		$this->_remove_hooks_civi();
 
-		// Get the CiviCRM Contact object.
+		// Creates Contact if none exists - returns the CiviCRM UFMatch object.
 		$civi_contact = CRM_Core_BAO_UFMatch::synchronizeUFMatch(
 			$user, // User object.
 			$user->ID, // ID.
@@ -351,10 +363,14 @@ class CiviCRM_WP_Profile_Sync {
 	public function civi_contact_pre_update( $op, $objectName, $objectId, $objectRef ) {
 
 		// Target our operation.
-		if ( $op != 'edit' ) return;
+		if ( $op != 'edit' ) {
+			return;
+		}
 
 		// Target our object type.
-		if ( $objectName != 'Individual' ) return;
+		if ( $objectName != 'Individual' ) {
+			return;
+		}
 
 		$this->_debug( array(
 			'method' => __METHOD__,
@@ -385,13 +401,19 @@ class CiviCRM_WP_Profile_Sync {
 	public function civi_primary_email_pre_update( $op, $objectName, $objectId, $objectRef ) {
 
 		// Target our operation.
-		if ( $op != 'edit' ) return;
+		if ( $op != 'edit' ) {
+			return;
+		}
 
 		// Target our object type.
-		if ( $objectName != 'Email' ) return;
+		if ( $objectName != 'Email' ) {
+			return;
+		}
 
 		// Bail if we have no email.
-		if ( ! isset( $objectRef['email'] ) ) return;
+		if ( ! isset( $objectRef['email'] ) ) {
+			return;
+		}
 
 		$this->_debug( array(
 			'method' => __METHOD__,
@@ -437,13 +459,19 @@ class CiviCRM_WP_Profile_Sync {
 	public function civi_website_pre_update( $op, $objectName, $objectId, $objectRef ) {
 
 		// Target our object type.
-		if ( $objectName != 'Website' ) return;
+		if ( $objectName != 'Website' ) {
+			return;
+		}
 
 		// Bail if we have no website.
-		if ( ! isset( $objectRef['url'] ) ) return;
+		if ( ! isset( $objectRef['url'] ) ) {
+			return;
+		}
 
 		// Bail if we have no Contact ID.
-		if ( ! isset( $objectRef['contact_id'] ) ) return;
+		if ( ! isset( $objectRef['contact_id'] ) ) {
+			return;
+		}
 
 		$this->_debug( array(
 			'method' => __METHOD__,
@@ -454,7 +482,9 @@ class CiviCRM_WP_Profile_Sync {
 		));
 
 		// Init CiviCRM to get WordPress User ID.
-		if ( ! civi_wp()->initialize() ) return;
+		if ( ! civi_wp()->initialize() ) {
+			return;
+		}
 
 		// Make sure CiviCRM file is included.
 		require_once 'CRM/Core/BAO/UFMatch.php';
@@ -468,7 +498,9 @@ class CiviCRM_WP_Profile_Sync {
 		));
 
 		// Kick out if we didn't get one.
-		if ( empty( $user_id ) ) return;
+		if ( empty( $user_id ) ) {
+			return;
+		}
 
 		// Remove WordPress and BuddyPress callbacks to prevent recursion.
 		$this->_remove_hooks_wp();
@@ -516,10 +548,14 @@ class CiviCRM_WP_Profile_Sync {
 	public function civi_contact_updated( $op, $objectName, $objectId, $objectRef ) {
 
 		// Target our operation.
-		if ( $op != 'edit' ) return;
+		if ( $op != 'edit' ) {
+			return;
+		}
 
 		// Target our object type.
-		if ( $objectName != 'Individual' ) return;
+		if ( $objectName != 'Individual' ) {
+			return;
+		}
 
 		$this->_debug( array(
 			'method' => __METHOD__,
@@ -533,7 +569,9 @@ class CiviCRM_WP_Profile_Sync {
 		if ( ! isset( $objectRef->email[0]->email ) ) {
 
 			// No, init CiviCRM to get WordPress User ID.
-			if ( ! civi_wp()->initialize() ) return;
+			if ( ! civi_wp()->initialize() ) {
+				return;
+			}
 
 			// Make sure CiviCRM file is included.
 			require_once 'CRM/Core/BAO/UFMatch.php';
@@ -542,7 +580,9 @@ class CiviCRM_WP_Profile_Sync {
 			$user_id = CRM_Core_BAO_UFMatch::getUFId( $objectId );
 
 			// Kick out if we didn't get one.
-			if ( empty( $user_id ) ) return;
+			if ( empty( $user_id ) ) {
+				return;
+			}
 
 		} else {
 
@@ -550,7 +590,9 @@ class CiviCRM_WP_Profile_Sync {
 			$user = get_user_by( 'email', $objectRef->email[0]->email );
 
 			// Bail if not a WordPress User.
-			if ( ! ( $user instanceof WP_User ) ) return;
+			if ( ! ( $user instanceof WP_User ) OR ! $user->exists() ) {
+				return;
+			}
 
 			// Assign ID.
 			$user_id = $user->ID;
@@ -757,7 +799,9 @@ class CiviCRM_WP_Profile_Sync {
 	private function _update_civi_name( $user, $civi_contact ) {
 
 		// Check if this is a BuddyPress General Settings update.
-		if ( function_exists( 'bp_is_current_action' ) AND bp_is_current_action( 'general' ) ) return;
+		if ( function_exists( 'bp_is_current_action' ) AND bp_is_current_action( 'general' ) ) {
+			return;
+		}
 
 		// Update the CiviCRM Contact first name and last name.
 		$contact = civicrm_api( 'contact', 'create', array(
