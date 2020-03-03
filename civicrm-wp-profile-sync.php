@@ -96,10 +96,6 @@ class CiviCRM_WP_Profile_Sync {
 
 
 
-	//##########################################################################
-
-
-
 	/**
 	 * Enable translation.
 	 *
@@ -112,91 +108,6 @@ class CiviCRM_WP_Profile_Sync {
 			'civicrm-wp-profile-sync', // Unique name.
 			false, // Deprecated argument.
 			dirname( plugin_basename( CIVICRM_WP_PROFILE_SYNC_FILE ) ) . '/languages/' // Relative path to files.
-		);
-
-	}
-
-
-
-	/**
-	 * Register directory that CiviCRM searches in for new PHP files.
-	 *
-	 * This only works with *new* PHP files. One cannot override existing PHP
-	 * with this technique - instead, the file must be placed in the path:
-	 * defined in $config->customPHPPathDir
-	 *
-	 * @since 0.1
-	 *
-	 * @param object $config The CiviCRM config object.
-	 */
-	public function register_php_directory( &$config ) {
-
-		// Kick out if no CiviCRM.
-		if ( ! civi_wp()->initialize() ) {
-			return;
-		}
-
-		// Define our custom path.
-		$custom_path = CIVICRM_WP_PROFILE_SYNC_PATH . 'civicrm_custom_php';
-
-		// Add to include path.
-		$include_path = $custom_path . PATH_SEPARATOR . get_include_path();
-		set_include_path( $include_path );
-
-	}
-
-
-
-	/**
-	 * Register directories that CiviCRM searches for php and template files.
-	 *
-	 * @since 0.1
-	 *
-	 * @param object $config The CiviCRM config object.
-	 */
-	public function register_template_directory( &$config ) {
-
-		// Define our custom path.
-		$custom_path = CIVICRM_WP_PROFILE_SYNC_PATH . 'civicrm_custom_templates';
-
-		// Kick out if no CiviCRM.
-		if ( ! civi_wp()->initialize() ) {
-			return;
-		}
-
-		// Get template instance.
-		$template = CRM_Core_Smarty::singleton();
-
-		// Add our custom template directory.
-		$template->addTemplateDir( $custom_path );
-
-		// Register template directories.
-		$template_include_path = $custom_path . PATH_SEPARATOR . get_include_path();
-		set_include_path( $template_include_path );
-
-	}
-
-
-
-	/**
-	 * Add an option to the Actions dropdown.
-	 *
-	 * @since 0.1
-	 *
-	 * @param str $object_name The CiviCRM object type.
-	 * @param array $tasks The CiviCRM tasks array to add our option to.
-	 */
-	public function civicrm_bulk_operations( $object_name, &$tasks ) {
-
-		// Only handle Contacts.
-		if ( $object_name != 'contact' ) {
-			return;
-		}
-
-		// Add our item to the tasks array.
-		$tasks[] = array(
-			'title' => __( 'Create WordPress Users from Contacts',  'civicrm-wp-profile-sync' ),
-			'class' => 'CRM_Contact_Form_Task_CreateWordPressUsers',
 		);
 
 	}
@@ -216,7 +127,7 @@ class CiviCRM_WP_Profile_Sync {
 	 * @param array $posted_field_ids The array of numeric IDs of the BuddyPress fields.
 	 * @param boolean $errors True if there are errors, false otherwise.
 	 */
-	public function buddypress_contact_updated( $user_id = 0, $posted_field_ids, $errors ) {
+	public function buddypress_user_updated( $user_id = 0, $posted_field_ids, $errors ) {
 
 		// Get BuddyPress instance.
 		$bp = buddypress();
@@ -237,7 +148,7 @@ class CiviCRM_WP_Profile_Sync {
 		}
 
 		// Pass to our sync method
-		$this->wordpress_contact_updated( $user_id );
+		$this->wordpress_user_updated( $user_id );
 
 	}
 
@@ -250,7 +161,7 @@ class CiviCRM_WP_Profile_Sync {
 	 *
 	 * @param integer $user_id The numeric ID of the WordPress User.
 	 */
-	public function wordpress_contact_updated( $user_id ) {
+	public function wordpress_user_updated( $user_id ) {
 
 		// Get the User object.
 		$user = get_userdata( $user_id );
@@ -297,15 +208,15 @@ class CiviCRM_WP_Profile_Sync {
 		}
 
 		// Update first name and last name.
-		$this->_update_civicrm_name( $user, $contact );
+		$this->civicrm_contact_name_update( $user, $contact );
 
 		// Optionally update primary email.
-		$this->_update_civicrm_primary_email( $user, $contact );
+		$this->civicrm_primary_email_update( $user, $contact );
 
 		// Optionally update website.
-		$this->_update_civicrm_website( $user, $contact );
+		$this->civicrm_website_update( $user, $contact );
 
-		// Add more built-in WordPress fields here...
+		// TODO: Add more built-in WordPress fields here...
 
 		/**
 		 * Allow plugins to hook into the sync process.
@@ -353,7 +264,7 @@ class CiviCRM_WP_Profile_Sync {
 	 * @param integer $objectId The ID of the object.
 	 * @param object $objectRef The object.
 	 */
-	public function civicrm_contact_pre_update( $op, $objectName, $objectId, $objectRef ) {
+	public function civicrm_contact_pre( $op, $objectName, $objectId, $objectRef ) {
 
 		// Target our operation.
 		if ( $op != 'edit' ) {
@@ -383,7 +294,7 @@ class CiviCRM_WP_Profile_Sync {
 	 * @param integer $objectId The ID of the object.
 	 * @param object $objectRef The object.
 	 */
-	public function civicrm_primary_email_pre_update( $op, $objectName, $objectId, $objectRef ) {
+	public function civicrm_primary_email_pre( $op, $objectName, $objectId, $objectRef ) {
 
 		// Target our operation.
 		if ( $op != 'edit' ) {
@@ -433,7 +344,7 @@ class CiviCRM_WP_Profile_Sync {
 	 * @param integer $objectId The ID of the object.
 	 * @param object $objectRef The object.
 	 */
-	public function civicrm_website_pre_update( $op, $objectName, $objectId, $objectRef ) {
+	public function civicrm_website_pre( $op, $objectName, $objectId, $objectRef ) {
 
 		// Target our object type.
 		if ( $objectName != 'Website' ) {
@@ -597,40 +508,6 @@ class CiviCRM_WP_Profile_Sync {
 
 
 	/**
-	 * Prevent recursion when a WordPress User is about to be bulk added.
-	 *
-	 * @since 0.1
-	 */
-	public function civicrm_contact_bulk_added_pre() {
-
-		// Remove WordPress and BuddyPress callbacks to prevent recursion.
-		$this->hooks_wp_remove();
-		$this->hooks_bp_remove();
-
-	}
-
-
-
-	/**
-	 * Re-hook when a WordPress User has been bulk added.
-	 *
-	 * @since 0.1
-	 */
-	public function civicrm_contact_bulk_added_post() {
-
-		// Re-add WordPress and BuddyPress callbacks.
-		$this->hooks_wp_add();
-		$this->hooks_bp_add();
-
-	}
-
-
-
-	//##########################################################################
-
-
-
-	/**
 	 * Check if a WordPress User should by synced.
 	 *
 	 * @since 0.3
@@ -725,115 +602,6 @@ class CiviCRM_WP_Profile_Sync {
 
 
 	/**
-	 * Add BuddyPress sync hooks.
-	 *
-	 * @since 0.1
-	 */
-	public function hooks_bp_add() {
-
-		// Callbacks for new and updated BuddyPress User actions.
-		add_action( 'xprofile_updated_profile', array( $this, 'buddypress_contact_updated' ), 20, 3 );
-		add_action( 'bp_core_signup_user', array( $this, 'buddypress_contact_updated' ), 20, 3 );
-		add_action( 'bp_core_activated_user', array( $this, 'buddypress_contact_updated' ), 20, 3 );
-
-	}
-
-
-
-	/**
-	 * Remove BuddyPress sync hooks.
-	 *
-	 * @since 0.1
-	 */
-	public function hooks_bp_remove() {
-
-		// Remove callbacks for new and updated BuddyPress User actions.
-		remove_action( 'xprofile_updated_profile', array( $this, 'buddypress_contact_updated' ), 20 );
-		remove_action( 'bp_core_signup_user', array( $this, 'buddypress_contact_updated' ), 20 );
-		remove_action( 'bp_core_activated_user', array( $this, 'buddypress_contact_updated' ), 20 );
-
-	}
-
-
-
-	/**
-	 * Add WordPress sync hooks.
-	 *
-	 * Post-processes a CiviCRM Contact when a WordPress User is updated.
-	 * Hooked in late to let other plugins go first.
-	 *
-	 * @since 0.1
-	 */
-	public function hooks_wp_add() {
-
-		// Callbacks for new and updated WordPress User actions.
-		add_action( 'user_register', array( $this, 'wordpress_contact_updated' ), 100, 1 );
-		add_action( 'profile_update', array( $this, 'wordpress_contact_updated' ), 100, 1 );
-
-	}
-
-
-
-	/**
-	 * Remove WordPress sync hooks.
-	 *
-	 * @since 0.1
-	 */
-	public function hooks_wp_remove() {
-
-		// Remove callbacks for new and updated WordPress User actions.
-		remove_action( 'user_register', array( $this, 'wordpress_contact_updated' ), 100 );
-		remove_action( 'profile_update', array( $this, 'wordpress_contact_updated' ), 100 );
-
-	}
-
-
-
-	/**
-	 * Add CiviCRM sync hooks.
-	 *
-	 * Syncs data to a WordPress User when a CiviCRM Contact is updated.
-	 *
-	 * @since 0.1
-	 */
-	public function hooks_civicrm_add() {
-
-		// Intercept Contact update in CiviCRM.
-		add_action( 'civicrm_pre', array( $this, 'civicrm_contact_pre_update' ), 10, 4 );
-		add_action( 'civicrm_post', array( $this, 'civicrm_contact_updated' ), 10, 4 );
-
-		// Intercept email update in CiviCRM.
-		add_action( 'civicrm_pre', array( $this, 'civicrm_primary_email_pre_update' ), 10, 4 );
-
-		// Intercept website update in CiviCRM.
-		add_action( 'civicrm_pre', array( $this, 'civicrm_website_pre_update' ), 10, 4 );
-
-	}
-
-
-
-	/**
-	 * Remove CiviCRM sync hooks.
-	 *
-	 * @since 0.1
-	 */
-	public function hooks_civicrm_remove() {
-
-		// Remove all CiviCRM callbacks.
-		remove_action( 'civicrm_pre', array( $this, 'civicrm_contact_pre_update' ), 10 );
-		remove_action( 'civicrm_post', array( $this, 'civicrm_contact_updated' ), 10 );
-		remove_action( 'civicrm_pre', array( $this, 'civicrm_primary_email_pre_update' ), 10 );
-		remove_action( 'civicrm_pre', array( $this, 'civicrm_website_pre_update' ), 10 );
-
-	}
-
-
-
-	//##########################################################################
-
-
-
-	/**
 	 * Update a CiviCRM Contact's first name and last name.
 	 *
 	 * @since 0.1
@@ -841,7 +609,7 @@ class CiviCRM_WP_Profile_Sync {
 	 * @param object $user The WordPress User object.
 	 * @param object $contact The CiviCRM Contact object.
 	 */
-	private function _update_civicrm_name( $user, $contact ) {
+	private function civicrm_contact_name_update( $user, $contact ) {
 
 		// Check if this is a BuddyPress General Settings update.
 		if ( function_exists( 'bp_is_current_action' ) AND bp_is_current_action( 'general' ) ) {
@@ -882,7 +650,7 @@ class CiviCRM_WP_Profile_Sync {
 	 * @param object $user The WordPress User object.
 	 * @param object $contact The CiviCRM Contact object.
 	 */
-	private function _update_civicrm_primary_email( $user, $contact ) {
+	private function civicrm_primary_email_update( $user, $contact ) {
 
 		// Get the current primary email.
 		$primary_email = civicrm_api( 'email', 'get', array(
@@ -937,7 +705,7 @@ class CiviCRM_WP_Profile_Sync {
 	 * @param object $user The WordPress User object.
 	 * @param object $contact The CiviCRM Contact object.
 	 */
-	private function _update_civicrm_website( $user, $contact ) {
+	private function civicrm_website_update( $user, $contact ) {
 
 		// Get the current website.
 		$existing_website = civicrm_api( 'website', 'get', array(
@@ -1027,6 +795,238 @@ class CiviCRM_WP_Profile_Sync {
 	}
 
 		}
+
+	}
+
+
+
+	//##########################################################################
+
+
+
+	/**
+	 * Register directory that CiviCRM searches in for new PHP files.
+	 *
+	 * This only works with *new* PHP files. One cannot override existing PHP
+	 * with this technique - instead, the file must be placed in the path:
+	 * defined in $config->customPHPPathDir
+	 *
+	 * @since 0.1
+	 *
+	 * @param object $config The CiviCRM config object.
+	 */
+	public function register_php_directory( &$config ) {
+
+		// Kick out if no CiviCRM.
+		if ( ! civi_wp()->initialize() ) {
+			return;
+		}
+
+		// Define our custom path.
+		$custom_path = CIVICRM_WP_PROFILE_SYNC_PATH . 'civicrm_custom_php';
+
+		// Add to include path.
+		$include_path = $custom_path . PATH_SEPARATOR . get_include_path();
+		set_include_path( $include_path );
+
+	}
+
+
+
+	/**
+	 * Register directories that CiviCRM searches for php and template files.
+	 *
+	 * @since 0.1
+	 *
+	 * @param object $config The CiviCRM config object.
+	 */
+	public function register_template_directory( &$config ) {
+
+		// Define our custom path.
+		$custom_path = CIVICRM_WP_PROFILE_SYNC_PATH . 'civicrm_custom_templates';
+
+		// Kick out if no CiviCRM.
+		if ( ! civi_wp()->initialize() ) {
+			return;
+		}
+
+		// Get template instance.
+		$template = CRM_Core_Smarty::singleton();
+
+		// Add our custom template directory.
+		$template->addTemplateDir( $custom_path );
+
+		// Register template directories.
+		$template_include_path = $custom_path . PATH_SEPARATOR . get_include_path();
+		set_include_path( $template_include_path );
+
+	}
+
+
+
+	/**
+	 * Add an option to the Actions dropdown.
+	 *
+	 * @since 0.1
+	 *
+	 * @param str $object_name The CiviCRM object type.
+	 * @param array $tasks The CiviCRM tasks array to add our option to.
+	 */
+	public function civicrm_bulk_operations( $object_name, &$tasks ) {
+
+		// Only handle Contacts.
+		if ( $object_name != 'contact' ) {
+			return;
+		}
+
+		// Add our item to the tasks array.
+		$tasks[] = array(
+			'title' => __( 'Create WordPress Users from Contacts',  'civicrm-wp-profile-sync' ),
+			'class' => 'CRM_Contact_Form_Task_CreateWordPressUsers',
+		);
+
+	}
+
+
+
+	//##########################################################################
+
+
+
+	/**
+	 * Prevent recursion when a WordPress User is about to be bulk added.
+	 *
+	 * @since 0.1
+	 */
+	public function civicrm_contact_bulk_added_pre() {
+
+		// Remove WordPress and BuddyPress callbacks to prevent recursion.
+		$this->hooks_wp_remove();
+		$this->hooks_bp_remove();
+
+	}
+
+
+
+	/**
+	 * Re-hook when a WordPress User has been bulk added.
+	 *
+	 * @since 0.1
+	 */
+	public function civicrm_contact_bulk_added_post() {
+
+		// Re-add WordPress and BuddyPress callbacks.
+		$this->hooks_wp_add();
+		$this->hooks_bp_add();
+
+	}
+
+
+
+	//##########################################################################
+
+
+
+	/**
+	 * Add BuddyPress sync hooks.
+	 *
+	 * @since 0.1
+	 */
+	public function hooks_bp_add() {
+
+		// Callbacks for new and updated BuddyPress User actions.
+		add_action( 'xprofile_updated_profile', array( $this, 'buddypress_user_updated' ), 20, 3 );
+		add_action( 'bp_core_signup_user', array( $this, 'buddypress_user_updated' ), 20, 3 );
+		add_action( 'bp_core_activated_user', array( $this, 'buddypress_user_updated' ), 20, 3 );
+
+	}
+
+
+
+	/**
+	 * Remove BuddyPress sync hooks.
+	 *
+	 * @since 0.1
+	 */
+	public function hooks_bp_remove() {
+
+		// Remove callbacks for new and updated BuddyPress User actions.
+		remove_action( 'xprofile_updated_profile', array( $this, 'buddypress_user_updated' ), 20 );
+		remove_action( 'bp_core_signup_user', array( $this, 'buddypress_user_updated' ), 20 );
+		remove_action( 'bp_core_activated_user', array( $this, 'buddypress_user_updated' ), 20 );
+
+	}
+
+
+
+	/**
+	 * Add WordPress sync hooks.
+	 *
+	 * Post-processes a CiviCRM Contact when a WordPress User is updated.
+	 * Hooked in late to let other plugins go first.
+	 *
+	 * @since 0.1
+	 */
+	public function hooks_wp_add() {
+
+		// Callbacks for new and updated WordPress User actions.
+		add_action( 'user_register', array( $this, 'wordpress_user_updated' ), 100, 1 );
+		add_action( 'profile_update', array( $this, 'wordpress_user_updated' ), 100, 1 );
+
+	}
+
+
+
+	/**
+	 * Remove WordPress sync hooks.
+	 *
+	 * @since 0.1
+	 */
+	public function hooks_wp_remove() {
+
+		// Remove callbacks for new and updated WordPress User actions.
+		remove_action( 'user_register', array( $this, 'wordpress_user_updated' ), 100 );
+		remove_action( 'profile_update', array( $this, 'wordpress_user_updated' ), 100 );
+
+	}
+
+
+
+	/**
+	 * Add CiviCRM sync hooks.
+	 *
+	 * Syncs data to a WordPress User when a CiviCRM Contact is updated.
+	 *
+	 * @since 0.1
+	 */
+	public function hooks_civicrm_add() {
+
+		// Intercept Contact update in CiviCRM.
+		add_action( 'civicrm_pre', array( $this, 'civicrm_contact_pre' ), 10, 4 );
+		add_action( 'civicrm_post', array( $this, 'civicrm_contact_updated' ), 10, 4 );
+
+		// Intercept email update in CiviCRM.
+		add_action( 'civicrm_pre', array( $this, 'civicrm_primary_email_pre' ), 10, 4 );
+
+		// Intercept website update in CiviCRM.
+		add_action( 'civicrm_pre', array( $this, 'civicrm_website_pre' ), 10, 4 );
+
+	}
+
+
+
+	/**
+	 * Remove CiviCRM sync hooks.
+	 *
+	 * @since 0.1
+	 */
+	public function hooks_civicrm_remove() {
+
+		// Remove all CiviCRM callbacks.
+		remove_action( 'civicrm_pre', array( $this, 'civicrm_contact_pre' ), 10 );
+		remove_action( 'civicrm_post', array( $this, 'civicrm_contact_updated' ), 10 );
+		remove_action( 'civicrm_pre', array( $this, 'civicrm_primary_email_pre' ), 10 );
+		remove_action( 'civicrm_pre', array( $this, 'civicrm_website_pre' ), 10 );
 
 	}
 
