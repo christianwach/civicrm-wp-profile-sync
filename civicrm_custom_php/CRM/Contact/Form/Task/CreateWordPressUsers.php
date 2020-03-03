@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This class provides the functionality to bulk create WordPress users from
- * a selection of CiviCRM contacts.
+ * This class provides the functionality to bulk create WordPress Users from
+ * a selection of CiviCRM Contacts.
  */
 class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
 
@@ -19,7 +19,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
     // Get rows.
     $rows = $this->getContactRows();
 
-    // Our array now contains all contacts who can be synced to WordPress.
+    // Our array now contains all Contacts who can be synced to WordPress.
     $this->assign( 'rows', $rows );
 
     // Add text.
@@ -28,15 +28,15 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
     $this->assign( 'tableDisplayName', __( 'Display Name', 'civicrm-wp-profile-sync' ) );
     $this->assign( 'tableEmail', __( 'Email', 'civicrm-wp-profile-sync' ) );
     $this->assign( 'tableUser', __( 'User Exists', 'civicrm-wp-profile-sync' ) );
-    $this->assign( 'notFound', __( 'There are no Contacts selected to create WordPress users from.', 'civicrm-wp-profile-sync' ) );
+    $this->assign( 'notFound', __( 'There are no Contacts selected to create WordPress Users from.', 'civicrm-wp-profile-sync' ) );
 
   }
 
   /**
    * Build the form.
    *
-   * The form consists of a table listing all contacts with the necessary
-   * information to create a WordPress user.
+   * The form consists of a table listing all Contacts with the necessary
+   * information to create a WordPress User.
    *
    * @access public
    */
@@ -67,7 +67,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
    */
   public function postProcess() {
 
-    // Get rows again since I can't figure out how to override contactIDs.
+    // Get rows again since I can't figure out how to override Contact IDs.
     $rows = $this->getContactRows();
 
     // Create them.
@@ -80,14 +80,14 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
    *
    * @access private
    *
-   * @return array $rows The contacts data array.
+   * @return array $rows The Contacts data array.
    */
   private function getContactRows() {
 
     // Init rows.
     $rows = array();
 
-    // Get contacts via CiviCRM API.
+    // Get Contacts via CiviCRM API.
     $result = civicrm_api( 'Contact', 'get', array(
       'version' => 3,
       'sequential' => 1,
@@ -104,13 +104,13 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
       return $rows;
     }
 
-    // Store raw contact data for reference in createUsers() if needed.
+    // Store raw Contact data for reference in createUsers() if needed.
     $this->contactsRaw = $result['values'];
 
     // Build rows.
     foreach( $this->contactsRaw AS $contact ) {
 
-      // Check if this Contact already has a WordPress user.
+      // Check if this Contact already has a WordPress User.
       $params = array(
         'version' => 3,
         'contact_id' => $contact['id'],
@@ -133,7 +133,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
         $match = true;
       }
 
-      // Build contact data row.
+      // Build Contact data row.
       $row = array(
         'id' => $contact['contact_id'],
         'contact_type' => $contact['contact_type'],
@@ -144,17 +144,17 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
       );
 
       /**
-       * Filter contact data row and add to array.
+       * Filter Contact data row and add to array.
        *
-       * Use this filter to provide further contact data from which a username
-       * can be built.
+       * Use this filter to provide further Contact data from which a WordPress
+       * User's username can be built.
        *
        * @since 0.2.6
        *
-       * @param array $row The default row of contact data.
-       * @param null The contact data retrieved from the database. Deprecated.
-       * @param array $contact The contact data retrieved from the database.
-       * @return array $row The modified row of contact data.
+       * @param array $row The default row of Contact data.
+       * @param null The Contact data retrieved from the database. Deprecated.
+       * @param array $contact The Contact data retrieved from the database.
+       * @return array $row The modified row of Contact data.
        */
       $rows[] = apply_filters( 'civicrm_wp_profile_sync_contact_row', $row, null, $contact );
 
@@ -165,11 +165,11 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
   }
 
   /**
-   * Create WordPress users from contacts.
+   * Create WordPress Users from Contacts.
    *
    * @access private
    *
-   * @param array $rows The contacts data array.
+   * @param array $rows The Contacts data array.
    */
   private function createUsers( $rows ) {
 
@@ -180,7 +180,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
     $default_role = get_option( 'default_role' );
 
     /**
-     * Broadcast that a user is about to be added.
+     * Broadcast that a User is about to be added.
      *
      * This allows other plugins to add or remove hooks.
      *
@@ -213,7 +213,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
     // Process data.
     foreach( $rows AS $row ) {
 
-      // Skip if user already exists.
+      // Skip if User already exists.
       if ( $row['user_exists'] === 'y' ) {
         $failure[] = $row['display_name'];
         continue;
@@ -241,7 +241,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
         continue;
       }
 
-      // Create a unique WordPress username for this contact.
+      // Create a unique WordPress username for this Contact.
       $username = $this->createUsername( $row );
 
       // Skip if username not valid for some reason.
@@ -257,7 +257,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
       // Create an arbitrary password.
       $password = substr( md5( uniqid( microtime() ) ), 0, 8 );
 
-      // Populate user data.
+      // Populate User data.
       $user_data = array(
         'ID' => '',
         'user_login' => $username,
@@ -268,7 +268,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
         'role' => $default_role,
       );
 
-      // Create the WordPress user.
+      // Create the WordPress User.
       $user_id = wp_insert_user( $user_data );
 
       // Create UFMatch record if successful.
@@ -295,12 +295,12 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
           ), true ) );
         }
 
-        // Add user to success array.
+        // Add User to success array.
         $success[] = $row['display_name'];
 
       } else {
 
-        // Add user to failure array.
+        // Add User to failure array.
         $failure[] = $row['display_name'];
 
       }
@@ -323,7 +323,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
     }
 
     /**
-     * Broadcast that a user has ben added.
+     * Broadcast that a WordPress User has ben added.
      *
      * This allows other plugins to add or remove hooks.
      *
@@ -357,11 +357,11 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
   }
 
   /**
-   * Create WordPress username from contact data.
+   * Create WordPress username from Contact data.
    *
    * @access private
    *
-   * @param array $row The contact data array.
+   * @param array $row The Contact data array.
    * @return str $username The unique username.
    */
   private function createUsername( $row ) {
@@ -381,7 +381,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
        * @since 0.2.6
        *
        * @param str $username The current username.
-       * @param array $row The user data from which the username has been constructed.
+       * @param array $row The User data from which the username has been constructed.
        * @return str $username The modified username.
        */
       $username = apply_filters( 'civicrm_wp_profile_sync_override_username', $username, $row );
@@ -392,7 +392,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
   }
 
   /**
-   * Generate a unique username for a WordPress user.
+   * Generate a unique username for a WordPress User.
    *
    * @since 0.2.8
    *
