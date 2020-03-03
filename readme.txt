@@ -36,6 +36,10 @@ This plugin is in active development. For feature requests and bug reports (or i
 
 == Changelog ==
 
+= 0.3 =
+
+* Introduces a set of "should_be_synced" filters
+
 = 0.2.8 =
 
 * "Bulk Add" functionality rewritten
