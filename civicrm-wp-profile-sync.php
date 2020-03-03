@@ -303,6 +303,13 @@ class CiviCRM_WP_Profile_Sync {
 			return;
 		}
 
+		// Should this user be synced?
+		if ( ! $this->user_should_be_synced( $user, $civi_contact ) ) {
+			$this->_add_hooks_bp();
+			$this->_add_hooks_civi();
+			return;
+		}
+
 		// Update first name and last name.
 		$this->_update_civi_name( $user, $civi_contact );
 
@@ -599,6 +606,11 @@ class CiviCRM_WP_Profile_Sync {
 
 		}
 
+		// Should this contact be synced?
+		if ( ! $this->contact_should_be_synced( $objectRef, $user_id ) ) {
+			return;
+		}
+
 		// Update first name.
 		update_user_meta( $user_id, 'first_name', $objectRef->first_name );
 
@@ -674,6 +686,100 @@ class CiviCRM_WP_Profile_Sync {
 		// Re-add WordPress and BuddyPress callbacks.
 		$this->_add_hooks_wp();
 		$this->_add_hooks_bp();
+
+	}
+
+
+
+	//##########################################################################
+
+
+
+	/**
+	 * Check if a WordPress User should by synced.
+	 *
+	 * @since 0.3
+	 *
+	 * @param object $user The WordPress User object.
+	 * @param object $contact The CiviCRM Contact object.
+	 * @return bool $should_be_synced Whether or not the User should be synced.
+	 */
+	public function user_should_be_synced( $user, $contact ) {
+
+		// Assume user should be synced.
+		$should_be_synced = true;
+
+		/**
+		 * Let other plugins override whether a WordPress User should be synced.
+		 *
+		 * @since 0.3
+		 *
+		 * @param bool $should_be_synced True if the User should be synced, false otherwise.
+		 * @param object $user The WordPress User object.
+		 * @param object $contact The CiviCRM Contact object.
+		 * @return bool $should_be_synced The modified value of the sync flag.
+		 */
+		return apply_filters( 'civicrm_wp_profile_sync_user_should_be_synced', $should_be_synced, $user, $contact );
+
+	}
+
+
+
+	/**
+	 * Check if a CiviCRM Contact should by synced.
+	 *
+	 * @since 0.3
+	 *
+	 * @param object $contact The CiviCRM Contact object.
+	 * @param int $user_id The numeric ID of the WordPress User.
+	 * @return bool $should_be_synced Whether or not the user should be synced.
+	 */
+	public function contact_should_be_synced( $contact, $user_id ) {
+
+		// Assume user should be synced.
+		$should_be_synced = true;
+
+		/**
+		 * Let other plugins override whether a CiviCRM Contact should be synced.
+		 *
+		 * @since 0.3
+		 *
+		 * @param bool $should_be_synced True if the User should be synced, false otherwise.
+		 * @param object $contact The CiviCRM Contact object.
+		 * @param int $user_id The numeric ID of the WordPress User.
+		 * @return bool $should_be_synced The modified value of the sync flag.
+		 */
+		return apply_filters( 'civicrm_wp_profile_sync_contact_should_be_synced', $should_be_synced, $contact, $user_id );
+
+	}
+
+
+
+	/**
+	 * Check if a CiviCRM Contact's name should by synced.
+	 *
+	 * @since 0.3
+	 *
+	 * @param object $user The WordPress User object.
+	 * @param object $contact The CiviCRM Contact object.
+	 * @return bool $should_be_synced Whether or not the user should be synced.
+	 */
+	public function contact_name_should_be_synced( $user, $contact ) {
+
+		// Assume user should be synced.
+		$should_be_synced = true;
+
+		/**
+		 * Let other plugins override whether a CiviCRM Contact's name should be synced.
+		 *
+		 * @since 0.3
+		 *
+		 * @param bool $should_be_synced True if the User should be synced, false otherwise.
+		 * @param object $user The WordPress User object.
+		 * @param object $contact The CiviCRM Contact object.
+		 * @return bool $should_be_synced The modified value of the sync flag.
+		 */
+		return apply_filters( 'civicrm_wp_profile_sync_contact_name_should_be_synced', $should_be_synced, $user, $contact );
 
 	}
 
@@ -800,6 +906,11 @@ class CiviCRM_WP_Profile_Sync {
 
 		// Check if this is a BuddyPress General Settings update.
 		if ( function_exists( 'bp_is_current_action' ) AND bp_is_current_action( 'general' ) ) {
+			return;
+		}
+
+		// Should this contact name be synced?
+		if ( ! $this->contact_name_should_be_synced( $user, $civi_contact ) ) {
 			return;
 		}
 
