@@ -17,11 +17,6 @@ Depends: CiviCRM
 // Set plugin version here.
 define( 'CIVICRM_WP_PROFILE_SYNC_VERSION', '0.3' );
 
-// Set our debug flag here.
-if ( ! defined( 'CIVICRM_WP_PROFILE_SYNC_DEBUG' ) ) {
-	define( 'CIVICRM_WP_PROFILE_SYNC_DEBUG', false );
-}
-
 // Set our bulk operations flag here.
 if ( ! defined( 'CIVICRM_WP_PROFILE_SYNC_BULK' ) ) {
 	define( 'CIVICRM_WP_PROFILE_SYNC_BULK', false );
@@ -223,10 +218,6 @@ class CiviCRM_WP_Profile_Sync {
 	 */
 	public function buddypress_contact_updated( $user_id = 0, $posted_field_ids, $errors ) {
 
-		$this->_debug( array(
-			'method' => __METHOD__,
-		));
-
 		// Get BuddyPress instance.
 		$bp = buddypress();
 
@@ -260,11 +251,6 @@ class CiviCRM_WP_Profile_Sync {
 	 * @param integer $user_id The numeric ID of the WordPress User.
 	 */
 	public function wordpress_contact_updated( $user_id ) {
-
-		$this->_debug( array(
-			'method' => __METHOD__,
-			'user_id' => $user_id,
-		));
 
 		// Okay, get User object.
 		$user = get_userdata( $user_id );
@@ -379,14 +365,6 @@ class CiviCRM_WP_Profile_Sync {
 			return;
 		}
 
-		$this->_debug( array(
-			'method' => __METHOD__,
-			'op' => $op,
-			'objectName' => $objectName,
-			'objectId' => $objectId,
-			'objectRef' => $objectRef,
-		));
-
 		// Remove WordPress and BuddyPress callbacks to prevent recursion.
 		$this->_remove_hooks_wp();
 		$this->_remove_hooks_bp();
@@ -421,14 +399,6 @@ class CiviCRM_WP_Profile_Sync {
 		if ( ! isset( $objectRef['email'] ) ) {
 			return;
 		}
-
-		$this->_debug( array(
-			'method' => __METHOD__,
-			'op' => $op,
-			'objectName' => $objectName,
-			'objectId' => $objectId,
-			'objectRef' => $objectRef,
-		));
 
 		// Remove WordPress and BuddyPress callbacks to prevent recursion.
 		$this->_remove_hooks_wp();
@@ -480,14 +450,6 @@ class CiviCRM_WP_Profile_Sync {
 			return;
 		}
 
-		$this->_debug( array(
-			'method' => __METHOD__,
-			'op' => $op,
-			'objectName' => $objectName,
-			'objectId' => $objectId,
-			'objectRef' => $objectRef,
-		));
-
 		// Init CiviCRM to get WordPress User ID.
 		if ( ! civi_wp()->initialize() ) {
 			return;
@@ -498,11 +460,6 @@ class CiviCRM_WP_Profile_Sync {
 
 		// Search using CiviCRM's logic.
 		$user_id = CRM_Core_BAO_UFMatch::getUFId( $objectRef['contact_id'] );
-
-		$this->_debug( array(
-			'method' => __METHOD__,
-			'user_id' => $user_id,
-		));
 
 		// Kick out if we didn't get one.
 		if ( empty( $user_id ) ) {
@@ -564,14 +521,6 @@ class CiviCRM_WP_Profile_Sync {
 			return;
 		}
 
-		$this->_debug( array(
-			'method' => __METHOD__,
-			'op' => $op,
-			'objectName' => $objectName,
-			'objectId' => $objectId,
-			'objectRef' => $objectRef,
-		));
-
 		// Check if we have a Contact email.
 		if ( ! isset( $objectRef->email[0]->email ) ) {
 
@@ -625,20 +574,6 @@ class CiviCRM_WP_Profile_Sync {
 
 			// Call the relevant sync method.
 			$bp_xprofile_wordpress_user_sync->intercept_wp_user_update( $user_id );
-
-		}
-
-		// Avoid getting WordPress User unless we're debugging.
-		if ( CIVICRM_WP_PROFILE_SYNC_DEBUG ) {
-
-			// For debugging, let get WordPress User.
-			$user = new WP_User( $user_id );
-
-			$this->_debug( array(
-				'user' => $user,
-				'first_name' => $user->first_name,
-				'last_name' => $user->last_name
-			));
 
 		}
 
@@ -1043,30 +978,6 @@ class CiviCRM_WP_Profile_Sync {
 				));
 
 			}
-
-		}
-
-	}
-
-
-
-	/**
-	 * Debugging.
-	 *
-	 * @since 0.1
-	 *
-	 * @param array $msg The message to log.
-	 */
-	private function _debug( $msg ) {
-
-		// Do we want output?
-		if ( CIVICRM_WP_PROFILE_SYNC_DEBUG ) {
-
-			// Uncomment this to add a backtrace.
-			//$msg['backtrace'] = wp_debug_backtrace_summary();
-
-			// Log the message.
-			error_log( print_r( $msg, true ) );
 
 		}
 
