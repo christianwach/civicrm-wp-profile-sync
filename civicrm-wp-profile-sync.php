@@ -854,12 +854,21 @@ class CiviCRM_WP_Profile_Sync {
 		}
 
 		// Update the CiviCRM Contact first name and last name.
-		$contact = civicrm_api( 'contact', 'create', array(
+		$result = civicrm_api( 'contact', 'create', array(
 			'version' => 3,
 			'id' => $contact->contact_id,
 			'first_name' => $user->first_name,
 			'last_name' => $user->last_name,
 		));
+
+        // Log something on failure.
+		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+			error_log( print_r( array(
+				'method' => __METHOD__,
+				'message' => __( 'Could not update the name of the CiviCRM Contact.', 'civicrm-wp-profile-sync' ),
+				'result' => $result,
+			), true ) );
+		}
 
 	}
 
@@ -896,12 +905,21 @@ class CiviCRM_WP_Profile_Sync {
 			if ( $existing_data['email'] != $user->user_email ) {
 
 				// Now update their email.
-				$new_email = civicrm_api( 'email', 'create', array(
+				$result = civicrm_api( 'email', 'create', array(
 					'version' => 3,
 					'id' => $primary_email['id'],
 					'contact_id' => $contact->contact_id,
 					'email' => $user->user_email,
 				));
+
+				// Log something on failure.
+				if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+					error_log( print_r( array(
+						'method' => __METHOD__,
+						'message' => __( 'Could not update the email of the CiviCRM Contact.', 'civicrm-wp-profile-sync' ),
+						'result' => $result,
+					), true ) );
+				}
 
 			}
 
@@ -952,6 +970,15 @@ class CiviCRM_WP_Profile_Sync {
 							'url' => $user->user_url,
 						));
 
+						// Log something on failure.
+						if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+							error_log( print_r( array(
+								'method' => __METHOD__,
+								'message' => __( 'Could not update the website for the CiviCRM Contact.', 'civicrm-wp-profile-sync' ),
+								'result' => $result,
+							), true ) );
+						}
+
 					} else {
 
 						// Delete their website.
@@ -960,6 +987,14 @@ class CiviCRM_WP_Profile_Sync {
 							'id' => $existing_website['id'],
 						));
 
+						// Log something on failure.
+						if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+							error_log( print_r( array(
+								'method' => __METHOD__,
+								'message' => __( 'Could not delete the website for the CiviCRM Contact.', 'civicrm-wp-profile-sync' ),
+								'result' => $result,
+							), true ) );
+						}
 					}
 
 				}
@@ -981,7 +1016,15 @@ class CiviCRM_WP_Profile_Sync {
 					'url' => $user->user_url,
 				));
 
-			}
+				// Log something on failure.
+				if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+					error_log( print_r( array(
+						'method' => __METHOD__,
+						'message' => __( 'Could not create the website for the CiviCRM Contact.', 'civicrm-wp-profile-sync' ),
+						'result' => $result,
+					), true ) );
+				}
+	}
 
 		}
 
