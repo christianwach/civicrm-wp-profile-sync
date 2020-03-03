@@ -194,13 +194,13 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
     // Do we have the old-style plugin structure?
     if ( method_exists( $civicrm, 'update_user' ) ) {
 
-      // Disable Civi's own register hooks.
+      // Disable CiviCRM's own register hooks.
       remove_action( 'user_register', array( $civicrm, 'update_user' ) );
       remove_action( 'profile_update', array( $civicrm, 'update_user' ) );
 
     } else {
 
-      // Disable Civi's own register hooks.
+      // Disable CiviCRM's own register hooks.
       remove_action( 'user_register', array( $civicrm->users, 'update_user' ) );
       remove_action( 'profile_update', array( $civicrm->users, 'update_user' ) );
 
