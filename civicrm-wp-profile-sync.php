@@ -61,13 +61,13 @@ class CiviCRM_WP_Profile_Sync {
 		$this->translation();
 
 		// Add WordPress callbacks.
-		$this->_add_hooks_wp();
+		$this->hooks_wp_add();
 
 		// Add BuddyPress callbacks.
-		$this->_add_hooks_bp();
+		$this->hooks_bp_add();
 
 		// Add CiviCRM callbacks.
-		$this->_add_hooks_civi();
+		$this->hooks_civicrm_add();
 
 		// Are we allowing bulk operations?
 		if ( CIVICRM_WP_PROFILE_SYNC_BULK ) {
@@ -269,8 +269,8 @@ class CiviCRM_WP_Profile_Sync {
 		require_once 'CRM/Core/BAO/UFMatch.php';
 
 		// Remove CiviCRM and BuddyPress callbacks to prevent recursion.
-		$this->_remove_hooks_bp();
-		$this->_remove_hooks_civi();
+		$this->hooks_bp_remove();
+		$this->hooks_civicrm_remove();
 
 		// Creates Contact if none exists - returns the CiviCRM UFMatch object.
 		$civi_contact = CRM_Core_BAO_UFMatch::synchronizeUFMatch(
@@ -284,15 +284,15 @@ class CiviCRM_WP_Profile_Sync {
 
 		// Bail if we don't get one for some reason.
 		if ( ! isset( $civi_contact->contact_id ) ) {
-			$this->_add_hooks_bp();
-			$this->_add_hooks_civi();
+			$this->hooks_bp_add();
+			$this->hooks_civicrm_add();
 			return;
 		}
 
 		// Should this user be synced?
 		if ( ! $this->user_should_be_synced( $user, $civi_contact ) ) {
-			$this->_add_hooks_bp();
-			$this->_add_hooks_civi();
+			$this->hooks_bp_add();
+			$this->hooks_civicrm_add();
 			return;
 		}
 
@@ -318,8 +318,8 @@ class CiviCRM_WP_Profile_Sync {
 		 do_action( 'civicrm_wp_profile_sync_wp_user_sync', $user, $civi_contact );
 
 		// Add CiviCRM and BuddyPress callbacks once more.
-		$this->_add_hooks_bp();
-		$this->_add_hooks_civi();
+		$this->hooks_bp_add();
+		$this->hooks_civicrm_add();
 
 		/**
 		 * Broadcast that a WordPress User has been synced.
@@ -366,8 +366,8 @@ class CiviCRM_WP_Profile_Sync {
 		}
 
 		// Remove WordPress and BuddyPress callbacks to prevent recursion.
-		$this->_remove_hooks_wp();
-		$this->_remove_hooks_bp();
+		$this->hooks_wp_remove();
+		$this->hooks_bp_remove();
 
 	}
 
@@ -401,8 +401,8 @@ class CiviCRM_WP_Profile_Sync {
 		}
 
 		// Remove WordPress and BuddyPress callbacks to prevent recursion.
-		$this->_remove_hooks_wp();
-		$this->_remove_hooks_bp();
+		$this->hooks_wp_remove();
+		$this->hooks_bp_remove();
 
 		/**
 		 * Fires when a CiviCRM Contact's primary email address is about to be
@@ -467,8 +467,8 @@ class CiviCRM_WP_Profile_Sync {
 		}
 
 		// Remove WordPress and BuddyPress callbacks to prevent recursion.
-		$this->_remove_hooks_wp();
-		$this->_remove_hooks_bp();
+		$this->hooks_wp_remove();
+		$this->hooks_bp_remove();
 
 		// Do User update.
 		wp_update_user( array(
@@ -477,8 +477,8 @@ class CiviCRM_WP_Profile_Sync {
 		) );
 
 		// Re-add WordPress and BuddyPress callbacks.
-		$this->_add_hooks_wp();
-		$this->_add_hooks_bp();
+		$this->hooks_wp_add();
+		$this->hooks_bp_add();
 
 		/**
 		 * Broadcast that a CiviCRM Contact's website has been synced.
@@ -604,8 +604,8 @@ class CiviCRM_WP_Profile_Sync {
 	public function civi_contact_bulk_added_pre() {
 
 		// Remove WordPress and BuddyPress callbacks to prevent recursion.
-		$this->_remove_hooks_wp();
-		$this->_remove_hooks_bp();
+		$this->hooks_wp_remove();
+		$this->hooks_bp_remove();
 
 	}
 
@@ -619,8 +619,8 @@ class CiviCRM_WP_Profile_Sync {
 	public function civi_contact_bulk_added_post() {
 
 		// Re-add WordPress and BuddyPress callbacks.
-		$this->_add_hooks_wp();
-		$this->_add_hooks_bp();
+		$this->hooks_wp_add();
+		$this->hooks_bp_add();
 
 	}
 
@@ -729,7 +729,7 @@ class CiviCRM_WP_Profile_Sync {
 	 *
 	 * @since 0.1
 	 */
-	private function _add_hooks_bp() {
+	public function hooks_bp_add() {
 
 		// Callbacks for new and updated BuddyPress User actions.
 		add_action( 'xprofile_updated_profile', array( $this, 'buddypress_contact_updated' ), 20, 3 );
@@ -745,7 +745,7 @@ class CiviCRM_WP_Profile_Sync {
 	 *
 	 * @since 0.1
 	 */
-	private function _remove_hooks_bp() {
+	public function hooks_bp_remove() {
 
 		// Remove callbacks for new and updated BuddyPress User actions.
 		remove_action( 'xprofile_updated_profile', array( $this, 'buddypress_contact_updated' ), 20 );
@@ -764,7 +764,7 @@ class CiviCRM_WP_Profile_Sync {
 	 *
 	 * @since 0.1
 	 */
-	private function _add_hooks_wp() {
+	public function hooks_wp_add() {
 
 		// Callbacks for new and updated WordPress User actions.
 		add_action( 'user_register', array( $this, 'wordpress_contact_updated' ), 100, 1 );
@@ -779,7 +779,7 @@ class CiviCRM_WP_Profile_Sync {
 	 *
 	 * @since 0.1
 	 */
-	private function _remove_hooks_wp() {
+	public function hooks_wp_remove() {
 
 		// Remove callbacks for new and updated WordPress User actions.
 		remove_action( 'user_register', array( $this, 'wordpress_contact_updated' ), 100 );
@@ -796,7 +796,7 @@ class CiviCRM_WP_Profile_Sync {
 	 *
 	 * @since 0.1
 	 */
-	private function _add_hooks_civi() {
+	public function hooks_civicrm_add() {
 
 		// Intercept Contact update in CiviCRM.
 		add_action( 'civicrm_pre', array( $this, 'civi_contact_pre_update' ), 10, 4 );
@@ -817,7 +817,7 @@ class CiviCRM_WP_Profile_Sync {
 	 *
 	 * @since 0.1
 	 */
-	private function _remove_hooks_civi() {
+	public function hooks_civicrm_remove() {
 
 		// Remove all CiviCRM callbacks.
 		remove_action( 'civicrm_pre', array( $this, 'civi_contact_pre_update' ), 10 );
@@ -826,6 +826,10 @@ class CiviCRM_WP_Profile_Sync {
 		remove_action( 'civicrm_pre', array( $this, 'civi_website_pre_update' ), 10 );
 
 	}
+
+
+
+	//##########################################################################
 
 
 
