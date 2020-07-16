@@ -472,7 +472,7 @@ class CiviCRM_WP_Profile_Sync {
 		}
 
 		// Remove CiviCRM's own callbacks.
-		$this->hooks_misc_remove();
+		$this->hooks_core_remove();
 
 		// Update first name.
 		update_user_meta( $user_id, 'first_name', $objectRef->first_name );
@@ -503,7 +503,7 @@ class CiviCRM_WP_Profile_Sync {
 		 do_action( 'civicrm_wp_profile_sync_civi_contact_synced', $objectId, $objectRef, $user_id );
 
 		// Add back CiviCRM's own callbacks.
-		$this->hooks_misc_add();
+		$this->hooks_core_add();
 
 	}
 
