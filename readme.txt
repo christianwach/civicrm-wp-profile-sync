@@ -36,6 +36,10 @@ This plugin is in active development. For feature requests and bug reports (or i
 
 == Changelog ==
 
+= 0.3.1 =
+
+* Explicitly suspend CiviCRM's callbacks when updating a WordPress user
+
 = 0.3 =
 
 * Introduces a set of "should_be_synced" filters
