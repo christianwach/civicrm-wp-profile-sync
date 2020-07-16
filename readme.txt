@@ -36,6 +36,10 @@ This plugin is in active development. For feature requests and bug reports (or i
 
 == Changelog ==
 
+= 0.3.2 =
+
+* Fix broken method reference
+
 = 0.3.1 =
 
 * Explicitly suspend CiviCRM's callbacks when updating a WordPress user
