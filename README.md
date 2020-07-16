@@ -8,7 +8,7 @@ CiviCRM WordPress Profile Sync
 **Tested up to:** 5.5<br/>
 **Stable tag:** 0.3.3<br/>
 **License:** GPLv2 or later<br/>
-**License URI:** http://www.gnu.org/licenses/gpl-2.0.html
+**License URI:** https://www.gnu.org/licenses/gpl-2.0.html
 
 CiviCRM WordPress Profile Sync keeps a WordPress and BuddyPress user profile in sync with a CiviCRM contact.
 
