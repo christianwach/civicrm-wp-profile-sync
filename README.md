@@ -18,13 +18,13 @@ Please note: this is the development repository for *CiviCRM WordPress Profile S
 
 The *CiviCRM WordPress Profile Sync* plugin keeps the "First Name", "Last Name", "Email Address" and "Website" fields of a *WordPress* (and *BuddyPress*) user profile in sync with the corresponding fields of a *CiviCRM* contact. The synchronisation takes place regardless of whether the changes are made in *WordPress*, *BuddyPress* or *CiviCRM*.
 
-This plugin requires a minimum of *WordPress 3.9* and *CiviCRM 4.6*. If you want to maintain sync with BuddyPress user profiles, then it also requires *BuddyPress 1.8* and the [BP XProfile WordPress User Sync](https://wordpress.org/plugins/bp-xprofile-wp-user-sync/) plugin to do so.
+This plugin requires a minimum of *WordPress 3.9* and *CiviCRM 4.6*. If you want to maintain sync with BuddyPress user profiles, then it also requires *BuddyPress 3.0* and the [BP XProfile WordPress User Sync](https://wordpress.org/plugins/bp-xprofile-wp-user-sync/) plugin to do so.
 
 ### Installation
 
 There are two ways to install from GitHub:
 
-##### ZIP Download
+#### ZIP Download
 
 If you have downloaded *CiviCRM WordPress Profile Sync* as a ZIP file from the GitHub repository, do the following to install and activate the plugin:
 
@@ -32,6 +32,6 @@ If you have downloaded *CiviCRM WordPress Profile Sync* as a ZIP file from the G
 2. Activate the plugin
 3. You are done!
 
-##### git clone
+#### git clone
 
 If you have cloned the code from GitHub, it is assumed that you know what you're doing.
