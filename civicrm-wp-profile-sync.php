@@ -471,6 +471,9 @@ class CiviCRM_WP_Profile_Sync {
 			return;
 		}
 
+		// Remove CiviCRM's own callbacks.
+		$this->hooks_misc_remove();
+
 		// Update first name.
 		update_user_meta( $user_id, 'first_name', $objectRef->first_name );
 
@@ -498,6 +501,9 @@ class CiviCRM_WP_Profile_Sync {
 		 * @param integer $user_id The ID of the WordPress User.
 		 */
 		 do_action( 'civicrm_wp_profile_sync_civi_contact_synced', $objectId, $objectRef, $user_id );
+
+		// Add back CiviCRM's own callbacks.
+		$this->hooks_misc_add();
 
 	}
 
@@ -1027,6 +1033,87 @@ class CiviCRM_WP_Profile_Sync {
 		remove_action( 'civicrm_post', array( $this, 'civicrm_contact_updated' ), 10 );
 		remove_action( 'civicrm_pre', array( $this, 'civicrm_primary_email_pre' ), 10 );
 		remove_action( 'civicrm_pre', array( $this, 'civicrm_website_pre' ), 10 );
+
+	}
+
+
+
+	/**
+	 * Add back CiviCRM's callbacks.
+	 *
+	 * This method undoes the removal of the callbacks below.
+	 *
+	 * @see self::hooks_core_remove()
+	 *
+	 * @since 0.3.1
+	 */
+	private function hooks_core_add() {
+
+		// Get CiviCRM instance.
+		$civicrm = civi_wp();
+
+		// Do we have the old-style plugin structure?
+		if ( method_exists( $civicrm, 'update_user' ) ) {
+
+			// Re-add previous CiviCRM plugin filters.
+			add_action( 'user_register', array( $civicrm, 'update_user' ) );
+			add_action( 'profile_update', array( $civicrm, 'update_user' ) );
+
+		} else {
+
+			// Re-add current CiviCRM plugin filters.
+			add_action( 'user_register', array( $civicrm->users, 'update_user' ) );
+			add_action( 'profile_update', array( $civicrm->users, 'update_user' ) );
+
+		}
+
+		/**
+		 * Let other plugins know that we're adding user actions.
+		 *
+		 * @since 0.3.1
+		 */
+		do_action( 'civicrm_wp_profile_sync_hooks_core_added' );
+
+	}
+
+
+
+	/**
+	 * Remove CiviCRM's callbacks.
+	 *
+	 * These may cause recursive updates when creating or editing a WordPress
+	 * user. This doesn't seem to have been necessary in the past, but seems
+	 * to be causing trouble when newer versions of BuddyPress and CiviCRM are
+	 * active.
+	 *
+	 * @since 0.3.1
+	 */
+	private function hooks_core_remove() {
+
+		// Get CiviCRM instance.
+		$civicrm = civi_wp();
+
+		// Do we have the old-style plugin structure?
+		if ( method_exists( $civicrm, 'update_user' ) ) {
+
+			// Remove previous CiviCRM plugin filters.
+			remove_action( 'user_register', array( $civicrm, 'update_user' ) );
+			remove_action( 'profile_update', array( $civicrm, 'update_user' ) );
+
+		} else {
+
+			// Remove current CiviCRM plugin filters.
+			remove_action( 'user_register', array( $civicrm->users, 'update_user' ) );
+			remove_action( 'profile_update', array( $civicrm->users, 'update_user' ) );
+
+		}
+
+		/**
+		 * Let other plugins know that we're removing CiviCRM's callbacks.
+		 *
+		 * @since 0.3.1
+		 */
+		do_action( 'civicrm_wp_profile_sync_hooks_core_removed' );
 
 	}
 
