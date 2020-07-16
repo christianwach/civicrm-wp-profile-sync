@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the CiviCRM WordPress Profile Sync package.
 msgid ""
 msgstr ""
-"Project-Id-Version: CiviCRM WordPress Profile Sync 0.3\n"
+"Project-Id-Version: CiviCRM WordPress Profile Sync 0.3.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/civicrm-wp-profile-sync\n"
-"POT-Creation-Date: 2020-03-03 10:36:11+00:00\n"
+"POT-Creation-Date: 2020-07-16 18:24:41+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,27 +12,27 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: civicrm-wp-profile-sync.php:636
+#: civicrm-wp-profile-sync.php:642
 msgid "Could not update the name of the CiviCRM Contact."
 msgstr ""
 
-#: civicrm-wp-profile-sync.php:687
+#: civicrm-wp-profile-sync.php:693
 msgid "Could not update the email of the CiviCRM Contact."
 msgstr ""
 
-#: civicrm-wp-profile-sync.php:745
+#: civicrm-wp-profile-sync.php:751
 msgid "Could not update the website for the CiviCRM Contact."
 msgstr ""
 
-#: civicrm-wp-profile-sync.php:762
+#: civicrm-wp-profile-sync.php:768
 msgid "Could not delete the website for the CiviCRM Contact."
 msgstr ""
 
-#: civicrm-wp-profile-sync.php:791
+#: civicrm-wp-profile-sync.php:797
 msgid "Could not create the website for the CiviCRM Contact."
 msgstr ""
 
-#: civicrm-wp-profile-sync.php:884
+#: civicrm-wp-profile-sync.php:890
 #: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:46
 msgid "Create WordPress Users from Contacts"
 msgstr ""
@@ -121,5 +121,5 @@ msgid "Christian Wach"
 msgstr ""
 
 #. Author URI of the plugin/theme
-msgid "http://haystack.co.uk"
+msgid "https://haystack.co.uk"
 msgstr ""
