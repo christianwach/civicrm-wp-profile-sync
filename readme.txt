@@ -6,7 +6,7 @@ Requires at least: 3.9
 Tested up to: 5.5
 Stable tag: 0.3.1
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 CiviCRM WordPress Profile Sync keeps a WordPress and BuddyPress user profile in sync with a CiviCRM contact.
 
@@ -17,7 +17,7 @@ The CiviCRM WordPress Profile Sync plugin keeps the "First Name", "Last Name", "
 
 ### Requirements
 
-This plugin requires a minimum of *WordPress 3.9* and *CiviCRM 4.6*. It also requires *BuddyPress 1.8* and the [BP XProfile WordPress User Sync](http://wordpress.org/plugins/bp-xprofile-wp-user-sync/) plugin for syncing data with BuddyPress profiles.
+This plugin requires a minimum of *WordPress 3.9* and *CiviCRM 4.6*. It also requires *BuddyPress 1.8* and the [BP XProfile WordPress User Sync](https://wordpress.org/plugins/bp-xprofile-wp-user-sync/) plugin for syncing data with BuddyPress profiles.
 
 ### Plugin Development
 
