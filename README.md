@@ -6,7 +6,7 @@ CiviCRM WordPress Profile Sync
 **Tags:** civicrm, acf, sync<br/>
 **Requires at least:** 3.9<br/>
 **Tested up to:** 5.5<br/>
-**Stable tag:** 0.3.3<br/>
+**Stable tag:** 0.3.4<br/>
 **License:** GPLv2 or later<br/>
 **License URI:** https://www.gnu.org/licenses/gpl-2.0.html
 
