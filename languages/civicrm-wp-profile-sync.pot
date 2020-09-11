@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the CiviCRM WordPress Profile Sync package.
 msgid ""
 msgstr ""
-"Project-Id-Version: CiviCRM WordPress Profile Sync 0.3.1\n"
+"Project-Id-Version: CiviCRM WordPress Profile Sync 0.3.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/civicrm-wp-profile-sync\n"
-"POT-Creation-Date: 2020-07-16 18:24:41+00:00\n"
+"POT-Creation-Date: 2020-09-11 12:49:43+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -69,39 +69,39 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:130
+#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:133
 msgid "No"
 msgstr ""
 
-#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:132
+#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:135
 msgid "Yes"
 msgstr ""
 
-#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:238
+#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:243
 msgid "The email %s already exists."
 msgstr ""
 
-#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:251
+#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:256
 msgid "The username %s is not valid."
 msgstr ""
 
-#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:293
+#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:300
 msgid "Could not create UFMatch record."
 msgstr ""
 
-#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:337
+#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:344
 msgid "Users successfully added to WordPress: %s"
 msgstr ""
 
-#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:340
+#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:347
 msgid "Users added"
 msgstr ""
 
-#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:346
+#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:353
 msgid "Users not added to WordPress: %s. Please review these Contacts and try again."
 msgstr ""
 
-#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:349
+#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:356
 msgid "Users not added"
 msgstr ""
 #. Plugin Name of the plugin/theme
