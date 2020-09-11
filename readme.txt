@@ -36,6 +36,10 @@ This plugin is in active development. For feature requests and bug reports (or i
 
 == Changelog ==
 
+= 0.3.3 =
+
+* Sync First Name and Last Name when bulk creating WordPress users.
+
 = 0.3.2 =
 
 * Fix broken method reference
