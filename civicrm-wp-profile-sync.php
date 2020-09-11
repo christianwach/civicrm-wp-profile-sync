@@ -73,15 +73,15 @@ class CiviCRM_WP_Profile_Sync {
 		if ( CIVICRM_WP_PROFILE_SYNC_BULK ) {
 
 			// Add an item to the actions dropdown.
-			add_action( 'civicrm_searchTasks', array( $this, 'civicrm_bulk_operations' ), 10, 2 );
+			add_action( 'civicrm_searchTasks', [ $this, 'civicrm_bulk_operations' ], 10, 2 );
 
 			// Register PHP and template directories.
-			add_action( 'civicrm_config', array( $this, 'register_php_directory' ), 10 );
-			add_action( 'civicrm_config', array( $this, 'register_template_directory' ), 10 );
+			add_action( 'civicrm_config', [ $this, 'register_php_directory' ], 10 );
+			add_action( 'civicrm_config', [ $this, 'register_template_directory' ], 10 );
 
 			// Prevent recursion when bulk adding WordPress Users via CiviCRM.
-			add_action( 'civicrm_wp_profile_sync_user_add_pre', array( $this, 'civicrm_contact_bulk_added_pre' ), 10 );
-			add_action( 'civicrm_wp_profile_sync_user_add_post', array( $this, 'civicrm_contact_bulk_added_post' ), 10 );
+			add_action( 'civicrm_wp_profile_sync_user_add_pre', [ $this, 'civicrm_contact_bulk_added_pre' ], 10 );
+			add_action( 'civicrm_wp_profile_sync_user_add_post', [ $this, 'civicrm_contact_bulk_added_post' ], 10 );
 
 		}
 
@@ -382,10 +382,10 @@ class CiviCRM_WP_Profile_Sync {
 		$this->hooks_bp_remove();
 
 		// Do User update.
-		wp_update_user( array(
+		wp_update_user([
 			'ID' => $user_id,
 			'user_url' => $objectRef['url'],
-		) );
+		]);
 
 		// Re-add WordPress and BuddyPress callbacks.
 		$this->hooks_wp_add();
@@ -628,20 +628,20 @@ class CiviCRM_WP_Profile_Sync {
 		}
 
 		// Update the CiviCRM Contact first name and last name.
-		$result = civicrm_api( 'contact', 'create', array(
+		$result = civicrm_api( 'contact', 'create', [
 			'version' => 3,
 			'id' => $contact->contact_id,
 			'first_name' => $user->first_name,
 			'last_name' => $user->last_name,
-		));
+		]);
 
         // Log something on failure.
 		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
-			error_log( print_r( array(
+			error_log( print_r( [
 				'method' => __METHOD__,
 				'message' => __( 'Could not update the name of the CiviCRM Contact.', 'civicrm-wp-profile-sync' ),
 				'result' => $result,
-			), true ) );
+			], true ) );
 		}
 
 	}
@@ -659,11 +659,11 @@ class CiviCRM_WP_Profile_Sync {
 	private function civicrm_primary_email_update( $user, $contact ) {
 
 		// Get the current primary email.
-		$primary_email = civicrm_api( 'email', 'get', array(
+		$primary_email = civicrm_api( 'email', 'get', [
 			'version' => 3,
 			'contact_id' => $contact->contact_id,
 			'is_primary' => 1,
-		));
+		]);
 
 		// Did we get one?
 		if (
@@ -679,20 +679,20 @@ class CiviCRM_WP_Profile_Sync {
 			if ( $existing_data['email'] != $user->user_email ) {
 
 				// Now update their email.
-				$result = civicrm_api( 'email', 'create', array(
+				$result = civicrm_api( 'email', 'create', [
 					'version' => 3,
 					'id' => $primary_email['id'],
 					'contact_id' => $contact->contact_id,
 					'email' => $user->user_email,
-				));
+				]);
 
 				// Log something on failure.
 				if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
-					error_log( print_r( array(
+					error_log( print_r( [
 						'method' => __METHOD__,
 						'message' => __( 'Could not update the email of the CiviCRM Contact.', 'civicrm-wp-profile-sync' ),
 						'result' => $result,
-					), true ) );
+					], true ) );
 				}
 
 			}
@@ -714,11 +714,11 @@ class CiviCRM_WP_Profile_Sync {
 	private function civicrm_website_update( $user, $contact ) {
 
 		// Get the current website.
-		$existing_website = civicrm_api( 'website', 'get', array(
+		$existing_website = civicrm_api( 'website', 'get', [
 			'version' => 3,
 			'contact_id' => $contact->contact_id,
 			//'website_type_id' => 1,
-		));
+		]);
 
 		// Did we get one?
 		if (
@@ -737,37 +737,37 @@ class CiviCRM_WP_Profile_Sync {
 					if ( $user->user_url != '' ) {
 
 						// Update their website.
-						$result = civicrm_api( 'website', 'create', array(
+						$result = civicrm_api( 'website', 'create', [
 							'version' => 3,
 							'id' => $website['id'],
 							'contact_id' => $contact->contact_id,
 							'url' => $user->user_url,
-						));
+						]);
 
 						// Log something on failure.
 						if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
-							error_log( print_r( array(
+							error_log( print_r( [
 								'method' => __METHOD__,
 								'message' => __( 'Could not update the website for the CiviCRM Contact.', 'civicrm-wp-profile-sync' ),
 								'result' => $result,
-							), true ) );
+							], true ) );
 						}
 
 					} else {
 
 						// Delete their website.
-						$result = civicrm_api( 'website', 'delete', array(
+						$result = civicrm_api( 'website', 'delete', [
 							'version' => 3,
 							'id' => $existing_website['id'],
-						));
+						]);
 
 						// Log something on failure.
 						if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
-							error_log( print_r( array(
+							error_log( print_r( [
 								'method' => __METHOD__,
 								'message' => __( 'Could not delete the website for the CiviCRM Contact.', 'civicrm-wp-profile-sync' ),
 								'result' => $result,
-							), true ) );
+							], true ) );
 						}
 					}
 
@@ -784,19 +784,19 @@ class CiviCRM_WP_Profile_Sync {
 			if ( $user->user_url != '' ) {
 
 				// Create their website
-				$result = civicrm_api( 'website', 'create', array(
+				$result = civicrm_api( 'website', 'create', [
 					'version' => 3,
 					'contact_id' => $contact->contact_id,
 					'url' => $user->user_url,
-				));
+				]);
 
 				// Log something on failure.
 				if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
-					error_log( print_r( array(
+					error_log( print_r( [
 						'method' => __METHOD__,
 						'message' => __( 'Could not create the website for the CiviCRM Contact.', 'civicrm-wp-profile-sync' ),
 						'result' => $result,
-					), true ) );
+					], true ) );
 				}
 	}
 
@@ -886,10 +886,10 @@ class CiviCRM_WP_Profile_Sync {
 		}
 
 		// Add our item to the tasks array.
-		$tasks[] = array(
+		$tasks[] = [
 			'title' => __( 'Create WordPress Users from Contacts',  'civicrm-wp-profile-sync' ),
 			'class' => 'CRM_Contact_Form_Task_CreateWordPressUsers',
-		);
+		];
 
 	}
 
@@ -941,9 +941,9 @@ class CiviCRM_WP_Profile_Sync {
 	public function hooks_bp_add() {
 
 		// Callbacks for new and updated BuddyPress User actions.
-		add_action( 'xprofile_updated_profile', array( $this, 'buddypress_user_updated' ), 20, 3 );
-		add_action( 'bp_core_signup_user', array( $this, 'buddypress_user_updated' ), 20, 3 );
-		add_action( 'bp_core_activated_user', array( $this, 'buddypress_user_updated' ), 20, 3 );
+		add_action( 'xprofile_updated_profile', [ $this, 'buddypress_user_updated' ], 20, 3 );
+		add_action( 'bp_core_signup_user', [ $this, 'buddypress_user_updated' ], 20, 3 );
+		add_action( 'bp_core_activated_user', [ $this, 'buddypress_user_updated' ], 20, 3 );
 
 	}
 
@@ -957,9 +957,9 @@ class CiviCRM_WP_Profile_Sync {
 	public function hooks_bp_remove() {
 
 		// Remove callbacks for new and updated BuddyPress User actions.
-		remove_action( 'xprofile_updated_profile', array( $this, 'buddypress_user_updated' ), 20 );
-		remove_action( 'bp_core_signup_user', array( $this, 'buddypress_user_updated' ), 20 );
-		remove_action( 'bp_core_activated_user', array( $this, 'buddypress_user_updated' ), 20 );
+		remove_action( 'xprofile_updated_profile', [ $this, 'buddypress_user_updated' ], 20 );
+		remove_action( 'bp_core_signup_user', [ $this, 'buddypress_user_updated' ], 20 );
+		remove_action( 'bp_core_activated_user', [ $this, 'buddypress_user_updated' ], 20 );
 
 	}
 
@@ -976,8 +976,8 @@ class CiviCRM_WP_Profile_Sync {
 	public function hooks_wp_add() {
 
 		// Callbacks for new and updated WordPress User actions.
-		add_action( 'user_register', array( $this, 'wordpress_user_updated' ), 100, 1 );
-		add_action( 'profile_update', array( $this, 'wordpress_user_updated' ), 100, 1 );
+		add_action( 'user_register', [ $this, 'wordpress_user_updated' ], 100, 1 );
+		add_action( 'profile_update', [ $this, 'wordpress_user_updated' ], 100, 1 );
 
 	}
 
@@ -991,8 +991,8 @@ class CiviCRM_WP_Profile_Sync {
 	public function hooks_wp_remove() {
 
 		// Remove callbacks for new and updated WordPress User actions.
-		remove_action( 'user_register', array( $this, 'wordpress_user_updated' ), 100 );
-		remove_action( 'profile_update', array( $this, 'wordpress_user_updated' ), 100 );
+		remove_action( 'user_register', [ $this, 'wordpress_user_updated' ], 100 );
+		remove_action( 'profile_update', [ $this, 'wordpress_user_updated' ], 100 );
 
 	}
 
@@ -1008,14 +1008,14 @@ class CiviCRM_WP_Profile_Sync {
 	public function hooks_civicrm_add() {
 
 		// Intercept Contact update in CiviCRM.
-		add_action( 'civicrm_pre', array( $this, 'civicrm_contact_pre' ), 10, 4 );
-		add_action( 'civicrm_post', array( $this, 'civicrm_contact_updated' ), 10, 4 );
+		add_action( 'civicrm_pre', [ $this, 'civicrm_contact_pre' ], 10, 4 );
+		add_action( 'civicrm_post', [ $this, 'civicrm_contact_updated' ], 10, 4 );
 
 		// Intercept email update in CiviCRM.
-		add_action( 'civicrm_pre', array( $this, 'civicrm_primary_email_pre' ), 10, 4 );
+		add_action( 'civicrm_pre', [ $this, 'civicrm_primary_email_pre' ], 10, 4 );
 
 		// Intercept website update in CiviCRM.
-		add_action( 'civicrm_pre', array( $this, 'civicrm_website_pre' ), 10, 4 );
+		add_action( 'civicrm_pre', [ $this, 'civicrm_website_pre' ], 10, 4 );
 
 	}
 
@@ -1029,10 +1029,10 @@ class CiviCRM_WP_Profile_Sync {
 	public function hooks_civicrm_remove() {
 
 		// Remove all CiviCRM callbacks.
-		remove_action( 'civicrm_pre', array( $this, 'civicrm_contact_pre' ), 10 );
-		remove_action( 'civicrm_post', array( $this, 'civicrm_contact_updated' ), 10 );
-		remove_action( 'civicrm_pre', array( $this, 'civicrm_primary_email_pre' ), 10 );
-		remove_action( 'civicrm_pre', array( $this, 'civicrm_website_pre' ), 10 );
+		remove_action( 'civicrm_pre', [ $this, 'civicrm_contact_pre' ], 10 );
+		remove_action( 'civicrm_post', [ $this, 'civicrm_contact_updated' ], 10 );
+		remove_action( 'civicrm_pre', [ $this, 'civicrm_primary_email_pre' ], 10 );
+		remove_action( 'civicrm_pre', [ $this, 'civicrm_website_pre' ], 10 );
 
 	}
 
@@ -1056,14 +1056,14 @@ class CiviCRM_WP_Profile_Sync {
 		if ( method_exists( $civicrm, 'update_user' ) ) {
 
 			// Re-add previous CiviCRM plugin filters.
-			add_action( 'user_register', array( $civicrm, 'update_user' ) );
-			add_action( 'profile_update', array( $civicrm, 'update_user' ) );
+			add_action( 'user_register', [ $civicrm, 'update_user' ] );
+			add_action( 'profile_update', [ $civicrm, 'update_user' ] );
 
 		} else {
 
 			// Re-add current CiviCRM plugin filters.
-			add_action( 'user_register', array( $civicrm->users, 'update_user' ) );
-			add_action( 'profile_update', array( $civicrm->users, 'update_user' ) );
+			add_action( 'user_register', [ $civicrm->users, 'update_user' ] );
+			add_action( 'profile_update', [ $civicrm->users, 'update_user' ] );
 
 		}
 
@@ -1097,14 +1097,14 @@ class CiviCRM_WP_Profile_Sync {
 		if ( method_exists( $civicrm, 'update_user' ) ) {
 
 			// Remove previous CiviCRM plugin filters.
-			remove_action( 'user_register', array( $civicrm, 'update_user' ) );
-			remove_action( 'profile_update', array( $civicrm, 'update_user' ) );
+			remove_action( 'user_register', [ $civicrm, 'update_user' ] );
+			remove_action( 'profile_update', [ $civicrm, 'update_user' ] );
 
 		} else {
 
 			// Remove current CiviCRM plugin filters.
-			remove_action( 'user_register', array( $civicrm->users, 'update_user' ) );
-			remove_action( 'profile_update', array( $civicrm->users, 'update_user' ) );
+			remove_action( 'user_register', [ $civicrm->users, 'update_user' ] );
+			remove_action( 'profile_update', [ $civicrm->users, 'update_user' ] );
 
 		}
 

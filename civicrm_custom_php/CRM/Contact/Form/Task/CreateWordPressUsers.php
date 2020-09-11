@@ -46,17 +46,17 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
     CRM_Utils_System::setTitle( __( 'Create WordPress Users from Contacts', 'civicrm-wp-profile-sync' ) );
 
     // Add our required buttons.
-    $this->addButtons( array(
-      array(
+    $this->addButtons( [
+      [
         'type' => 'next',
         'name' => __( 'Create WordPress Users', 'civicrm-wp-profile-sync' ),
         'isDefault' => TRUE,
-      ),
-      array(
+      ],
+      [
         'type' => 'cancel',
         'name' => __( 'Cancel', 'civicrm-wp-profile-sync' ),
-      ),
-    ));
+      ],
+    ]);
 
   }
 
@@ -85,17 +85,17 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
   private function getContactRows() {
 
     // Init rows.
-    $rows = array();
+    $rows = [];
 
     // Get Contacts via CiviCRM API.
-    $result = civicrm_api( 'Contact', 'get', array(
+    $result = civicrm_api( 'Contact', 'get', [
       'version' => 3,
       'sequential' => 1,
-      'id' => array( 'IN' => $this->_contactIds ),
+      'id' => [ 'IN' => $this->_contactIds ],
 			'options' => [
 				'limit' => 0, // No limit.
 			],
-    ));
+    ]);
 
     // Bail on failure.
     if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
@@ -114,11 +114,11 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
     foreach( $this->contactsRaw AS $contact ) {
 
       // Check if this Contact already has a WordPress User.
-      $params = array(
+      $params = [
         'version' => 3,
         'contact_id' => $contact['id'],
         'domain_id' => CRM_Core_Config::domainID(),
-      );
+      ];
 
       // Get all UFMatch records via API.
       $uf_result = civicrm_api( 'UFMatch', 'get', $params );
@@ -137,7 +137,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
       }
 
       // Build Contact data row.
-      $row = array(
+      $row = [
         'id' => $contact['contact_id'],
         'contact_type' => $contact['contact_type'],
         'display_name' => ! empty( $contact['display_name'] ) ? $contact['display_name'] : '',
@@ -146,7 +146,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
         'email' => $contact['email'],
         'has_user' => $has_user,
         'user_exists' => $match ? 'y' : 'n',
-      );
+      ];
 
       /**
        * Filter Contact data row and add to array.
@@ -200,20 +200,20 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
     if ( method_exists( $civicrm, 'update_user' ) ) {
 
       // Disable CiviCRM's own register hooks.
-      remove_action( 'user_register', array( $civicrm, 'update_user' ) );
-      remove_action( 'profile_update', array( $civicrm, 'update_user' ) );
+      remove_action( 'user_register', [ $civicrm, 'update_user' ] );
+      remove_action( 'profile_update', [ $civicrm, 'update_user' ] );
 
     } else {
 
       // Disable CiviCRM's own register hooks.
-      remove_action( 'user_register', array( $civicrm->users, 'update_user' ) );
-      remove_action( 'profile_update', array( $civicrm->users, 'update_user' ) );
+      remove_action( 'user_register', [ $civicrm->users, 'update_user' ] );
+      remove_action( 'profile_update', [ $civicrm->users, 'update_user' ] );
 
     }
 
     // Init success and failure arrays.
-    $success = array();
-    $failure = array();
+    $success = [];
+    $failure = [];
 
     // Process data.
     foreach( $rows AS $row ) {
@@ -238,10 +238,10 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
 
       // Skip if email already exists.
       if ( email_exists( $row['email'] ) ) {
-        error_log( print_r( array(
+        error_log( print_r( [
           'method' => __METHOD__,
           'message' => sprintf( __( 'The email %s already exists.', 'civicrm-wp-profile-sync' ), $row['email'] ),
-        ), true ) );
+        ], true ) );
         $failure[] = $row['display_name'];
         continue;
       }
@@ -251,10 +251,10 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
 
       // Skip if username not valid for some reason.
       if ( ! validate_username( $username ) ) {
-        error_log( print_r( array(
+        error_log( print_r( [
           'method' => __METHOD__,
           'message' => sprintf( __( 'The username %s is not valid.', 'civicrm-wp-profile-sync' ), $username ),
-        ), true ) );
+        ], true ) );
         $failure[] = $row['display_name'];
         continue;
       }
@@ -263,7 +263,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
       $password = substr( md5( uniqid( microtime() ) ), 0, 8 );
 
       // Populate User data.
-      $user_data = array(
+      $user_data = [
         'ID' => '',
         'user_login' => $username,
         'user_email' => $row['email'],
@@ -273,7 +273,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
         'first_name' => $row['first_name'],
         'last_name' => $row['last_name'],
         'role' => $default_role,
-      );
+      ];
 
       // Create the WordPress User.
       $user_id = wp_insert_user( $user_data );
@@ -282,24 +282,24 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
       if ( ! is_wp_error( $user_id ) AND isset( $row['id'] ) ) {
 
         // Construct params.
-        $uf_params = array(
+        $uf_params = [
           'version' => 3,
           'uf_id' => $user_id,
           'uf_name' => $username,
           'contact_id' => $row['id'],
           'domain_id' => CRM_Core_Config::domainID(),
-        );
+        ];
 
         // Create record via API.
         $result = civicrm_api( 'UFMatch', 'create', $uf_params );
 
         // Log something on failure.
         if ( isset( $uf_result['is_error'] ) AND $uf_result['is_error'] == '1' ) {
-          error_log( print_r( array(
+          error_log( print_r( [
             'method' => __METHOD__,
             'message' => __( 'Could not create UFMatch record.', 'civicrm-wp-profile-sync' ),
             'result' => $result,
-          ), true ) );
+          ], true ) );
         }
 
         // Add User to success array.
@@ -318,14 +318,14 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
     if ( method_exists( $civicrm, 'update_user' ) ) {
 
       // Re-add previous CiviCRM plugin filters.
-      add_action( 'user_register', array( $civicrm, 'update_user' ) );
-      add_action( 'profile_update', array( $civicrm, 'update_user' ) );
+      add_action( 'user_register', [ $civicrm, 'update_user' ] );
+      add_action( 'profile_update', [ $civicrm, 'update_user' ] );
 
     } else {
 
       // Re-add current CiviCRM plugin filters.
-      add_action( 'user_register', array( $civicrm->users, 'update_user' ) );
-      add_action( 'profile_update', array( $civicrm->users, 'update_user' ) );
+      add_action( 'user_register', [ $civicrm->users, 'update_user' ] );
+      add_action( 'profile_update', [ $civicrm->users, 'update_user' ] );
 
     }
 
@@ -447,7 +447,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
   private function filterName( $name ) {
 
     // Build array of replacements.
-    $replacements = array( '.', ' ', '-', "'", "’" );
+    $replacements = [ '.', ' ', '-', "'", "’" ];
 
     // Do replacement.
     $name = str_replace( $replacements, '', $name );
