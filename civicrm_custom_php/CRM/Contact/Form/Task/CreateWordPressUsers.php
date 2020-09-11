@@ -92,6 +92,9 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
       'version' => 3,
       'sequential' => 1,
       'id' => array( 'IN' => $this->_contactIds ),
+			'options' => [
+				'limit' => 0, // No limit.
+			],
     ));
 
     // Bail on failure.
@@ -137,7 +140,9 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
       $row = array(
         'id' => $contact['contact_id'],
         'contact_type' => $contact['contact_type'],
-        'display_name' => $contact['display_name'],
+        'display_name' => ! empty( $contact['display_name'] ) ? $contact['display_name'] : '',
+        'first_name' => ! empty( $contact['first_name'] ) ? $contact['first_name'] : '',
+        'last_name' => ! empty( $contact['last_name'] ) ? $contact['last_name'] : '',
         'email' => $contact['email'],
         'has_user' => $has_user,
         'user_exists' => $match ? 'y' : 'n',
@@ -265,6 +270,8 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
         'user_pass' => $password,
         'nickname' => $username,
         'display_name' => $row['display_name'],
+        'first_name' => $row['first_name'],
+        'last_name' => $row['last_name'],
         'role' => $default_role,
       );
 
