@@ -146,7 +146,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	public function initialise_settings() {
 
 		// Assign installed plugin version.
-		$this->plugin_version = $this->site_option_get( 'cwps_version', false );
+		$this->plugin_version = $this->option_get( 'cwps_version', false );
 
 		// Do upgrade tasks.
 		$this->upgrade_tasks();
@@ -157,12 +157,12 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		}
 
 		// Store default settings if none exist.
-		if ( ! $this->site_option_exists( 'cwps_settings' ) ) {
-			$this->site_option_set( 'cwps_settings', $this->settings_get_defaults() );
+		if ( ! $this->option_exists( 'cwps_settings' ) ) {
+			$this->option_set( 'cwps_settings', $this->settings_get_defaults() );
 		}
 
 		// Load settings array.
-		$this->settings = $this->site_option_get( 'cwps_settings', $this->settings );
+		$this->settings = $this->option_get( 'cwps_settings', $this->settings );
 
 		// Settings upgrade tasks.
 		$this->upgrade_settings();
@@ -179,7 +179,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	public function store_version() {
 
 		// Store version.
-		$this->site_option_set( 'cwps_version', CIVICRM_WP_PROFILE_SYNC_VERSION );
+		$this->option_set( 'cwps_version', CIVICRM_WP_PROFILE_SYNC_VERSION );
 
 	}
 
@@ -733,7 +733,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	public function settings_save() {
 
 		// Save array as option.
-		return $this->site_option_set( 'cwps_settings', $this->settings );
+		return $this->option_set( 'cwps_settings', $this->settings );
 
 	}
 
@@ -819,10 +819,10 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 * @param str $option_name The name of the option.
 	 * @return bool $exists Whether or not the option exists.
 	 */
-	public function site_option_exists( $option_name = '' ) {
+	public function option_exists( $option_name = '' ) {
 
 		// Test by getting option with unlikely default.
-		if ( $this->site_option_get( $option_name, 'fenfgehgefdfdjgrkj' ) == 'fenfgehgefdfdjgrkj' ) {
+		if ( $this->option_get( $option_name, 'fenfgehgefdfdjgrkj' ) == 'fenfgehgefdfdjgrkj' ) {
 			return false;
 		} else {
 			return true;
@@ -841,10 +841,10 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 * @param str $default The default value of the option if it has no value.
 	 * @return mixed $value the value of the option.
 	 */
-	public function site_option_get( $option_name = '', $default = false ) {
+	public function option_get( $option_name = '', $default = false ) {
 
 		// Get option.
-		$value = get_site_option( $option_name, $default );
+		$value = get_option( $option_name, $default );
 
 		// --<
 		return $value;
@@ -862,10 +862,10 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 * @param mixed $value The value to set the option to.
 	 * @return bool $success True if the value of the option was successfully updated.
 	 */
-	public function site_option_set( $option_name = '', $value = '' ) {
+	public function option_set( $option_name = '', $value = '' ) {
 
 		// Update option.
-		return update_site_option( $option_name, $value );
+		return update_option( $option_name, $value );
 
 	}
 
@@ -879,10 +879,10 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 * @param str $option_name The name of the option.
 	 * @return bool $success True if the option was successfully deleted.
 	 */
-	public function site_option_delete( $option_name = '' ) {
+	public function option_delete( $option_name = '' ) {
 
 		// Delete option.
-		return delete_site_option( $option_name );
+		return delete_option( $option_name );
 
 	}
 
