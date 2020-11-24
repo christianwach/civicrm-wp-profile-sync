@@ -550,14 +550,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 			'admin_page_cwps_settings',
 		];
 
-		$e = new \Exception;
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'screen_id' => $screen_id,
-			//'backtrace' => $trace,
-		), true ) );
-
 		// Bail if not the Screen ID we want.
 		if ( ! in_array( $screen_id, $screen_ids ) ) {
 			return;
