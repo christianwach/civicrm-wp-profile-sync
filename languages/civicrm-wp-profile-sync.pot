@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the CiviCRM WordPress Profile Sync package.
 msgid ""
 msgstr ""
-"Project-Id-Version: CiviCRM WordPress Profile Sync 0.3.3\n"
+"Project-Id-Version: CiviCRM WordPress Profile Sync 0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/civicrm-wp-profile-sync\n"
-"POT-Creation-Date: 2020-09-11 12:49:43+00:00\n"
+"POT-Creation-Date: 2020-11-27 11:39:25+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,97 +12,146 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: civicrm-wp-profile-sync.php:642
-msgid "Could not update the name of the CiviCRM Contact."
-msgstr ""
-
-#: civicrm-wp-profile-sync.php:693
-msgid "Could not update the email of the CiviCRM Contact."
-msgstr ""
-
-#: civicrm-wp-profile-sync.php:751
-msgid "Could not update the website for the CiviCRM Contact."
-msgstr ""
-
-#: civicrm-wp-profile-sync.php:768
-msgid "Could not delete the website for the CiviCRM Contact."
-msgstr ""
-
-#: civicrm-wp-profile-sync.php:797
-msgid "Could not create the website for the CiviCRM Contact."
-msgstr ""
-
-#: civicrm-wp-profile-sync.php:890
-#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:46
-msgid "Create WordPress Users from Contacts"
-msgstr ""
-
-#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:26
+#: assets/civicrm/custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:26
 msgid "ID"
 msgstr ""
 
-#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:27
+#: assets/civicrm/custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:27
 msgid "Type"
 msgstr ""
 
-#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:28
+#: assets/civicrm/custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:28
 msgid "Display Name"
 msgstr ""
 
-#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:29
+#: assets/civicrm/custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:29
 msgid "Email"
 msgstr ""
 
-#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:30
+#: assets/civicrm/custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:30
 msgid "User Exists"
 msgstr ""
 
-#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:31
+#: assets/civicrm/custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:31
 msgid "There are no Contacts selected to create WordPress Users from."
 msgstr ""
 
-#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:52
+#: assets/civicrm/custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:46
+#: includes/civicrm/cwps-civicrm-bulk.php:200
+msgid "Create WordPress Users from Contacts"
+msgstr ""
+
+#: assets/civicrm/custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:52
 msgid "Create WordPress Users"
 msgstr ""
 
-#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:57
+#: assets/civicrm/custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:57
 msgid "Cancel"
 msgstr ""
 
-#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:133
+#: assets/civicrm/custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:133
 msgid "No"
 msgstr ""
 
-#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:135
+#: assets/civicrm/custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:135
 msgid "Yes"
 msgstr ""
 
-#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:243
+#: assets/civicrm/custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:243
 msgid "The email %s already exists."
 msgstr ""
 
-#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:256
+#: assets/civicrm/custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:256
 msgid "The username %s is not valid."
 msgstr ""
 
-#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:300
+#: assets/civicrm/custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:300
 msgid "Could not create UFMatch record."
 msgstr ""
 
-#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:344
+#: assets/civicrm/custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:344
 msgid "Users successfully added to WordPress: %s"
 msgstr ""
 
-#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:347
+#: assets/civicrm/custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:347
 msgid "Users added"
 msgstr ""
 
-#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:353
+#: assets/civicrm/custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:353
 msgid "Users not added to WordPress: %s. Please review these Contacts and try again."
 msgstr ""
 
-#: civicrm_custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:356
+#: assets/civicrm/custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:356
 msgid "Users not added"
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/cwps-admin-metabox-profile.php:4
+msgid "Website Type"
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/cwps-admin-metabox-profile.php:18
+msgid "The CiviCRM Website Type that the WordPress User Profile Website syncs with."
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/cwps-admin-metabox-submit.php:6
+msgid "Save your settings here."
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/cwps-admin-metabox-submit.php:14
+msgid "Update"
+msgstr ""
+
+#: assets/templates/wordpress/pages/cwps-admin-page-settings.php:4
+msgid "CiviCRM Profile Sync"
+msgstr ""
+
+#: assets/templates/wordpress/pages/cwps-admin-page-settings.php:8
+#: includes/admin/cwps-admin.php:338 includes/admin/cwps-admin.php:566
+msgid "Settings"
+msgstr ""
+
+#: includes/admin/cwps-admin.php:319 includes/admin/cwps-admin.php:337
+msgid "CiviCRM Profile Sync: Settings"
+msgstr ""
+
+#: includes/admin/cwps-admin.php:320
+msgid "Profile Sync"
+msgstr ""
+
+#: includes/admin/cwps-admin.php:576
+msgid "User Profile Settings"
+msgstr ""
+
+#: includes/cai/cwps-cai.php:1381 includes/cai/cwps-cai.php:1390
+msgid "%s (A-B)"
+msgstr ""
+
+#: includes/cai/cwps-cai.php:1402 includes/cai/cwps-cai.php:1411
+msgid "%s (B-A)"
+msgstr ""
+
+#: includes/civicrm/cwps-civicrm-contact.php:523
+msgid "Could not update the name of the CiviCRM Contact."
+msgstr ""
+
+#: includes/civicrm/cwps-civicrm-contact.php:615
+msgid "Could not update the nickname of the CiviCRM Contact."
+msgstr ""
+
+#: includes/civicrm/cwps-civicrm-email.php:391
+msgid "Could not update the email of the CiviCRM Contact."
+msgstr ""
+
+#: includes/civicrm/cwps-civicrm-website.php:265
+msgid "Could not create the Website for the CiviCRM Contact."
+msgstr ""
+
+#: includes/civicrm/cwps-civicrm-website.php:299
+msgid "Could not update the Website for the CiviCRM Contact."
+msgstr ""
+
+#: includes/civicrm/cwps-civicrm-website.php:322
+msgid "Could not delete the Website for the CiviCRM Contact."
 msgstr ""
 #. Plugin Name of the plugin/theme
 msgid "CiviCRM WordPress Profile Sync"
