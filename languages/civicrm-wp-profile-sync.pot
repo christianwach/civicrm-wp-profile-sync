@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CiviCRM WordPress Profile Sync 0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/civicrm-wp-profile-sync\n"
-"POT-Creation-Date: 2020-11-27 11:39:25+00:00\n"
+"POT-Creation-Date: 2020-11-27 12:19:17+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -106,19 +106,27 @@ msgid "CiviCRM Profile Sync"
 msgstr ""
 
 #: assets/templates/wordpress/pages/cwps-admin-page-settings.php:8
-#: includes/admin/cwps-admin.php:338 includes/admin/cwps-admin.php:566
+#: includes/admin/cwps-admin.php:389 includes/admin/cwps-admin.php:617
 msgid "Settings"
 msgstr ""
 
-#: includes/admin/cwps-admin.php:319 includes/admin/cwps-admin.php:337
+#: includes/admin/cwps-admin.php:248
+msgid "CiviCRM WordPress Profile Sync needs to know which Website Type to sync."
+msgstr ""
+
+#: includes/admin/cwps-admin.php:251
+msgid "CiviCRM WordPress Profile Sync needs your attention. Please visit the %1$sSettings Page%2$s for details."
+msgstr ""
+
+#: includes/admin/cwps-admin.php:370 includes/admin/cwps-admin.php:388
 msgid "CiviCRM Profile Sync: Settings"
 msgstr ""
 
-#: includes/admin/cwps-admin.php:320
+#: includes/admin/cwps-admin.php:371
 msgid "Profile Sync"
 msgstr ""
 
-#: includes/admin/cwps-admin.php:576
+#: includes/admin/cwps-admin.php:627
 msgid "User Profile Settings"
 msgstr ""
 
