@@ -164,6 +164,9 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		// Load settings array.
 		$this->settings = $this->option_get( 'cwps_settings', $this->settings );
 
+		// Maybe show a warning if Settings need updating.
+		add_action( 'admin_notices', [ $this, 'upgrade_warning' ] );
+
 		// Settings upgrade tasks.
 		$this->upgrade_settings();
 
@@ -207,6 +210,54 @@ class CiviCRM_WP_Profile_Sync_Admin {
 			// Do something
 		}
 		*/
+
+	}
+
+
+
+	/**
+	 * Show a warning when a settings upgrade is required.
+	 *
+	 * @since 0.4
+	 */
+	public function upgrade_warning() {
+
+		// Check user permissions.
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		// Bail if the setting exists and has a value.
+		if (
+			$this->setting_exists( 'user_profile_website_type' ) AND
+			$this->setting_get( 'user_profile_website_type', 0 ) !== 0
+		) {
+			return;
+		}
+
+		// Get current screen.
+		$screen = get_current_screen();
+
+		// Bail if it's not what we expect.
+		if ( ! ( $screen instanceof WP_Screen ) ) {
+			return;
+		}
+
+		// Set message depending whether we are on our Settings page or not.
+		if ( $screen->id == 'civicrm_page_cwps_parent' ) {
+			$message = __( 'CiviCRM WordPress Profile Sync needs to know which Website Type to sync.', 'civicrm-wp-profile-sync' );
+		} else {
+			$message = sprintf(
+				__( 'CiviCRM WordPress Profile Sync needs your attention. Please visit the %1$sSettings Page%2$s for details.', 'civicrm-wp-profile-sync' ),
+				'<a href="' . menu_page_url( 'cwps_parent', false ) . '">',
+				'</a>'
+			);
+		}
+
+		// Show it.
+		echo '<div id="message" class="notice notice-warning">';
+		echo '<p>' . $message . '</p>';
+		echo '</div>';
 
 	}
 
