@@ -10,15 +10,17 @@ CiviCRM WordPress Profile Sync
 **License:** GPLv2 or later<br/>
 **License URI:** https://www.gnu.org/licenses/gpl-2.0.html
 
-CiviCRM WordPress Profile Sync keeps a WordPress and BuddyPress user profile in sync with a CiviCRM contact.
+Keeps the built-in *WordPress* User Profile fields in sync with their corresponding *CiviCRM* Contact fields.
 
 ### Description
 
 Please note: this is the development repository for *CiviCRM WordPress Profile Sync*. It can be found in [the WordPress Plugin Directory](https://wordpress.org/plugins/civicrm-wp-profile-sync/), which is the best place to get it from if you're not a developer.
 
-The *CiviCRM WordPress Profile Sync* plugin keeps the "First Name", "Last Name", "Email Address" and "Website" fields of a *WordPress* (and *BuddyPress*) user profile in sync with the corresponding fields of a *CiviCRM* contact. The synchronisation takes place regardless of whether the changes are made in *WordPress*, *BuddyPress* or *CiviCRM*.
+The *CiviCRM WordPress Profile Sync* plugin keeps the "First Name", "Last Name", "Nickname", "Email Address" and "Website" fields of a *WordPress* User Profile in sync with their corresponding fields in a *CiviCRM* Contact. The synchronisation takes place regardless of whether the changes are made in *WordPress* or *CiviCRM*.
 
-This plugin recommends a minimum of *WordPress 4.9* and *CiviCRM 5.23*. If you want to maintain sync with BuddyPress user profiles, then it also requires *BuddyPress 3.0* and the [BP XProfile WordPress User Sync](https://wordpress.org/plugins/bp-xprofile-wp-user-sync/) plugin to do so.
+The plugin also supports syncing the "First Name" and "Last Name" fields of the WordPress User and CiviCRM Contact with *BuddyPress* when using the *BP xProfile WordPress User Sync* plugin.
+
+This plugin recommends a minimum of *WordPress 4.9* and *CiviCRM 5.23*. If you want to maintain sync with BuddyPress user profiles, then it also requires *BuddyPress 3.0* and the [BP xProfile WordPress User Sync](https://wordpress.org/plugins/bp-xprofile-wp-user-sync/) plugin to do so.
 
 ### Installation
 
