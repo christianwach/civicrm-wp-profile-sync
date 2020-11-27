@@ -38,6 +38,11 @@ This plugin is in active development. For feature requests and bug reports (or i
 
 == Changelog ==
 
+= 0.4 =
+
+* Adds "Nickname" field sync.
+* Adds initial support for syncing ACF fields.
+
 = 0.3.3 =
 
 * Sync First Name and Last Name when bulk creating WordPress users.
