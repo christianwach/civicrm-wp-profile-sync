@@ -389,6 +389,11 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 		$user_id = $args['user_id'];
 		$website = $args['objectRef'];
 
+		// Sometimes CiviCRM uses the string 'null' when the URL is empty.
+		if ( $website->url === 'null' ) {
+			$website->url = '';
+		}
+
 		// Remove WordPress and BuddyPress callbacks to prevent recursion.
 		$this->plugin->hooks_wp_remove();
 		$this->plugin->hooks_bp_remove();
