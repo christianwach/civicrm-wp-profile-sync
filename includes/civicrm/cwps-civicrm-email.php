@@ -165,18 +165,39 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 	 * Get the current value of the CiviCRM "Sync CMS Email" setting.
 	 *
 	 * @since 0.4
+	 *
+	 * @return bool $value Numeric 1 or 0 depending on the CiviCRM setting, or false otherwise.
 	 */
 	public function sync_setting_get() {
 
-		// Switch setting to false.
+		// Init return.
+		$value = false;
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $value;
+		}
+
+		// Get setting value.
 		$params = [
 			'version' => 3,
-			'syncCMSEmail' => false,
+			'name' => 'syncCMSEmail',
 			'group' => 'CiviCRM Preferences',
 		];
 
 		// Return the setting.
-		return civicrm_api( 'Setting', 'getvalue', $params );
+		$result = civicrm_api( 'Setting', 'getvalue', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+			return $value;
+		}
+
+		// Overwrite value with result.
+		$value = $result ? 1 : 0;
+
+		// Return the setting.
+		return $value;
 
 	}
 
@@ -191,6 +212,11 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 	 */
 	public function sync_setting_set( $value = false ) {
 
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return;
+		}
+
 		// Switch setting to false.
 		$params = [
 			'version' => 3,
@@ -199,6 +225,28 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 
 		// Save the setting.
 		$result = civicrm_api( 'Setting', 'create', $params );
+
+	}
+
+
+
+	/**
+	 * Set the CiviCRM "Sync CMS Email" setting without listening.
+	 *
+	 * @since 0.4
+	 *
+	 * @param bool $value The value to apply to the setting.
+	 */
+	public function sync_setting_force( $value = false ) {
+
+		// Remove our hook.
+		remove_action( 'civicrm_postSave_civicrm_setting', [ $this, 'sync_setting_override' ], 10 );
+
+		// Override.
+		$this->sync_setting_set( $value );
+
+		// Reinstate our hook.
+		add_action( 'civicrm_postSave_civicrm_setting', [ $this, 'sync_setting_override' ], 10 );
 
 	}
 
@@ -231,14 +279,14 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 			return;
 		}
 
-		// Remove our hook.
-		remove_action( 'civicrm_postSave_civicrm_setting', [ $this, 'sync_setting_override' ], 10 );
+		// Bail if our setting allows CiviCRM to handle Primary Email sync.
+		$email_sync = $this->plugin->admin->setting_get( 'user_profile_email_sync', 2 );
+		if ( $email_sync !== 1 ) {
+			return;
+		}
 
 		// Override.
-		$this->sync_setting_set( false );
-
-		// Reinstate our hook.
-		add_action( 'civicrm_postSave_civicrm_setting', [ $this, 'sync_setting_override' ], 10 );
+		$this->sync_setting_force( false );
 
 	}
 
@@ -249,7 +297,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 
 
 	/**
-	 * Prevent recursion when a CiviCRM Contact's Primary Email address is edited.
+	 * Listens for when a CiviCRM Contact's Primary Email address is about to be edited.
 	 *
 	 * @see CRM_Core_BAO_Email::add()
 	 *
@@ -272,6 +320,16 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 			return;
 		}
 
+		// If our setting allows CiviCRM to handle Primary Email sync.
+		$email_sync = $this->plugin->admin->setting_get( 'user_profile_email_sync', 2 );
+		if ( $email_sync !== 1 ) {
+
+			// Remove WordPress and BuddyPress callbacks to prevent recursion.
+			$this->plugin->hooks_wp_remove();
+			$this->plugin->hooks_bp_remove();
+
+		}
+
 		/**
 		 * Fires when a CiviCRM Contact's Primary Email address is about to be
 		 * edited.
@@ -292,7 +350,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 
 
 	/**
-	 * Fires just after a CiviCRM Contact's Primary Email address is edited.
+	 * Listens for when a CiviCRM Contact's Primary Email address has been edited.
 	 *
 	 * @see CRM_Core_BAO_Email::add()
 	 *
@@ -301,6 +359,12 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 	 * @param array $args The array of CiviCRM params.
 	 */
 	public function primary_edited( $args ) {
+
+		// Bail if our setting allows CiviCRM to handle Primary Email sync.
+		$email_sync = $this->plugin->admin->setting_get( 'user_profile_email_sync', 2 );
+		if ( $email_sync !== 1 ) {
+			return;
+		}
 
 		// Get full Email record being edited.
 		$primary_email = $this->primary_record_get_by_id( $args['objectId'] );
@@ -419,6 +483,11 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		// Init return.
 		$email = false;
 
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $email;
+		}
+
 		// Get the current Primary Email.
 		$params = [
 			'version' => 3,
@@ -460,6 +529,11 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 
 		// Init return.
 		$email = false;
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $email;
+		}
 
 		// Get the current Primary Email.
 		$params = [

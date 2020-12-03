@@ -227,14 +227,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 			return;
 		}
 
-		// Bail if the setting exists and has a value.
-		if (
-			$this->setting_exists( 'user_profile_website_type' ) AND
-			$this->setting_get( 'user_profile_website_type', 0 ) !== 0
-		) {
-			return;
-		}
-
 		// Get current screen.
 		$screen = get_current_screen();
 
@@ -243,21 +235,67 @@ class CiviCRM_WP_Profile_Sync_Admin {
 			return;
 		}
 
-		// Set message depending whether we are on our Settings page or not.
-		if ( $screen->id == 'civicrm_page_cwps_parent' ) {
-			$message = __( 'CiviCRM WordPress Profile Sync needs to know which Website Type to sync.', 'civicrm-wp-profile-sync' );
-		} else {
-			$message = sprintf(
-				__( 'CiviCRM WordPress Profile Sync needs your attention. Please visit the %1$sSettings Page%2$s for details.', 'civicrm-wp-profile-sync' ),
-				'<a href="' . menu_page_url( 'cwps_parent', false ) . '">',
-				'</a>'
-			);
+		// Set flags.
+		$website_type_undefined = false;
+		$email_sync_undefined = false;
+
+		// If the setting doesn't exist or has no value.
+		if (
+			! $this->setting_exists( 'user_profile_website_type' ) OR
+			$this->setting_get( 'user_profile_website_type', 0 ) === 0
+		) {
+
+			// Set message if we are on our Settings page.
+			if ( $screen->id == 'civicrm_page_cwps_parent' ) {
+				echo '<div id="message" class="notice notice-warning">';
+				echo '<p>' . __( 'CiviCRM Profile Sync needs to know which Website Type to sync.', 'civicrm-wp-profile-sync' ) . '</p>';
+				echo '</div>';
+			}
+
+			// Set flag.
+			$website_type_undefined = true;
+
 		}
 
-		// Show it.
-		echo '<div id="message" class="notice notice-warning">';
-		echo '<p>' . $message . '</p>';
-		echo '</div>';
+		// If the setting doesn't exist or has no valid value.
+		if (
+			! $this->setting_exists( 'user_profile_email_sync' ) OR
+			$this->setting_get( 'user_profile_email_sync', 2 ) === 2
+		) {
+
+			// Set message if we are on our Settings page.
+			if ( $screen->id == 'civicrm_page_cwps_parent' ) {
+				echo '<div id="message" class="notice notice-warning">';
+				echo '<p>' . __( 'CiviCRM Profile Sync needs to know how to sync the Primary Email.', 'civicrm-wp-profile-sync' ) . '</p>';
+				echo '</div>';
+			}
+
+			// Set flag.
+			$email_sync_undefined = true;
+
+		}
+
+		// If either setting has no valid value.
+		if ( $website_type_undefined OR $email_sync_undefined ) {
+
+			// If we are not on our Settings page.
+			if ( $screen->id != 'civicrm_page_cwps_parent' ) {
+
+				// Show general "Call to Action".
+				$message = sprintf(
+					__( 'CiviCRM Profile Sync needs your attention. Please visit the %1$sSettings Page%2$s for details.', 'civicrm-wp-profile-sync' ),
+					'<a href="' . menu_page_url( 'cwps_parent', false ) . '">',
+					'</a>'
+				);
+
+				// Show it.
+				echo '<div id="message" class="notice notice-warning">';
+				echo '<p>' . $message . '</p>';
+				echo '</div>';
+
+			}
+
+		}
 
 	}
 
@@ -279,6 +317,16 @@ class CiviCRM_WP_Profile_Sync_Admin {
 			// Add it from defaults.
 			$settings = $this->settings_get_defaults();
 			$this->setting_set( 'user_profile_website_type', $settings['user_profile_website_type'] );
+			$save = true;
+
+		}
+
+		// "User Email Sync" setting may not exist.
+		if ( ! $this->setting_exists( 'user_profile_email_sync' ) ) {
+
+			// Add it from defaults.
+			$settings = $this->settings_get_defaults();
+			$this->setting_set( 'user_profile_email_sync', $settings['user_profile_email_sync'] );
 			$save = true;
 
 		}
@@ -660,7 +708,14 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		$options = $this->plugin->civicrm->website->types_options_get();
 
 		// Get selected option.
-		$selected = $this->setting_get( 'user_profile_website_type', 0 );
+		$website_type_selected = $this->setting_get( 'user_profile_website_type', 0 );
+
+		// Get setting.
+		$email_sync = (int) $this->setting_get( 'user_profile_email_sync', 2 );
+
+		// Init template vars.
+		$email_sync_yes = $email_sync === 1 ? ' selected ="selected"' : '';
+		$email_sync_no =  $email_sync === 0 ? ' selected ="selected"' : '';
 
 		// Include template file.
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/metaboxes/cwps-admin-metabox-profile.php';
@@ -687,6 +742,9 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 		// Set an impossible default "User Profile Website Type".
 		$settings['user_profile_website_type'] = 0;
+
+		// Set impossible default "User Email Sync" value.
+		$settings['user_profile_email_sync'] = 2;
 
 		/**
 		 * Filter default settings.
@@ -739,6 +797,23 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		// Did we set a CiviCRM Website Type?
 		if ( $website_type !== 0 ) {
 			$this->setting_set( 'user_profile_website_type', $website_type );
+		}
+
+		// Get User Profile Email Sync.
+		$email_sync = isset( $_POST['cwps_email_sync_select'] ) ?
+					  (int) trim( $_POST['cwps_email_sync_select'] ) :
+					  2;
+
+		// Did we choose an Email Sync setting?
+		if ( $email_sync !== 2 ) {
+
+			// Assign the setting.
+			$this->setting_set( 'user_profile_email_sync', $email_sync );
+
+			// The setting in CiviCRM is the logical opposite of ours.
+			$civicrm_email_sync = $email_sync === 1 ? false : true;
+			$this->plugin->civicrm->email->sync_setting_force( $civicrm_email_sync );
+
 		}
 
 		/**
