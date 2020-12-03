@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CiviCRM WordPress Profile Sync 0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/civicrm-wp-profile-sync\n"
-"POT-Creation-Date: 2020-11-27 12:19:17+00:00\n"
+"POT-Creation-Date: 2020-12-03 11:52:57+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -93,6 +93,26 @@ msgstr ""
 msgid "The CiviCRM Website Type that the WordPress User Profile Website syncs with."
 msgstr ""
 
+#: assets/templates/wordpress/metaboxes/cwps-admin-metabox-profile.php:23
+msgid "Primary Email"
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/cwps-admin-metabox-profile.php:28
+msgid "- Select Primary Email sync method -"
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/cwps-admin-metabox-profile.php:30
+msgid "Yes, handle Primary Email sync (recommended)"
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/cwps-admin-metabox-profile.php:31
+msgid "No, let CiviCRM handle Primary Email sync"
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/cwps-admin-metabox-profile.php:34
+msgid "By default, CiviCRM is set to sync the Primary Email of a Contact to the email of a linked WordPress User. Unfortunately, CiviCRM is a bit clumsy in the way that it does this. Since you have CiviCRM Profile Sync installed, it is recommended that you let this plugin handle Primary Email sync for you."
+msgstr ""
+
 #: assets/templates/wordpress/metaboxes/cwps-admin-metabox-submit.php:6
 msgid "Save your settings here."
 msgstr ""
@@ -106,27 +126,31 @@ msgid "CiviCRM Profile Sync"
 msgstr ""
 
 #: assets/templates/wordpress/pages/cwps-admin-page-settings.php:8
-#: includes/admin/cwps-admin.php:389 includes/admin/cwps-admin.php:617
+#: includes/admin/cwps-admin.php:437 includes/admin/cwps-admin.php:665
 msgid "Settings"
 msgstr ""
 
-#: includes/admin/cwps-admin.php:248
-msgid "CiviCRM WordPress Profile Sync needs to know which Website Type to sync."
-msgstr ""
-
 #: includes/admin/cwps-admin.php:251
-msgid "CiviCRM WordPress Profile Sync needs your attention. Please visit the %1$sSettings Page%2$s for details."
+msgid "CiviCRM Profile Sync needs to know which Website Type to sync."
 msgstr ""
 
-#: includes/admin/cwps-admin.php:370 includes/admin/cwps-admin.php:388
+#: includes/admin/cwps-admin.php:269
+msgid "CiviCRM Profile Sync needs to know how to sync the Primary Email."
+msgstr ""
+
+#: includes/admin/cwps-admin.php:286
+msgid "CiviCRM Profile Sync needs your attention. Please visit the %1$sSettings Page%2$s for details."
+msgstr ""
+
+#: includes/admin/cwps-admin.php:418 includes/admin/cwps-admin.php:436
 msgid "CiviCRM Profile Sync: Settings"
 msgstr ""
 
-#: includes/admin/cwps-admin.php:371
+#: includes/admin/cwps-admin.php:419
 msgid "Profile Sync"
 msgstr ""
 
-#: includes/admin/cwps-admin.php:627
+#: includes/admin/cwps-admin.php:675
 msgid "User Profile Settings"
 msgstr ""
 
@@ -146,7 +170,7 @@ msgstr ""
 msgid "Could not update the nickname of the CiviCRM Contact."
 msgstr ""
 
-#: includes/civicrm/cwps-civicrm-email.php:391
+#: includes/civicrm/cwps-civicrm-email.php:455
 msgid "Could not update the email of the CiviCRM Contact."
 msgstr ""
 
