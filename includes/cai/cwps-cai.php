@@ -147,6 +147,10 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		// Check if a Contact is being trashed and has a WordPress User.
 		add_filter( 'civicrm_acf_integration_post_contact_data', [ $this, 'contact_data' ], 50, 2 );
 
+		// Listen for reverse-sync actions and prevent triggering needless procedures.
+		add_action( 'cai/contact_field/reverse_sync/pre', [ $this, 'unregister_mapper_civicrm_hooks' ], 10 );
+		add_action( 'cai/contact_field/reverse_sync/post', [ $this, 'register_mapper_civicrm_hooks' ], 10 );
+
 	}
 
 
