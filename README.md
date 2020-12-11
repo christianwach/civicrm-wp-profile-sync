@@ -24,7 +24,7 @@ The plugin also supports syncing the "First Name" and "Last Name" fields of the 
 
 This plugin is compatible with the [CiviCRM ACF Integration](https://github.com/christianwach/civicrm-acf-integration) plugin and enables syncing of Custom Fields on CiviCRM Contacts with ACF Fields attached to the WordPress User Profiles. It currently only supports the "User Form = Add/Edit" Location Rule.
 
-*Important note:* Please make sure you have *CiviCRM ACF Integration* version 0.8 or greater.
+*Important note:* Please make sure you have *CiviCRM ACF Integration* version 0.8.2 or greater.
 
 #### Requirements
 
