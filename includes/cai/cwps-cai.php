@@ -738,7 +738,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 	 *
 	 * @param array $args The array of CiviCRM params.
 	 */
-	public function im_edited( $contact, $im, $acf_im, $args ) {
+	public function im_edited( $args ) {
 
 		// Extract Instant Messenger.
 		$im = $args['objectRef'];
