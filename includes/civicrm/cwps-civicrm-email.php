@@ -102,6 +102,10 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		// Prevent CiviCRM from syncing Primary Email with WordPress User.
 		add_action( 'civicrm_postSave_civicrm_setting', [ $this, 'sync_setting_override' ], 10 );
 
+		// Show a notice in CiviCRM's WordPress Settings.
+		add_action( 'civicrm/metabox/email_sync/pre', [ $this, 'sync_setting_notice' ], 10 );
+		add_action( 'civicrm/metabox/email_sync/post', [ $this, 'sync_setting_js' ], 10 );
+
 		// Listen for User sync.
 		add_action( 'cwps/wordpress/user_sync', [ $this, 'primary_update' ], 10 );
 
@@ -287,6 +291,50 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 
 		// Override.
 		$this->sync_setting_force( false );
+
+	}
+
+
+
+	/**
+	 * Show a notice on the CiviCRM Settings "Email Sync" metabox.
+	 *
+	 * @since 0.4
+	 */
+	public function sync_setting_notice() {
+
+		// Bail if our setting allows CiviCRM to handle Primary Email sync.
+		$email_sync = $this->plugin->admin->setting_get( 'user_profile_email_sync', 2 );
+		if ( $email_sync !== 1 ) {
+			return;
+		}
+
+		// Let people know.
+		echo '<div class="notice notice-warning inline" style="background-color: #f7f7f7;">
+			<p>' . esc_html__( 'CiviCRM Profile Sync is managing Contact Email &rarr; User Email sync.' ) . '</p>
+		</div>';
+
+	}
+
+
+
+	/**
+	 * Add some Javascript on the CiviCRM Settings "Email Sync" metabox.
+	 *
+	 * @since 0.4
+	 */
+	public function sync_setting_js() {
+
+		// Bail if our setting allows CiviCRM to handle Primary Email sync.
+		$email_sync = $this->plugin->admin->setting_get( 'user_profile_email_sync', 2 );
+		if ( $email_sync !== 1 ) {
+			return;
+		}
+
+		// Disable the dropdown.
+		echo '<script type="text/javascript">
+			jQuery("#sync_email").prop("disabled", true);
+		</script>';
 
 	}
 
