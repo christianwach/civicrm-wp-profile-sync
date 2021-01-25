@@ -10,7 +10,7 @@ CiviCRM WordPress Profile Sync
 **License:** GPLv2 or later<br/>
 **License URI:** https://www.gnu.org/licenses/gpl-2.0.html
 
-Keeps the built-in *WordPress* User Profile fields in sync with their corresponding *CiviCRM* Contact fields.
+Keeps *WordPress* User Profile fields in sync with their corresponding *CiviCRM* Contact fields.
 
 ### Description
 
