@@ -136,6 +136,8 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		$this->register_mapper_wp_hooks();
 		$this->register_mapper_civicrm_hooks();
 
+		// TODO: Create AJAX-based Manual Sync.
+
 		// Listen for the start and end of the User-to-Contact sync process.
 		//add_action( 'cwps/wordpress/user_sync/pre', [ $this, 'wp_user_sync_pre' ], 10 );
 		//add_action( 'cwps/wordpress/user_sync/post', [ $this, 'wp_user_synced' ], 10 );
@@ -268,6 +270,9 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		add_action( 'civicrm_acf_integration_mapper_address_edited', [ $this, 'map_edited' ], 10 );
 		add_action( 'civicrm_acf_integration_mapper_address_deleted', [ $this, 'map_deleted' ], 10 );
 
+		add_action( 'civicrm_acf_integration_mapper_contact_created', [ $this, 'contact_id_edited' ], 10 );
+		add_action( 'civicrm_acf_integration_mapper_contact_edited', [ $this, 'contact_id_edited' ], 10 );
+
 	}
 
 
@@ -318,6 +323,9 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		remove_action( 'civicrm_acf_integration_mapper_address_created', [ $this, 'map_created' ], 10 );
 		remove_action( 'civicrm_acf_integration_mapper_address_edited', [ $this, 'map_edited' ], 10 );
 		remove_action( 'civicrm_acf_integration_mapper_address_deleted', [ $this, 'map_deleted' ], 10 );
+
+		remove_action( 'civicrm_acf_integration_mapper_contact_created', [ $this, 'contact_id_edited' ], 10 );
+		remove_action( 'civicrm_acf_integration_mapper_contact_edited', [ $this, 'contact_id_edited' ], 10 );
 
 	}
 
@@ -485,7 +493,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 
 	/**
-	 * Update an Address ACF Field on a User when a CiviCRM Contact has been edited.
+	 * Update an Email ACF Field on a User when a CiviCRM Contact has been edited.
 	 *
 	 * @since 0.4
 	 *
@@ -563,7 +571,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 
 	/**
-	 * Update Phone ACF Fields on a User when a CiviCRM Contact has been edited.
+	 * Update Website ACF Fields on a User when a CiviCRM Contact has been edited.
 	 *
 	 * @since 0.4
 	 *
@@ -1317,6 +1325,49 @@ class CiviCRM_WP_Profile_Sync_CAI {
 			$this->cai->civicrm->google_map->fields_update( $post_id, $address_shared );
 
 		}
+
+		// Re-register WordPress hooks.
+		$this->register_mapper_wp_hooks();
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Update a Contact ID ACF Field on a User when a CiviCRM Contact has been edited.
+	 *
+	 * @since 0.4
+	 *
+	 * @param array $args The array of CiviCRM params.
+	 */
+	public function contact_id_edited( $args ) {
+
+		// Grab the Contact ID.
+		$contact_id = $args['objectId'];
+
+		// Sanity check.
+		if ( empty( $contact_id ) ) {
+			return;
+		}
+
+		// Bail if this Contact doesn't have a User ID.
+		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $contact_id );
+		if ( $user_id === false ) {
+			return;
+		}
+
+		// Format the ACF "Post ID".
+		$post_id = 'user_' . $user_id;
+
+		// Unregister WordPress hooks.
+		$this->unregister_mapper_wp_hooks();
+
+		// Run the routine, but with a User reference.
+		$this->cai->civicrm->contact_id->fields_update( $post_id, $args );
 
 		// Re-register WordPress hooks.
 		$this->register_mapper_wp_hooks();
