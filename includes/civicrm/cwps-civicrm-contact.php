@@ -119,6 +119,9 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		add_action( 'cwps/wordpress/user_sync', [ $this, 'name_update' ], 10 );
 		add_action( 'cwps/wordpress/user_sync', [ $this, 'nickname_update' ], 10 );
 
+		// Add "CiviCRM Profile" link to admin menu.
+		add_action( 'admin_bar_menu', [ $this, 'menu_link_add' ], 1 );
+
 	}
 
 
@@ -716,6 +719,95 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 		// --<
 		return $this->top_level_types;
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Add a link to the Contact View screen to the WordPress admin menu.
+	 *
+	 * @since 0.4
+	 */
+	public function menu_link_add() {
+
+		// Access WordPress admin bar.
+		global $wp_admin_bar;
+
+		// Get current user.
+		$user = wp_get_current_user();
+
+	    // Sanity check.
+		if ( ! ( $user instanceof WP_User ) ) {
+			return;
+		}
+
+		// Does this User have a Contact?
+		$contact = $this->plugin->mapper->ufmatch->contact_get_by_user_id( $user->ID );
+
+		// Bail if there isn't one.
+		if ( $contact === false ) {
+			return;
+		}
+
+		// Check permission to view this Contact.
+		if ( ! $this->user_can_view( $contact['id'] ) ) {
+			return;
+		}
+
+		// Get the link to the Contact.
+		$link = $this->civicrm->get_link( 'civicrm/contact/view', 'reset=1&cid=' . $contact['id'] );
+
+		// Add menu item.
+		$wp_admin_bar->add_node( [
+			'parent' => 'user-actions',
+			'id'     => 'civicrm-profile',
+			'title'  => __( 'CiviCRM Profile', 'civicrm-wp-profile-sync' ),
+			'href'   => $link,
+		] );
+
+
+	}
+
+
+
+	/**
+	 * Check with CiviCRM that this Contact can be viewed.
+	 *
+	 * @since 0.4
+	 *
+	 * @param int $contact_id The CiviCRM Contact ID to check.
+	 * @return bool $permitted True if allowed, false otherwise.
+	 */
+	public function user_can_view( $contact_id ) {
+
+		// Deny by default.
+		$permitted = false;
+
+		// Always deny if CiviCRM is not active.
+		if ( ! $this->plugin->civicrm->is_initialised() ) {
+			return $permitted;
+		}
+
+		// Check with CiviCRM that this Contact can be viewed.
+		if ( CRM_Contact_BAO_Contact_Permission::allow( $contact_id, CRM_Core_Permission::VIEW ) ) {
+			$permitted = true;
+		}
+
+		/**
+		 * Return permission but allow overrides.
+		 *
+		 * @since 0.3
+		 *
+		 * @param bool $permitted True if allowed, false otherwise.
+		 * @param int $contact_id The CiviCRM Contact ID.
+		 * @return bool $permitted True if allowed, false otherwise.
+		 */
+		return apply_filters( 'cwps/contact/user_can_view', $permitted, $contact_id );
 
 	}
 

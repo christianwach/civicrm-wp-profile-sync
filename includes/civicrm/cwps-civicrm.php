@@ -260,6 +260,47 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 
 
 
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Get a CiviCRM admin link.
+	 *
+	 * @since 0.4
+	 *
+	 * @param str $path The CiviCRM path.
+	 * @param str $params The CiviCRM parameters.
+	 * @return string $link The URL of the CiviCRM page.
+	 */
+	public function get_link( $path = '', $params = null ) {
+
+		// Init link.
+		$link = '';
+
+		// Init CiviCRM or bail.
+		if ( ! $this->is_initialised() ) {
+			return $link;
+		}
+
+		// Use CiviCRM to construct link.
+		$link = CRM_Utils_System::url(
+			$path,
+			$params,
+			true,
+			null,
+			true,
+			false,
+			true
+		);
+
+		// --<
+		return $link;
+
+	}
+
+
+
 } // Class ends.
 
 
