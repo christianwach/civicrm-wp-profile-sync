@@ -105,6 +105,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		// Show a notice in CiviCRM's WordPress Settings.
 		add_action( 'civicrm/metabox/email_sync/pre', [ $this, 'sync_setting_notice' ], 10 );
 		add_action( 'civicrm/metabox/email_sync/post', [ $this, 'sync_setting_js' ], 10 );
+		add_filter( 'civicrm/metabox/email_sync/submit/options', [ $this, 'sync_setting_button' ], 10 );
 
 		// Listen for User sync.
 		add_action( 'cwps/wordpress/user_sync', [ $this, 'primary_update' ], 10 );
@@ -335,6 +336,32 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		echo '<script type="text/javascript">
 			jQuery("#sync_email").prop("disabled", true);
 		</script>';
+
+	}
+
+
+
+	/**
+	 * Filter the "Email Sync" submit button attributes.
+	 *
+	 * @since 0.4
+	 *
+	 * @param array $options The existing button attributes.
+	 * @return array $options The modified button attributes.
+	 */
+	public function sync_setting_button( $options ) {
+
+		// Bail if our setting allows CiviCRM to handle Primary Email sync.
+		$email_sync = $this->plugin->admin->setting_get( 'user_profile_email_sync', 2 );
+		if ( $email_sync !== 1 ) {
+			return $options;
+		}
+
+		// Disable the submit button.
+		$options['disabled'] = null;
+
+		// --<
+		return $options;
 
 	}
 
