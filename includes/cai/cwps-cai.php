@@ -270,6 +270,16 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		add_action( 'civicrm_acf_integration_mapper_address_edited', [ $this, 'map_edited' ], 10 );
 		add_action( 'civicrm_acf_integration_mapper_address_deleted', [ $this, 'map_deleted' ], 10 );
 
+		add_action( 'civicrm_acf_integration_mapper_address_created', [ $this, 'city_edited' ], 10 );
+		add_action( 'civicrm_acf_integration_mapper_address_edited', [ $this, 'city_edited' ], 10 );
+		add_action( 'civicrm_acf_integration_mapper_address_pre_delete', [ $this, 'city_pre_delete' ], 10 );
+		add_action( 'civicrm_acf_integration_mapper_address_deleted', [ $this, 'city_deleted' ], 10 );
+
+		add_action( 'civicrm_acf_integration_mapper_address_created', [ $this, 'state_edited' ], 10 );
+		add_action( 'civicrm_acf_integration_mapper_address_edited', [ $this, 'state_edited' ], 10 );
+		add_action( 'civicrm_acf_integration_mapper_address_pre_delete', [ $this, 'state_pre_delete' ], 10 );
+		add_action( 'civicrm_acf_integration_mapper_address_deleted', [ $this, 'state_deleted' ], 10 );
+
 		add_action( 'civicrm_acf_integration_mapper_contact_created', [ $this, 'contact_id_edited' ], 10 );
 		add_action( 'civicrm_acf_integration_mapper_contact_edited', [ $this, 'contact_id_edited' ], 10 );
 
@@ -323,6 +333,16 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		remove_action( 'civicrm_acf_integration_mapper_address_created', [ $this, 'map_created' ], 10 );
 		remove_action( 'civicrm_acf_integration_mapper_address_edited', [ $this, 'map_edited' ], 10 );
 		remove_action( 'civicrm_acf_integration_mapper_address_deleted', [ $this, 'map_deleted' ], 10 );
+
+		remove_action( 'civicrm_acf_integration_mapper_address_created', [ $this, 'city_edited' ], 10 );
+		remove_action( 'civicrm_acf_integration_mapper_address_edited', [ $this, 'city_edited' ], 10 );
+		remove_action( 'civicrm_acf_integration_mapper_address_pre_delete', [ $this, 'city_pre_delete' ], 10 );
+		remove_action( 'civicrm_acf_integration_mapper_address_deleted', [ $this, 'city_deleted' ], 10 );
+
+		remove_action( 'civicrm_acf_integration_mapper_address_created', [ $this, 'state_edited' ], 10 );
+		remove_action( 'civicrm_acf_integration_mapper_address_edited', [ $this, 'state_edited' ], 10 );
+		remove_action( 'civicrm_acf_integration_mapper_address_pre_delete', [ $this, 'state_pre_delete' ], 10 );
+		remove_action( 'civicrm_acf_integration_mapper_address_deleted', [ $this, 'state_deleted' ], 10 );
 
 		remove_action( 'civicrm_acf_integration_mapper_contact_created', [ $this, 'contact_id_edited' ], 10 );
 		remove_action( 'civicrm_acf_integration_mapper_contact_edited', [ $this, 'contact_id_edited' ], 10 );
@@ -1325,6 +1345,266 @@ class CiviCRM_WP_Profile_Sync_CAI {
 			$this->cai->civicrm->google_map->fields_update( $post_id, $address_shared );
 
 		}
+
+		// Re-register WordPress hooks.
+		$this->register_mapper_wp_hooks();
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Update City ACF Fields on a User when a CiviCRM Contact has been edited.
+	 *
+	 * @since 0.4
+	 *
+	 * @param array $args The array of CiviCRM params.
+	 */
+	public function city_edited( $args ) {
+
+		// Extract Address.
+		$address = $args['objectRef'];
+
+		// Sanity check.
+		if ( empty( $address->contact_id ) ) {
+			return;
+		}
+
+		// Bail if this Contact doesn't have a User ID.
+		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $address->contact_id );
+		if ( $user_id === false ) {
+			return;
+		}
+
+		// Format the ACF "Post ID".
+		$post_id = 'user_' . $user_id;
+
+		// Unregister WordPress hooks.
+		$this->unregister_mapper_wp_hooks();
+
+		// Run the routine, but with a User reference.
+		$this->cai->civicrm->address_city->fields_update( $post_id, $address, $args );
+
+		// Re-register WordPress hooks.
+		$this->register_mapper_wp_hooks();
+
+	}
+
+
+
+	/**
+	 * A CiviCRM Contact's Address Record is about to be deleted.
+	 *
+	 * Before a Address Record is deleted, we need to retrieve the existing data.
+	 *
+	 * This is not required when creating or editing a Address Record.
+	 *
+	 * @since 0.4
+	 *
+	 * @param array $args The array of CiviCRM params.
+	 */
+	public function city_pre_delete( $args ) {
+
+		// Always clear properties if set previously.
+		if ( isset( $this->city_address_pre ) ) {
+			unset( $this->city_address_pre );
+		}
+
+		// We just need the Address ID.
+		$address_id = (int) $args['objectId'];
+
+		// Grab the Address Record data from the database.
+		$address_pre = $this->cai->civicrm->address->address_get_by_id( $address_id );
+
+		// Maybe cast previous Address Record data as object and stash in a property.
+		if ( ! is_object( $address_pre ) ) {
+			$this->city_address_pre = (object) $address_pre;
+		} else {
+			$this->city_address_pre = $address_pre;
+		}
+
+	}
+
+
+
+	/**
+	 * A CiviCRM Address Record has just been deleted.
+	 *
+	 * @since 0.4
+	 *
+	 * @param array $args The array of CiviCRM params.
+	 */
+	public function city_deleted( $args ) {
+
+		// Bail if we don't have a pre-delete Address Record.
+		if ( ! isset( $this->city_address_pre ) ) {
+			return;
+		}
+
+		// We just need the Address ID.
+		$address_id = (int) $args['objectId'];
+
+		// Sanity check.
+		if ( $address_id != $this->city_address_pre->id ) {
+			return;
+		}
+
+		// Bail if this is not a Contact's Address Record.
+		if ( empty( $this->city_address_pre->contact_id ) ) {
+			return;
+		}
+
+		// Overwrite empty Address Record with full Record.
+		$address = $this->city_address_pre;
+
+		// Bail if this Contact doesn't have a User ID.
+		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $address->contact_id );
+		if ( $user_id === false ) {
+			return;
+		}
+
+		// Format the ACF "Post ID".
+		$post_id = 'user_' . $user_id;
+
+		// Unregister WordPress hooks.
+		$this->unregister_mapper_wp_hooks();
+
+		// Run the routine, but with a User reference.
+		$this->cai->civicrm->address_city->fields_update( $post_id, $address, $args );
+
+		// Re-register WordPress hooks.
+		$this->register_mapper_wp_hooks();
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Update City ACF Fields on a User when a CiviCRM Contact has been edited.
+	 *
+	 * @since 0.4
+	 *
+	 * @param array $args The array of CiviCRM params.
+	 */
+	public function state_edited( $args ) {
+
+		// Extract Address.
+		$address = $args['objectRef'];
+
+		// Sanity check.
+		if ( empty( $address->contact_id ) ) {
+			return;
+		}
+
+		// Bail if this Contact doesn't have a User ID.
+		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $address->contact_id );
+		if ( $user_id === false ) {
+			return;
+		}
+
+		// Format the ACF "Post ID".
+		$post_id = 'user_' . $user_id;
+
+		// Unregister WordPress hooks.
+		$this->unregister_mapper_wp_hooks();
+
+		// Run the routine, but with a User reference.
+		$this->cai->civicrm->address_state->fields_update( $post_id, $address, $args );
+
+		// Re-register WordPress hooks.
+		$this->register_mapper_wp_hooks();
+
+	}
+
+
+
+	/**
+	 * A CiviCRM Contact's Address Record is about to be deleted.
+	 *
+	 * Before a Address Record is deleted, we need to retrieve the existing data.
+	 *
+	 * This is not required when creating or editing a Address Record.
+	 *
+	 * @since 0.4
+	 *
+	 * @param array $args The array of CiviCRM params.
+	 */
+	public function state_pre_delete( $args ) {
+
+		// Always clear properties if set previously.
+		if ( isset( $this->state_address_pre ) ) {
+			unset( $this->state_address_pre );
+		}
+
+		// We just need the Address ID.
+		$address_id = (int) $args['objectId'];
+
+		// Grab the Address Record data from the database.
+		$address_pre = $this->cai->civicrm->address->address_get_by_id( $address_id );
+
+		// Maybe cast previous Address Record data as object and stash in a property.
+		if ( ! is_object( $address_pre ) ) {
+			$this->state_address_pre = (object) $address_pre;
+		} else {
+			$this->state_address_pre = $address_pre;
+		}
+
+	}
+
+
+
+	/**
+	 * A CiviCRM Address Record has just been deleted.
+	 *
+	 * @since 0.4
+	 *
+	 * @param array $args The array of CiviCRM params.
+	 */
+	public function state_deleted( $args ) {
+
+		// Bail if we don't have a pre-delete Address Record.
+		if ( ! isset( $this->state_address_pre ) ) {
+			return;
+		}
+
+		// We just need the Address ID.
+		$address_id = (int) $args['objectId'];
+
+		// Sanity check.
+		if ( $address_id != $this->state_address_pre->id ) {
+			return;
+		}
+
+		// Bail if this is not a Contact's Address Record.
+		if ( empty( $this->state_address_pre->contact_id ) ) {
+			return;
+		}
+
+		// Overwrite empty Address Record with full Record.
+		$address = $this->state_address_pre;
+
+		// Bail if this Contact doesn't have a User ID.
+		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $address->contact_id );
+		if ( $user_id === false ) {
+			return;
+		}
+
+		// Format the ACF "Post ID".
+		$post_id = 'user_' . $user_id;
+
+		// Unregister WordPress hooks.
+		$this->unregister_mapper_wp_hooks();
+
+		// Run the routine, but with a User reference.
+		$this->cai->civicrm->address_state->fields_update( $post_id, $address, $args );
 
 		// Re-register WordPress hooks.
 		$this->register_mapper_wp_hooks();
