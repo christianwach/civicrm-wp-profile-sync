@@ -561,7 +561,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		$columns = ( 1 == $screen->get_columns() ? '1' : '2' );
 
 		// Include template file.
-		include( CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/pages/cwps-admin-page-settings.php' );
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/pages/cwps-admin-page-settings.php';
 
 	}
 
