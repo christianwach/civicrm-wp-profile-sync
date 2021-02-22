@@ -261,6 +261,8 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 		/**
 		 * Let other plugins override whether a WordPress User should be synced.
 		 *
+		 * Deprecated: use "cwps/user/should_be_synced" instead.
+		 *
 		 * @since 0.3
 		 *
 		 * @param bool $should_be_synced True if the User should be synced, false otherwise.
@@ -268,7 +270,19 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 		 * @param object $contact The CiviCRM Contact object.
 		 * @return bool $should_be_synced The modified value of the sync flag.
 		 */
-		return apply_filters( 'civicrm_wp_profile_sync_user_should_be_synced', $should_be_synced, $user, $contact );
+		$should_be_synced = apply_filters( 'civicrm_wp_profile_sync_user_should_be_synced', $should_be_synced, $user, $contact );
+
+		/**
+		 * Let other plugins override whether a WordPress User should be synced.
+		 *
+		 * @since 0.4
+		 *
+		 * @param bool $should_be_synced True if the User should be synced, false otherwise.
+		 * @param object $user The WordPress User object.
+		 * @param object $contact The CiviCRM Contact object.
+		 * @return bool $should_be_synced The modified value of the sync flag.
+		 */
+		return apply_filters( 'cwps/user/should_be_synced', $should_be_synced, $user, $contact );
 
 	}
 
