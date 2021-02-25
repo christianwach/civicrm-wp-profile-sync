@@ -2043,7 +2043,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		// Bail if this Contact doesn't have a User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $contact_data['id'] );
 		if ( $user_id === false ) {
-			return;
+			return $contact_data;
 		}
 
 		// Override the status for the Contact.
