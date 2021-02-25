@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
 
 
 /**
- * CiviCRM ACF Integration Mapper Class.
+ * CiviCRM Profile Sync ACF Mapper Class.
  *
  * A class that encapsulates methods to keep a WordPress Entity synced with a
  * CiviCRM Entity via ACF Fields.
