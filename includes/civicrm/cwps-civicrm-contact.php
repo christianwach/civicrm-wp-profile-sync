@@ -337,7 +337,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		 *
 		 * @param array $args The array of CiviCRM params.
 		 */
-		do_action( 'cwps/civicrm/contact_sync/pre', $args );
+		do_action( 'cwps/civicrm/contact/contact_sync/pre', $args );
 
 		 // TODO: It seems overkill to update the User twice here.
 
@@ -348,7 +348,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		/**
 		 * Allow plugins to hook into the sync process.
 		 *
-		 * Deprecated: Use "cwps/civicrm/contact_sync" instead.
+		 * Deprecated: Use "cwps/civicrm/contact/contact_sync" instead.
 		 *
 		 * @since 0.2.4
 		 *
@@ -365,7 +365,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		 *
 		 * @param array $args The array of CiviCRM params.
 		 */
-		do_action( 'cwps/civicrm/contact_sync', $args );
+		do_action( 'cwps/civicrm/contact/contact_sync', $args );
 
 		// Add back CiviCRM's own callbacks.
 		$this->hooks_core_add();
@@ -377,7 +377,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		 *
 		 * @param array $args The array of CiviCRM params.
 		 */
-		do_action( 'cwps/civicrm/contact_sync/post', $args );
+		do_action( 'cwps/civicrm/contact/contact_sync/post', $args );
 
 	}
 

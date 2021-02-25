@@ -143,8 +143,8 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		//add_action( 'cwps/wordpress/user_sync/post', [ $this, 'wp_user_synced' ], 10 );
 
 		// Listen for the start and end of the Contact-to-User sync process.
-		//add_action( 'cwps/civicrm/contact_sync/pre', [ $this, 'contact_sync_pre' ], 10 );
-		//add_action( 'cwps/civicrm/contact_sync/post', [ $this, 'contact_synced' ], 10 );
+		//add_action( 'cwps/civicrm/contact/contact_sync/pre', [ $this, 'contact_sync_pre' ], 10 );
+		//add_action( 'cwps/civicrm/contact/contact_sync/post', [ $this, 'contact_synced' ], 10 );
 
 		// Check if a Contact is being trashed and has a WordPress User.
 		add_filter( 'civicrm_acf_integration_post_contact_data', [ $this, 'contact_data' ], 50, 2 );
