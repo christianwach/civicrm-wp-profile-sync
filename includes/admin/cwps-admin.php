@@ -486,7 +486,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		 * @param array $subpages The existing list of subpages.
 		 * @return array $subpages The modified list of subpages.
 		 */
-		$subpages = apply_filters( 'cwps/subpages', $subpages );
+		$subpages = apply_filters( 'cwps/admin/settings/subpages', $subpages );
 
 		// This tweaks the Settings subnav menu to show only one menu item.
 		if ( in_array( $plugin_page, $subpages ) ) {
