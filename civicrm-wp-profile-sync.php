@@ -94,6 +94,15 @@ class CiviCRM_WP_Profile_Sync {
 	public $bp;
 
 	/**
+	 * ACF compatibility object.
+	 *
+	 * @since 0.4
+	 * @access public
+	 * @var object $acf The ACF compatibility object.
+	 */
+	public $acf;
+
+	/**
 	 * CiviCRM ACF Integration compatibility object.
 	 *
 	 * @since 0.4
@@ -168,6 +177,7 @@ class CiviCRM_WP_Profile_Sync {
 		require CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/civicrm/cwps-civicrm.php';
 		require CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/buddypress/cwps-bp.php';
 		require CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/cai/cwps-cai.php';
+		require CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/cwps-acf-loader.php';
 		require CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/mapper/cwps-mapper.php';
 
 		// We're done.
@@ -196,6 +206,7 @@ class CiviCRM_WP_Profile_Sync {
 		$this->civicrm = new CiviCRM_WP_Profile_Sync_CiviCRM();
 		$this->bp = new CiviCRM_WP_Profile_Sync_BuddyPress();
 		$this->cai = new CiviCRM_WP_Profile_Sync_CAI();
+		$this->acf = new CiviCRM_WP_Profile_Sync_ACF_Loader();
 		$this->mapper = new CiviCRM_WP_Profile_Sync_Mapper();
 
 		// Store references.
@@ -204,6 +215,7 @@ class CiviCRM_WP_Profile_Sync {
 		$this->civicrm->set_references( $this );
 		$this->bp->set_references( $this );
 		$this->cai->set_references( $this );
+		$this->acf->set_references( $this );
 		$this->mapper->set_references( $this );
 
 		// We're done.

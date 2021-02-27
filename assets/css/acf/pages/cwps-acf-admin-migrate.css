@@ -1,0 +1,28 @@
+/**
+ * CiviCRM Profile Sync "ACF Migrate" Styles
+ *
+ * Implements styling for CiviCRM Profile Sync "ACF Migrate" page.
+ *
+ * @package WordPress
+ * @subpackage CiviCRM_Profile_Sync
+ */
+
+
+/* Admin Screen setup
+----------------------------------*/
+#cwps_info h4 {
+    font-size: 1.1em;
+}
+
+#cwps_info p, #cwps_info ul li {
+    font-size: 14px;
+}
+
+#cwps_info code {
+    font-size: 13px;
+}
+
+#cwps_info ul {
+	list-style: disc;
+	padding-left: 20px;
+}
