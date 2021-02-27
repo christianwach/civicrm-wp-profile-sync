@@ -103,6 +103,15 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 	 */
 	public $mapper;
 
+	/**
+	 * Loaded flag.
+	 *
+	 * @since 0.4
+	 * @access public
+	 * @var bool $loaded Loaded flag. True when conditions are met.
+	 */
+	public $loaded = false;
+
 
 
 	/**
@@ -130,6 +139,22 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 
 		// Store reference.
 		$this->plugin = $parent;
+
+	}
+
+
+
+	/**
+	 * Getter for loaded property.
+	 *
+	 * @since 0.4
+	 *
+	 * @return bool $loaded True if fully loaded, false otherwise.
+	 */
+	public function is_loaded() {
+
+		// --<
+		return $this->loaded;
 
 	}
 
@@ -179,8 +204,9 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 		 */
 		do_action( 'cwps/acf/loaded' );
 
-		// We're done.
+		// We're done and loaded.
 		$done = true;
+		$this->loaded = true;
 
 	}
 
