@@ -216,7 +216,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		// Enqueue CSS.
 		wp_enqueue_style(
 			'cwps-admin-style',
-			CIVICRM_WP_PROFILE_SYNC_URL . 'assets/css/acf/pages/cwps-acf-admin-manual-sync.css',
+			CIVICRM_WP_PROFILE_SYNC_URL . 'assets/css/acf/pages/page-admin-acf-sync.css',
 			null,
 			CIVICRM_WP_PROFILE_SYNC_VERSION,
 			'all' // Media.
@@ -236,7 +236,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		// Enqueue Javascript.
 		wp_enqueue_script(
 			'cwps-admin-script',
-			CIVICRM_WP_PROFILE_SYNC_URL . 'assets/js/acf/pages/cwps-acf-admin-manual-sync.js',
+			CIVICRM_WP_PROFILE_SYNC_URL . 'assets/js/acf/pages/page-admin-acf-sync.js',
 			[ 'jquery', 'jquery-ui-core', 'jquery-ui-progressbar' ],
 			CIVICRM_WP_PROFILE_SYNC_VERSION
 		);

@@ -262,7 +262,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 		// Enqueue CSS.
 		wp_enqueue_style(
 			'cwps-admin-migrate',
-			CIVICRM_WP_PROFILE_SYNC_URL . 'assets/css/acf/pages/cwps-acf-admin-migrate.css',
+			CIVICRM_WP_PROFILE_SYNC_URL . 'assets/css/acf/pages/page-admin-acf-migrate.css',
 			null,
 			CIVICRM_WP_PROFILE_SYNC_VERSION,
 			'all' // Media.
