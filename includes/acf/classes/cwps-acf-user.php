@@ -13,7 +13,6 @@ defined( 'ABSPATH' ) || exit;
 
 
 
-
 /**
  * CiviCRM Profile Sync WordPress User Class.
  *
