@@ -1,22 +1,36 @@
 === CiviCRM Profile Sync ===
 Contributors: needle, cuny-academic-commons
 Donate link: https://www.paypal.me/interactivist
-Tags: civicrm, buddypress, user, profile, xprofile, sync
+Tags: civicrm, buddypress, advanced custom fields, acf, user, profile, xprofile, sync
 Requires at least: 4.9
-Tested up to: 5.6
+Tested up to: 5.7
 Stable tag: 0.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Keeps entities in CiviCRM in sync with their equivalents in WordPress.
+Keeps a WordPress User profile in sync with a CiviCRM Contact and integrates WordPress Entities and CiviCRM Entities with data synced via Advanced Custom Fields.
 
 
 
 == Description ==
 
-The CiviCRM Profile Sync plugin keeps the "First Name", "Last Name", "Nickname", "Email Address" and "Website" fields of a WordPress User Profile in sync with their corresponding fields in a CiviCRM Contact. The synchronisation takes place regardless of whether the changes are made in WordPress or CiviCRM.
+### WordPress Integration
 
-The plugin also supports syncing the "First Name" and "Last Name" fields of the WordPress User and CiviCRM Contact with BuddyPress when using the [BP xProfile WordPress User Sync](https://wordpress.org/plugins/bp-xprofile-wp-user-sync/) plugin.
+At its simplest, the CiviCRM Profile Sync plugin keeps the "First Name", "Last Name", "Nickname", "Email Address" and "Website" fields of a WordPress User Profile in sync with their corresponding fields in a CiviCRM Contact. The synchronisation takes place regardless of whether the changes are made in WordPress or CiviCRM.
+
+### BuddyPress Integration
+
+The plugin also supports syncing the "First Name" and "Last Name" fields of the WordPress User and CiviCRM Contact with BuddyPress when using the BP xProfile WordPress User Sync plugin. Further integration with BuddyPress is in the pipeline.
+
+### ACF Integration
+
+CiviCRM Profile Sync also enables integration between CiviCRM Entities and WordPress Entities with data synced via Advanced Custom Fields.
+
+Please be aware that ACF integration is at an early stage of development and (although it is limited in its coverage of the entities that can be linked) it is fairly comprehensive in its mapping of the built-in CiviCRM Custom Field Types with their corresponding ACF Field Types.
+
+So if, for example, you want to display (or create) a Contact Type on your WordPress site with ACF Fields that contain synced CiviCRM data, this plugin could work for you.
+
+Please refer to the [ACF Integration Documentation](https://github.com/christianwach/civicrm-wp-profile-sync/docs/ACF.md) for details.
 
 ### Requirements
 
@@ -36,13 +50,11 @@ This plugin is in active development. For feature requests and bug reports (or i
 
 
 
-
 == Changelog ==
 
 = 0.4 =
 
-* Adds "Nickname" field sync.
-* Adds initial support for syncing ACF fields.
+* Enables integration between CiviCRM Entities and WordPress Entities with data synced via Advanced Custom Fields.
 
 = 0.3.3 =
 
