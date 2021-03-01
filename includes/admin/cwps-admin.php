@@ -59,6 +59,15 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	public $is_upgrade = false;
 
 	/**
+	 * Warning flag.
+	 *
+	 * @since 0.4
+	 * @access public
+	 * @var bool $is_upgrade An upgrade flag.
+	 */
+	public $has_warning = false;
+
+	/**
 	 * Parent page reference.
 	 *
 	 * @since 0.4
@@ -277,6 +286,9 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 		// If either setting has no valid value.
 		if ( $website_type_undefined OR $email_sync_undefined ) {
+
+			 // Set warning flag.
+			 $this->has_warning = true;
 
 			// If we are not on our Settings page.
 			if ( $screen->id != 'civicrm_page_cwps_parent' ) {
