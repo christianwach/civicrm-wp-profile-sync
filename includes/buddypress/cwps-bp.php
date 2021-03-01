@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 
 
 /**
- * CiviCRM WordPress Profile Sync BuddyPress Class.
+ * CiviCRM Profile Sync BuddyPress Class.
  *
  * This class provides BuddyPress integration.
  *

@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
 
 
 /**
- * CiviCRM WordPress Profile Sync UFMatch Class.
+ * CiviCRM Profile Sync UFMatch Class.
  *
  * A class that encapsulates User-Contact matching functionality.
  *

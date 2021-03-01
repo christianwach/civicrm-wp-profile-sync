@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
 
 
 /**
- * CiviCRM WordPress Profile Sync WordPress compatibility Class.
+ * CiviCRM Profile Sync WordPress compatibility Class.
  *
  * This class provides WordPress integration.
  *

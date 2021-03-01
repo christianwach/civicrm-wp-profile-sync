@@ -1,4 +1,4 @@
-=== CiviCRM WordPress Profile Sync ===
+=== CiviCRM Profile Sync ===
 Contributors: needle, cuny-academic-commons
 Donate link: https://www.paypal.me/interactivist
 Tags: civicrm, buddypress, user, profile, xprofile, sync
@@ -8,12 +8,13 @@ Stable tag: 0.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Keeps WordPress User Profile fields in sync with their corresponding CiviCRM Contact fields.
+Keeps entities in CiviCRM in sync with their equivalents in WordPress.
+
 
 
 == Description ==
 
-The CiviCRM WordPress Profile Sync plugin keeps the "First Name", "Last Name", "Nickname", "Email Address" and "Website" fields of a WordPress User Profile in sync with their corresponding fields in a CiviCRM Contact. The synchronisation takes place regardless of whether the changes are made in WordPress or CiviCRM.
+The CiviCRM Profile Sync plugin keeps the "First Name", "Last Name", "Nickname", "Email Address" and "Website" fields of a WordPress User Profile in sync with their corresponding fields in a CiviCRM Contact. The synchronisation takes place regardless of whether the changes are made in WordPress or CiviCRM.
 
 The plugin also supports syncing the "First Name" and "Last Name" fields of the WordPress User and CiviCRM Contact with BuddyPress when using the [BP xProfile WordPress User Sync](https://wordpress.org/plugins/bp-xprofile-wp-user-sync/) plugin.
 

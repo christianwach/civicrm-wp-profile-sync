@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
 
 
 /**
- * CiviCRM WordPress Profile Sync Mapper Hooks Class.
+ * CiviCRM Profile Sync Mapper Hooks Class.
  *
  * This class provides hooks functionality.
  *

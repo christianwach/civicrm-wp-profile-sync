@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
 
 
 /**
- * CiviCRM WordPress Profile Sync Mapper Parent Class.
+ * CiviCRM Profile Sync Mapper Parent Class.
  *
  * This class provides mapping integration.
  *

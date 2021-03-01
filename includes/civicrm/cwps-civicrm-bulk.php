@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
 
 
 /**
- * CiviCRM WordPress Profile Sync CiviCRM Bulk Operations Class.
+ * CiviCRM Profile Sync CiviCRM Bulk Operations Class.
  *
  * This class provides CiviCRM Bulk Operations integration.
  *

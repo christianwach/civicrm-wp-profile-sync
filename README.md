@@ -1,5 +1,5 @@
-CiviCRM WordPress Profile Sync
-==============================
+CiviCRM Profile Sync
+====================
 
 **Contributors:** [needle](https://profiles.wordpress.org/needle/), [cuny-academic-commons](https://profiles.wordpress.org/cuny-academic-commons/)<br/>
 **Donate link:** https://www.paypal.me/interactivist<br/>
@@ -10,13 +10,13 @@ CiviCRM WordPress Profile Sync
 **License:** GPLv2 or later<br/>
 **License URI:** https://www.gnu.org/licenses/gpl-2.0.html
 
-Keeps *WordPress* User Profile fields in sync with their corresponding *CiviCRM* Contact fields.
+Keeps entities in *CiviCRM* in sync with their equivalents in *WordPress*.
 
 ### Description
 
-Please note: this is the development repository for *CiviCRM WordPress Profile Sync*. It can be found in the [WordPress Plugin Directory](https://wordpress.org/plugins/civicrm-wp-profile-sync/), which is the best place to get it from if you're not a developer.
+Please note: this is the development repository for *CiviCRM Profile Sync*. It can be found in the [WordPress Plugin Directory](https://wordpress.org/plugins/civicrm-wp-profile-sync/), which is the best place to get it from if you're not a developer.
 
-The *CiviCRM WordPress Profile Sync* plugin keeps the "First Name", "Last Name", "Nickname", "Email Address" and "Website" fields of a *WordPress* User Profile in sync with their corresponding fields in a *CiviCRM* Contact. The synchronisation takes place regardless of whether the changes are made in *WordPress* or *CiviCRM*.
+The *CiviCRM Profile Sync* plugin keeps the "First Name", "Last Name", "Nickname", "Email Address" and "Website" fields of a *WordPress* User Profile in sync with their corresponding fields in a *CiviCRM* Contact. The synchronisation takes place regardless of whether the changes are made in *WordPress* or *CiviCRM*.
 
 The plugin also supports syncing the "First Name" and "Last Name" fields of the WordPress User and CiviCRM Contact with *BuddyPress* when using the *BP xProfile WordPress User Sync* plugin.
 
@@ -36,7 +36,7 @@ There are two ways to install from GitHub:
 
 #### ZIP Download
 
-If you have downloaded *CiviCRM WordPress Profile Sync* as a ZIP file from the GitHub repository, do the following to install and activate the plugin:
+If you have downloaded *CiviCRM Profile Sync* as a ZIP file from the GitHub repository, do the following to install and activate the plugin:
 
 1. Unzip the .zip file and, if needed, rename the enclosing folder so that the plugin's files are located directly inside `/wp-content/plugins/civicrm-wp-profile-sync`
 2. Activate the plugin

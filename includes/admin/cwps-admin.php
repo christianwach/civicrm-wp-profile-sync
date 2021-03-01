@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
 
 
 /**
- * CiviCRM WordPress Profile Sync Admin utility Class.
+ * CiviCRM Profile Sync Admin utility Class.
  *
  * This class provides Admin functionality.
  *
