@@ -473,7 +473,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		$urls = $this->acf_loader->plugin->admin->page_get_urls();
 
 		// Include template file.
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/pages/cwps-admin-page-acf-sync.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/pages/page-admin-acf-sync.php';
 
 	}
 

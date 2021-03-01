@@ -8,7 +8,7 @@
  * @since 0.6.4
  */
 
-?><!-- assets/templates/wordpress/manual-sync.php -->
+?><!-- assets/templates/wordpress/pages/page-admin-acf-sync.php -->
 <div class="wrap">
 
 	<h1><?php _e( 'CiviCRM Profile Sync', 'civicrm-wp-profile-sync' ); ?></h1>
