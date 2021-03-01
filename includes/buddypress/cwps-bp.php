@@ -13,7 +13,6 @@ defined( 'ABSPATH' ) || exit;
 
 
 
-
 /**
  * CiviCRM Profile Sync BuddyPress Class.
  *
@@ -194,7 +193,7 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 
 		// Bail if BuddyPress is not set to sync to WordPress.
 		if ( ! bp_disable_profile_sync() ) {
-			return true;
+			return;
 		}
 
 		// Fetch logged-in User if none set.
@@ -204,11 +203,11 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 
 		// Bail if no User ID found.
 		if ( empty( $args['user_id'] ) ) {
-			return false;
+			return;
 		}
 
 		// Pass to our sync method.
-		$this->plugin->wp->user_edited( $args );
+		$this->plugin->wp->user->user_edited( $args );
 
 	}
 
@@ -220,12 +219,13 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 	 * @since 0.4
 	 *
 	 * @param bool $should_be_synced True if the Contact's name should be synced, false otherwise.
+	 * @return bool $should_be_synced The modified value of the "should be synced" flag.
 	 */
 	public function name_update_allow( $should_be_synced ) {
 
-		// Disallow if this is a BuddyPress General Settings update.
+		// Disallow if this is a BuddyPress User's "General Settings" update.
 		if ( function_exists( 'bp_is_current_action' ) AND bp_is_current_action( 'general' ) ) {
-			return false;
+			$should_be_synced = false;
 		}
 
 		// --<
