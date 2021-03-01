@@ -267,7 +267,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 *
 	 * @param mixed $value The Contact Field value.
 	 * @param array $name The Contact Field name.
-	 * @param str $selector The ACF Field selector.
+	 * @param string $selector The ACF Field selector.
 	 * @param mixed $post_id The ACF "Post ID".
 	 * @return mixed $value The formatted field value.
 	 */
@@ -376,8 +376,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $name The name of the Contact Field.
-	 * @return str $format The date format.
+	 * @param string $name The name of the Contact Field.
+	 * @return string $format The date format.
 	 */
 	public function date_format_get( $name ) {
 
@@ -409,8 +409,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $date The date in CiviCRM-style "Ymdhis" format.
-	 * @return str $age_string The age expressed as a string.
+	 * @param string $date The date in CiviCRM-style "Ymdhis" format.
+	 * @return string $age_string The age expressed as a string.
 	 */
 	public function date_age_get( $date ) {
 
@@ -460,7 +460,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $name The name of the Contact Field.
+	 * @param string $name The name of the Contact Field.
 	 * @return array $options The array of field options.
 	 */
 	public function options_get( $name ) {
@@ -510,7 +510,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $name The name of the option group.
+	 * @param string $name The name of the option group.
 	 * @return array $option_group The array of option group data.
 	 */
 	public function option_group_get( $name ) {
@@ -631,7 +631,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $name The name of the field.
+	 * @param string $name The name of the field.
 	 * @return array $field The array of field data.
 	 */
 	public function get_by_name( $name ) {
@@ -680,8 +680,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 * @since 0.4
 	 *
 	 * @param array $contact_type The Contact Type to query.
-	 * @param str $field_type The type of ACF Field.
-	 * @param str $filter The token by which to filter the array of fields.
+	 * @param string $field_type The type of ACF Field.
+	 * @param string $filter The token by which to filter the array of fields.
 	 * @return array $fields The array of field names.
 	 */
 	public function data_get( $contact_type = 'Individual', $field_type = '', $filter = 'none' ) {
@@ -815,7 +815,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 * @since 0.4
 	 *
 	 * @param array $types The Contact Type(s) to query.
-	 * @param str $type The type of ACF Field.
+	 * @param string $type The type of ACF Field.
 	 * @return array $fields The array of field names.
 	 */
 	public function get_by_acf_type( $types = [ 'Individual' ], $type = '' ) {
@@ -845,7 +845,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $name The name of the Contact Field.
+	 * @param string $name The name of the Contact Field.
 	 * @return array $fields The array of field names.
 	 */
 	public function get_acf_type( $name = '' ) {
@@ -880,7 +880,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $contact_field_name The CiviCRM Contact Field name.
+	 * @param string $contact_field_name The CiviCRM Contact Field name.
 	 * @return array $choices The choices for the field.
 	 */
 	public function select_choices_get( $contact_field_name ) {
@@ -903,7 +903,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $contact_field_name The CiviCRM Contact Field name.
+	 * @param string $contact_field_name The CiviCRM Contact Field name.
 	 * @return array $choices The choices for the field.
 	 */
 	public function radio_choices_get( $contact_field_name ) {
@@ -927,7 +927,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 * @since 0.4
 	 *
 	 * @param array $field The field data array.
-	 * @param str $contact_field_name The CiviCRM Contact Field name.
+	 * @param string $contact_field_name The CiviCRM Contact Field name.
 	 * @return array $choices The choices for the field.
 	 */
 	public function date_settings_get( $field, $contact_field_name ) {
@@ -955,7 +955,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 * @since 0.4
 	 *
 	 * @param array $field The field data array.
-	 * @param str $contact_field_name The CiviCRM Contact Field name.
+	 * @param string $contact_field_name The CiviCRM Contact Field name.
 	 * @return array $choices The choices for the field.
 	 */
 	public function text_settings_get( $field, $contact_field_name ) {
@@ -986,7 +986,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 * @since 0.4
 	 *
 	 * @param array $field The field data array.
-	 * @param str $contact_field_name The CiviCRM Contact Field name.
+	 * @param string $contact_field_name The CiviCRM Contact Field name.
 	 * @return array $choices The choices for the field.
 	 */
 	public function image_settings_get( $field, $contact_field_name ) {
@@ -1008,7 +1008,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 *
 	 * @param mixed $value The Contact Field value (the Image URL).
 	 * @param array $name The Contact Field name.
-	 * @param str $selector The ACF Field selector.
+	 * @param string $selector The ACF Field selector.
 	 * @param mixed $post_id The ACF "Post ID".
 	 * @return mixed $value The formatted field value.
 	 */
@@ -1271,9 +1271,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $post_id The numeric ID of the WordPress Post.
-	 * @param str $url The URL to resolve.
-	 * @return int The found Post ID, or 0 on failure.
+	 * @param integer $post_id The numeric ID of the WordPress Post.
+	 * @param string $url The URL to resolve.
+	 * @return integer The found Post ID, or 0 on failure.
 	 */
 	public function image_url_to_post_id_helper( $post_id, $url ) {
 
@@ -1444,7 +1444,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $post_id The numeric ID of the Attachment.
+	 * @param integer $post_id The numeric ID of the Attachment.
 	 */
 	public function image_attachment_deleted( $post_id ) {
 

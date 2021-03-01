@@ -380,7 +380,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 * @since 0.4
 	 *
 	 * @param array $contact_ids The array of numeric IDs of the CiviCRM Contacts to query.
-	 * @return array|bool $contact_data An array of Contact data, or false on failure.
+	 * @return array|boolean $contact_data An array of Contact data, or false on failure.
 	 */
 	public function get_by_ids( $contact_ids = [] ) {
 
@@ -432,8 +432,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $contact_id The numeric ID of the CiviCRM Contact to query.
-	 * @return array|bool $contact_data An array of Contact data, or false on failure.
+	 * @param integer $contact_id The numeric ID of the CiviCRM Contact to query.
+	 * @return array|boolean $contact_data An array of Contact data, or false on failure.
 	 */
 	public function get_by_id( $contact_id ) {
 
@@ -488,10 +488,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $search The search string to query.
-	 * @param str $contact_type The CiviCRM Contact Type.
-	 * @param str $contact_subtype The CiviCRM Contact Sub-type.
-	 * @return array|bool $contact_data An array of Contact data, or false on failure.
+	 * @param string $search The search string to query.
+	 * @param string $contact_type The CiviCRM Contact Type.
+	 * @param string $contact_subtype The CiviCRM Contact Sub-type.
+	 * @return array|boolean $contact_data An array of Contact data, or false on failure.
 	 */
 	public function get_by_search_string( $search, $contact_type = '', $contact_subtype = '' ) {
 
@@ -559,8 +559,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $image_url The Image URL of the CiviCRM Contact.
-	 * @return array|bool $contacts An array of Contacts, or false on failure.
+	 * @param string $image_url The Image URL of the CiviCRM Contact.
+	 * @return array|boolean $contacts An array of Contacts, or false on failure.
 	 */
 	public function get_by_image( $image_url ) {
 
@@ -622,8 +622,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 * @since 0.4
 	 *
 	 * @param integer $contact_type_id The numeric ID of the CiviCRM Contact Type.
-	 * @param int $offset The numeric offset for the query.
-	 * @param int $limit The numeric limit for the query.
+	 * @param integer $offset The numeric offset for the query.
+	 * @param integer $limit The numeric limit for the query.
 	 * @return array $result The array of Contact data from the CiviCRM API.
 	 */
 	public function contacts_chunked_data_get( $contact_type_id, $offset, $limit ) {
@@ -689,8 +689,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 * @since 0.4
 	 *
 	 * @param array|obj $contact The Contact data.
-	 * @param str $create_post Create a mapped Post if missing. Either 'create' or 'skip'.
-	 * @return array|bool $is_mapped An array of Post Types if the Contact is mapped, false otherwise.
+	 * @param string $create_post Create a mapped Post if missing. Either 'create' or 'skip'.
+	 * @return array|boolean $is_mapped An array of Post Types if the Contact is mapped, false otherwise.
 	 */
 	public function is_mapped( $contact, $create_post = 'skip' ) {
 
@@ -793,8 +793,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 * @since 0.4
 	 *
 	 * @param array|obj $contact The Contact data.
-	 * @param str $post_type The WordPress Post Type.
-	 * @return int|bool $is_mapped The ID of the WordPress Post if the Contact is mapped, false otherwise.
+	 * @param string $post_type The WordPress Post Type.
+	 * @return integer|boolean $is_mapped The ID of the WordPress Post if the Contact is mapped, false otherwise.
 	 */
 	public function is_mapped_to_post( $contact, $post_type = 'any' ) {
 
@@ -857,7 +857,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 * @since 0.4
 	 *
 	 * @param array $contact The CiviCRM Contact data.
-	 * @return array|bool $contact_data The array Contact data from the CiviCRM API, or false on failure.
+	 * @return array|boolean $contact_data The array Contact data from the CiviCRM API, or false on failure.
 	 */
 	public function create( $contact ) {
 
@@ -935,7 +935,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 * @since 0.4
 	 *
 	 * @param array $contact The CiviCRM Contact data.
-	 * @return array|bool The array Contact data from the CiviCRM API, or false on failure.
+	 * @return array|boolean The array Contact data from the CiviCRM API, or false on failure.
 	 */
 	public function update( $contact ) {
 
@@ -965,7 +965,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 * @since 0.4
 	 *
 	 * @param array $contact The CiviCRM Contact data.
-	 * @return array|bool $contact_data The array Contact data from the CiviCRM API, or false on failure.
+	 * @return array|boolean $contact_data The array Contact data from the CiviCRM API, or false on failure.
 	 */
 	public function delete( $contact ) {
 
@@ -1028,7 +1028,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 * @since 0.4
 	 *
 	 * @param WP_Post $post The WordPress Post object.
-	 * @param int $contact_id The numeric ID of the Contact (or null if new).
+	 * @param integer $contact_id The numeric ID of the Contact (or null if new).
 	 * @return array $contact_data The CiviCRM Contact data.
 	 */
 	public function prepare_from_post( $post, $contact_id = null ) {
@@ -1168,7 +1168,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 * @since 0.4
 	 *
 	 * @param WP_Post $post The WordPress Post object.
-	 * @return array|bool $contact The CiviCRM Contact data, or false on failure.
+	 * @return array|boolean $contact The CiviCRM Contact data, or false on failure.
 	 */
 	public function create_from_post( $post ) {
 
@@ -1208,8 +1208,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 * @since 0.4
 	 *
 	 * @param WP_Post $post The WordPress Post object.
-	 * @param int $existing_id The numeric ID of the Contact.
-	 * @return array|bool $contact The CiviCRM Contact data, or false on failure.
+	 * @param integer $existing_id The numeric ID of the Contact.
+	 * @return array|boolean $contact The CiviCRM Contact data, or false on failure.
 	 */
 	public function update_from_post( $post, $existing_id ) {
 
@@ -1248,8 +1248,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 * @since 0.4
 	 *
 	 * @param array $fields The ACF Field data.
-	 * @param int|str $post_id The ACF "Post ID".
-	 * @return array|bool $contact_data The CiviCRM Contact data.
+	 * @param integer|string $post_id The ACF "Post ID".
+	 * @return array|boolean $contact_data The CiviCRM Contact data.
 	 */
 	public function prepare_from_fields( $fields, $post_id = null ) {
 
@@ -1323,10 +1323,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $contact_id The numeric ID of the Contact.
+	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param array $fields The ACF Field data.
-	 * @param int|str $post_id The ACF "Post ID".
-	 * @return array|bool $contact The CiviCRM Contact data, or false on failure.
+	 * @param integer|string $post_id The ACF "Post ID".
+	 * @return array|boolean $contact The CiviCRM Contact data, or false on failure.
 	 */
 	public function update_from_fields( $contact_id, $fields, $post_id = null ) {
 
@@ -1420,7 +1420,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 * @since 0.4
 	 *
 	 * @param array $field The existing field data array.
-	 * @return str|bool $contact_field_name The name of the Contact Field, or false if none.
+	 * @return string|boolean $contact_field_name The name of the Contact Field, or false if none.
 	 */
 	public function contact_field_name_get( $field ) {
 
@@ -1442,9 +1442,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		 *
 		 * @since 0.4
 		 *
-		 * @param int $contact_field_name The existing Contact Field name.
+		 * @param integer $contact_field_name The existing Contact Field name.
 		 * @param array $field The array of ACF Field data.
-		 * @return int $contact_field_name The modified Contact Field name.
+		 * @return integer $contact_field_name The modified Contact Field name.
 		 */
 		$contact_field_name = apply_filters( 'cwps/acf/civicrm/contact/contact_field/name', $contact_field_name, $field );
 
@@ -1464,8 +1464,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $contact_id The CiviCRM Contact ID to check.
-	 * @return bool $permitted True if allowed, false otherwise.
+	 * @param integer $contact_id The CiviCRM Contact ID to check.
+	 * @return boolean $permitted True if allowed, false otherwise.
 	 */
 	public function user_can_view( $contact_id ) {
 
@@ -1487,9 +1487,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		 *
 		 * @since 0.4
 		 *
-		 * @param bool $permitted True if allowed, false otherwise.
-		 * @param int $contact_id The CiviCRM Contact ID.
-		 * @return bool $permitted True if allowed, false otherwise.
+		 * @param boolean $permitted True if allowed, false otherwise.
+		 * @param integer $contact_id The CiviCRM Contact ID.
+		 * @return boolean $permitted True if allowed, false otherwise.
 		 */
 		return apply_filters( 'cwps/acf/civicrm/contact/user_can_view', $permitted, $contact_id );
 
@@ -1509,9 +1509,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 *
 	 * @since 0.4
 	 *
-	 * @param bool $mapped The existing mapping flag.
+	 * @param boolean $mapped The existing mapping flag.
 	 * @param array $field_group The array of ACF Field Group data.
-	 * @param bool $mapped True if the Field Group is mapped, or pass through if not mapped.
+	 * @param boolean $mapped True if the Field Group is mapped, or pass through if not mapped.
 	 */
 	public function query_field_group_mapped( $mapped, $field_group ) {
 
@@ -1593,9 +1593,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array|bool $post_ids The existing "Post IDs".
+	 * @param array|boolean $post_ids The existing "Post IDs".
 	 * @param array $args The array of CiviCRM Custom Fields params.
-	 * @return array|bool $post_id The mapped "Post IDs", or false if not mapped.
+	 * @return array|boolean $post_id The mapped "Post IDs", or false if not mapped.
 	 */
 	public function query_post_id( $post_ids, $args ) {
 
@@ -1693,7 +1693,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 * @since 0.4
 	 *
 	 * @param array $field_group The Field Group to check.
-	 * @return bool|array The array of Post Types if the Field Group has been mapped, or false otherwise.
+	 * @return array|boolean The array of Post Types if the Field Group has been mapped, or false otherwise.
 	 */
 	public function is_contact_field_group( $field_group ) {
 

@@ -240,7 +240,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 	 * @since 0.4
 	 *
 	 * @param array $args The array of WordPress params.
-	 * @return bool True if updates were successful, or false on failure.
+	 * @return boolean True if updates were successful, or false on failure.
 	 */
 	public function fields_handled_update( $args ) {
 
@@ -278,12 +278,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $field The ACF Field selector.
+	 * @param string $field The ACF Field selector.
 	 * @param mixed $value The ACF Field value.
-	 * @param int $contact_id The numeric ID of the Contact.
+	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param array $settings The ACF Field settings.
 	 * @param array $args The array of WordPress params.
-	 * @return bool True if updates were successful, or false on failure.
+	 * @return boolean True if updates were successful, or false on failure.
 	 */
 	public function field_handled_update( $field, $value, $contact_id, $settings, $args ) {
 
@@ -416,10 +416,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 	 * @since 0.4
 	 *
 	 * @param array $values The array of Address Record arrays to update the Contact with.
-	 * @param int $contact_id The numeric ID of the Contact.
-	 * @param str $selector The ACF Field selector.
+	 * @param integer $contact_id The numeric ID of the Contact.
+	 * @param string $selector The ACF Field selector.
 	 * @param array $args The array of WordPress params.
-	 * @return array|bool $addresses The array of Address Record data, or false on failure.
+	 * @return array|boolean $addresses The array of Address Record data, or false on failure.
 	 */
 	public function addresses_update( $values, $contact_id, $selector, $args = [] ) {
 
@@ -621,7 +621,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 	 * @since 0.4
 	 *
 	 * @param array $value The array of Address data in the ACF Field.
-	 * @param int $address_id The numeric ID of the Address Record (or null if new).
+	 * @param integer $address_id The numeric ID of the Address Record (or null if new).
 	 * @return array $address_data The CiviCRM Address Record data.
 	 */
 	public function prepare_from_field( $value, $address_id = null ) {
@@ -851,7 +851,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 	 *
 	 * @since 0.4
 	 *
-	 * @param int|str $post_id The ACF "Post ID".
+	 * @param integer|string $post_id The ACF "Post ID".
 	 * @param object $address The CiviCRM Address Record object.
 	 * @param array $acf_address The ACF Address Record array.
 	 * @param array $args The array of CiviCRM params.
@@ -1019,7 +1019,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 	 *
 	 * @since 0.4
 	 *
-	 * @return str $acf_field_key The key of the "CiviCRM Addresses" in the ACF Field data.
+	 * @return string $acf_field_key The key of the "CiviCRM Addresses" in the ACF Field data.
 	 */
 	public function acf_field_key_get() {
 
@@ -1037,7 +1037,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 	 *
 	 * @param array $acf_fields The existing ACF Fields array.
 	 * @param array $field The ACF Field.
-	 * @param int $post_id The numeric ID of the WordPress Post.
+	 * @param integer $post_id The numeric ID of the WordPress Post.
 	 * @return array $acf_fields The modified ACF Fields array.
 	 */
 	public function acf_fields_get_for_post( $acf_fields, $field, $post_id ) {

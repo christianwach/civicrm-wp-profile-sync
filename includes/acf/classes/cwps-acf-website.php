@@ -168,7 +168,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	 * @since 0.4
 	 *
 	 * @param array $args The array of WordPress params.
-	 * @return bool True if updates were successful, or false on failure.
+	 * @return boolean True if updates were successful, or false on failure.
 	 */
 	public function fields_handled_update( $args ) {
 
@@ -208,9 +208,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	 *
 	 * @param array $field The ACF Field data.
 	 * @param mixed $value The ACF Field value.
-	 * @param int $contact_id The numeric ID of the Contact.
+	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param array $settings The ACF Field settings.
-	 * @return bool True if updates were successful, or false on failure.
+	 * @return boolean True if updates were successful, or false on failure.
 	 */
 	public function field_handled_update( $field, $value, $contact_id, $settings ) {
 
@@ -254,7 +254,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $website_id The numeric ID of the Website.
+	 * @param integer $website_id The numeric ID of the Website.
 	 * @param array $website The array of Website data, or empty if none.
 	 */
 	public function website_get_by_id( $website_id ) {
@@ -305,7 +305,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $contact_id The numeric ID of the CiviCRM Contact.
+	 * @param integer $contact_id The numeric ID of the CiviCRM Contact.
 	 * @return array $website_data The array of Website data for the CiviCRM Contact.
 	 */
 	public function websites_get_for_contact( $contact_id ) {
@@ -425,10 +425,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $website_type_id The numeric ID of the Website Type.
-	 * @param int $contact_id The numeric ID of the Contact.
-	 * @param str $value The Website URL to update the Contact with.
-	 * @return array|bool $website The array of Website data, or false on failure.
+	 * @param integer $website_type_id The numeric ID of the Website Type.
+	 * @param integer $contact_id The numeric ID of the Contact.
+	 * @param string $value The Website URL to update the Contact with.
+	 * @return array|boolean $website The array of Website data, or false on failure.
 	 */
 	public function website_update( $website_type_id, $contact_id, $value ) {
 
@@ -626,7 +626,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	 *
 	 * @since 0.4
 	 *
-	 * @param int|str $post_id The ACF "Post ID".
+	 * @param integer|string $post_id The ACF "Post ID".
 	 * @param object $website The CiviCRM Website Record object.
 	 */
 	public function fields_update( $post_id, $website ) {
@@ -674,9 +674,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $custom_field_id The existing Custom Field ID.
+	 * @param integer $custom_field_id The existing Custom Field ID.
 	 * @param array $field The array of ACF Field data.
-	 * @return int $custom_field_id The modified Custom Field ID.
+	 * @return integer $custom_field_id The modified Custom Field ID.
 	 */
 	public function custom_field_id_get( $custom_field_id, $field ) {
 
@@ -808,7 +808,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	 *
 	 * @since 0.4
 	 *
-	 * @return str $acf_field_key The key of the "CiviCRM Website" in the ACF Field data.
+	 * @return string $acf_field_key The key of the "CiviCRM Website" in the ACF Field data.
 	 */
 	public function acf_field_key_get() {
 
@@ -826,7 +826,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	 *
 	 * @param array $acf_fields The existing ACF Fields array.
 	 * @param array $field The ACF Field.
-	 * @param int $post_id The numeric ID of the WordPress Post.
+	 * @param integer $post_id The numeric ID of the WordPress Post.
 	 * @return array $acf_fields The modified ACF Fields array.
 	 */
 	public function acf_fields_get_for_post( $acf_fields, $field, $post_id ) {

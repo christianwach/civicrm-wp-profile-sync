@@ -151,9 +151,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $entity The name of the Entity.
-	 * @param int $id The numeric ID of the Entity.
-	 * @param str $type For WordPress Entities, this is the Post Type.
+	 * @param string $entity The name of the Entity.
+	 * @param integer $id The numeric ID of the Entity.
+	 * @param string $type For WordPress Entities, this is the Post Type.
 	 */
 	public function entity_set( $entity, $id, $type = '' ) {
 
@@ -2145,9 +2145,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $op The kind of operation.
-	 * @param int $groupID The numeric ID of the Custom Group.
-	 * @param int $entityID The numeric ID of the Contact.
+	 * @param string $op The kind of operation.
+	 * @param integer $groupID The numeric ID of the Custom Group.
+	 * @param integer $entityID The numeric ID of the Contact.
 	 * @param array $custom_fields The array of Custom Fields.
 	 */
 	public function custom_edited( $op, $groupID, $entityID, &$custom_fields ) {
@@ -2645,9 +2645,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $post_id The ID of the Post or revision.
-	 * @param int $post The Post object.
-	 * @param bool $update True if the Post is being updated, false if new.
+	 * @param integer $post_id The ID of the Post or revision.
+	 * @param integer $post The Post object.
+	 * @param boolean $update True if the Post is being updated, false if new.
 	 */
 	public function post_saved( $post_id, $post, $update ) {
 
@@ -2760,7 +2760,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $term_id The numeric ID of the new term.
+	 * @param integer $term_id The numeric ID of the new term.
 	 * @param string $taxonomy The taxonomy containing the term.
 	 */
 	public function term_pre_edit( $term_id, $taxonomy = null ) {
@@ -2794,7 +2794,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $term_id The numeric ID of the edited term.
+	 * @param integer $term_id The numeric ID of the edited term.
 	 * @param array $tt_id The numeric ID of the edited term taxonomy.
 	 * @param string $taxonomy Should be (an array containing) the taxonomy.
 	 */
@@ -2830,7 +2830,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $term_id The numeric ID of the deleted term.
+	 * @param integer $term_id The numeric ID of the deleted term.
 	 * @param array $tt_id The numeric ID of the deleted term taxonomy.
 	 * @param string $taxonomy Name of the taxonomy.
 	 * @param object $deleted_term The deleted term object.

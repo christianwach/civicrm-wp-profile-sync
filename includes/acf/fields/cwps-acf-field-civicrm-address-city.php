@@ -271,7 +271,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_City_Field extends acf_field {
 	 * @since 0.4
 	 *
 	 * @param mixed $value The value found in the database.
-	 * @param int|str $post_id The ACF "Post ID" from which the value was loaded.
+	 * @param integer|string $post_id The ACF "Post ID" from which the value was loaded.
 	 * @param array $field The field array holding all the field options.
 	 * @return mixed $value The modified value.
 	 */
@@ -295,7 +295,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_City_Field extends acf_field {
 	 * @since 0.4
 	 *
 	 * @param mixed $value The value found in the database.
-	 * @param int $post_id The Post ID from which the value was loaded.
+	 * @param integer $post_id The Post ID from which the value was loaded.
 	 * @param array $field The field array holding all the field options.
 	 * @return mixed $value The modified value.
 	 */
@@ -319,7 +319,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_City_Field extends acf_field {
 	 * @since 0.4
 	 *
 	 * @param mixed $value The value found in the database.
-	 * @param int $post_id The Post ID from which the value was loaded.
+	 * @param integer $post_id The Post ID from which the value was loaded.
 	 * @param array $field The field array holding all the field options.
 	 * @return mixed $value The modified value.
 	 */
@@ -417,11 +417,11 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_City_Field extends acf_field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param bool $valid The validation status based on the value and the field's required setting.
+	 * @param boolean $valid The validation status based on the value and the field's required setting.
 	 * @param mixed $value The $_POST value.
 	 * @param array $field The field array holding all the field options.
-	 * @param str $input The corresponding input name for $_POST value.
-	 * @return bool|str $valid False if not valid, or string for error message.
+	 * @param string $input The corresponding input name for $_POST value.
+	 * @return string|boolean $valid False if not valid, or string for error message.
 	public function validate_value( $valid, $value, $field, $input ) {
 
 		// Basic usage.
@@ -449,8 +449,8 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_City_Field extends acf_field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $post_id The Post ID from which the value was deleted.
-	 * @param str $key The meta key which the value was deleted.
+	 * @param integer $post_id The Post ID from which the value was deleted.
+	 * @param string $key The meta key which the value was deleted.
 	public function delete_value( $post_id, $key ) {
 
 	}

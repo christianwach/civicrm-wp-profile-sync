@@ -119,8 +119,8 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 	 * @since 0.4
 	 *
 	 * @param integer $user_id The numeric ID of the WordPress User.
-	 * @param int|str $domain_id The Domain ID (defaults to current Domain ID) or a string to search all Domains.
-	 * @return int|bool $contact_id The CiviCRM contact ID, or false on failure.
+	 * @param integer|string $domain_id The Domain ID (defaults to current Domain ID) or a string to search all Domains.
+	 * @return integer|boolean $contact_id The CiviCRM contact ID, or false on failure.
 	 */
 	public function contact_id_get_by_user_id( $user_id, $domain_id = 'all' ) {
 
@@ -181,8 +181,8 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 	 * @since 0.4
 	 *
 	 * @param integer $user_id The numeric ID of the WordPress User.
-	 * @param int|str $domain_id The Domain ID (defaults to current Domain ID) or a string to search all Domains.
-	 * @return array|bool $contact The CiviCRM Contact data, or false on failure.
+	 * @param integer|string $domain_id The Domain ID (defaults to current Domain ID) or a string to search all Domains.
+	 * @return array|boolean $contact The CiviCRM Contact data, or false on failure.
 	 */
 	public function contact_get_by_user_id( $user_id, $domain_id = '' ) {
 
@@ -214,8 +214,8 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 	 * @since 0.4
 	 *
 	 * @param integer $contact_id The numeric ID of the CiviCRM Contact.
-	 * @param int|str $domain_id The Domain ID (defaults to current Domain ID) or a string to search all Domains.
-	 * @return WP_User|bool $user The WordPress User object, or false on failure.
+	 * @param integer|string $domain_id The Domain ID (defaults to current Domain ID) or a string to search all Domains.
+	 * @return WP_User|boolean $user The WordPress User object, or false on failure.
 	 */
 	public function user_id_get_by_contact_id( $contact_id, $domain_id = '' ) {
 
@@ -271,8 +271,8 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 	 * @since 0.4
 	 *
 	 * @param integer $contact_id The numeric ID of the CiviCRM Contact.
-	 * @param int|str $domain_id The Domain ID (defaults to current Domain ID) or a string to search all Domains.
-	 * @return WP_User|bool $user The WordPress User object, or false on failure.
+	 * @param integer|string $domain_id The Domain ID (defaults to current Domain ID) or a string to search all Domains.
+	 * @return WP_User|boolean $user The WordPress User object, or false on failure.
 	 */
 	public function user_get_by_contact_id( $contact_id, $domain_id = '' ) {
 
@@ -307,9 +307,9 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 	 *
 	 * @param integer $contact_id The numeric ID of the CiviCRM Contact.
 	 * @param integer $user_id The numeric ID of the WordPress User.
-	 * @param str $username The WordPress username.
+	 * @param string $username The WordPress username.
 	 * @param integer $domain_id The CiviCRM Domain ID (defaults to current Domain ID).
-	 * @return array|bool The UFMatch data on success, or false on failure.
+	 * @return array|boolean The UFMatch data on success, or false on failure.
 	 */
 	public function entry_create( $contact_id, $user_id, $username, $domain_id = '' ) {
 
@@ -365,7 +365,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 	 * @since 0.4
 	 *
 	 * @param integer $ufmatch_id The numeric ID of the UFMatch entry.
-	 * @return array|bool The UFMatch data on success, or false on failure.
+	 * @return array|boolean The UFMatch data on success, or false on failure.
 	 */
 	public function entry_delete( $ufmatch_id ) {
 
@@ -422,8 +422,8 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 	 * @since 0.4
 	 *
 	 * @param integer $contact_id The numeric ID of the CiviCRM Contact.
-	 * @param int|str $domain_id The CiviCRM Domain ID (defaults to current Domain ID).
-	 * @return array|object|bool $entry The UFMatch data on success, or false on failure.
+	 * @param integer|string $domain_id The CiviCRM Domain ID (defaults to current Domain ID).
+	 * @return array|object|boolean $entry The UFMatch data on success, or false on failure.
 	 */
 	public function entry_get_by_contact_id( $contact_id, $domain_id = '' ) {
 
@@ -508,8 +508,8 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 	 * @since 0.4
 	 *
 	 * @param integer $user_id The numeric ID of the WordPress User.
-	 * @param int|str $domain_id The CiviCRM Domain ID (defaults to current Domain ID).
-	 * @return array|object|bool $entry The UFMatch data on success, or false on failure.
+	 * @param integer|string $domain_id The CiviCRM Domain ID (defaults to current Domain ID).
+	 * @return array|object|boolean $entry The UFMatch data on success, or false on failure.
 	 */
 	public function entry_get_by_user_id( $user_id, $domain_id = '' ) {
 
@@ -593,9 +593,9 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $email The WordPress User's email address.
-	 * @param int|str $domain_id The CiviCRM Domain ID (defaults to current Domain ID).
-	 * @return array|object|bool $entry The UFMatch data on success, or false on failure.
+	 * @param string $email The WordPress User's email address.
+	 * @param integer|string $domain_id The CiviCRM Domain ID (defaults to current Domain ID).
+	 * @return array|object|boolean $entry The UFMatch data on success, or false on failure.
 	 */
 	public function entry_get_by_user_email( $email, $domain_id = '' ) {
 

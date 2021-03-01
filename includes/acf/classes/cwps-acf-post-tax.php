@@ -425,8 +425,8 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $term_id The numeric ID of the term.
-	 * @return int|bool $group_id The ID of the CiviCRM Group, or false on failure.
+	 * @param integer $term_id The numeric ID of the term.
+	 * @return integer|boolean $group_id The ID of the CiviCRM Group, or false on failure.
 	 */
 	public function term_meta_get( $term_id ) {
 
@@ -450,9 +450,9 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $term_id The numeric ID of the term.
-	 * @param int $group_id The numeric ID of the CiviCRM Group.
-	 * @return int|bool $meta_id The ID of the meta, or false on failure.
+	 * @param integer $term_id The numeric ID of the term.
+	 * @param integer $group_id The numeric ID of the CiviCRM Group.
+	 * @return integer|boolean $meta_id The ID of the meta, or false on failure.
 	 */
 	public function term_meta_add( $term_id, $group_id ) {
 
@@ -512,9 +512,9 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $term_id The numeric ID of the term.
-	 * @param int $group_id The numeric ID of the CiviCRM Group.
-	 * @return int|bool $meta_id The ID of the meta if new, true on success or false on failure.
+	 * @param integer $term_id The numeric ID of the term.
+	 * @param integer $group_id The numeric ID of the CiviCRM Group.
+	 * @return integer|boolean $meta_id The ID of the meta if new, true on success or false on failure.
 	 */
 	public function term_meta_update( $term_id, $group_id ) {
 
@@ -570,8 +570,8 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $term_id The numeric ID of the term.
-	 * @return bool True if successful, or false on failure.
+	 * @param integer $term_id The numeric ID of the term.
+	 * @return boolean True if successful, or false on failure.
 	 */
 	public function term_meta_delete( $term_id ) {
 
@@ -594,8 +594,8 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $group_id The numeric ID of CiviCRM Group.
-	 * @return array|bool $terms The array of term objects, or false on failure.
+	 * @param integer $group_id The numeric ID of CiviCRM Group.
+	 * @return array|boolean $terms The array of term objects, or false on failure.
 	 */
 	public function terms_get_by_group_id( $group_id ) {
 
@@ -652,7 +652,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $post_type The name of WordPress Post Type.
+	 * @param string $post_type The name of WordPress Post Type.
 	 * @return array $terms The array of term objects.
 	 */
 	public function terms_get_by_post_type( $post_type ) {
@@ -691,7 +691,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int|str $post_id The ACF "Post ID".
+	 * @param integer|string $post_id The ACF "Post ID".
 	 * @return array $terms The array of term objects.
 	 */
 	public function terms_get_for_post( $post_id ) {
@@ -720,8 +720,8 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $post_type The name of WordPress Post Type.
-	 * @return array|bool $terms The array of term objects, or false on failure.
+	 * @param string $post_type The name of WordPress Post Type.
+	 * @return array|boolean $terms The array of term objects, or false on failure.
 	 */
 	public function synced_terms_get_for_post_type( $post_type ) {
 
@@ -770,8 +770,8 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int|str $post_id The ACF "Post ID".
-	 * @return array|bool $terms The array of term objects, or false on failure.
+	 * @param integer|string $post_id The ACF "Post ID".
+	 * @return array|boolean $terms The array of term objects, or false on failure.
 	 */
 	public function synced_terms_get_for_post( $post_id ) {
 
@@ -810,7 +810,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int|str $post_id The ACF "Post ID".
+	 * @param integer|string $post_id The ACF "Post ID".
 	 * @param integer $group_id The ID of the CiviCRM Group.
 	 * @return array $terms The array of terms.
 	 */
@@ -861,8 +861,8 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $taxonomy The name of WordPress taxonomy.
-	 * @return array|bool $terms The array of term objects, or false on failure.
+	 * @param string $taxonomy The name of WordPress taxonomy.
+	 * @return array|boolean $terms The array of term objects, or false on failure.
 	 */
 	public function synced_terms_get_for_taxonomy( $taxonomy ) {
 
@@ -903,7 +903,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	 *
 	 * @since 0.4
 	 *
-	 * @return array|bool $terms The array of term objects, or false on failure.
+	 * @return array|boolean $terms The array of term objects, or false on failure.
 	 */
 	public function synced_terms_get_all() {
 
@@ -948,7 +948,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int|str $post_id The ACF "Post ID".
+	 * @param integer|string $post_id The ACF "Post ID".
 	 * @param array $data The array of unslashed post data.
 	 */
 	public function post_saved_pre( $post_id, $data ) {
@@ -1114,7 +1114,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	 *
 	 * @param integer $group_id The ID of the CiviCRM Group.
 	 * @param array $contact_ids Array of CiviCRM Contact IDs.
-	 * @param str $op The kind of operation - 'add' or 'remove'.
+	 * @param string $op The kind of operation - 'add' or 'remove'.
 	 */
 	public function terms_update_for_group_contacts( $group_id, $contact_ids, $op ) {
 

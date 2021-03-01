@@ -185,7 +185,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Bulk {
 	 *
 	 * @since 0.1
 	 *
-	 * @param str $object_name The CiviCRM object type.
+	 * @param string $object_name The CiviCRM object type.
 	 * @param array $tasks The CiviCRM tasks array to add our option to.
 	 */
 	public function bulk_operations( $object_name, &$tasks ) {

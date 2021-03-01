@@ -98,7 +98,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $country_id The numeric ID of the Country.
+	 * @param integer $country_id The numeric ID of the Country.
 	 * @return array $country The array of Country data.
 	 */
 	public function country_get_by_id( $country_id ) {
@@ -146,7 +146,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $country_short The "short name" of the Country.
+	 * @param string $country_short The "short name" of the Country.
 	 * @return array $country The array of Country data, empty on failure.
 	 */
 	public function country_get_by_short( $country_short ) {
@@ -221,7 +221,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $state_province_id The numeric ID of the State/Province.
+	 * @param integer $state_province_id The numeric ID of the State/Province.
 	 * @return array $state_province The array of State/Province data.
 	 */
 	public function state_province_get_by_id( $state_province_id ) {
@@ -269,7 +269,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $abbreviation The short name of the State/Province.
+	 * @param string $abbreviation The short name of the State/Province.
 	 * @return array $state_province The array of State/Province data.
 	 */
 	public function state_province_get_by_short( $abbreviation ) {
@@ -317,7 +317,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $address_id The numeric ID of the Address.
+	 * @param integer $address_id The numeric ID of the Address.
 	 * @param array $shared The array of Shared Address data.
 	 */
 	public function addresses_shared_get_by_id( $address_id ) {
@@ -368,8 +368,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $address_id The numeric ID of the Address.
-	 * @param object|bool $address The Address data object, or false if none.
+	 * @param integer $address_id The numeric ID of the Address.
+	 * @param object|boolean $address The Address data object, or false if none.
 	 */
 	public function address_get_by_id( $address_id ) {
 
@@ -415,7 +415,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $contact_id The numeric ID of the Contact.
+	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param array $addresses The array of data for the Addresses, or empty if none.
 	 */
 	public function addresses_get_by_contact_id( $contact_id ) {
@@ -464,7 +464,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $contact_id The numeric ID of the Contact.
+	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param array $address The Address data object, or false if none.
 	 */
 	public function address_get_primary_by_contact_id( $contact_id ) {
@@ -516,7 +516,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $location_type_id The numeric ID of the Location Type.
+	 * @param integer $location_type_id The numeric ID of the Location Type.
 	 * @return array $location_type The array of Location Type data.
 	 */
 	public function location_type_get_by_id( $location_type_id ) {
@@ -620,9 +620,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $contact_id The numeric ID of the Contact.
-	 * @param str $data The Address data to update the Contact with.
-	 * @return array|bool $address The array of Address Record data, or false on failure.
+	 * @param integer $contact_id The numeric ID of the Contact.
+	 * @param string $data The Address data to update the Contact with.
+	 * @return array|boolean $address The array of Address Record data, or false on failure.
 	 */
 	public function update( $contact_id, $data ) {
 
@@ -668,8 +668,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $address_id The numeric ID of the Address Record.
-	 * @return bool $success True if successfully deleted, or false on failure.
+	 * @param integer $address_id The numeric ID of the Address Record.
+	 * @return boolean $success True if successfully deleted, or false on failure.
 	 */
 	public function delete( $address_id ) {
 

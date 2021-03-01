@@ -369,7 +369,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
    * @access private
    *
    * @param array $row The Contact data array.
-   * @return str $username The unique username.
+   * @return string $username The unique username.
    */
   private function createUsername( $row ) {
 
@@ -387,9 +387,9 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
        *
        * @since 0.2.6
        *
-       * @param str $username The current username.
+       * @param string $username The current username.
        * @param array $row The User data from which the username has been constructed.
-       * @return str $username The modified username.
+       * @return string $username The modified username.
        */
       $username = apply_filters( 'civicrm_wp_profile_sync_override_username', $username, $row );
 
@@ -403,9 +403,9 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
    *
    * @since 0.2.8
    *
-   * @param str $username The previously-generated WordPress username.
-   * @param str $name The CiviCRM Contact's display name.
-   * @return str $new_username The modified WordPress username.
+   * @param string $username The previously-generated WordPress username.
+   * @param string $name The CiviCRM Contact's display name.
+   * @return string $new_username The modified WordPress username.
    */
   public function uniqueUsername( $username, $name ) {
 
@@ -441,8 +441,8 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
    *
    * @access private
    *
-   * @param str The unfiltered name.
-   * @return str The filtered name.
+   * @param string The unfiltered name.
+   * @return string The filtered name.
    */
   private function filterName( $name ) {
 

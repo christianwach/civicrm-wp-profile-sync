@@ -389,7 +389,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 	 * @since 0.1
 	 *
 	 * @param WP_User $user The WordPress User object.
-	 * @return object|bool $ufmatch The array of CiviCRM UFMatch data, or false on failure.
+	 * @return object|boolean $ufmatch The array of CiviCRM UFMatch data, or false on failure.
 	 */
 	public function contact_sync( $user ) {
 
@@ -446,7 +446,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 	 *
 	 * @param object $contact The CiviCRM Contact object.
 	 * @param integer $user_id The numeric ID of the WordPress User.
-	 * @return bool $should_be_synced Whether or not the Contact should be synced.
+	 * @return boolean $should_be_synced Whether or not the Contact should be synced.
 	 */
 	public function contact_should_be_synced( $contact, $user_id ) {
 
@@ -460,10 +460,10 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		 *
 		 * @since 0.3
 		 *
-		 * @param bool $should_be_synced True if the Contact should be synced, false otherwise.
+		 * @param boolean $should_be_synced True if the Contact should be synced, false otherwise.
 		 * @param object $contact The CiviCRM Contact object.
 		 * @param integer $user_id The numeric ID of the WordPress User.
-		 * @return bool $should_be_synced The modified value of the sync flag.
+		 * @return boolean $should_be_synced The modified value of the sync flag.
 		 */
 		$should_be_synced = apply_filters( 'civicrm_wp_profile_sync_contact_should_be_synced', $should_be_synced, $contact, $user_id );
 
@@ -472,10 +472,10 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		 *
 		 * @since 0.4
 		 *
-		 * @param bool $should_be_synced True if the Contact should be synced, false otherwise.
+		 * @param boolean $should_be_synced True if the Contact should be synced, false otherwise.
 		 * @param object $contact The CiviCRM Contact object.
 		 * @param integer $user_id The numeric ID of the WordPress User.
-		 * @return bool $should_be_synced The modified value of the sync flag.
+		 * @return boolean $should_be_synced The modified value of the sync flag.
 		 */
 		return apply_filters( 'cwps/contact/should_be_synced', $should_be_synced, $contact, $user_id );
 
@@ -540,7 +540,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 	 *
 	 * @param object $user The WordPress User object.
 	 * @param object $contact The CiviCRM Contact object.
-	 * @return bool $should_be_synced Whether or not the Contact's name should be synced.
+	 * @return boolean $should_be_synced Whether or not the Contact's name should be synced.
 	 */
 	public function name_should_be_synced( $user, $contact ) {
 
@@ -554,10 +554,10 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		 *
 		 * @since 0.3
 		 *
-		 * @param bool $should_be_synced True if the Contact's name should be synced, false otherwise.
+		 * @param boolean $should_be_synced True if the Contact's name should be synced, false otherwise.
 		 * @param object $user The WordPress User object.
 		 * @param object $contact The CiviCRM Contact object.
-		 * @return bool $should_be_synced The modified value of the sync flag.
+		 * @return boolean $should_be_synced The modified value of the sync flag.
 		 */
 		$should_be_synced = apply_filters( 'civicrm_wp_profile_sync_contact_name_should_be_synced', $should_be_synced, $user, $contact );
 
@@ -566,10 +566,10 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		 *
 		 * @since 0.4
 		 *
-		 * @param bool $should_be_synced True if the Contact's name should be synced, false otherwise.
+		 * @param boolean $should_be_synced True if the Contact's name should be synced, false otherwise.
 		 * @param object $user The WordPress User object.
 		 * @param object $contact The CiviCRM Contact object.
-		 * @return bool $should_be_synced The modified value of the sync flag.
+		 * @return boolean $should_be_synced The modified value of the sync flag.
 		 */
 		return apply_filters( 'cwps/contact/name/should_be_synced', $should_be_synced, $user, $contact );
 
@@ -632,7 +632,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 	 *
 	 * @param object $user The WordPress User object.
 	 * @param object $contact The CiviCRM Contact object.
-	 * @return bool $should_be_synced Whether or not the Contact's "Nickname" should be synced.
+	 * @return boolean $should_be_synced Whether or not the Contact's "Nickname" should be synced.
 	 */
 	public function nickname_should_be_synced( $user, $contact ) {
 
@@ -644,10 +644,10 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		 *
 		 * @since 0.4
 		 *
-		 * @param bool $should_be_synced True if the Contact's "Nickname" should be synced, false otherwise.
+		 * @param boolean $should_be_synced True if the Contact's "Nickname" should be synced, false otherwise.
 		 * @param object $user The WordPress User object.
 		 * @param object $contact The CiviCRM Contact object.
-		 * @return bool $should_be_synced The modified value of the sync flag.
+		 * @return boolean $should_be_synced The modified value of the sync flag.
 		 */
 		return apply_filters( 'cwps/contact/nickname/should_be_synced', $should_be_synced, $user, $contact );
 
@@ -665,7 +665,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 	 * @since 0.4
 	 *
 	 * @param integer $contact_id The numeric ID of the Contact.
-	 * @param array|bool $contact The array of Contact data, or false if none.
+	 * @param array|boolean $contact The array of Contact data, or false if none.
 	 */
 	public function get_by_id( $contact_id ) {
 
@@ -780,8 +780,8 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $contact_id The CiviCRM Contact ID to check.
-	 * @return bool $permitted True if allowed, false otherwise.
+	 * @param integer $contact_id The CiviCRM Contact ID to check.
+	 * @return boolean $permitted True if allowed, false otherwise.
 	 */
 	public function user_can_view( $contact_id ) {
 
@@ -803,9 +803,9 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		 *
 		 * @since 0.3
 		 *
-		 * @param bool $permitted True if allowed, false otherwise.
-		 * @param int $contact_id The CiviCRM Contact ID.
-		 * @return bool $permitted True if allowed, false otherwise.
+		 * @param boolean $permitted True if allowed, false otherwise.
+		 * @param integer $contact_id The CiviCRM Contact ID.
+		 * @return boolean $permitted True if allowed, false otherwise.
 		 */
 		return apply_filters( 'cwps/contact/user_can_view', $permitted, $contact_id );
 

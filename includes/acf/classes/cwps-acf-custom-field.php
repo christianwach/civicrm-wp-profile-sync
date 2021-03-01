@@ -226,7 +226,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $activity_id The numeric ID of the CiviCRM Activity to query.
+	 * @param integer $activity_id The numeric ID of the CiviCRM Activity to query.
 	 * @param array $custom_field_ids The Custom Field IDs to query.
 	 * @return array $activity_data An array of Activity data.
 	 */
@@ -370,7 +370,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $contact_id The numeric ID of the CiviCRM Contact to query.
+	 * @param integer $contact_id The numeric ID of the CiviCRM Contact to query.
 	 * @param array $custom_field_ids The Custom Field IDs to query.
 	 * @return array $contact_data An array of Contact data.
 	 */
@@ -443,8 +443,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $contact_id The numeric ID of the CiviCRM Contact.
-	 * @param str $post_type The WordPress Post Type.
+	 * @param integer $contact_id The numeric ID of the CiviCRM Contact.
+	 * @param string $post_type The WordPress Post Type.
 	 * @return array $custom_field_ids The array of found Custom Field IDs.
 	 */
 	public function ids_get_by_contact_id( $contact_id, $post_type ) {
@@ -561,8 +561,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str|int $option_group_id The numeric ID of the Custom Group.
-	 * @return array|bool $option_group An array of Option Group data, or false on failure.
+	 * @param string|integer $option_group_id The numeric ID of the Custom Group.
+	 * @return array|boolean $option_group An array of Option Group data, or false on failure.
 	 */
 	public function option_group_get_by_id( $option_group_id ) {
 
@@ -638,9 +638,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		 *
 		 * @since 0.4
 		 *
-		 * @param bool $post_ids False, since we're asking for Post IDs.
+		 * @param boolean $post_ids False, since we're asking for Post IDs.
 		 * @param array $args The array of CiviCRM Custom Fields params.
-		 * @return array|bool $post_ids The array of mapped Post IDs, or false if not mapped.
+		 * @return array|boolean $post_ids The array of mapped Post IDs, or false if not mapped.
 		 */
 		$post_ids = apply_filters( 'cwps/acf/query_post_id', $post_ids, $args );
 
@@ -698,7 +698,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		 *
 		 * @since 0.4
 		 *
-		 * @param array|bool $post_ids The array of mapped Post IDs, or false if not mapped.
+		 * @param array|boolean $post_ids The array of mapped Post IDs, or false if not mapped.
 		 * @param array $args The array of CiviCRM params.
 		 */
 		do_action( 'cwps/acf/civicrm/custom_field/custom_edited', $post_ids, $args );
@@ -718,8 +718,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @param mixed $value The Custom Field value.
 	 * @param array $field The Custom Field data.
-	 * @param str $selector The ACF Field selector.
-	 * @param int|str $post_id The ACF "Post ID".
+	 * @param string $selector The ACF Field selector.
+	 * @param integer|string $post_id The ACF "Post ID".
 	 * @return mixed $value The formatted field value.
 	 */
 	public function value_get_for_acf( $value, $field, $selector, $post_id ) {
@@ -812,8 +812,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str|int $group_id The numeric ID of the Custom Group.
-	 * @return array|bool $group An array of Custom Group data, or false on failure.
+	 * @param string|integer $group_id The numeric ID of the Custom Group.
+	 * @return array|boolean $group An array of Custom Group data, or false on failure.
 	 */
 	public function group_get_by_id( $group_id ) {
 
@@ -868,8 +868,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str|int $field_id The numeric ID of the Custom Field.
-	 * @return array|bool $field An array of Custom Field data, or false on failure.
+	 * @param string|integer $field_id The numeric ID of the Custom Field.
+	 * @return array|boolean $field An array of Custom Field data, or false on failure.
 	 */
 	public function get_by_id( $field_id ) {
 
@@ -916,7 +916,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $custom_group_id The numeric ID of the Custom Group.
+	 * @param integer $custom_group_id The numeric ID of the Custom Group.
 	 * @return array $fields An array of Custom Field data.
 	 */
 	public function get_by_group_id( $custom_group_id ) {
@@ -1126,8 +1126,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $type The Contact Type that the Option Group applies to.
-	 * @param str $subtype The Contact Sub-type that the Option Group applies to.
+	 * @param string $type The Contact Type that the Option Group applies to.
+	 * @param string $subtype The Contact Sub-type that the Option Group applies to.
 	 * @return array $custom_fields The array of Custom Fields.
 	 */
 	public function get_for_contact_type( $type = '', $subtype = '' ) {
@@ -1231,8 +1231,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $type The Entity Type that the Option Group applies to.
-	 * @param str $subtype The Entity Sub-type that the Option Group applies to.
+	 * @param string $type The Entity Type that the Option Group applies to.
+	 * @param string $subtype The Entity Sub-type that the Option Group applies to.
 	 * @return array $custom_fields The array of Custom Fields.
 	 */
 	public function get_for_entity_type( $type = '', $subtype = '' ) {
@@ -1325,7 +1325,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 * @since 0.4
 	 *
 	 * @param array $field The existing field data array.
-	 * @return int|bool $custom_field_id The numeric ID of the Custom Field, or false if none.
+	 * @return integer|boolean $custom_field_id The numeric ID of the Custom Field, or false if none.
 	 */
 	public function custom_field_id_get( $field ) {
 
@@ -1347,9 +1347,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		 *
 		 * @since 0.4
 		 *
-		 * @param int $custom_field_id The existing Custom Field ID.
+		 * @param integer $custom_field_id The existing Custom Field ID.
 		 * @param array $field The array of ACF Field data.
-		 * @return int $custom_field_id The modified Custom Field ID.
+		 * @return integer $custom_field_id The modified Custom Field ID.
 		 */
 		$custom_field_id = apply_filters( 'cwps/acf/contact/custom_field/id_get', $custom_field_id, $field );
 
@@ -1426,7 +1426,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $custom_field_id The numeric ID of the CiviCRM Custom Field.
+	 * @param string $custom_field_id The numeric ID of the CiviCRM Custom Field.
 	 * @return array $choices The choices for the field.
 	 */
 	public function select_choices_get( $custom_field_id ) {
@@ -1533,7 +1533,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $custom_field_id The numeric ID of the CiviCRM Custom Field.
+	 * @param string $custom_field_id The numeric ID of the CiviCRM Custom Field.
 	 * @return array $choices The choices for the field.
 	 */
 	public function radio_choices_get( $custom_field_id ) {
@@ -1608,7 +1608,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $custom_field_id The numeric ID of the CiviCRM Custom Field.
+	 * @param string $custom_field_id The numeric ID of the CiviCRM Custom Field.
 	 * @return array $choices The choices for the field.
 	 */
 	public function checkbox_choices_get( $custom_field_id ) {
@@ -1684,7 +1684,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 * @since 0.4
 	 *
 	 * @param array $field The existing field data array.
-	 * @param str $custom_field_id The numeric ID of the CiviCRM Custom Field.
+	 * @param string $custom_field_id The numeric ID of the CiviCRM Custom Field.
 	 * @return array $field The modified field data array.
 	 */
 	public function date_settings_get( $field, $custom_field_id ) {
@@ -1769,7 +1769,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 * @since 0.4
 	 *
 	 * @param array $field The existing field data array.
-	 * @param str $custom_field_id The numeric ID of the CiviCRM Custom Field.
+	 * @param string $custom_field_id The numeric ID of the CiviCRM Custom Field.
 	 * @return array $field The modified field data array.
 	 */
 	public function date_time_settings_get( $field, $custom_field_id ) {
@@ -1862,7 +1862,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 * @since 0.4
 	 *
 	 * @param array $field The existing field data array.
-	 * @param str $custom_field_id The numeric ID of the CiviCRM Custom Field.
+	 * @param string $custom_field_id The numeric ID of the CiviCRM Custom Field.
 	 * @return array $field The modified field data array.
 	 */
 	public function text_settings_get( $field, $custom_field_id ) {

@@ -181,7 +181,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 * @since 0.4
 	 *
 	 * @param array $args The array of WordPress params.
-	 * @return bool True if updates were successful, or false on failure.
+	 * @return boolean True if updates were successful, or false on failure.
 	 */
 	public function fields_handled_update( $args ) {
 
@@ -219,12 +219,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $field The ACF Field selector.
+	 * @param string $field The ACF Field selector.
 	 * @param mixed $value The ACF Field value.
-	 * @param int $contact_id The numeric ID of the Contact.
+	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param array $settings The ACF Field settings.
 	 * @param array $args The array of WordPress params.
-	 * @return bool True if updates were successful, or false on failure.
+	 * @return boolean True if updates were successful, or false on failure.
 	 */
 	public function field_handled_update( $field, $value, $contact_id, $settings, $args ) {
 
@@ -277,12 +277,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $field The ACF Field selector.
+	 * @param string $field The ACF Field selector.
 	 * @param mixed $value The ACF Field value.
-	 * @param int $contact_id The numeric ID of the Contact.
+	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param array $settings The ACF Field settings.
 	 * @param array $args The array of WordPress params.
-	 * @return bool True if updates were successful, or false on failure.
+	 * @return boolean True if updates were successful, or false on failure.
 	 */
 	public function address_update( $field, $value, $contact_id, $settings, $args ) {
 
@@ -873,7 +873,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 *
 	 * @since 0.4
 	 *
-	 * @param int|str $post_id The ACF "Post ID".
+	 * @param integer|string $post_id The ACF "Post ID".
 	 * @param object $address The current CiviCRM Address data.
 	 * @param object $previous The previous CiviCRM Address data.
 	 */
@@ -907,9 +907,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 * @since 0.4
 	 *
 	 * @param object $address The Address data.
-	 * @param str $selector The ACF Field selector.
-	 * @param int $post_id The ACF "Post ID".
-	 * @param str $action The kind of action to perform on the ACF Field - 'update' or 'clear'.
+	 * @param string $selector The ACF Field selector.
+	 * @param integer $post_id The ACF "Post ID".
+	 * @param string $action The kind of action to perform on the ACF Field - 'update' or 'clear'.
 	 */
 	public function field_update( $address, $selector, $post_id, $action = '' ) {
 
@@ -950,7 +950,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 * @since 0.4
 	 *
 	 * @param array|object $address The CiviCRM Address data.
-	 * @param str $action The kind of action to perform on the ACF Field.
+	 * @param string $action The kind of action to perform on the ACF Field.
 	 * @return array $field_data The Address data prepared for an ACF Google Map field.
 	 */
 	public function field_map_prepare( $address, $action = '' ) {
@@ -1357,7 +1357,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 *
 	 * @since 0.4
 	 *
-	 * @return str $acf_field_key The key of the "CiviCRM Address" in the ACF Field data.
+	 * @return string $acf_field_key The key of the "CiviCRM Address" in the ACF Field data.
 	 */
 	public function acf_field_key_get() {
 
@@ -1373,7 +1373,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 *
 	 * @since 0.4
 	 *
-	 * @return str $acf_field_edit_key The key of the "Make Read Only" in the ACF Field data.
+	 * @return string $acf_field_edit_key The key of the "Make Read Only" in the ACF Field data.
 	 */
 	public function acf_field_key_edit_get() {
 
@@ -1391,7 +1391,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 *
 	 * @param array $acf_fields The existing ACF Fields array.
 	 * @param array $field The ACF Field.
-	 * @param int $post_id The numeric ID of the WordPress Post.
+	 * @param integer $post_id The numeric ID of the WordPress Post.
 	 * @return array $acf_fields The modified ACF Fields array.
 	 */
 	public function acf_fields_get_for_post( $acf_fields, $field, $post_id ) {

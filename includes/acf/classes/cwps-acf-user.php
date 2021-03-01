@@ -888,7 +888,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $contact_id The numeric ID of the Contact.
+	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param array|object $relationship The Relationship data.
 	 * @param string $op The type of database operation.
 	 */
@@ -1652,9 +1652,9 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 *
 	 * @since 0.4
 	 *
-	 * @param bool $mapped The existing mapping flag.
+	 * @param boolean $mapped The existing mapping flag.
 	 * @param array $field_group The array of ACF Field Group data.
-	 * @param bool $mapped True if the Field Group is mapped, or pass through if not mapped.
+	 * @param boolean $mapped True if the Field Group is mapped, or pass through if not mapped.
 	 */
 	public function query_field_group_mapped( $mapped, $field_group ) {
 
@@ -1870,9 +1870,9 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array|bool $post_ids The existing "Post IDs".
+	 * @param array|boolean $post_ids The existing "Post IDs".
 	 * @param array $args The array of CiviCRM Custom Fields params.
-	 * @return array|bool $post_id The mapped User ID in ACF "user_N" format, or false if not mapped.
+	 * @return array|boolean $post_id The mapped User ID in ACF "user_N" format, or false if not mapped.
 	 */
 	public function query_post_id( $post_ids, $args ) {
 
@@ -1930,10 +1930,10 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 *
 	 * @since 0.4
 	 *
-	 * @param bool $contact_id False, since we're asking for a Contact ID.
-	 * @param int|str $post_id The ACF "Post ID".
-	 * @param str $entity The kind of WordPress Entity.
-	 * @return int|bool $contact_id The mapped Contact ID, or false if not mapped.
+	 * @param boolean $contact_id False, since we're asking for a Contact ID.
+	 * @param integer|string $post_id The ACF "Post ID".
+	 * @param string $entity The kind of WordPress Entity.
+	 * @return integer|boolean $contact_id The mapped Contact ID, or false if not mapped.
 	 */
 	public function query_contact_id( $contact_id, $post_id, $entity ) {
 
@@ -2007,8 +2007,8 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int|str $post_id The ACF "Post ID".
-	 * @return int|bool $is_mapped The ID of the CiviCRM Contact if the User is mapped, false otherwise.
+	 * @param integer|string $post_id The ACF "Post ID".
+	 * @return integer|boolean $is_mapped The ID of the CiviCRM Contact if the User is mapped, false otherwise.
 	 */
 	public function is_mapped_to_contact( $post_id ) {
 
@@ -2061,7 +2061,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 * @since 0.4
 	 *
 	 * @param array $field_group The Field Group to check.
-	 * @return bool True if the Field Group has been mapped to a WordPress User Form, or false otherwise.
+	 * @return boolean True if the Field Group has been mapped to a WordPress User Form, or false otherwise.
 	 */
 	public function is_user_field_group( $field_group ) {
 

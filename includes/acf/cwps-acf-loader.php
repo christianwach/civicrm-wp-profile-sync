@@ -108,7 +108,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var bool $loaded Loaded flag. True when conditions are met.
+	 * @var boolean $loaded Loaded flag. True when conditions are met.
 	 */
 	public $loaded = false;
 
@@ -149,7 +149,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 	 *
 	 * @since 0.4
 	 *
-	 * @return bool $loaded True if fully loaded, false otherwise.
+	 * @return boolean $loaded True if fully loaded, false otherwise.
 	 */
 	public function is_loaded() {
 

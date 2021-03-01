@@ -125,8 +125,8 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int|str $post_id The ACF "Post ID" parameter.
-	 * @return str The type of WordPress Entity that a Field refers to.
+	 * @param integer|string $post_id The ACF "Post ID" parameter.
+	 * @return string The type of WordPress Entity that a Field refers to.
 	 */
 	public function entity_type_get( $post_id ) {
 
@@ -183,8 +183,8 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param bool $post_id The ACF "Post ID".
-	 * @return int|bool $contact_id The mapped Contact ID, or false if not mapped.
+	 * @param boolean $post_id The ACF "Post ID".
+	 * @return integer|boolean $contact_id The mapped Contact ID, or false if not mapped.
 	 */
 	public function query_contact_id( $post_id ) {
 
@@ -206,10 +206,10 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		 *
 		 * @since 0.4
 		 *
-		 * @param bool $contact_id False, since we're asking for a Contact ID.
-		 * @param int|str $post_id The ACF "Post ID".
-		 * @param str $entity The kind of WordPress Entity.
-		 * @return int|bool $contact_id The mapped Contact ID, or false if not mapped.
+		 * @param boolean $contact_id False, since we're asking for a Contact ID.
+		 * @param integer|string $post_id The ACF "Post ID".
+		 * @param string $entity The kind of WordPress Entity.
+		 * @return integer|boolean $contact_id The mapped Contact ID, or false if not mapped.
 		 */
 		$contact_id = apply_filters( 'cwps/acf/query_contact_id', $contact_id, $post_id, $entity );
 
@@ -239,7 +239,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int|str $post_id The ACF "Post ID".
+	 * @param integer|string $post_id The ACF "Post ID".
 	 * @return array $fields The mapped ACF Fields for this post.
 	 */
 	public function fields_get_for_post( $post_id ) {
@@ -320,7 +320,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 				 *
 				 * @param array $acf_fields The existing ACF Fields array.
 				 * @param array $field_in_group The ACF Field.
-				 * @param int $post_id The numeric ID of the WordPress Post.
+				 * @param integer|string $post_id The ACF "Post ID".
 				 * @return array $acf_fields The modified ACF Fields array.
 				 */
 				$acf_fields = apply_filters( 'cwps/acf/fields_get_for_post', $acf_fields, $field_in_group, $post_id );
@@ -350,9 +350,9 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $selector The field name or key.
+	 * @param string $selector The field name or key.
 	 * @param mixed $value The value to save in the database.
-	 * @param int|str $post_id The ACF "Post ID".
+	 * @param integer|string $post_id The ACF "Post ID".
 	 */
 	public function value_update( $selector, $value, $post_id ) {
 
@@ -372,11 +372,11 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param bool $valid The existing valid status.
+	 * @param boolean $valid The existing valid status.
 	 * @param mixed $value The value of the Field.
 	 * @param array $field The Field data array.
 	 * @param string $input The input element's name attribute.
-	 * @return bool|str $valid A string to display a custom error message, bool otherwise.
+	 * @return string|boolean $valid A string to display a custom error message, boolean otherwise.
 	 */
 	public function value_validate( $valid, $value, $field, $input ) {
 
@@ -515,7 +515,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 * @since 0.4
 	 *
 	 * @param mixed $value The ACF field value.
-	 * @param str $type The ACF Field type.
+	 * @param string $type The ACF Field type.
 	 * @param array $settings The ACF Field settings.
 	 * @param array $args Any additional arguments.
 	 * @return mixed $value The field value formatted for CiviCRM.
@@ -565,8 +565,8 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int|null $value The field value, or empty when "false".
-	 * @return str $value The "Yes/No" value expressed as "1" or "0".
+	 * @param integer|null $value The field value, or empty when "false".
+	 * @return string $value The "Yes/No" value expressed as "1" or "0".
 	 */
 	public function true_false_value_get( $value = '0' ) {
 
@@ -1011,9 +1011,9 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $value The existing field value.
+	 * @param string $value The existing field value.
 	 * @param array $settings The ACF Field settings.
-	 * @return str $value The modified value for CiviCRM.
+	 * @return string $value The modified value for CiviCRM.
 	 */
 	public function date_picker_value_get( $value = '', $settings ) {
 
@@ -1114,8 +1114,8 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $value The field value.
-	 * @param int|str $post_id The ACF "Post ID".
+	 * @param string $value The field value.
+	 * @param integer|string $post_id The ACF "Post ID".
 	 * @param array $field The existing field data array.
 	 * @return array $field The modified field data array.
 	 */
@@ -1137,9 +1137,9 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $value The existing field value.
+	 * @param string $value The existing field value.
 	 * @param array $settings The ACF Field settings.
-	 * @return str $value The modified value for CiviCRM.
+	 * @return string $value The modified value for CiviCRM.
 	 */
 	public function date_time_picker_value_get( $value = '', $settings ) {
 
@@ -1252,8 +1252,8 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $value The field value.
-	 * @param int|str $post_id The ACF "Post ID".
+	 * @param string $value The field value.
+	 * @param integer|string $post_id The ACF "Post ID".
 	 * @param array $field The existing field data array.
 	 * @return array $field The modified field data array.
 	 */
@@ -1459,7 +1459,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 * @since 0.4
 	 *
 	 * @param mixed $value The existing value.
-	 * @param int $post_id The Post ID from which the value was loaded.
+	 * @param integer $post_id The Post ID from which the value was loaded.
 	 * @param array $field The field array holding all the field options.
 	 * @return mixed $value The modified value.
 	 */
@@ -1652,8 +1652,8 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int|null $value The field value (the Attachment data).
-	 * @return str $value The URL of the full size image.
+	 * @param integer|null $value The field value (the Attachment data).
+	 * @return string $value The URL of the full size image.
 	 */
 	public function image_value_get( $value ) {
 

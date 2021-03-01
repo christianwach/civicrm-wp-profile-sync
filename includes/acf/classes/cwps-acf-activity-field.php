@@ -134,11 +134,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param bool $valid The existing valid status.
+	 * @param boolean $valid The existing valid status.
 	 * @param mixed $value The value of the Field.
 	 * @param array $field The Field data array.
 	 * @param string $input The input element's name attribute.
-	 * @return bool|str $valid A string to display a custom error message, bool otherwise.
+	 * @return string|boolean $valid A string to display a custom error message, boolean otherwise.
 	 */
 	public function value_validate( $valid, $value, $field, $input ) {
 
@@ -256,8 +256,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 	 *
 	 * @param mixed $value The Activity Field value.
 	 * @param array $name The Activity Field name.
-	 * @param str $selector The ACF Field selector.
-	 * @param int $post_id The numeric ID of the WordPress Post.
+	 * @param string $selector The ACF Field selector.
+	 * @param integer|string $post_id The ACF "Post ID".
 	 * @return mixed $value The formatted field value.
 	 */
 	public function value_get_for_acf( $value, $name, $selector, $post_id ) {
@@ -348,7 +348,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $name The name of the Activity Field.
+	 * @param string $name The name of the Activity Field.
 	 * @return array $options The array of field options.
 	 */
 	public function options_get( $name ) {
@@ -398,7 +398,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $name The name of the option group.
+	 * @param string $name The name of the option group.
 	 * @return array $option_group The array of option group data.
 	 */
 	public function option_group_get( $name ) {
@@ -498,7 +498,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $name The name of the field.
+	 * @param string $name The name of the field.
 	 * @return array $field The array of field data.
 	 */
 	public function get_by_name( $name ) {
@@ -546,8 +546,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $field_type The type of ACF Field.
-	 * @param str $filter The token by which to filter the array of fields.
+	 * @param string $field_type The type of ACF Field.
+	 * @param string $filter The token by which to filter the array of fields.
 	 * @return array $fields The array of field names.
 	 */
 	public function data_get( $field_type = '', $filter = 'none' ) {
@@ -628,7 +628,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $type The type of ACF Field.
+	 * @param string $type The type of ACF Field.
 	 * @return array $fields The array of field names.
 	 */
 	public function get_by_acf_type( $type = '' ) {
@@ -655,7 +655,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $name The name of the Activity Field.
+	 * @param string $name The name of the Activity Field.
 	 * @return array $fields The array of field names.
 	 */
 	public function get_acf_type( $name = '' ) {
@@ -684,7 +684,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $activity_field_name The CiviCRM Activity Field name.
+	 * @param string $activity_field_name The CiviCRM Activity Field name.
 	 * @return array $choices The choices for the field.
 	 */
 	public function select_choices_get( $activity_field_name ) {
@@ -707,7 +707,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $activity_field_name The CiviCRM Activity Field name.
+	 * @param string $activity_field_name The CiviCRM Activity Field name.
 	 * @return array $choices The choices for the field.
 	 */
 	public function radio_choices_get( $activity_field_name ) {
@@ -731,7 +731,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 	 * @since 0.4
 	 *
 	 * @param array $field The existing field data array.
-	 * @param str $activity_field_name The CiviCRM Activity Field name.
+	 * @param string $activity_field_name The CiviCRM Activity Field name.
 	 * @return array $field The modified field data array.
 	 */
 	public function date_time_settings_get( $field, $activity_field_name ) {
@@ -757,8 +757,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $name The name of the Activity Field.
-	 * @return str $format The DateTime format.
+	 * @param string $name The name of the Activity Field.
+	 * @return string $format The DateTime format.
 	 */
 	public function date_time_format_get( $name ) {
 
@@ -800,7 +800,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 	 * @since 0.4
 	 *
 	 * @param array $field The field data array.
-	 * @param str $activity_field_name The CiviCRM Activity Field name.
+	 * @param string $activity_field_name The CiviCRM Activity Field name.
 	 * @return array $choices The choices for the field.
 	 */
 	public function text_settings_get( $field, $activity_field_name ) {
@@ -836,7 +836,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 	 * @since 0.4
 	 *
 	 * @param array $args The array of WordPress params.
-	 * @return bool True if updates were successful, or false on failure.
+	 * @return boolean True if updates were successful, or false on failure.
 	 */
 	public function maybe_sync_fields( $args ) {
 

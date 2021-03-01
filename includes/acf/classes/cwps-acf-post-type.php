@@ -128,7 +128,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $contact_type_id The numeric ID of the Contact Type.
+	 * @param integer $contact_type_id The numeric ID of the Contact Type.
 	 * @return array $post_types The array of Post Types.
 	 */
 	public function post_types_get_for_contact_type( $contact_type_id ) {
@@ -171,8 +171,8 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $contact_type_id The numeric ID of the Contact Type.
-	 * @return str|bool $post_type The name of Post Type, or false if not mapped.
+	 * @param integer $contact_type_id The numeric ID of the Contact Type.
+	 * @return string|boolean $post_type The name of Post Type, or false if not mapped.
 	 */
 	public function get_for_contact_type( $contact_type_id ) {
 
@@ -192,7 +192,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $activity_type_id The numeric ID of the Activity Type.
+	 * @param integer $activity_type_id The numeric ID of the Activity Type.
 	 * @return array $post_types The array of Post Types.
 	 */
 	public function post_types_get_for_activity_type( $activity_type_id ) {
@@ -235,8 +235,8 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $activity_type_id The numeric ID of the Activity Type.
-	 * @return str|bool $post_type The name of Post Type, or false if not mapped.
+	 * @param integer $activity_type_id The numeric ID of the Activity Type.
+	 * @return string|boolean $post_type The name of Post Type, or false if not mapped.
 	 */
 	public function get_for_activity_type( $activity_type_id ) {
 
@@ -256,8 +256,8 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $post_type The name of the WordPress Post Type.
-	 * @return int $count The number of Contacts of that Type.
+	 * @param string $post_type The name of the WordPress Post Type.
+	 * @return integer $count The number of Contacts of that Type.
 	 */
 	public function post_count( $post_type ) {
 
@@ -291,7 +291,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $entity_type The Entity to which the Post Types are mapped.
+	 * @param string $entity_type The Entity to which the Post Types are mapped.
 	 * @return array $post_types The array of mapped Post Types.
 	 */
 	public function get_mapped( $entity_type = 'contact' ) {
@@ -334,8 +334,8 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $post_type The name of the Post Type.
-	 * @return bool $is_linked True if the Post Type is mapped, false otherwise.
+	 * @param string $post_type The name of the Post Type.
+	 * @return boolean $is_linked True if the Post Type is mapped, false otherwise.
 	 */
 	public function is_mapped_to_contact_type( $post_type ) {
 
@@ -367,8 +367,8 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $post_type The name of the Post Type.
-	 * @return bool $is_linked True if the Post Type is mapped, false otherwise.
+	 * @param string $post_type The name of the Post Type.
+	 * @return boolean $is_linked True if the Post Type is mapped, false otherwise.
 	 */
 	public function is_mapped_to_activity_type( $post_type ) {
 
@@ -404,8 +404,8 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $post_type The name of the Post Type.
-	 * @return str $label The singular label for the Post Type.
+	 * @param string $post_type The name of the Post Type.
+	 * @return string $label The singular label for the Post Type.
 	 */
 	public function singular_label_get( $post_type ) {
 

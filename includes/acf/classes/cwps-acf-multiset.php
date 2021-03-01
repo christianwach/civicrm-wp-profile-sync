@@ -132,7 +132,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 	 * @since 0.4
 	 *
 	 * @param array $args The array of WordPress params.
-	 * @return bool $success True if updates were successful, or false on failure.
+	 * @return boolean $success True if updates were successful, or false on failure.
 	 */
 	public function fields_handled_update( $args ) {
 
@@ -170,12 +170,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $field The ACF Field selector.
+	 * @param string $field The ACF Field selector.
 	 * @param mixed $value The ACF Field value.
-	 * @param int $contact_id The numeric ID of the Contact.
+	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param array $settings The ACF Field settings.
 	 * @param array $args The array of WordPress params.
-	 * @return bool True if updates were successful, or false on failure.
+	 * @return boolean True if updates were successful, or false on failure.
 	 */
 	public function field_handled_update( $field, $value, $contact_id, $settings, $args ) {
 
@@ -203,7 +203,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $multiset_id The numeric ID of the Multiple Record Set.
+	 * @param integer $multiset_id The numeric ID of the Multiple Record Set.
 	 * @param array $multiset The array of Multiple Record Set data, or empty if none.
 	 */
 	public function multiset_get_by_id( $multiset_id ) {
@@ -224,7 +224,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $contact_id The numeric ID of the CiviCRM Contact.
+	 * @param integer $contact_id The numeric ID of the CiviCRM Contact.
 	 * @return array $multiset_data The array of Multiple Record Set data for the CiviCRM Contact.
 	 */
 	public function multisets_get_for_contact( $contact_id ) {
@@ -338,10 +338,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 	 * @since 0.4
 	 *
 	 * @param array $values The array of Multiple Record Sets to update the Contact with.
-	 * @param int $contact_id The numeric ID of the Contact.
-	 * @param str $selector The ACF Field selector.
+	 * @param integer $contact_id The numeric ID of the Contact.
+	 * @param string $selector The ACF Field selector.
 	 * @param array $args The array of WordPress params.
-	 * @return array|bool $multisets The array of Multiple Record Sets, or false on failure.
+	 * @return array|boolean $multisets The array of Multiple Record Sets, or false on failure.
 	 */
 	public function multisets_update( $values, $contact_id, $selector, $args = [] ) {
 
@@ -543,7 +543,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 	 * @since 0.4
 	 *
 	 * @param array $value The array of Multiple Record Set data in the ACF Field.
-	 * @param int $multiset_id The numeric ID of the Multiple Record Set (or null if new).
+	 * @param integer $multiset_id The numeric ID of the Multiple Record Set (or null if new).
 	 * @return array $multiset_data The CiviCRM Multiple Record Set data.
 	 */
 	public function prepare_from_field( $value, $multiset_id = null ) {
@@ -610,9 +610,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $contact_id The numeric ID of the Contact.
-	 * @param str $data The Multiple Record Set data to update the Contact with.
-	 * @return array|bool $multiset The array of Multiple Record Set data, or false on failure.
+	 * @param integer $contact_id The numeric ID of the Contact.
+	 * @param string $data The Multiple Record Set data to update the Contact with.
+	 * @return array|boolean $multiset The array of Multiple Record Set data, or false on failure.
 	 */
 	public function update( $contact_id, $data ) {
 
@@ -658,8 +658,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $multiset_id The numeric ID of the Multiple Record Set.
-	 * @return bool $success True if successfully deleted, or false on failure.
+	 * @param integer $multiset_id The numeric ID of the Multiple Record Set.
+	 * @return boolean $success True if successfully deleted, or false on failure.
 	 */
 	public function delete( $multiset_id ) {
 
@@ -974,9 +974,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		 *
 		 * @since 0.4
 		 *
-		 * @param bool $mapped False, since we're asking for a mapping.
+		 * @param boolean $mapped False, since we're asking for a mapping.
 		 * @param array $field_group The array of ACF Field Group data.
-		 * @param bool|array $mapped An array of Post Types if the Field Group is mapped, or false if not mapped.
+		 * @param array|boolean $mapped An array of Post Types if the Field Group is mapped, or false if not mapped.
 		 */
 		$mapped = apply_filters( 'cwps/acf/query_field_group_mapped', $mapped, $field_group );
 
@@ -1076,7 +1076,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 	 *
 	 * @param array $acf_fields The existing ACF Fields array.
 	 * @param array $field The ACF Field.
-	 * @param int $post_id The numeric ID of the WordPress Post.
+	 * @param integer $post_id The numeric ID of the WordPress Post.
 	 * @return array $acf_fields The modified ACF Fields array.
 	 */
 	public function acf_fields_get_for_post( $acf_fields, $field, $post_id ) {

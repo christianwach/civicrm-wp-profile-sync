@@ -166,7 +166,7 @@ class CiviCRM_Profile_Sync_ACF {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $version The installed version of ACF.
+	 * @param string $version The installed version of ACF.
 	 */
 	public function include_field_types( $version ) {
 

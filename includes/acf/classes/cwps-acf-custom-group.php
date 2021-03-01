@@ -147,7 +147,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Group {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $custom_group_id The numeric ID of the Custom Group.
+	 * @param integer $custom_group_id The numeric ID of the Custom Group.
 	 * @return array $custom_group The array of Custom Group data.
 	 */
 	public function get_by_id( $custom_group_id ) {
@@ -195,8 +195,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Group {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $type The Entity Type that the Custom Group applies to.
-	 * @param str $subtype The Entity Sub-type that the Custom Group applies to.
+	 * @param string $type The Entity Type that the Custom Group applies to.
+	 * @param string $subtype The Entity Sub-type that the Custom Group applies to.
 	 * @return array $custom_groups The array of Custom Groups.
 	 */
 	public function get_for_entity_type( $type = '', $subtype = '' ) {

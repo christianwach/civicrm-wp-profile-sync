@@ -324,7 +324,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Activity_Assignee extends acf_field {
 		 *
 		 * @param array $args The array of query arguments.
 		 * @param array $field The ACF Field data.
-		 * @param int $post_id The numeric ID of the WordPress post.
+		 * @param integer $post_id The numeric ID of the WordPress post.
 		 */
 		$args = apply_filters( 'acf/fields/' . $this->name . '/query', $args, $field, $post_id );
 		$args = apply_filters( 'acf/fields/' . $this->name . "/query/name={$field['_name']}", $args, $field, $post_id );
@@ -474,7 +474,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Activity_Assignee extends acf_field {
 	 * @since 0.4
 	 *
 	 * @param mixed $value The value found in the database.
-	 * @param int $post_id The Post ID from which the value was loaded.
+	 * @param integer $post_id The Post ID from which the value was loaded.
 	 * @param array $field The field array holding all the field options.
 	 * @return mixed $value The modified value.
 	public function load_value( $value, $post_id, $field ) {
@@ -493,7 +493,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Activity_Assignee extends acf_field {
 	 * @since 0.4
 	 *
 	 * @param mixed $value The value found in the database.
-	 * @param int $post_id The Post ID from which the value was loaded.
+	 * @param integer $post_id The Post ID from which the value was loaded.
 	 * @param array $field The field array holding all the field options.
 	 * @return mixed $value The modified value.
 	public function update_value( $value, $post_id, $field ) {
@@ -548,11 +548,11 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Activity_Assignee extends acf_field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param bool $valid The validation status based on the value and the field's required setting.
+	 * @param boolean $valid The validation status based on the value and the field's required setting.
 	 * @param mixed $value The $_POST value.
 	 * @param array $field The field array holding all the field options.
-	 * @param str $input The corresponding input name for $_POST value.
-	 * @return bool|str $valid False if not valid, or string for error message.
+	 * @param string $input The corresponding input name for $_POST value.
+	 * @return string|boolean $valid False if not valid, or string for error message.
 	public function validate_value( $valid, $value, $field, $input ) {
 
 		// Basic usage.
@@ -580,8 +580,8 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Activity_Assignee extends acf_field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $post_id The Post ID from which the value was deleted.
-	 * @param str $key The meta key which the value was deleted.
+	 * @param integer $post_id The Post ID from which the value was deleted.
+	 * @param string $key The meta key which the value was deleted.
 	public function delete_value( $post_id, $key ) {
 
 	}

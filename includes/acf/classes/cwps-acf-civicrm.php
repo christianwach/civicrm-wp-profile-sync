@@ -377,7 +377,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 *
-	 * @return bool $initialised True if CiviCRM initialised, false otherwise.
+	 * @return boolean $initialised True if CiviCRM initialised, false otherwise.
 	 */
 	public function is_initialised() {
 
@@ -406,8 +406,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $permission The permission string.
-	 * @return bool $permitted True if allowed, false otherwise.
+	 * @param string $permission The permission string.
+	 * @return boolean $permitted True if allowed, false otherwise.
 	 */
 	public function check_permission( $permission ) {
 
@@ -429,9 +429,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		 *
 		 * @since 0.4
 		 *
-		 * @param bool $permitted True if allowed, false otherwise.
-		 * @param str $permission The CiviCRM permission string.
-		 * @return bool $permitted True if allowed, false otherwise.
+		 * @param boolean $permitted True if allowed, false otherwise.
+		 * @param string $permission The CiviCRM permission string.
+		 * @return boolean $permitted True if allowed, false otherwise.
 		 */
 		return apply_filters( 'cwps/acf/civicrm/permitted', $permitted, $permission );
 
@@ -444,8 +444,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $path The CiviCRM path.
-	 * @param str $params The CiviCRM parameters.
+	 * @param string $path The CiviCRM path.
+	 * @param string $params The CiviCRM parameters.
 	 * @return string $link The URL of the CiviCRM page.
 	 */
 	public function get_link( $path = '', $params = null ) {
@@ -485,7 +485,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 *
-	 * @return str $acf_field_key The key of the "CiviCRM Field" in the ACF Field data.
+	 * @return string $acf_field_key The key of the "CiviCRM Field" in the ACF Field data.
 	 */
 	public function acf_field_key_get() {
 

@@ -136,7 +136,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Base {
 	 * @since 0.4
 	 *
 	 * @param array $args The array of WordPress params.
-	 * @return bool True if updates were successful, or false on failure.
+	 * @return boolean True if updates were successful, or false on failure.
 	 */
 	public function fields_handled_update( $args ) {
 

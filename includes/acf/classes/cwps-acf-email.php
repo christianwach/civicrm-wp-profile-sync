@@ -163,7 +163,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 * @since 0.4
 	 *
 	 * @param array $args The array of WordPress params.
-	 * @return bool True if updates were successful, or false on failure.
+	 * @return boolean True if updates were successful, or false on failure.
 	 */
 	public function fields_handled_update( $args ) {
 
@@ -203,9 +203,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 *
 	 * @param array $field The ACF Field data.
 	 * @param mixed $value The ACF Field value.
-	 * @param int $contact_id The numeric ID of the Contact.
+	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param array $settings The ACF Field settings.
-	 * @return bool True if updates were successful, or false on failure.
+	 * @return boolean True if updates were successful, or false on failure.
 	 */
 	public function field_handled_update( $field, $value, $contact_id, $settings ) {
 
@@ -253,8 +253,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $contact_id The numeric ID of the CiviCRM Contact.
-	 * @return object|bool $email The Primary Email data object, or false on failure.
+	 * @param integer $contact_id The numeric ID of the CiviCRM Contact.
+	 * @return object|boolean $email The Primary Email data object, or false on failure.
 	 */
 	public function primary_email_get( $contact_id ) {
 
@@ -307,9 +307,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $contact_id The numeric ID of the Contact.
-	 * @param str $value The email to update the Contact with.
-	 * @return array|bool $email The array of Email data, or false on failure.
+	 * @param integer $contact_id The numeric ID of the Contact.
+	 * @param string $value The email to update the Contact with.
+	 * @return array|boolean $email The array of Email data, or false on failure.
 	 */
 	public function primary_email_update( $contact_id, $value ) {
 
@@ -416,7 +416,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $contact_id The numeric ID of the CiviCRM Contact.
+	 * @param integer $contact_id The numeric ID of the CiviCRM Contact.
 	 * @return array $email_data The array of Email data for the CiviCRM Contact.
 	 */
 	public function emails_get_for_contact( $contact_id ) {
@@ -534,10 +534,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $location_type_id The numeric ID of the Location Type.
-	 * @param int $contact_id The numeric ID of the Contact.
-	 * @param str $value The Email to update the Contact with.
-	 * @return array|bool $email The array of Email data, or false on failure.
+	 * @param integer $location_type_id The numeric ID of the Location Type.
+	 * @param integer $contact_id The numeric ID of the Contact.
+	 * @param string $value The Email to update the Contact with.
+	 * @return array|boolean $email The array of Email data, or false on failure.
 	 */
 	public function email_update( $location_type_id, $contact_id, $value ) {
 
@@ -709,7 +709,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 *
 	 * @since 0.4
 	 *
-	 * @param int|str $post_id The ACF "Post ID".
+	 * @param integer|string $post_id The ACF "Post ID".
 	 * @param object $email The CiviCRM email object.
 	 */
 	public function fields_update( $post_id, $email ) {
@@ -876,7 +876,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 *
 	 * @since 0.4
 	 *
-	 * @return str $acf_field_key The key of the "CiviCRM Email" in the ACF Field data.
+	 * @return string $acf_field_key The key of the "CiviCRM Email" in the ACF Field data.
 	 */
 	public function acf_field_key_get() {
 
@@ -894,7 +894,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 *
 	 * @param array $acf_fields The existing ACF Fields array.
 	 * @param array $field The ACF Field.
-	 * @param int|str $post_id The ACF "Post ID".
+	 * @param integer|string $post_id The ACF "Post ID".
 	 * @return array $acf_fields The modified ACF Fields array.
 	 */
 	public function acf_fields_get_for_post( $acf_fields, $field, $post_id ) {

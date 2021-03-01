@@ -54,7 +54,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var bool $is_upgrade An upgrade flag.
+	 * @var boolean $is_upgrade An upgrade flag.
 	 */
 	public $is_upgrade = false;
 
@@ -63,7 +63,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var bool $is_upgrade An upgrade flag.
+	 * @var boolean $is_upgrade An upgrade flag.
 	 */
 	public $has_warning = false;
 
@@ -550,8 +550,8 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		 *
 		 * @since 0.4
 		 *
-		 * @param bool False by default - do not show tabs.
-		 * @return bool Modified flag for whether or not to show tabs.
+		 * @param boolean False by default - do not show tabs.
+		 * @return boolean Modified flag for whether or not to show tabs.
 		 */
 		$show_tabs = apply_filters( 'cwps/admin/settings/show_tabs', false );
 
@@ -565,7 +565,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		 *
 		 * @since 0.4
 		 *
-		 * @param str $screen_id The ID of the current screen.
+		 * @param string $screen_id The ID of the current screen.
 		 */
 		do_action( 'add_meta_boxes', $screen->id, null );
 
@@ -651,7 +651,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $screen_id The Admin Page Screen ID.
+	 * @param string $screen_id The Admin Page Screen ID.
 	 */
 	public function meta_boxes_add( $screen_id ) {
 
@@ -858,7 +858,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 *
 	 * @since 0.4
 	 *
-	 * @return bool Success or failure.
+	 * @return boolean Success or failure.
 	 */
 	public function settings_save() {
 
@@ -875,7 +875,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 * @since 0.4
 	 *
 	 * @param string $setting_name The name of the setting.
-	 * @return bool Whether or not the setting exists.
+	 * @return boolean Whether or not the setting exists.
 	 */
 	public function setting_exists( $setting_name = '' ) {
 
@@ -946,8 +946,8 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $option_name The name of the option.
-	 * @return bool $exists Whether or not the option exists.
+	 * @param string $option_name The name of the option.
+	 * @return boolean $exists Whether or not the option exists.
 	 */
 	public function option_exists( $option_name = '' ) {
 
@@ -967,8 +967,8 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $option_name The name of the option.
-	 * @param str $default The default value of the option if it has no value.
+	 * @param string $option_name The name of the option.
+	 * @param string $default The default value of the option if it has no value.
 	 * @return mixed $value the value of the option.
 	 */
 	public function option_get( $option_name = '', $default = false ) {
@@ -988,9 +988,9 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $option_name The name of the option.
+	 * @param string $option_name The name of the option.
 	 * @param mixed $value The value to set the option to.
-	 * @return bool $success True if the value of the option was successfully updated.
+	 * @return boolean $success True if the value of the option was successfully updated.
 	 */
 	public function option_set( $option_name = '', $value = '' ) {
 
@@ -1006,8 +1006,8 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $option_name The name of the option.
-	 * @return bool $success True if the option was successfully deleted.
+	 * @param string $option_name The name of the option.
+	 * @return boolean $success True if the option was successfully deleted.
 	 */
 	public function option_delete( $option_name = '' ) {
 

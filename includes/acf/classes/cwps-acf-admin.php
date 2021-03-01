@@ -458,7 +458,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		 *
 		 * @since 0.4
 		 *
-		 * @param str $screen_id The ID of the current screen.
+		 * @param string $screen_id The ID of the current screen.
 		 */
 		do_action( 'add_meta_boxes', $screen->id, null );
 
@@ -504,8 +504,8 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	 *
 	 * @since 0.4
 	 *
-	 * @param bool $show_tabs True if tabs are shown, false otherwise.
-	 * @return bool $show_tabs True if tabs are to be shown, false otherwise.
+	 * @param boolean $show_tabs True if tabs are shown, false otherwise.
+	 * @return boolean $show_tabs True if tabs are to be shown, false otherwise.
 	 */
 	public function page_show_tabs( $show_tabs ) {
 
@@ -525,7 +525,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	 * @since 0.4
 	 *
 	 * @param array $urls The array of subpage URLs.
-	 * @param str The key of the active tab in the subpage URLs array.
+	 * @param string The key of the active tab in the subpage URLs array.
 	 */
 	public function page_add_tab( $urls, $active_tab ) {
 
@@ -556,7 +556,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $screen_id The Admin Page Screen ID.
+	 * @param string $screen_id The Admin Page Screen ID.
 	 */
 	public function meta_boxes_add( $screen_id ) {
 
@@ -1043,7 +1043,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $entity The identifier for the entity - here it's Post ID.
+	 * @param string $entity The identifier for the entity - here it's Post ID.
 	 */
 	public function stepped_sync_posts_to_contacts( $entity = null ) {
 
@@ -1203,7 +1203,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $entity The identifier for the entity - here it's Contact Type ID.
+	 * @param string $entity The identifier for the entity - here it's Contact Type ID.
 	 */
 	public function stepped_sync_contacts_to_posts( $entity = null ) {
 
@@ -1342,7 +1342,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $entity The identifier for the entity - here it's Post ID.
+	 * @param string $entity The identifier for the entity - here it's Post ID.
 	 */
 	public function stepped_sync_posts_to_activities( $entity = null ) {
 
@@ -1501,7 +1501,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $entity The identifier for the Entity - here it's Activity Type ID.
+	 * @param string $entity The identifier for the Entity - here it's Activity Type ID.
 	 */
 	public function stepped_sync_activities_to_posts( $entity = null ) {
 
@@ -1639,7 +1639,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $entity The identifier for the entity - here it's Group ID.
+	 * @param string $entity The identifier for the entity - here it's Group ID.
 	 */
 	public function stepped_sync_groups_to_terms( $entity = null ) {
 
@@ -1772,7 +1772,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $key The unique identifier for the stepper.
+	 * @param string $key The unique identifier for the stepper.
 	 */
 	public function stepped_offset_init( $key ) {
 
@@ -1805,8 +1805,8 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $key The unique identifier for the stepper.
-	 * @param str $to The value for the stepper.
+	 * @param string $key The unique identifier for the stepper.
+	 * @param string $to The value for the stepper.
 	 */
 	public function stepped_offset_update( $key, $to ) {
 
@@ -1825,7 +1825,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $key The unique identifier for the stepper.
+	 * @param string $key The unique identifier for the stepper.
 	 */
 	public function stepped_offset_delete( $key ) {
 
@@ -1873,8 +1873,8 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $type The type of mapping.
-	 * @return int $step_count The number of items to sync for this mapping.
+	 * @param string $type The type of mapping.
+	 * @return integer $step_count The number of items to sync for this mapping.
 	 */
 	public function step_count_get( $type ) {
 

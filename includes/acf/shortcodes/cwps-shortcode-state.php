@@ -140,9 +140,9 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_State {
 	 * @since 0.4
 	 *
 	 * @param array $attr The saved Shortcode attributes.
-	 * @param str $content The enclosed content of the Shortcode.
-	 * @param str $tag The Shortcode which invoked the callback.
-	 * @return str $content The HTML-formatted Shortcode content.
+	 * @param string $content The enclosed content of the Shortcode.
+	 * @param string $tag The Shortcode which invoked the callback.
+	 * @return string $content The HTML-formatted Shortcode content.
 	 */
 	public function shortcode_render( $attr, $content = '', $tag = '' ) {
 
@@ -273,8 +273,8 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_State {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $mce_css The existing list of stylesheets that TinyMCE will load.
-	 * @return str $mce_css The modified list of stylesheets that TinyMCE will load.
+	 * @param string $mce_css The existing list of stylesheets that TinyMCE will load.
+	 * @return string $mce_css The modified list of stylesheets that TinyMCE will load.
 	 */
 	public function shortcake_styles( $mce_css ) {
 

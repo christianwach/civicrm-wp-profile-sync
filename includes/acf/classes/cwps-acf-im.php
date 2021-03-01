@@ -209,7 +209,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 	 * @since 0.4
 	 *
 	 * @param array $args The array of WordPress params.
-	 * @return bool $success True if updates were successful, or false on failure.
+	 * @return boolean $success True if updates were successful, or false on failure.
 	 */
 	public function fields_handled_update( $args ) {
 
@@ -247,12 +247,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $field The ACF Field selector.
+	 * @param string $field The ACF Field selector.
 	 * @param mixed $value The ACF Field value.
-	 * @param int $contact_id The numeric ID of the Contact.
+	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param array $settings The ACF Field settings.
 	 * @param array $args The array of WordPress params.
-	 * @return bool True if updates were successful, or false on failure.
+	 * @return boolean True if updates were successful, or false on failure.
 	 */
 	public function field_handled_update( $field, $value, $contact_id, $settings, $args ) {
 
@@ -280,7 +280,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $im_id The numeric ID of the Instant Messenger Record.
+	 * @param integer $im_id The numeric ID of the Instant Messenger Record.
 	 * @param array $im The array of Instant Messenger Record data, or empty if none.
 	 */
 	public function im_get_by_id( $im_id ) {
@@ -331,7 +331,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $contact_id The numeric ID of the CiviCRM Contact.
+	 * @param integer $contact_id The numeric ID of the CiviCRM Contact.
 	 * @return array $im_data The array of Instant Messenger Record data for the CiviCRM Contact.
 	 */
 	public function ims_get_for_contact( $contact_id ) {
@@ -445,10 +445,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 	 * @since 0.4
 	 *
 	 * @param array $values The array of Instant Messenger Records to update the Contact with.
-	 * @param int $contact_id The numeric ID of the Contact.
-	 * @param str $selector The ACF Field selector.
+	 * @param integer $contact_id The numeric ID of the Contact.
+	 * @param string $selector The ACF Field selector.
 	 * @param array $args The array of WordPress params.
-	 * @return array|bool $ims The array of Instant Messenger Records, or false on failure.
+	 * @return array|boolean $ims The array of Instant Messenger Records, or false on failure.
 	 */
 	public function ims_update( $values, $contact_id, $selector, $args = [] ) {
 
@@ -650,7 +650,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 	 * @since 0.4
 	 *
 	 * @param array $value The array of Instant Messenger Record data in the ACF Field.
-	 * @param int $im_id The numeric ID of the Instant Messenger Record (or null if new).
+	 * @param integer $im_id The numeric ID of the Instant Messenger Record (or null if new).
 	 * @return array $im_data The CiviCRM Instant Messenger Record data.
 	 */
 	public function prepare_from_field( $value, $im_id = null ) {
@@ -717,9 +717,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $contact_id The numeric ID of the Contact.
-	 * @param str $data The Instant Messenger data to update the Contact with.
-	 * @return array|bool $im The array of Instant Messenger Record data, or false on failure.
+	 * @param integer $contact_id The numeric ID of the Contact.
+	 * @param string $data The Instant Messenger data to update the Contact with.
+	 * @return array|boolean $im The array of Instant Messenger Record data, or false on failure.
 	 */
 	public function update( $contact_id, $data ) {
 
@@ -765,8 +765,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $im_id The numeric ID of the Instant Messenger Record.
-	 * @return bool $success True if successfully deleted, or false on failure.
+	 * @param integer $im_id The numeric ID of the Instant Messenger Record.
+	 * @return boolean $success True if successfully deleted, or false on failure.
 	 */
 	public function delete( $im_id ) {
 
@@ -973,7 +973,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 	 *
 	 * @since 0.4
 	 *
-	 * @param int|str $post_id The ACF "Post ID".
+	 * @param integer|string $post_id The ACF "Post ID".
 	 * @param object $im The CiviCRM Instant Messenger Record object.
 	 * @param array $acf_im The ACF Instant Messenger Record array.
 	 * @param array $args The array of CiviCRM params.
@@ -1268,7 +1268,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 	 *
 	 * @param array $acf_fields The existing ACF Fields array.
 	 * @param array $field The ACF Field.
-	 * @param int|str $post_id The ACF "Post ID".
+	 * @param integer|string $post_id The ACF "Post ID".
 	 * @return array $acf_fields The modified ACF Fields array.
 	 */
 	public function acf_fields_get_for_post( $acf_fields, $field, $post_id ) {

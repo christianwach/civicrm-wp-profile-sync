@@ -209,7 +209,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 	 * @since 0.4
 	 *
 	 * @param array $args The array of WordPress params.
-	 * @return bool $success True if updates were successful, or false on failure.
+	 * @return boolean $success True if updates were successful, or false on failure.
 	 */
 	public function fields_handled_update( $args ) {
 
@@ -247,12 +247,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $field The ACF Field selector.
+	 * @param string $field The ACF Field selector.
 	 * @param mixed $value The ACF Field value.
-	 * @param int $contact_id The numeric ID of the Contact.
+	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param array $settings The ACF Field settings.
 	 * @param array $args The array of WordPress params.
-	 * @return bool True if updates were successful, or false on failure.
+	 * @return boolean True if updates were successful, or false on failure.
 	 */
 	public function field_handled_update( $field, $value, $contact_id, $settings, $args ) {
 
@@ -280,7 +280,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $phone_id The numeric ID of the Phone Record.
+	 * @param integer $phone_id The numeric ID of the Phone Record.
 	 * @param array $phone The array of Phone Record data, or empty if none.
 	 */
 	public function phone_get_by_id( $phone_id ) {
@@ -331,7 +331,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $contact_id The numeric ID of the CiviCRM Contact.
+	 * @param integer $contact_id The numeric ID of the CiviCRM Contact.
 	 * @return array $phone_data The array of Phone Record data for the CiviCRM Contact.
 	 */
 	public function phones_get_for_contact( $contact_id ) {
@@ -445,10 +445,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 	 * @since 0.4
 	 *
 	 * @param array $values The array of Phone Record arrays to update the Contact with.
-	 * @param int $contact_id The numeric ID of the Contact.
-	 * @param str $selector The ACF Field selector.
+	 * @param integer $contact_id The numeric ID of the Contact.
+	 * @param string $selector The ACF Field selector.
 	 * @param array $args The array of WordPress params.
-	 * @return array|bool $phones The array of Phone Record data, or false on failure.
+	 * @return array|boolean $phones The array of Phone Record data, or false on failure.
 	 */
 	public function phones_update( $values, $contact_id, $selector, $args = [] ) {
 
@@ -650,7 +650,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 	 * @since 0.4
 	 *
 	 * @param array $value The array of Phone Record data in the ACF Field.
-	 * @param int $phone_id The numeric ID of the Phone Record (or null if new).
+	 * @param integer $phone_id The numeric ID of the Phone Record (or null if new).
 	 * @return array $phone_data The CiviCRM Phone Record data.
 	 */
 	public function prepare_from_field( $value, $phone_id = null ) {
@@ -721,9 +721,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $contact_id The numeric ID of the Contact.
-	 * @param str $data The Phone data to update the Contact with.
-	 * @return array|bool $phone The array of Phone Record data, or false on failure.
+	 * @param integer $contact_id The numeric ID of the Contact.
+	 * @param string $data The Phone data to update the Contact with.
+	 * @return array|boolean $phone The array of Phone Record data, or false on failure.
 	 */
 	public function update( $contact_id, $data ) {
 
@@ -769,8 +769,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $phone_id The numeric ID of the Phone Record.
-	 * @return bool $success True if successfully deleted, or false on failure.
+	 * @param integer $phone_id The numeric ID of the Phone Record.
+	 * @return boolean $success True if successfully deleted, or false on failure.
 	 */
 	public function delete( $phone_id ) {
 
@@ -977,7 +977,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 	 *
 	 * @since 0.4
 	 *
-	 * @param int|str $post_id The ACF "Post ID".
+	 * @param integer|string $post_id The ACF "Post ID".
 	 * @param object $phone The CiviCRM Phone Record object.
 	 * @param array $acf_phone The ACF Phone Record array.
 	 * @param array $args The array of CiviCRM params.
@@ -1272,7 +1272,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 	 *
 	 * @param array $acf_fields The existing ACF Fields array.
 	 * @param array $field The ACF Field.
-	 * @param int|str $post_id The ACF "Post ID".
+	 * @param integer|string $post_id The ACF "Post ID".
 	 * @return array $acf_fields The modified ACF Fields array.
 	 */
 	public function acf_fields_get_for_post( $acf_fields, $field, $post_id ) {

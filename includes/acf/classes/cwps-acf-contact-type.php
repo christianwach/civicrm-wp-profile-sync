@@ -197,9 +197,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str|int $contact_type The name of the CiviCRM Contact Type to query.
-	 * @param str $mode The param to query by: 'name' or 'id'.
-	 * @return array|bool $contact_type_data An array of Contact Type data, or false on failure.
+	 * @param string|integer $contact_type The name of the CiviCRM Contact Type to query.
+	 * @param string $mode The param to query by: 'name' or 'id'.
+	 * @return array|boolean $contact_type_data An array of Contact Type data, or false on failure.
 	 */
 	public function get_data( $contact_type, $mode = 'name' ) {
 
@@ -278,9 +278,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $contact_type The name of the CiviCRM Contact Type to query.
-	 * @param str $mode The param to query by: 'name' or 'id'.
-	 * @return array|bool $types An array of type and sub-type, or false on failure.
+	 * @param string $contact_type The name of the CiviCRM Contact Type to query.
+	 * @param string $mode The param to query by: 'name' or 'id'.
+	 * @return array|boolean $types An array of type and sub-type, or false on failure.
 	 */
 	public function hierarchy_get( $contact_type, $mode = 'name' ) {
 
@@ -363,7 +363,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $contact_type_id The numeric ID of the CiviCRM Contact Type.
+	 * @param string $contact_type_id The numeric ID of the CiviCRM Contact Type.
 	 * @return array $types An associative array populated with parent type and sub-types.
 	 */
 	public function hierarchy_get_by_id( $contact_type_id ) {
@@ -487,7 +487,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 	 * @since 0.4
 	 *
 	 * @param integer $contact_type_id The ID of the CiviCRM Contact Type.
-	 * @return int $count The number of Contacts of that Type.
+	 * @return integer $count The number of Contacts of that Type.
 	 */
 	public function contact_count( $contact_type_id ) {
 
@@ -545,7 +545,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str|bool $post_type_name The name of Post Type.
+	 * @param string|boolean $post_type_name The name of Post Type.
 	 * @return array $types An associative array populated with parent type and sub-type.
 	 */
 	public function hierarchy_get_for_post_type( $post_type_name ) {
@@ -576,8 +576,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $post_type_name The name of Post Type.
-	 * @return int|bool $contact_type_id The numeric ID of the Contact Type, or false if not mapped.
+	 * @param string $post_type_name The name of Post Type.
+	 * @return integer|boolean $contact_type_id The numeric ID of the Contact Type, or false if not mapped.
 	 */
 	public function id_get_for_post_type( $post_type_name ) {
 
@@ -682,8 +682,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int|str|array $contact_type The "ID", "name" or "hierarchy" of the Contact Type.
-	 * @return str|bool $is_linked The name of the Post Type, or false otherwise.
+	 * @param integer|string |array $contact_type The "ID", "name" or "hierarchy" of the Contact Type.
+	 * @return string|boolean $is_linked The name of the Post Type, or false otherwise.
 	 */
 	public function is_mapped_to_post_type( $contact_type ) {
 

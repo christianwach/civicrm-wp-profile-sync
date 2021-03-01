@@ -63,7 +63,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var bool $acf_loaded True if ACF is present, false otherwise.
+	 * @var boolean $acf_loaded True if ACF is present, false otherwise.
 	 */
 	public $acf_loaded = false;
 

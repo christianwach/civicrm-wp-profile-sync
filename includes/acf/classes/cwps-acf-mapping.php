@@ -464,7 +464,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 			 *
 			 * @since 0.4
 			 *
-			 * @param int $activity_type_id The removed Activity Type ID.
+			 * @param integer $activity_type_id The removed Activity Type ID.
 			 * @param array $values The form values.
 			 */
 			do_action( 'cwps/acf/mapping/activity/removed', $activity_type_id, $values );
@@ -482,8 +482,8 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 			 *
 			 * @since 0.4
 			 *
-			 * @param int $activity_type_id The updated Activity Type ID.
-			 * @param str $post_type The updated Post Type name.
+			 * @param integer $activity_type_id The updated Activity Type ID.
+			 * @param string $post_type The updated Post Type name.
 			 * @param array $values The form values.
 			 */
 			do_action( 'cwps/acf/mapping/activity/edited', $activity_type_id, $post_type, $values );
@@ -679,7 +679,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 			 *
 			 * @since 0.4
 			 *
-			 * @param int $contact_type_id The removed Contact Type ID.
+			 * @param integer $contact_type_id The removed Contact Type ID.
 			 * @param array $values The form values.
 			 */
 			do_action( 'cwps/acf/mapping/contact/removed', $contact_type_id, $values );
@@ -697,8 +697,8 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 			 *
 			 * @since 0.4
 			 *
-			 * @param int $contact_type_id The updated Contact Type ID.
-			 * @param str $post_type The updated Post Type name.
+			 * @param integer $contact_type_id The updated Contact Type ID.
+			 * @param string $post_type The updated Post Type name.
 			 * @param array $values The form values.
 			 */
 			do_action( 'cwps/acf/mapping/contact/edited', $contact_type_id, $post_type, $values );
@@ -772,8 +772,8 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $contact_type_id The numeric ID of the Contact Type.
-	 * @return str|bool $cpt_name The name of the Post Type or false if none exists.
+	 * @param integer $contact_type_id The numeric ID of the Contact Type.
+	 * @return string|boolean $cpt_name The name of the Post Type or false if none exists.
 	 */
 	public function mapping_for_contact_type_get( $contact_type_id ) {
 
@@ -797,9 +797,9 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $contact_type_id The numeric ID of the Contact Type.
-	 * @param str $cpt_name The name of the WordPress Post Type.
-	 * @return bool $success Whether or not the operation was successful.
+	 * @param integer $contact_type_id The numeric ID of the Contact Type.
+	 * @param string $cpt_name The name of the WordPress Post Type.
+	 * @return boolean $success Whether or not the operation was successful.
 	 */
 	public function mapping_for_contact_type_update( $contact_type_id, $cpt_name ) {
 
@@ -818,8 +818,8 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $contact_type_id The numeric ID of the Contact Type.
-	 * @return bool $success Whether or not the operation was successful.
+	 * @param integer $contact_type_id The numeric ID of the Contact Type.
+	 * @return boolean $success Whether or not the operation was successful.
 	 */
 	public function mapping_for_contact_type_remove( $contact_type_id ) {
 
@@ -866,8 +866,8 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $activity_type_id The numeric ID of the Activity Type.
-	 * @return str|bool $cpt_name The name of the Post Type or false if none exists.
+	 * @param integer $activity_type_id The numeric ID of the Activity Type.
+	 * @return string|boolean $cpt_name The name of the Post Type or false if none exists.
 	 */
 	public function mapping_for_activity_type_get( $activity_type_id ) {
 
@@ -891,9 +891,9 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $activity_type_id The numeric ID of the Activity Type.
-	 * @param str $cpt_name The name of the WordPress Post Type.
-	 * @return bool $success Whether or not the operation was successful.
+	 * @param integer $activity_type_id The numeric ID of the Activity Type.
+	 * @param string $cpt_name The name of the WordPress Post Type.
+	 * @return boolean $success Whether or not the operation was successful.
 	 */
 	public function mapping_for_activity_type_update( $activity_type_id, $cpt_name ) {
 
@@ -912,8 +912,8 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $activity_type_id The numeric ID of the Activity Type.
-	 * @return bool $success Whether or not the operation was successful.
+	 * @param integer $activity_type_id The numeric ID of the Activity Type.
+	 * @return boolean $success Whether or not the operation was successful.
 	 */
 	public function mapping_for_activity_type_remove( $activity_type_id ) {
 
@@ -974,8 +974,8 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $post_type The name of the Post Type.
-	 * @return array|bool $setting The array of settings for the Post Type, or false if none exist.
+	 * @param string $post_type The name of the Post Type.
+	 * @return array|boolean $setting The array of settings for the Post Type, or false if none exist.
 	 */
 	public function setting_get( $post_type ) {
 
@@ -999,9 +999,9 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $post_type The name of the Post Type.
+	 * @param string $post_type The name of the Post Type.
 	 * @param array $data The settings data for the Post Type.
-	 * @return bool $success Whether or not the operation was successful.
+	 * @return boolean $success Whether or not the operation was successful.
 	 */
 	public function setting_update( $post_type, $data ) {
 
@@ -1020,8 +1020,8 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $post_type The name of the Post Type.
-	 * @return bool $success Whether or not the operation was successful.
+	 * @param string $post_type The name of the Post Type.
+	 * @return boolean $success Whether or not the operation was successful.
 	 */
 	public function setting_remove( $post_type ) {
 
@@ -1046,8 +1046,8 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $option_name The name of the option.
-	 * @return bool $exists Whether or not the option exists.
+	 * @param string $option_name The name of the option.
+	 * @return boolean $exists Whether or not the option exists.
 	 */
 	public function option_exists( $option_name = '' ) {
 
@@ -1072,8 +1072,8 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $option_name The name of the option.
-	 * @param str $default The default value of the option if it has no value.
+	 * @param string $option_name The name of the option.
+	 * @param string $default The default value of the option if it has no value.
 	 * @return mixed $value the value of the option.
 	 */
 	public function option_get( $option_name = '', $default = false ) {
@@ -1098,9 +1098,9 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $option_name The name of the option.
+	 * @param string $option_name The name of the option.
 	 * @param mixed $value The value to set the option to.
-	 * @return bool $success True if the value of the option was successfully updated.
+	 * @return boolean $success True if the value of the option was successfully updated.
 	 */
 	public function option_set( $option_name = '', $value = '' ) {
 
@@ -1121,8 +1121,8 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $option_name The name of the option.
-	 * @return bool $success True if the option was successfully deleted.
+	 * @param string $option_name The name of the option.
+	 * @return boolean $success True if the option was successfully deleted.
 	 */
 	public function option_delete( $option_name = '' ) {
 

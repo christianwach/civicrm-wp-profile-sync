@@ -236,7 +236,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	 *
 	 * @since 0.4
 	 *
-	 * @return bool True if CiviCRM initialised, false otherwise.
+	 * @return boolean True if CiviCRM initialised, false otherwise.
 	 */
 	public function is_initialised() {
 
@@ -269,8 +269,8 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $path The CiviCRM path.
-	 * @param str $params The CiviCRM parameters.
+	 * @param string $path The CiviCRM path.
+	 * @param string $params The CiviCRM parameters.
 	 * @return string $link The URL of the CiviCRM page.
 	 */
 	public function get_link( $path = '', $params = null ) {

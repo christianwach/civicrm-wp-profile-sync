@@ -951,9 +951,9 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $op The kind of operation.
-	 * @param int $groupID The numeric ID of the Custom Group.
-	 * @param int $entityID The numeric ID of the Contact.
+	 * @param string $op The kind of operation.
+	 * @param integer $groupID The numeric ID of the Custom Group.
+	 * @param integer $entityID The numeric ID of the Contact.
 	 * @param array $custom_fields The array of Custom Fields.
 	 */
 	public function custom_edited( $op, $groupID, $entityID, &$custom_fields ) {

@@ -322,7 +322,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $contact_id The numeric ID of the CiviCRM Contact.
+	 * @param integer $contact_id The numeric ID of the CiviCRM Contact.
 	 * @return array $group_data The array of Group data for the CiviCRM Contact.
 	 */
 	public function groups_get_current_for_contact( $contact_id ) {
@@ -442,7 +442,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $contact_id The numeric ID of the CiviCRM Contact.
+	 * @param integer $contact_id The numeric ID of the CiviCRM Contact.
 	 * @return array $group_data The array of Group data for the CiviCRM Contact.
 	 */
 	public function groups_get_removed_for_contact( $contact_id ) {
@@ -510,7 +510,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 	 * @since 0.4
 	 *
 	 * @param integer $group_id The ID of the CiviCRM Group.
-	 * @return int $count The number of Contacts in the Group, or false otherwise.
+	 * @return integer $count The number of Contacts in the Group, or false otherwise.
 	 */
 	public function group_contact_count( $group_id ) {
 
@@ -554,7 +554,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 	 *
 	 * @param integer $group_id The ID of the CiviCRM Group.
 	 * @param array $contact_id The numeric ID of a CiviCRM Contact.
-	 * @return bool $is_member True if the Contact is in the Group, or false otherwise.
+	 * @return boolean $is_member True if the Contact is in the Group, or false otherwise.
 	 */
 	public function group_contact_exists( $group_id, $contact_id ) {
 
@@ -597,7 +597,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 	 *
 	 * @param integer $group_id The ID of the CiviCRM Group.
 	 * @param array $contact_id The numeric ID of a CiviCRM Contact.
-	 * @return array|bool $result The Group-Contact data, or false on failure.
+	 * @return array|boolean $result The Group-Contact data, or false on failure.
 	 */
 	public function group_contact_create( $group_id, $contact_id ) {
 
@@ -641,7 +641,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 	 *
 	 * @param integer $group_id The ID of the CiviCRM Group.
 	 * @param array $contact_id The numeric ID of a CiviCRM Contact.
-	 * @return array|bool $result The Group-Contact data, or false on failure.
+	 * @return array|boolean $result The Group-Contact data, or false on failure.
 	 */
 	public function group_contact_delete( $group_id, $contact_id ) {
 
@@ -691,8 +691,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 	 * @since 0.4
 	 *
 	 * @param integer $group_id The numeric ID of the CiviCRM Group.
-	 * @param int $offset The numeric offset for the query.
-	 * @param int $limit The numeric limit for the query.
+	 * @param integer $offset The numeric offset for the query.
+	 * @param integer $limit The numeric limit for the query.
 	 * @return array $result The array of Group Contact data from the CiviCRM API.
 	 */
 	public function group_contacts_chunked_data_get( $group_id, $offset, $limit ) {

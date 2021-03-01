@@ -326,7 +326,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 		 *
 		 * @since 0.4
 		 *
-		 * @param str $screen_id The ID of the current screen.
+		 * @param string $screen_id The ID of the current screen.
 		 */
 		do_action( 'add_meta_boxes', $screen->id, null );
 
@@ -368,8 +368,8 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	 *
 	 * @since 0.4
 	 *
-	 * @param bool $show_tabs True if tabs are shown, false otherwise.
-	 * @return bool $show_tabs True if tabs are to be shown, false otherwise.
+	 * @param boolean $show_tabs True if tabs are shown, false otherwise.
+	 * @return boolean $show_tabs True if tabs are to be shown, false otherwise.
 	 */
 	public function page_show_tabs( $show_tabs ) {
 
@@ -389,7 +389,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	 * @since 0.4
 	 *
 	 * @param array $urls The array of subpage URLs.
-	 * @param str The key of the active tab in the subpage URLs array.
+	 * @param string The key of the active tab in the subpage URLs array.
 	 */
 	public function page_add_tab( $urls, $active_tab ) {
 
@@ -446,7 +446,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $screen_id The Admin Page Screen ID.
+	 * @param string $screen_id The Admin Page Screen ID.
 	 */
 	public function meta_boxes_add( $screen_id ) {
 
@@ -636,8 +636,8 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $option_name The name of the option.
-	 * @return bool $exists Whether or not the option exists.
+	 * @param string $option_name The name of the option.
+	 * @return boolean $exists Whether or not the option exists.
 	 */
 	public function option_exists( $option_name = '' ) {
 
@@ -662,8 +662,8 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $option_name The name of the option.
-	 * @param str $default The default value of the option if it has no value.
+	 * @param string $option_name The name of the option.
+	 * @param string $default The default value of the option if it has no value.
 	 * @return mixed $value the value of the option.
 	 */
 	public function option_get( $option_name = '', $default = false ) {
@@ -688,9 +688,9 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $option_name The name of the option.
+	 * @param string $option_name The name of the option.
 	 * @param mixed $value The value to set the option to.
-	 * @return bool $success True if the value of the option was successfully updated.
+	 * @return boolean $success True if the value of the option was successfully updated.
 	 */
 	public function option_set( $option_name = '', $value = '' ) {
 
@@ -711,8 +711,8 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $option_name The name of the option.
-	 * @return bool $success True if the option was successfully deleted.
+	 * @param string $option_name The name of the option.
+	 * @return boolean $success True if the option was successfully deleted.
 	 */
 	public function option_delete( $option_name = '' ) {
 

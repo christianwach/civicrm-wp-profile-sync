@@ -23,7 +23,7 @@
 		 * @since 0.4
 		 *
 		 * @param array $urls The array of subpage URLs.
-		 * @param str The key of the active tab in the subpage URLs array.
+		 * @param string The key of the active tab in the subpage URLs array.
 		 */
 		do_action( 'cwps/admin/settings/nav_tabs', $urls, 'manual-sync' );
 
