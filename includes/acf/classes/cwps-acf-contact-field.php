@@ -1271,6 +1271,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 *
 	 * @since 0.4
 	 *
+	 * @param int $post_id The numeric ID of the WordPress Post.
 	 * @param str $url The URL to resolve.
 	 * @return int The found Post ID, or 0 on failure.
 	 */

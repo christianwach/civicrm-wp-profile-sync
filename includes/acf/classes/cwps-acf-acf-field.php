@@ -514,8 +514,8 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $type The ACF Field type.
 	 * @param mixed $value The ACF field value.
+	 * @param str $type The ACF Field type.
 	 * @param array $settings The ACF Field settings.
 	 * @param array $args Any additional arguments.
 	 * @return mixed $value The field value formatted for CiviCRM.

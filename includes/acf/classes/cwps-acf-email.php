@@ -710,7 +710,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 * @since 0.4
 	 *
 	 * @param int|str $post_id The ACF "Post ID".
-	 * @param array $args The array of CiviCRM params.
+	 * @param object $email The CiviCRM email object.
 	 */
 	public function fields_update( $post_id, $email ) {
 

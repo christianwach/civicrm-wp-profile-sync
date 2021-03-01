@@ -209,7 +209,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 	public function multiset_get_by_id( $multiset_id ) {
 
 		// Query the Custom Group.
-		return $this->civicrm->custom_group->get_by_id( $multiset_id )
+		return $this->civicrm->custom_group->get_by_id( $multiset_id );
 
 	}
 

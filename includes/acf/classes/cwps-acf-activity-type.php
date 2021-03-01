@@ -214,7 +214,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 	 *
 	 * @since 0.4
 	 *
-	 * @param int $activity_type_id The numeric value of the Activity Type.
+	 * @param int $activity_type_value The numeric value of the Activity Type.
 	 * @return array|bool $activity_type An array of Activity Type data, or false on failure.
 	 */
 	public function get_by_value( $activity_type_value ) {

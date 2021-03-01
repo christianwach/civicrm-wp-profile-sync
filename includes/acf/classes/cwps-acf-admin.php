@@ -1873,8 +1873,8 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $mapping The type of mapping.
-	 * @param int $step_count The number of items to sync for this mapping.
+	 * @param str $type The type of mapping.
+	 * @return int $step_count The number of items to sync for this mapping.
 	 */
 	public function step_count_get( $type ) {
 

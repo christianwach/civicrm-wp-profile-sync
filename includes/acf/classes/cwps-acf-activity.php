@@ -353,7 +353,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 	 *
 	 * @since 0.4
 	 *
-	 * @param integer $contact_type_id The numeric ID of the CiviCRM Activity Type.
+	 * @param integer $activity_type_id The numeric ID of the CiviCRM Activity Type.
 	 * @param int $offset The numeric offset for the query.
 	 * @param int $limit The numeric limit for the query.
 	 * @return array $result The array of Activity data from the CiviCRM API.
@@ -865,7 +865,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 	 *
 	 * @since 0.4
 	 *
-	 * @param object $activity_id The numeric ID of the CiviCRM Activity.
+	 * @param object $activity The CiviCRM Activity data object.
 	 * @return object $activity The backfilled CiviCRM Activity data.
 	 */
 	public function backfill( $activity ) {
