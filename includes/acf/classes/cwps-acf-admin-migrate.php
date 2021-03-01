@@ -151,14 +151,19 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 			return;
 		}
 
-		// Bail if we are on our "ACF Migration" page.
+		// Bail if we are on our "ACF Integration" page.
 		if ( $screen->id == 'admin_page_cwps_acf_sync' ) {
+			return;
+		}
+
+		// Bail if there is already a warning.
+		if ( $this->acf_loader->plugin->admin->has_warning === true ) {
 			return;
 		}
 
 		// Show general "Call to Action".
 		$message = sprintf(
-			__( 'CiviCRM Profile Sync has detected that you are running the CiviCRM ACF Integration plugin and requires your attention. Please visit the %1$sMigration Page%2$s for details.', 'civicrm-wp-profile-sync' ),
+			__( 'CiviCRM ACF Integration has become part of CiviCRM Profile Sync. Please visit the %1$sMigration Page%2$s to switch over.', 'civicrm-wp-profile-sync' ),
 			'<a href="' . menu_page_url( 'cwps_acf_sync', false ) . '">',
 			'</a>'
 		);
@@ -193,11 +198,11 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 			return;
 		}
 
-		// Add our "ACF Migration" page to the CiviCRM menu.
+		// Add our "ACF Integration" page to the CiviCRM menu.
 		$this->migrate_page = add_submenu_page(
 			'cwps_parent', // Parent slug.
 			__( 'CiviCRM Profile Sync', 'civicrm-wp-profile-sync' ),
-			__( 'ACF Migration', 'civicrm-wp-profile-sync' ),
+			__( 'ACF Integration', 'civicrm-wp-profile-sync' ),
 			'manage_options',
 			'cwps_acf_sync',
 			[ $this, 'page_acf_migrate' ]
@@ -209,7 +214,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 		// Ensure correct menu item is highlighted.
 		add_action( 'admin_head-' . $this->migrate_page, [ $this->acf_loader->plugin->admin, 'admin_menu_highlight' ], 50 );
 
-		// Add styles and scripts only on our "ACF Migration" page.
+		// Add styles and scripts only on our "ACF Integration" page.
 		// @see wp-admin/admin-header.php
 		add_action( 'admin_head-' . $this->migrate_page, [ $this, 'admin_head' ] );
 		add_action( 'admin_print_styles-' . $this->migrate_page, [ $this, 'admin_styles' ] );
@@ -268,10 +273,10 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 
 
 	/**
-	 * Append the "ACF Migration" page to Settings page.
+	 * Append the "ACF Integration" page to Settings page.
 	 *
 	 * This ensures that the correct parent menu item is highlighted for our
-	 * "ACF Migration" subpage.
+	 * "ACF Integration" subpage.
 	 *
 	 * @since 0.4
 	 *
@@ -280,7 +285,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	 */
 	public function admin_subpages_filter( $subpages ) {
 
-		// Add "ACF Migration" page.
+		// Add "ACF Integration" page.
 		$subpages[] = 'cwps_acf_sync';
 
 		// --<
@@ -295,7 +300,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 
 
 	/**
-	 * Show our "ACF Migration" page.
+	 * Show our "ACF Integration" page.
 	 *
 	 * @since 0.4
 	 */
@@ -339,7 +344,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 
 
 	/**
-	 * Append the "ACF Migration" page URL to the subpage URLs.
+	 * Append the "ACF Integration" page URL to the subpage URLs.
 	 *
 	 * @since 0.4
 	 *
@@ -389,7 +394,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	public function page_add_tab( $urls, $active_tab ) {
 
 		// Define title.
-		$title = __( 'ACF Migration', 'civicrm-admin-utilities' );
+		$title = __( 'ACF Integration', 'civicrm-admin-utilities' );
 
 		// Default to inactive.
 		$active = '';

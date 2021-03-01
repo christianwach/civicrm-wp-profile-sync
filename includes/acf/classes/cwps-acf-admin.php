@@ -152,11 +152,11 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			return;
 		}
 
-		// Add our "ACF Sync" page to the CiviCRM menu.
+		// Add our "ACF Integration" page to the CiviCRM menu.
 		$this->sync_page = add_submenu_page(
 			'cwps_parent', // Parent slug.
 			__( 'CiviCRM Profile Sync', 'civicrm-wp-profile-sync' ),
-			__( 'ACF Sync', 'civicrm-wp-profile-sync' ),
+			__( 'ACF Integration', 'civicrm-wp-profile-sync' ),
 			'manage_options',
 			'cwps_acf_sync',
 			[ $this, 'page_manual_sync' ]
@@ -530,7 +530,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	public function page_add_tab( $urls, $active_tab ) {
 
 		// Define title.
-		$title = __( 'ACF Sync', 'civicrm-admin-utilities' );
+		$title = __( 'ACF Integration', 'civicrm-admin-utilities' );
 
 		// Default to inactive.
 		$active = '';
