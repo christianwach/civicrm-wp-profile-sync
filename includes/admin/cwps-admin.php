@@ -703,7 +703,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	public function meta_box_submit_render() {
 
 		// Include template file.
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/metaboxes/cwps-admin-metabox-submit.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/metaboxes/metabox-admin-settings-submit.php';
 
 	}
 
@@ -730,7 +730,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		$email_sync_no =  $email_sync === 0 ? ' selected ="selected"' : '';
 
 		// Include template file.
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/metaboxes/cwps-admin-metabox-profile.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/metaboxes/metabox-admin-settings-profile.php';
 
 	}
 

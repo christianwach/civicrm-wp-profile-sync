@@ -1,4 +1,4 @@
-<!-- assets/templates/wordpress/metaboxes/cwps-admin-metabox-profile.php -->
+<!-- assets/templates/wordpress/metaboxes/metabox-admin-settings-profile.php -->
 <table class="form-table">
 	<tr>
 		<th scope="row"><?php _e( 'Website Type', 'civicrm-admin-utilities' ); ?></th>

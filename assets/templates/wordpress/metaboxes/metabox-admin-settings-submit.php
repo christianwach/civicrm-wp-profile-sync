@@ -1,4 +1,4 @@
-<!-- assets/templates/wordpress/metaboxes/cwps-admin-metabox-submit.php -->
+<!-- assets/templates/wordpress/metaboxes/metabox-admin-settings-submit.php -->
 <div class="submitbox">
 	<div id="minor-publishing">
 		<div id="misc-publishing-actions">
