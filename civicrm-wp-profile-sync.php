@@ -2,7 +2,7 @@
 --------------------------------------------------------------------------------
 Plugin Name: CiviCRM Profile Sync
 Plugin URI: https://github.com/christianwach/civicrm-wp-profile-sync
-Description: Keeps a WordPress User profile in sync with CiviCRM Contact info and enables integration between CiviCRM Entities and WordPress Entities with data synced via Advanced Custom Fields.
+Description: Keeps a WordPress User profile in sync with a CiviCRM Contact and integrates WordPress and CiviCRM Entities with data synced via Advanced Custom Fields.
 Author: Christian Wach
 Version: 0.4
 Author URI: https://haystack.co.uk

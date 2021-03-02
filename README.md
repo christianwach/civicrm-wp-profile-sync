@@ -10,7 +10,7 @@ CiviCRM Profile Sync
 **License:** GPLv2 or later<br/>
 **License URI:** https://www.gnu.org/licenses/gpl-2.0.html
 
-Keeps a WordPress User profile in sync with CiviCRM Contact info and enables integration between CiviCRM Entities and WordPress Entities with data synced via Advanced Custom Fields.
+Keeps a WordPress User profile in sync with a CiviCRM Contact and integrates WordPress and CiviCRM Entities with data synced via Advanced Custom Fields.
 
 
 
