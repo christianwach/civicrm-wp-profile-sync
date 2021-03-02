@@ -219,6 +219,9 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 	 */
 	public function include_files() {
 
+		// Include legacy CAI functions.
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/functions/cwps-acf-functions-cai.php';
+
 		// Include functions.
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/functions/cwps-acf-functions.php';
 

@@ -56,7 +56,16 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Instant_Messenger {
 	 * @access public
 	 * @var str $tag The Shortcode name.
 	 */
-	public $tag = 'cai_im';
+	public $tag = 'cwps_im';
+
+	/**
+	 * CAI Shortcode name.
+	 *
+	 * @since 0.4
+	 * @access public
+	 * @var str $tag The Shortcode name.
+	 */
+	public $cai_tag = 'cai_im';
 
 
 
@@ -129,6 +138,9 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Instant_Messenger {
 
 		// Register our Shortcode and its callback.
 		add_shortcode( $this->tag, [ $this, 'shortcode_render' ] );
+
+		// Register the legacy Shortcode and its callback.
+		add_shortcode( $this->cai_tag, [ $this, 'shortcode_render' ] );
 
 	}
 
@@ -274,6 +286,9 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Instant_Messenger {
 
 		// Register Shortcake options.
 		shortcode_ui_register_for_shortcode( $this->tag, $settings );
+
+		// Register legacy Shortcake options.
+		shortcode_ui_register_for_shortcode( $this->cai_tag, $settings );
 
 	}
 

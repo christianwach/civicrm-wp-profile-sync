@@ -1,8 +1,10 @@
 <?php
 /**
- * Theme functions.
+ * Legacy theme functions for CiviCRM ACF Integration.
  *
- * Global scope functions that are available to the theme can be found here.
+ * Legacy global scope functions that support the CiviCRM ACF Integration plugin
+ * can be found here. These are now deprecated - so please use their equivalents
+ * in the `cwps-acf-functions.php` file.
  *
  * @package CiviCRM_WP_Profile_Sync
  * @since 0.4
@@ -22,7 +24,7 @@ defined( 'ABSPATH' ) || exit;
  * @param integer|string $post_id The ACF "Post ID".
  * @return string $age The age expressed as a string.
  */
-function cwps_get_age_from_acf_field( $selector, $post_id = null ) {
+function cacf_get_age_from_acf_field( $selector, $post_id = null ) {
 
 	// Get reference to plugin.
 	$cwps = civicrm_wp_profile_sync()->acf;
@@ -86,13 +88,13 @@ function cwps_get_age_from_acf_field( $selector, $post_id = null ) {
  * @param integer|string $post_id The ACF "Post ID".
  * @return string $phones The formatted Phone Numbers.
  */
-function cwps_get_phone_numbers( $selector, $post_id = null ) {
+function cacf_get_phone_numbers( $selector, $post_id = null ) {
 
 	// Init return.
 	$phones = '';
 
 	// Get the Phone Records.
-	$records = cwps_get_phone_records( $selector, $post_id );
+	$records = cacf_get_phone_records( $selector, $post_id );
 
 	// Bail if we don't get a Phone Record.
 	if ( empty( $records ) ) {
@@ -186,13 +188,13 @@ function cwps_get_phone_numbers( $selector, $post_id = null ) {
  * @param integer|string $post_id The ACF "Post ID".
  * @return string $phone The formatted Phone Number.
  */
-function cwps_get_phone_numbers_by_type_ids( $selector, $location_type_id, $phone_type_id, $return = 'list', $post_id = null ) {
+function cacf_get_phone_numbers_by_type_ids( $selector, $location_type_id, $phone_type_id, $return = 'list', $post_id = null ) {
 
 	// Init return.
 	$phones = '';
 
 	// Get the Phone Records.
-	$records = cwps_get_phone_records_by_type_ids( $selector, $location_type_id, $phone_type_id, $post_id );
+	$records = cacf_get_phone_records_by_type_ids( $selector, $location_type_id, $phone_type_id, $post_id );
 
 	// Bail if we don't get a Phone Record.
 	if ( empty( $records ) ) {
@@ -201,7 +203,7 @@ function cwps_get_phone_numbers_by_type_ids( $selector, $location_type_id, $phon
 
 	// If we are looking for all records.
 	if ( empty( $location_type_id ) AND empty( $phone_type_id ) ) {
-		return cwps_get_phone_numbers( $selector, $post_id );
+		return cacf_get_phone_numbers( $selector, $post_id );
 	}
 
 	// Init filtered array.
@@ -288,13 +290,13 @@ function cwps_get_phone_numbers_by_type_ids( $selector, $location_type_id, $phon
  * @param integer|string $post_id The ACF "Post ID".
  * @return array $phones The array of Phone Record data.
  */
-function cwps_get_phone_records_by_type_ids( $selector, $location_type_id, $phone_type_id, $post_id = null ) {
+function cacf_get_phone_records_by_type_ids( $selector, $location_type_id, $phone_type_id, $post_id = null ) {
 
 	// Init return.
 	$phones = [];
 
 	// Get the Phone Records.
-	$records = cwps_get_phone_records( $selector, $post_id );
+	$records = cacf_get_phone_records( $selector, $post_id );
 
 	// Bail if we don't get a Phone Record.
 	if ( empty( $records ) ) {
@@ -378,13 +380,13 @@ function cwps_get_phone_records_by_type_ids( $selector, $location_type_id, $phon
  * @param integer|string $post_id The ACF "Post ID".
  * @return string $phone The formatted Phone Number.
  */
-function cwps_get_primary_phone_number( $selector, $post_id = null ) {
+function cacf_get_primary_phone_number( $selector, $post_id = null ) {
 
 	// Init return.
 	$phone = '';
 
 	// Get the Phone Record.
-	$record = cwps_get_primary_phone_record( $selector, $post_id );
+	$record = cacf_get_primary_phone_record( $selector, $post_id );
 
 	// Bail if we don't get a Phone Record.
 	if ( empty( $record ) ) {
@@ -438,13 +440,13 @@ function cwps_get_primary_phone_number( $selector, $post_id = null ) {
  * @param integer|string $post_id The ACF "Post ID".
  * @return array $phone The array of Phone Record data.
  */
-function cwps_get_primary_phone_record( $selector, $post_id = null ) {
+function cacf_get_primary_phone_record( $selector, $post_id = null ) {
 
 	// Init return.
 	$phone = [];
 
 	// Get the Phone Record.
-	$records = cwps_get_phone_records( $selector, $post_id );
+	$records = cacf_get_phone_records( $selector, $post_id );
 
 	// Now try and find the Primary Phone Record.
 	foreach( $records AS $record ) {
@@ -483,7 +485,7 @@ function cwps_get_primary_phone_record( $selector, $post_id = null ) {
  * @param integer|string $post_id The ACF "Post ID".
  * @return array $records The array of Phone Record data.
  */
-function cwps_get_phone_records( $selector, $post_id = null ) {
+function cacf_get_phone_records( $selector, $post_id = null ) {
 
 	// Init return.
 	$records = [];
@@ -547,13 +549,13 @@ function cwps_get_phone_records( $selector, $post_id = null ) {
  * @param integer|string $post_id The ACF "Post ID".
  * @return string $ims The formatted Instant Messenger "Names".
  */
-function cwps_get_ims( $selector, $post_id = null ) {
+function cacf_get_ims( $selector, $post_id = null ) {
 
 	// Init return.
 	$ims = '';
 
 	// Get the Instant Messenger Records.
-	$records = cwps_get_im_records( $selector, $post_id );
+	$records = cacf_get_im_records( $selector, $post_id );
 
 	// Bail if we don't get an Instant Messenger Record.
 	if ( empty( $records ) ) {
@@ -638,13 +640,13 @@ function cwps_get_ims( $selector, $post_id = null ) {
  * @param integer|string $post_id The ACF "Post ID".
  * @return string $im The formatted Instant Messenger.
  */
-function cwps_get_ims_by_type_ids( $selector, $location_type_id, $im_provider_id, $return = 'list', $post_id = null ) {
+function cacf_get_ims_by_type_ids( $selector, $location_type_id, $im_provider_id, $return = 'list', $post_id = null ) {
 
 	// Init return.
 	$ims = '';
 
 	// Get the Instant Messenger Records.
-	$records = cwps_get_im_records_by_type_ids( $selector, $location_type_id, $im_provider_id, $post_id );
+	$records = cacf_get_im_records_by_type_ids( $selector, $location_type_id, $im_provider_id, $post_id );
 
 	// Bail if we don't get an Instant Messenger Record.
 	if ( empty( $records ) ) {
@@ -653,7 +655,7 @@ function cwps_get_ims_by_type_ids( $selector, $location_type_id, $im_provider_id
 
 	// If we are looking for all records.
 	if ( empty( $location_type_id ) AND empty( $im_provider_id ) ) {
-		return cwps_get_ims( $selector, $post_id );
+		return cacf_get_ims( $selector, $post_id );
 	}
 
 	// Init filtered array.
@@ -731,13 +733,13 @@ function cwps_get_ims_by_type_ids( $selector, $location_type_id, $im_provider_id
  * @param integer|string $post_id The ACF "Post ID".
  * @return array $ims The array of Instant Messenger Record data.
  */
-function cwps_get_im_records_by_type_ids( $selector, $location_type_id, $im_provider_id, $post_id = null ) {
+function cacf_get_im_records_by_type_ids( $selector, $location_type_id, $im_provider_id, $post_id = null ) {
 
 	// Init return.
 	$ims = [];
 
 	// Get the Instant Messenger Records.
-	$records = cwps_get_im_records( $selector, $post_id );
+	$records = cacf_get_im_records( $selector, $post_id );
 
 	// Bail if we don't get an Instant Messenger Record.
 	if ( empty( $records ) ) {
@@ -821,13 +823,13 @@ function cwps_get_im_records_by_type_ids( $selector, $location_type_id, $im_prov
  * @param integer|string $post_id The ACF "Post ID".
  * @return string $im The formatted Instant Messenger.
  */
-function cwps_get_primary_im( $selector, $post_id = null ) {
+function cacf_get_primary_im( $selector, $post_id = null ) {
 
 	// Init return.
 	$im = '';
 
 	// Get the Instant Messenger Record.
-	$record = cwps_get_primary_im_record( $selector, $post_id );
+	$record = cacf_get_primary_im_record( $selector, $post_id );
 
 	// Bail if we don't get an Instant Messenger Record.
 	if ( empty( $record ) ) {
@@ -882,13 +884,13 @@ function cwps_get_primary_im( $selector, $post_id = null ) {
  * @param integer|string $post_id The ACF "Post ID".
  * @return array $im The array of Instant Messenger Record data.
  */
-function cwps_get_primary_im_record( $selector, $post_id = null ) {
+function cacf_get_primary_im_record( $selector, $post_id = null ) {
 
 	// Init return.
 	$im = [];
 
 	// Get the Instant Messenger Record.
-	$records = cwps_get_im_records( $selector, $post_id );
+	$records = cacf_get_im_records( $selector, $post_id );
 
 	// Now try and find the Primary Instant Messenger Record.
 	foreach( $records AS $record ) {
@@ -927,7 +929,7 @@ function cwps_get_primary_im_record( $selector, $post_id = null ) {
  * @param integer|string $post_id The ACF "Post ID".
  * @return array $records The array of Instant Messenger Record data.
  */
-function cwps_get_im_records( $selector, $post_id = null ) {
+function cacf_get_im_records( $selector, $post_id = null ) {
 
 	// Init return.
 	$records = [];
@@ -991,13 +993,13 @@ function cwps_get_im_records( $selector, $post_id = null ) {
  * @param integer|string $post_id The ACF "Post ID".
  * @return string $addresses The formatted Addresses.
  */
-function cwps_get_addresses( $selector, $post_id = null ) {
+function cacf_get_addresses( $selector, $post_id = null ) {
 
 	// Init return.
 	$addresses = '';
 
 	// Get the Address Records.
-	$records = cwps_get_address_records( $selector, $post_id );
+	$records = cacf_get_address_records( $selector, $post_id );
 
 	// Bail if we don't get any.
 	if ( empty( $records ) ) {
@@ -1105,13 +1107,13 @@ function cwps_get_addresses( $selector, $post_id = null ) {
  * @param integer|string $post_id The ACF "Post ID".
  * @return string $address The formatted Address.
  */
-function cwps_get_address_by_type_id( $selector, $location_type_id, $post_id = null ) {
+function cacf_get_address_by_type_id( $selector, $location_type_id, $post_id = null ) {
 
 	// Init return.
 	$address = '';
 
 	// Get the Address Records.
-	$records = cwps_get_address_records_by_type_id( $selector, $location_type_id, $post_id );
+	$records = cacf_get_address_records_by_type_id( $selector, $location_type_id, $post_id );
 
 	// Bail if we don't get any.
 	if ( empty( $records ) ) {
@@ -1120,7 +1122,7 @@ function cwps_get_address_by_type_id( $selector, $location_type_id, $post_id = n
 
 	// If we are looking for all records.
 	if ( empty( $location_type_id ) ) {
-		return cwps_get_addresses( $selector, $post_id );
+		return cacf_get_addresses( $selector, $post_id );
 	}
 
 	// CiviCRM only allows one Address per Location Type.
@@ -1205,13 +1207,13 @@ function cwps_get_address_by_type_id( $selector, $location_type_id, $post_id = n
  * @param integer|string $post_id The ACF "Post ID".
  * @return array $addresses The array of Address Record data.
  */
-function cwps_get_address_records_by_type_id( $selector, $location_type_id, $post_id = null ) {
+function cacf_get_address_records_by_type_id( $selector, $location_type_id, $post_id = null ) {
 
 	// Init return.
 	$addresses = [];
 
 	// Get the Address Records.
-	$records = cwps_get_address_records( $selector, $post_id );
+	$records = cacf_get_address_records( $selector, $post_id );
 
 	// Bail if we don't get any.
 	if ( empty( $records ) ) {
@@ -1266,13 +1268,13 @@ function cwps_get_address_records_by_type_id( $selector, $location_type_id, $pos
  * @param integer|string $post_id The ACF "Post ID".
  * @return string $city The formatted Address.
  */
-function cwps_get_primary_address( $selector, $post_id = null ) {
+function cacf_get_primary_address( $selector, $post_id = null ) {
 
 	// Init return.
 	$address = '';
 
 	// Get the Primary Address Record.
-	$record = cwps_get_primary_address_record( $selector, $post_id );
+	$record = cacf_get_primary_address_record( $selector, $post_id );
 
 	// Bail if we don't get an Address Record.
 	if ( empty( $record ) ) {
@@ -1342,13 +1344,13 @@ function cwps_get_primary_address( $selector, $post_id = null ) {
  * @param integer|string $post_id The ACF "Post ID".
  * @return array $address The array of Address Record data.
  */
-function cwps_get_primary_address_record( $selector, $post_id = null ) {
+function cacf_get_primary_address_record( $selector, $post_id = null ) {
 
 	// Init return.
 	$address = [];
 
 	// Get the Address Records.
-	$records = cwps_get_address_records( $selector, $post_id );
+	$records = cacf_get_address_records( $selector, $post_id );
 
 	// Now try and find the Primary Address Record.
 	foreach( $records AS $record ) {
@@ -1388,7 +1390,7 @@ function cwps_get_primary_address_record( $selector, $post_id = null ) {
  * @param integer|string $post_id The ACF "Post ID".
  * @return array $records The array of Address Record data.
  */
-function cwps_get_address_records( $selector, $post_id = null ) {
+function cacf_get_address_records( $selector, $post_id = null ) {
 
 	// Init return.
 	$records = [];
@@ -1452,13 +1454,13 @@ function cwps_get_address_records( $selector, $post_id = null ) {
  * @param integer|string $post_id The ACF "Post ID".
  * @return string $cities The formatted Cities.
  */
-function cwps_get_cities( $selector, $post_id = null ) {
+function cacf_get_cities( $selector, $post_id = null ) {
 
 	// Init return.
 	$cities = '';
 
 	// Get the Address Records.
-	$records = cwps_get_address_records( $selector, $post_id );
+	$records = cacf_get_address_records( $selector, $post_id );
 
 	// Bail if we don't get any.
 	if ( empty( $records ) ) {
@@ -1538,13 +1540,13 @@ function cwps_get_cities( $selector, $post_id = null ) {
  * @param integer|string $post_id The ACF "Post ID".
  * @return string $city The formatted City.
  */
-function cwps_get_city_by_type_id( $selector, $location_type_id, $return = 'list', $post_id = null ) {
+function cacf_get_city_by_type_id( $selector, $location_type_id, $return = 'list', $post_id = null ) {
 
 	// Init return.
 	$city = '';
 
 	// Get the City Records.
-	$records = cwps_get_address_records_by_type_id( $selector, $location_type_id, $post_id );
+	$records = cacf_get_address_records_by_type_id( $selector, $location_type_id, $post_id );
 
 	// Bail if we don't get any.
 	if ( empty( $records ) ) {
@@ -1553,7 +1555,7 @@ function cwps_get_city_by_type_id( $selector, $location_type_id, $return = 'list
 
 	// If we are looking for all records.
 	if ( empty( $location_type_id ) ) {
-		return cwps_get_cities( $selector, $post_id );
+		return cacf_get_cities( $selector, $post_id );
 	}
 
 	// Init filtered array.
@@ -1610,13 +1612,13 @@ function cwps_get_city_by_type_id( $selector, $location_type_id, $return = 'list
  * @param integer|string $post_id The ACF "Post ID".
  * @return string $city The formatted City.
  */
-function cwps_get_primary_city( $selector, $post_id = null ) {
+function cacf_get_primary_city( $selector, $post_id = null ) {
 
 	// Init return.
 	$city = '';
 
 	// Get the Primary Address Record.
-	$record = cwps_get_primary_address_record( $selector, $post_id );
+	$record = cacf_get_primary_address_record( $selector, $post_id );
 
 	// Bail if we don't get a City Record.
 	if ( empty( $record ) ) {
@@ -1665,13 +1667,13 @@ function cwps_get_primary_city( $selector, $post_id = null ) {
  * @param integer|string $post_id The ACF "Post ID".
  * @return string $states The formatted States.
  */
-function cwps_get_states( $selector, $post_id = null ) {
+function cacf_get_states( $selector, $post_id = null ) {
 
 	// Init return.
 	$states = '';
 
 	// Get the Address Records.
-	$records = cwps_get_address_records( $selector, $post_id );
+	$records = cacf_get_address_records( $selector, $post_id );
 
 	// Bail if we don't get any.
 	if ( empty( $records ) ) {
@@ -1754,13 +1756,13 @@ function cwps_get_states( $selector, $post_id = null ) {
  * @param integer|string $post_id The ACF "Post ID".
  * @return string $state The formatted State.
  */
-function cwps_get_state_by_type_id( $selector, $location_type_id, $return = 'list', $post_id = null ) {
+function cacf_get_state_by_type_id( $selector, $location_type_id, $return = 'list', $post_id = null ) {
 
 	// Init return.
 	$state = '';
 
 	// Get the State Records.
-	$records = cwps_get_address_records_by_type_id( $selector, $location_type_id, $post_id );
+	$records = cacf_get_address_records_by_type_id( $selector, $location_type_id, $post_id );
 
 	// Bail if we don't get any.
 	if ( empty( $records ) ) {
@@ -1769,7 +1771,7 @@ function cwps_get_state_by_type_id( $selector, $location_type_id, $return = 'lis
 
 	// If we are looking for all records.
 	if ( empty( $location_type_id ) ) {
-		return cwps_get_states( $selector, $post_id );
+		return cacf_get_states( $selector, $post_id );
 	}
 
 	// Get reference to plugin.
@@ -1832,13 +1834,13 @@ function cwps_get_state_by_type_id( $selector, $location_type_id, $return = 'lis
  * @param integer|string $post_id The ACF "Post ID".
  * @return string $state The formatted State.
  */
-function cwps_get_primary_state( $selector, $post_id = null ) {
+function cacf_get_primary_state( $selector, $post_id = null ) {
 
 	// Init return.
 	$state = '';
 
 	// Get the Primary Address Record.
-	$record = cwps_get_primary_address_record( $selector, $post_id );
+	$record = cacf_get_primary_address_record( $selector, $post_id );
 
 	// Bail if we don't get a State Record.
 	if ( empty( $record ) ) {

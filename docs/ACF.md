@@ -115,16 +115,18 @@ Syncs between the ACF Field and a CiviCRM Yes/No Custom Field. This Field Type i
 
 ```php
 <p><strong><?php echo __( 'All Addresses as list:', 'your-slug' ); ?></strong>
-<?php echo cacf_get_addresses( 'address_field' ); ?></p>
+<?php echo cwps_get_addresses( 'address_field' ); ?></p>
 
 <p><strong><?php echo __( 'Primary Address:', 'your-slug' ); ?></strong>
-<?php echo cacf_get_primary_address( 'address_field' ); ?></p>
+<?php echo cwps_get_primary_address( 'address_field' ); ?></p>
 
 <p><strong><?php echo __( 'Main Address:', 'your-slug' ); ?></strong>
-<?php echo cacf_get_address_by_type_id( 'address_field', 3 ); ?></p>
+<?php echo cwps_get_address_by_type_id( 'address_field', 3 ); ?></p>
 ```
 
-You can also display Addresses using the [Shortcake](https://en-gb.wordpress.org/plugins/shortcode-ui/)-compatible `[cai_address]` Shortcode. The available attributes are:
+**Note:** the legacy CiviCRM ACF Integration Address functions are still supported.
+
+You can also display Addresses using the [Shortcake](https://en-gb.wordpress.org/plugins/shortcode-ui/)-compatible `[cwps_address]` Shortcode. The available attributes are:
 
 * `field` (required) The ACF Field selector.
 * `location_type` (optional) The desired Addresses Location Type ID.
@@ -133,41 +135,45 @@ You can also display Addresses using the [Shortcake](https://en-gb.wordpress.org
 Some examples might be:
 
 * **All Addresses in the current Post:**
-`[cai_address field="addresses" /]`
+`[cwps_address field="addresses" /]`
 * **Home Address as `<address>` element from the Post with ID `2319`:**
-`[cai_address field="addresses" location_type="1" post_id="2319"]`
+`[cwps_address field="addresses" location_type="1" post_id="2319"]`
 
-You can narrow down what you display with two other Shortcodes: `[cai_city]` and `[cai_state]` both of which take the same attributes as `[cai_address]`. Some examples might be:
+You can narrow down what you display with two other Shortcodes: `[cwps_city]` and `[cwps_state]` both of which take the same attributes as `[cwps_address]`. Some examples might be:
 
 * **Home City from the Post with ID `2319`:**
-`[cai_city field="addresses" location_type="1" post_id="2319"]`
+`[cwps_city field="addresses" location_type="1" post_id="2319"]`
 
 * **Home State from the current Post:**
-`[cai_state field="addresses" location_type="1"]`
+`[cwps_state field="addresses" location_type="1"]`
+
+**Note:** the legacy CiviCRM ACF Integration `[cai_address]`, `[cai_city]` and `[cai_state]` Shortcodes are still supported.
 
 #### CiviCRM Phone
 
 **NOTE: Requires ACF Pro.** Syncs with all the CiviCRM "Phone" Contact Fields. Use the supplied template functions to display particular Phone Numbers in your templates. Here are some examples:
 
 ```php
-<p><strong><?php echo __( 'Primary Phone Number:', 'your-slug' ); ?></strong> <?php echo cacf_get_primary_phone_number( 'phone_numbers' ); ?></p>
+<p><strong><?php echo __( 'Primary Phone Number:', 'your-slug' ); ?></strong> <?php echo cwps_get_primary_phone_number( 'phone_numbers' ); ?></p>
 
 <p><strong><?php _e( 'All Numbers as list:', 'your-slug' ). ' '; ?></strong></p>
-<?php echo cacf_get_phone_numbers( 'phone_numbers' ); ?>
+<?php echo cwps_get_phone_numbers( 'phone_numbers' ); ?>
 
 <p><strong><?php _e( 'All Home Phone Numbers as list:', 'your-slug' ). ' '; ?></strong></p>
-<?php echo cacf_get_phone_numbers_by_type_ids( 'phone_numbers', 1 ); ?>
+<?php echo cwps_get_phone_numbers_by_type_ids( 'phone_numbers', 1 ); ?>
 
 <p><strong><?php echo __( 'All Home Phone Numbers as string:', 'your-slug' ); ?></strong><br />
-<?php echo cacf_get_phone_numbers_by_type_ids( 'phone_numbers', 1, null, 'commas' );
+<?php echo cwps_get_phone_numbers_by_type_ids( 'phone_numbers', 1, null, 'commas' );
 ?></p>
 
 <p><strong><?php echo __( 'Voicemail:', 'your-slug' ). ' '; ?></strong>
-<?php echo cacf_get_phone_numbers_by_type_ids( 'phone_numbers', 0, 5, 'commas' );
+<?php echo cwps_get_phone_numbers_by_type_ids( 'phone_numbers', 0, 5, 'commas' );
 ?></p>
 ```
 
-You can also display Phone Numbers using the [Shortcake](https://en-gb.wordpress.org/plugins/shortcode-ui/)-compatible `[cai_phone]` Shortcode. The available attributes are:
+**Note:** the legacy CiviCRM ACF Integration Phone functions are still supported.
+
+You can also display Phone Numbers using the [Shortcake](https://en-gb.wordpress.org/plugins/shortcode-ui/)-compatible `[cwps_phone]` Shortcode. The available attributes are:
 
 * `field` (required) The ACF Field selector.
 * `location_type` (optional) The desired Phone Location Type ID.
@@ -178,25 +184,29 @@ You can also display Phone Numbers using the [Shortcake](https://en-gb.wordpress
 Some examples might be:
 
 * **All Phone Numbers in the current Post as list:**
-`[cai_phone field="phone_numbers" style="list" post_id="2319" /]`
+`[cwps_phone field="phone_numbers" style="list" post_id="2319" /]`
 * **All Home Phone Numbers as string from the Post with ID `2319`:**
-`[cai_phone field="phone_numbers" location_type="1" style="commas" post_id="2319"]`
+`[cwps_phone field="phone_numbers" location_type="1" style="commas" post_id="2319"]`
+
+**Note:** the legacy CiviCRM ACF Integration `[cai_phone]` Shortcode is still supported.
 
 #### CiviCRM Instant Messenger
 
 **NOTE: Requires ACF Pro.** Syncs with all the CiviCRM "Instant Messenger" Contact Fields. As with the "CiviCRM Phone" Field, use the supplied template functions to display particular Instant Messenger Records in your templates. Here are some examples:
 
 ```php
-<p><strong><?php echo __( 'Primary IM:', 'your-slug' ); ?></strong> <?php echo cacf_get_primary_im( 'instant_messenger' ); ?></p>
+<p><strong><?php echo __( 'Primary IM:', 'your-slug' ); ?></strong> <?php echo cwps_get_primary_im( 'instant_messenger' ); ?></p>
 
 <p><strong><?php _e( 'All IMs as list:', 'your-slug' ). ' '; ?></strong></p>
-<?php echo cacf_get_ims( 'instant_messenger' ); ?>
+<?php echo cwps_get_ims( 'instant_messenger' ); ?>
 
 <p><strong><?php _e( 'All Skype IMs as list:', 'your-slug' ). ' '; ?></strong></p>
-<?php echo cacf_get_ims_by_type_ids( 'instant_messenger', null, 6, 'list' ); ?>
+<?php echo cwps_get_ims_by_type_ids( 'instant_messenger', null, 6, 'list' ); ?>
 ```
 
-You can also display Instant Messenger Records using the [Shortcake](https://en-gb.wordpress.org/plugins/shortcode-ui/)-compatible `[cai_im]` Shortcode. The available attributes are:
+**Note:** the legacy CiviCRM ACF Integration Instant Messenger functions are still supported.
+
+You can also display Instant Messenger Records using the [Shortcake](https://en-gb.wordpress.org/plugins/shortcode-ui/)-compatible `[cwps_im]` Shortcode. The available attributes are:
 
 * `field` (required) The ACF Field selector.
 * `location_type` (optional) The desired Instant Messenger Location Type ID.
@@ -207,9 +217,11 @@ You can also display Instant Messenger Records using the [Shortcake](https://en-
 Some examples might be:
 
 * **All Instant Messenger Records from the current Post as list:**
-`[cai_im field="instant_messenger" style="list" /]`
+`[cwps_im field="instant_messenger" style="list" /]`
 * **All Home Instant Messenger Records as string from the Post with ID `2319`:**
-`[cai_im field="instant_messenger" location_type="1" style="commas" post_id="2319"]`
+`[cwps_im field="instant_messenger" location_type="1" style="commas" post_id="2319"]`
+
+**Note:** the legacy CiviCRM ACF Integration `[cai_im]` Shortcode is still supported.
 
 #### CiviCRM Activity Creator
 
