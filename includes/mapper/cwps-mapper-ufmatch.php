@@ -38,29 +38,16 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 	 *
 	 * @since 0.4
 	 *
-	 * @param object $plugin The plugin object.
-	 */
-	public function __construct() {
-
-		// Initialise when plugin is loaded.
-		add_action( 'cwps/mapper/loaded', [ $this, 'initialise' ] );
-
-	}
-
-
-
-	/**
-	 * Set references to other objects.
-	 *
-	 * @since 0.4
-	 *
 	 * @param object $parent The parent object.
 	 */
-	public function set_references( $parent ) {
+	public function __construct( $parent ) {
 
 		// Store references.
 		$this->plugin = $parent->plugin;
 		$this->mapper = $parent;
+
+		// Initialise when plugin is loaded.
+		add_action( 'cwps/mapper/loaded', [ $this, 'initialise' ] );
 
 	}
 

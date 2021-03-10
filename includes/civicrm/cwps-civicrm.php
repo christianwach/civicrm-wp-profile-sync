@@ -73,27 +73,16 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	 * Initialises this object.
 	 *
 	 * @since 0.4
-	 */
-	public function __construct() {
-
-		// Boot when plugin is loaded.
-		add_action( 'civicrm_wp_profile_sync_init', [ $this, 'initialise' ] );
-
-	}
-
-
-
-	/**
-	 * Set references to other objects.
-	 *
-	 * @since 0.4
 	 *
 	 * @param object $parent The parent object.
 	 */
-	public function set_references( $parent ) {
+	public function __construct( $parent ) {
 
 		// Store reference.
 		$this->plugin = $parent;
+
+		// Boot when plugin is loaded.
+		add_action( 'civicrm_wp_profile_sync_init', [ $this, 'initialise' ] );
 
 	}
 
@@ -148,16 +137,10 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	public function setup_objects() {
 
 		// Initialise objects.
-		$this->contact = new CiviCRM_WP_Profile_Sync_CiviCRM_Contact();
-		$this->email = new CiviCRM_WP_Profile_Sync_CiviCRM_Email();
-		$this->website = new CiviCRM_WP_Profile_Sync_CiviCRM_Website();
-		$this->bulk = new CiviCRM_WP_Profile_Sync_CiviCRM_Bulk();
-
-		// Store references.
-		$this->contact->set_references( $this );
-		$this->email->set_references( $this );
-		$this->website->set_references( $this );
-		$this->bulk->set_references( $this );
+		$this->contact = new CiviCRM_WP_Profile_Sync_CiviCRM_Contact( $this );
+		$this->email = new CiviCRM_WP_Profile_Sync_CiviCRM_Email( $this );
+		$this->website = new CiviCRM_WP_Profile_Sync_CiviCRM_Website( $this );
+		$this->bulk = new CiviCRM_WP_Profile_Sync_CiviCRM_Bulk( $this );
 
 	}
 

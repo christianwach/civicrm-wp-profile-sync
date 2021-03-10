@@ -55,27 +55,16 @@ class CiviCRM_WP_Profile_Sync_Mapper {
 	 * Initialises this object.
 	 *
 	 * @since 0.4
-	 */
-	public function __construct() {
-
-		// Boot when plugin is loaded.
-		add_action( 'civicrm_wp_profile_sync_init', [ $this, 'initialise' ] );
-
-	}
-
-
-
-	/**
-	 * Set references to other objects.
-	 *
-	 * @since 0.4
 	 *
 	 * @param object $parent The parent object.
 	 */
-	public function set_references( $parent ) {
+	public function __construct( $parent ) {
 
 		// Store reference.
 		$this->plugin = $parent;
+
+		// Boot when plugin is loaded.
+		add_action( 'civicrm_wp_profile_sync_init', [ $this, 'initialise' ] );
 
 	}
 
@@ -128,12 +117,8 @@ class CiviCRM_WP_Profile_Sync_Mapper {
 	public function setup_objects() {
 
 		// Initialise objects.
-		$this->hooks = new CiviCRM_WP_Profile_Sync_Mapper_Hooks();
-		$this->ufmatch = new CiviCRM_WP_Profile_Sync_Mapper_UFMatch();
-
-		// Store references.
-		$this->hooks->set_references( $this );
-		$this->ufmatch->set_references( $this );
+		$this->hooks = new CiviCRM_WP_Profile_Sync_Mapper_Hooks( $this );
+		$this->ufmatch = new CiviCRM_WP_Profile_Sync_Mapper_UFMatch( $this );
 
 	}
 

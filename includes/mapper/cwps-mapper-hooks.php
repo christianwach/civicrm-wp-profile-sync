@@ -73,28 +73,17 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks {
 	 * Initialises this object.
 	 *
 	 * @since 0.4
-	 */
-	public function __construct() {
-
-		// Boot when Mapper is loaded.
-		add_action( 'cwps/mapper/loaded', [ $this, 'initialise' ] );
-
-	}
-
-
-
-	/**
-	 * Set references to other objects.
-	 *
-	 * @since 0.4
 	 *
 	 * @param object $parent The parent object.
 	 */
-	public function set_references( $parent ) {
+	public function __construct( $parent ) {
 
 		// Store reference.
 		$this->plugin = $parent->plugin;
 		$this->mapper = $parent;
+
+		// Boot when Mapper is loaded.
+		add_action( 'cwps/mapper/loaded', [ $this, 'initialise' ] );
 
 	}
 
@@ -151,19 +140,11 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks {
 	public function setup_objects() {
 
 		// Initialise objects.
-		$this->core = new CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core();
+		$this->core = new CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core( $this );
 
 		// Maybe initialise legacy CAI object.
 		if ( $this->plugin->cai->is_loaded() ) {
-			$this->acf = new CiviCRM_WP_Profile_Sync_Mapper_Hooks_ACF();
-		}
-
-		// Store references.
-		$this->core->set_references( $this );
-
-		// Maybe set references in legacy CAI object.
-		if ( $this->plugin->cai->is_loaded() ) {
-			$this->acf->set_references( $this );
+			$this->acf = new CiviCRM_WP_Profile_Sync_Mapper_Hooks_ACF( $this );
 		}
 
 	}

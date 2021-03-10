@@ -46,30 +46,19 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 	 * Initialises this object.
 	 *
 	 * @since 0.4
-	 */
-	public function __construct() {
-
-		// Boot when plugin is loaded.
-		add_action( 'cwps/wordpress/loaded', [ $this, 'initialise' ] );
-
-	}
-
-
-
-	/**
-	 * Set references to other objects.
-	 *
-	 * @since 0.4
 	 *
 	 * @param object $parent The parent object.
 	 */
-	public function set_references( $parent ) {
+	public function __construct( $parent ) {
 
 		// Store plugin reference.
 		$this->plugin = $parent->plugin;
 
 		// Store WordPress object reference.
 		$this->wp = $parent;
+
+		// Boot when plugin is loaded.
+		add_action( 'cwps/wordpress/loaded', [ $this, 'initialise' ] );
 
 	}
 

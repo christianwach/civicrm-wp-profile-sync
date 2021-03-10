@@ -41,6 +41,15 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	public $plugin_version;
 
 	/**
+	 * The network-activated status of the plugin.
+	 *
+	 * @since 0.4
+	 * @access public
+	 * @var str $network_active The network-activated status of the plugin.
+	 */
+	public $network_active = false;
+
+	/**
 	 * Settings data.
 	 *
 	 * @since 0.4
@@ -91,27 +100,16 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 * Initialises this object.
 	 *
 	 * @since 0.4
-	 */
-	public function __construct() {
-
-		// Boot when plugin is loaded.
-		add_action( 'civicrm_wp_profile_sync_init', [ $this, 'initialise' ] );
-
-	}
-
-
-
-	/**
-	 * Set references to other objects.
-	 *
-	 * @since 0.4
 	 *
 	 * @param object $parent The parent object.
 	 */
-	public function set_references( $parent ) {
+	public function __construct( $parent ) {
 
 		// Store reference.
 		$this->plugin = $parent;
+
+		// Boot when plugin is loaded.
+		add_action( 'civicrm_wp_profile_sync_init', [ $this, 'initialise' ] );
 
 	}
 

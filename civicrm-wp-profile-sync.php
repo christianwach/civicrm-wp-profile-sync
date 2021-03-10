@@ -201,22 +201,13 @@ class CiviCRM_WP_Profile_Sync {
 		}
 
 		// Initialise objects.
-		$this->admin = new CiviCRM_WP_Profile_Sync_Admin();
-		$this->wp = new CiviCRM_WP_Profile_Sync_WordPress();
-		$this->civicrm = new CiviCRM_WP_Profile_Sync_CiviCRM();
-		$this->bp = new CiviCRM_WP_Profile_Sync_BuddyPress();
-		$this->cai = new CiviCRM_WP_Profile_Sync_CAI();
-		$this->acf = new CiviCRM_WP_Profile_Sync_ACF_Loader();
-		$this->mapper = new CiviCRM_WP_Profile_Sync_Mapper();
-
-		// Store references.
-		$this->admin->set_references( $this );
-		$this->wp->set_references( $this );
-		$this->civicrm->set_references( $this );
-		$this->bp->set_references( $this );
-		$this->cai->set_references( $this );
-		$this->acf->set_references( $this );
-		$this->mapper->set_references( $this );
+		$this->admin = new CiviCRM_WP_Profile_Sync_Admin( $this );
+		$this->wp = new CiviCRM_WP_Profile_Sync_WordPress( $this );
+		$this->civicrm = new CiviCRM_WP_Profile_Sync_CiviCRM( $this );
+		$this->bp = new CiviCRM_WP_Profile_Sync_BuddyPress( $this );
+		$this->cai = new CiviCRM_WP_Profile_Sync_CAI( $this );
+		$this->acf = new CiviCRM_WP_Profile_Sync_ACF_Loader( $this );
+		$this->mapper = new CiviCRM_WP_Profile_Sync_Mapper( $this );
 
 		// We're done.
 		$done = true;

@@ -59,30 +59,19 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 	 * Initialises this object.
 	 *
 	 * @since 0.4
-	 */
-	public function __construct() {
-
-		// Init when the CiviCRM object is loaded.
-		add_action( 'cwps/civicrm/loaded', [ $this, 'initialise' ] );
-
-	}
-
-
-
-	/**
-	 * Set references to other objects.
-	 *
-	 * @since 0.4
 	 *
 	 * @param object $parent The parent object.
 	 */
-	public function set_references( $parent ) {
+	public function __construct( $parent ) {
 
 		// Store plugin reference.
 		$this->plugin = $parent->plugin;
 
 		// Store CiviCRM object reference.
 		$this->civicrm = $parent;
+
+		// Init when the CiviCRM object is loaded.
+		add_action( 'cwps/civicrm/loaded', [ $this, 'initialise' ] );
 
 	}
 

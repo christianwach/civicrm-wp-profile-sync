@@ -118,27 +118,16 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 	 * Constructor.
 	 *
 	 * @since 0.4
-	 */
-	public function __construct() {
-
-		// Initialise on plugin init.
-		add_action( 'civicrm_wp_profile_sync_init', [ $this, 'initialise' ] );
-
-	}
-
-
-
-	/**
-	 * Set references to other objects.
-	 *
-	 * @since 0.4
 	 *
 	 * @param object $parent The parent object.
 	 */
-	public function set_references( $parent ) {
+	public function __construct( $parent ) {
 
 		// Store reference.
 		$this->plugin = $parent;
+
+		// Initialise on plugin init.
+		add_action( 'civicrm_wp_profile_sync_init', [ $this, 'initialise' ] );
 
 	}
 
