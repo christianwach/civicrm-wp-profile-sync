@@ -401,6 +401,64 @@ class CiviCRM_WP_Profile_Sync {
 
 
 
+	/**
+	 * Check if CiviCRM Admin Utilities is hiding CiviCRM except on main site.
+	 *
+	 * @since 0.4
+	 *
+	 * @return bool $civicrm_hidden True if CAU is hiding CiviCRM, false otherwise.
+	 */
+	public function is_civicrm_main_site_only() {
+
+		// Only need to test once.
+		static $civicrm_hidden;
+
+		// Have we done this already?
+		if ( isset( $civicrm_hidden ) ) {
+			return $civicrm_hidden;
+		}
+
+		// If not multisite, it cannot be.
+		if ( ! is_multisite() ) {
+			$civicrm_hidden = false;
+			return $civicrm_hidden;
+		}
+
+		// Bail if CiviCRM is not network-activated.
+		if ( ! $this->is_civicrm_network_activated() ) {
+			$civicrm_hidden = false;
+			return $civicrm_hidden;
+		}
+
+		// If CAU's constant is not defined, we'll never know.
+		if ( ! defined( 'CIVICRM_ADMIN_UTILITIES_VERSION' ) ) {
+			$civicrm_hidden = false;
+			return $civicrm_hidden;
+		}
+
+		// Grab the CAU plugin reference.
+		$cau = civicrm_au();
+
+		// Bail if CAU's multisite object is not defined.
+		if ( empty( $cau->multisite ) ) {
+			$civicrm_hidden = false;
+			return $civicrm_hidden;
+		}
+
+		// Bail if not hidden.
+		if ( $cau->multisite->setting_get( 'main_site_only', '0' ) == '0' ) {
+			$civicrm_hidden = false;
+			return $civicrm_hidden;
+		}
+
+		// CAU is hiding CiviCRM.
+		$civicrm_hidden = true;
+		return $civicrm_hidden;
+
+	}
+
+
+
 } // Class ends.
 
 

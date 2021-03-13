@@ -4,6 +4,7 @@ Donate link: https://www.paypal.me/interactivist
 Tags: civicrm, buddypress, advanced custom fields, acf, user, profile, xprofile, sync
 Requires at least: 4.9
 Tested up to: 5.7
+Requires PHP: 5.6
 Stable tag: 0.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -48,12 +49,38 @@ This plugin is in active development. For feature requests and bug reports (or i
 1. Upload plugin files to your `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
+### Activation
+
+CiviCRM Profile Sync has some particular requirements when it comes to how it is activated. These correspond to the different types of WordPress install:
+
+#### Single Site
+
+Easy - just activate the plugin and you are done!
+
+#### Multisite
+
+Since Users and User metadata are stored in a single place for all sites, CiviCRM Profile Sync's User Profile settings cannot be configured on a per-site basis. This means that (whether CiviCRM Profile Sync is network-activated or not) whichever settings page you go to, you will see CiviCRM Profile Sync settings that are held in common for all sites.
+
+It is, of course, possible to activate CiviCRM in many different ways in Multisite - it could be network-activated, activated on the main site, and/or activated on one or more sub-sites. CiviCRM could also be in Multi-Domain mode or each instance could have its own database. It is recommended that you activate CiviCRM Profile Sync in the same way that CiviCRM is activated.
+
+If CiviCRM is not in Multi-Domain mode, you may have to write some custom code to propagate changed User details to other CiviCRM instances because (depending on the site on which a particular User's details are changed) only the Contact on the CiviCRM instance linked to that site will be updated.
+
+Test early, test often and - above all - test on a development site first.
+
+#### Multi-Network
+
+In Multi-Network, Users and User metadata are stored in one place for all Networks but `site_options` are stored on a per-Network basis. As a result, it is not simple for CiviCRM Profile Sync to store a single collection of User Profile settings for all Networks. You will have to make sure that they are the same across all the Networks where both CiviCRM and this plugin are activated.
+
+A consequence of this architecture is that (depending on how you have set up CiviCRM across the Networks) there may be mismatches between the User data in WordPress and the Contact data in your CiviCRM instances. If CiviCRM is not in Multi-Domain mode, you will have to write some custom code to keep the data synced between WordPress and your CiviCRM instances.
+
+I'll say it again: test early, test often and - above all - test on a development site first.
 
 
 == Changelog ==
 
 = 0.4 =
 
+* Introduces a Settings Page to set Website Type and Email sync options.
 * Enables integration between CiviCRM Entities and WordPress Entities with data synced via Advanced Custom Fields.
 
 = 0.3.3 =

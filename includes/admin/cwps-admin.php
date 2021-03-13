@@ -32,6 +32,15 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	public $plugin;
 
 	/**
+	 * Multisite Admin object.
+	 *
+	 * @since 0.4
+	 * @access public
+	 * @var object $multisite The Multisite Admin object.
+	 */
+	public $multisite;
+
+	/**
 	 * The installed version of the plugin.
 	 *
 	 * @since 0.4
@@ -39,15 +48,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 * @var str $plugin_version The plugin version.
 	 */
 	public $plugin_version;
-
-	/**
-	 * The network-activated status of the plugin.
-	 *
-	 * @since 0.4
-	 * @access public
-	 * @var str $network_active The network-activated status of the plugin.
-	 */
-	public $network_active = false;
 
 	/**
 	 * Settings data.
@@ -81,18 +81,36 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var array $parent_page The reference to the parent page.
+	 * @var str $parent_page The reference to the parent page.
 	 */
 	public $parent_page;
 
 	/**
-	 * Settings page reference.
+	 * Parent page slug.
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var array $settings_page The reference to the settings page.
+	 * @var str $parent_page_slug The slug of the parent page.
+	 */
+	public $parent_page_slug = 'cwps_parent';
+
+	/**
+	 * Settings Page reference.
+	 *
+	 * @since 0.4
+	 * @access public
+	 * @var str $settings_page The reference to the Settings Page.
 	 */
 	public $settings_page;
+
+	/**
+	 * Settings Page slug.
+	 *
+	 * @since 0.4
+	 * @access public
+	 * @var str $settings_page_slug The slug of the Settings Page.
+	 */
+	public $settings_page_slug = 'cwps_settings';
 
 
 
@@ -160,7 +178,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 		// Store version for later reference if there has been a change.
 		if ( $this->plugin_version != CIVICRM_WP_PROFILE_SYNC_VERSION ) {
-			$this->store_version();
+			$this->option_set( 'cwps_version', CIVICRM_WP_PROFILE_SYNC_VERSION );
 		}
 
 		// Store default settings if none exist.
@@ -171,9 +189,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		// Load settings array.
 		$this->settings = $this->option_get( 'cwps_settings', $this->settings );
 
-		// Maybe show a warning if Settings need updating.
-		add_action( 'admin_notices', [ $this, 'upgrade_warning' ] );
-
 		// Settings upgrade tasks.
 		$this->upgrade_settings();
 
@@ -182,16 +197,74 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 
 	/**
-	 * Store the plugin version.
+	 * Include files.
 	 *
 	 * @since 0.4
 	 */
-	public function store_version() {
+	public function include_files() {
 
-		// Store version.
-		$this->option_set( 'cwps_version', CIVICRM_WP_PROFILE_SYNC_VERSION );
+		// Include Multisite Admin class.
+		if ( is_multisite() ) {
+			include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/admin/cwps-admin-multisite.php';
+		}
 
 	}
+
+
+
+	/**
+	 * Set up this plugin's objects.
+	 *
+	 * @since 0.4
+	 */
+	public function setup_objects() {
+
+		// Maybe instantiate Multisite object.
+		if ( is_multisite() ) {
+			$this->multisite = new CiviCRM_WP_Profile_Sync_Admin_Multisite( $this );
+		}
+
+	}
+
+
+
+	/**
+	 * Register hooks.
+	 *
+	 * @since 0.4
+	 */
+	public function register_hooks() {
+
+		// Maybe show a warning if Settings need updating.
+		add_action( 'admin_notices', [ $this, 'upgrade_warning' ] );
+
+		// Add Settings Page to Settings menu.
+		add_action( 'admin_menu', [ $this, 'admin_menu' ], 20 );
+
+		// Add our meta boxes.
+		add_action( 'add_meta_boxes', [ $this, 'meta_boxes_add' ], 11 );
+
+	}
+
+
+
+	/**
+	 * Unregister hooks.
+	 *
+	 * @since 0.4
+	 */
+	public function unregister_hooks() {
+
+		// Remove the callbacks registered by this class.
+		remove_action( 'admin_notices', [ $this, 'upgrade_warning' ] );
+		remove_action( 'admin_menu', [ $this, 'admin_menu' ], 20 );
+		remove_action( 'add_meta_boxes', [ $this, 'meta_boxes_add' ], 11 );
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
 
 
 
@@ -229,8 +302,18 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 */
 	public function upgrade_warning() {
 
+		/**
+		 * Set access capability but allow overrides.
+		 *
+		 * @since 0.4
+		 *
+		 * @param str The default capability for access to Settings Page.
+		 * @return str The modified capability for access to Settings Page.
+		 */
+		$capability = apply_filters( 'cwps/admin/page/settings/cap', 'manage_options' );
+
 		// Check user permissions.
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! current_user_can( $capability ) ) {
 			return;
 		}
 
@@ -242,59 +325,91 @@ class CiviCRM_WP_Profile_Sync_Admin {
 			return;
 		}
 
-		// Set flags.
+		// Set website flag.
 		$website_type_undefined = false;
-		$email_sync_undefined = false;
 
-		// If the setting doesn't exist or has no value.
+		// Overwrite flag if the setting doesn't exist or has no value.
 		if (
 			! $this->setting_exists( 'user_profile_website_type' ) OR
 			$this->setting_get( 'user_profile_website_type', 0 ) === 0
 		) {
-
-			// Set message if we are on our Settings page.
-			if ( $screen->id == 'civicrm_page_cwps_parent' ) {
-				echo '<div id="message" class="notice notice-warning">';
-				echo '<p>' . __( 'CiviCRM Profile Sync needs to know which Website Type to sync.', 'civicrm-wp-profile-sync' ) . '</p>';
-				echo '</div>';
-			}
-
-			// Set flag.
 			$website_type_undefined = true;
-
 		}
 
-		// If the setting doesn't exist or has no valid value.
+		// Set email flag.
+		$email_sync_undefined = false;
+
+		// Overwrite flag if the setting doesn't exist or has no value.
 		if (
 			! $this->setting_exists( 'user_profile_email_sync' ) OR
 			$this->setting_get( 'user_profile_email_sync', 2 ) === 2
 		) {
+			$email_sync_undefined = true;
+		}
 
-			// Set message if we are on our Settings page.
-			if ( $screen->id == 'civicrm_page_cwps_parent' ) {
+		// Get our Settings Page screens.
+		$settings_screens = $this->page_settings_screens_get();
+
+		// Determine if we are on one of our Settings Pages.
+		$is_settings_screen = in_array( $screen->id, $settings_screens );
+
+		// Set message if we are on one of our Settings Pages.
+		if ( $is_settings_screen === true ) {
+
+			// If the website setting doesn't exist or has no value.
+			if ( $website_type_undefined === true ) {
+
+				echo '<div id="message" class="notice notice-warning">';
+				echo '<p>' . __( 'CiviCRM Profile Sync needs to know which Website Type to sync.', 'civicrm-wp-profile-sync' ) . '</p>';
+				echo '</div>';
+
+			}
+
+			// If the email setting doesn't exist or has no valid value.
+			if ( $email_sync_undefined === true ) {
+
 				echo '<div id="message" class="notice notice-warning">';
 				echo '<p>' . __( 'CiviCRM Profile Sync needs to know how to sync the Primary Email.', 'civicrm-wp-profile-sync' ) . '</p>';
 				echo '</div>';
-			}
 
-			// Set flag.
-			$email_sync_undefined = true;
+			}
 
 		}
 
 		// If either setting has no valid value.
 		if ( $website_type_undefined OR $email_sync_undefined ) {
 
-			 // Set warning flag.
-			 $this->has_warning = true;
+			// Set warning flag.
+			$this->has_warning = true;
 
-			// If we are not on our Settings page.
-			if ( $screen->id != 'civicrm_page_cwps_parent' ) {
+			// Show Admin Notice if not on Settings Page.
+			$show_notice = false;
+			if ( ! $is_settings_screen ) {
+				$show_notice = true;
+			}
+
+			/**
+			 * Filter whether to show the Admin Notice.
+			 *
+			 * @since 0.4
+			 *
+			 * @param bool $show_notice False by default. True if not on Settings Screen.
+			 * @param bool $is_settings_screen True if on our Settings Page, or false otherwise.
+			 * @param str $screen_id The ID of the current screen.
+			 * @return bool $show_notice True if the Admin Notice should be shown, false otherwise.
+			 */
+			$show_notice = apply_filters( 'cwps/admin/notice/show', $show_notice, $is_settings_screen, $screen->id );
+
+			// If we should show the notice.
+			if ( $show_notice ) {
+
+				// Get Settings Page URL for use in Admin Notices.
+				$url = $this->page_settings_warning_url_get();
 
 				// Show general "Call to Action".
 				$message = sprintf(
 					__( 'CiviCRM Profile Sync needs your attention. Please visit the %1$sSettings Page%2$s for details.', 'civicrm-wp-profile-sync' ),
-					'<a href="' . menu_page_url( 'cwps_parent', false ) . '">',
+					'<a href="' . $url . '">',
 					'</a>'
 				);
 
@@ -356,56 +471,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 
 
-	/**
-	 * Include files.
-	 *
-	 * @since 0.4
-	 */
-	public function include_files() {
-
-	}
-
-
-
-	/**
-	 * Set up this plugin's objects.
-	 *
-	 * @since 0.4
-	 */
-	public function setup_objects() {
-
-	}
-
-
-
-	/**
-	 * Register hooks.
-	 *
-	 * @since 0.4
-	 */
-	public function register_hooks() {
-
-		// Add admin page to Settings menu.
-		add_action( 'admin_menu', [ $this, 'admin_menu' ], 20 );
-
-		// Add our meta boxes.
-		add_action( 'add_meta_boxes', [ $this, 'meta_boxes_add' ], 11, 1 );
-
-	}
-
-
-
-	/**
-	 * Unregister hooks.
-	 *
-	 * @since 0.4
-	 */
-	public function unregister_hooks() {
-
-	}
-
-
-
 	// -------------------------------------------------------------------------
 
 
@@ -428,29 +493,35 @@ class CiviCRM_WP_Profile_Sync_Admin {
 			__( 'CiviCRM Profile Sync: Settings', 'civicrm-wp-profile-sync' ), // Page title.
 			__( 'Profile Sync', 'civicrm-wp-profile-sync' ), // Menu title.
 			'manage_options', // Required caps.
-			'cwps_parent', // Slug name.
+			$this->parent_page_slug, // Slug name.
 			[ $this, 'page_settings' ], // Callback.
 			10
 		);
 
-		// Add help text.
+		// Register our form submit hander.
+		add_action( 'load-' . $this->parent_page, [ $this, 'settings_update_router' ] );
+
+		// Add WordPress scripts and help text.
 		add_action( 'admin_head-' . $this->parent_page, [ $this, 'admin_head' ], 50 );
 
 		// Add scripts and styles.
 		//add_action( 'admin_print_styles-' . $this->parent_page, [ $this, 'admin_css' ] );
 		//add_action( 'admin_print_scripts-' . $this->parent_page, [ $this, 'admin_js' ] );
 
-		// Add settings page.
+		// Add Settings Page.
 		$this->settings_page = add_submenu_page(
-			'cwps_parent', // Parent slug.
+			$this->parent_page_slug, // Parent slug.
 			__( 'CiviCRM Profile Sync: Settings', 'civicrm-wp-profile-sync' ), // Page title.
 			__( 'Settings', 'civicrm-wp-profile-sync' ), // Menu title.
 			'manage_options', // Required caps.
-			'cwps_settings', // Slug name.
+			$this->settings_page_slug, // Slug name.
 			[ $this, 'page_settings' ] // Callback.
 		);
 
-		// Add help text.
+		// Register our form submit hander.
+		add_action( 'load-' . $this->settings_page, [ $this, 'settings_update_router' ] );
+
+		// Add WordPress scripts and help text.
 		add_action( 'admin_head-' . $this->settings_page, [ $this, 'admin_head' ], 50 );
 
 		// Ensure correct menu item is highlighted.
@@ -459,9 +530,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		// Add scripts and styles
 		//add_action( 'admin_print_styles-' . $this->settings_page, [ $this, 'admin_css' ] );
 		//add_action( 'admin_print_scripts-' . $this->settings_page, [ $this, 'admin_js' ] );
-
-		// Try and update options.
-		$saved = $this->settings_update_router();
 
 	}
 
@@ -485,7 +553,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 		// Define subpages.
 		$subpages = [
-		 	'cwps_settings',
+		 	$this->settings_page_slug,
 		];
 
 		/**
@@ -500,8 +568,8 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 		// This tweaks the Settings subnav menu to show only one menu item.
 		if ( in_array( $plugin_page, $subpages ) ) {
-			$plugin_page = 'cwps_parent';
-			$submenu_file = 'cwps_parent';
+			$plugin_page = $this->parent_page_slug;
+			$submenu_file = $this->parent_page_slug;
 		}
 
 	}
@@ -529,7 +597,44 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 
 	/**
-	 * Show our settings page.
+	 * Get Settings Page Tab URLs.
+	 *
+	 * @since 0.4
+	 *
+	 * @return array $urls The array of Settings Page Tab URLs.
+	 */
+	public function page_tab_urls_get() {
+
+		// Only calculate once.
+		if ( isset( $this->urls ) ) {
+			return $this->urls;
+		}
+
+		// Init return.
+		$this->urls = [];
+
+		// Get Settings Page URL.
+		$this->urls['settings'] = menu_page_url( $this->settings_page_slug, false );
+
+		/**
+		 * Filter the list of URLs.
+		 *
+		 * @since 0.4
+		 *
+		 * @param array $urls The existing list of URLs.
+		 * @return array $urls The modified list of URLs.
+		 */
+		$this->urls = apply_filters( 'cwps/admin/settings/tab_urls', $this->urls );
+
+		// --<
+		return $this->urls;
+
+	}
+
+
+
+	/**
+	 * Show our Settings Page.
 	 *
 	 * @since 0.4
 	 */
@@ -540,8 +645,8 @@ class CiviCRM_WP_Profile_Sync_Admin {
 			return;
 		}
 
-		// Get admin page URLs.
-		$urls = $this->page_get_urls();
+		// Get Settings Page Tab URLs.
+		$urls = $this->page_tab_urls_get();
 
 		/**
 		 * Do not show tabs by default but allow overrides.
@@ -559,7 +664,10 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		/**
 		 * Allow meta boxes to be added to this screen.
 		 *
-		 * The Screen ID to use is: "civicrm_page_cwps_settings".
+		 * The Screen ID to use are:
+		 *
+		 * * "civicrm_page_cwps_parent"
+		 * * "civicrm_page_cwps_settings"
 		 *
 		 * @since 0.4
 		 *
@@ -578,63 +686,118 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 
 	/**
-	 * Get settings page URLs.
+	 * Get our Settings Page screens.
 	 *
 	 * @since 0.4
 	 *
-	 * @return array $urls The array of admin page URLs.
+	 * @return array $settings_screens The array of Settings Page screens.
 	 */
-	public function page_get_urls() {
+	public function page_settings_screens_get() {
 
-		// Only calculate once.
-		if ( isset( $this->urls ) ) {
-			return $this->urls;
-		}
-
-		// Init return.
-		$this->urls = [];
-
-		// Get admin page URLs.
-		$this->urls['settings'] = menu_page_url( 'cwps_settings', false );
+		// Define this plugin's Settings Page screen IDs.
+		$settings_screens = [
+			'civicrm_page_' . $this->parent_page_slug,
+			'admin_page_' . $this->settings_page_slug,
+		];
 
 		/**
-		 * Filter the list of URLs.
+		 * Filter the Settings Page screens.
 		 *
 		 * @since 0.4
 		 *
-		 * @param array $urls The existing list of URLs.
-		 * @return array $urls The modified list of URLs.
+		 * @param array $settings_screens The default array of Settings Page screens.
+		 * @return array $settings_screens The modified array of Settings Page screens.
 		 */
-		$this->urls = apply_filters( 'cwps/admin/settings/page_urls', $this->urls );
-
-		// --<
-		return $this->urls;
+		return apply_filters( 'cwps/admin/page/settings/screens', $settings_screens );
 
 	}
 
 
 
 	/**
-	 * Get the URL for the form action.
+	 * Get the URL of the Settings Page.
 	 *
 	 * @since 0.4
 	 *
-	 * @return string $target_url The URL for the admin form action.
+	 * @return string $url The URL of the Settings Page.
 	 */
-	public function page_submit_url_get() {
+	public function page_settings_url_get() {
 
-		// Sanitise admin page url.
-		$target_url = $_SERVER['REQUEST_URI'];
-		$url_array = explode( '&', $target_url );
+		// Get Settings Page URL.
+		$url = menu_page_url( $this->settings_page_slug, false );
 
-		// Strip flag, if present, and rebuild.
-		if ( ! empty( $url_array ) ) {
-			$url_raw = str_replace( '&amp;updated=true', '', $url_array[0] );
-			$target_url = htmlentities( $url_raw . '&updated=true' );
-		}
+		/**
+		 * Filter the Settings Page URL.
+		 *
+		 * @since 0.4
+		 *
+		 * @param array $url The default Settings Page URL.
+		 * @return array $url The modified Settings Page URL.
+		 */
+		$url = apply_filters( 'cwps/admin/page/settings/url', $url );
 
 		// --<
-		return $target_url;
+		return $url;
+
+	}
+
+
+
+	/**
+	 * Get the URL for the Settings Page form action attribute.
+	 *
+	 * This happens to be the same as the Settings Page URL, but need not be.
+	 *
+	 * @since 0.4
+	 *
+	 * @return string $submit_url The URL for the Settings Page form action.
+	 */
+	public function page_settings_submit_url_get() {
+
+		// Get Settings Page submit URL.
+		$submit_url = menu_page_url( $this->settings_page_slug, false );
+
+		/**
+		 * Filter the Settings Page submit URL.
+		 *
+		 * @since 0.4
+		 *
+		 * @param array $submit_url The Settings Page submit URL.
+		 * @return array $submit_url The modified Settings Page submit URL.
+		 */
+		$submit_url = apply_filters( 'cwps/admin/page/settings/submit_url', $submit_url );
+
+		// --<
+		return $submit_url;
+
+	}
+
+
+
+	/**
+	 * Get the URL to the Settings Page in our Admin Notices.
+	 *
+	 * @since 0.4
+	 *
+	 * @return string $notice_url The URL to the Settings Page in our Admin Notices.
+	 */
+	public function page_settings_warning_url_get() {
+
+		// Use default Settings Page URL.
+		$notice_url = menu_page_url( $this->settings_page_slug, false );
+
+		/**
+		 * Filter the Settings Page URL in Admin Notices.
+		 *
+		 * @since 0.4
+		 *
+		 * @param array $notice_url The default Settings Page URL in Admin Notices.
+		 * @return array $notice_url The modified Settings Page URL in Admin Notices.
+		 */
+		$notice_url = apply_filters( 'cwps/admin/notice/url', $notice_url );
+
+		// --<
+		return $notice_url;
 
 	}
 
@@ -653,19 +816,26 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 */
 	public function meta_boxes_add( $screen_id ) {
 
-		// Define valid Screen IDs.
-		$screen_ids = [
-			'civicrm_page_cwps_parent',
-			'admin_page_cwps_settings',
-		];
+		// Get our Settings Page screens.
+		$settings_screens = $this->page_settings_screens_get();
 
 		// Bail if not the Screen ID we want.
-		if ( ! in_array( $screen_id, $screen_ids ) ) {
+		if ( ! in_array( $screen_id, $settings_screens ) ) {
 			return;
 		}
 
-		// Bail if user cannot access CiviCRM.
-		if ( ! current_user_can( 'access_civicrm' ) ) {
+		/**
+		 * Set access capability but allow overrides.
+		 *
+		 * @since 0.4
+		 *
+		 * @param str The default capability for access to Settings Page.
+		 * @return str The modified capability for access to Settings Page.
+		 */
+		$capability = apply_filters( 'cwps/admin/page/settings/cap', 'manage_options' );
+
+		// Check user permissions.
+		if ( ! current_user_can( $capability ) ) {
 			return;
 		}
 
@@ -782,7 +952,19 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 		// Was the "Settings" form submitted?
 		if ( isset( $_POST['cwps_save'] ) ) {
+
+			// Update the settings.
 			$this->settings_update();
+
+			// Get the Settings Page URL.
+			$url = $this->page_settings_url_get();
+
+			// Our array of arguments.
+			$args = [ 'updated' => 'true' ];
+
+			// Redirect to our Settings Page.
+			wp_safe_redirect( add_query_arg( $args, $url ) );
+
 		}
 
 	}
@@ -790,7 +972,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 
 	/**
-	 * Update options supplied by our Settings page.
+	 * Update options supplied by our Settings Page.
 	 *
 	 * @since 0.4
 	 */
@@ -972,7 +1154,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	public function option_get( $option_name = '', $default = false ) {
 
 		// Get option.
-		$value = get_option( $option_name, $default );
+		$value = get_site_option( $option_name, $default );
 
 		// --<
 		return $value;
@@ -993,7 +1175,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	public function option_set( $option_name = '', $value = '' ) {
 
 		// Update option.
-		return update_option( $option_name, $value );
+		return update_site_option( $option_name, $value );
 
 	}
 
@@ -1010,7 +1192,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	public function option_delete( $option_name = '' ) {
 
 		// Delete option.
-		return delete_option( $option_name );
+		return delete_site_option( $option_name );
 
 	}
 

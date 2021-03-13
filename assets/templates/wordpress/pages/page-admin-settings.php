@@ -24,7 +24,7 @@
 		<hr />
 	<?php endif; ?>
 
-	<form method="post" id="cwps_settings_form" action="<?php echo $this->page_submit_url_get(); ?>">
+	<form method="post" id="cwps_settings_form" action="<?php echo $this->page_settings_submit_url_get(); ?>">
 
 		<?php wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false ); ?>
 		<?php wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false ); ?>

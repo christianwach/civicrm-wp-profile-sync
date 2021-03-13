@@ -106,7 +106,12 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	 */
 	public function register_hooks() {
 
-		// Is this the back end?
+		// Bail if WordPress Network Admin.
+		if ( is_multisite() AND is_network_admin() ) {
+			return;
+		}
+
+		// Bail if not WordPress Admin.
 		if ( ! is_admin() ) {
 			return;
 		}
@@ -142,11 +147,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	 */
 	public function admin_menu() {
 
-		// We must be network admin in Multisite.
-		if ( is_multisite() AND ! is_super_admin() ) {
-			return;
-		}
-
 		// Check user permissions.
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
@@ -175,7 +175,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		add_filter( 'cwps/admin/settings/subpages', [ $this, 'admin_subpages_filter' ] );
 
 		// Filter the list of single site page URLs and add multidomain page URL.
-		add_filter( 'cwps/admin/settings/page_urls', [ $this, 'page_urls_filter' ] );
+		add_filter( 'cwps/admin/settings/tab_urls', [ $this, 'page_tab_urls_filter' ] );
 
 		// Filter the "show tabs" flag for setting templates.
 		add_filter( 'cwps/admin/settings/show_tabs', [ $this, 'page_show_tabs' ] );
@@ -470,7 +470,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// Get admin page URLs.
-		$urls = $this->acf_loader->plugin->admin->page_get_urls();
+		$urls = $this->acf_loader->plugin->admin->page_tab_urls_get();
 
 		// Include template file.
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/pages/page-admin-acf-sync.php';
@@ -487,7 +487,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	 * @param array $urls The existing list of URLs.
 	 * @return array $urls The modified list of URLs.
 	 */
-	public function page_urls_filter( $urls ) {
+	public function page_tab_urls_filter( $urls ) {
 
 		// Add multidomain settings page.
 		$urls['manual-sync'] = menu_page_url( 'cwps_acf_sync', false );
@@ -1070,7 +1070,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			$data['finished'] = 'true';
 
 			// Send data to browser.
-			$this->send_data( $data );
+			wp_send_json( $data );
 			return;
 
 		}
@@ -1091,7 +1091,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			$data['finished'] = 'true';
 
 			// Send data to browser.
-			$this->send_data( $data );
+			wp_send_json( $data );
 			return;
 
 		}
@@ -1192,7 +1192,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// Send data to browser.
-		$this->send_data( $data );
+		wp_send_json( $data );
 
 	}
 
@@ -1233,7 +1233,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			$data['finished'] = 'true';
 
 			// Send data to browser.
-			$this->send_data( $data );
+			wp_send_json( $data );
 			return;
 
 		}
@@ -1331,7 +1331,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// Send data to browser.
-		$this->send_data( $data );
+		wp_send_json( $data );
 
 	}
 
@@ -1369,7 +1369,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			$data['finished'] = 'true';
 
 			// Send data to browser.
-			$this->send_data( $data );
+			wp_send_json( $data );
 			return;
 
 		}
@@ -1390,7 +1390,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			$data['finished'] = 'true';
 
 			// Send data to browser.
-			$this->send_data( $data );
+			wp_send_json( $data );
 			return;
 
 		}
@@ -1490,7 +1490,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// Send data to browser.
-		$this->send_data( $data );
+		wp_send_json( $data );
 
 	}
 
@@ -1531,7 +1531,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			$data['finished'] = 'true';
 
 			// Send data to browser.
-			$this->send_data( $data );
+			wp_send_json( $data );
 			return;
 
 		}
@@ -1628,7 +1628,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// Send data to browser.
-		$this->send_data( $data );
+		wp_send_json( $data );
 
 	}
 
@@ -1669,7 +1669,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			$data['finished'] = 'true';
 
 			// Send data to browser.
-			$this->send_data( $data );
+			wp_send_json( $data );
 			return;
 
 		}
@@ -1761,7 +1761,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// Send data to browser.
-		$this->send_data( $data );
+		wp_send_json( $data );
 
 	}
 
@@ -1888,39 +1888,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Return the value for the given key.
 		return $step_counts[$type];
-
-	}
-
-
-
-	// -------------------------------------------------------------------------
-
-
-
-	/**
-	 * Send JSON data to the browser.
-	 *
-	 * @since 0.4
-	 *
-	 * @param array $data The data to send.
-	 */
-	private function send_data( $data ) {
-
-		// Is this an AJAX request?
-		if ( defined( 'DOING_AJAX' ) AND DOING_AJAX ) {
-
-			// Set reasonable headers.
-			header('Content-type: text/plain');
-			header("Cache-Control: no-cache");
-			header("Expires: -1");
-
-			// Echo.
-			echo json_encode( $data );
-
-			// Die.
-			exit();
-
-		}
 
 	}
 

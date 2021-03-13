@@ -224,7 +224,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 		add_filter( 'cwps/admin/settings/subpages', [ $this, 'admin_subpages_filter' ] );
 
 		// Filter the list of single site page URLs and add multidomain page URL.
-		add_filter( 'cwps/admin/settings/page_urls', [ $this, 'page_urls_filter' ] );
+		add_filter( 'cwps/admin/settings/tab_urls', [ $this, 'page_urls_filter' ] );
 
 		// Filter the "show tabs" flag for setting templates.
 		add_filter( 'cwps/admin/settings/show_tabs', [ $this, 'page_show_tabs' ] );
@@ -334,7 +334,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 		$columns = ( 1 == $screen->get_columns() ? '1' : '2' );
 
 		// Get admin page URLs.
-		$urls = $this->acf_loader->plugin->admin->page_get_urls();
+		$urls = $this->acf_loader->plugin->admin->page_tab_urls_get();
 
 		// Include template file.
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/pages/page-admin-acf-migrate.php';

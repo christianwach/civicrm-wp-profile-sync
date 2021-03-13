@@ -21,7 +21,15 @@
 
 	<p><?php _e( 'The uninstall routine in the CiviCRM ACF Integration plugin will auto-delete its settings when the plugin is deleted. It is therefore necessary to migrate these to CiviCRM Profile Sync before that is done. You should only deactivate and delete the CiviCRM ACF Integration plugin when you are sure everything mentioned here has been completed.', 'civicrm-wp-profile-sync' ); ?></p>
 
-	<p><em><?php _e( 'CiviCRM Profile Sync will handle migration of settings for you when you click the "Migrate" button.', 'civicrm-wp-profile-sync' ); ?></em></p>
+	<?php if ( is_multisite() ) : ?>
+
+		<p><em><?php _e( 'CiviCRM Profile Sync will handle migration of settings for this site when you click the "Migrate" button. Because this is a WordPress Multisite install, you will also have to visit the equivalent Migration Page on every site where the CiviCRM ACF Integration plugin is activated and follow the same procedure as here before deactivating it.', 'civicrm-wp-profile-sync' ); ?></em></p>
+
+	<?php else : ?>
+
+		<p><em><?php _e( 'CiviCRM Profile Sync will handle migration of settings for you when you click the "Migrate" button.', 'civicrm-wp-profile-sync' ); ?></em></p>
+
+	<?php endif; ?>
 
 <?php else : ?>
 
