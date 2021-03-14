@@ -124,21 +124,21 @@ I'll say it again: test early, test often and - above all - test on a developmen
 
 = 0.2.3 =
 
-Further fixes to bulk operations logic
+* Further fixes to bulk operations logic
 
 = 0.2.2 =
 
-Minor fixes to bulk operations logic
+* Minor fixes to bulk operations logic
 
 = 0.2.1 =
 
-Initial WordPress plugin directory release
+* Initial WordPress plugin directory release
 
 = 0.2 =
 
-Added two-way Website sync
-Fixed unpredictable detection of sync direction
+* Added two-way Website sync
+* Fixed unpredictable detection of sync direction
 
 = 0.1 =
 
-Initial release
+* Initial release
