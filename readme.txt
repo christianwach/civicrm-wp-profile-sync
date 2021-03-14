@@ -1,7 +1,7 @@
 === CiviCRM Profile Sync ===
 Contributors: needle, cuny-academic-commons
 Donate link: https://www.paypal.me/interactivist
-Tags: civicrm, buddypress, advanced custom fields, acf, user, profile, xprofile, sync
+Tags: civicrm, user, buddypress, acf, profile, xprofile, sync
 Requires at least: 4.9
 Tested up to: 5.7
 Requires PHP: 5.6
