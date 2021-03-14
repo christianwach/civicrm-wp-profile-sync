@@ -946,8 +946,14 @@ class CiviCRM_Profile_Sync_ACF_Post {
 				// Delete the Contact ID meta.
 				$this->contact_id_delete( $post_id );
 
+				// Remove WordPress Post callbacks to prevent recursion.
+				$this->acf_loader->mapper->hooks_wordpress_post_remove();
+
 				/**
 				 * Broadcast that a WordPress Post has been unlinked from a Contact.
+				 *
+				 * This hook can be used to change the status of the Post to 'draft'
+				 * or even to delete the Post entirely.
 				 *
 				 * @since 0.4
 				 *
@@ -956,6 +962,9 @@ class CiviCRM_Profile_Sync_ACF_Post {
 				 * @param array $args The array of CiviCRM params.
 				 */
 				do_action( 'cwps/acf/post/unlinked', $post_id, $post_type, $args );
+
+				// Reinstate WordPress Post callbacks.
+				$this->acf_loader->mapper->hooks_wordpress_post_add();
 
 			}
 
