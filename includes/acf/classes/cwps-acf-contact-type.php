@@ -53,6 +53,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 		'Organization',
 	];
 
+	/**
+	 * Contact data bridging array.
+	 *
+	 * @since 0.4
+	 * @access public
+	 * @var array $bridging_array The Contact data bridging array.
+	 */
+	public $bridging_array = [];
+
 
 
 	/**
@@ -84,9 +93,38 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 	 */
 	public function register_hooks() {
 
-		// Trace database operations.
-		//add_action( 'civicrm_pre', [ $this, 'trace_pre' ], 10, 4 );
-		//add_action( 'civicrm_post', [ $this, 'trace_post' ], 10, 4 );
+		// Always register Mapper hooks.
+		$this->register_mapper_hooks();
+
+	}
+
+
+
+	/**
+	 * Register callbacks for Mapper events.
+	 *
+	 * @since 0.4
+	 */
+	public function register_mapper_hooks() {
+
+		// Listen for events from our Mapper that may signal a change of Contact Type.
+		add_action( 'cwps/acf/mapper/contact/edit/pre', [ $this, 'contact_edit_pre' ], 10 );
+		add_action( 'cwps/acf/mapper/contact/edited', [ $this, 'contact_edited' ], 9 );
+
+	}
+
+
+
+	/**
+	 * Unregister callbacks for Mapper events.
+	 *
+	 * @since 0.4
+	 */
+	public function unregister_mapper_hooks() {
+
+		// Remove all Mapper listeners.
+		remove_action( 'cwps/acf/mapper/contact/edit/pre', [ $this, 'contact_edit_pre' ], 10 );
+		remove_action( 'cwps/acf/mapper/contact/edited', [ $this, 'contact_edited' ], 9 );
 
 	}
 
@@ -736,6 +774,64 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 
 		// --<
 		return $is_mapped;
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * When a CiviCRM Contact is about to be updated, get existing data.
+	 *
+	 * @since 0.4
+	 *
+	 * @param array $args The array of CiviCRM params.
+	 */
+	public function contact_edit_pre( $args ) {
+
+		// Get the full existing Contact data.
+		$contact = $this->acf_loader->civicrm->contact->get_by_id( $args['objectId'] );
+
+		// Add to bridge.
+		$this->bridging_array[$args['objectId']] = $contact;
+
+	}
+
+
+
+	/**
+	 * When a CiviCRM Contact has been updated, compare with existing data.
+	 *
+	 * This method is hooked in before any other Mapper listener so that it can
+	 * be queried as to whether a Contact's Contact Types have changed.
+	 *
+	 * @since 0.4
+	 *
+	 * @param array $args The array of CiviCRM params.
+	 */
+	public function contact_edited( $args ) {
+
+		// Get the previous Contact data.
+		$contact_pre = [];
+		if ( ! empty( $this->bridging_array[$args['objectId']] ) ) {
+			$contact_pre = $this->bridging_array[$args['objectId']];
+			unset( $this->bridging_array[$args['objectId']] );
+		}
+
+		// Find the Contact Types that are missing.
+		$types_removed = array_diff( $contact_pre['contact_sub_type'], $args['objectRef']->contact_sub_type );
+
+		// Find the Contact Types that have been added.
+		$types_added = array_diff( $args['objectRef']->contact_sub_type, $contact_pre['contact_sub_type'] );
+
+		// Save the diffs in the Contact data.
+		$args['objectRef']->subtype_diffs = [
+			'removed' => $types_removed,
+			'added' => $types_added,
+		];
 
 	}
 

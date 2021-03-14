@@ -596,6 +596,22 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 
 
+	/**
+	 * Delete the CiviCRM Contact ID for a given WordPress Post ID.
+	 *
+	 * @since 0.4
+	 *
+	 * @param integer $post_id The numeric ID of the WordPress Post.
+	 */
+	public function contact_id_delete( $post_id ) {
+
+		// Store the Contact ID.
+		delete_post_meta( $post_id, $this->contact_id_key );
+
+	}
+
+
+
 	// -------------------------------------------------------------------------
 
 
@@ -834,7 +850,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 
 	/**
-	 * Update a WordPress Post when a CiviCRM Contact has been updated.
+	 * Update the synced WordPress Posts when a CiviCRM Contact has been updated.
 	 *
 	 * @since 0.4
 	 *
@@ -894,6 +910,52 @@ class CiviCRM_Profile_Sync_ACF_Post {
 				 * @param array $post_type_args The array of CiviCRM and discovered params.
 				 */
 				do_action( 'cwps/acf/post/edited', $post_type_args );
+
+			}
+
+		}
+
+		// Have any Contact Types been removed?
+		$removed_types = [];
+		if ( ! empty( $args['objectRef']->subtype_diffs['removed'] ) ) {
+			$removed_types = $args['objectRef']->subtype_diffs['removed'];
+		}
+
+		// Process the Contact Types.
+		foreach( $removed_types AS $contact_type ) {
+
+			// Get the mapped Post Type.
+			$post_type = $this->acf_loader->civicrm->contact_type->is_mapped_to_post_type( $contact_type );
+
+			// Skip if this Contact Type is not mapped.
+			if ( $post_type === false ) {
+				continue;
+			}
+
+			// Get the associated Post IDs.
+			$post_ids = $this->get_by_contact_id( $args['objectId'], $post_type );
+
+			// Skip if there are no associated Post IDs.
+			if ( $post_type === false ) {
+				continue;
+			}
+
+			// Process them.
+			foreach( $post_ids AS $post_id ) {
+
+				// Delete the Contact ID meta.
+				$this->contact_id_delete( $post_id );
+
+				/**
+				 * Broadcast that a WordPress Post has been unlinked from a Contact.
+				 *
+				 * @since 0.4
+				 *
+				 * @param int $post_id The numeric ID of the WordPress Post.
+				 * @param int $post_type The WordPress Post Type.
+				 * @param array $args The array of CiviCRM params.
+				 */
+				do_action( 'cwps/acf/post/unlinked', $post_id, $post_type, $args );
 
 			}
 
