@@ -1053,7 +1053,7 @@ function cacf_get_addresses( $selector, $post_id = null ) {
 
 		// Build Address from template.
 		ob_start();
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/shortcodes/shortcode-address.php';;
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/shortcodes/shortcode-address.php';
 		$address = ob_get_contents();
 		ob_end_clean();
 
@@ -1162,7 +1162,7 @@ function cacf_get_address_by_type_id( $selector, $location_type_id, $post_id = n
 
 		// Build Address from template.
 		ob_start();
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/shortcodes/shortcode-address.php';;
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/shortcodes/shortcode-address.php';
 		$filtered[] = ob_get_contents();
 		ob_end_clean();
 
@@ -1310,7 +1310,7 @@ function cacf_get_primary_address( $selector, $post_id = null ) {
 
 	// Build Address from template.
 	ob_start();
-	include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/shortcodes/shortcode-address.php';;
+	include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/shortcodes/shortcode-address.php';
 	$address = ob_get_contents();
 	ob_end_clean();
 
