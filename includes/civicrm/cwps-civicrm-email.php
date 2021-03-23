@@ -439,7 +439,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		}
 
 		// Bail if it isn't the Primary Email.
-		if ( $primary_email->is_primary != 1 ) {
+		if ( empty( $primary_email->is_primary ) OR $primary_email->is_primary != 1 ) {
 			return;
 		}
 
