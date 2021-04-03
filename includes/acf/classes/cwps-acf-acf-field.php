@@ -407,7 +407,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 			case 'String' :
 
 				// CiviCRM string fields are varchar(255) or varchar(260).
-				if ( ! empty( $field_data['text_length'] ) )
+				if ( ! empty( $field_data['text_length'] ) ) {
 					if ( strlen( $value ) > $field_data['text_length'] ) {
 						$valid = sprintf( __( 'Must be maximum %s characters.', 'civicrm-wp-profile-sync' ), $field_data['text_length'] );
 					}
