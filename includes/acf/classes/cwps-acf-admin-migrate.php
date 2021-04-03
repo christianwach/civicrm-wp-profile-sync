@@ -622,6 +622,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 
 		// Redirect to our admin page.
 		wp_safe_redirect( add_query_arg( $args, admin_url( 'admin.php' ) ) );
+		exit;
 
 	}
 

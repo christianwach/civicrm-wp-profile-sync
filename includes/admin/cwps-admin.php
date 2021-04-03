@@ -964,6 +964,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 			// Redirect to our Settings Page.
 			wp_safe_redirect( add_query_arg( $args, $url ) );
+			exit;
 
 		}
 
