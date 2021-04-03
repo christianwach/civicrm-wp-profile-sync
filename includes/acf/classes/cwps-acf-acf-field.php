@@ -405,8 +405,18 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		switch ( $field_data['data_type'] ) {
 
 			case 'String' :
-				// Anything goes - except the length may be wrong.
-				// TODO: Check string length.
+
+				// CiviCRM string fields are varchar(255) or varchar(260).
+				if ( ! empty( $field_data['text_length'] ) )
+					if ( strlen( $value ) > $field_data['text_length'] ) {
+						$valid = sprintf( __( 'Must be maximum %s characters.', 'civicrm-wp-profile-sync' ), $field_data['text_length'] );
+					}
+				} else {
+					if ( strlen( $value ) > 255 ) {
+						$valid = __( 'Must be maximum 255 characters.', 'civicrm-wp-profile-sync' );
+					}
+				}
+
 				break;
 
 			case 'Int' :
@@ -421,11 +431,23 @@ class CiviCRM_Profile_Sync_ACF_Field {
 						}
 					}
 
+					// CiviCRM integer fields are signed int(11).
+					foreach( $value AS $item ) {
+						if ( (int) $value > 2147483647 ) {
+							$valid = __( 'Values must all be less than 2147483647.', 'civicrm-wp-profile-sync' );
+						}
+					}
+
 				} else {
 
 					// Value must be an integer.
 					if ( ! ctype_digit( $value ) ) {
 						$valid = __( 'Must be an integer.', 'civicrm-wp-profile-sync' );
+					}
+
+					// CiviCRM integer fields are signed int(11).
+					if ( (int) $value > 2147483647 ) {
+						$valid = __( 'Must be less than 2147483647.', 'civicrm-wp-profile-sync' );
 					}
 
 				}
@@ -437,7 +459,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 				// If it's a Multi-select.
 				if ( $field_data['html_type'] == 'Multi-Select' AND is_array( $value ) ) {
 
-					// Make sure values are all integers.
+					// Make sure values are all numeric.
 					foreach( $value AS $item ) {
 						if ( ! is_numeric( $item ) ) {
 							$valid = __( 'Values must all be numbers.', 'civicrm-wp-profile-sync' );
@@ -446,7 +468,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 				} else {
 
-					// Value must be a number.
+					// Value must be numeric.
 					if ( ! is_numeric( $value ) ) {
 						$valid = __( 'Must be a number.', 'civicrm-wp-profile-sync' );
 					}
@@ -459,7 +481,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 				// If it's a Multi-select.
 				if ( $field_data['html_type'] == 'Multi-Select' AND is_array( $value ) ) {
 
-					// Make sure values are all integers.
+					// Make sure values are all numeric.
 					foreach( $value AS $item ) {
 
 						// Must be a number.
