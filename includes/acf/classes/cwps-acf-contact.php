@@ -906,8 +906,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		// Call the API.
 		$result = civicrm_api( 'Contact', 'create', $params );
 
-		// Bail if there's an error.
+		// Log and bail if there's an error.
 		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+			$e = new Exception;
+			$trace = $e->getTraceAsString();
+			error_log( print_r( array(
+				'method' => __METHOD__,
+				'params' => $params,
+				'result' => $result,
+				//'backtrace' => $trace,
+			), true ) );
 			return $contact_data;
 		}
 
