@@ -820,7 +820,31 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 
 				// Exclude "reverse" edits when a Post is the originator.
 				if ( $entity['entity'] === 'post' AND $post_id == $entity['id'] ) {
-					continue;
+
+					/**
+					 * Allow "reverse" edit to happen if another plugin has specifically
+					 * requested that it should happen.
+					 *
+					 * Addresses may be set by other processes as the result of, say, a
+					 * relationship being created. When this is the case, then a plugin
+					 * may return "true" and cause a reverse edit for an operation that
+					 * adds, edits or removes an Address for a Contact. It should unhook
+					 * its callback immediately after the CiviCRM API operation.
+					 *
+					 * This has little consequence because this plugin doesn't listen for
+					 * edits to individual ACF Fields but acts on "acf/save_post" events
+					 * instead. Therefore no other unhooking/rehooking needs to be done.
+					 *
+					 * @since 0.4
+					 *
+					 * @param bool Default false disallows reverse edits. Return true to allow.
+					 * @param int $post_id The numeric ID of the WordPress Post.
+					 * @param array $args The array of CiviCRM params.
+					 */
+					if ( false === apply_filters( 'cwps/acf/addresses/address/reverse_edit', false, $post_id, $args ) ) {
+						continue;
+					}
+
 				}
 
 				// Update the ACF Fields for this Post.
