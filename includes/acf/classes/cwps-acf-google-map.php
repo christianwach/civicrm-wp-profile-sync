@@ -41,11 +41,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	public $civicrm;
 
 	/**
-	 * "CiviCRM Address" field key in the ACF Field data.
+	 * "CiviCRM Google Map" field key in the ACF Field data.
+	 *
+	 * Sorry that this key name is slightly misleading - it is a leftover from
+	 * when the Google Map field was the only kind of supported Address field.
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var str $acf_field_key The key of the "CiviCRM Address" in the ACF Field data.
+	 * @var str $acf_field_key The key of the "CiviCRM Google Map" in the ACF Field data.
 	 */
 	public $acf_field_key = 'field_cacf_civicrm_address';
 
@@ -123,7 +126,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		// Customise "Google Map" Fields.
 		//add_action( 'acf/render_field_settings/type=google_map', [ $this, 'map_setting_add' ] );
 
-		// Add any Address Fields attached to a Post.
+		// Add any Google Map Fields attached to a Post.
 		add_filter( 'cwps/acf/fields_get_for_post', [ $this, 'acf_fields_get_for_post' ], 10, 3 );
 
 		// Check Contact prior to Post-Contact sync event.
@@ -143,7 +146,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 */
 	public function register_mapper_hooks() {
 
-		// Listen for events from our Mapper that require Address updates.
+		// Listen for events from our Mapper that require Google Map updates.
 		add_action( 'cwps/acf/mapper/address/edit/pre', [ $this, 'address_pre_edit' ], 10 );
 		add_action( 'cwps/acf/mapper/address/created', [ $this, 'address_created' ], 10 );
 		add_action( 'cwps/acf/mapper/address/edited', [ $this, 'address_edited' ], 10 );
@@ -506,7 +509,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		// Get the ACF Fields for this ACF "Post ID".
 		$acf_fields = $this->acf_loader->acf->field->fields_get_for_post( $args['post_id'] );
 
-		// Bail if there are no Address Fields.
+		// Bail if there are no Google Map Fields.
 		if ( empty( $acf_fields['google_map'] ) ) {
 			return;
 		}
@@ -607,7 +610,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 			return;
 		}
 
-		// Do the Address update.
+		// Do the Google Map update.
 		$this->address_fields_update( $address );
 
 		// If this address is a "Master Address" then it will return "Shared Addresses".
@@ -682,7 +685,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		// Check if the edited Address has had its properties toggled.
 		$address = $this->address_properties_check( $address, $this->address_pre );
 
-		// Do the Address update.
+		// Do the Google Map update.
 		$this->address_fields_update( $address, $this->address_pre );
 
 		// If this address is a "Master Address" then it will return "Shared Addresses".
@@ -722,7 +725,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		// Set a property to flag that it's being deleted.
 		$address->to_delete = true;
 
-		// Clear the Address.
+		// Clear the Google Map.
 		$this->address_fields_update( $address );
 
 		// If this address is a "Master Address" then it will return "Shared Addresses".
@@ -808,7 +811,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 
 	/**
-	 * Update the Address ACF Field on a Post mapped to a Contact ID.
+	 * Update the Google Map ACF Field on a Post mapped to a Contact ID.
 	 *
 	 * @since 0.4
 	 *
@@ -854,7 +857,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		}
 
 		/**
-		 * Broadcast that an Address ACF Field may have been edited.
+		 * Broadcast that a Google Map ACF Field may have been edited.
 		 *
 		 * @since 0.4
 		 *
@@ -869,7 +872,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 
 	/**
-	 * Update the Address ACF Field on an Entity mapped to a Contact ID.
+	 * Update the Google Map ACF Field on an Entity mapped to a Contact ID.
 	 *
 	 * @since 0.4
 	 *
@@ -879,7 +882,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 */
 	public function fields_update( $post_id, $address, $previous = null ) {
 
-		// Bail if there are no Address fields for this "Post ID".
+		// Bail if there are no Google Map fields for this "Post ID".
 		$acf_fields = $this->acf_loader->acf->field->fields_get_for_post( $post_id );
 		if ( empty( $acf_fields['google_map'] ) ) {
 			return;
@@ -902,7 +905,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 
 	/**
-	 * Update the Address ACF Field on a Post mapped to a Contact ID.
+	 * Update the Google Map ACF Field on a Post mapped to a Contact ID.
 	 *
 	 * @since 0.4
 	 *
@@ -945,7 +948,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 
 	/**
-	 * Prepare the Address data for updating a Google Maps ACF Field.
+	 * Prepare the Address data for updating a Google Map ACF Field.
 	 *
 	 * @since 0.4
 	 *
@@ -1244,7 +1247,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 
 	/**
-	 * Return the "CiviCRM Address" ACF Settings Field.
+	 * Return the "CiviCRM Google Map" ACF Settings Field.
 	 *
 	 * @since 0.4
 	 *
@@ -1353,11 +1356,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 
 	/**
-	 * Getter method for the "CiviCRM Address" key.
+	 * Getter method for the "CiviCRM Google Map" key.
 	 *
 	 * @since 0.4
 	 *
-	 * @return string $acf_field_key The key of the "CiviCRM Address" in the ACF Field data.
+	 * @return string $acf_field_key The key of the "CiviCRM Google Map" in the ACF Field data.
 	 */
 	public function acf_field_key_get() {
 
@@ -1396,7 +1399,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 */
 	public function acf_fields_get_for_post( $acf_fields, $field, $post_id ) {
 
-		// Get the "CiviCRM Address" key.
+		// Get the "CiviCRM Google Map" key.
 		$address_key = $this->acf_field_key_get();
 
 		// Add if it has a reference to a Google Map Field.
