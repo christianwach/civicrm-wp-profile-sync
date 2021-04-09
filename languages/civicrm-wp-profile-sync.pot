@@ -1,14 +1,15 @@
-# Copyright (C) 2020 CiviCRM WordPress Profile Sync
-# This file is distributed under the same license as the CiviCRM WordPress Profile Sync package.
+# Copyright (C) 2021 CiviCRM Profile Sync
+# This file is distributed under the same license as the CiviCRM Profile Sync package.
 msgid ""
 msgstr ""
-"Project-Id-Version: CiviCRM WordPress Profile Sync 0.4\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/civicrm-wp-profile-sync\n"
-"POT-Creation-Date: 2020-12-03 11:52:57+00:00\n"
+"Project-Id-Version: CiviCRM Profile Sync 0.4\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/civicrm-wp-"
+"profile-sync\n"
+"POT-Creation-Date: 2021-04-09 12:11:37+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2020-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2021-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
@@ -17,6 +18,7 @@ msgid "ID"
 msgstr ""
 
 #: assets/civicrm/custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:27
+#: includes/acf/fields/cwps-acf-field-civicrm-phone.php:659
 msgid "Type"
 msgstr ""
 
@@ -37,7 +39,7 @@ msgid "There are no Contacts selected to create WordPress Users from."
 msgstr ""
 
 #: assets/civicrm/custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:46
-#: includes/civicrm/cwps-civicrm-bulk.php:200
+#: includes/civicrm/cwps-civicrm-bulk.php:189
 msgid "Create WordPress Users from Contacts"
 msgstr ""
 
@@ -50,10 +52,12 @@ msgid "Cancel"
 msgstr ""
 
 #: assets/civicrm/custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:133
+#: includes/acf/fields/cwps-acf-field-civicrm-yes-no.php:169
 msgid "No"
 msgstr ""
 
 #: assets/civicrm/custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:135
+#: includes/acf/fields/cwps-acf-field-civicrm-yes-no.php:168
 msgid "Yes"
 msgstr ""
 
@@ -78,115 +82,1142 @@ msgid "Users added"
 msgstr ""
 
 #: assets/civicrm/custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:353
-msgid "Users not added to WordPress: %s. Please review these Contacts and try again."
+msgid ""
+"Users not added to WordPress: %s. Please review these Contacts and try again."
 msgstr ""
 
 #: assets/civicrm/custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:356
 msgid "Users not added"
 msgstr ""
 
-#: assets/templates/wordpress/metaboxes/cwps-admin-metabox-profile.php:4
-msgid "Website Type"
+#: assets/templates/help/settings-help.php:12
+msgid ""
+"Settings: For further information about using this plugin, please refer to "
+"the readme.txt file that comes with this plugin."
 msgstr ""
 
-#: assets/templates/wordpress/metaboxes/cwps-admin-metabox-profile.php:18
-msgid "The CiviCRM Website Type that the WordPress User Profile Website syncs with."
+#: assets/templates/wordpress/metaboxes/metabox-acf-activities-posts.php:16
+msgid ""
+"Select which Activity Types you want to sync to their corresponding "
+"WordPress Post Types."
 msgstr ""
 
-#: assets/templates/wordpress/metaboxes/cwps-admin-metabox-profile.php:23
-msgid "Primary Email"
+#: assets/templates/wordpress/metaboxes/metabox-acf-activities-posts.php:27
+#: assets/templates/wordpress/metaboxes/metabox-acf-contacts-posts.php:27
+#: assets/templates/wordpress/metaboxes/metabox-acf-groups-terms.php:27
+#: assets/templates/wordpress/metaboxes/metabox-acf-posts-activities.php:27
+#: assets/templates/wordpress/metaboxes/metabox-acf-posts-contacts.php:27
+msgid "Sync Now"
 msgstr ""
 
-#: assets/templates/wordpress/metaboxes/cwps-admin-metabox-profile.php:28
-msgid "- Select Primary Email sync method -"
+#: assets/templates/wordpress/metaboxes/metabox-acf-activities-posts.php:29
+#: assets/templates/wordpress/metaboxes/metabox-acf-contacts-posts.php:29
+#: assets/templates/wordpress/metaboxes/metabox-acf-groups-terms.php:29
+#: assets/templates/wordpress/metaboxes/metabox-acf-posts-activities.php:29
+#: assets/templates/wordpress/metaboxes/metabox-acf-posts-contacts.php:29
+msgid "Continue Sync"
 msgstr ""
 
-#: assets/templates/wordpress/metaboxes/cwps-admin-metabox-profile.php:30
-msgid "Yes, handle Primary Email sync (recommended)"
+#: assets/templates/wordpress/metaboxes/metabox-acf-activities-posts.php:37
+#: assets/templates/wordpress/metaboxes/metabox-acf-contacts-posts.php:37
+#: assets/templates/wordpress/metaboxes/metabox-acf-groups-terms.php:37
+#: assets/templates/wordpress/metaboxes/metabox-acf-posts-activities.php:37
+#: assets/templates/wordpress/metaboxes/metabox-acf-posts-contacts.php:37
+msgid "Stop Sync"
 msgstr ""
 
-#: assets/templates/wordpress/metaboxes/cwps-admin-metabox-profile.php:31
-msgid "No, let CiviCRM handle Primary Email sync"
+#: assets/templates/wordpress/metaboxes/metabox-acf-activities-posts.php:52
+msgid "No synced Activity Types found."
 msgstr ""
 
-#: assets/templates/wordpress/metaboxes/cwps-admin-metabox-profile.php:34
-msgid "By default, CiviCRM is set to sync the Primary Email of a Contact to the email of a linked WordPress User. Unfortunately, CiviCRM is a bit clumsy in the way that it does this. Since you have CiviCRM Profile Sync installed, it is recommended that you let this plugin handle Primary Email sync for you."
+#: assets/templates/wordpress/metaboxes/metabox-acf-contacts-posts.php:16
+msgid ""
+"Select which Contact Types you want to sync to their corresponding WordPress "
+"Post Types."
 msgstr ""
 
-#: assets/templates/wordpress/metaboxes/cwps-admin-metabox-submit.php:6
-msgid "Save your settings here."
+#: assets/templates/wordpress/metaboxes/metabox-acf-contacts-posts.php:52
+msgid "No synced Contact Types found."
 msgstr ""
 
-#: assets/templates/wordpress/metaboxes/cwps-admin-metabox-submit.php:14
-msgid "Update"
+#: assets/templates/wordpress/metaboxes/metabox-acf-groups-terms.php:16
+msgid ""
+"Select which CiviCRM Groups you want to sync to their corresponding "
+"WordPress Terms."
 msgstr ""
 
-#: assets/templates/wordpress/pages/cwps-admin-page-settings.php:4
-msgid "CiviCRM Profile Sync"
+#: assets/templates/wordpress/metaboxes/metabox-acf-groups-terms.php:52
+msgid "No synced Groups found."
 msgstr ""
 
-#: assets/templates/wordpress/pages/cwps-admin-page-settings.php:8
-#: includes/admin/cwps-admin.php:437 includes/admin/cwps-admin.php:665
+#: assets/templates/wordpress/metaboxes/metabox-acf-migrate-info.php:4
+msgid "Why migrate?"
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/metabox-acf-migrate-info.php:6
+msgid ""
+"The CiviCRM ACF Integration plugin is no longer being developed as a "
+"standalone plugin, so the functionality that it provides has been "
+"transferred to CiviCRM Profile Sync. New features and bug fixes will only be "
+"added to this plugin from now on."
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/metabox-acf-migrate-info.php:8
+msgid "What needs to be done?"
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/metabox-acf-migrate-info.php:10
+msgid ""
+"I have tried to keep the tasks to an absolute minimum, however there are "
+"some changes that are unavoidable. Before you go ahead and deactivate and "
+"delete the CiviCRM ACF Integration plugin, there are few things that need to "
+"be done to make sure your site continues to work as normal."
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/metabox-acf-migrate-info.php:10
+msgid ""
+"CiviCRM Profile Sync will not affect your site until you give it the go-"
+"ahead."
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/metabox-acf-migrate-info.php:12
+msgid "Filters and Actions"
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/metabox-acf-migrate-info.php:14
+msgid ""
+"If you have not implemented any of the Filters or Actions from the CiviCRM "
+"ACF Integration plugin, then it is unlikely that you will need to take any "
+"further action before migrating."
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/metabox-acf-migrate-info.php:16
+msgid ""
+"Filters and Actions have undergone a major overhaul and there isn’t really a "
+"simple substitution formula that I can give you. If you are technical enough "
+"to have used them to modify or extend the behaviour of the CiviCRM ACF "
+"Integration plugin, then I am confident that you are capable of figuring out "
+"their replacements by looking at the equivalent classes, functions and "
+"templates in CiviCRM Profile Sync."
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/metabox-acf-migrate-info.php:18
+msgid "This is really just a reminder that you need to do so."
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/metabox-acf-migrate-info.php:20
+#: assets/templates/wordpress/pages/page-admin-acf-migrate.php:17
+#: assets/templates/wordpress/pages/page-admin-acf-sync.php:17
+#: assets/templates/wordpress/pages/page-admin-settings.php:8
+#: includes/admin/cwps-admin.php:515 includes/admin/cwps-admin.php:845
 msgid "Settings"
 msgstr ""
 
-#: includes/admin/cwps-admin.php:251
-msgid "CiviCRM Profile Sync needs to know which Website Type to sync."
+#: assets/templates/wordpress/metaboxes/metabox-acf-migrate-info.php:22
+msgid ""
+"The uninstall routine in the CiviCRM ACF Integration plugin will auto-delete "
+"its settings when the plugin is deleted. It is therefore necessary to "
+"migrate these to CiviCRM Profile Sync before that is done. You should only "
+"deactivate and delete the CiviCRM ACF Integration plugin when you are sure "
+"everything mentioned here has been completed."
 msgstr ""
 
-#: includes/admin/cwps-admin.php:269
-msgid "CiviCRM Profile Sync needs to know how to sync the Primary Email."
+#: assets/templates/wordpress/metaboxes/metabox-acf-migrate-info.php:26
+msgid ""
+"CiviCRM Profile Sync will handle migration of settings for this site when "
+"you click the \"Migrate\" button. Because this is a WordPress Multisite "
+"install, you will also have to visit the equivalent Migration Page on every "
+"site where the CiviCRM ACF Integration plugin is activated and follow the "
+"same procedure as here before deactivating it."
 msgstr ""
 
-#: includes/admin/cwps-admin.php:286
-msgid "CiviCRM Profile Sync needs your attention. Please visit the %1$sSettings Page%2$s for details."
+#: assets/templates/wordpress/metaboxes/metabox-acf-migrate-info.php:30
+msgid ""
+"CiviCRM Profile Sync will handle migration of settings for you when you "
+"click the \"Migrate\" button."
 msgstr ""
 
-#: includes/admin/cwps-admin.php:418 includes/admin/cwps-admin.php:436
-msgid "CiviCRM Profile Sync: Settings"
+#: assets/templates/wordpress/metaboxes/metabox-acf-migrate-info.php:36
+msgid "Congratulations!"
 msgstr ""
 
-#: includes/admin/cwps-admin.php:419
-msgid "Profile Sync"
+#: assets/templates/wordpress/metaboxes/metabox-acf-migrate-info.php:38
+msgid ""
+"CiviCRM Profile Sync has migrated your CiviCRM ACF Integration plugin "
+"settings."
 msgstr ""
 
-#: includes/admin/cwps-admin.php:675
-msgid "User Profile Settings"
+#: assets/templates/wordpress/metaboxes/metabox-acf-migrate-info.php:41
+msgid ""
+"You can now go to your %1$sPlugins page%2$s and deactivate the CiviCRM ACF "
+"Integration plugin."
 msgstr ""
 
-#: includes/cai/cwps-cai.php:1381 includes/cai/cwps-cai.php:1390
+#: assets/templates/wordpress/metaboxes/metabox-acf-migrate-info.php:46
+msgid ""
+"When you have done that, you will be able to access the \"Manual Sync\" page "
+"here instead of this page."
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/metabox-acf-migrate-submit.php:6
+msgid ""
+"When you are ready to deactivate the CiviCRM ACF Integration plugin, click "
+"the \"Migrate\" button below."
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/metabox-acf-migrate-submit.php:14
+msgid "Migrate"
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/metabox-acf-posts-activities.php:16
+msgid ""
+"Select which Post Types you want to sync to their corresponding CiviCRM "
+"Activity Types."
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/metabox-acf-posts-activities.php:52
+msgid "No synced Activity Post Types found."
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/metabox-acf-posts-contacts.php:16
+msgid ""
+"Select which Post Types you want to sync to their corresponding CiviCRM "
+"Contact Types."
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/metabox-acf-posts-contacts.php:52
+msgid "No synced Post Types found."
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/metabox-admin-settings-profile.php:4
+msgid "Website Type"
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/metabox-admin-settings-profile.php:18
+msgid ""
+"The CiviCRM Website Type that the WordPress User Profile Website syncs with."
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/metabox-admin-settings-profile.php:23
+#: includes/acf/classes/cwps-acf-email.php:841
+msgid "Primary Email"
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/metabox-admin-settings-profile.php:28
+msgid "- Select Primary Email sync method -"
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/metabox-admin-settings-profile.php:30
+msgid "Yes, handle Primary Email sync (recommended)"
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/metabox-admin-settings-profile.php:31
+msgid "No, let CiviCRM handle Primary Email sync"
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/metabox-admin-settings-profile.php:34
+msgid ""
+"By default, CiviCRM is set to sync the Primary Email of a Contact to the "
+"email of a linked WordPress User. Unfortunately, CiviCRM is a bit clumsy in "
+"the way that it does this. Since you have CiviCRM Profile Sync installed, it "
+"is recommended that you let this plugin handle Primary Email sync for you."
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/metabox-admin-settings-submit.php:6
+msgid "Save your settings here."
+msgstr ""
+
+#: assets/templates/wordpress/metaboxes/metabox-admin-settings-submit.php:14
+msgid "Update"
+msgstr ""
+
+#. #-#-#-#-#  civicrm-wp-profile-sync.pot (CiviCRM Profile Sync 0.4)  #-#-#-#-#
+#. Plugin Name of the plugin/theme
+#: assets/templates/wordpress/pages/page-admin-acf-migrate.php:14
+#: assets/templates/wordpress/pages/page-admin-acf-sync.php:14
+#: assets/templates/wordpress/pages/page-admin-settings.php:4
+#: includes/acf/classes/cwps-acf-admin-migrate.php:204
+#: includes/acf/classes/cwps-acf-admin.php:158
+#: includes/admin/cwps-admin-multisite.php:231
+msgid "CiviCRM Profile Sync"
+msgstr ""
+
+#: assets/templates/wordpress/pages/page-admin-acf-sync.php:33
+msgid ""
+"Things can be a little complicated on initial setup because there can be "
+"data in WordPress or CiviCRM or both. The utilities below should help you "
+"get going."
+msgstr ""
+
+#: assets/templates/wordpress/taxonomies/term-add.php:13
+#: assets/templates/wordpress/taxonomies/term-edit.php:13
+msgid "CiviCRM Group for ACF Integration"
+msgstr ""
+
+#: assets/templates/wordpress/taxonomies/term-add.php:15
+#: assets/templates/wordpress/taxonomies/term-edit.php:17
+#: assets/templates/wordpress/taxonomies/term-edit.php:19
+msgid "None"
+msgstr ""
+
+#: assets/templates/wordpress/taxonomies/term-add.php:22
+msgid ""
+"When a CiviCRM Group is chosen here, then any Post which is given this term "
+"will have its synced Contact added to the Group. In CiviCRM, any Contact "
+"that is made a member of the chosen Group will have this term assigned to "
+"their synced Post."
+msgstr ""
+
+#: assets/templates/wordpress/taxonomies/term-edit.php:31
+msgid ""
+"When a CiviCRM Group is chosen, then any Contact that is a member of the "
+"chosen Group will have this term assigned to their synced Post."
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-acf-blocks.php:102
+#: includes/acf/fields/cwps-acf-field-civicrm-phone.php:152
+#: includes/acf/shortcodes/cwps-shortcode-phone.php:268
+msgid "CiviCRM Phone"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-acf-blocks.php:103
+msgid "A custom phone block."
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-acf-field.php:412
+msgid "Must be maximum %s characters."
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-acf-field.php:416
+msgid "Must be maximum 255 characters."
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-acf-field.php:430
+msgid "Values must all be integers."
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-acf-field.php:437
+msgid "Values must all be less than 2147483647."
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-acf-field.php:445
+#: includes/acf/classes/cwps-acf-activity-field.php:164
+msgid "Must be an integer."
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-acf-field.php:450
+msgid "Must be less than 2147483647."
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-acf-field.php:465
+msgid "Values must all be numbers."
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-acf-field.php:473
+msgid "Must be a number."
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-acf-field.php:489
+msgid "All values must be a valid money format."
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-acf-field.php:497
+msgid "All values must have only two decimal places."
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-acf-field.php:506
+msgid "Must be a valid money format."
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-acf-field.php:514
+msgid "Only two decimal places please."
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-activity.php:849
+msgid "A numerical ID must be present to update an Activity."
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-activity.php:942
+#: includes/acf/classes/cwps-acf-contact.php:1054
+msgid "Name not set"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-activity.php:1178
+msgid "Activity Fields"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-activity.php:1205
+#: includes/acf/classes/cwps-acf-contact.php:1403
+#: includes/acf/classes/cwps-acf-custom-field.php:1398
+#: includes/acf/classes/cwps-acf-multiset.php:1050
+msgid "CiviCRM Field"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-activity.php:1208
+#: includes/acf/classes/cwps-acf-contact.php:1406
+#: includes/acf/classes/cwps-acf-custom-field.php:1401
+#: includes/acf/classes/cwps-acf-multiset.php:1053
+msgid ""
+"Choose the CiviCRM Field that this ACF Field should sync with. (Optional)"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-admin-migrate.php:166
+msgid ""
+"CiviCRM ACF Integration has become part of CiviCRM Profile Sync. Please "
+"visit the %1$sMigration Page%2$s to switch over."
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-admin-migrate.php:205
+#: includes/acf/classes/cwps-acf-admin-migrate.php:397
+#: includes/acf/classes/cwps-acf-admin.php:159
+#: includes/acf/classes/cwps-acf-admin.php:533
+msgid "ACF Integration"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-admin-migrate.php:311
+#: includes/acf/classes/cwps-acf-admin-migrate.php:316
+#: includes/acf/classes/cwps-acf-admin.php:443
+#: includes/acf/classes/cwps-acf-admin.php:448
+msgid "You do not have permission to access this page."
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-admin-migrate.php:487
+msgid "Migrate Settings"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-admin-migrate.php:498
+msgid "Migration Tasks"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-admin-migrate.php:500
+msgid "Migration Complete"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-admin-migrate.php:647
+#: includes/acf/classes/cwps-acf-mapping.php:1056
+msgid "You must supply an option to option_exists()"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-admin-migrate.php:674
+#: includes/acf/classes/cwps-acf-mapping.php:1083
+msgid "You must supply an option to option_get()"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-admin-migrate.php:700
+#: includes/acf/classes/cwps-acf-mapping.php:1109
+msgid "You must supply an option to option_set()"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-admin-migrate.php:722
+#: includes/acf/classes/cwps-acf-mapping.php:1131
+msgid "You must supply an option to option_delete()"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-admin.php:324
+#: includes/acf/classes/cwps-acf-admin.php:348
+msgid "Posts to sync: {{total}}"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-admin.php:325
+#: includes/acf/classes/cwps-acf-admin.php:349
+msgid "Processing posts {{from}} to {{to}}"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-admin.php:326
+#: includes/acf/classes/cwps-acf-admin.php:350
+msgid "Processing posts {{from}} to {{to}} complete"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-admin.php:332
+msgid "Contacts to sync: {{total}}"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-admin.php:333
+msgid "Processing contacts {{from}} to {{to}}"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-admin.php:334
+msgid "Processing contacts {{from}} to {{to}} complete"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-admin.php:340
+msgid "Group members to sync: {{total}}"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-admin.php:341
+msgid "Processing group members {{from}} to {{to}}"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-admin.php:342
+msgid "Processing group members {{from}} to {{to}} complete"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-admin.php:356
+msgid "Activitys to sync: {{total}}"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-admin.php:357
+msgid "Processing activities {{from}} to {{to}}"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-admin.php:358
+msgid "Processing activities {{from}} to {{to}} complete"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-admin.php:364
+msgid "All done!"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-admin.php:581
+msgid "WordPress Posts &rarr; CiviCRM Contacts"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-admin.php:594
+msgid "CiviCRM Contacts &rarr; WordPress Posts"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-admin.php:607
+msgid "WordPress Posts &rarr; CiviCRM Activities"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-admin.php:620
+msgid "CiviCRM Activities &rarr; WordPress Posts"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-admin.php:633
+msgid "CiviCRM Groups &rarr; WordPress Terms"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-contact-field.php:429
+msgid "%d year"
+msgid_plural "%d years"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/acf/classes/cwps-acf-contact-field.php:437
+msgid "%d month"
+msgid_plural "%d months"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/acf/classes/cwps-acf-contact-field.php:444
+msgid "Under a month"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-contact-field.php:1092
+msgid "CiviCRM Contact Image"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-contact.php:956
+msgid "A numerical ID must be present to update a Contact."
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-contact.php:994
+msgid "A numerical ID must be present to delete a Contact."
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-contact.php:1376
+msgid "Contact Fields"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-email.php:840
+msgid "Specific Emails"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-email.php:844
+#: includes/acf/classes/cwps-acf-google-map.php:1273
+msgid "Location Types"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-email.php:852
+msgid "CiviCRM Email"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-email.php:855
+msgid ""
+"Choose the CiviCRM Email that this ACF Field should sync with. (Optional)"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-google-map.php:1268
+msgid "Specific Addresses"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-google-map.php:1269
+msgid "Primary Address"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-google-map.php:1270
+msgid "Billing Address"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-google-map.php:1281
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:152
+#: includes/acf/shortcodes/cwps-shortcode-address.php:245
+msgid "CiviCRM Address"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-google-map.php:1284
+msgid ""
+"Choose the CiviCRM Location Type that this ACF Field should sync with. "
+"(Optional)"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-google-map.php:1321
+msgid "Make Read Only"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-google-map.php:1325
+msgid "Only CiviCRM can set the Location in this Field."
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-mapping.php:278
+#: includes/acf/classes/cwps-acf-mapping.php:526
+msgid "No Synced Post Type"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-mapping.php:319
+#: includes/acf/classes/cwps-acf-mapping.php:567
+msgid "Synced Post Type"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-post-tax.php:535
+msgid "Could not update term_meta"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-post.php:250
+msgid "CiviCRM ACF Integration"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-post.php:285
+msgid "View this Contact in CiviCRM"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-post.php:349
+msgid "View %s in WordPress"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-post.php:370
+msgid "Edit %s in WordPress"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-post.php:446
+msgid "Edit in CiviCRM"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-post.php:454
+#: includes/acf/classes/cwps-acf-post.php:462
+msgid "View in CiviCRM"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-post.php:509
+msgid "CiviCRM"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-relationship.php:1295
+#: includes/acf/fields/cwps-acf-field-civicrm-relationship.php:153
+msgid "CiviCRM Relationship"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-relationship.php:1298
+msgid ""
+"Choose the CiviCRM Relationship that this ACF Field should sync with. "
+"(Optional)"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-user.php:1820
+#: includes/acf/classes/cwps-acf-user.php:1829
+#: includes/acf/fields/cwps-acf-field-civicrm-relationship.php:732
+#: includes/acf/fields/cwps-acf-field-civicrm-relationship.php:742
+#: includes/cai/cwps-cai.php:1851 includes/cai/cwps-cai.php:1860
 msgid "%s (A-B)"
 msgstr ""
 
-#: includes/cai/cwps-cai.php:1402 includes/cai/cwps-cai.php:1411
+#: includes/acf/classes/cwps-acf-user.php:1841
+#: includes/acf/classes/cwps-acf-user.php:1850
+#: includes/acf/fields/cwps-acf-field-civicrm-relationship.php:760
+#: includes/acf/fields/cwps-acf-field-civicrm-relationship.php:770
+#: includes/cai/cwps-cai.php:1872 includes/cai/cwps-cai.php:1881
 msgid "%s (B-A)"
 msgstr ""
 
-#: includes/civicrm/cwps-civicrm-contact.php:523
+#: includes/acf/classes/cwps-acf-website.php:768
+msgid "Contact Website Type"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-website.php:784
+msgid "CiviCRM Website"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-website.php:787
+msgid ""
+"Choose the CiviCRM Website Field that this ACF Field should sync with. "
+"(Optional)"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-activity-assignee.php:140
+msgid "CiviCRM Activity Assignee"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-activity-assignee.php:145
+#: includes/acf/fields/cwps-acf-field-civicrm-activity-creator.php:145
+#: includes/acf/fields/cwps-acf-field-civicrm-activity-target.php:145
+#: includes/acf/fields/cwps-acf-field-civicrm-contact.php:158
+#: includes/acf/fields/cwps-acf-field-civicrm-relationship.php:158
+#: includes/acf/fields/cwps-acf-field-civicrm-yes-no.php:163
+msgid "Error! Please enter a higher value."
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-activity-creator.php:140
+msgid "CiviCRM Activity Creator"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-activity-target.php:140
+msgid "CiviCRM Activity Target"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-address-city.php:153
+#: includes/acf/shortcodes/cwps-shortcode-city.php:258
+msgid "CiviCRM City"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-address-city.php:189
+#: includes/acf/fields/cwps-acf-field-civicrm-address-state.php:189
+msgid "CiviCRM Primary Address"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-address-city.php:192
+#: includes/acf/fields/cwps-acf-field-civicrm-address-state.php:192
+msgid "Sync with the CiviCRM Primary Address."
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-address-city.php:203
+#: includes/acf/fields/cwps-acf-field-civicrm-address-state.php:203
+msgid "CiviCRM Location Type"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-address-city.php:206
+#: includes/acf/fields/cwps-acf-field-civicrm-address-state.php:206
+msgid ""
+"Choose the Location Type of the CiviCRM Address that this ACF Field should "
+"sync with."
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-address-state.php:153
+#: includes/acf/shortcodes/cwps-shortcode-state.php:258
+msgid "CiviCRM State"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:177
+msgid "CiviCRM Address ID"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:181
+#: includes/acf/fields/cwps-acf-field-civicrm-im.php:181
+#: includes/acf/fields/cwps-acf-field-civicrm-phone.php:181
+msgid "Show"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:182
+#: includes/acf/fields/cwps-acf-field-civicrm-im.php:182
+#: includes/acf/fields/cwps-acf-field-civicrm-phone.php:182
+msgid "Hide"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:435
+msgid "Please select a Primary Address"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:449
+msgid "You can only have one Address per Location Type"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:566
+msgid "Add Address"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:593
+#: includes/acf/shortcodes/cwps-shortcode-address.php:222
+#: includes/acf/shortcodes/cwps-shortcode-city.php:223
+#: includes/acf/shortcodes/cwps-shortcode-im.php:224
+#: includes/acf/shortcodes/cwps-shortcode-phone.php:224
+#: includes/acf/shortcodes/cwps-shortcode-state.php:223
+msgid "Location Type"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:619
+#: includes/acf/fields/cwps-acf-field-civicrm-im.php:659
+#: includes/acf/fields/cwps-acf-field-civicrm-phone.php:685
+msgid "Is Primary"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:632
+#: includes/acf/fields/cwps-acf-field-civicrm-im.php:672
+#: includes/acf/fields/cwps-acf-field-civicrm-phone.php:698
+msgid "Primary"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:646
+msgid "Is Billing"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:659
+msgid "Billing"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:672
+msgid "Street Address"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:694
+msgid "Supplemental Address 1"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:716
+msgid "Supplemental Address 2"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:738
+msgid "Supplemental Address 3"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:760
+msgid "City"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:782
+msgid "Post Code"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:806
+msgid "Country"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:831
+msgid "State/Province"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:856
+msgid "Latitude"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:878
+msgid "Longitude"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:900
+msgid "Override automatic geocoding"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:913
+msgid "Override"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:927
+#: includes/acf/fields/cwps-acf-field-civicrm-im.php:687
+#: includes/acf/fields/cwps-acf-field-civicrm-phone.php:713
+msgid "CiviCRM ID"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-contact-id.php:141
+msgid "CiviCRM Contact ID"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-contact.php:153
+msgid "CiviCRM Contact Reference"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-im.php:152
+#: includes/acf/shortcodes/cwps-shortcode-im.php:268
+msgid "CiviCRM Instant Messenger"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-im.php:177
+msgid "CiviCRM Instant Messenger ID"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-im.php:434
+msgid "Please select a Primary Instant Messenger"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-im.php:448
+msgid "Please enter an Instant Messenger"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-im.php:565
+msgid "Add Instant Messenger"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-im.php:575
+msgid "Instant Messenger"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-im.php:607
+#: includes/acf/fields/cwps-acf-field-civicrm-phone.php:633
+msgid "Location"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-im.php:633
+msgid "Provider"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-multiset.php:152
+msgid "CiviCRM Multiple Record Set"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-multiset.php:495
+msgid "Add Record Set"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-phone.php:177
+msgid "CiviCRM Phone ID"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-phone.php:437
+msgid "Please select a Primary Number"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-phone.php:451
+msgid "Please enter a Phone Number"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-phone.php:568
+msgid "Add Phone Number"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-phone.php:578
+msgid "Phone Number"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-phone.php:601
+msgid "Extension"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-yes-no.php:158
+msgid "CiviCRM Yes / No"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-yes-no.php:170
+msgid "Unknown"
+msgstr ""
+
+#: includes/acf/functions/cwps-acf-functions-cai.php:129
+#: includes/acf/functions/cwps-acf-functions.php:127
+msgid "%1$s %2$s: %3$s"
+msgstr ""
+
+#: includes/acf/functions/cwps-acf-functions-cai.php:138
+#: includes/acf/functions/cwps-acf-functions-cai.php:226
+#: includes/acf/functions/cwps-acf-functions-cai.php:407
+#: includes/acf/functions/cwps-acf-functions.php:136
+#: includes/acf/functions/cwps-acf-functions.php:224
+#: includes/acf/functions/cwps-acf-functions.php:405
+msgid "%1$s Ext. %2$s"
+msgstr ""
+
+#: includes/acf/functions/cwps-acf-functions-cai.php:590
+#: includes/acf/functions/cwps-acf-functions.php:588
+msgid "%1$s (%2$s): %3$s"
+msgstr ""
+
+#: includes/acf/functions/cwps-acf-functions-cai.php:852
+#: includes/acf/functions/cwps-acf-functions-cai.php:1492
+#: includes/acf/functions/cwps-acf-functions-cai.php:1708
+#: includes/acf/functions/cwps-acf-functions.php:850
+#: includes/acf/functions/cwps-acf-functions.php:1490
+#: includes/acf/functions/cwps-acf-functions.php:1706
+msgid "%1$s: %2$s"
+msgstr ""
+
+#: includes/acf/functions/cwps-acf-functions-cai.php:1026
+#: includes/acf/functions/cwps-acf-functions.php:1024
+msgid "%s Address"
+msgstr ""
+
+#: includes/acf/shortcodes/cwps-shortcode-address.php:163
+msgid "Visit the website to see the Address."
+msgstr ""
+
+#: includes/acf/shortcodes/cwps-shortcode-address.php:178
+#: includes/acf/shortcodes/cwps-shortcode-city.php:179
+#: includes/acf/shortcodes/cwps-shortcode-im.php:180
+#: includes/acf/shortcodes/cwps-shortcode-phone.php:180
+#: includes/acf/shortcodes/cwps-shortcode-state.php:179
+msgid "Please include an ACF Field attribute."
+msgstr ""
+
+#: includes/acf/shortcodes/cwps-shortcode-address.php:214
+#: includes/acf/shortcodes/cwps-shortcode-city.php:215
+#: includes/acf/shortcodes/cwps-shortcode-im.php:216
+#: includes/acf/shortcodes/cwps-shortcode-phone.php:216
+#: includes/acf/shortcodes/cwps-shortcode-state.php:215
+msgid "ACF Field"
+msgstr ""
+
+#: includes/acf/shortcodes/cwps-shortcode-address.php:217
+#: includes/acf/shortcodes/cwps-shortcode-city.php:218
+#: includes/acf/shortcodes/cwps-shortcode-im.php:219
+#: includes/acf/shortcodes/cwps-shortcode-phone.php:219
+#: includes/acf/shortcodes/cwps-shortcode-state.php:218
+msgid "Please enter an ACF Field selector."
+msgstr ""
+
+#: includes/acf/shortcodes/cwps-shortcode-address.php:226
+#: includes/acf/shortcodes/cwps-shortcode-city.php:227
+#: includes/acf/shortcodes/cwps-shortcode-im.php:228
+#: includes/acf/shortcodes/cwps-shortcode-phone.php:228
+#: includes/acf/shortcodes/cwps-shortcode-state.php:227
+msgid "Please select a Location Type."
+msgstr ""
+
+#: includes/acf/shortcodes/cwps-shortcode-address.php:234
+#: includes/acf/shortcodes/cwps-shortcode-city.php:247
+#: includes/acf/shortcodes/cwps-shortcode-im.php:257
+#: includes/acf/shortcodes/cwps-shortcode-phone.php:257
+#: includes/acf/shortcodes/cwps-shortcode-state.php:247
+msgid "Post (optional)"
+msgstr ""
+
+#: includes/acf/shortcodes/cwps-shortcode-address.php:238
+#: includes/acf/shortcodes/cwps-shortcode-city.php:251
+#: includes/acf/shortcodes/cwps-shortcode-im.php:261
+#: includes/acf/shortcodes/cwps-shortcode-phone.php:261
+#: includes/acf/shortcodes/cwps-shortcode-state.php:251
+msgid "Please select a Post."
+msgstr ""
+
+#: includes/acf/shortcodes/cwps-shortcode-address.php:302
+#: includes/acf/shortcodes/cwps-shortcode-city.php:316
+#: includes/acf/shortcodes/cwps-shortcode-im.php:327
+#: includes/acf/shortcodes/cwps-shortcode-phone.php:327
+#: includes/acf/shortcodes/cwps-shortcode-state.php:316
+msgid "Select a Location Type"
+msgstr ""
+
+#: includes/acf/shortcodes/cwps-shortcode-city.php:163
+msgid "Visit the website to see the City."
+msgstr ""
+
+#: includes/acf/shortcodes/cwps-shortcode-city.php:232
+#: includes/acf/shortcodes/cwps-shortcode-im.php:242
+#: includes/acf/shortcodes/cwps-shortcode-phone.php:242
+#: includes/acf/shortcodes/cwps-shortcode-state.php:232
+msgid "Style"
+msgstr ""
+
+#: includes/acf/shortcodes/cwps-shortcode-city.php:236
+#: includes/acf/shortcodes/cwps-shortcode-im.php:246
+#: includes/acf/shortcodes/cwps-shortcode-phone.php:246
+#: includes/acf/shortcodes/cwps-shortcode-state.php:236
+msgid "List"
+msgstr ""
+
+#: includes/acf/shortcodes/cwps-shortcode-city.php:237
+#: includes/acf/shortcodes/cwps-shortcode-im.php:247
+#: includes/acf/shortcodes/cwps-shortcode-phone.php:247
+#: includes/acf/shortcodes/cwps-shortcode-state.php:237
+msgid "Comma-separated"
+msgstr ""
+
+#: includes/acf/shortcodes/cwps-shortcode-city.php:239
+#: includes/acf/shortcodes/cwps-shortcode-im.php:249
+#: includes/acf/shortcodes/cwps-shortcode-phone.php:249
+#: includes/acf/shortcodes/cwps-shortcode-state.php:239
+msgid "Please choose list or comma-separated output."
+msgstr ""
+
+#: includes/acf/shortcodes/cwps-shortcode-im.php:163
+msgid "Visit the website to see the Instant Messenger record."
+msgstr ""
+
+#: includes/acf/shortcodes/cwps-shortcode-im.php:233
+msgid "Instant Messenger Type (optional)"
+msgstr ""
+
+#: includes/acf/shortcodes/cwps-shortcode-im.php:237
+msgid "Please select an Instant Messenger Type."
+msgstr ""
+
+#: includes/acf/shortcodes/cwps-shortcode-im.php:354
+msgid "Select an Instant Messenger Type"
+msgstr ""
+
+#: includes/acf/shortcodes/cwps-shortcode-phone.php:163
+msgid "Visit the website to see the Phone record."
+msgstr ""
+
+#: includes/acf/shortcodes/cwps-shortcode-phone.php:233
+msgid "Phone Type (optional)"
+msgstr ""
+
+#: includes/acf/shortcodes/cwps-shortcode-phone.php:237
+msgid "Please select a Phone Type."
+msgstr ""
+
+#: includes/acf/shortcodes/cwps-shortcode-phone.php:354
+msgid "Select a Phone Type"
+msgstr ""
+
+#: includes/acf/shortcodes/cwps-shortcode-state.php:163
+msgid "Visit the website to see the State."
+msgstr ""
+
+#: includes/admin/cwps-admin-multisite.php:230
+#: includes/admin/cwps-admin.php:493 includes/admin/cwps-admin.php:514
+msgid "CiviCRM Profile Sync: Settings"
+msgstr ""
+
+#: includes/admin/cwps-admin.php:363
+msgid "CiviCRM Profile Sync needs to know which Website Type to sync."
+msgstr ""
+
+#: includes/admin/cwps-admin.php:372
+msgid "CiviCRM Profile Sync needs to know how to sync the Primary Email."
+msgstr ""
+
+#: includes/admin/cwps-admin.php:411
+msgid ""
+"CiviCRM Profile Sync needs your attention. Please visit the %1$sSettings Page"
+"%2$s for details."
+msgstr ""
+
+#: includes/admin/cwps-admin.php:494
+msgid "Profile Sync"
+msgstr ""
+
+#: includes/admin/cwps-admin.php:855
+msgid "User Profile Settings"
+msgstr ""
+
+#: includes/civicrm/cwps-civicrm-contact.php:515
 msgid "Could not update the name of the CiviCRM Contact."
 msgstr ""
 
-#: includes/civicrm/cwps-civicrm-contact.php:615
+#: includes/civicrm/cwps-civicrm-contact.php:607
 msgid "Could not update the nickname of the CiviCRM Contact."
 msgstr ""
 
-#: includes/civicrm/cwps-civicrm-email.php:455
+#: includes/civicrm/cwps-civicrm-contact.php:758
+msgid "CiviCRM Profile"
+msgstr ""
+
+#: includes/civicrm/cwps-civicrm-email.php:304
+msgid "CiviCRM Profile Sync is managing Contact Email &rarr; User Email sync."
+msgstr ""
+
+#: includes/civicrm/cwps-civicrm-email.php:519
 msgid "Could not update the email of the CiviCRM Contact."
 msgstr ""
 
-#: includes/civicrm/cwps-civicrm-website.php:265
+#: includes/civicrm/cwps-civicrm-website.php:254
 msgid "Could not create the Website for the CiviCRM Contact."
 msgstr ""
 
-#: includes/civicrm/cwps-civicrm-website.php:299
+#: includes/civicrm/cwps-civicrm-website.php:288
 msgid "Could not update the Website for the CiviCRM Contact."
 msgstr ""
 
-#: includes/civicrm/cwps-civicrm-website.php:322
+#: includes/civicrm/cwps-civicrm-website.php:311
 msgid "Could not delete the Website for the CiviCRM Contact."
-msgstr ""
-#. Plugin Name of the plugin/theme
-msgid "CiviCRM WordPress Profile Sync"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
@@ -194,7 +1225,9 @@ msgid "https://github.com/christianwach/civicrm-wp-profile-sync"
 msgstr ""
 
 #. Description of the plugin/theme
-msgid "Keeps a WordPress User profile in sync with CiviCRM Contact info."
+msgid ""
+"Keeps a WordPress User profile in sync with a CiviCRM Contact and integrates "
+"WordPress and CiviCRM Entities with data synced via Advanced Custom Fields."
 msgstr ""
 
 #. Author of the plugin/theme
