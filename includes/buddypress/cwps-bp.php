@@ -111,7 +111,7 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 		$this->register_mapper_hooks();
 
 		// Listen for special BuddyPress situation.
-		add_action( 'civicrm_wp_profile_sync_contact_name_should_be_synced', [ $this, 'name_update_allow' ], 1000 );
+		add_action( 'cwps/contact/name/should_be_synced', [ $this, 'name_update_allow' ], 1000 );
 
 	}
 
@@ -128,7 +128,7 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 		$this->unregister_mapper_hooks();
 
 		// Do not listen for special BuddyPress situation.
-		remove_action( 'civicrm_wp_profile_sync_contact_name_should_be_synced', [ $this, 'name_update_allow' ], 1000 );
+		remove_action( 'cwps/contact/name/should_be_synced', [ $this, 'name_update_allow' ], 1000 );
 
 	}
 
