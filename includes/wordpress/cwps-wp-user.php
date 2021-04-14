@@ -85,6 +85,10 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 	 */
 	public function register_hooks() {
 
+		// Do not sync when CiviCRM creates a User.
+		add_action( 'civicrm_pre_create_user', [ $this, 'unregister_mapper_hooks' ] );
+		add_action( 'civicrm_post_create_user', [ $this, 'register_mapper_hooks' ] );
+
 		// Always register Mapper callbacks.
 		$this->register_mapper_hooks();
 
