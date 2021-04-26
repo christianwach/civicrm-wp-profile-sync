@@ -116,9 +116,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			return;
 		}
 
-		// Add AJAX handler.
-		add_action( 'wp_ajax_sync_acf_and_civicrm', [ $this, 'sync_acf_and_civicrm' ] );
-
 		// Add menu item(s) to WordPress admin menu.
 		add_action( 'admin_menu', [ $this, 'admin_menu' ], 30 );
 
