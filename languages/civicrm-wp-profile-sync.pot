@@ -2,10 +2,10 @@
 # This file is distributed under the same license as the CiviCRM Profile Sync package.
 msgid ""
 msgstr ""
-"Project-Id-Version: CiviCRM Profile Sync 0.4\n"
+"Project-Id-Version: CiviCRM Profile Sync 0.4.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/civicrm-wp-"
 "profile-sync\n"
-"POT-Creation-Date: 2021-04-09 12:11:37+00:00\n"
+"POT-Creation-Date: 2021-05-13 08:54:36+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -331,13 +331,13 @@ msgstr ""
 msgid "Update"
 msgstr ""
 
-#. #-#-#-#-#  civicrm-wp-profile-sync.pot (CiviCRM Profile Sync 0.4)  #-#-#-#-#
+#. #-#-#-#-#  civicrm-wp-profile-sync.pot (CiviCRM Profile Sync 0.4.1)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 #: assets/templates/wordpress/pages/page-admin-acf-migrate.php:14
 #: assets/templates/wordpress/pages/page-admin-acf-sync.php:14
 #: assets/templates/wordpress/pages/page-admin-settings.php:4
 #: includes/acf/classes/cwps-acf-admin-migrate.php:204
-#: includes/acf/classes/cwps-acf-admin.php:158
+#: includes/acf/classes/cwps-acf-admin.php:155
 #: includes/admin/cwps-admin-multisite.php:231
 msgid "CiviCRM Profile Sync"
 msgstr ""
@@ -469,15 +469,15 @@ msgstr ""
 
 #: includes/acf/classes/cwps-acf-admin-migrate.php:205
 #: includes/acf/classes/cwps-acf-admin-migrate.php:397
-#: includes/acf/classes/cwps-acf-admin.php:159
-#: includes/acf/classes/cwps-acf-admin.php:533
+#: includes/acf/classes/cwps-acf-admin.php:156
+#: includes/acf/classes/cwps-acf-admin.php:530
 msgid "ACF Integration"
 msgstr ""
 
 #: includes/acf/classes/cwps-acf-admin-migrate.php:311
 #: includes/acf/classes/cwps-acf-admin-migrate.php:316
-#: includes/acf/classes/cwps-acf-admin.php:443
-#: includes/acf/classes/cwps-acf-admin.php:448
+#: includes/acf/classes/cwps-acf-admin.php:440
+#: includes/acf/classes/cwps-acf-admin.php:445
 msgid "You do not have permission to access this page."
 msgstr ""
 
@@ -513,78 +513,78 @@ msgstr ""
 msgid "You must supply an option to option_delete()"
 msgstr ""
 
-#: includes/acf/classes/cwps-acf-admin.php:324
-#: includes/acf/classes/cwps-acf-admin.php:348
+#: includes/acf/classes/cwps-acf-admin.php:321
+#: includes/acf/classes/cwps-acf-admin.php:345
 msgid "Posts to sync: {{total}}"
 msgstr ""
 
-#: includes/acf/classes/cwps-acf-admin.php:325
-#: includes/acf/classes/cwps-acf-admin.php:349
+#: includes/acf/classes/cwps-acf-admin.php:322
+#: includes/acf/classes/cwps-acf-admin.php:346
 msgid "Processing posts {{from}} to {{to}}"
 msgstr ""
 
-#: includes/acf/classes/cwps-acf-admin.php:326
-#: includes/acf/classes/cwps-acf-admin.php:350
+#: includes/acf/classes/cwps-acf-admin.php:323
+#: includes/acf/classes/cwps-acf-admin.php:347
 msgid "Processing posts {{from}} to {{to}} complete"
 msgstr ""
 
-#: includes/acf/classes/cwps-acf-admin.php:332
+#: includes/acf/classes/cwps-acf-admin.php:329
 msgid "Contacts to sync: {{total}}"
 msgstr ""
 
-#: includes/acf/classes/cwps-acf-admin.php:333
+#: includes/acf/classes/cwps-acf-admin.php:330
 msgid "Processing contacts {{from}} to {{to}}"
 msgstr ""
 
-#: includes/acf/classes/cwps-acf-admin.php:334
+#: includes/acf/classes/cwps-acf-admin.php:331
 msgid "Processing contacts {{from}} to {{to}} complete"
 msgstr ""
 
-#: includes/acf/classes/cwps-acf-admin.php:340
+#: includes/acf/classes/cwps-acf-admin.php:337
 msgid "Group members to sync: {{total}}"
 msgstr ""
 
-#: includes/acf/classes/cwps-acf-admin.php:341
+#: includes/acf/classes/cwps-acf-admin.php:338
 msgid "Processing group members {{from}} to {{to}}"
 msgstr ""
 
-#: includes/acf/classes/cwps-acf-admin.php:342
+#: includes/acf/classes/cwps-acf-admin.php:339
 msgid "Processing group members {{from}} to {{to}} complete"
 msgstr ""
 
-#: includes/acf/classes/cwps-acf-admin.php:356
+#: includes/acf/classes/cwps-acf-admin.php:353
 msgid "Activitys to sync: {{total}}"
 msgstr ""
 
-#: includes/acf/classes/cwps-acf-admin.php:357
+#: includes/acf/classes/cwps-acf-admin.php:354
 msgid "Processing activities {{from}} to {{to}}"
 msgstr ""
 
-#: includes/acf/classes/cwps-acf-admin.php:358
+#: includes/acf/classes/cwps-acf-admin.php:355
 msgid "Processing activities {{from}} to {{to}} complete"
 msgstr ""
 
-#: includes/acf/classes/cwps-acf-admin.php:364
+#: includes/acf/classes/cwps-acf-admin.php:361
 msgid "All done!"
 msgstr ""
 
-#: includes/acf/classes/cwps-acf-admin.php:581
+#: includes/acf/classes/cwps-acf-admin.php:578
 msgid "WordPress Posts &rarr; CiviCRM Contacts"
 msgstr ""
 
-#: includes/acf/classes/cwps-acf-admin.php:594
+#: includes/acf/classes/cwps-acf-admin.php:591
 msgid "CiviCRM Contacts &rarr; WordPress Posts"
 msgstr ""
 
-#: includes/acf/classes/cwps-acf-admin.php:607
+#: includes/acf/classes/cwps-acf-admin.php:604
 msgid "WordPress Posts &rarr; CiviCRM Activities"
 msgstr ""
 
-#: includes/acf/classes/cwps-acf-admin.php:620
+#: includes/acf/classes/cwps-acf-admin.php:617
 msgid "CiviCRM Activities &rarr; WordPress Posts"
 msgstr ""
 
-#: includes/acf/classes/cwps-acf-admin.php:633
+#: includes/acf/classes/cwps-acf-admin.php:630
 msgid "CiviCRM Groups &rarr; WordPress Terms"
 msgstr ""
 
