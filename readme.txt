@@ -78,6 +78,10 @@ I'll say it again: test early, test often and - above all - test on a developmen
 
 == Changelog ==
 
+= 0.4.1 =
+
+* Skips sync when CiviCRM creates a User.
+
 = 0.4 =
 
 * Introduces a Settings Page to set Website Type and Email sync options.
