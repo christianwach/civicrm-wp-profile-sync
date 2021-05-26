@@ -62,6 +62,8 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		'groups' => 10, // Number of Group Members per CiviCRM Group.
 		'activity_post_types' => 10, // Number of Activity Posts per WordPress Post Type.
 		'activity_types' => 10, // Number of Activities per CiviCRM Activity Type.
+		'participant_role_post_types' => 10, // Number of Participant Role Posts per WordPress Post Type.
+		'participant_roles' => 10, // Number of Participants per CiviCRM Participant Role.
 	];
 
 
@@ -128,6 +130,11 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		add_action( 'wp_ajax_sync_groups_to_terms', [ $this, 'stepped_sync_groups_to_terms' ] );
 		add_action( 'wp_ajax_sync_posts_to_activities', [ $this, 'stepped_sync_posts_to_activities' ] );
 		add_action( 'wp_ajax_sync_activities_to_posts', [ $this, 'stepped_sync_activities_to_posts' ] );
+		// Register CPT hooks prior to Participant Role hooks.
+		add_action( 'wp_ajax_sync_posts_to_participant_roles', [ $this, 'stepped_sync_posts_to_participants' ] );
+		add_action( 'wp_ajax_sync_participant_roles_to_posts', [ $this, 'stepped_sync_participants_to_posts' ] );
+		add_action( 'wp_ajax_sync_posts_to_participant_roles', [ $this, 'stepped_sync_posts_to_participant_roles' ] );
+		add_action( 'wp_ajax_sync_participant_roles_to_posts', [ $this, 'stepped_sync_participant_roles_to_posts' ] );
 
 	}
 
@@ -181,7 +188,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		add_filter( 'cwps/admin/settings/nav_tabs', [ $this, 'page_add_tab' ], 10, 2 );
 
 		// Try and update options.
-		$this->settings_update_router();
+		add_action( 'load-' . $this->sync_page, [ $this, 'settings_update_router' ], 50 );
 
 	}
 
@@ -298,6 +305,59 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			];
 		}
 
+		// Get all Post Types mapped to Participant Roles.
+		$mapped_participant_post_types = $this->acf_loader->post_type->get_mapped( 'participant_role' );
+
+		/**
+		 * Filter the mapped Participant Role Post Types.
+		 *
+		 * @since 0.5
+		 *
+		 * @param $mapped_participant_post_types The mapped WordPress Post Types.
+		 */
+		$mapped_participant_post_types = apply_filters(
+			'cwps/acf/admin/router/participant_role/post_types',
+			$mapped_participant_post_types
+		);
+
+		// Loop through them and get the data we want.
+		$participant_post_types = [];
+		foreach( $mapped_participant_post_types AS $participant_post_type ) {
+			$participant_post_types[$participant_post_type->name] = [
+				'label' => esc_html( $participant_post_type->label ),
+				'count' => $this->acf_loader->post_type->post_count( $participant_post_type->name ),
+			];
+		}
+
+		// Get all mapped Participant Roles.
+		$mapped_participant_roles = $this->acf_loader->civicrm->participant_role->get_mapped();
+
+		/**
+		 * Filter the mapped Participant Roles.
+		 *
+		 * @since 0.5
+		 *
+		 * @param $participant_roles The mapped CiviCRM Participant Roles.
+		 */
+		$mapped_participant_roles = apply_filters(
+			'cwps/acf/admin/router/participant_role/roles',
+			$mapped_participant_roles
+		);
+
+		// Loop through them and get the data we want.
+		$participant_roles = [];
+		foreach( $mapped_participant_roles AS $participant_role ) {
+			if ( $participant_role['value'] == 'cpt' ) {
+				$count = $this->acf_loader->civicrm->participant_role->participant_count();
+			} else {
+				$count = $this->acf_loader->civicrm->participant_role->participant_count( $participant_role['value'] );
+			}
+			$participant_roles[$participant_role['value']] = [
+				'label' => esc_html( $participant_role['label'] ),
+				'count' => $count,
+			];
+		}
+
 		// Init settings.
 		$settings = [
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
@@ -306,11 +366,15 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			'groups' => $groups,
 			'activity_post_types' => $activity_post_types,
 			'activity_types' => $activity_types,
+			'participant_post_types' => $participant_post_types,
+			'participant_roles' => $participant_roles,
 			'step_contact_post_types' => $this->step_count_get( 'contact_post_types' ),
 			'step_contact_types' => $this->step_count_get( 'contact_types' ),
 			'step_groups' => $this->step_count_get( 'groups' ),
 			'step_activity_post_types' => $this->step_count_get( 'activity_post_types' ),
 			'step_activity_types' => $this->step_count_get( 'activity_types' ),
+			'step_participant_role_post_types' => $this->step_count_get( 'participant_role_post_types' ),
+			'step_participant_roles' => $this->step_count_get( 'participant_roles' ),
 		];
 
 		// Init localisation.
@@ -350,10 +414,26 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Add Activity Types localisation.
 		$localisation['activity_types'] = [
-			'total' => __( 'Activitys to sync: {{total}}', 'civicrm-wp-profile-sync' ),
+			'total' => __( 'Activities to sync: {{total}}', 'civicrm-wp-profile-sync' ),
 			'current' => __( 'Processing activities {{from}} to {{to}}', 'civicrm-wp-profile-sync' ),
 			'complete' => __( 'Processing activities {{from}} to {{to}} complete', 'civicrm-wp-profile-sync' ),
 			'count' => count( $activity_types ),
+		];
+
+		// Add Participant Role Post Types localisation.
+		$localisation['participant_post_types'] = [
+			'total' => __( 'Posts to sync: {{total}}', 'civicrm-wp-profile-sync' ),
+			'current' => __( 'Processing posts {{from}} to {{to}}', 'civicrm-wp-profile-sync' ),
+			'complete' => __( 'Processing posts {{from}} to {{to}} complete', 'civicrm-wp-profile-sync' ),
+			'count' => count( $participant_post_types ),
+		];
+
+		// Add Participant Roles localisation.
+		$localisation['participant_roles'] = [
+			'total' => __( 'Participants to sync: {{total}}', 'civicrm-wp-profile-sync' ),
+			'current' => __( 'Processing participants {{from}} to {{to}}', 'civicrm-wp-profile-sync' ),
+			'complete' => __( 'Processing participants {{from}} to {{to}} complete', 'civicrm-wp-profile-sync' ),
+			'count' => count( $participant_roles ),
 		];
 
 		// Add common localisation.
@@ -624,6 +704,32 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		// Closed by default.
 		add_filter( "postbox_classes_{$screen_id}_cwps_acf_activity_post", [ $this, 'meta_box_closed' ] );
 
+		// Create WordPress Posts to CiviCRM Participant Roles metabox.
+		add_meta_box(
+			'cwps_acf_post_participant_role',
+			__( 'WordPress Posts &rarr; CiviCRM Participants', 'civicrm-wp-profile-sync' ),
+			[ $this, 'meta_box_post_participant_role_render' ], // Callback.
+			$screen_id, // Screen ID.
+			'side', // Column: options are 'normal' and 'side'.
+			'core' // Vertical placement: options are 'core', 'high', 'low'.
+		);
+
+		// Closed by default.
+		add_filter( "postbox_classes_{$screen_id}_cwps_acf_post_participant_role", [ $this, 'meta_box_closed' ] );
+
+		// Create CiviCRM Participants to WordPress Posts metabox.
+		add_meta_box(
+			'cwps_acf_participant_role_post',
+			__( 'CiviCRM Participants &rarr; WordPress Posts', 'civicrm-wp-profile-sync' ),
+			[ $this, 'meta_box_participant_role_post_render' ], // Callback.
+			$screen_id, // Screen ID.
+			'normal', // Column: options are 'normal' and 'side'.
+			'core' // Vertical placement: options are 'core', 'high', 'low'.
+		);
+
+		// Closed by default.
+		add_filter( "postbox_classes_{$screen_id}_cwps_acf_participant_role_post", [ $this, 'meta_box_closed' ] );
+
 		// Create CiviCRM Groups to WordPress Terms metabox.
 		add_meta_box(
 			'cwps_acf_group_term',
@@ -757,6 +863,70 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 
 	/**
+	 * Render WordPress Posts to CiviCRM Participants meta box.
+	 *
+	 * @since 0.4
+	 */
+	public function meta_box_post_participant_role_render() {
+
+		// Get all Post Types mapped to Participant Roles.
+		$mapped_participant_role_post_types = $this->acf_loader->post_type->get_mapped( 'participant_role' );
+
+		// Loop through them and get the data we want.
+		$post_types = [];
+		foreach( $mapped_participant_role_post_types AS $participant_role_post_type ) {
+			$post_types[$participant_role_post_type->name] = $participant_role_post_type->label;
+		}
+
+		/**
+		 * Filter the mapped Participant Role Post Types.
+		 *
+		 * @since 0.5
+		 *
+		 * @param $post_types The mapped WordPress Post Types.
+		 */
+		$participant_role_post_types = apply_filters( 'cwps/acf/admin/participant_role/post_types', $post_types );
+
+		// Include template file.
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/metaboxes/metabox-acf-posts-participants.php';
+
+	}
+
+
+
+	/**
+	 * Render CiviCRM Participant Roles to WordPress Posts meta box.
+	 *
+	 * @since 0.4
+	 */
+	public function meta_box_participant_role_post_render() {
+
+		// Get all mapped Participant Roles.
+		$mapped_participant_roles = $this->acf_loader->civicrm->participant_role->get_mapped();
+
+		// Loop through them and get the data we want.
+		$participant_roles = [];
+		foreach( $mapped_participant_roles AS $participant_role ) {
+			$participant_roles[$participant_role['value']] = $participant_role['label'];
+		}
+
+		/**
+		 * Filter the mapped Participant Roles.
+		 *
+		 * @since 0.5
+		 *
+		 * @param $participant_roles The mapped CiviCRM Participant Roles.
+		 */
+		$participant_roles = apply_filters( 'cwps/acf/admin/participant_role/roles', $participant_roles );
+
+		// Include template file.
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/metaboxes/metabox-acf-participants-posts.php';
+
+	}
+
+
+
+	/**
 	 * Render CiviCRM Groups to WordPress Terms meta box.
 	 *
 	 * @since 0.4
@@ -833,6 +1003,48 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		$activity_types = [];
 		foreach( $mapped_activity_types AS $activity_type ) {
 			$activity_types[$activity_type['id']] = 'cwps_acf_activity_to_post_' . $activity_type['id'] . '_stop';
+		}
+
+		// Get all Post Types mapped to Participant Roles.
+		$mapped_participant_role_post_types = $this->acf_loader->post_type->get_mapped( 'participant_role' );
+
+		/**
+		 * Filter the mapped Participant Role Post Types.
+		 *
+		 * @since 0.5
+		 *
+		 * @param $post_types The mapped WordPress Post Types.
+		 */
+		$mapped_participant_role_post_types = apply_filters(
+			'cwps/acf/admin/router/participant_role/post_types',
+			$mapped_participant_role_post_types
+		);
+
+		// Loop through them and get the data we want.
+		$participant_role_post_types = [];
+		foreach( $mapped_participant_role_post_types AS $participant_role_post_type ) {
+			$participant_role_post_types[$participant_role_post_type->name] = 'cwps_acf_post_to_participant_role_' . $participant_role_post_type->name . '_stop';
+		}
+
+		// Get all mapped Participant Roles.
+		$mapped_participant_roles = $this->acf_loader->civicrm->participant_role->get_mapped();
+
+		/**
+		 * Filter the mapped Participant Roles.
+		 *
+		 * @since 0.5
+		 *
+		 * @param $participant_roles The mapped CiviCRM Participant Roles.
+		 */
+		$mapped_participant_roles = apply_filters(
+			'cwps/acf/admin/router/participant_role/roles',
+			$mapped_participant_roles
+		);
+
+		// Loop through them and get the data we want.
+		$participant_roles = [];
+		foreach( $mapped_participant_roles AS $participant_role ) {
+			$participant_roles[$participant_role['value']] = 'cwps_acf_participant_role_to_post_' . $participant_role['value'] . '_stop';
 		}
 
 		// Init stop, continue and sync flags.
@@ -972,6 +1184,58 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			}
 		}
 
+		// Find out if a Participant Role Post Type button has been pressed.
+		foreach( $participant_role_post_types AS $participant_role_post_type => $stop_code ) {
+
+			// Define replacements.
+			$replacements = [ 'cwps_acf_post_to_participant_role_', '_stop' ];
+
+			// Was a "Stop Sync" button pressed?
+			if ( isset( $_POST[$stop_code] ) ) {
+				$stop = $stop_code;
+				$sync_type = 'participant_role_post_type';
+				$entity_id = str_replace( $replacements, '', $stop_code );
+				break;
+			}
+
+			// Was a "Sync Now" or "Continue Sync" button pressed?
+			$button = str_replace( '_stop', '', $stop_code );
+			if ( isset( $_POST[$button] ) ) {
+				$continue = $button;
+				$sync_type = 'participant_role_post_type';
+				$entity_id = str_replace( $replacements, '', $stop_code );
+				break;
+			}
+
+		}
+
+		// Find out if a Participant Role button has been pressed.
+		if ( $stop === false AND $continue === false ) {
+			foreach( $participant_roles AS $participant_role_id => $stop_code ) {
+
+				// Define replacements.
+				$replacements = [ 'cwps_acf_participant_role_to_post_', '_stop' ];
+
+				// Was a "Stop Sync" button pressed?
+				if ( isset( $_POST[$stop_code] ) ) {
+					$stop = $stop_code;
+					$sync_type = 'participant_role';
+					$entity_id = str_replace( $replacements, '', $stop_code );
+					break;
+				}
+
+				// Was a "Sync Now" or "Continue Sync" button pressed?
+				$button = str_replace( '_stop', '', $stop_code );
+				if ( isset( $_POST[$button] ) ) {
+					$continue = $button;
+					$sync_type = 'participant_role';
+					$entity_id = str_replace( $replacements, '', $stop_code );
+					break;
+				}
+
+			}
+		}
+
 	 	// Bail if no button was pressed.
 		if ( empty( $stop ) AND empty( $continue ) ) {
 			return;
@@ -990,6 +1254,8 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 				'group' => 'group_to_term_',
 				'activity_post_type' => 'post_to_activity_',
 				'activity_type' => 'activity_to_post_',
+				'participant_role_post_type' => 'post_to_participant_role_',
+				'participant_role' => 'participant_role_to_post_',
 			];
 
 			// Build key.
@@ -1031,6 +1297,24 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			$this->stepped_sync_activities_to_posts( $entity_id );
 		}
 
+		// Was a Participant Role Post Type "Sync Now" button pressed?
+		if ( $sync_type == 'participant_role_post_type' ) {
+			if ( $entity_id == 'participant' ) {
+				$this->stepped_sync_posts_to_participants( $entity_id );
+			} else {
+				$this->stepped_sync_posts_to_participant_roles( $entity_id );
+			}
+		}
+
+		// Was a Participant Role "Sync Now" button pressed?
+		if ( $sync_type == 'participant_role' ) {
+			if ( $entity_id == 'cpt' ) {
+				$this->stepped_sync_participants_to_posts( $entity_id );
+			} else {
+				$this->stepped_sync_participant_roles_to_posts( $entity_id );
+			}
+		}
+
 	}
 
 
@@ -1067,7 +1351,9 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			$data['finished'] = 'true';
 
 			// Send data to browser.
-			wp_send_json( $data );
+			if ( wp_doing_ajax() ) {
+				wp_send_json( $data );
+			}
 			return;
 
 		}
@@ -1088,7 +1374,9 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			$data['finished'] = 'true';
 
 			// Send data to browser.
-			wp_send_json( $data );
+			if ( wp_doing_ajax() ) {
+				wp_send_json( $data );
+			}
 			return;
 
 		}
@@ -1189,7 +1477,9 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// Send data to browser.
-		wp_send_json( $data );
+		if ( wp_doing_ajax() ) {
+			wp_send_json( $data );
+		}
 
 	}
 
@@ -1230,7 +1520,9 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			$data['finished'] = 'true';
 
 			// Send data to browser.
-			wp_send_json( $data );
+			if ( wp_doing_ajax() ) {
+				wp_send_json( $data );
+			}
 			return;
 
 		}
@@ -1328,7 +1620,9 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// Send data to browser.
-		wp_send_json( $data );
+		if ( wp_doing_ajax() ) {
+			wp_send_json( $data );
+		}
 
 	}
 
@@ -1366,7 +1660,9 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			$data['finished'] = 'true';
 
 			// Send data to browser.
-			wp_send_json( $data );
+			if ( wp_doing_ajax() ) {
+				wp_send_json( $data );
+			}
 			return;
 
 		}
@@ -1387,7 +1683,9 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			$data['finished'] = 'true';
 
 			// Send data to browser.
-			wp_send_json( $data );
+			if ( wp_doing_ajax() ) {
+				wp_send_json( $data );
+			}
 			return;
 
 		}
@@ -1487,7 +1785,9 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// Send data to browser.
-		wp_send_json( $data );
+		if ( wp_doing_ajax() ) {
+			wp_send_json( $data );
+		}
 
 	}
 
@@ -1528,7 +1828,9 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			$data['finished'] = 'true';
 
 			// Send data to browser.
-			wp_send_json( $data );
+			if ( wp_doing_ajax() ) {
+				wp_send_json( $data );
+			}
 			return;
 
 		}
@@ -1625,9 +1927,621 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// Send data to browser.
-		wp_send_json( $data );
+		if ( wp_doing_ajax() ) {
+			wp_send_json( $data );
+		}
 
 	}
+
+
+
+	/**
+	 * Stepped synchronisation of WordPress Posts to CiviCRM Participants.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $entity The identifier for the entity - here it's Post ID.
+	 */
+	public function stepped_sync_posts_to_participant_roles( $entity = null ) {
+
+		// Get all mapped Post Types.
+		$mapped_participant_post_types = $this->acf_loader->post_type->get_mapped( 'participant_role' );
+
+		// Loop through them and get the data we want.
+		$participant_post_types = [];
+		foreach( $mapped_participant_post_types AS $participant_post_type ) {
+			$participant_post_types[] = $participant_post_type->name;
+		}
+
+		// Sanitise input.
+		if ( ! wp_doing_ajax() ) {
+			$participant_post_type = empty( $entity ) ? '' : $entity;
+		} else {
+			$participant_post_type = isset( $_POST['entity_id'] ) ? trim( $_POST['entity_id'] ) : '';
+		}
+
+		// If "participant", then bail.
+		if ( $participant_post_type == 'participant' ) {
+			return;
+		}
+
+		// Sanity check input.
+		if ( ! in_array( $participant_post_type, $participant_post_types ) ) {
+
+			// Set finished flag.
+			$data['finished'] = 'true';
+
+			// Send data to browser.
+			if ( wp_doing_ajax() ) {
+				wp_send_json( $data );
+			}
+			return;
+
+		}
+
+		// Build key.
+		$key = 'post_to_participant_role_' . $participant_post_type;
+
+		// If this is an AJAX request, check security.
+		$result = true;
+		if ( wp_doing_ajax() ) {
+			$result = check_ajax_referer( 'cwps_acf_' . $key, false, false );
+		}
+
+		// If we get an error.
+		if ( $participant_post_type === '' OR $result === false ) {
+
+			// Set finished flag.
+			$data['finished'] = 'true';
+
+			// Send data to browser.
+			if ( wp_doing_ajax() ) {
+				wp_send_json( $data );
+			}
+			return;
+
+		}
+
+		// Get the current offset.
+		$offset = $this->stepped_offset_init( $key );
+
+		// Construct args.
+		$args = [
+			'post_type' => $participant_post_type,
+			'no_found_rows' => true,
+			'numberposts' => $this->step_count_get( 'participant_role_post_types' ),
+			'offset' => $offset,
+		];
+
+		// Get all posts.
+		$posts = get_posts( $args );
+
+		// If we get results.
+		if ( count( $posts ) > 0 ) {
+
+			// Set finished flag.
+			$data['finished'] = 'false';
+
+			// Are there less items than the step count?
+			if ( count( $posts ) < $this->step_count_get( 'participant_role_post_types' ) ) {
+				$diff = count( $posts );
+			} else {
+				$diff = $this->step_count_get( 'participant_role_post_types' );
+			}
+
+			// Set from and to flags.
+			$data['from'] = (int) $offset;
+			$data['to'] = $data['from'] + $diff;
+
+			// Remove CiviCRM callbacks to prevent recursion.
+			$this->acf_loader->mapper->hooks_civicrm_remove();
+
+			// Sync each Post in turn.
+			foreach( $posts AS $post ) {
+
+				// Let's make an array of params.
+				$args = [
+					'post_id' => $post->ID,
+					'post' => $post,
+					'update' => true,
+				];
+
+				/**
+				 * Broadcast that the Post must be synced.
+				 *
+				 * Used internally to:
+				 *
+				 * - Update a CiviCRM Participant
+				 * - Update the CiviCRM Custom Fields
+				 *
+				 * @since 0.5
+				 *
+				 * @param array $args The array of WordPress params.
+				 */
+				do_action( 'cwps/acf/admin/post-to-participant-role/sync', $args );
+
+				// Let's make an array of params.
+				$args = [
+					'post_id' => $post->ID,
+				];
+
+				/**
+				 * Broadcast that the ACF Fields must be synced.
+				 *
+				 * Used internally to:
+				 *
+				 * - Update the CiviCRM Custom Fields
+				 *
+				 * @since 0.5
+				 *
+				 * @param array $args The array of CiviCRM params.
+				 */
+				do_action( 'cwps/acf/admin/post-to-participant-role/acf_fields/sync', $args );
+
+			}
+
+			// Reinstate CiviCRM callbacks.
+			$this->acf_loader->mapper->hooks_civicrm_add();
+
+			// Increment offset option.
+			$this->stepped_offset_update( $key, $data['to'] );
+
+		} else {
+
+			// Set finished flag.
+			$data['finished'] = 'true';
+
+			// Delete the option to start from the beginning.
+			$this->stepped_offset_delete( $key );
+
+		}
+
+		// Send data to browser.
+		if ( wp_doing_ajax() ) {
+			wp_send_json( $data );
+		}
+
+	}
+
+
+
+	/**
+	 * Stepped synchronisation of CiviCRM Participants to WordPress Posts.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $entity The identifier for the Entity - here it's Participant ID.
+	 */
+	public function stepped_sync_participant_roles_to_posts( $entity = null ) {
+
+		// Init AJAX return.
+		$data = [];
+
+		// Sanitise input.
+		if ( ! wp_doing_ajax() ) {
+			$participant_role_id = is_numeric( $entity ) ? $entity : 0;
+		} else {
+			$participant_role_id = isset( $_POST['entity_id'] ) ? trim( $_POST['entity_id'] ) : 0;
+		}
+
+		// If "cpt", then bail.
+		if ( $participant_role_id == 'cpt' ) {
+			return;
+		}
+
+		// Build key.
+		$key = 'participant_role_to_post_' . $participant_role_id;
+
+		// If this is an AJAX request, check security.
+		$result = true;
+		if ( wp_doing_ajax() ) {
+			$result = check_ajax_referer( 'cwps_acf_' . $key, false, false );
+		}
+
+		// If we get an error.
+		if ( $participant_role_id === 0 OR $result === false ) {
+
+			// Set finished flag.
+			$data['finished'] = 'true';
+
+			// Send data to browser.
+			if ( wp_doing_ajax() ) {
+				wp_send_json( $data );
+			}
+			return;
+
+		}
+
+		// Get the current offset.
+		$offset = $this->stepped_offset_init( $key );
+
+		// Init query result.
+		$result = [];
+
+		// Init CiviCRM.
+		if ( $this->acf_loader->civicrm->is_initialised() ) {
+
+			// Get the Participant data.
+			$result = $this->acf_loader->civicrm->participant->participants_by_role_chunked_data_get(
+				$participant_role_id,
+				$offset,
+				$this->step_count_get( 'participant_roles' )
+			);
+
+		} else {
+
+			// Do not allow progress.
+			$result['is_error'] = 1;
+
+		}
+
+		// Did we get an error?
+		$error = false;
+		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+			$error = true;
+		}
+
+		// Finish sync on failure or empty result.
+		if ( $error OR empty( $result['values'] ) ) {
+
+			// Set finished flag.
+			$data['finished'] = 'true';
+
+			// Delete the option to start from the beginning.
+			$this->stepped_offset_delete( $key );
+
+		} else {
+
+			// Set finished flag.
+			$data['finished'] = 'false';
+
+			// Are there fewer items than the step count?
+			if ( count( $result['values'] ) < $this->step_count_get( 'participant_roles' ) ) {
+				$diff = count( $result['values'] );
+			} else {
+				$diff = $this->step_count_get( 'participant_roles' );
+			}
+
+			// Set "from" and "to" flags.
+			$data['from'] = (int) $offset;
+			$data['to'] = $data['from'] + $diff;
+
+			// Remove WordPress callbacks to prevent recursion.
+			$this->acf_loader->mapper->hooks_wordpress_remove();
+
+			// Trigger sync for each Participant in turn.
+			foreach( $result['values'] AS $participant ) {
+
+				// Let's make an array of params.
+				$args = [
+					'op' => 'sync',
+					'objectName' => 'Participant',
+					'objectId' => $participant['id'],
+					'objectRef' => (object) $participant,
+				];
+
+				/**
+				 * Broadcast that the Participant must be synced.
+				 *
+				 * Used internally to:
+				 *
+				 * - Update a WordPress Post
+				 *
+				 * @since 0.5
+				 *
+				 * @param array $args The array of CiviCRM params.
+				 */
+				do_action( 'cwps/acf/admin/participant-role-to-post/sync', $args );
+
+			}
+
+			// Reinstate WordPress callbacks.
+			$this->acf_loader->mapper->hooks_wordpress_add();
+
+			// Increment offset option.
+			$this->stepped_offset_update( $key, $data['to'] );
+
+		}
+
+		// Send data to browser.
+		if ( wp_doing_ajax() ) {
+			wp_send_json( $data );
+		}
+
+	}
+
+
+	/**
+	 * Stepped synchronisation of WordPress Posts to CiviCRM Participants.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $entity The identifier for the entity - here it's Post Type.
+	 */
+	public function stepped_sync_posts_to_participants( $entity = null ) {
+
+		// Sanitise input.
+		if ( ! wp_doing_ajax() ) {
+			$entity_id = empty( $entity ) ? '' : $entity;
+		} else {
+			$entity_id = isset( $_POST['entity_id'] ) ? trim( $_POST['entity_id'] ) : '';
+		}
+
+		// If not "participant", then bail.
+		if ( $entity_id != 'participant' ) {
+			return;
+		}
+
+		// Build key.
+		$key = 'post_to_participant_role_' . $entity_id;
+
+		// If this is an AJAX request, check security.
+		$result = true;
+		if ( wp_doing_ajax() ) {
+			$result = check_ajax_referer( 'cwps_acf_' . $key, false, false );
+		}
+
+		// If we get an error.
+		if ( $result === false ) {
+
+			// Set finished flag.
+			$data['finished'] = 'true';
+
+			// Send data to browser.
+			if ( wp_doing_ajax() ) {
+				wp_send_json( $data );
+			}
+			return;
+
+		}
+
+		// Get the current offset.
+		$offset = $this->stepped_offset_init( $key );
+
+		// Construct args.
+		$args = [
+			'post_type' => $entity_id,
+			'no_found_rows' => true,
+			'numberposts' => $this->step_count_get( 'participant_role_post_types' ),
+			'offset' => $offset,
+		];
+
+		// Get all posts.
+		$posts = get_posts( $args );
+
+		// If we get results.
+		if ( count( $posts ) > 0 ) {
+
+			// Set finished flag.
+			$data['finished'] = 'false';
+
+			// Are there less items than the step count?
+			if ( count( $posts ) < $this->step_count_get( 'participant_role_post_types' ) ) {
+				$diff = count( $posts );
+			} else {
+				$diff = $this->step_count_get( 'participant_role_post_types' );
+			}
+
+			// Set from and to flags.
+			$data['from'] = (int) $offset;
+			$data['to'] = $data['from'] + $diff;
+
+			// Remove CiviCRM callbacks to prevent recursion.
+			$this->acf_loader->mapper->hooks_civicrm_remove();
+
+			// Sync each Post in turn.
+			foreach( $posts AS $post ) {
+
+				// Let's make an array of params.
+				$args = [
+					'post_id' => $post->ID,
+					'post' => $post,
+					'update' => true,
+				];
+
+				/**
+				 * Broadcast that the Post must be synced.
+				 *
+				 * Used internally to:
+				 *
+				 * - Update a CiviCRM Participant
+				 * - Update the CiviCRM Custom Fields
+				 *
+				 * @since 0.5
+				 *
+				 * @param array $args The array of WordPress params.
+				 */
+				do_action( 'cwps/acf/admin/post-to-participant/sync', $args );
+
+				// Let's make an array of params.
+				$args = [
+					'post_id' => $post->ID,
+				];
+
+				/**
+				 * Broadcast that the ACF Fields must be synced.
+				 *
+				 * Used internally to:
+				 *
+				 * - Update the CiviCRM Custom Fields
+				 *
+				 * @since 0.5
+				 *
+				 * @param array $args The array of CiviCRM params.
+				 */
+				do_action( 'cwps/acf/admin/post-to-participant/acf_fields/sync', $args );
+
+			}
+
+			// Reinstate CiviCRM callbacks.
+			$this->acf_loader->mapper->hooks_civicrm_add();
+
+			// Increment offset option.
+			$this->stepped_offset_update( $key, $data['to'] );
+
+		} else {
+
+			// Set finished flag.
+			$data['finished'] = 'true';
+
+			// Delete the option to start from the beginning.
+			$this->stepped_offset_delete( $key );
+
+		}
+
+		// Send data to browser.
+		if ( wp_doing_ajax() ) {
+			wp_send_json( $data );
+		}
+
+	}
+
+
+
+	/**
+	 * Stepped synchronisation of CiviCRM Participants to WordPress Posts.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $entity The identifier for the Entity - here it's 'cpt'.
+	 */
+	public function stepped_sync_participants_to_posts( $entity = null ) {
+
+		// Init AJAX return.
+		$data = [];
+
+		// Sanitise input.
+		if ( ! wp_doing_ajax() ) {
+			$entity_id = $entity == 'cpt' ? $entity : 0;
+		} else {
+			$entity_id = isset( $_POST['entity_id'] ) ? trim( $_POST['entity_id'] ) : 0;
+		}
+
+		// If not "cpt", then bail.
+		if ( $entity_id != 'cpt' ) {
+			return;
+		}
+
+		// Build key.
+		$key = 'participant_role_to_post_' . $entity_id;
+
+		// If this is an AJAX request, check security.
+		$result = true;
+		if ( wp_doing_ajax() ) {
+			$result = check_ajax_referer( 'cwps_acf_' . $key, false, false );
+		}
+
+		// If we get an error.
+		if ( $entity_id === 0 OR $result === false ) {
+
+			// Set finished flag.
+			$data['finished'] = 'true';
+
+			// Send data to browser.
+			if ( wp_doing_ajax() ) {
+				wp_send_json( $data );
+			}
+			return;
+
+		}
+
+		// Get the current offset.
+		$offset = $this->stepped_offset_init( $key );
+
+		// Init query result.
+		$result = [];
+
+		// Init CiviCRM.
+		if ( $this->acf_loader->civicrm->is_initialised() ) {
+
+			// Get the Participant data.
+			$result = $this->acf_loader->civicrm->participant->participants_chunked_data_get(
+				$offset,
+				$this->step_count_get( 'participant_roles' )
+			);
+
+		} else {
+
+			// Do not allow progress.
+			$result['is_error'] = 1;
+
+		}
+
+		// Did we get an error?
+		$error = false;
+		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+			$error = true;
+		}
+
+		// Finish sync on failure or empty result.
+		if ( $error OR empty( $result['values'] ) ) {
+
+			// Set finished flag.
+			$data['finished'] = 'true';
+
+			// Delete the option to start from the beginning.
+			$this->stepped_offset_delete( $key );
+
+		} else {
+
+			// Set finished flag.
+			$data['finished'] = 'false';
+
+			// Are there fewer items than the step count?
+			if ( count( $result['values'] ) < $this->step_count_get( 'participant_roles' ) ) {
+				$diff = count( $result['values'] );
+			} else {
+				$diff = $this->step_count_get( 'participant_roles' );
+			}
+
+			// Set "from" and "to" flags.
+			$data['from'] = (int) $offset;
+			$data['to'] = $data['from'] + $diff;
+
+			// Remove WordPress callbacks to prevent recursion.
+			$this->acf_loader->mapper->hooks_wordpress_remove();
+
+			// Trigger sync for each Participant in turn.
+			foreach( $result['values'] AS $participant ) {
+
+				// Let's make an array of params.
+				$args = [
+					'op' => 'sync',
+					'objectName' => 'Participant',
+					'objectId' => $participant['id'],
+					'objectRef' => (object) $participant,
+				];
+
+				/**
+				 * Broadcast that the Participant must be synced.
+				 *
+				 * Used internally to:
+				 *
+				 * - Update a WordPress Post
+				 *
+				 * @since 0.5
+				 *
+				 * @param array $args The array of CiviCRM params.
+				 */
+				do_action( 'cwps/acf/admin/participant-to-post/sync', $args );
+
+			}
+
+			// Reinstate WordPress callbacks.
+			$this->acf_loader->mapper->hooks_wordpress_add();
+
+			// Increment offset option.
+			$this->stepped_offset_update( $key, $data['to'] );
+
+		}
+
+		// Send data to browser.
+		if ( wp_doing_ajax() ) {
+			wp_send_json( $data );
+		}
+
+	}
+
 
 
 
@@ -1666,7 +2580,9 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			$data['finished'] = 'true';
 
 			// Send data to browser.
-			wp_send_json( $data );
+			if ( wp_doing_ajax() ) {
+				wp_send_json( $data );
+			}
 			return;
 
 		}
@@ -1758,7 +2674,9 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// Send data to browser.
-		wp_send_json( $data );
+		if ( wp_doing_ajax() ) {
+			wp_send_json( $data );
+		}
 
 	}
 

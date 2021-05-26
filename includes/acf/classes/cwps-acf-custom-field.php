@@ -140,155 +140,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		// Intercept Post synced from Activity events.
 		//add_action( 'cwps/acf/post/activity/sync', [ $this, 'activity_sync_to_post' ], 10 );
 
+		// Intercept Post synced from Participant events.
+		//add_action( 'cwps/acf/post/participant/sync', [ $this, 'participant_sync_to_post' ], 10 );
+
 		// Intercept CiviCRM Add/Edit Custom Field postSave hook.
 		//add_action( 'civicrm_postSave_civicrm_custom_field', [ $this, 'custom_field_edited' ], 10 );
 
 		// Intercept CiviCRM Add/Edit Option Value postSave hook.
 		//add_action( 'civicrm_postSave_civicrm_option_value', [ $this, 'option_value_edited' ], 10 );
-
-	}
-
-
-
-	// -------------------------------------------------------------------------
-
-
-
-	/**
-	 * Intercept when a Post has been updated from an Activity via the Mapper.
-	 *
-	 * Sync any associated ACF Fields mapped to Custom Fields.
-	 *
-	 * @since 0.4
-	 *
-	 * @param array $args The array of CiviCRM Activity and WordPress Post params.
-	 */
-	public function activity_sync_to_post( $args ) {
-
-		// Get the Custom Fields for this CiviCRM Activity.
-		$custom_fields_for_activity = $this->get_for_activity( $args['objectRef'] );
-
-		// Bail if we don't have any Custom Fields for this Activity.
-		if ( empty( $custom_fields_for_activity ) ) {
-			return;
-		}
-
-		// Get the Custom Field IDs for this Activity.
-		$custom_field_ids = $this->ids_get_by_activity_id( $args['objectId'], $args['post_type'] );
-
-		// Filter the Custom Fields array.
-		$filtered = [];
-		foreach( $custom_field_ids AS $selector => $custom_field_id ) {
-			foreach( $custom_fields_for_activity AS $key => $custom_field_data ) {
-				if ( $custom_field_data['id'] == $custom_field_id ) {
-					$filtered[$selector] = $custom_field_data;
-					break;
-				}
-			}
-		}
-
-		// Extract the Custom Field mappings.
-		$custom_field_mappings = wp_list_pluck( $filtered, 'id' );
-
-		// Get the Custom Field values for this Activity.
-		$custom_field_values = $this->values_get_by_activity_id( $args['objectId'], $custom_field_mappings );
-
-		// Build a final data array.
-		$final = [];
-		foreach( $filtered AS $key => $custom_field ) {
-			$custom_field['value'] = $custom_field_values[$custom_field['id']];
-			$custom_field['type'] = $custom_field['data_type'];
-			$final[$key] = $custom_field;
-		}
-
-		// Let's populate each ACF Field in turn.
-		foreach( $final AS $selector => $field ) {
-
-			// Modify values for ACF prior to update.
-			$value = $this->value_get_for_acf(
-				$field['value'],
-				$field,
-				$selector,
-				$args['post_id']
-			);
-
-			// Update the ACF Field.
-			$this->acf_loader->acf->field->value_update( $selector, $value, $args['post_id'] );
-
-		}
-
-	}
-
-
-
-	/**
-	 * Get the values for a given CiviCRM Activity ID and set of Custom Fields.
-	 *
-	 * @since 0.4
-	 *
-	 * @param integer $activity_id The numeric ID of the CiviCRM Activity to query.
-	 * @param array $custom_field_ids The Custom Field IDs to query.
-	 * @return array $activity_data An array of Activity data.
-	 */
-	public function values_get_by_activity_id( $activity_id, $custom_field_ids = [] ) {
-
-		// Init return.
-		$activity_data = [];
-
-		// Bail if we have no Custom Field IDs.
-		if ( empty( $custom_field_ids ) ) {
-			return $activity_data;
-		}
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $activity_data;
-		}
-
-		// Format codes.
-		$codes = [];
-		foreach( $custom_field_ids AS $custom_field_id ) {
-			$codes[] = 'custom_' . $custom_field_id;
-		}
-
-		// Define params to get queried Activity.
-		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'id' => $activity_id,
-			'return' => $codes,
-			'options' => [
-				'limit' => 0, // No limit.
-			],
-		];
-
-		// Call the API.
-		$result = civicrm_api( 'Activity', 'get', $params );
-
-		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
-			return $activity_data;
-		}
-
-		// Bail if there are no results.
-		if ( empty( $result['values'] ) ) {
-			return $activity_data;
-		}
-
-		// Overwrite return.
-		foreach( $result['values'] AS $item ) {
-			foreach( $item AS $key => $value ) {
-				if ( substr( $key, 0, 7 ) == 'custom_' ) {
-					$index = str_replace( 'custom_', '', $key );
-					$activity_data[$index] = $value;
-				}
-			}
-		}
-
-		// Maybe filter here?
-
-		// --<
-		return $activity_data;
 
 	}
 
@@ -479,6 +338,294 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 		// --<
 		return $custom_field_ids;
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Intercept when a Post has been updated from an Activity via the Mapper.
+	 *
+	 * Sync any associated ACF Fields mapped to Custom Fields.
+	 *
+	 * @since 0.4
+	 *
+	 * @param array $args The array of CiviCRM Activity and WordPress Post params.
+	 */
+	public function activity_sync_to_post( $args ) {
+
+		// Get the Custom Fields for this CiviCRM Activity.
+		$custom_fields_for_activity = $this->get_for_activity( $args['objectRef'] );
+
+		// Bail if we don't have any Custom Fields for this Activity.
+		if ( empty( $custom_fields_for_activity ) ) {
+			return;
+		}
+
+		// Get the Custom Field IDs for this Activity.
+		$custom_field_ids = $this->ids_get_by_activity_id( $args['objectId'], $args['post_type'] );
+
+		// Filter the Custom Fields array.
+		$filtered = [];
+		foreach( $custom_field_ids AS $selector => $custom_field_id ) {
+			foreach( $custom_fields_for_activity AS $key => $custom_field_data ) {
+				if ( $custom_field_data['id'] == $custom_field_id ) {
+					$filtered[$selector] = $custom_field_data;
+					break;
+				}
+			}
+		}
+
+		// Extract the Custom Field mappings.
+		$custom_field_mappings = wp_list_pluck( $filtered, 'id' );
+
+		// Get the Custom Field values for this Activity.
+		$custom_field_values = $this->values_get_by_activity_id( $args['objectId'], $custom_field_mappings );
+
+		// Build a final data array.
+		$final = [];
+		foreach( $filtered AS $key => $custom_field ) {
+			$custom_field['value'] = $custom_field_values[$custom_field['id']];
+			$custom_field['type'] = $custom_field['data_type'];
+			$final[$key] = $custom_field;
+		}
+
+		// Let's populate each ACF Field in turn.
+		foreach( $final AS $selector => $field ) {
+
+			// Modify values for ACF prior to update.
+			$value = $this->value_get_for_acf(
+				$field['value'],
+				$field,
+				$selector,
+				$args['post_id']
+			);
+
+			// Update the ACF Field.
+			$this->acf_loader->acf->field->value_update( $selector, $value, $args['post_id'] );
+
+		}
+
+	}
+
+
+
+	/**
+	 * Get the values for a given CiviCRM Activity ID and set of Custom Fields.
+	 *
+	 * @since 0.4
+	 *
+	 * @param integer $activity_id The numeric ID of the CiviCRM Activity to query.
+	 * @param array $custom_field_ids The Custom Field IDs to query.
+	 * @return array $activity_data An array of Activity data.
+	 */
+	public function values_get_by_activity_id( $activity_id, $custom_field_ids = [] ) {
+
+		// Init return.
+		$activity_data = [];
+
+		// Bail if we have no Custom Field IDs.
+		if ( empty( $custom_field_ids ) ) {
+			return $activity_data;
+		}
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $activity_data;
+		}
+
+		// Format codes.
+		$codes = [];
+		foreach( $custom_field_ids AS $custom_field_id ) {
+			$codes[] = 'custom_' . $custom_field_id;
+		}
+
+		// Define params to get queried Activity.
+		$params = [
+			'version' => 3,
+			'sequential' => 1,
+			'id' => $activity_id,
+			'return' => $codes,
+			'options' => [
+				'limit' => 0, // No limit.
+			],
+		];
+
+		// Call the API.
+		$result = civicrm_api( 'Activity', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+			return $activity_data;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $activity_data;
+		}
+
+		// Overwrite return.
+		foreach( $result['values'] AS $item ) {
+			foreach( $item AS $key => $value ) {
+				if ( substr( $key, 0, 7 ) == 'custom_' ) {
+					$index = str_replace( 'custom_', '', $key );
+					$activity_data[$index] = $value;
+				}
+			}
+		}
+
+		// Maybe filter here?
+
+		// --<
+		return $activity_data;
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Intercept when a Post has been updated from a Participant via the Mapper.
+	 *
+	 * Sync any associated ACF Fields mapped to Custom Fields.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $args The array of CiviCRM Participant and WordPress Post params.
+	 */
+	public function participant_sync_to_post( $args ) {
+
+		// Get the Custom Fields for this CiviCRM Participant.
+		$custom_fields_for_participant = $this->get_for_activity( $args['objectRef'] );
+
+		// Bail if we don't have any Custom Fields for this Participant.
+		if ( empty( $custom_fields_for_participant ) ) {
+			return;
+		}
+
+		// Get the Custom Field IDs for this Participant.
+		$custom_field_ids = $this->ids_get_by_participant_id( $args['objectId'], $args['post_type'] );
+
+		// Filter the Custom Fields array.
+		$filtered = [];
+		foreach( $custom_field_ids AS $selector => $custom_field_id ) {
+			foreach( $custom_fields_for_participant AS $key => $custom_field_data ) {
+				if ( $custom_field_data['id'] == $custom_field_id ) {
+					$filtered[$selector] = $custom_field_data;
+					break;
+				}
+			}
+		}
+
+		// Extract the Custom Field mappings.
+		$custom_field_mappings = wp_list_pluck( $filtered, 'id' );
+
+		// Get the Custom Field values for this Participant.
+		$custom_field_values = $this->values_get_by_participant_id( $args['objectId'], $custom_field_mappings );
+
+		// Build a final data array.
+		$final = [];
+		foreach( $filtered AS $key => $custom_field ) {
+			$custom_field['value'] = $custom_field_values[$custom_field['id']];
+			$custom_field['type'] = $custom_field['data_type'];
+			$final[$key] = $custom_field;
+		}
+
+		// Let's populate each ACF Field in turn.
+		foreach( $final AS $selector => $field ) {
+
+			// Modify values for ACF prior to update.
+			$value = $this->value_get_for_acf(
+				$field['value'],
+				$field,
+				$selector,
+				$args['post_id']
+			);
+
+			// Update the ACF Field.
+			$this->acf_loader->acf->field->value_update( $selector, $value, $args['post_id'] );
+
+		}
+
+	}
+
+
+
+	/**
+	 * Get the values for a given CiviCRM Participant ID and set of Custom Fields.
+	 *
+	 * @since 0.5
+	 *
+	 * @param integer $participant_id The numeric ID of the CiviCRM Participant to query.
+	 * @param array $custom_field_ids The Custom Field IDs to query.
+	 * @return array $participant_data An array of Participant data.
+	 */
+	public function values_get_by_participant_id( $participant_id, $custom_field_ids = [] ) {
+
+		// Init return.
+		$participant_data = [];
+
+		// Bail if we have no Custom Field IDs.
+		if ( empty( $custom_field_ids ) ) {
+			return $participant_data;
+		}
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $participant_data;
+		}
+
+		// Format codes.
+		$codes = [];
+		foreach( $custom_field_ids AS $custom_field_id ) {
+			$codes[] = 'custom_' . $custom_field_id;
+		}
+
+		// Define params to get queried Participant.
+		$params = [
+			'version' => 3,
+			'sequential' => 1,
+			'id' => $participant_id,
+			'return' => $codes,
+			'options' => [
+				'limit' => 0, // No limit.
+			],
+		];
+
+		// Call the API.
+		$result = civicrm_api( 'Participant', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+			return $participant_data;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $participant_data;
+		}
+
+		// Overwrite return.
+		foreach( $result['values'] AS $item ) {
+			foreach( $item AS $key => $value ) {
+				if ( substr( $key, 0, 7 ) == 'custom_' ) {
+					$index = str_replace( 'custom_', '', $key );
+					$participant_data[$index] = $value;
+				}
+			}
+		}
+
+		// Maybe filter here?
+
+		// --<
+		return $participant_data;
 
 	}
 
@@ -808,58 +955,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 
 	/**
-	 * Get the CiviCRM Custom Group data for a given ID.
-	 *
-	 * @since 0.4
-	 *
-	 * @param string|integer $group_id The numeric ID of the Custom Group.
-	 * @return array|boolean $group An array of Custom Group data, or false on failure.
-	 */
-	public function group_get_by_id( $group_id ) {
-
-		// Init return.
-		$group = false;
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $group;
-		}
-
-		// Build params to get Custom Group data.
-		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'id' => $group_id,
-		];
-
-		// Call the CiviCRM API.
-		$result = civicrm_api( 'CustomGroup', 'get', $params );
-
-		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
-			return $group;
-		}
-
-		// Bail if there are no results.
-		if ( empty( $result['values'] ) ) {
-			return $group;
-		}
-
-		// The result set should contain only one item.
-		$group = array_pop( $result['values'] );
-
-		// --<
-		return $group;
-
-	}
-
-
-
-	// -------------------------------------------------------------------------
-
-
-
-	/**
 	 * Get the CiviCRM Custom Field data for a given ID.
 	 *
 	 * This is called on a per-Field basis. If it ends up slowing things down
@@ -998,6 +1093,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		 *
 		 * @see CiviCRM_Profile_Sync_ACF_CiviCRM_Contact::query_custom_fields()
 		 * @see CiviCRM_Profile_Sync_ACF_CiviCRM_Activity::query_custom_fields()
+		 * @see CiviCRM_Profile_Sync_ACF_CiviCRM_Participant::query_custom_fields()
 		 *
 		 * @since 0.4
 		 *

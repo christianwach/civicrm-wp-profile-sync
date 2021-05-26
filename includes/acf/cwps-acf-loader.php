@@ -217,6 +217,12 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 		// Include Admin class.
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-admin.php';
 
+		// Include Mapper class.
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-mapper.php';
+
+		// Include Mapping class.
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-mapping.php';
+
 		// Include CiviCRM class.
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-civicrm.php';
 
@@ -232,12 +238,6 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 		// Include ACF class.
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-acf.php';
 
-		// Include Mapping class.
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-mapping.php';
-
-		// Include Mapper class.
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-mapper.php';
-
 	}
 
 
@@ -251,6 +251,12 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 
 		// Init Admin object.
 		$this->admin = new CiviCRM_Profile_Sync_ACF_Admin( $this );
+
+		// Init Mapper object.
+		$this->mapper = new CiviCRM_Profile_Sync_ACF_Mapper( $this );
+
+		// Init Mapping object.
+		$this->mapping = new CiviCRM_Profile_Sync_ACF_Mapping( $this );
 
 		// Init CiviCRM object.
 		$this->civicrm = new CiviCRM_Profile_Sync_ACF_CiviCRM( $this );
@@ -266,12 +272,6 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 
 		// Init ACF object.
 		$this->acf = new CiviCRM_Profile_Sync_ACF( $this );
-
-		// Init Mapping object.
-		$this->mapping = new CiviCRM_Profile_Sync_ACF_Mapping( $this );
-
-		// Init Mapper object.
-		$this->mapper = new CiviCRM_Profile_Sync_ACF_Mapper( $this );
 
 	}
 

@@ -32,6 +32,15 @@ class CiviCRM_Profile_Sync_ACF {
 	public $acf_loader;
 
 	/**
+	 * ACF Field Type object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $field_type The ACF Field Type object.
+	 */
+	public $field_type;
+
+	/**
 	 * ACF Field Group object.
 	 *
 	 * @since 0.4
@@ -119,6 +128,7 @@ class CiviCRM_Profile_Sync_ACF {
 	public function include_files() {
 
 		// Include class files.
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-acf-field-type.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-acf-field-group.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-acf-field.php';
 		//include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-acf-blocks.php';
@@ -133,6 +143,9 @@ class CiviCRM_Profile_Sync_ACF {
 	 * @since 0.4
 	 */
 	public function setup_objects() {
+
+		// Init Field Type object.
+		$this->field_type = new CiviCRM_Profile_Sync_ACF_Field_Type( $this );
 
 		// Init Field Group object.
 		$this->field_group = new CiviCRM_Profile_Sync_ACF_Field_Group( $this );
@@ -153,52 +166,6 @@ class CiviCRM_Profile_Sync_ACF {
 	 * @since 0.4
 	 */
 	public function register_hooks() {
-
-		// Include any Field Types that we have defined.
-		add_action( 'acf/include_field_types', [ $this, 'include_field_types' ] );
-
-	}
-
-
-
-	/**
-	 * Include Field Types for ACF5.
-	 *
-	 * @since 0.4
-	 *
-	 * @param string $version The installed version of ACF.
-	 */
-	public function include_field_types( $version ) {
-
-		// Include class files.
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-contact-id.php';
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-contact.php';
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-relationship.php';
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-address.php';
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-address-city.php';
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-address-state.php';
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-phone.php';
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-im.php';
-		//include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-multiset.php';
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-yes-no.php';
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-activity-creator.php';
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-activity-target.php';
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-activity-assignee.php';
-
-		// Create fields.
-		new CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_ID_Field( $this );
-		new CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field( $this );
-		new CiviCRM_Profile_Sync_Custom_CiviCRM_Relationship( $this );
-		new CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Field( $this );
-		new CiviCRM_Profile_Sync_Custom_CiviCRM_Address_City_Field( $this );
-		new CiviCRM_Profile_Sync_Custom_CiviCRM_Address_State_Field( $this );
-		new CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Field( $this );
-		new CiviCRM_Profile_Sync_Custom_CiviCRM_Instant_Messenger( $this );
-		//new CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set( $this );
-		new CiviCRM_Profile_Sync_Custom_CiviCRM_Yes_No( $this );
-		new CiviCRM_Profile_Sync_Custom_CiviCRM_Activity_Creator( $this );
-		new CiviCRM_Profile_Sync_Custom_CiviCRM_Activity_Target( $this );
-		new CiviCRM_Profile_Sync_Custom_CiviCRM_Activity_Assignee( $this );
 
 	}
 

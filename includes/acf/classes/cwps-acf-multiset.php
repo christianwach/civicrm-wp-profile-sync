@@ -971,6 +971,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		 *
 		 * @see CiviCRM_Profile_Sync_ACF_CiviCRM_Contact::query_field_group_mapped()
 		 * @see CiviCRM_Profile_Sync_ACF_CiviCRM_Activity::query_field_group_mapped()
+		 * @see CiviCRM_Profile_Sync_ACF_CiviCRM_Participant::query_field_group_mapped()
 		 *
 		 * @since 0.4
 		 *

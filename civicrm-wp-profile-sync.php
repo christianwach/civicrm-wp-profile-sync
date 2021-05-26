@@ -120,6 +120,26 @@ class CiviCRM_WP_Profile_Sync {
 	 */
 	public function __construct() {
 
+		// Initialise this plugin.
+		$this->initialise();
+
+	}
+
+
+
+	/**
+	 * Initialise this plugin.
+	 *
+	 * @since 0.5
+	 */
+	public function initialise() {
+
+		// Only do this once.
+		static $done;
+		if ( isset( $done ) AND $done === true ) {
+			return;
+		}
+
 		// Use translation.
 		$this->translation();
 
@@ -135,6 +155,9 @@ class CiviCRM_WP_Profile_Sync {
 		 * @since 0.2.4
 		 */
 		do_action( 'civicrm_wp_profile_sync_init' );
+
+		// We're done.
+		$done = true;
 
 	}
 
@@ -165,12 +188,6 @@ class CiviCRM_WP_Profile_Sync {
 	 */
 	public function include_files() {
 
-		// Only do this once.
-		static $done;
-		if ( isset( $done ) AND $done === true ) {
-			return;
-		}
-
 		// Load our class files.
 		require CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/admin/cwps-admin.php';
 		require CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/wordpress/cwps-wp.php';
@@ -179,9 +196,6 @@ class CiviCRM_WP_Profile_Sync {
 		require CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/cai/cwps-cai.php';
 		require CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/cwps-acf-loader.php';
 		require CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/mapper/cwps-mapper.php';
-
-		// We're done.
-		$done = true;
 
 	}
 
@@ -194,12 +208,6 @@ class CiviCRM_WP_Profile_Sync {
 	 */
 	public function setup_objects() {
 
-		// Only do this once.
-		static $done;
-		if ( isset( $done ) AND $done === true ) {
-			return;
-		}
-
 		// Initialise objects.
 		$this->admin = new CiviCRM_WP_Profile_Sync_Admin( $this );
 		$this->wp = new CiviCRM_WP_Profile_Sync_WordPress( $this );
@@ -208,9 +216,6 @@ class CiviCRM_WP_Profile_Sync {
 		$this->cai = new CiviCRM_WP_Profile_Sync_CAI( $this );
 		$this->acf = new CiviCRM_WP_Profile_Sync_ACF_Loader( $this );
 		$this->mapper = new CiviCRM_WP_Profile_Sync_Mapper( $this );
-
-		// We're done.
-		$done = true;
 
 	}
 
@@ -487,6 +492,51 @@ function civicrm_wp_profile_sync() {
 
 // Load only when CiviCRM has loaded.
 add_action( 'civicrm_instance_loaded', 'civicrm_wp_profile_sync' );
+
+
+
+/**
+ * Performs plugin activation tasks.
+ *
+ * @since 0.5
+ */
+function civicrm_wp_profile_sync_activate() {
+
+	/**
+	 * Broadcast that this plugin has been activated.
+	 *
+	 * @since 0.5
+	 */
+	do_action( 'cwps/activated' );
+
+}
+
+// Activation.
+register_activation_hook( __FILE__, 'civicrm_wp_profile_sync_activate' );
+
+
+
+/**
+ * Performs plugin deactivation tasks.
+ *
+ * @since 0.5
+ */
+function civicrm_wp_profile_sync_deactivated() {
+
+	/**
+	 * Broadcast that this plugin has been deactivated.
+	 *
+	 * @since 0.5
+	 */
+	do_action( 'cwps/deactivated' );
+
+}
+
+// Deactivation.
+register_deactivation_hook( __FILE__, 'civicrm_wp_profile_sync_deactivated' );
+
+// Uninstall uses the 'uninstall.php' method.
+// See: http://codex.wordpress.org/Function_Reference/register_uninstall_hook
 
 
 

@@ -51,6 +51,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 * [
 	 *   'contact-post' => [ 3 => 'post', 8 => 'student' ],
 	 *   'activity-post' => [ 123 => 'award', 258 => 'foo' ],
+	 *   'participant-role-post' => [ 256 => 'attendee', 576 => 'speaker' ],
 	 * ]
 	 *
 	 * @since 0.4
@@ -75,6 +76,9 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *   'student' => [
 	 *     'some_option' => 0,
 	 *     'another_option' => 'bar',
+	 *   ],
+	 *   'participant' => [
+	 *     'enabled' => 0,
 	 *   ],
 	 * ]
 	 *
@@ -188,6 +192,21 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		// Intercept CiviCRM Add/Edit Activity Type postSave hook.
 		add_action( 'civicrm_postSave_civicrm_option_value', [ $this, 'form_activity_type_postSave' ], 10 );
 
+		// Modify CiviCRM Add/Edit Participant Role form.
+		add_action( 'civicrm_buildForm', [ $this, 'form_participant_role_build' ], 10, 2 );
+
+		// Intercept CiviCRM Add/Edit Participant Role form submission process.
+		add_action( 'civicrm_postProcess', [ $this, 'form_participant_role_process' ], 10, 2 );
+
+		// Intercept CiviCRM Add/Edit Participant Role postSave hook.
+		add_action( 'civicrm_postSave_civicrm_option_value', [ $this, 'form_participant_role_postSave' ], 10 );
+
+		// Modify CiviCRM Event Component Settings form.
+		add_action( 'civicrm_buildForm', [ $this, 'form_participant_build' ], 10, 2 );
+
+		// Intercept CiviCRM Event Component Settings form submission process.
+		add_action( 'civicrm_postProcess', [ $this, 'form_participant_process' ], 10, 2 );
+
 	}
 
 
@@ -222,6 +241,221 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		// Register template directory.
 		$template_include_path = $custom_path . PATH_SEPARATOR . get_include_path();
 		set_include_path( $template_include_path );
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Enable a WordPress Custom Post Type to be linked to a CiviCRM Contact Type.
+	 *
+	 * @since 0.4
+	 *
+	 * @param string $formName The CiviCRM form name.
+	 * @param object $form The CiviCRM form object.
+	 */
+	public function form_contact_type_build( $formName, &$form ) {
+
+		// Is this the Contact Type edit form?
+		if ( $formName != 'CRM_Admin_Form_ContactType' ) return;
+
+		// Get CiviCRM Contact Type.
+		$contact_type = $form->getVar( '_values' );
+
+		// Determine form mode by whether we have a Contact Type.
+		if ( isset( $contact_type ) AND ! empty( $contact_type ) ) {
+			$mode = 'edit';
+		} else {
+			$mode = 'create';
+		}
+
+		// Build options array.
+		$options = [
+			'' => '- ' . __( 'No Synced Post Type', 'civicrm-wp-profile-sync' ) . ' -',
+		];
+
+		// Maybe assign Contact Type ID.
+		$contact_type_id = 0;
+		if ( $mode === 'edit' ) {
+			$contact_type_id = (int) $contact_type['id'];
+		}
+
+		// Get all available Post Types for this Contact Type.
+		$post_types = $this->acf_loader->post_type->post_types_get_for_contact_type( $contact_type_id );
+
+		// Add select option for those which are public.
+		if ( count( $post_types ) > 0 ) {
+			foreach( $post_types AS $post_type ) {
+
+				/*
+				 * Exclude built-in WordPress private Post Types.
+				 *
+				 * - nav_menu_item
+				 * - revision
+				 * - customize_changeset
+				 * - etc, etc
+				 *
+				 * ACF does not support these.
+				 */
+				if ( $post_type->_builtin AND ! $post_type->public ) continue;
+
+				// ACF does not support the built-in WordPress Media Post Type.
+				if ( $post_type->name == 'attachment' ) continue;
+
+				// Add anything else.
+				$options[esc_attr( $post_type->name )] = esc_html( $post_type->labels->singular_name );
+
+			}
+		}
+
+		// Add Post Types dropdown.
+		$cpt_select = $form->add(
+			'select',
+			'cwps_acf_cpt',
+			__( 'Synced Post Type', 'civicrm-wp-profile-sync' ),
+			$options,
+			FALSE,
+			[]
+		);
+
+		// Add a description.
+		//$form->assign( 'cwps_acf_cpt_desc', __( 'Blah', 'civicrm-wp-profile-sync' ) );
+
+		// Amend form in edit mode.
+		if ( $mode === 'edit' ) {
+
+			// Get existing CPT.
+			$cpt_name = $this->mapping_for_contact_type_get( $contact_type['id'] );
+
+			// If we have a mapped CPT.
+			if ( $cpt_name !== false ) {
+
+				// Set selected value of our dropdown.
+				$cpt_select->setSelected( $cpt_name );
+
+				// Get CPT settings.
+				$cpt_settings = $this->setting_get( $cpt_name );
+
+			}
+
+			// Do we allow changes to be made?
+			//$cpt_select->freeze();
+
+		}
+
+		// Insert template block into the page.
+		CRM_Core_Region::instance('page-body')->add([
+			'template' => 'cwps-acf-contact-type-cpt.tpl'
+		]);
+
+	}
+
+
+
+	/**
+	 * Callback for the Add/Edit Contact Type form's postSave hook.
+	 *
+	 * Since neither "civicrm_pre" nor "civicrm_post" fire for this CiviCRM
+	 * entity, we grab the saved ID here, store it, then use it in the form's
+	 * postProcess callback.
+	 *
+	 * @see form_contact_type_process()
+	 *
+	 * @since 0.4
+	 *
+	 * @param object $objectRef The DAO object.
+	 */
+	public function form_contact_type_postSave( $objectRef ) {
+
+		// Bail if not Contact Type save operation.
+		if ( ! ( $objectRef instanceof CRM_Contact_DAO_ContactType ) ) {
+			return;
+		}
+
+		// Bail if no Contact Type ID.
+		if ( empty( $objectRef->id ) ) {
+			return;
+		}
+
+		// Store locally for use in form_contact_type_process().
+		$this->saved_contact_type_id = $objectRef->id;
+
+	}
+
+
+
+	/**
+	 * Callback for the Add/Edit Contact Type form's postProcess hook.
+	 *
+	 * Neither "civicrm_pre" nor "civicrm_post" fire for this CiviCRM entity,
+	 * so the link between the Contact Type and the WordPress Post Type must be
+	 * made here.
+	 *
+	 * @since 0.4
+	 *
+	 * @param string $formName The CiviCRM form name.
+	 * @param object $form The CiviCRM form object.
+	 */
+	public function form_contact_type_process( $formName, &$form ) {
+
+		// Bail if not Contact Type edit form.
+		if ( ! ( $form instanceof CRM_Admin_Form_ContactType ) ) {
+			return;
+		}
+
+		// Grab Contact Type ID from form.
+		$contact_type_id = $form->getVar( '_id' );
+
+		// Get Contact Type ID if not present in the form.
+		if ( empty( $contact_type_id ) ) {
+			if ( isset( $this->saved_contact_type_id ) ) {
+				$contact_type_id = $this->saved_contact_type_id;
+			}
+		}
+
+		// Grab submitted values.
+		$values = $form->getSubmitValues();
+
+		// Inspect our select value.
+		if ( empty( $values['cwps_acf_cpt'] ) ) {
+
+			// Remove (or ignore) linkage.
+			$this->mapping_for_contact_type_remove( $contact_type_id );
+
+			/**
+			 * Broadcast that the mapping has been removed.
+			 *
+			 * @since 0.4
+			 *
+			 * @param integer $contact_type_id The removed Contact Type ID.
+			 * @param array $values The form values.
+			 */
+			do_action( 'cwps/acf/mapping/contact/removed', $contact_type_id, $values );
+
+		} else {
+
+			// Let's grab the Post Type.
+			$post_type = trim( $values['cwps_acf_cpt'] );
+
+			// Add/Update linkage.
+			$this->mapping_for_contact_type_update( $contact_type_id, $post_type );
+
+			/**
+			 * Broadcast that the mapping has been updated.
+			 *
+			 * @since 0.4
+			 *
+			 * @param integer $contact_type_id The updated Contact Type ID.
+			 * @param string $post_type The updated Post Type name.
+			 * @param array $values The form values.
+			 */
+			do_action( 'cwps/acf/mapping/contact/edited', $contact_type_id, $post_type, $values );
+
+		}
 
 	}
 
@@ -499,23 +733,36 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 
 	/**
-	 * Enable a WordPress Custom Post Type to be linked to a CiviCRM Contact Type.
+	 * Enable a WordPress Custom Post Type to be linked to a CiviCRM Participant Role.
 	 *
-	 * @since 0.4
+	 * @since 0.5
 	 *
 	 * @param string $formName The CiviCRM form name.
 	 * @param object $form The CiviCRM form object.
 	 */
-	public function form_contact_type_build( $formName, &$form ) {
+	public function form_participant_role_build( $formName, &$form ) {
 
-		// Is this the Contact Type edit form?
-		if ( $formName != 'CRM_Admin_Form_ContactType' ) return;
+		// Is this the Options edit form?
+		if ( $formName != 'CRM_Admin_Form_Options' ) {
+			return;
+		}
 
-		// Get CiviCRM Contact Type.
-		$contact_type = $form->getVar( '_values' );
+		// Is this a Participant Role form?
+		if ( $form->get( 'gName' ) != 'participant_role' ) {
+			return;
+		}
 
-		// Determine form mode by whether we have a Contact Type.
-		if ( isset( $contact_type ) AND ! empty( $contact_type ) ) {
+		// Bail if it's the "Delete" form.
+		// TODO: Check "Activity Type" form for this.
+		if ( $form->get( 'action' ) == 8 ) {
+			return;
+		}
+
+		// Get displayed CiviCRM Participant Role.
+		$participant_role = $form->getVar( '_values' );
+
+		// Determine form mode by whether we have a Participant Role.
+		if ( isset( $participant_role ) AND ! empty( $participant_role ) ) {
 			$mode = 'edit';
 		} else {
 			$mode = 'create';
@@ -526,14 +773,14 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 			'' => '- ' . __( 'No Synced Post Type', 'civicrm-wp-profile-sync' ) . ' -',
 		];
 
-		// Maybe assign Contact Type ID.
-		$contact_type_id = 0;
+		// Maybe assign Participant Role ID.
+		$participant_role_id = 0;
 		if ( $mode === 'edit' ) {
-			$contact_type_id = (int) $contact_type['id'];
+			$participant_role_id = (int) $participant_role['value'];
 		}
 
-		// Get all available Post Types for this Contact Type.
-		$post_types = $this->acf_loader->post_type->post_types_get_for_contact_type( $contact_type_id );
+		// Get all available Post Types for this Participant Role.
+		$post_types = $this->acf_loader->post_type->post_types_get_for_participant_role( $participant_role_id );
 
 		// Add select option for those which are public.
 		if ( count( $post_types ) > 0 ) {
@@ -577,7 +824,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		if ( $mode === 'edit' ) {
 
 			// Get existing CPT.
-			$cpt_name = $this->mapping_for_contact_type_get( $contact_type['id'] );
+			$cpt_name = $this->mapping_for_participant_role_get( $participant_role['value'] );
 
 			// If we have a mapped CPT.
 			if ( $cpt_name !== false ) {
@@ -597,7 +844,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 		// Insert template block into the page.
 		CRM_Core_Region::instance('page-body')->add([
-			'template' => 'cwps-acf-contact-type-cpt.tpl'
+			'template' => 'cwps-acf-participant-role-cpt.tpl'
 		]);
 
 	}
@@ -605,84 +852,117 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 
 	/**
-	 * Callback for the Add/Edit Contact Type form's postSave hook.
+	 * Callback for the Add/Edit Participant Role form's postSave hook.
 	 *
 	 * Since neither "civicrm_pre" nor "civicrm_post" fire for this CiviCRM
 	 * entity, we grab the saved ID here, store it, then use it in the form's
 	 * postProcess callback.
 	 *
-	 * @see form_contact_type_process()
+	 * @see form_participant_role_process()
 	 *
-	 * @since 0.4
+	 * @since 0.5
 	 *
 	 * @param object $objectRef The DAO object.
 	 */
-	public function form_contact_type_postSave( $objectRef ) {
+	public function form_participant_role_postSave( $objectRef ) {
 
-		// Bail if not Contact Type save operation.
-		if ( ! ( $objectRef instanceof CRM_Contact_DAO_ContactType ) ) {
+		// Bail if not Participant Role save operation.
+		if ( ! ( $objectRef instanceof CRM_Core_DAO_OptionValue ) ) {
 			return;
 		}
 
-		// Bail if no Contact Type ID.
+		// Bail if no Participant Role ID.
 		if ( empty( $objectRef->id ) ) {
 			return;
 		}
 
-		// Store locally for use in form_contact_type_process().
-		$this->saved_contact_type_id = $objectRef->id;
+		// Bail if no Option Group ID.
+		if ( empty( $objectRef->option_group_id ) ) {
+			return;
+		}
+
+		// Get the ID of the Participant Roles Option Group.
+		$participant_roles_id = $this->acf_loader->civicrm->participant_role->option_group_id_get();
+
+		// Bail if not in Participant Roles Option Group.
+		if ( $objectRef->option_group_id != $participant_roles_id ) {
+			return;
+		}
+
+		// Get the data for the Participant Role.
+		$participant_role = $this->acf_loader->civicrm->participant_role->get_by_id( $objectRef->id );
+
+		// Bail on failure.
+		if ( $participant_role === false ) {
+			return;
+		}
+
+		// Store ID (actually "value") locally for use in form_participant_role_process().
+		$this->saved_participant_role_id = (int) $participant_role['value'];
 
 	}
 
 
 
 	/**
-	 * Callback for the Add/Edit Contact Type form's postProcess hook.
+	 * Callback for the Add/Edit Participant Role form's postProcess hook.
 	 *
 	 * Neither "civicrm_pre" nor "civicrm_post" fire for this CiviCRM entity,
-	 * so the link between the Contact Type and the WordPress Post Type must be
+	 * so the link between the Participant Role and the WordPress Post Type must be
 	 * made here.
 	 *
-	 * @since 0.4
+	 * @since 0.5
 	 *
 	 * @param string $formName The CiviCRM form name.
 	 * @param object $form The CiviCRM form object.
 	 */
-	public function form_contact_type_process( $formName, &$form ) {
+	public function form_participant_role_process( $formName, &$form ) {
 
-		// Bail if not Contact Type edit form.
-		if ( ! ( $form instanceof CRM_Admin_Form_ContactType ) ) {
+		// Bail if not Participant Role edit form.
+		if ( ! ( $form instanceof CRM_Admin_Form_Options ) ) {
 			return;
 		}
 
-		// Grab Contact Type ID from form.
-		$contact_type_id = $form->getVar( '_id' );
+		// Grab "Group Name" from form.
+		$group_name = $form->getVar( '_gName' );
 
-		// Get Contact Type ID if not present in the form.
-		if ( empty( $contact_type_id ) ) {
-			if ( isset( $this->saved_contact_type_id ) ) {
-				$contact_type_id = $this->saved_contact_type_id;
-			}
+		// Bail if not Participant Role.
+		if ( $group_name != 'participant_role' ) {
+			return;
 		}
 
 		// Grab submitted values.
 		$values = $form->getSubmitValues();
 
+		// Get Participant Role ID if not present in the form.
+		if ( ! empty( $values['value'] ) ) {
+			$participant_role_id = (int) $values['value'];
+		} else {
+			if ( isset( $this->saved_participant_role_id ) ) {
+				$participant_role_id = $this->saved_participant_role_id;
+			}
+		}
+
+		// Bail if we don't get a Participant Role for some reason.
+		if ( empty( $participant_role_id ) ) {
+			return;
+		}
+
 		// Inspect our select value.
 		if ( empty( $values['cwps_acf_cpt'] ) ) {
 
 			// Remove (or ignore) linkage.
-			$this->mapping_for_contact_type_remove( $contact_type_id );
+			$this->mapping_for_participant_role_remove( $participant_role_id );
 
 			/**
 			 * Broadcast that the mapping has been removed.
 			 *
-			 * @since 0.4
+			 * @since 0.5
 			 *
-			 * @param integer $contact_type_id The removed Contact Type ID.
+			 * @param integer $participant_role_id The removed Participant Role ID.
 			 * @param array $values The form values.
 			 */
-			do_action( 'cwps/acf/mapping/contact/removed', $contact_type_id, $values );
+			do_action( 'cwps/acf/mapping/participant/removed', $participant_role_id, $values );
 
 		} else {
 
@@ -690,20 +970,146 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 			$post_type = trim( $values['cwps_acf_cpt'] );
 
 			// Add/Update linkage.
-			$this->mapping_for_contact_type_update( $contact_type_id, $post_type );
+			$this->mapping_for_participant_role_update( $participant_role_id, $post_type );
 
 			/**
 			 * Broadcast that the mapping has been updated.
 			 *
-			 * @since 0.4
+			 * @since 0.5
 			 *
-			 * @param integer $contact_type_id The updated Contact Type ID.
+			 * @param integer $participant_role_id The updated Participant Role ID.
 			 * @param string $post_type The updated Post Type name.
 			 * @param array $values The form values.
 			 */
-			do_action( 'cwps/acf/mapping/contact/edited', $contact_type_id, $post_type, $values );
+			do_action( 'cwps/acf/mapping/participant/edited', $participant_role_id, $post_type, $values );
 
 		}
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Enable or disable the "Participant" Custom Post Type provided by this plugin.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $formName The CiviCRM form name.
+	 * @param object $form The CiviCRM form object.
+	 */
+	public function form_participant_build( $formName, &$form ) {
+
+		// Is this the Event Component edit form?
+		if ( $formName != 'CRM_Admin_Form_Generic' ) {
+			return;
+		}
+
+		// Grab "URL Path" from form.
+		$form_url_path = $form->getVar( 'urlPath' );
+        $url_path = [ 'civicrm', 'admin', 'setting',  'preferences', 'event' ];
+        if ( $form_url_path !== $url_path ) {
+        	return;
+        }
+
+		// Add "Enable CPT" checkbox.
+		$checkbox = $form->add(
+			'checkbox',
+			'cwps_acf_enable_cpt',
+			__( 'Enable the "Participant" Custom Post Type', 'civicrm-wp-profile-sync' ),
+		);
+
+		// Add help text.
+		$form->assign(
+			'cwps_acf_enable_cpt_help',
+			__( 'If you would like to use the "Participant" Custom Post Type provided by this plugin then check this box. This will also enable a Custom Taxonomy on the "Participant" Post Type which is kept in sync with the Participant Roles in CiviCRM.', 'civicrm-wp-profile-sync' )
+		);
+
+		// Get settings.
+		$settings = $this->setting_get( 'participant' );
+
+		// Set status of checkbox based on setting.
+		if ( $settings !== false ) {
+			if ( isset( $settings['enabled'] ) AND $settings['enabled'] === 1 ) {
+				$checkbox->setChecked( true );
+			}
+		}
+
+		// Insert template block into the page.
+		CRM_Core_Region::instance('page-body')->add([
+			'template' => 'cwps-acf-participant-cpt.tpl'
+		]);
+
+	}
+
+
+
+	/**
+	 * Callback for the CiviEvent Component Settings form's postProcess hook.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $formName The CiviCRM form name.
+	 * @param object $form The CiviCRM form object.
+	 */
+	public function form_participant_process( $formName, &$form ) {
+
+		// Is this the Event Component edit form?
+		if ( $formName != 'CRM_Admin_Form_Generic' ) {
+			return;
+		}
+
+		// Grab "URL Path" from form.
+		$form_url_path = $form->getVar( 'urlPath' );
+        $url_path = [ 'civicrm', 'admin', 'setting',  'preferences', 'event' ];
+        if ( $form_url_path !== $url_path ) {
+        	return;
+        }
+
+		// Grab submitted values.
+		$values = $form->getSubmitValues();
+
+		// Assume the "Enable CPT" checkbox is not checked, but override if it is.
+		$current = 0;
+		if ( isset( $values['cwps_acf_enable_cpt'] ) AND $values['cwps_acf_enable_cpt'] == '1' ) {
+			$current = 1;
+		}
+
+		// Get current setting data.
+		$data = $this->setting_get( 'participant' );
+
+		// Grab previous value for comparison below.
+		$previous = empty( $data['enabled'] ) ? 0 : 1;
+
+		// Bail if there is no change.
+		if ( $previous === $current ) {
+			return;
+		}
+
+		// Add/Update setting.
+		$data['enabled'] = $current;
+
+		// Overwrite setting.
+		$this->setting_update( 'participant', $data );
+
+		// Fire one of two actions depending on what has happened.
+		$action = 'enabled';
+		if ( $previous === 1 AND $current === 0 ) {
+			$action = 'disabled';
+		}
+
+		/**
+		 * Broadcast that the mapping has been updated.
+		 *
+		 * @since 0.5
+		 *
+		 * @param array $values The form values.
+		 * @param array $data The settings.
+		 */
+		do_action( "cwps/acf/mapping/participant-cpt/{$action}", $values, $data );
 
 	}
 
@@ -725,9 +1131,10 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		// Get existing mappings.
 		$for_contacts = $this->mappings_for_contact_types_get();
 		$for_activities = $this->mappings_for_activity_types_get();
+		$for_participants = $this->mappings_for_participant_roles_get();
 
 		// --<
-		return array_merge( $for_contacts, $for_activities );
+		return array_merge( $for_contacts, $for_activities, $for_participants );
 
 	}
 
@@ -925,6 +1332,100 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 			// Finally, remove mapping.
 			unset( $this->mappings['activity-post'][$activity_type_id] );
+
+		}
+
+		// Update option.
+		$this->option_set( $this->mappings_key, $this->mappings );
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Get all Participant Role to Post Type mappings.
+	 *
+	 * @since 0.5
+	 *
+	 * @return array $mappings The array of mappings.
+	 */
+	public function mappings_for_participant_roles_get() {
+
+		// --<
+		return ! empty( $this->mappings['participant-role-post'] ) ? $this->mappings['participant-role-post'] : [];
+
+	}
+
+
+
+	/**
+	 * Get the WordPress Post Type for a CiviCRM Participant Role.
+	 *
+	 * @since 0.5
+	 *
+	 * @param integer $participant_role_id The numeric ID of the Participant Role.
+	 * @return string|boolean $cpt_name The name of the Post Type or false if none exists.
+	 */
+	public function mapping_for_participant_role_get( $participant_role_id ) {
+
+		// Init as false.
+		$cpt_name = false;
+
+		// Overwrite if a mapping exists.
+		if ( isset( $this->mappings['participant-role-post'][$participant_role_id] ) ) {
+			$cpt_name = $this->mappings['participant-role-post'][$participant_role_id];
+		}
+
+		// --<
+		return $cpt_name;
+
+	}
+
+
+
+	/**
+	 * Add or update the link between a CiviCRM Participant Role and a WordPress Post Type.
+	 *
+	 * @since 0.5
+	 *
+	 * @param integer $participant_role_id The numeric ID of the Participant Role.
+	 * @param string $cpt_name The name of the WordPress Post Type.
+	 * @return boolean $success Whether or not the operation was successful.
+	 */
+	public function mapping_for_participant_role_update( $participant_role_id, $cpt_name ) {
+
+		// Overwrite (or create) mapping.
+		$this->mappings['participant-role-post'][$participant_role_id] = $cpt_name;
+
+		// Update option.
+		$this->option_set( $this->mappings_key, $this->mappings );
+
+	}
+
+
+
+	/**
+	 * Maybe delete the link between a CiviCRM Participant Role and a WordPress Post Type.
+	 *
+	 * @since 0.5
+	 *
+	 * @param integer $participant_role_id The numeric ID of the Participant Role.
+	 * @return boolean $success Whether or not the operation was successful.
+	 */
+	public function mapping_for_participant_role_remove( $participant_role_id ) {
+
+		// If a mapping exists.
+		if ( isset( $this->mappings['participant-role-post'][$participant_role_id] ) ) {
+
+			// We also need to remove the setting.
+			$this->setting_remove( $this->mappings['participant-role-post'][$participant_role_id] );
+
+			// Finally, remove mapping.
+			unset( $this->mappings['participant-role-post'][$participant_role_id] );
 
 		}
 

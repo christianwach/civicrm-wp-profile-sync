@@ -252,6 +252,70 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 
 
 	/**
+	 * Get all Post Types that a Participant Role may be synced with.
+	 *
+	 * @since 0.5
+	 *
+	 * @param integer $participant_role_id The numeric ID of the Participant Role.
+	 * @return array $post_types The array of Post Types.
+	 */
+	public function post_types_get_for_participant_role( $participant_role_id ) {
+
+		// Init return.
+		$filtered = [];
+
+		// Get all Post Types.
+		$post_types = $this->post_types_get_all();
+
+		// Get all used Post Types.
+		$used_post_types = $this->acf_loader->mapping->mappings_get_all();
+
+		// Get existing Post Type.
+		$existing_post_type = '';
+		if ( $participant_role_id !== 0 ) {
+			$existing_post_type = $this->acf_loader->mapping->mapping_for_participant_role_get( $participant_role_id );
+		}
+
+		// Retain only those which are unused, plus the existing one.
+		if ( count( $post_types ) > 0 ) {
+			foreach( $post_types AS $post_type ) {
+				$used = in_array( $post_type->name, $used_post_types );
+				$mine = ( $post_type->name == $existing_post_type ) ? true : false;
+				if ( ! $used OR $mine ) {
+					$filtered[] = $post_type;
+				}
+			}
+		}
+
+		// --<
+		return $filtered;
+
+	}
+
+
+
+	/**
+	 * Get the Post Type that is mapped to a Participant Role.
+	 *
+	 * @since 0.5
+	 *
+	 * @param integer $participant_role_id The numeric ID of the Participant Role.
+	 * @return string|boolean $post_type The name of Post Type, or false if not mapped.
+	 */
+	public function get_for_participant_role( $participant_role_id ) {
+
+		// --<
+		return $this->acf_loader->mapping->mapping_for_participant_role_get( $participant_role_id );
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
 	 * Get the number of Posts in a WordPress Post Type.
 	 *
 	 * @since 0.4
@@ -274,6 +338,11 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 
 		// We don't care about the post status.
 		$sum = array_sum( array_values( $counts ) );
+
+		// Except for "auto-draft", which we exclude.
+		if ( ! empty( $counts['auto-draft'] ) ) {
+			$sum = $sum - $counts['auto-draft'];
+		}
 
 		// --<
 		return $sum;
@@ -305,12 +374,16 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 		// Get all used Post Types by Entity.
 		switch ( $entity_type ) {
 
+			case 'contact':
+				$synced_post_types = $this->acf_loader->mapping->mappings_for_contact_types_get();
+				break;
+
 			case 'activity':
 				$synced_post_types = $this->acf_loader->mapping->mappings_for_activity_types_get();
 				break;
 
-			case 'contact':
-				$synced_post_types = $this->acf_loader->mapping->mappings_for_contact_types_get();
+			case 'participant_role':
+				$synced_post_types = $this->acf_loader->mapping->mappings_for_participant_roles_get();
 				break;
 
 		}
@@ -321,6 +394,16 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 				$post_types[] = $post_type;
 			}
 		}
+
+		/**
+		 * Filter the mapped Post Types.
+		 *
+		 * @since 0.5
+		 *
+		 * @param $post_types The mapped WordPress Post Types.
+		 * @param $entity_type The requested CiviCRM Entity Type.
+		 */
+		$post_types = apply_filters( 'cwps/acf/post_types/get_mapped', $post_types, $entity_type );
 
 		// --<
 		return $post_types;
@@ -377,6 +460,39 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 
 		// Get mapped Post Types.
 		$mapped_post_types = $this->acf_loader->mapping->mappings_for_activity_types_get();
+
+		// Bail if there are no mappings.
+		if ( empty( $mapped_post_types ) ) {
+			return $is_linked;
+		}
+
+		// Override if this Post Type is mapped.
+		if ( in_array( $post_type, $mapped_post_types ) ) {
+			$is_linked = true;
+		}
+
+		// --<
+		return $is_linked;
+
+	}
+
+
+
+	/**
+	 * Check if a Post Type is mapped to Participant Roles.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $post_type The name of the Post Type.
+	 * @return boolean $is_linked True if the Post Type is mapped, false otherwise.
+	 */
+	public function is_mapped_to_participant_role( $post_type ) {
+
+		// Assume not.
+		$is_linked = false;
+
+		// Get mapped Post Types.
+		$mapped_post_types = $this->acf_loader->mapping->mappings_for_participant_roles_get();
 
 		// Bail if there are no mappings.
 		if ( empty( $mapped_post_types ) ) {

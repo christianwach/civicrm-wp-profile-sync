@@ -333,7 +333,9 @@ var CiviCRM_Profile_Sync_ACF_Sync = CiviCRM_Profile_Sync_ACF_Sync || {};
 		this.setup = function() {
 
 			// Define vars.
-			var contact_post_types, contact_types, groups, prop, obj;
+			var contact_post_types, contact_types, groups, activity_post_types,
+				activity_types, participant_post_types, participant_roles,
+				prop, obj;
 
 			// WordPress Posts to CiviCRM Contacts.
 			contact_post_types = CiviCRM_Profile_Sync_ACF_Sync.settings.get_setting( 'contact_post_types' );
@@ -411,6 +413,38 @@ var CiviCRM_Profile_Sync_ACF_Sync = CiviCRM_Profile_Sync_ACF_Sync || {};
 					action: 'sync_activities_to_posts',
 					entity_id: prop,
 					count: activity_types[prop].count
+				});
+				me.bars.push( obj );
+			}
+
+			// WordPress Posts to CiviCRM Participants.
+			participant_post_types = CiviCRM_Profile_Sync_ACF_Sync.settings.get_setting( 'participant_post_types' );
+			for ( prop in participant_post_types ) {
+				obj = new CAI_ProgressBar({
+					bar: '#progress-bar-cwps_acf_post_to_participant_role_' + prop,
+					label: '#progress-bar-cwps_acf_post_to_participant_role_' + prop + ' .progress-label',
+					key: 'participant_post_types',
+					button: '#cwps_acf_post_to_participant_role_' + prop,
+					step: 'step_participant_role_post_types',
+					action: 'sync_posts_to_participant_roles',
+					entity_id: prop,
+					count: participant_post_types[prop].count
+				});
+				me.bars.push( obj );
+			}
+
+			// CiviCRM Participants to WordPress Posts.
+			participant_roles = CiviCRM_Profile_Sync_ACF_Sync.settings.get_setting( 'participant_roles' );
+			for ( prop in participant_roles ) {
+				obj = new CAI_ProgressBar({
+					bar: '#progress-bar-cwps_acf_participant_role_to_post_' + prop,
+					label: '#progress-bar-cwps_acf_participant_role_to_post_' + prop + ' .progress-label',
+					key: 'participant_roles',
+					button: '#cwps_acf_participant_role_to_post_' + prop,
+					step: 'step_participant_roles',
+					action: 'sync_participant_roles_to_posts',
+					entity_id: prop,
+					count: participant_roles[prop].count
 				});
 				me.bars.push( obj );
 			}

@@ -119,7 +119,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 * @access public
 	 * @var object $custom_group The CiviCRM Custom Group object.
 	 */
-	//public $custom_group;
+	public $custom_group;
 
 	/**
 	 * CiviCRM Custom Field object.
@@ -212,6 +212,42 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	public $activity_field;
 
 	/**
+	 * CiviCRM Event object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $event The CiviCRM Event object.
+	 */
+	public $event;
+
+	/**
+	 * CiviCRM Participant Role object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $participant_role The CiviCRM Participant Role object.
+	 */
+	public $participant_role;
+
+	/**
+	 * CiviCRM Participant object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $participant The CiviCRM Participant object.
+	 */
+	public $participant;
+
+	/**
+	 * CiviCRM Participant Field object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $participant_field The CiviCRM Participant Field object.
+	 */
+	public $participant_field;
+
+	/**
 	 * "CiviCRM Field" field key in the ACF Field data.
 	 *
 	 * This "top level" field key is common to "Contact" and "Activity" Entities
@@ -220,6 +256,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 * @see self::custom_field_prefix()
 	 * @see self::contact_field_prefix()
 	 * @see self::activity_field_prefix()
+	 * @see self::participant_field_prefix()
 	 *
 	 * @since 0.4
 	 * @access public
@@ -294,9 +331,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-activity-type.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-activity.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-activity-field.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-event.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-participant-role.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-participant.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-participant-field.php';
 
 		// Include Standalone class files.
-		//include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-custom-group.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-custom-group.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-custom-field.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-civicrm-group.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-address.php';
@@ -335,8 +376,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		$this->activity = new CiviCRM_Profile_Sync_ACF_CiviCRM_Activity( $this );
 		$this->activity_field = new CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field( $this );
 
+		// Init Event, Participant Role, Participant and Participant Field objects.
+		$this->event = new CiviCRM_Profile_Sync_ACF_CiviCRM_Event( $this );
+		$this->participant = new CiviCRM_Profile_Sync_ACF_CiviCRM_Participant( $this );
+		$this->participant_field = new CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field( $this );
+		$this->participant_role = new CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role( $this );
+
 		// Init Standalone objects.
-		//$this->custom_group = new CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Group( $this );
+		$this->custom_group = new CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Group( $this );
 		$this->custom_field = new CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field( $this );
 		$this->group = new CiviCRM_Profile_Sync_ACF_CiviCRM_Group( $this );
 		$this->address = new CiviCRM_Profile_Sync_ACF_CiviCRM_Address( $this );
@@ -539,6 +586,22 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 
 		// --<
 		return $this->activity->activity_field_prefix;
+
+	}
+
+
+
+	/**
+	 * Get ACF Field setting prefix that distinguishes Participant Fields from Custom Fields.
+	 *
+	 * @since 0.5
+	 *
+	 * @return string $participant_field_prefix The prefix of the "CiviCRM Field" value.
+	 */
+	public function participant_field_prefix() {
+
+		// --<
+		return $this->participant->participant_field_prefix;
 
 	}
 

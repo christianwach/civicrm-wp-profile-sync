@@ -1,11 +1,9 @@
 <?php
 /**
- * ACF "CiviCRM Contact Field" Class.
- *
- * Provides a "CiviCRM Contact Field" Custom ACF Field in ACF 5+.
+ * CiviCRM Profile Sync Custom ACF Field Type - CiviCRM Contact Reference Field.
  *
  * @package CiviCRM_WP_Profile_Sync
- * @since 0.4
+ * @since 0.5
  */
 
 // Exit if accessed directly.
@@ -14,18 +12,18 @@ defined( 'ABSPATH' ) || exit;
 
 
 /**
- * CiviCRM Profile Sync Custom ACF Field Type - CiviCRM Contact Reference Field.
+ * ACF "CiviCRM Contact Reference" Class.
  *
- * A class that encapsulates a "CiviCRM Contact Field" Custom ACF Field in ACF 5+.
+ * A class that encapsulates a "CiviCRM Contact Reference" Custom ACF Field in ACF 5+.
  *
- * @since 0.4
+ * @since 0.5
  */
-class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
+class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Ref extends acf_field {
 
 	/**
 	 * ACF Loader object.
 	 *
-	 * @since 0.4
+	 * @since 0.5
 	 * @access public
 	 * @var object $acf_loader The ACF Loader object.
 	 */
@@ -34,7 +32,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 	/**
 	 * Advanced Custom Fields object.
 	 *
-	 * @since 0.4
+	 * @since 0.5
 	 * @access public
 	 * @var object $acf The Advanced Custom Fields object.
 	 */
@@ -43,7 +41,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 	/**
 	 * CiviCRM Utilities object.
 	 *
-	 * @since 0.4
+	 * @since 0.5
 	 * @access public
 	 * @var object $civicrm The CiviCRM Utilities object.
 	 */
@@ -54,11 +52,11 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 	 *
 	 * Single word, no spaces. Underscores allowed.
 	 *
-	 * @since 0.4
+	 * @since 0.5
 	 * @access public
 	 * @var str $name The Field Type name.
 	 */
-	public $name = 'civicrm_contact';
+	public $name = 'civicrm_contact_ref';
 
 	/**
 	 * Field Type label.
@@ -67,7 +65,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 	 *
 	 * Multiple words, can include spaces, visible when selecting a field type.
 	 *
-	 * @since 0.4
+	 * @since 0.5
 	 * @access public
 	 * @var str $label The Field Type label.
 	 */
@@ -80,7 +78,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 	 *
 	 * basic | content | choice | relational | jquery | layout | CUSTOM GROUP NAME
 	 *
-	 * @since 0.4
+	 * @since 0.5
 	 * @access public
 	 * @var str $label The Field Type category.
 	 */
@@ -92,7 +90,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 	 * Array of default settings which are merged into the field object.
 	 * These are used later in settings.
 	 *
-	 * @since 0.4
+	 * @since 0.5
 	 * @access public
 	 * @var array $defaults The Field Type defaults.
 	 */
@@ -103,7 +101,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 	 *
 	 * Contains "version", "url" and "path" as references for use with assets.
 	 *
-	 * @since 0.4
+	 * @since 0.5
 	 * @access public
 	 * @var array $settings The Field Type settings.
 	 */
@@ -121,9 +119,9 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 	 * Array of strings that are used in JavaScript. This allows JS strings
 	 * to be translated in PHP and loaded via:
 	 *
-	 * var message = acf._e( 'civicrm_contact', 'error' );
+	 * var message = acf._e( 'civicrm_participant', 'error' );
 	 *
-	 * @since 0.4
+	 * @since 0.5
 	 * @access public
 	 * @var array $l10n The Field Type translations.
 	 */
@@ -134,7 +132,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 	/**
 	 * Sets up the Field Type.
 	 *
-	 * @since 0.4
+	 * @since 0.5
 	 *
 	 * @param object $parent The parent object reference.
 	 */
@@ -150,7 +148,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 		$this->civicrm = $this->acf_loader->civicrm;
 
 		// Define label.
-		$this->label = __( 'CiviCRM Contact Reference', 'civicrm-wp-profile-sync' );
+		$this->label = __( 'CiviCRM Contact Ref', 'civicrm-wp-profile-sync' );
 
 		// Define translations.
 		$this->l10n = [
@@ -174,61 +172,20 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 	 *
 	 * These extra Settings will be visible when editing a Field.
 	 *
-	 * @since 0.4
+	 * @since 0.5
 	 *
 	 * @param array $field The Field being edited.
 	 */
 	public function render_field_settings( $field ) {
 
 		// Get the Participant Fields for this ACF Field Type.
-		$participant_fields = $this->civicrm->participant_field->get_for_acf_field( $field );
-
-		// Get the Contact Fields for this CiviCRM Contact Type.
-		$contact_fields = $this->civicrm->contact_field->get_for_acf_field( $field );
-
-		// Get the Custom Fields for this CiviCRM Contact Type.
-		$custom_fields = $this->civicrm->custom_field->get_for_acf_field( $field );
-
-		// Filter fields to include only "Contact Reference".
-		$filtered_fields = [];
-		foreach( $custom_fields AS $custom_group_name => $custom_group ) {
-			foreach( $custom_group AS $custom_field ) {
-				if ( ! empty( $custom_field['data_type'] ) AND $custom_field['data_type'] == 'ContactReference' ) {
-					if ( ! empty( $custom_field['html_type'] ) AND $custom_field['html_type'] == 'Autocomplete-Select' ) {
-						$filtered_fields[$custom_group_name][] = $custom_field;
-					}
-				}
-			}
-		}
-
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'contact_fields' => $contact_fields,
-			'participant_fields' => $participant_fields,
-			'custom_fields' => $custom_fields,
-			'filtered_fields' => $filtered_fields,
-			//'backtrace' => $trace,
-		), true ) );
-
-		// Bail if there are no fields.
-		if ( empty( $filtered_fields ) AND empty( $contact_fields ) AND empty( $participant_fields ) ) {
+		$participant_fields = $this->acf_loader->civicrm->participant_field->get_for_acf_field( $field );
+		if ( empty( $participant_fields ) ) {
 			return;
 		}
 
 		// Get Setting field.
-		if ( ! empty( $contact_fields ) ) {
-			$setting = $this->civicrm->contact->acf_field_get( $filtered_fields, $contact_fields );
-		}
-		if ( ! empty( $participant_fields ) ) {
-			$setting = $this->civicrm->participant->acf_field_get( $filtered_fields, $participant_fields );
-		}
-
-		// Bail if we have no setting.
-		if ( empty( $setting ) ) {
-			return;
-		}
+		$setting = $this->civicrm->participant->acf_field_get( [], $participant_fields );
 
 		// Now add it.
 		acf_render_field_setting( $field, $setting );
@@ -240,7 +197,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 	/**
 	 * Creates the HTML interface for this Field Type.
 	 *
-	 * @since 0.4
+	 * @since 0.5
 	 *
 	 * @param array $field The Field being rendered.
 	 */
@@ -297,7 +254,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 	/**
 	 * AJAX Query callback.
 	 *
-	 * @since 0.4
+	 * @since 0.5
 	 */
 	public function ajax_query() {
 
@@ -319,7 +276,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 	/**
 	 * AJAX Query callback.
 	 *
-	 * @since 0.4
+	 * @since 0.5
 	 *
 	 * @param array $options The options that define the query.
 	 * @return array $response The query results.
@@ -366,18 +323,13 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 		// Get the "CiviCRM Field" key.
 		$acf_field_key = $this->civicrm->acf_field_key_get();
 
-		// Assume any Contact Type.
+		// Default to any Contact Type.
 		$args['contact_type'] = '';
-
-		// Restrict to target Contact Type if this Field is linked to Employer ID.
-		if ( $field[$acf_field_key] == $this->civicrm->contact_field_prefix() . 'employer_id' ) {
-			$args['contact_type'] = 'Organization';
-		}
 
 		/**
 		 * Maintain compatibility with the usual ACF filter schema.
 		 *
-		 * @since 0.4
+		 * @since 0.5
 		 *
 		 * @param array $args The array of query arguments.
 		 * @param array $field The ACF Field data.
@@ -429,14 +381,14 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 	 * Use this action to add CSS and JavaScript to assist your render_field()
 	 * action.
 	 *
-	 * @since 0.4
+	 * @since 0.5
 	 */
 	public function input_admin_enqueue_scripts() {
 
 		// Enqueue our JavaScript.
 		wp_enqueue_script(
 			'acf-input-' . $this->name,
-			plugins_url( 'assets/js/acf/fields/civicrm-contact-field.js', CIVICRM_WP_PROFILE_SYNC_FILE ),
+			plugins_url( 'assets/js/acf/fields/civicrm-contact-ref-field.js', CIVICRM_WP_PROFILE_SYNC_FILE ),
 			[ 'acf-input' ],
 			CIVICRM_WP_PROFILE_SYNC_VERSION // Version.
 		);

@@ -244,7 +244,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 */
 	public function fields_get_for_post( $post_id ) {
 
-		// Only do this once per Contact Type and mode.
+		// Only do this once per Post.
 		static $pseudocache;
 		if ( isset( $pseudocache[$post_id] ) ) {
 			return $pseudocache[$post_id];
@@ -281,7 +281,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		foreach( $acf_field_groups AS $acf_field_group ) {
 
 			// Get all the fields in this Field Group.
-			$fields_in_group = acf_get_fields( $acf_field_group['ID'] );
+			$fields_in_group = acf_get_fields( $acf_field_group );
 
 			// Add their Field "name" to the return.
 			foreach( $fields_in_group AS $field_in_group ) {
@@ -302,6 +302,12 @@ class CiviCRM_Profile_Sync_ACF_Field {
 				$activity_field_name = $this->acf_loader->civicrm->activity->activity_field_name_get( $field_in_group );
 				if ( ! empty( $activity_field_name ) ) {
 					$acf_fields['activity'][$field_in_group['name']] = $activity_field_name;
+				}
+
+				// Get the CiviCRM Participant Field and add if it has a reference to a CiviCRM Field.
+				$participant_field_name = $this->acf_loader->civicrm->participant->participant_field_name_get( $field_in_group );
+				if ( ! empty( $participant_field_name ) ) {
+					$acf_fields['participant'][$field_in_group['name']] = $participant_field_name;
 				}
 
 				/**
@@ -672,6 +678,9 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 */
 	public function select_setting_add( $field ) {
 
+		// Get the Participant Fields for this ACF Field.
+		$participant_fields = $this->acf_loader->civicrm->participant_field->get_for_acf_field( $field );
+
 		// Get the Activity Fields for this ACF Field.
 		$activity_fields = $this->acf_loader->civicrm->activity_field->get_for_acf_field( $field );
 
@@ -679,7 +688,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		$contact_fields = $this->acf_loader->civicrm->contact_field->get_for_acf_field( $field );
 
 		// Bail if there are conflicting fields.
-		if ( ! empty( $contact_fields ) AND ! empty( $activity_fields ) ) {
+		if ( ! empty( $contact_fields ) AND ! empty( $activity_fields ) AND ! empty( $participant_fields ) ) {
 			return;
 		}
 
@@ -690,15 +699,24 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		$filtered_fields = $this->acf_loader->civicrm->custom_field->select_settings_filter( $field, $custom_fields );
 
 		// Bail if there are no fields.
-		if ( empty( $filtered_fields ) AND empty( $contact_fields ) AND empty( $activity_fields ) ) {
+		if ( empty( $filtered_fields ) AND empty( $contact_fields ) AND empty( $activity_fields ) AND empty( $participant_fields ) ) {
 			return;
 		}
 
 		// Get Setting field based on Entity.
 		if ( ! empty( $activity_fields ) ) {
 			$setting = $this->acf_loader->civicrm->activity->acf_field_get( $filtered_fields, $activity_fields );
-		} else {
+		}
+		if ( ! empty( $participant_fields ) ) {
+			$setting = $this->acf_loader->civicrm->participant->acf_field_get( $filtered_fields, $participant_fields );
+		}
+		if ( ! empty( $activity_fields ) AND ! empty( $participant_fields ) ) {
 			$setting = $this->acf_loader->civicrm->contact->acf_field_get( $filtered_fields, $contact_fields );
+		}
+
+		// Bail if we have no setting.
+		if ( empty( $setting ) ) {
+			return;
 		}
 
 		// Now add it.
@@ -760,6 +778,19 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 					// These are all optional.
 					$field['allow_null'] = 1;
+
+				} else {
+
+					// Get the mapped Participant Field name if present.
+					$participant_field_name = $this->acf_loader->civicrm->participant->participant_field_name_get( $field );
+
+					// Bail if we don't have one.
+					if ( $participant_field_name !== false ) {
+
+						// Get keyed array of settings.
+						$choices = $this->acf_loader->civicrm->participant_field->select_choices_get( $participant_field_name );
+
+					}
 
 				}
 
@@ -1186,6 +1217,9 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 */
 	public function date_time_picker_setting_add( $field ) {
 
+		// Get the Participant Fields for this ACF Field.
+		$participant_fields = $this->acf_loader->civicrm->participant_field->get_for_acf_field( $field );
+
 		// Get the Activity Fields for this ACF Field.
 		$activity_fields = $this->acf_loader->civicrm->activity_field->get_for_acf_field( $field );
 
@@ -1193,7 +1227,11 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		$contact_fields = $this->acf_loader->civicrm->contact_field->get_for_acf_field( $field );
 
 		// Bail if there are conflicting fields.
-		if ( ! empty( $contact_fields ) AND ! empty( $activity_fields ) ) {
+		if (
+			( ! empty( $contact_fields ) AND ! empty( $activity_fields ) ) OR
+			( ! empty( $contact_fields )  AND ! empty( $participant_fields ) ) OR
+			( ! empty( $participant_fields )  AND ! empty( $activity_fields ) )
+		) {
 			return;
 		}
 
@@ -1204,15 +1242,24 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		$filtered_fields = $this->acf_loader->civicrm->custom_field->date_time_settings_filter( $field, $custom_fields );
 
 		// Bail if there are no fields.
-		if ( empty( $filtered_fields ) AND empty( $contact_fields ) AND empty( $activity_fields ) ) {
+		if ( empty( $filtered_fields ) AND empty( $contact_fields ) AND empty( $activity_fields ) AND empty( $participant_fields ) ) {
 			return;
 		}
 
 		// Get Setting field based on Entity.
 		if ( ! empty( $activity_fields ) ) {
 			$setting = $this->acf_loader->civicrm->activity->acf_field_get( $filtered_fields, $activity_fields );
-		} else {
+		}
+		if ( ! empty( $participant_fields ) ) {
+			$setting = $this->acf_loader->civicrm->participant->acf_field_get( $filtered_fields, $participant_fields );
+		}
+		if ( empty( $activity_fields ) AND empty( $participant_fields ) ) {
 			$setting = $this->acf_loader->civicrm->contact->acf_field_get( $filtered_fields, $contact_fields );
+		}
+
+		// Bail if we have no setting.
+		if ( empty( $setting ) ) {
+			return;
 		}
 
 		// Now add it.
@@ -1255,9 +1302,22 @@ class CiviCRM_Profile_Sync_ACF_Field {
 			// Get the mapped Activity Field name if present.
 			$activity_field_name = $this->acf_loader->civicrm->activity->activity_field_name_get( $field );
 
-			// Bail if we don't have one.
+			// Skip if we don't have one.
 			if ( $activity_field_name !== false ) {
 				$field = $this->acf_loader->civicrm->activity_field->date_time_settings_get( $field, $activity_field_name );
+			}
+
+		}
+
+		// Check Participant settings if we have one.
+		if ( $custom_field_id === false AND $activity_field_name === false ) {
+
+			// Get the mapped Participant Field name if present.
+			$participant_field_name = $this->acf_loader->civicrm->participant->participant_field_name_get( $field );
+
+			// Skip if we don't have one.
+			if ( $participant_field_name !== false ) {
+				$field = $this->acf_loader->civicrm->participant_field->date_time_settings_get( $field, $participant_field_name );
 			}
 
 		}
@@ -1575,6 +1635,9 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 */
 	public function text_setting_add( $field ) {
 
+		// Get the Participant Fields for this ACF Field.
+		$participant_fields = $this->acf_loader->civicrm->participant_field->get_for_acf_field( $field );
+
 		// Get the Activity Fields for this ACF Field.
 		$activity_fields = $this->acf_loader->civicrm->activity_field->get_for_acf_field( $field );
 
@@ -1582,26 +1645,40 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		$contact_fields = $this->acf_loader->civicrm->contact_field->get_for_acf_field( $field );
 
 		// Bail if there are conflicting fields.
-		if ( ! empty( $contact_fields ) AND ! empty( $activity_fields ) ) {
+		if ( ! empty( $contact_fields ) AND ! empty( $activity_fields ) AND ! empty( $participant_fields ) ) {
 			return;
 		}
 
-		// Get the Custom Fields for this CiviCRM Contact Type.
+		// Get the Custom Fields for this CiviCRM Entity Type.
 		$custom_fields = $this->acf_loader->civicrm->custom_field->get_for_acf_field( $field );
 
 		// Filter the Custom Fields for this CiviCRM Contact Type.
 		$filtered_fields = $this->acf_loader->civicrm->custom_field->text_settings_filter( $field, $custom_fields );
 
 		// Bail if there are no fields.
-		if ( empty( $filtered_fields ) AND empty( $contact_fields ) AND empty( $activity_fields ) ) {
+		if (
+			empty( $filtered_fields ) AND
+			empty( $contact_fields ) AND
+			empty( $activity_fields ) AND
+			empty( $participant_fields )
+		) {
 			return;
 		}
 
 		// Get Setting field based on Entity.
 		if ( ! empty( $activity_fields ) ) {
 			$setting = $this->acf_loader->civicrm->activity->acf_field_get( $filtered_fields, $activity_fields );
-		} else {
+		}
+		if ( ! empty( $participant_fields ) ) {
+			$setting = $this->acf_loader->civicrm->participant->acf_field_get( $filtered_fields, $participant_fields );
+		}
+		if ( ! empty( $contact_fields ) ) {
 			$setting = $this->acf_loader->civicrm->contact->acf_field_get( $filtered_fields, $contact_fields );
+		}
+
+		// Bail if we have no setting.
+		if ( empty( $setting ) ) {
+			return;
 		}
 
 		// Now add it.

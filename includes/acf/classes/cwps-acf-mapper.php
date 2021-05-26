@@ -78,6 +78,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 * - WordPress Post
 	 * - CiviCRM Contact
 	 * - CiviCRM Activity
+	 * - CiviCRM Participant
 	 *
 	 * Knowing this helps us determine the messaging flow.
 	 *
@@ -257,6 +258,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		add_action( 'edited_term', [ $this, 'term_edited' ], 20, 3 );
 
 		// Intercept term deletion.
+		add_action( 'pre_delete_term', [ $this, 'term_pre_delete' ], 20, 2 );
 		add_action( 'delete_term', [ $this, 'term_deleted' ], 20, 4 );
 
 	}
@@ -326,10 +328,11 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function hooks_wordpress_tax_remove() {
 
 		// Remove all term-related callbacks.
-		remove_action( 'created_term', [ $this, 'intercept_create_term' ], 20 );
-		remove_action( 'edit_terms', [ $this, 'intercept_pre_update_term' ], 20 );
-		remove_action( 'edited_term', [ $this, 'intercept_update_term' ], 20 );
-		remove_action( 'delete_term', [ $this, 'intercept_delete_term' ], 20 );
+		remove_action( 'created_term', [ $this, 'term_created' ], 20 );
+		remove_action( 'edit_terms', [ $this, 'term_pre_edit' ], 20 );
+		remove_action( 'edited_term', [ $this, 'term_edited' ], 20 );
+		remove_action( 'pre_delete_term', [ $this, 'term_pre_delete' ], 20 );
+		remove_action( 'delete_term', [ $this, 'term_deleted' ], 20 );
 
 	}
 
@@ -351,6 +354,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Intercept Activity updates in CiviCRM.
 		$this->hooks_civicrm_activity_add();
+
+		// Intercept Participant updates in CiviCRM.
+		$this->hooks_civicrm_participant_add();
 
 		// Intercept Email updates in CiviCRM.
 		$this->hooks_civicrm_email_add();
@@ -413,6 +419,25 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		add_action( 'civicrm_post', [ $this, 'activity_created' ], 10, 4 );
 		add_action( 'civicrm_post', [ $this, 'activity_edited' ], 10, 4 );
 		add_action( 'civicrm_post', [ $this, 'activity_deleted' ], 10, 4 );
+
+	}
+
+
+
+	/**
+	 * Register CiviCRM Participant hooks.
+	 *
+	 * @since 0.5
+	 */
+	public function hooks_civicrm_participant_add() {
+
+		// Intercept Participant updates in CiviCRM.
+		add_action( 'civicrm_pre', [ $this, 'participant_pre_create' ], 10, 4 );
+		add_action( 'civicrm_pre', [ $this, 'participant_pre_edit' ], 10, 4 );
+		add_action( 'civicrm_pre', [ $this, 'participant_pre_delete' ], 10, 4 );
+		add_action( 'civicrm_post', [ $this, 'participant_created' ], 10, 4 );
+		add_action( 'civicrm_post', [ $this, 'participant_edited' ], 10, 4 );
+		add_action( 'civicrm_post', [ $this, 'participant_deleted' ], 10, 4 );
 
 	}
 
@@ -581,6 +606,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		// Remove Activity update hooks.
 		$this->hooks_civicrm_activity_remove();
 
+		// Remove Participant update hooks.
+		$this->hooks_civicrm_participant_remove();
+
 		// Remove Email update hooks.
 		$this->hooks_civicrm_email_remove();
 
@@ -642,6 +670,25 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		remove_action( 'civicrm_post', [ $this, 'activity_created' ], 10 );
 		remove_action( 'civicrm_post', [ $this, 'activity_edited' ], 10 );
 		remove_action( 'civicrm_post', [ $this, 'activity_deleted' ], 10 );
+
+	}
+
+
+
+	/**
+	 * Unregister CiviCRM Participant hooks.
+	 *
+	 * @since 0.5
+	 */
+	public function hooks_civicrm_participant_remove() {
+
+		// Remove Participant update hooks.
+		remove_action( 'civicrm_pre', [ $this, 'participant_pre_create' ], 10 );
+		remove_action( 'civicrm_pre', [ $this, 'participant_pre_edit' ], 10 );
+		remove_action( 'civicrm_pre', [ $this, 'participant_pre_delete' ], 10 );
+		remove_action( 'civicrm_post', [ $this, 'participant_created' ], 10 );
+		remove_action( 'civicrm_post', [ $this, 'participant_edited' ], 10 );
+		remove_action( 'civicrm_post', [ $this, 'participant_deleted' ], 10 );
 
 	}
 
@@ -2641,6 +2688,298 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 
 	/**
+	 * Fires just before a CiviCRM Participant is created.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $op The type of database operation.
+	 * @param string $objectName The type of object.
+	 * @param integer $objectId The ID of the object.
+	 * @param object $objectRef The object.
+	 */
+	public function participant_pre_create( $op, $objectName, $objectId, $objectRef ) {
+
+		// Bail if not the context we want.
+		if ( $op != 'create' ) {
+			return;
+		}
+
+		// Bail if this is not a Participant.
+		if ( $objectName != 'Participant' ) {
+			return;
+		}
+
+		// Let's make an array of the CiviCRM params.
+		$args = [
+			'op' => $op,
+			'objectName' => $objectName,
+			'objectId' => $objectId,
+		];
+
+		// Maybe cast objectRef as object.
+		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+
+		/**
+		 * Broadcast that a relevant Participant is about to be created.
+		 *
+		 * @since 0.5
+		 *
+		 * @param array $args The array of CiviCRM params.
+		 */
+		do_action( 'cwps/acf/mapper/participant/create/pre', $args );
+
+	}
+
+
+
+	/**
+	 * Fires just before a CiviCRM Participant is updated.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $op The type of database operation.
+	 * @param string $objectName The type of object.
+	 * @param integer $objectId The ID of the object.
+	 * @param object $objectRef The object.
+	 */
+	public function participant_pre_edit( $op, $objectName, $objectId, $objectRef ) {
+
+		// Bail if not the context we want.
+		if ( $op != 'edit' ) {
+			return;
+		}
+
+		// Bail if this is not a Participant.
+		if ( $objectName != 'Participant' ) {
+			return;
+		}
+
+		// Let's make an array of the CiviCRM params.
+		$args = [
+			'op' => $op,
+			'objectName' => $objectName,
+			'objectId' => $objectId,
+		];
+
+		// Maybe cast objectRef as object.
+		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+
+		/**
+		 * Broadcast that a relevant Participant is about to be updated.
+		 *
+		 * @since 0.5
+		 *
+		 * @param array $args The array of CiviCRM params.
+		 */
+		do_action( 'cwps/acf/mapper/participant/edit/pre', $args );
+
+	}
+
+
+
+	/**
+	 * Fires just before a CiviCRM Participant is deleted.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $op The type of database operation.
+	 * @param string $objectName The type of object.
+	 * @param integer $objectId The ID of the object.
+	 * @param object $objectRef The object.
+	 */
+	public function participant_pre_delete( $op, $objectName, $objectId, $objectRef ) {
+
+		// Bail if not the context we want.
+		if ( $op != 'delete' ) {
+			return;
+		}
+
+		// Bail if this is not a Participant.
+		if ( $objectName != 'Participant' ) {
+			return;
+		}
+
+		// Let's make an array of the CiviCRM params.
+		$args = [
+			'op' => $op,
+			'objectName' => $objectName,
+			'objectId' => $objectId,
+		];
+
+		// Maybe cast objectRef as object.
+		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+
+		/**
+		 * Broadcast that a relevant Participant is about to be deleted.
+		 *
+		 * @since 0.5
+		 *
+		 * @param array $args The array of CiviCRM params.
+		 */
+		do_action( 'cwps/acf/mapper/participant/delete/pre', $args );
+
+	}
+
+
+
+	/**
+	 * Create a WordPress Post when a CiviCRM Participant is created.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $op The type of database operation.
+	 * @param string $objectName The type of object.
+	 * @param integer $objectId The ID of the object.
+	 * @param object $objectRef The object.
+	 */
+	public function participant_created( $op, $objectName, $objectId, $objectRef ) {
+
+		// Bail if it's not the "create" operation.
+		if ( $op != 'create' ) {
+			return;
+		}
+
+		// Bail if this is not a Participant.
+		if ( $objectName != 'Participant' ) {
+			return;
+		}
+
+		// Let's make an array of the CiviCRM params.
+		$args = [
+			'op' => $op,
+			'objectName' => $objectName,
+			'objectId' => $objectId,
+		];
+
+		// Maybe cast objectRef as object.
+		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+
+		// Maybe set this as the originating Entity.
+		$this->entity_set( 'participant', $objectId );
+
+		/**
+		 * Broadcast that a relevant Participant has been created.
+		 *
+		 * @since 0.5
+		 *
+		 * @param array $args The array of CiviCRM params.
+		 */
+		do_action( 'cwps/acf/mapper/participant/created', $args );
+
+	}
+
+
+
+	/**
+	 * Update a WordPress Post when a CiviCRM Participant is updated.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $op The type of database operation.
+	 * @param string $objectName The type of object.
+	 * @param integer $objectId The ID of the object.
+	 * @param object $objectRef The object.
+	 */
+	public function participant_edited( $op, $objectName, $objectId, $objectRef ) {
+
+		// Bail if it's not an "edit" operation.
+		if ( $op != 'edit' ) {
+			return;
+		}
+
+		// Bail if this is not a Participant.
+		if ( $objectName != 'Participant' ) {
+			return;
+		}
+
+		// Bail if it's not a Participant.
+		if ( ! ( $objectRef instanceof CRM_Event_BAO_Participant ) ) {
+			return;
+		}
+
+		// Let's make an array of the CiviCRM params.
+		$args = [
+			'op' => $op,
+			'objectName' => $objectName,
+			'objectId' => $objectId,
+		];
+
+		// Maybe cast objectRef as object.
+		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+
+		// Maybe set this as the originating Entity.
+		$this->entity_set( 'participant', $objectId );
+
+		/**
+		 * Broadcast that a relevant Participant has been updated.
+		 *
+		 * Used internally to:
+		 *
+		 * - Update a WordPress Post
+		 *
+		 * @since 0.5
+		 *
+		 * @param array $args The array of CiviCRM params.
+		 */
+		do_action( 'cwps/acf/mapper/participant/edited', $args );
+
+	}
+
+
+
+	/**
+	 * Intercept when a CiviCRM Participant has been deleted.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $op The type of database operation.
+	 * @param string $objectName The type of object.
+	 * @param integer $objectId The ID of the object.
+	 * @param object $objectRef The object.
+	 */
+	public function participant_deleted( $op, $objectName, $objectId, $objectRef ) {
+
+		// Bail if not the context we want.
+		if ( $op != 'delete' ) {
+			return;
+		}
+
+		// Bail if this is not a Participant.
+		if ( $objectName != 'Participant' ) {
+			return;
+		}
+
+		// Let's make an array of the params.
+		$args = [
+			'op' => $op,
+			'objectName' => $objectName,
+			'objectId' => $objectId,
+		];
+
+		// Maybe cast objectRef as object.
+		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+
+		// Maybe set this as the originating Entity.
+		$this->entity_set( 'participant', $objectId );
+
+		/**
+		 * Broadcast that a CiviCRM Participant has been deleted.
+		 *
+		 * @since 0.5
+		 *
+		 * @param array $args The array of CiviCRM params.
+		 */
+		do_action( 'cwps/acf/mapper/participant/deleted', $args );
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
 	 * Intercept the Post saved operation.
 	 *
 	 * @since 0.4
@@ -2820,6 +3159,40 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		 * @param array $args The array of WordPress params.
 		 */
 		do_action( 'cwps/acf/mapper/term/edited', $args );
+
+	}
+
+
+
+	/**
+	 * Hook in before a Term is deleted.
+	 *
+	 * @since 0.5
+	 *
+	 * @param integer $term_id The numeric ID of the Term.
+	 * @param string $taxonomy The Taxonomy containing the Term.
+	 */
+	public function term_pre_delete( $term_id, $taxonomy = null ) {
+
+		// Bail if there was a Multisite switch.
+		if ( is_multisite() AND ms_is_switched() ) {
+			return;
+		}
+
+		// Let's make an array of the params.
+		$args = [
+			'term_id' => $term_id,
+			'taxonomy' => $taxonomy,
+		];
+
+		/**
+		 * Broadcast that a WordPress Term is about to be deleted.
+		 *
+		 * @since 0.5
+		 *
+		 * @param array $args The array of WordPress params.
+		 */
+		do_action( 'cwps/acf/mapper/term/delete/pre', $args );
 
 	}
 
