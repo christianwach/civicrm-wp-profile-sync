@@ -201,17 +201,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 			}
 		}
 
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'contact_fields' => $contact_fields,
-			'participant_fields' => $participant_fields,
-			'custom_fields' => $custom_fields,
-			'filtered_fields' => $filtered_fields,
-			//'backtrace' => $trace,
-		), true ) );
-
 		// Bail if there are no fields.
 		if ( empty( $filtered_fields ) AND empty( $contact_fields ) AND empty( $participant_fields ) ) {
 			return;
