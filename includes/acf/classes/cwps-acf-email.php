@@ -249,6 +249,53 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 
 	/**
+	 * Get the data for an Email.
+	 *
+	 * @since 0.5
+	 *
+	 * @param integer $email_id The numeric ID of the Email.
+	 * @param array $email The array of Email data, or empty if none.
+	 */
+	public function email_get_by_id( $email_id ) {
+
+		// Init return.
+		$email = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $email;
+		}
+
+		// Construct API query.
+		$params = [
+			'version' => 3,
+			'id' => $email_id,
+		];
+
+		// Get Email details via API.
+		$result = civicrm_api( 'Email', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+			return $email;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $email;
+		}
+
+ 		// The result set should contain only one item.
+		$email = (object) array_pop( $result['values'] );
+
+		// --<
+		return $email;
+
+	}
+
+
+
+	/**
 	 * Get the Primary Email for a given Contact ID.
 	 *
 	 * @since 0.4
@@ -663,7 +710,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		}
 
 		// Data may be missing for some operations, so get the full Email record.
-		$email = $this->primary_email_get( $email_data->contact_id );
+		$email = $this->email_get_by_id( $email_data->id );
 		if ( empty( $email->contact_id ) ) {
 			return;
 		}
@@ -726,7 +773,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		foreach( $acf_fields['email'] AS $selector => $email_field ) {
 
 			// If this is mapped to the Primary Email.
-			if ( $email_field == 'primary' AND $email->is_primary == '1' ) {
+			if ( $email_field == 'primary' AND ! empty( $email->is_primary ) ) {
 				$this->acf_loader->acf->field->value_update( $selector, $email->email, $post_id );
 				continue;
 			}
