@@ -515,7 +515,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 	/**
 	 * A CiviCRM Contact's Website is about to be edited.
 	 *
-	 * Before an Website is edited, we need to store the previous data so that
+	 * Before a Website is edited, we need to store the previous data so that
 	 * we can compare with the data after the edit. If there are changes, then
 	 * we will need to update accordingly.
 	 *
@@ -970,10 +970,10 @@ class CiviCRM_Profile_Sync_ACF_User {
 	/**
 	 * A CiviCRM Contact's Address Record is about to be deleted.
 	 *
-	 * Before a Address Record is deleted, we need to remove the corresponding
+	 * Before an Address Record is deleted, we need to remove the corresponding
 	 * element in the ACF Field data.
 	 *
-	 * This is not required when creating or editing a Address Record.
+	 * This is not required when creating or editing an Address Record.
 	 *
 	 * @since 0.4
 	 *
@@ -1356,9 +1356,9 @@ class CiviCRM_Profile_Sync_ACF_User {
 	/**
 	 * A CiviCRM Contact's Address Record is about to be deleted.
 	 *
-	 * Before a Address Record is deleted, we need to retrieve the existing data.
+	 * Before an Address Record is deleted, we need to retrieve the existing data.
 	 *
-	 * This is not required when creating or editing a Address Record.
+	 * This is not required when creating or editing an Address Record.
 	 *
 	 * @since 0.4
 	 *
@@ -1486,9 +1486,9 @@ class CiviCRM_Profile_Sync_ACF_User {
 	/**
 	 * A CiviCRM Contact's Address Record is about to be deleted.
 	 *
-	 * Before a Address Record is deleted, we need to retrieve the existing data.
+	 * Before an Address Record is deleted, we need to retrieve the existing data.
 	 *
-	 * This is not required when creating or editing a Address Record.
+	 * This is not required when creating or editing an Address Record.
 	 *
 	 * @since 0.4
 	 *

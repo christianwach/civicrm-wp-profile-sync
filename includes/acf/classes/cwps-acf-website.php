@@ -250,7 +250,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 
 
 	/**
-	 * Get the data for an Website.
+	 * Get the data for a Website.
 	 *
 	 * @since 0.4
 	 *
@@ -533,7 +533,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	/**
 	 * A CiviCRM Contact's Website is about to be edited.
 	 *
-	 * Before an Website is edited, we need to store the previous data so that
+	 * Before a Website is edited, we need to store the previous data so that
 	 * we can compare with the data after the edit. If there are changes, then
 	 * we will need to update accordingly.
 	 *
