@@ -710,7 +710,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		if ( ! empty( $participant_fields ) ) {
 			$setting = $this->acf_loader->civicrm->participant->acf_field_get( $filtered_fields, $participant_fields );
 		}
-		if ( ! empty( $activity_fields ) AND ! empty( $participant_fields ) ) {
+		if ( empty( $activity_fields ) AND empty( $participant_fields ) ) {
 			$setting = $this->acf_loader->civicrm->contact->acf_field_get( $filtered_fields, $contact_fields );
 		}
 
