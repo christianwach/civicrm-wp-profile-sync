@@ -739,7 +739,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->acf_loader->civicrm->acf_field_key_get();
 		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
-			return;
+			return $field;
 		}
 
 		// Get the mapped Custom Field ID if present.
@@ -860,7 +860,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->acf_loader->civicrm->acf_field_key_get();
 		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
-			return;
+			return $field;
 		}
 
 		// Get the mapped Custom Field ID if present.
@@ -955,7 +955,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->acf_loader->civicrm->acf_field_key_get();
 		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
-			return;
+			return $field;
 		}
 
 		// Get the mapped Custom Field ID if present.
@@ -1128,7 +1128,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->acf_loader->civicrm->acf_field_key_get();
 		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
-			return;
+			return $field;
 		}
 
 		// Get the mapped Custom Field ID if present.
@@ -1285,7 +1285,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->acf_loader->civicrm->acf_field_key_get();
 		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
-			return;
+			return $field;
 		}
 
 		// Get the mapped Custom Field ID if present.
@@ -1473,7 +1473,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		// Bail if it's not a linked field.
 		$key = $this->acf_loader->civicrm->google_map->acf_field_key_get();
 		if ( empty( $field[$key] ) ) {
-			return;
+			return $field;
 		}
 
 		// Get the "Make Read Only" key.
@@ -1701,7 +1701,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->acf_loader->civicrm->acf_field_key_get();
 		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
-			return;
+			return $field;
 		}
 
 		// Get the mapped Custom Field ID if present.
@@ -1831,7 +1831,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->acf_loader->civicrm->acf_field_key_get();
 		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
-			return;
+			return $field;
 		}
 
 		// Get the mapped Contact Field name if present.
