@@ -149,6 +149,26 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		// Intercept CiviCRM Add/Edit Option Value postSave hook.
 		//add_action( 'civicrm_postSave_civicrm_option_value', [ $this, 'option_value_edited' ], 10 );
 
+		// Listen for queries from our Entity classes.
+		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'select_settings_filter' ], 10, 2 );
+		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'radio_settings_filter' ], 10, 2 );
+		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'checkbox_settings_filter' ], 10, 2 );
+		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'date_settings_filter' ], 10, 2 );
+		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'date_time_settings_filter' ], 10, 2 );
+		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'text_settings_filter' ], 10, 2 );
+		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'wysiwyg_settings_filter' ], 10, 2 );
+		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'textarea_settings_filter' ], 10, 2 );
+		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'true_false_settings_filter' ], 10, 2 );
+		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'url_settings_filter' ], 10, 2 );
+
+		// Listen for queries from our ACF Field Group class.
+		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'select_settings_modify' ], 10, 2 );
+		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'radio_settings_modify' ], 10, 2 );
+		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'checkbox_settings_modify' ], 10, 2 );
+		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'date_picker_settings_modify' ], 10, 2 );
+		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'date_time_picker_settings_modify' ], 10, 2 );
+		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'text_settings_modify' ], 10, 2 );
+
 	}
 
 
@@ -1518,6 +1538,44 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 
 	/**
+	 * Modify the Settings of an ACF "Select" Field.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $field The existing ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @return array $field The modified ACF Field data array.
+	 */
+	public function select_settings_modify( $field, $field_group ) {
+
+		// Bail early if not our Field Type.
+		if ( 'select' !== $field['type'] ) {
+			return $field;
+		}
+
+		// Skip if the CiviCRM Field key isn't there or isn't populated.
+		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+			return $field;
+		}
+
+		// Get the mapped Custom Field ID if present.
+		$custom_field_id = $this->custom_field_id_get( $field );
+		if ( $custom_field_id === false ) {
+			return $field;
+		}
+
+		// Get keyed array of settings.
+		$field['choices'] = $this->select_choices_get( $custom_field_id );
+
+		// --<
+		return $field;
+
+	}
+
+
+
+	/**
 	 * Get the choices for the Setting of a "Select" Field.
 	 *
 	 * @since 0.4
@@ -1577,11 +1635,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $field The ACF Field data array.
 	 * @param array $custom_fields The array of Custom Fields.
+	 * @param array $field The ACF Field data array.
 	 * @return array $filtered_fields The filtered Custom Fields.
 	 */
-	public function select_settings_filter( $field, $custom_fields ) {
+	public function select_settings_filter( $custom_fields, $field ) {
+
+		// Bail early if not our Field Type.
+		if ( 'select' !== $field['type'] ) {
+			return $custom_fields;
+		}
 
 		// Init return.
 		$filtered_fields = [];
@@ -1619,6 +1682,44 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 		// --<
 		return $filtered_fields;
+
+	}
+
+
+
+	/**
+	 * Modify the Settings of an ACF "Radio" Field.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $field The existing ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @return array $field The modified ACF Field data array.
+	 */
+	public function radio_settings_modify( $field, $field_group ) {
+
+		// Bail early if not our Field Type.
+		if ( 'radio' !== $field['type'] ) {
+			return $field;
+		}
+
+		// Skip if the CiviCRM Field key isn't there or isn't populated.
+		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+			return $field;
+		}
+
+		// Get the mapped Custom Field ID if present.
+		$custom_field_id = $this->custom_field_id_get( $field );
+		if ( $custom_field_id === false ) {
+			return $field;
+		}
+
+		// Get keyed array of settings.
+		$field['choices'] = $this->radio_choices_get( $custom_field_id );
+
+		// --<
+		return $field;
 
 	}
 
@@ -1672,11 +1773,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $field The ACF Field data array.
 	 * @param array $custom_fields The array of Custom Fields.
+	 * @param array $field The ACF Field data array.
 	 * @return array $filtered_fields The filtered Custom Fields.
 	 */
-	public function radio_settings_filter( $field, $custom_fields ) {
+	public function radio_settings_filter( $custom_fields, $field ) {
+
+		// Bail early if not our Field Type.
+		if ( 'radio' !== $field['type'] ) {
+			return $custom_fields;
+		}
 
 		// Init return.
 		$filtered_fields = [];
@@ -1694,6 +1800,44 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 		// --<
 		return $filtered_fields;
+
+	}
+
+
+
+	/**
+	 * Modify the Settings of an ACF "Checkbox" Field.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $field The existing ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @return array $field The modified ACF Field data array.
+	 */
+	public function checkbox_settings_modify( $field, $field_group ) {
+
+		// Bail early if not our Field Type.
+		if ( 'checkbox' !== $field['type'] ) {
+			return $field;
+		}
+
+		// Skip if the CiviCRM Field key isn't there or isn't populated.
+		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+			return $field;
+		}
+
+		// Get the mapped Custom Field ID if present.
+		$custom_field_id = $this->custom_field_id_get( $field );
+		if ( $custom_field_id === false ) {
+			return $field;
+		}
+
+		// Get keyed array of settings.
+		$field['choices'] = $this->checkbox_choices_get( $custom_field_id );
+
+		// --<
+		return $field;
 
 	}
 
@@ -1747,11 +1891,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $field The ACF Field data array.
 	 * @param array $custom_fields The array of Custom Fields.
+	 * @param array $field The ACF Field data array.
 	 * @return array $filtered_fields The filtered Custom Fields.
 	 */
-	public function checkbox_settings_filter( $field, $custom_fields ) {
+	public function checkbox_settings_filter( $custom_fields, $field ) {
+
+		// Bail early if not our Field Type.
+		if ( 'checkbox' !== $field['type'] ) {
+			return $custom_fields;
+		}
 
 		// Init return.
 		$filtered_fields = [];
@@ -1775,15 +1924,32 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 
 	/**
-	 * Get the Settings of a "Date" Field as required by a Custom Field.
+	 * Modify the Settings of an ACF "Date Picker" Field.
 	 *
-	 * @since 0.4
+	 * @since 0.5
 	 *
-	 * @param array $field The existing field data array.
-	 * @param string $custom_field_id The numeric ID of the CiviCRM Custom Field.
-	 * @return array $field The modified field data array.
+	 * @param array $field The existing ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @return array $field The modified ACF Field data array.
 	 */
-	public function date_settings_get( $field, $custom_field_id ) {
+	public function date_picker_settings_modify( $field, $field_group ) {
+
+		// Bail early if not our Field Type.
+		if ( 'date_picker' !== $field['type'] ) {
+			return $field;
+		}
+
+		// Skip if the CiviCRM Field key isn't there or isn't populated.
+		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+			return $field;
+		}
+
+		// Get the mapped Custom Field ID if present.
+		$custom_field_id = $this->custom_field_id_get( $field );
+		if ( $custom_field_id === false ) {
+			return $field;
+		}
 
 		// Get Custom Field data.
 		$field_data = $this->get_by_id( $custom_field_id );
@@ -1830,11 +1996,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $field The ACF Field data array.
 	 * @param array $custom_fields The array of Custom Fields.
+	 * @param array $field The ACF Field data array.
 	 * @return array $filtered_fields The filtered Custom Fields.
 	 */
-	public function date_settings_filter( $field, $custom_fields ) {
+	public function date_settings_filter( $custom_fields, $field ) {
+
+		// Bail early if not our Field Type.
+		if ( 'date_picker' !== $field['type'] ) {
+			return $custom_fields;
+		}
 
 		// Init return.
 		$filtered_fields = [];
@@ -1860,20 +2031,35 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 
 	/**
-	 * Get the Settings of a "Date Time" Field as required by a Custom Field.
+	 * Modify the Settings of an ACF "Date Time Picker" Field.
 	 *
-	 * @since 0.4
+	 * @since 0.5
 	 *
-	 * @param array $field The existing field data array.
-	 * @param string $custom_field_id The numeric ID of the CiviCRM Custom Field.
-	 * @return array $field The modified field data array.
+	 * @param array $field The existing ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @return array $field The modified ACF Field data array.
 	 */
-	public function date_time_settings_get( $field, $custom_field_id ) {
+	public function date_time_picker_settings_modify( $field, $field_group ) {
+
+		// Bail early if not our Field Type.
+		if ( 'date_time_picker' !== $field['type'] ) {
+			return $field;
+		}
+
+		// Skip if the CiviCRM Field key isn't there or isn't populated.
+		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+			return $field;
+		}
+
+		// Get the mapped Custom Field ID if present.
+		$custom_field_id = $this->custom_field_id_get( $field );
+		if ( $custom_field_id === false ) {
+			return $field;
+		}
 
 		// Get Custom Field data.
 		$field_data = $this->get_by_id( $custom_field_id );
-
-		// Bail if we don't get any.
 		if ( $field_data === false ) {
 			return $field;
 		}
@@ -1923,11 +2109,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $field The ACF Field data array.
 	 * @param array $custom_fields The array of Custom Fields.
+	 * @param array $field The ACF Field data array.
 	 * @return array $filtered_fields The filtered Custom Fields.
 	 */
-	public function date_time_settings_filter( $field, $custom_fields ) {
+	public function date_time_settings_filter( $custom_fields, $field ) {
+
+		// Bail early if not our Field Type.
+		if ( 'date_time_picker' !== $field['type'] ) {
+			return $custom_fields;
+		}
 
 		// Init return.
 		$filtered_fields = [];
@@ -1953,15 +2144,32 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 
 	/**
-	 * Get the Settings of a "Text" Field as required by a Custom Field.
+	 * Modify the Settings of an ACF "Text" Field.
 	 *
-	 * @since 0.4
+	 * @since 0.5
 	 *
-	 * @param array $field The existing field data array.
-	 * @param string $custom_field_id The numeric ID of the CiviCRM Custom Field.
-	 * @return array $field The modified field data array.
+	 * @param array $field The existing ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @return array $field The modified ACF Field data array.
 	 */
-	public function text_settings_get( $field, $custom_field_id ) {
+	public function text_settings_modify( $field, $field_group ) {
+
+		// Bail early if not our Field Type.
+		if ( 'text' !== $field['type'] ) {
+			return $field;
+		}
+
+		// Skip if the CiviCRM Field key isn't there or isn't populated.
+		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+			return $field;
+		}
+
+		// Get the mapped Custom Field ID if present.
+		$custom_field_id = $this->custom_field_id_get( $field );
+		if ( $custom_field_id === false ) {
+			return $field;
+		}
 
 		// Get Custom Field data.
 		$field_data = $this->get_by_id( $custom_field_id );
@@ -2001,11 +2209,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $field The ACF Field data array.
 	 * @param array $custom_fields The array of Custom Fields.
+	 * @param array $field The ACF Field data array.
 	 * @return array $filtered_fields The filtered Custom Fields.
 	 */
-	public function text_settings_filter( $field, $custom_fields ) {
+	public function text_settings_filter( $custom_fields, $field ) {
+
+		// Bail early if not our Field Type.
+		if ( 'text' !== $field['type'] ) {
+			return $custom_fields;
+		}
 
 		// Init return.
 		$filtered_fields = [];
@@ -2033,11 +2246,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $field The ACF Field data array.
 	 * @param array $custom_fields The array of Custom Fields.
+	 * @param array $field The ACF Field data array.
 	 * @return array $filtered_fields The filtered Custom Fields.
 	 */
-	public function wysiwyg_settings_filter( $field, $custom_fields ) {
+	public function wysiwyg_settings_filter( $custom_fields, $field ) {
+
+		// Bail early if not our Field Type.
+		if ( 'wysiwyg' !== $field['type'] ) {
+			return $custom_fields;
+		}
 
 		// Init return.
 		$filtered_fields = [];
@@ -2065,11 +2283,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $field The ACF Field data array.
 	 * @param array $custom_fields The array of Custom Fields.
+	 * @param array $field The ACF Field data array.
 	 * @return array $filtered_fields The filtered Custom Fields.
 	 */
-	public function textarea_settings_filter( $field, $custom_fields ) {
+	public function textarea_settings_filter( $custom_fields, $field ) {
+
+		// Bail early if not our Field Type.
+		if ( 'textarea' !== $field['type'] ) {
+			return $custom_fields;
+		}
 
 		// Init return.
 		$filtered_fields = [];
@@ -2097,11 +2320,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $field The ACF Field data array.
 	 * @param array $custom_fields The array of Custom Fields.
+	 * @param array $field The ACF Field data array.
 	 * @return array $filtered_fields The filtered Custom Fields.
 	 */
-	public function true_false_settings_filter( $field, $custom_fields ) {
+	public function true_false_settings_filter( $custom_fields, $field ) {
+
+		// Bail early if not our Field Type.
+		if ( 'true_false' !== $field['type'] ) {
+			return $custom_fields;
+		}
 
 		// Init return.
 		$filtered_fields = [];
@@ -2129,11 +2357,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $field The ACF Field data array.
 	 * @param array $custom_fields The array of Custom Fields.
+	 * @param array $field The ACF Field data array.
 	 * @return array $filtered_fields The filtered Custom Fields.
 	 */
-	public function url_settings_filter( $field, $custom_fields ) {
+	public function url_settings_filter( $custom_fields, $field ) {
+
+		// Bail early if not our Field Type.
+		if ( 'url' !== $field['type'] ) {
+			return $custom_fields;
+		}
 
 		// Init return.
 		$filtered_fields = [];

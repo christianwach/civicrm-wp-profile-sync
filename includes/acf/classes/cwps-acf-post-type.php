@@ -31,6 +31,15 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 	 */
 	public $acf_loader;
 
+	/**
+	 * Supported Location Rule name.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var string $rule_name The supported Location Rule name.
+	 */
+	public $rule_name = 'post_type';
+
 
 
 	/**
@@ -72,6 +81,9 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 	 * @since 0.4
 	 */
 	public function register_hooks() {
+
+		// Listen for queries from the ACF Field Group class.
+		add_filter( 'cwps/acf/field_group/query_supported_rules', [ $this, 'query_supported_rules' ], 10, 4 );
 
 	}
 
@@ -538,6 +550,40 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 
 		// --<
 		return $label;
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Listen for queries for supported Location Rules.
+	 *
+	 * @since 0.5
+	 *
+	 * @param bool $supported The existing supported Location Rules status.
+	 * @param array $rule The Location Rule.
+	 * @param array $params The query params array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @return bool $supported The modified supported Location Rules status.
+	 */
+	public function query_supported_rules( $supported, $rule, $params, $field_group ) {
+
+		// Bail if already supported.
+		if ( $supported === true ) {
+			return $supported;
+		}
+
+		// Test for this Location Rule.
+		if ( $rule['param'] == $this->rule_name AND ! empty( $params[$this->rule_name] ) ) {
+			$supported = true;
+		}
+
+		// --<
+		return $supported;
 
 	}
 

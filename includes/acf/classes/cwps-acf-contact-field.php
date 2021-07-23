@@ -162,6 +162,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		add_action( 'civicrm_postSave_civicrm_contact', [ $this, 'image_deleted' ], 10 );
 		add_action( 'delete_attachment', [ $this, 'image_attachment_deleted' ], 10 );
 
+		// Listen for queries from our ACF Field Group class.
+		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'select_settings_modify' ], 50, 2 );
+		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'radio_settings_modify' ], 50, 2 );
+		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'date_picker_settings_modify' ], 10, 2 );
+		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'text_settings_modify' ], 10, 2 );
+		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'image_settings_modify' ], 10, 2 );
+
 		// TODO: Add hooks to Relationships to detect Employer changes via that route.
 
 	}
@@ -876,61 +883,114 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 
 	/**
-	 * Get the choices for the Setting of a "Select" Field.
+	 * Modify the Settings of an ACF "Select" Field.
 	 *
-	 * @since 0.4
+	 * @since 0.5
 	 *
-	 * @param string $contact_field_name The CiviCRM Contact Field name.
-	 * @return array $choices The choices for the field.
+	 * @param array $field The existing ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @return array $field The modified ACF Field data array.
 	 */
-	public function select_choices_get( $contact_field_name ) {
+	public function select_settings_modify( $field, $field_group ) {
 
-		// Init return.
-		$choices = [];
+		// Bail early if not our Field Type.
+		if ( 'select' !== $field['type'] ) {
+			return $field;
+		}
 
-		// Get the array of options for this Contact Field.
-		$choices = $this->options_get( $contact_field_name );
+		// Skip if the CiviCRM Field key isn't there or isn't populated.
+		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+			return $field;
+		}
+
+		// Get the mapped Contact Field name if present.
+		$contact_field_name = $this->civicrm->contact->contact_field_name_get( $field );
+		if ( $contact_field_name === false ) {
+			return $field;
+		}
+
+		// Get keyed array of options for this Contact Field.
+		$field['choices'] = $this->options_get( $contact_field_name );
+
+		// "Prefix" and "Suffix" are optional.
+		$field['allow_null'] = 1;
 
 		// --<
-		return $choices;
+		return $field;
 
 	}
 
 
 
 	/**
-	 * Get the choices for the Setting of a "Radio" Field.
+	 * Modify the Settings of an ACF "Radio" Field.
 	 *
-	 * @since 0.4
+	 * @since 0.5
 	 *
-	 * @param string $contact_field_name The CiviCRM Contact Field name.
-	 * @return array $choices The choices for the field.
+	 * @param array $field The existing ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @return array $field The modified ACF Field data array.
 	 */
-	public function radio_choices_get( $contact_field_name ) {
+	public function radio_settings_modify( $field, $field_group ) {
 
-		// Init return.
-		$choices = [];
+		// Bail early if not our Field Type.
+		if ( 'radio' !== $field['type'] ) {
+			return $field;
+		}
 
-		// Get the array of options for this Contact Field.
-		$choices = $this->acf_loader->civicrm->contact_field->options_get( $contact_field_name );
+		// Skip if the CiviCRM Field key isn't there or isn't populated.
+		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+			return $field;
+		}
+
+		// Get the mapped Contact Field name if present.
+		$contact_field_name = $this->acf_loader->civicrm->contact->contact_field_name_get( $field );
+		if ( $contact_field_name === false ) {
+			return $field;
+		}
+
+		// Get keyed array of options for this Contact Field.
+		$field['choices'] = $this->options_get( $contact_field_name );
+
+		// "Prefix" and "Suffix" are optional.
+		$field['allow_null'] = 1;
 
 		// --<
-		return $choices;
+		return $field;
 
 	}
 
 
 
 	/**
-	 * Get the Settings of a "Date" Field as required by a Contact Field.
+	 * Modify the Settings of an ACF "Date Picker" Field.
 	 *
-	 * @since 0.4
+	 * @since 0.5
 	 *
-	 * @param array $field The field data array.
-	 * @param string $contact_field_name The CiviCRM Contact Field name.
-	 * @return array $choices The choices for the field.
+	 * @param array $field The existing ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @return array $field The modified ACF Field data array.
 	 */
-	public function date_settings_get( $field, $contact_field_name ) {
+	public function date_picker_settings_modify( $field, $field_group ) {
+
+		// Bail early if not our Field Type.
+		if ( 'date_picker' !== $field['type'] ) {
+			return $field;
+		}
+
+		// Skip if the CiviCRM Field key isn't there or isn't populated.
+		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+			return $field;
+		}
+
+		// Get the mapped Contact Field name if present.
+		$contact_field_name = $this->acf_loader->civicrm->contact->contact_field_name_get( $field );
+		if ( $contact_field_name === false ) {
+			return $field;
+		}
 
 		// Get Contact Field data.
 		$format = $this->date_format_get( $contact_field_name );
@@ -950,18 +1010,35 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 
 	/**
-	 * Get the Settings of a "Text" Field as required by a Contact Field.
+	 * Modify the Settings of an ACF "Text" Field.
 	 *
-	 * @since 0.4
+	 * @since 0.5
 	 *
-	 * @param array $field The field data array.
-	 * @param string $contact_field_name The CiviCRM Contact Field name.
-	 * @return array $choices The choices for the field.
+	 * @param array $field The existing ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @return array $field The modified ACF Field data array.
 	 */
-	public function text_settings_get( $field, $contact_field_name ) {
+	public function text_settings_modify( $field, $field_group ) {
+
+		// Bail early if not our Field Type.
+		if ( 'text' !== $field['type'] ) {
+			return $field;
+		}
+
+		// Skip if the CiviCRM Field key isn't there or isn't populated.
+		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+			return $field;
+		}
+
+		// Get the mapped Contact Field name if present.
+		$contact_field_name = $this->civicrm->contact->contact_field_name_get( $field );
+		if ( $contact_field_name === false ) {
+			return $field;
+		}
 
 		// Get Contact Field data.
-		$field_data = $this->acf_loader->civicrm->contact_field->get_by_name( $contact_field_name );
+		$field_data = $this->get_by_name( $contact_field_name );
 
 		// Set the "maxlength" attribute.
 		if ( ! empty( $field_data['maxlength'] ) ) {
@@ -983,13 +1060,30 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 * same Attachment - useful for situations where a Contact has multiple
 	 * Contact Types that are mapped to Custom Post Types.
 	 *
-	 * @since 0.4
+	 * @since 0.5
 	 *
-	 * @param array $field The field data array.
-	 * @param string $contact_field_name The CiviCRM Contact Field name.
-	 * @return array $choices The choices for the field.
+	 * @param array $field The existing ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @return array $field The modified ACF Field data array.
 	 */
-	public function image_settings_get( $field, $contact_field_name ) {
+	public function image_settings_modify( $field, $field_group ) {
+
+		// Bail early if not our Field Type.
+		if ( 'image' !== $field['type'] ) {
+			return $field;
+		}
+
+		// Skip if the CiviCRM Field key isn't there or isn't populated.
+		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+			return $field;
+		}
+
+		// Get the mapped Contact Field name if present.
+		$contact_field_name = $this->civicrm->contact->contact_field_name_get( $field );
+		if ( $contact_field_name === false ) {
+			return $field;
+		}
 
 		// Set Field source library.
 		$field['library'] = 'all';

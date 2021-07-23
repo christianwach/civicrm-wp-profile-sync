@@ -59,6 +59,15 @@ class CiviCRM_Profile_Sync_ACF {
 	public $field;
 
 	/**
+	 * ACF Bypass object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $bypass The ACF Bypass object.
+	 */
+	public $bypass;
+
+	/**
 	 * ACF Blocks object.
 	 *
 	 * @since 0.4
@@ -131,6 +140,7 @@ class CiviCRM_Profile_Sync_ACF {
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-acf-field-type.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-acf-field-group.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-acf-field.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-acf-bypass.php';
 		//include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-acf-blocks.php';
 
 	}
@@ -152,6 +162,9 @@ class CiviCRM_Profile_Sync_ACF {
 
 		// Init Field object.
 		$this->field = new CiviCRM_Profile_Sync_ACF_Field( $this );
+
+		// Init Bypass object.
+		$this->bypass = new CiviCRM_Profile_Sync_ACF_Bypass( $this );
 
 		// Init Blocks object.
 		//$this->blocks = new CiviCRM_Profile_Sync_ACF_Blocks( $this );

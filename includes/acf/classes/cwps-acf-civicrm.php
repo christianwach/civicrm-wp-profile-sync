@@ -250,8 +250,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	/**
 	 * "CiviCRM Field" field key in the ACF Field data.
 	 *
-	 * This "top level" field key is common to "Contact" and "Activity" Entities
-	 * where the field name prefix distiguishes the target Entity.
+	 * This "top level" field key is common to all CiviCRM Entities. The value
+	 * of the field has a prefix which distiguishes the target Entity.
 	 *
 	 * @see self::custom_field_prefix()
 	 * @see self::contact_field_prefix()

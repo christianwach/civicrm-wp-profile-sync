@@ -356,6 +356,68 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 
 
 	/**
+	 * Get all Participant Roles.
+	 *
+	 * @since 0.5
+	 *
+	 * @return array $participant_roles The array of all Participant Roles.
+	 */
+	public function get_all() {
+
+		// Only do this once.
+		static $pseudocache;
+		if ( isset( $pseudocache ) ) {
+			return $pseudocache;
+		}
+
+		// Init return.
+		$participant_roles = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $participant_roles;
+		}
+
+		// Define params to get all Participant Roles.
+		$params = [
+			'version' => 3,
+			'sequential' => 1,
+			'option_group_id' => $this->option_group_id_get(),
+			'options' => [
+				'sort' => 'label',
+				'limit' => 0, // No limit.
+			],
+		];
+
+		// Call the API.
+		$result = civicrm_api( 'OptionValue', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+			return $participant_roles;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $participant_roles;
+		}
+
+		// The result set is what we're after.
+		$participant_roles = $result['values'];
+
+		// Maybe add to pseudo-cache.
+		if ( ! isset( $pseudocache ) ) {
+			$pseudocache = $participant_roles;
+		}
+
+		// --<
+		return $participant_roles;
+
+	}
+
+
+
+	/**
 	 * Get all Participant Roles that are mapped to Post Types.
 	 *
 	 * @since 0.5

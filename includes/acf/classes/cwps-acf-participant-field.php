@@ -119,6 +119,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 		// Some Participant "Text" Fields need their own validation.
 		add_filter( 'acf/validate_value/type=text', [ $this, 'value_validate' ], 10, 4 );
 
+		// Listen for queries from our ACF Field class.
+		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'select_settings_modify' ], 30, 2 );
+		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'date_time_picker_settings_modify' ], 10, 2 );
+
 	}
 
 
@@ -611,6 +615,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 			return $participant_fields;
 		}
 
+		// TODO: Do we need this loop?
+
 		// Loop through the Post Types.
 		foreach( $is_participant_field_group AS $post_type_name ) {
 
@@ -828,61 +834,70 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 
 
 	/**
-	 * Get the choices for the Setting of a "Select" Field.
+	 * Modify the Settings of an ACF "Select" Field.
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $participant_field_name The CiviCRM Participant Field name.
-	 * @return array $choices The choices for the field.
+	 * @param array $field The existing ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @return array $field The modified ACF Field data array.
 	 */
-	public function select_choices_get( $participant_field_name ) {
+	public function select_settings_modify( $field, $field_group ) {
 
-		// Init return.
-		$choices = [];
+		// Bail early if not our Field Type.
+		if ( 'select' !== $field['type'] ) {
+			return $field;
+		}
 
-		// Get the array of options for this Participant Field.
-		$choices = $this->options_get( $participant_field_name );
+		// Skip if the CiviCRM Field key isn't there or isn't populated.
+		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+			return $field;
+		}
+
+		// Get the mapped Participant Field name if present.
+		$participant_field_name = $this->civicrm->participant->participant_field_name_get( $field );
+		if ( $participant_field_name === false ) {
+			return $field;
+		}
+
+		// Get keyed array of settings.
+		$field['choices'] = $this->options_get( $participant_field_name );
 
 		// --<
-		return $choices;
+		return $field;
 
 	}
 
 
 
 	/**
-	 * Get the choices for the Setting of a "Radio" Field.
+	 * Modify the Settings of an ACF "Date Time Picker" Field.
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $participant_field_name The CiviCRM Participant Field name.
-	 * @return array $choices The choices for the field.
+	 * @param array $field The existing ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @return array $field The modified ACF Field data array.
 	 */
-	public function radio_choices_get( $participant_field_name ) {
+	public function date_time_picker_settings_modify( $field, $field_group ) {
 
-		// Init return.
-		$choices = [];
+		// Bail early if not our Field Type.
+		if ( 'date_time_picker' !== $field['type'] ) {
+			return $field;
+		}
 
-		// Get the array of options for this Participant Field.
-		$choices = $this->acf_loader->civicrm->participant_field->options_get( $participant_field_name );
+		// Skip if the CiviCRM Field key isn't there or isn't populated.
+		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+			return $field;
+		}
 
-		// --<
-		return $choices;
-
-	}
-
-
-
-	/**
-	 * Get the Settings of a "DateTime" Field as required by a Participant Field.
-	 *
-	 * @since 0.5
-	 *
-	 * @param array $field The existing field data array.
-	 * @param string $participant_field_name The CiviCRM Participant Field name.
-	 * @return array $field The modified field data array.
-	 */
-	public function date_time_settings_get( $field, $participant_field_name ) {
+		// Get the mapped Participant Field name if present.
+		$participant_field_name = $this->acf_loader->civicrm->participant->participant_field_name_get( $field );
+		if ( $participant_field_name === false ) {
+			return $field;
+		}
 
 		// Try and get CiviCRM format.
 		//$civicrm_format = $this->date_time_format_get( $participant_field_name );
@@ -937,32 +952,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 
 		// --<
 		return $format;
-
-	}
-
-
-
-	/**
-	 * Get the Settings of a "Text" Field as required by a Participant Field.
-	 *
-	 * @since 0.5
-	 *
-	 * @param array $field The field data array.
-	 * @param string $participant_field_name The CiviCRM Participant Field name.
-	 * @return array $choices The choices for the field.
-	 */
-	public function text_settings_get( $field, $participant_field_name ) {
-
-		// Get Participant Field data.
-		$field_data = $this->acf_loader->civicrm->participant_field->get_by_name( $participant_field_name );
-
-		// Set the "maxlength" attribute.
-		if ( ! empty( $field_data['maxlength'] ) ) {
-			$field['maxlength'] = $field_data['maxlength'];
-		}
-
-		// --<
-		return $field;
 
 	}
 

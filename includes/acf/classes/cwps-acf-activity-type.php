@@ -359,6 +359,68 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 
 
 	/**
+	 * Get all Activity Types.
+	 *
+	 * @since 0.5
+	 *
+	 * @return array $activity_types The array of Activity Types.
+	 */
+	public function get_all() {
+
+		// Only do this once.
+		static $pseudocache;
+		if ( isset( $pseudocache ) ) {
+			return $pseudocache;
+		}
+
+		// Init return.
+		$activity_types = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $activity_types;
+		}
+
+		// Define params to get queried Activity Types.
+		$params = [
+			'version' => 3,
+			'sequential' => 1,
+			'option_group_id' => $this->option_group_id_get(),
+			'options' => [
+				'sort' => 'label',
+				'limit' => 0, // No limit.
+			],
+		];
+
+		// Call the API.
+		$result = civicrm_api( 'OptionValue', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+			return $activity_types;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $activity_types;
+		}
+
+		// The result set is what we're after.
+		$activity_types = $result['values'];
+
+		// Maybe add to pseudo-cache.
+		if ( ! isset( $pseudocache ) ) {
+			$pseudocache = $activity_types;
+		}
+
+		// --<
+		return $activity_types;
+
+	}
+
+
+
+	/**
 	 * Get all Activity Types that are mapped to Post Types.
 	 *
 	 * @since 0.4

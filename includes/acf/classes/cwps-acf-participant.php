@@ -59,6 +59,17 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 	public $cpt;
 
 	/**
+	 * Entity identifier.
+	 *
+	 * This identifier is unique to this "top level" Entity.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var str $identifier The unique identifier for this "top level" Entity.
+	 */
+	public $identifier = 'participant';
+
+	/**
 	 * "CiviCRM Field" field value prefix in the ACF Field data.
 	 *
 	 * This distinguishes Participant Fields from Custom Fields.
@@ -195,6 +206,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 		// Maybe add a Menu Item to CiviCRM Admin Utilities menu.
 		add_action( 'civicrm_admin_utilities_menu_top', [ $this, 'menu_item_add_to_cau' ], 10, 2 );
+
+		// Listen for queries from the ACF Field class.
+		add_filter( 'cwps/acf/query_settings_field', [ $this, 'query_settings_field' ], 10, 3 );
+
+		// Listen for queries from the ACF Bypass class.
+		add_filter( 'cwps/acf/bypass/query_settings_field', [ $this, 'query_bypass_settings_field' ], 10, 4 );
+
+		// Listen for queries from the ACF Bypass Location Rule class.
+		add_filter( 'cwps/acf/bypass/location/query_entities', [ $this, 'query_bypass_entities' ], 20, 2 );
 
 	}
 
@@ -1229,6 +1249,149 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 
 	/**
+	 * Returns a Setting Field from this Entity when found.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $setting_field The existing Setting Field array.
+	 * @param array $field The ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @param bool $skip_check True if the check for Field Group should be skipped. Default false.
+	 * @return array|bool $setting_field The Setting Field array if populated, false if conflicting.
+	 */
+	public function query_settings_field( $setting_field, $field, $field_group, $skip_check = false ) {
+
+		// Pass if conflicting fields have been found.
+		if ( $setting_field === false ) {
+			return false;
+		}
+
+		// Pass if this is not a Participant Field Group.
+		$is_visible = $this->is_participant_field_group( $field_group );
+		if ( $is_visible === false ) {
+			return $setting_field;
+		}
+
+		// If already populated, then this is a conflicting field.
+		if ( ! empty( $setting_field ) ) {
+			return false;
+		}
+
+		// Get the Participant Fields for this ACF Field.
+		$participant_fields = $this->acf_loader->civicrm->participant_field->get_for_acf_field( $field );
+
+		// Get the Custom Fields for CiviCRM Participants.
+		$custom_fields = $this->acf_loader->civicrm->custom_field->get_for_entity_type( 'Participant', '' );
+
+		/**
+		 * Filter the Custom Fields.
+		 *
+		 * @since 0.5
+		 *
+		 * @param array $custom_fields The CiviCRM Custom Fields array.
+		 * @param array $field The ACF Field data array.
+		 */
+		$filtered_fields = apply_filters( 'cwps/acf/query_settings/custom_fields_filter', $custom_fields, $field );
+
+		// Pass if not populated.
+		if ( empty( $participant_fields ) AND empty( $filtered_fields ) ) {
+			return $setting_field;
+		}
+
+		// Get the Setting Field.
+		$setting_field = $this->acf_field_get( $filtered_fields, $participant_fields );
+
+		// Return populated array.
+		return $setting_field;
+
+	}
+
+
+
+	/**
+	 * Returns a Setting Field for a Bypass ACF Field Group when found.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $setting_field The existing Setting Field array.
+	 * @param array $field The ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @param array $entity_array The Entity and ID array.
+	 * @return array|bool $setting_field The Setting Field array if populated, false if conflicting.
+	 */
+	public function query_bypass_settings_field( $setting_field, $field, $field_group, $entity_array ) {
+
+		// Pass if not our Entity Type.
+		if ( $entity_array['entity'] !== $this->identifier ) {
+			return $setting_field;
+		}
+
+		// Get the public fields on the Entity for this Field Type.
+		$fields_for_entity = $this->acf_loader->civicrm->participant_field->data_get( $field['type'], 'public' );
+
+		// Get the Custom Fields for this Entity.
+		$custom_fields = $this->acf_loader->civicrm->custom_field->get_for_entity_type( 'Participant', '' );
+
+		/**
+		 * Filter the Custom Fields.
+		 *
+		 * @since 0.5
+		 *
+		 * @param array $custom_fields The CiviCRM Custom Fields array.
+		 * @param array $field The ACF Field data array.
+		 */
+		$filtered_fields = apply_filters( 'cwps/acf/query_settings/custom_fields_filter', $custom_fields, $field );
+
+		// Pass if not populated.
+		if ( empty( $fields_for_entity ) AND empty( $filtered_fields ) ) {
+			return $setting_field;
+		}
+
+		// Get the Setting Field.
+		$setting_field = $this->acf_field_get( $filtered_fields, $fields_for_entity );
+
+		// Return populated array.
+		return $setting_field;
+
+	}
+
+
+
+	/**
+	 * Appends a nested array of possible values to the Entities array for the
+	 * Bypass Location Rule.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $entities The existing Entity values array.
+	 * @param array $rule The current Location Rule.
+	 * @return array $entities The modified Entity values array.
+	 */
+	public function query_bypass_entities( $entities, $rule ) {
+
+		// Get all Participant Roles.
+		$participant_roles = $this->civicrm->participant_role->get_all();
+
+		// Bail if there are none.
+		if ( empty( $participant_roles ) ) {
+			return $entities;
+		}
+
+		// Add Option Group and add entries for each Participant Role.
+		$participant_roles_title = esc_attr( __( 'Participant Roles', 'civicrm-wp-profile-sync' ) );
+		$entities[$participant_roles_title] = [];
+		foreach( $participant_roles AS $participant_role ) {
+			$entities[$participant_roles_title][$this->identifier . '-' . $participant_role['value']] = $participant_role['label'];
+		}
+
+		// --<
+		return $entities;
+
+	}
+
+
+
+	/**
 	 * Listen for queries from the Field Group class.
 	 *
 	 * This method responds with a Boolean if it detects that this Field Group
@@ -1408,7 +1571,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		// Assume not a Participant Field Group.
 		$is_participant_field_group = false;
 
-		// If location rules exist.
+		// If Location Rules exist.
 		if ( ! empty( $field_group['location'] ) ) {
 
 			// Get mapped Post Types.

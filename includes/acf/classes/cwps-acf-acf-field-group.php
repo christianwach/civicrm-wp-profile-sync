@@ -172,16 +172,15 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 		// Loop through Fields and save them.
 		foreach( $fields AS $field ) {
 
-			// Build method name.
-			$method = $field['type'] . '_setting_modify';
-
-			// Skip if not callable.
-			if ( ! is_callable( [ $this->acf->field, $method ] ) ) {
-				continue;
-			}
-
-			// Run Field through associated method.
-			$field = $this->acf->field->$method( $field );
+			/**
+			 * Filters the mapped ACF Field before saving.
+			 *
+			 * @since 0.5
+			 *
+			 * @param array $field The ACF Field to save.
+			 * @param array $field_group The array of ACF Field Group data.
+			 */
+			$field = apply_filters( 'cwps/acf/field_group/field/pre_update', $field, $field_group );
 
 			// Save the Field.
 			acf_update_field( $field );
@@ -205,28 +204,49 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 	 * @since 0.4
 	 *
 	 * @param array $field The ACF Field data array.
-	 * @return array $field_group The ACF Field Group data array.
+	 * @return array|bool $field_group The ACF Field Group data array, false if not found.
 	 */
 	public function get_for_field( $field ) {
+
+		// Only do this once per Field.
+		static $pseudocache;
+		if ( isset( $pseudocache[$field['ID']] ) ) {
+			return $pseudocache[$field['ID']];
+		}
 
 		// Get field parent safely.
 		$field_parent = acf_maybe_get( $field, 'parent' );
 
-		// Bail if there's no field parent.
+		// If there's no field parent.
 		if ( ! $field_parent ) {
-			return false;
+
+			// Flag in pseudo-cache.
+			$field_group = false;
+
+		} else {
+
+			// If this field has no ancestors.
+			$field_ancestors = acf_get_field_ancestors( $field );
+			if ( ! $field_ancestors ) {
+
+				// Use the parent.
+				$field_group = acf_get_field_group( $field_parent );
+
+			} else {
+
+				// It has ancestors - get top-most field's field group.
+				$topmost_field = array_pop( $field_ancestors );
+				$field_data = acf_get_field( $topmost_field );
+				$field_group = acf_get_field_group( $field_data['parent'] );
+
+			}
+
 		}
 
-		// Return early if this field has no ancestors.
-		$field_ancestors = acf_get_field_ancestors( $field );
-		if ( ! $field_ancestors ) {
-			return acf_get_field_group( $field_parent );
+		// Maybe add to pseudo-cache.
+		if ( ! isset( $pseudocache[$field['ID']] ) ) {
+			$pseudocache[$field['ID']] = $field_group;
 		}
-
-		// It has ancestors - get top-most field's field group.
-		$topmost_field = array_pop( $field_ancestors );
-		$field_data = acf_get_field( $topmost_field );
-		$field_group = acf_get_field_group( $field_data['parent'] );
 
 		// --<
 		return $field_group;
@@ -291,7 +311,7 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 	 */
 	public function is_visible( $field_group, $params ) {
 
-		// Bail if no location rules exist.
+		// Bail if no Location Rules exist.
 		if ( empty( $field_group['location'] ) ) {
 			return false;
 		}
@@ -323,14 +343,26 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 			 */
 			foreach( $group AS $rule ) {
 
-				// TODO: Make the following a filter?
+				/**
+				 * Check for any supported Location Rules.
+				 *
+				 * Internally, this is used by:
+				 *
+				 * @see CiviCRM_Profile_Sync_ACF_Bypass::query_supported_rules()
+				 * @see CiviCRM_Profile_Sync_ACF_User::query_supported_rules()
+				 * @see CiviCRM_Profile_Sync_ACF_Post_Type::query_supported_rules()
+				 *
+				 * @since 0.5
+				 *
+				 * @param bool False defaults to no supported Location Rules.
+				 * @param array $rule The Location Rule.
+				 * @param array $params The query params array.
+				 * @param array $field_group The ACF Field Group data array.
+				 */
+				$supported = apply_filters( 'cwps/acf/field_group/query_supported_rules', false, $rule, $params, $field_group );
 
-				// Check any rules which reference a "post type" or "user form".
-				if (
-					( $rule['param'] == 'post_type' AND ! empty( $params['post_type'] ) )
-					OR
-					( $rule['param'] == 'user_form' AND ! empty( $params['user_form'] ) )
-				) {
+				// Do we have a supported rule?
+				if ( $supported ) {
 
 					// Regardless of match, a rules references the
 					$queried_entity_present = true;

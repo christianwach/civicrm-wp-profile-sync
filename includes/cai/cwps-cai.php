@@ -2007,17 +2007,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 	 */
 	public function contact_data( $contact_data, $post ) {
 
-		/*
-		$e = new Exception;
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'contact_data' => $contact_data,
-			'post' => $post,
-			'backtrace' => $trace,
-		), true ) );
-		*/
-
 		// Skip if the Post Status isn't 'trash'.
 		if ( $post->post_status !== 'trash' ) {
 			return $contact_data;
@@ -2116,7 +2105,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		// Assume not visible.
 		$is_visible = false;
 
-		// Bail if no location rules exist.
+		// Skip if no Location Rules exist.
 		if ( ! empty( $field_group['location'] ) ) {
 
 			// Define params to test for User Edit Form location.

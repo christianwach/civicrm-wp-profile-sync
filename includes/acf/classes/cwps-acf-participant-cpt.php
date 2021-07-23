@@ -1209,7 +1209,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		// Assume not a Participant Field Group.
 		$is_participant_field_group = false;
 
-		// If location rules exist.
+		// If Location Rules exist.
 		if ( ! empty( $field_group['location'] ) ) {
 
 			// Define params to test for our Post Type.
@@ -1920,7 +1920,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 			'type' => 'select',
 			'instructions' => '',
 			'required' => 1,
-			'choices' => $this->civicrm->participant_field->select_choices_get( 'status_id' ),
+			'choices' => $this->civicrm->participant_field->options_get( 'status_id' ),
 			'default_value' => false,
 			'allow_null' => 0,
 			'multiple' => 0,

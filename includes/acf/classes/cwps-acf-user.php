@@ -40,6 +40,17 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 */
 	public $acf_loader;
 
+	/**
+	 * Supported Location Rule names.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array $rule_names The supported Location Rule names.
+	 */
+	public $rule_names = [
+		'user_form',
+	];
+
 
 
 	/**
@@ -113,6 +124,9 @@ class CiviCRM_Profile_Sync_ACF_User {
 		// Listen for reverse-sync actions and prevent triggering needless procedures.
 		add_action( 'cwps/acf/contact_field/reverse_sync/pre', [ $this, 'unregister_mapper_civicrm_hooks' ], 10 );
 		add_action( 'cwps/acf/contact_field/reverse_sync/post', [ $this, 'register_mapper_civicrm_hooks' ], 10 );
+
+		// Listen for queries from the ACF Field Group class.
+		add_filter( 'cwps/acf/field_group/query_supported_rules', [ $this, 'query_supported_rules' ], 10, 4 );
 
 	}
 
@@ -1957,6 +1971,45 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 
 
+	/**
+	 * Listen for queries for supported Location Rules.
+	 *
+	 * @since 0.5
+	 *
+	 * @param bool $supported The existing supported Location Rules status.
+	 * @param array $rule The Location Rule.
+	 * @param array $params The query params array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @return bool $supported The modified supported Location Rules status.
+	 */
+	public function query_supported_rules( $supported, $rule, $params, $field_group ) {
+
+		// Bail if already supported.
+		if ( $supported === true ) {
+			return $supported;
+		}
+
+		// Test for this Location Rule.
+		if ( ! in_array( $rule['param'], $this->rule_names ) ) {
+			return $supported;
+		}
+
+		// Loop through our rule names to see if the query contains one.
+		foreach ( $this->rule_names AS $rule_name ) {
+			 if ( ! empty( $params[$rule_name] ) ) {
+				$supported = true;
+				break;
+			}
+		}
+
+
+		// --<
+		return $supported;
+
+	}
+
+
+
 	// -------------------------------------------------------------------------
 
 
@@ -2074,7 +2127,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		// Assume not visible.
 		$is_visible = false;
 
-		// Bail if no location rules exist.
+		// Bail if no Location Rules exist.
 		if ( ! empty( $field_group['location'] ) ) {
 
 			// Define params to test for User Edit Form location.

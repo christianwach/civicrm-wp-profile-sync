@@ -71,44 +71,19 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 */
 	public function register_hooks() {
 
-		// Add setting to various Fields.
-		add_action( 'acf/render_field_settings/type=true_false', [ $this, 'true_false_setting_add' ] );
-		add_action( 'acf/render_field_settings/type=wysiwyg', [ $this, 'wysiwyg_setting_add' ] );
-		add_action( 'acf/render_field_settings/type=textarea', [ $this, 'textarea_setting_add' ] );
-		add_action( 'acf/render_field_settings/type=url', [ $this, 'url_setting_add' ] );
-		add_action( 'acf/render_field_settings/type=email', [ $this, 'email_setting_add' ] );
+		// Validate Fields.
+		add_filter( 'acf/validate_value/type=select', [ $this, 'value_validate' ], 10, 4 );
+		add_filter( 'acf/validate_value/type=radio', [ $this, 'value_validate' ], 10, 4 );
+		add_filter( 'acf/validate_value/type=text', [ $this, 'value_validate' ], 10, 4 );
+
+		// Add Setting Field to Fields.
+		add_action( 'acf/render_field_settings', [ $this, 'field_setting_add' ] );
 
 		// Customise "Google Map" Fields.
-		add_action( 'acf/render_field_settings/type=google_map', [ $this, 'google_map_setting_add' ] );
 		add_action( 'acf/render_field/type=google_map', [ $this, 'google_map_styles_add' ] );
 		add_action( 'acf/load_value/type=google_map', [ $this, 'google_map_value_modify' ], 10, 3 );
 		add_action( 'acf/update_value/type=google_map', [ $this, 'google_map_value_modify' ], 10, 3 );
-
-		// Customise "Select" Fields.
-		add_action( 'acf/render_field_settings/type=select', [ $this, 'select_setting_add' ] );
-		add_filter( 'acf/validate_value/type=select', [ $this, 'value_validate' ], 10, 4 );
-
-		// Customise "Radio" Fields.
-		add_action( 'acf/render_field_settings/type=radio', [ $this, 'radio_setting_add' ] );
-		add_filter( 'acf/validate_value/type=radio', [ $this, 'value_validate' ], 10, 4 );
-
-		// Customise "CheckBox" Fields.
-		add_action( 'acf/render_field_settings/type=checkbox', [ $this, 'checkbox_setting_add' ] );
-
-		// Customise "Date" Fields.
-		add_action( 'acf/render_field_settings/type=date_picker', [ $this, 'date_picker_setting_add' ] );
-		add_filter( 'acf/load_value/type=date_picker', [ $this, 'date_picker_value_modify' ], 10, 3 );
-
-		// Customise "Date Time" Fields.
-		add_action( 'acf/render_field_settings/type=date_time_picker', [ $this, 'date_time_picker_setting_add' ] );
-		add_filter( 'acf/load_value/type=date_time_picker', [ $this, 'date_time_picker_value_modify' ], 10, 3 );
-
-		// Customise "Text" Fields.
-		add_action( 'acf/render_field_settings/type=text', [ $this, 'text_setting_add' ] );
-		add_filter( 'acf/validate_value/type=text', [ $this, 'value_validate' ], 10, 4 );
-
-		// Customise "Image" Fields.
-		add_action( 'acf/render_field_settings/type=image', [ $this, 'image_setting_add' ] );
+		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'google_map_setting_modify' ], 10, 2 );
 
 	}
 
@@ -122,6 +97,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 * Get the type of WordPress Entity that a Field refers to.
 	 *
 	 * @see https://www.advancedcustomfields.com/resources/get_fields/
+	 * @see acf_decode_post_id()
 	 *
 	 * @since 0.4
 	 *
@@ -393,16 +369,12 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 		// Get the mapped Custom Field ID if present.
 		$custom_field_id = $this->acf_loader->civicrm->custom_field->custom_field_id_get( $field );
-
-		// Bail if we don't have one.
 		if ( $custom_field_id === false ) {
 			return $valid;
 		}
 
 		// Get Custom Field data.
 		$field_data = $this->acf_loader->civicrm->custom_field->get_by_id( $custom_field_id );
-
-		// Bail if we don't get any.
 		if ( $field_data === false ) {
 			return $valid;
 		}
@@ -584,10 +556,6 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 
 
-	// -------------------------------------------------------------------------
-
-
-
 	/**
 	 * Get the value of a "True/False" Field formatted for CiviCRM.
 	 *
@@ -616,446 +584,54 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 
 	/**
-	 * Add Setting to "True/False" Field Settings.
+	 * Get the value of an "Image" Field formatted for CiviCRM.
+	 *
+	 * The only kind of sync that an ACF Image Field can do at the moment is to
+	 * sync with the CiviCRM Contact Image. This is a built-in field for Contacts
+	 * and consists simply of the URL of the image.
+	 *
+	 * The ACF Image Field return format can be either 'array', 'url' or 'id' so
+	 * we need to extract the original image URL to send to CiviCRM.
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $field The field data array.
+	 * @param integer|null $value The field value (the Attachment data).
+	 * @return string $value The URL of the full size image.
 	 */
-	public function true_false_setting_add( $field ) {
+	public function image_value_get( $value ) {
 
-		// Get the Contact Fields for this CiviCRM Contact Type.
-		$contact_fields = $this->acf_loader->civicrm->contact_field->get_for_acf_field( $field );
-
-		// Get the Custom Fields for this CiviCRM Contact Type.
-		$custom_fields = $this->acf_loader->civicrm->custom_field->get_for_acf_field( $field );
-
-		// Filter the Custom Fields for this CiviCRM Contact Type.
-		$filtered_fields = $this->acf_loader->civicrm->custom_field->true_false_settings_filter( $field, $custom_fields );
-
-		// Bail if there are no fields.
-		if ( empty( $filtered_fields ) AND empty( $contact_fields ) ) {
-			return;
+		// Return empty string when value is empty.
+		if ( empty( $value ) ) {
+			return '';
 		}
 
-		// Get Setting field.
-		$setting = $this->acf_loader->civicrm->contact->acf_field_get( $filtered_fields, $contact_fields );
+		// If it's an array, extract full image URL.
+		if ( is_array( $value ) ) {
 
-		// Now add it.
-		acf_render_field_setting( $field, $setting );
+			// Discard all but the URL.
+			if ( ! empty( $value['url'] ) ) {
+				$value = $value['url'];
+			}
 
-	}
+		// When it's numeric, get full image URL from attachment.
+		} elseif ( is_numeric( $value ) ) {
 
+			// Grab the the full size Image URL.
+			$url = wp_get_attachment_image_url( (int) $value, 'full' );
 
-
-	// -------------------------------------------------------------------------
-
-
-
-	/**
-	 * Add Setting to "Select" Fields.
-	 *
-	 * The following is weak in that the ACF Field has to be set up with these
-	 * settings for the mapping to function.
-	 *
-	 * Ideally, once the mapping has been established, the ACF Field should
-	 * be amended to match the kind of CiviCRM Custom Field. This could be
-	 * done by allowing all Select-type Custom Fields to be chosen when adding
-	 * an ACF Field, then post-processing when the type of Custom Field is
-	 * known.
-	 *
-	 * For now the mapping is:
-	 *
-	 * Multi-Select: Requires "Select multiple values?" to be selected.
-	 * Autocomplete-Select: Requires both "Stylised UI" and "Use AJAX to lazy load choices?"
-	 * Select: Fallback when the above are not selected.
-	 *
-	 * @todo Better sync between these types.
-	 *
-	 * @since 0.4
-	 *
-	 * @param array $field The ACF Field data array.
-	 */
-	public function select_setting_add( $field ) {
-
-		// Get the Participant Fields for this ACF Field.
-		$participant_fields = $this->acf_loader->civicrm->participant_field->get_for_acf_field( $field );
-
-		// Get the Activity Fields for this ACF Field.
-		$activity_fields = $this->acf_loader->civicrm->activity_field->get_for_acf_field( $field );
-
-		// Get the Contact Fields for this CiviCRM Contact Type.
-		$contact_fields = $this->acf_loader->civicrm->contact_field->get_for_acf_field( $field );
-
-		// Bail if there are conflicting fields.
-		if ( ! empty( $contact_fields ) AND ! empty( $activity_fields ) AND ! empty( $participant_fields ) ) {
-			return;
-		}
-
-		// Get the Custom Fields for this CiviCRM Contact Type.
-		$custom_fields = $this->acf_loader->civicrm->custom_field->get_for_acf_field( $field );
-
-		// Filter the Custom Fields for this CiviCRM Contact Type.
-		$filtered_fields = $this->acf_loader->civicrm->custom_field->select_settings_filter( $field, $custom_fields );
-
-		// Bail if there are no fields.
-		if ( empty( $filtered_fields ) AND empty( $contact_fields ) AND empty( $activity_fields ) AND empty( $participant_fields ) ) {
-			return;
-		}
-
-		// Get Setting field based on Entity.
-		if ( ! empty( $activity_fields ) ) {
-			$setting = $this->acf_loader->civicrm->activity->acf_field_get( $filtered_fields, $activity_fields );
-		}
-		if ( ! empty( $participant_fields ) ) {
-			$setting = $this->acf_loader->civicrm->participant->acf_field_get( $filtered_fields, $participant_fields );
-		}
-		if ( empty( $activity_fields ) AND empty( $participant_fields ) ) {
-			$setting = $this->acf_loader->civicrm->contact->acf_field_get( $filtered_fields, $contact_fields );
-		}
-
-		// Bail if we have no setting.
-		if ( empty( $setting ) ) {
-			return;
-		}
-
-		// Now add it.
-		acf_render_field_setting( $field, $setting );
-
-	}
-
-
-
-	/**
-	 * Maybe modify the Setting of a "Select" Field.
-	 *
-	 * @since 0.4
-	 *
-	 * @param array $field The existing field data array.
-	 * @return array $field The modified field data array.
-	 */
-	public function select_setting_modify( $field ) {
-
-		// Skip if the CiviCRM Field key isn't there or isn't populated.
-		$key = $this->acf_loader->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
-			return $field;
-		}
-
-		// Get the mapped Custom Field ID if present.
-		$custom_field_id = $this->acf_loader->civicrm->custom_field->custom_field_id_get( $field );
-
-		// Check for a Custom Field.
-		if ( $custom_field_id !== false ) {
-
-			// Get keyed array of settings.
-			$choices = $this->acf_loader->civicrm->custom_field->select_choices_get( $custom_field_id );
-
-		} else {
-
-			// Get the mapped Contact Field name if present.
-			$contact_field_name = $this->acf_loader->civicrm->contact->contact_field_name_get( $field );
-
-			// Bail if we don't have one.
-			if ( $contact_field_name !== false ) {
-
-				// Get keyed array of settings.
-				$choices = $this->acf_loader->civicrm->contact_field->select_choices_get( $contact_field_name );
-
-				// "Prefix" and "Suffix" are optional.
-				$field['allow_null'] = 1;
-
-			} else {
-
-				// Get the mapped Activity Field name if present.
-				$activity_field_name = $this->acf_loader->civicrm->activity->activity_field_name_get( $field );
-
-				// Bail if we don't have one.
-				if ( $activity_field_name !== false ) {
-
-					// Get keyed array of settings.
-					$choices = $this->acf_loader->civicrm->activity_field->select_choices_get( $activity_field_name );
-
-					// These are all optional.
-					$field['allow_null'] = 1;
-
-				} else {
-
-					// Get the mapped Participant Field name if present.
-					$participant_field_name = $this->acf_loader->civicrm->participant->participant_field_name_get( $field );
-
-					// Bail if we don't have one.
-					if ( $participant_field_name !== false ) {
-
-						// Get keyed array of settings.
-						$choices = $this->acf_loader->civicrm->participant_field->select_choices_get( $participant_field_name );
-
-					}
-
-				}
-
+			// Overwrite with the URL.
+			if ( ! empty( $url ) ) {
+				$value = $url;
 			}
 
 		}
 
-		// Overwrite choices.
-		if ( ! empty( $choices ) ) {
-			$field['choices'] = $choices;
-		}
+		// When it's a string, it must be the URL.
 
 		// --<
-		return $field;
+		return $value;
 
 	}
-
-
-
-	// -------------------------------------------------------------------------
-
-
-
-	/**
-	 * Add Setting to "Alphanumeric Radio" Field Settings.
-	 *
-	 * @since 0.4
-	 *
-	 * @param array $field The field data array.
-	 */
-	public function radio_setting_add( $field ) {
-
-		// Get the Contact Fields for this CiviCRM Contact Type.
-		$contact_fields = $this->acf_loader->civicrm->contact_field->get_for_acf_field( $field );
-
-		// Get the Custom Fields for this CiviCRM Contact Type.
-		$custom_fields = $this->acf_loader->civicrm->custom_field->get_for_acf_field( $field );
-
-		// Filter the Custom Fields for this CiviCRM Contact Type.
-		$filtered_fields = $this->acf_loader->civicrm->custom_field->radio_settings_filter( $field, $custom_fields );
-
-		// Bail if there are no fields.
-		if ( empty( $filtered_fields ) AND empty( $contact_fields ) ) {
-			return;
-		}
-
-		// Get Setting field.
-		$setting = $this->acf_loader->civicrm->contact->acf_field_get( $filtered_fields, $contact_fields );
-
-		// Now add it.
-		acf_render_field_setting( $field, $setting );
-
-	}
-
-
-
-	/**
-	 * Maybe modify the Setting of an "Alphanumeric Radio" Field.
-	 *
-	 * @since 0.4
-	 *
-	 * @param array $field The existing field data array.
-	 * @return array $field The modified field data array.
-	 */
-	public function radio_setting_modify( $field ) {
-
-		// Skip if the CiviCRM Field key isn't there or isn't populated.
-		$key = $this->acf_loader->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
-			return $field;
-		}
-
-		// Get the mapped Custom Field ID if present.
-		$custom_field_id = $this->acf_loader->civicrm->custom_field->custom_field_id_get( $field );
-
-		// Check for Contact Field if we don't have a Custom Field.
-		if ( $custom_field_id === false ) {
-
-			// Get the mapped Contact Field name if present.
-			$contact_field_name = $this->acf_loader->civicrm->contact->contact_field_name_get( $field );
-
-			// Bail if we don't have one.
-			if ( $contact_field_name === false ) {
-				return $field;
-			}
-
-			// Get keyed array of Contact Field settings.
-			$choices = $this->acf_loader->civicrm->contact_field->radio_choices_get( $contact_field_name );
-
-			// "Prefix" and "Suffix" are optional.
-			$field['allow_null'] = 1;
-
-		} else {
-
-			// Get keyed array of Custom Field settings.
-			$choices = $this->acf_loader->civicrm->custom_field->radio_choices_get( $custom_field_id );
-
-		}
-
-		// Overwrite choices.
-		if ( ! empty( $choices ) ) {
-			$field['choices'] = $choices;
-		}
-
-		// --<
-		return $field;
-
-	}
-
-
-
-	// -------------------------------------------------------------------------
-
-
-
-	/**
-	 * Add Setting to "CheckBox" Fields.
-	 *
-	 * @since 0.4
-	 *
-	 * @param array $field The field data array.
-	 */
-	public function checkbox_setting_add( $field ) {
-
-		// Get the Contact Fields for this CiviCRM Contact Type.
-		$contact_fields = $this->acf_loader->civicrm->contact_field->get_for_acf_field( $field );
-
-		// Get the Custom Fields for this CiviCRM Contact Type.
-		$custom_fields = $this->acf_loader->civicrm->custom_field->get_for_acf_field( $field );
-
-		// Filter the Custom Fields for this CiviCRM Contact Type.
-		$filtered_fields = $this->acf_loader->civicrm->custom_field->checkbox_settings_filter( $field, $custom_fields );
-
-		// Bail if there are no fields.
-		if ( empty( $filtered_fields ) AND empty( $contact_fields ) ) {
-			return;
-		}
-
-		// Get Setting field.
-		$setting = $this->acf_loader->civicrm->contact->acf_field_get( $filtered_fields, $contact_fields );
-
-		// Now add it.
-		acf_render_field_setting( $field, $setting );
-
-	}
-
-
-
-	/**
-	 * Maybe modify the Setting of a "CheckBox" Field.
-	 *
-	 * There are no Contact Fields of type "CheckBox", so we only need to check
-	 * for Custom Fields.
-	 *
-	 * @since 0.4
-	 *
-	 * @param array $field The existing field data array.
-	 * @return array $field The modified field data array.
-	 */
-	public function checkbox_setting_modify( $field ) {
-
-		// Skip if the CiviCRM Field key isn't there or isn't populated.
-		$key = $this->acf_loader->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
-			return $field;
-		}
-
-		// Get the mapped Custom Field ID if present.
-		$custom_field_id = $this->acf_loader->civicrm->custom_field->custom_field_id_get( $field );
-
-		// Bail if we don't have one.
-		if ( $custom_field_id === false ) {
-			return $field;
-		}
-
-		// Get keyed array of Custom Field settings.
-		$choices = $this->acf_loader->civicrm->custom_field->checkbox_choices_get( $custom_field_id );
-
-		// Overwrite choices.
-		if ( ! empty( $choices ) ) {
-			$field['choices'] = $choices;
-		}
-
-		// --<
-		return $field;
-
-	}
-
-
-
-	// -------------------------------------------------------------------------
-
-
-
-	/**
-	 * Add Setting to "Wysiwyg" Field Settings.
-	 *
-	 * @since 0.4
-	 *
-	 * @param array $field The field data array.
-	 */
-	public function wysiwyg_setting_add( $field ) {
-
-		// Get the Contact Fields for this CiviCRM Contact Type.
-		$contact_fields = $this->acf_loader->civicrm->contact_field->get_for_acf_field( $field );
-
-		// Get the Custom Fields for this CiviCRM Contact Type.
-		$custom_fields = $this->acf_loader->civicrm->custom_field->get_for_acf_field( $field );
-
-		// Filter the Custom Fields for this CiviCRM Contact Type.
-		$filtered_fields = $this->acf_loader->civicrm->custom_field->wysiwyg_settings_filter( $field, $custom_fields );
-
-		// Bail if there are no fields.
-		if ( empty( $filtered_fields ) AND empty( $contact_fields ) ) {
-			return;
-		}
-
-		// Get Setting field.
-		$setting = $this->acf_loader->civicrm->contact->acf_field_get( $filtered_fields, $contact_fields );
-
-		// Now add it.
-		acf_render_field_setting( $field, $setting );
-
-	}
-
-
-
-	// -------------------------------------------------------------------------
-
-
-
-	/**
-	 * Add Setting to "Text Area" Field Settings.
-	 *
-	 * @since 0.4
-	 *
-	 * @param array $field The field data array.
-	 */
-	public function textarea_setting_add( $field ) {
-
-		// Get the Contact Fields for this CiviCRM Contact Type.
-		$contact_fields = $this->acf_loader->civicrm->contact_field->get_for_acf_field( $field );
-
-		// Get the Custom Fields for this CiviCRM Contact Type.
-		$custom_fields = $this->acf_loader->civicrm->custom_field->get_for_acf_field( $field );
-
-		// Filter the Custom Fields for this CiviCRM Contact Type.
-		$filtered_fields = $this->acf_loader->civicrm->custom_field->textarea_settings_filter( $field, $custom_fields );
-
-		// Bail if there are no fields.
-		if ( empty( $filtered_fields ) AND empty( $contact_fields ) ) {
-			return;
-		}
-
-		// Get Setting field.
-		$setting = $this->acf_loader->civicrm->contact->acf_field_get( $filtered_fields, $contact_fields );
-
-		// Now add it.
-		acf_render_field_setting( $field, $setting );
-
-	}
-
-
-
-	// -------------------------------------------------------------------------
 
 
 
@@ -1083,109 +659,6 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 
 	/**
-	 * Add Setting to "Date" Field Settings.
-	 *
-	 * @since 0.4
-	 *
-	 * @param array $field The field data array.
-	 */
-	public function date_picker_setting_add( $field ) {
-
-		// Get the Contact Fields for this CiviCRM Contact Type.
-		$contact_fields = $this->acf_loader->civicrm->contact_field->get_for_acf_field( $field );
-
-		// Get the Custom Fields for this CiviCRM Contact Type.
-		$custom_fields = $this->acf_loader->civicrm->custom_field->get_for_acf_field( $field );
-
-		// Filter the Custom Fields for this CiviCRM Contact Type.
-		$filtered_fields = $this->acf_loader->civicrm->custom_field->date_settings_filter( $field, $custom_fields );
-
-		// Bail if there are no fields.
-		if ( empty( $filtered_fields ) AND empty( $contact_fields ) ) {
-			return;
-		}
-
-		// Get Setting field.
-		$setting = $this->acf_loader->civicrm->contact->acf_field_get( $filtered_fields, $contact_fields );
-
-		// Now add it.
-		acf_render_field_setting( $field, $setting );
-
-	}
-
-
-
-	/**
-	 * Maybe modify the Setting of a "Date" Field.
-	 *
-	 * @since 0.4
-	 *
-	 * @param array $field The existing field data array.
-	 * @return array $field The modified field data array.
-	 */
-	public function date_picker_setting_modify( $field ) {
-
-		// Skip if the CiviCRM Field key isn't there or isn't populated.
-		$key = $this->acf_loader->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
-			return $field;
-		}
-
-		// Get the mapped Custom Field ID if present.
-		$custom_field_id = $this->acf_loader->civicrm->custom_field->custom_field_id_get( $field );
-
-		// Check for Contact Field if we don't have a Custom Field.
-		if ( $custom_field_id === false ) {
-
-			// Get the mapped Contact Field name if present.
-			$contact_field_name = $this->acf_loader->civicrm->contact->contact_field_name_get( $field );
-
-			// Bail if we don't have one.
-			if ( $contact_field_name === false ) {
-				return $field;
-			}
-
-			// Apply settings.
-			$field = $this->acf_loader->civicrm->contact_field->date_settings_get( $field, $contact_field_name );
-
-		} else {
-
-			// Apply settings.
-			$field = $this->acf_loader->civicrm->custom_field->date_settings_get( $field, $custom_field_id );
-
-		}
-
-		// --<
-		return $field;
-
-	}
-
-
-
-	/**
-	 * Maybe modify the value of a "Date" Field.
-	 *
-	 * @since 0.4
-	 *
-	 * @param string $value The field value.
-	 * @param integer|string $post_id The ACF "Post ID".
-	 * @param array $field The existing field data array.
-	 * @return array $field The modified field data array.
-	 */
-	public function date_picker_value_modify( $value, $post_id, $field ) {
-
-		// --<
-		return $value;
-
-	}
-
-
-
-	// -------------------------------------------------------------------------
-
-
-
-	/**
 	 * Get the value of a "Date Time Picker" Field formatted for CiviCRM.
 	 *
 	 * @since 0.4
@@ -1208,54 +681,32 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 
 
+	// -------------------------------------------------------------------------
+
+
+
 	/**
-	 * Add Setting to "Date Time" Field Settings.
+	 * Add Setting to "Text" Field Settings.
 	 *
 	 * @since 0.4
 	 *
 	 * @param array $field The field data array.
 	 */
-	public function date_time_picker_setting_add( $field ) {
+	public function field_setting_add( $field ) {
 
-		// Get the Participant Fields for this ACF Field.
-		$participant_fields = $this->acf_loader->civicrm->participant_field->get_for_acf_field( $field );
+		// Get the Field Group for this Field.
+		$field_group = $this->acf->field_group->get_for_field( $field );
 
-		// Get the Activity Fields for this ACF Field.
-		$activity_fields = $this->acf_loader->civicrm->activity_field->get_for_acf_field( $field );
-
-		// Get the Contact Fields for this ACF Field.
-		$contact_fields = $this->acf_loader->civicrm->contact_field->get_for_acf_field( $field );
-
-		// Bail if there are conflicting fields.
-		if (
-			( ! empty( $contact_fields ) AND ! empty( $activity_fields ) ) OR
-			( ! empty( $contact_fields )  AND ! empty( $participant_fields ) ) OR
-			( ! empty( $participant_fields )  AND ! empty( $activity_fields ) )
-		) {
-			return;
-		}
-
-		// Get the Custom Fields for this ACF Field.
-		$custom_fields = $this->acf_loader->civicrm->custom_field->get_for_acf_field( $field );
-
-		// Filter the Custom Fields for this ACF Field.
-		$filtered_fields = $this->acf_loader->civicrm->custom_field->date_time_settings_filter( $field, $custom_fields );
-
-		// Bail if there are no fields.
-		if ( empty( $filtered_fields ) AND empty( $contact_fields ) AND empty( $activity_fields ) AND empty( $participant_fields ) ) {
-			return;
-		}
-
-		// Get Setting field based on Entity.
-		if ( ! empty( $activity_fields ) ) {
-			$setting = $this->acf_loader->civicrm->activity->acf_field_get( $filtered_fields, $activity_fields );
-		}
-		if ( ! empty( $participant_fields ) ) {
-			$setting = $this->acf_loader->civicrm->participant->acf_field_get( $filtered_fields, $participant_fields );
-		}
-		if ( empty( $activity_fields ) AND empty( $participant_fields ) ) {
-			$setting = $this->acf_loader->civicrm->contact->acf_field_get( $filtered_fields, $contact_fields );
-		}
+		/**
+		 * Request a Setting Field from Entity classes.
+		 *
+		 * @since 0.5
+		 *
+		 * @param array The empty default Setting Field array.
+		 * @param array $field The ACF Field data array.
+		 * @param array $field_group The ACF Field Group data array.
+		 */
+		$setting = apply_filters( 'cwps/acf/query_settings_field', [], $field, $field_group );
 
 		// Bail if we have no setting.
 		if ( empty( $setting ) ) {
@@ -1269,230 +720,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 
 
-	/**
-	 * Maybe modify the Setting of a "Date Time" Field.
-	 *
-	 * There are no Contact Fields of type "Date Time", so we only need to check
-	 * for Custom Fields.
-	 *
-	 * @since 0.4
-	 *
-	 * @param array $field The existing field data array.
-	 * @return array $field The modified field data array.
-	 */
-	public function date_time_picker_setting_modify( $field ) {
-
-		// Skip if the CiviCRM Field key isn't there or isn't populated.
-		$key = $this->acf_loader->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
-			return $field;
-		}
-
-		// Get the mapped Custom Field ID if present.
-		$custom_field_id = $this->acf_loader->civicrm->custom_field->custom_field_id_get( $field );
-
-		// Apply settings if we have one.
-		if ( $custom_field_id !== false ) {
-			$field = $this->acf_loader->civicrm->custom_field->date_time_settings_get( $field, $custom_field_id );
-		}
-
-		// Check Activity settings if we have one.
-		if ( $custom_field_id === false ) {
-
-			// Get the mapped Activity Field name if present.
-			$activity_field_name = $this->acf_loader->civicrm->activity->activity_field_name_get( $field );
-
-			// Skip if we don't have one.
-			if ( $activity_field_name !== false ) {
-				$field = $this->acf_loader->civicrm->activity_field->date_time_settings_get( $field, $activity_field_name );
-			}
-
-		}
-
-		// Check Participant settings if we have one.
-		if ( $custom_field_id === false AND $activity_field_name === false ) {
-
-			// Get the mapped Participant Field name if present.
-			$participant_field_name = $this->acf_loader->civicrm->participant->participant_field_name_get( $field );
-
-			// Skip if we don't have one.
-			if ( $participant_field_name !== false ) {
-				$field = $this->acf_loader->civicrm->participant_field->date_time_settings_get( $field, $participant_field_name );
-			}
-
-		}
-
-		// --<
-		return $field;
-
-	}
-
-
-
-	/**
-	 * Maybe modify the value of a "Date Time" Field.
-	 *
-	 * @since 0.4
-	 *
-	 * @param string $value The field value.
-	 * @param integer|string $post_id The ACF "Post ID".
-	 * @param array $field The existing field data array.
-	 * @return array $field The modified field data array.
-	 */
-	public function date_time_picker_value_modify( $value, $post_id, $field ) {
-
-		// --<
-		return $value;
-
-	}
-
-
-
 	// -------------------------------------------------------------------------
-
-
-
-	/**
-	 * Add Setting to "URL" Field Settings.
-	 *
-	 * @since 0.4
-	 *
-	 * @param array $field The field data array.
-	 */
-	public function url_setting_add( $field ) {
-
-		// Get the Website Fields for this CiviCRM Contact Type.
-		$website_fields = $this->acf_loader->civicrm->website->get_for_acf_field( $field );
-
-		// Get the Custom Fields for this CiviCRM Contact Type.
-		$custom_fields = $this->acf_loader->civicrm->custom_field->get_for_acf_field( $field );
-
-		// Filter the Custom Fields for this CiviCRM Contact Type.
-		$filtered_fields = $this->acf_loader->civicrm->custom_field->url_settings_filter( $field, $custom_fields );
-
-		// Bail if there are no fields.
-		if ( empty( $filtered_fields ) AND empty( $website_fields ) ) {
-			return;
-		}
-
-		// Get Setting field.
-		$setting = $this->acf_loader->civicrm->website->acf_field_get( $filtered_fields, $website_fields );
-
-		// Now add it.
-		acf_render_field_setting( $field, $setting );
-
-	}
-
-
-
-	// -------------------------------------------------------------------------
-
-
-
-	/**
-	 * Add Setting to "Email" Field Settings.
-	 *
-	 * @since 0.4
-	 *
-	 * @param array $field The field data array.
-	 */
-	public function email_setting_add( $field ) {
-
-		// Get the Email Fields for this CiviCRM Contact Type.
-		$email_fields = $this->acf_loader->civicrm->email->get_for_acf_field( $field );
-
-		// Bail if there are no fields.
-		if ( empty( $email_fields ) ) {
-			return;
-		}
-
-		// Get Setting field.
-		$setting = $this->acf_loader->civicrm->email->acf_field_get( $email_fields );
-
-		// Now add it.
-		acf_render_field_setting( $field, $setting );
-
-	}
-
-
-
-	// -------------------------------------------------------------------------
-
-
-
-	/**
-	 * Add Setting to "Google Map" Field Settings.
-	 *
-	 * @since 0.4
-	 *
-	 * @param array $field The field data array.
-	 */
-	public function google_map_setting_add( $field ) {
-
-		// Get the Address Fields for this CiviCRM Contact Type.
-		$address_fields = $this->acf_loader->civicrm->google_map->get_for_acf_field( $field );
-
-		// Bail if there are no fields.
-		if ( empty( $address_fields ) ) {
-			return;
-		}
-
-		// Get Setting field.
-		$setting = $this->acf_loader->civicrm->google_map->acf_field_get( $address_fields );
-
-		// Now add it.
-		acf_render_field_setting( $field, $setting );
-
-		/*
-		// Get "Disable Edit" Setting field.
-		$edit_setting = $this->acf_loader->civicrm->google_map->acf_field_edit_get( $address_fields );
-
-		// Now add it.
-		acf_render_field_setting( $field, $edit_setting );
-		*/
-
-	}
-
-
-
-	/**
-	 * Maybe modify the Setting of a "Google Map" Field.
-	 *
-	 * Only the Primary Address can be editable in the ACF Field because it is
-	 * the only CiviCRM Address that is guaranteed to be unique. There can be
-	 * multiple Addresses with the same Location Type but only one that is the
-	 * Primary Address.
-	 *
-	 * @since 0.4
-	 *
-	 * @param array $field The existing field data array.
-	 * @return array $field The modified field data array.
-	 */
-	public function google_map_setting_modify( $field ) {
-
-		// Bail if it's not a linked field.
-		$key = $this->acf_loader->civicrm->google_map->acf_field_key_get();
-		if ( empty( $field[$key] ) ) {
-			return $field;
-		}
-
-		// Get the "Make Read Only" key.
-		$edit_key = $this->acf_loader->civicrm->google_map->acf_field_key_edit_get();
-
-		// Always set to default if not set.
-		if ( ! isset( $field[$edit_key] ) ) {
-			$field[$edit_key] = 1;
-		}
-
-		// Always set to true if not a "Primary" Address.
-		if ( $field[$key] != 'primary' ) {
-			$field[$edit_key] = 1;
-		}
-
-		// --<
-		return $field;
-
-	}
 
 
 
@@ -1622,228 +850,45 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 
 
-	// -------------------------------------------------------------------------
-
-
-
 	/**
-	 * Add Setting to "Text" Field Settings.
+	 * Maybe modify the Setting of a "Google Map" Field.
 	 *
-	 * @since 0.4
-	 *
-	 * @param array $field The field data array.
-	 */
-	public function text_setting_add( $field ) {
-
-		// Get the Participant Fields for this ACF Field.
-		$participant_fields = $this->acf_loader->civicrm->participant_field->get_for_acf_field( $field );
-
-		// Get the Activity Fields for this ACF Field.
-		$activity_fields = $this->acf_loader->civicrm->activity_field->get_for_acf_field( $field );
-
-		// Get the Contact Fields for this CiviCRM Contact Type.
-		$contact_fields = $this->acf_loader->civicrm->contact_field->get_for_acf_field( $field );
-
-		// Bail if there are conflicting fields.
-		if ( ! empty( $contact_fields ) AND ! empty( $activity_fields ) AND ! empty( $participant_fields ) ) {
-			return;
-		}
-
-		// Get the Custom Fields for this CiviCRM Entity Type.
-		$custom_fields = $this->acf_loader->civicrm->custom_field->get_for_acf_field( $field );
-
-		// Filter the Custom Fields for this CiviCRM Contact Type.
-		$filtered_fields = $this->acf_loader->civicrm->custom_field->text_settings_filter( $field, $custom_fields );
-
-		// Bail if there are no fields.
-		if (
-			empty( $filtered_fields ) AND
-			empty( $contact_fields ) AND
-			empty( $activity_fields ) AND
-			empty( $participant_fields )
-		) {
-			return;
-		}
-
-		// Get Setting field based on Entity.
-		if ( ! empty( $activity_fields ) ) {
-			$setting = $this->acf_loader->civicrm->activity->acf_field_get( $filtered_fields, $activity_fields );
-		}
-		if ( ! empty( $participant_fields ) ) {
-			$setting = $this->acf_loader->civicrm->participant->acf_field_get( $filtered_fields, $participant_fields );
-		}
-		if ( empty( $activity_fields ) AND empty( $participant_fields ) ) {
-			$setting = $this->acf_loader->civicrm->contact->acf_field_get( $filtered_fields, $contact_fields );
-		}
-
-		// Bail if we have no setting.
-		if ( empty( $setting ) ) {
-			return;
-		}
-
-		// Now add it.
-		acf_render_field_setting( $field, $setting );
-
-	}
-
-
-
-	/**
-	 * Maybe modify the Setting of a "Text" Field.
+	 * Only the Primary Address can be editable in the ACF Field because it is
+	 * the only CiviCRM Address that is guaranteed to be unique. There can be
+	 * multiple Addresses with the same Location Type but only one that is the
+	 * Primary Address.
 	 *
 	 * @since 0.4
 	 *
 	 * @param array $field The existing field data array.
+	 * @param array $field_group The array of ACF Field Group data.
 	 * @return array $field The modified field data array.
 	 */
-	public function text_setting_modify( $field ) {
+	public function google_map_setting_modify( $field, $field_group = [] ) {
 
-		// Skip if the CiviCRM Field key isn't there or isn't populated.
-		$key = $this->acf_loader->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+		// Bail early if not our Field Type.
+		if ( 'google_map' !== $field['type'] ) {
 			return $field;
 		}
 
-		// Get the mapped Custom Field ID if present.
-		$custom_field_id = $this->acf_loader->civicrm->custom_field->custom_field_id_get( $field );
-
-		// Check for Contact Field if we don't have a Custom Field.
-		if ( $custom_field_id === false ) {
-
-			// Get the mapped Contact Field name if present.
-			$contact_field_name = $this->acf_loader->civicrm->contact->contact_field_name_get( $field );
-
-			// Bail if we don't have one.
-			if ( $contact_field_name === false ) {
-				return $field;
-			}
-
-			// Apply settings.
-			$field = $this->acf_loader->civicrm->contact_field->text_settings_get( $field, $contact_field_name );
-
-		} else {
-
-			// Apply settings.
-			$field = $this->acf_loader->civicrm->custom_field->text_settings_get( $field, $custom_field_id );
-
-		}
-
-		// --<
-		return $field;
-
-	}
-
-
-
-	// -------------------------------------------------------------------------
-
-
-
-	/**
-	 * Get the value of an "Image" Field formatted for CiviCRM.
-	 *
-	 * The only kind of sync that an ACF Image Field can do at the moment is to
-	 * sync with the CiviCRM Contact Image. This is a built-in field for Contacts
-	 * and consists simply of the URL of the image.
-	 *
-	 * The ACF Image Field return format can be either 'array', 'url' or 'id' so
-	 * we need to extract the original image URL to send to CiviCRM.
-	 *
-	 * @since 0.4
-	 *
-	 * @param integer|null $value The field value (the Attachment data).
-	 * @return string $value The URL of the full size image.
-	 */
-	public function image_value_get( $value ) {
-
-		// Return empty string when value is empty.
-		if ( empty( $value ) ) {
-			return '';
-		}
-
-		// If it's an array, extract full image URL.
-		if ( is_array( $value ) ) {
-
-			// Discard all but the URL.
-			if ( ! empty( $value['url'] ) ) {
-				$value = $value['url'];
-			}
-
-		// When it's numeric, get full image URL from attachment.
-		} elseif ( is_numeric( $value ) ) {
-
-			// Grab the the full size Image URL.
-			$url = wp_get_attachment_image_url( (int) $value, 'full' );
-
-			// Overwrite with the URL.
-			if ( ! empty( $url ) ) {
-				$value = $url;
-			}
-
-		}
-
-		// When it's a string, it must be the URL.
-
-		// --<
-		return $value;
-
-	}
-
-
-
-	/**
-	 * Add Setting to "Image" Field Settings.
-	 *
-	 * @since 0.4
-	 *
-	 * @param array $field The field data array.
-	 */
-	public function image_setting_add( $field ) {
-
-		// Get the Contact Fields for this CiviCRM Contact Type.
-		$contact_fields = $this->acf_loader->civicrm->contact_field->get_for_acf_field( $field );
-
-		// Bail if there are no fields.
-		if ( empty( $contact_fields ) ) {
-			return;
-		}
-
-		// Get Setting field.
-		$setting = $this->acf_loader->civicrm->contact->acf_field_get( [], $contact_fields );
-
-		// Now add it.
-		acf_render_field_setting( $field, $setting );
-
-	}
-
-
-
-	/**
-	 * Maybe modify the Setting of an "Image" Field.
-	 *
-	 * @since 0.4
-	 *
-	 * @param array $field The existing field data array.
-	 * @return array $field The modified field data array.
-	 */
-	public function image_setting_modify( $field ) {
-
-		// Skip if the CiviCRM Field key isn't there or isn't populated.
-		$key = $this->acf_loader->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+		// Bail if it's not a linked field.
+		$key = $this->acf_loader->civicrm->google_map->acf_field_key_get();
+		if ( empty( $field[$key] ) ) {
 			return $field;
 		}
 
-		// Get the mapped Contact Field name if present.
-		$contact_field_name = $this->acf_loader->civicrm->contact->contact_field_name_get( $field );
+		// Get the "Make Read Only" key.
+		$edit_key = $this->acf_loader->civicrm->google_map->acf_field_key_edit_get();
 
-		// Bail if we don't have one.
-		if ( $contact_field_name === false ) {
-			return $field;
+		// Always set to default if not set.
+		if ( ! isset( $field[$edit_key] ) ) {
+			$field[$edit_key] = 1;
 		}
 
-		// Apply settings.
-		$field = $this->acf_loader->civicrm->contact_field->image_settings_get( $field, $contact_field_name );
+		// Always set to true if not a "Primary" Address.
+		if ( $field[$key] != 'primary' ) {
+			$field[$edit_key] = 1;
+		}
 
 		// --<
 		return $field;

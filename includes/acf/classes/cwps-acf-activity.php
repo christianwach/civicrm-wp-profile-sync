@@ -41,6 +41,17 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 	public $civicrm;
 
 	/**
+	 * Entity identifier.
+	 *
+	 * This identifier is unique to this "top level" Entity.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var str $identifier The unique identifier for this "top level" Entity.
+	 */
+	public $identifier = 'activity';
+
+	/**
 	 * "CiviCRM Field" field value prefix in the ACF Field data.
 	 *
 	 * This distinguishes Activity Fields from Custom Fields.
@@ -111,6 +122,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 		// Listen for queries from the Custom Field class.
 		add_filter( 'cwps/acf/query_post_id', [ $this, 'query_post_id' ], 10, 2 );
+
+		// Listen for queries from the ACF Field class.
+		add_filter( 'cwps/acf/query_settings_field', [ $this, 'query_settings_field' ], 20, 3 );
+
+		// Listen for queries from the ACF Bypass class.
+		add_filter( 'cwps/acf/bypass/query_settings_field', [ $this, 'query_bypass_settings_field' ], 20, 4 );
+
+		// Listen for queries from the ACF Bypass Location Rule class.
+		add_filter( 'cwps/acf/bypass/location/query_entities', [ $this, 'query_bypass_entities' ], 50, 2 );
 
 	}
 
@@ -1270,6 +1290,148 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 
 	/**
+	 * Returns a Setting Field from this Entity when found.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $setting_field The existing Setting Field array.
+	 * @param array $field The ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @return array|bool $setting_field The Setting Field array if populated, false if conflicting.
+	 */
+	public function query_settings_field( $setting_field, $field, $field_group ) {
+
+		// Pass if conflicting fields have been found.
+		if ( $setting_field === false ) {
+			return false;
+		}
+
+		// Pass if this is not an Activity Field Group.
+		$is_visible = $this->is_activity_field_group( $field_group );
+		if ( $is_visible === false ) {
+			return $setting_field;
+		}
+
+		// If already populated, then this is a conflicting field.
+		if ( ! empty( $setting_field ) ) {
+			return false;
+		}
+
+		// Get the Activity Fields for this ACF Field.
+		$activity_fields = $this->acf_loader->civicrm->activity_field->get_for_acf_field( $field );
+
+		// Get the Custom Fields for CiviCRM Activities.
+		$custom_fields = $this->acf_loader->civicrm->custom_field->get_for_entity_type( 'Activity', '' );
+
+		/**
+		 * Filter the Custom Fields.
+		 *
+		 * @since 0.5
+		 *
+		 * @param array $custom_fields The CiviCRM Custom Fields array.
+		 * @param array $field The ACF Field data array.
+		 */
+		$filtered_fields = apply_filters( 'cwps/acf/query_settings/custom_fields_filter', $custom_fields, $field );
+
+		// Pass if not populated.
+		if ( empty( $activity_fields ) AND empty( $filtered_fields ) ) {
+			return $setting_field;
+		}
+
+		// Get the Setting Field.
+		$setting_field = $this->acf_field_get( $filtered_fields, $activity_fields );
+
+		// Return populated array.
+		return $setting_field;
+
+	}
+
+
+
+	/**
+	 * Returns a Setting Field for a Bypass ACF Field Group when found.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $setting_field The existing Setting Field array.
+	 * @param array $field The ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @param array $entity_array The Entity and ID array.
+	 * @return array|bool $setting_field The Setting Field array if populated, false if conflicting.
+	 */
+	public function query_bypass_settings_field( $setting_field, $field, $field_group, $entity_array ) {
+
+		// Pass if not our Entity Type.
+		if ( $entity_array['entity'] !== $this->identifier ) {
+			return $setting_field;
+		}
+
+		// Get the public fields on the Entity for this Field Type.
+		$fields_for_entity = $this->acf_loader->civicrm->activity_field->data_get( $field['type'], 'public' );
+
+		// Get the Custom Fields for this Entity.
+		$custom_fields = $this->acf_loader->civicrm->custom_field->get_for_entity_type( 'Activity', '' );
+
+		/**
+		 * Filter the Custom Fields.
+		 *
+		 * @since 0.5
+		 *
+		 * @param array $custom_fields The CiviCRM Custom Fields array.
+		 * @param array $field The ACF Field data array.
+		 */
+		$filtered_fields = apply_filters( 'cwps/acf/query_settings/custom_fields_filter', $custom_fields, $field );
+
+		// Pass if not populated.
+		if ( empty( $fields_for_entity ) AND empty( $filtered_fields ) ) {
+			return $setting_field;
+		}
+
+		// Get the Setting Field.
+		$setting_field = $this->acf_field_get( $filtered_fields, $fields_for_entity );
+
+		// Return populated array.
+		return $setting_field;
+
+	}
+
+
+
+	/**
+	 * Appends a nested array of possible values to the Entities array for the
+	 * Bypass Location Rule.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $entities The existing Entity values array.
+	 * @param array $rule The current Location Rule.
+	 * @return array $entities The modified Entity values array.
+	 */
+	public function query_bypass_entities( $entities, $rule ) {
+
+		// Get all Activity Types.
+		$activity_types = $this->civicrm->activity_type->get_all();
+
+		// Bail if there are none.
+		if ( empty( $activity_types ) ) {
+			return $entities;
+		}
+
+		// Add Option Group and add entries for each Activity Type.
+		$activity_types_title = esc_attr( __( 'Activity Types', 'civicrm-wp-profile-sync' ) );
+		$entities[$activity_types_title] = [];
+		foreach( $activity_types AS $activity_type ) {
+			$entities[$activity_types_title][$this->identifier . '-' . $activity_type['value']] = $activity_type['label'];
+		}
+
+		// --<
+		return $entities;
+
+	}
+
+
+
+	/**
 	 * Listen for queries from the Field Group class.
 	 *
 	 * This method responds with a Boolean if it detects that this Field Group
@@ -1439,7 +1601,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		// Assume not an Activity Field Group.
 		$is_activity_field_group = false;
 
-		// If location rules exist.
+		// If Location Rules exist.
 		if ( ! empty( $field_group['location'] ) ) {
 
 			// Get mapped Post Types.
