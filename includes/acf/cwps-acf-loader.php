@@ -81,9 +81,18 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $cpt The Advanced Custom Fields object.
+	 * @var object $acf The Advanced Custom Fields object.
 	 */
 	public $acf;
+
+	/**
+	 * ACF Extended object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $acfe The ACF Extended object.
+	 */
+	public $acfe;
 
 	/**
 	 * Mapping object.
@@ -238,6 +247,9 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 		// Include ACF class.
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-acf.php';
 
+		// Include ACFE class.
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/classes/cwps-acf-acfe.php';
+
 	}
 
 
@@ -272,6 +284,9 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 
 		// Init ACF object.
 		$this->acf = new CiviCRM_Profile_Sync_ACF( $this );
+
+		// Init ACFE object.
+		$this->acfe = new CiviCRM_Profile_Sync_ACF_ACFE( $this );
 
 	}
 

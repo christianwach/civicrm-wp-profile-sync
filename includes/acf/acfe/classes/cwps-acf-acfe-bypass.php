@@ -20,7 +20,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 0.5
  */
-class CiviCRM_Profile_Sync_ACF_Bypass {
+class CiviCRM_Profile_Sync_ACF_ACFE_Bypass {
 
 	/**
 	 * ACF Loader object.
@@ -38,7 +38,7 @@ class CiviCRM_Profile_Sync_ACF_Bypass {
 	 * @access public
 	 * @var object $acf The parent object.
 	 */
-	public $acf;
+	public $acfe;
 
 	/**
 	 * Supported Location Rule name.
@@ -64,10 +64,10 @@ class CiviCRM_Profile_Sync_ACF_Bypass {
 		$this->acf_loader = $parent->acf_loader;
 
 		// Store reference to parent.
-		$this->acf = $parent;
+		$this->acfe = $parent;
 
 		// Init when this plugin is loaded.
-		add_action( 'cwps/acf/acf/loaded', [ $this, 'initialise' ] );
+		add_action( 'cwps/acf/acfe/loaded', [ $this, 'initialise' ] );
 
 	}
 
