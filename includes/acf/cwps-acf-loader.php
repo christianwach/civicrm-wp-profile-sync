@@ -121,6 +121,15 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 	 */
 	public $loaded = false;
 
+	/**
+	 * ACF Pro flag.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var boolean $acf_pro ACF Pro flag. True when ACF Pro is installed.
+	 */
+	public $acf_pro = false;
+
 
 
 	/**
@@ -188,6 +197,9 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 			return;
 
 		}
+
+		// Save ACF Pro flag.
+		$this->acf_pro = ( defined( 'ACF_PRO' ) && ACF_PRO ) ? true : false;
 
 		// Include files.
 		$this->include_files();

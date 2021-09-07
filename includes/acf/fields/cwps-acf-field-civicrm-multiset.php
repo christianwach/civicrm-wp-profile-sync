@@ -149,7 +149,11 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set extends acf_field 
 		// Store reference to CiviCRM Utilities.
 		$this->civicrm = $this->acf_loader->civicrm;
 
+		// Define label.
 		$this->label = __( 'CiviCRM Multiple Record Set', 'civicrm-wp-profile-sync' );
+
+		// Define category.
+		$this->category = __( 'CiviCRM Post Type Sync', 'civicrm-wp-profile-sync' );
 
 		// Define translations.
 		$this->l10n = [];

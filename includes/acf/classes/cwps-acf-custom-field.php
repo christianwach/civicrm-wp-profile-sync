@@ -150,16 +150,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		//add_action( 'civicrm_postSave_civicrm_option_value', [ $this, 'option_value_edited' ], 10 );
 
 		// Listen for queries from our Entity classes.
-		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'select_settings_filter' ], 10, 2 );
-		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'radio_settings_filter' ], 10, 2 );
-		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'checkbox_settings_filter' ], 10, 2 );
-		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'date_settings_filter' ], 10, 2 );
-		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'date_time_settings_filter' ], 10, 2 );
-		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'text_settings_filter' ], 10, 2 );
-		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'wysiwyg_settings_filter' ], 10, 2 );
-		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'textarea_settings_filter' ], 10, 2 );
-		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'true_false_settings_filter' ], 10, 2 );
-		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'url_settings_filter' ], 10, 2 );
+		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'select_settings_filter' ], 10, 3 );
+		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'radio_settings_filter' ], 10, 3 );
+		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'checkbox_settings_filter' ], 10, 3 );
+		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'date_settings_filter' ], 10, 3 );
+		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'date_time_settings_filter' ], 10, 3 );
+		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'text_settings_filter' ], 10, 3 );
+		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'wysiwyg_settings_filter' ], 10, 3 );
+		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'textarea_settings_filter' ], 10, 3 );
+		//add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'true_false_settings_filter' ], 10, 3 );
+		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'url_settings_filter' ], 10, 3 );
 
 		// Listen for queries from our ACF Field Group class.
 		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'select_settings_modify' ], 10, 2 );
@@ -1502,11 +1502,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		 * Filter the choices to display in the "CiviCRM Field" select.
 		 *
 		 * @since 0.4
+		 * @since 0.5 Filter name changed.
 		 *
 		 * @param array $choices The existing select options array.
 		 * @param array $choices The modified select options array.
 		 */
-		$choices = apply_filters( 'cwps/acf/contact/custom_field/choices', $choices );
+		$choices = apply_filters( 'cwps/acf/custom_field/choices', $choices );
 
 		// Define field.
 		$field = [
@@ -1635,19 +1636,17 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
+	 * @param array $filtered_fields The existing array of filtered Custom Fields.
 	 * @param array $custom_fields The array of Custom Fields.
 	 * @param array $field The ACF Field data array.
-	 * @return array $filtered_fields The filtered Custom Fields.
+	 * @return array $filtered_fields The modified array of filtered Custom Fields.
 	 */
-	public function select_settings_filter( $custom_fields, $field ) {
+	public function select_settings_filter( $filtered_fields, $custom_fields, $field ) {
 
 		// Bail early if not our Field Type.
 		if ( 'select' !== $field['type'] ) {
-			return $custom_fields;
+			return $filtered_fields;
 		}
-
-		// Init return.
-		$filtered_fields = [];
 
 		// ACF "Multi-Select".
 		if ( $field['multiple'] == 1 ) {
@@ -1773,19 +1772,17 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
+	 * @param array $filtered_fields The existing array of filtered Custom Fields.
 	 * @param array $custom_fields The array of Custom Fields.
 	 * @param array $field The ACF Field data array.
-	 * @return array $filtered_fields The filtered Custom Fields.
+	 * @return array $filtered_fields The modified array of filtered Custom Fields.
 	 */
-	public function radio_settings_filter( $custom_fields, $field ) {
+	public function radio_settings_filter( $filtered_fields, $custom_fields, $field ) {
 
 		// Bail early if not our Field Type.
 		if ( 'radio' !== $field['type'] ) {
-			return $custom_fields;
+			return $filtered_fields;
 		}
-
-		// Init return.
-		$filtered_fields = [];
 
 		// Filter fields to include only "Radio" HTML types.
 		foreach( $custom_fields AS $custom_group_name => $custom_group ) {
@@ -1891,19 +1888,17 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
+	 * @param array $filtered_fields The existing array of filtered Custom Fields.
 	 * @param array $custom_fields The array of Custom Fields.
 	 * @param array $field The ACF Field data array.
-	 * @return array $filtered_fields The filtered Custom Fields.
+	 * @return array $filtered_fields The modified array of filtered Custom Fields.
 	 */
-	public function checkbox_settings_filter( $custom_fields, $field ) {
+	public function checkbox_settings_filter( $filtered_fields, $custom_fields, $field ) {
 
 		// Bail early if not our Field Type.
 		if ( 'checkbox' !== $field['type'] ) {
-			return $custom_fields;
+			return $filtered_fields;
 		}
-
-		// Init return.
-		$filtered_fields = [];
 
 		// Filter fields to include only Boolean/Radio.
 		foreach( $custom_fields AS $custom_group_name => $custom_group ) {
@@ -1996,19 +1991,17 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
+	 * @param array $filtered_fields The existing array of filtered Custom Fields.
 	 * @param array $custom_fields The array of Custom Fields.
 	 * @param array $field The ACF Field data array.
-	 * @return array $filtered_fields The filtered Custom Fields.
+	 * @return array $filtered_fields The modified array of filtered Custom Fields.
 	 */
-	public function date_settings_filter( $custom_fields, $field ) {
+	public function date_settings_filter( $filtered_fields, $custom_fields, $field ) {
 
 		// Bail early if not our Field Type.
 		if ( 'date_picker' !== $field['type'] ) {
-			return $custom_fields;
+			return $filtered_fields;
 		}
-
-		// Init return.
-		$filtered_fields = [];
 
 		// Filter fields to include only Date/Select Date.
 		foreach( $custom_fields AS $custom_group_name => $custom_group ) {
@@ -2109,19 +2102,17 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
+	 * @param array $filtered_fields The existing array of filtered Custom Fields.
 	 * @param array $custom_fields The array of Custom Fields.
 	 * @param array $field The ACF Field data array.
-	 * @return array $filtered_fields The filtered Custom Fields.
+	 * @return array $filtered_fields The modified array of filtered Custom Fields.
 	 */
-	public function date_time_settings_filter( $custom_fields, $field ) {
+	public function date_time_settings_filter( $filtered_fields, $custom_fields, $field ) {
 
 		// Bail early if not our Field Type.
 		if ( 'date_time_picker' !== $field['type'] ) {
-			return $custom_fields;
+			return $filtered_fields;
 		}
-
-		// Init return.
-		$filtered_fields = [];
 
 		// Filter fields to include only Date/Select Date.
 		foreach( $custom_fields AS $custom_group_name => $custom_group ) {
@@ -2209,19 +2200,17 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
+	 * @param array $filtered_fields The existing array of filtered Custom Fields.
 	 * @param array $custom_fields The array of Custom Fields.
 	 * @param array $field The ACF Field data array.
-	 * @return array $filtered_fields The filtered Custom Fields.
+	 * @return array $filtered_fields The modified array of filtered Custom Fields.
 	 */
-	public function text_settings_filter( $custom_fields, $field ) {
+	public function text_settings_filter( $filtered_fields, $custom_fields, $field ) {
 
 		// Bail early if not our Field Type.
 		if ( 'text' !== $field['type'] ) {
-			return $custom_fields;
+			return $filtered_fields;
 		}
-
-		// Init return.
-		$filtered_fields = [];
 
 		// Filter fields to include only those of HTML type "Text".
 		foreach( $custom_fields AS $custom_group_name => $custom_group ) {
@@ -2246,19 +2235,17 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
+	 * @param array $filtered_fields The existing array of filtered Custom Fields.
 	 * @param array $custom_fields The array of Custom Fields.
 	 * @param array $field The ACF Field data array.
-	 * @return array $filtered_fields The filtered Custom Fields.
+	 * @return array $filtered_fields The modified array of filtered Custom Fields.
 	 */
-	public function wysiwyg_settings_filter( $custom_fields, $field ) {
+	public function wysiwyg_settings_filter( $filtered_fields, $custom_fields, $field ) {
 
 		// Bail early if not our Field Type.
 		if ( 'wysiwyg' !== $field['type'] ) {
-			return $custom_fields;
+			return $filtered_fields;
 		}
-
-		// Init return.
-		$filtered_fields = [];
 
 		// Filter fields to include only Memo/RichTextEditor.
 		foreach( $custom_fields AS $custom_group_name => $custom_group ) {
@@ -2283,19 +2270,17 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
+	 * @param array $filtered_fields The existing array of filtered Custom Fields.
 	 * @param array $custom_fields The array of Custom Fields.
 	 * @param array $field The ACF Field data array.
-	 * @return array $filtered_fields The filtered Custom Fields.
+	 * @return array $filtered_fields The modified array of filtered Custom Fields.
 	 */
-	public function textarea_settings_filter( $custom_fields, $field ) {
+	public function textarea_settings_filter( $filtered_fields, $custom_fields, $field ) {
 
 		// Bail early if not our Field Type.
 		if ( 'textarea' !== $field['type'] ) {
-			return $custom_fields;
+			return $filtered_fields;
 		}
-
-		// Init return.
-		$filtered_fields = [];
 
 		// Filter fields to include only Memo/TextArea.
 		foreach( $custom_fields AS $custom_group_name => $custom_group ) {
@@ -2320,19 +2305,17 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
+	 * @param array $filtered_fields The existing array of filtered Custom Fields.
 	 * @param array $custom_fields The array of Custom Fields.
 	 * @param array $field The ACF Field data array.
-	 * @return array $filtered_fields The filtered Custom Fields.
+	 * @return array $filtered_fields The modified array of filtered Custom Fields.
 	 */
-	public function true_false_settings_filter( $custom_fields, $field ) {
+	public function true_false_settings_filter( $filtered_fields, $custom_fields, $field ) {
 
 		// Bail early if not our Field Type.
 		if ( 'true_false' !== $field['type'] ) {
-			return $custom_fields;
+			return $filtered_fields;
 		}
-
-		// Init return.
-		$filtered_fields = [];
 
 		// Filter fields to include only Boolean/Radio.
 		foreach( $custom_fields AS $custom_group_name => $custom_group ) {
@@ -2357,19 +2340,17 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
+	 * @param array $filtered_fields The existing array of filtered Custom Fields.
 	 * @param array $custom_fields The array of Custom Fields.
 	 * @param array $field The ACF Field data array.
-	 * @return array $filtered_fields The filtered Custom Fields.
+	 * @return array $filtered_fields The modified array of filtered Custom Fields.
 	 */
-	public function url_settings_filter( $custom_fields, $field ) {
+	public function url_settings_filter( $filtered_fields, $custom_fields, $field ) {
 
 		// Bail early if not our Field Type.
 		if ( 'url' !== $field['type'] ) {
-			return $custom_fields;
+			return $filtered_fields;
 		}
-
-		// Init return.
-		$filtered_fields = [];
 
 		// Filter fields to include only "Link".
 		foreach( $custom_fields AS $custom_group_name => $custom_group ) {

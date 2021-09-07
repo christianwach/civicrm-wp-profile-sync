@@ -1064,7 +1064,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		}
 
 		// Get the Custom Fields for CiviCRM Participants.
-		$custom_fields = $this->acf_loader->civicrm->custom_field->get_for_entity_type( 'Participant', '' );
+		$entity_custom_fields = $this->acf_loader->civicrm->custom_field->get_for_entity_type( 'Participant', '' );
+
+		// Maybe merge with passed in array.
+		if ( ! empty( $entity_custom_fields ) ) {
+			$custom_fields = array_merge( $custom_fields, $entity_custom_fields );
+		}
 
 		// --<
 		return $custom_fields;

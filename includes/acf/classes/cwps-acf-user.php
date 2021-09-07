@@ -41,6 +41,15 @@ class CiviCRM_Profile_Sync_ACF_User {
 	public $acf_loader;
 
 	/**
+	 * CiviCRM Utilities object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $civicrm The CiviCRM Utilities object.
+	 */
+	public $civicrm;
+
+	/**
 	 * Supported Location Rule names.
 	 *
 	 * @since 0.5
@@ -63,8 +72,8 @@ class CiviCRM_Profile_Sync_ACF_User {
 	public function __construct( $acf_loader ) {
 
 		// Store references.
-		$this->acf_loader = $acf_loader;
 		$this->plugin = $acf_loader->plugin;
+		$this->acf_loader = $acf_loader;
 
 		// Init when this plugin is loaded.
 		add_action( 'cwps/acf/loaded', [ $this, 'initialise' ] );
@@ -79,6 +88,9 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 * @since 0.4
 	 */
 	public function initialise() {
+
+		// Store CiviCRM reference late.
+		$this->civicrm = $this->acf_loader->civicrm;
 
 		// Register hooks.
 		$this->register_hooks();
@@ -125,9 +137,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 		add_action( 'cwps/acf/contact_field/reverse_sync/pre', [ $this, 'unregister_mapper_civicrm_hooks' ], 10 );
 		add_action( 'cwps/acf/contact_field/reverse_sync/post', [ $this, 'register_mapper_civicrm_hooks' ], 10 );
 
-		// Listen for queries from the ACF Field Group class.
-		add_filter( 'cwps/acf/field_group/query_supported_rules', [ $this, 'query_supported_rules' ], 10, 4 );
-
 	}
 
 
@@ -146,6 +155,12 @@ class CiviCRM_Profile_Sync_ACF_User {
 		add_filter( 'cwps/acf/civicrm/relationships/get_for_acf_field', [ $this, 'query_relationship_fields' ], 10, 3 );
 		add_filter( 'cwps/acf/query_post_id', [ $this, 'query_post_id' ], 10, 2 );
 		add_filter( 'cwps/acf/query_contact_id', [ $this, 'query_contact_id' ], 10, 3 );
+
+		// Listen for queries from the ACF Field class.
+		add_filter( 'cwps/acf/field/query_setting_choices', [ $this, 'query_setting_choices' ], 50, 3 );
+
+		// Listen for queries from the ACF Field Group class.
+		add_filter( 'cwps/acf/field_group/query_supported_rules', [ $this, 'query_supported_rules' ], 10, 4 );
 
 	}
 
@@ -402,7 +417,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$this->unregister_mapper_civicrm_hooks();
 
 		// Update the Fields on the CiviCRM Contact.
-		$this->acf_loader->civicrm->contact->update_from_fields( $args['contact_id'], $fields, $args['post_id'] );
+		$this->civicrm->contact->update_from_fields( $args['contact_id'], $fields, $args['post_id'] );
 
 		/**
 		 * Broadcast that a Contact has been edited when ACF Fields were saved.
@@ -513,7 +528,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$this->unregister_mapper_wp_hooks();
 
 		// Run the routine, but with a User reference.
-		$this->acf_loader->civicrm->email->fields_update( $post_id, $email );
+		$this->civicrm->email->fields_update( $post_id, $email );
 
 		// Re-register WordPress hooks.
 		$this->register_mapper_wp_hooks();
@@ -555,7 +570,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		}
 
 		// Run the pre-edit routine.
-		$this->acf_loader->civicrm->website->website_pre_edit( $args );
+		$this->civicrm->website->website_pre_edit( $args );
 
 	}
 
@@ -590,7 +605,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$this->unregister_mapper_wp_hooks();
 
 		// Run the routine, but with a User reference.
-		$this->acf_loader->civicrm->website->fields_update( $post_id, $website );
+		$this->civicrm->website->fields_update( $post_id, $website );
 
 		// Re-register WordPress hooks.
 		$this->register_mapper_wp_hooks();
@@ -630,13 +645,13 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$post_id = 'user_' . $user_id;
 
 		// Convert to ACF Phone data.
-		$acf_phone = $this->acf_loader->civicrm->phone->prepare_from_civicrm( $phone );
+		$acf_phone = $this->civicrm->phone->prepare_from_civicrm( $phone );
 
 		// Unregister WordPress hooks.
 		$this->unregister_mapper_wp_hooks();
 
 		// Run the routine, but with a User reference.
-		$this->acf_loader->civicrm->phone->fields_update( $post_id, $phone, $acf_phone, $args );
+		$this->civicrm->phone->fields_update( $post_id, $phone, $acf_phone, $args );
 
 		// Re-register WordPress hooks.
 		$this->register_mapper_wp_hooks();
@@ -668,7 +683,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$phone_id = (int) $args['objectId'];
 
 		// Grab the Phone Record data from the database.
-		$phone_pre = $this->acf_loader->civicrm->phone->phone_get_by_id( $phone_id );
+		$phone_pre = $this->civicrm->phone->phone_get_by_id( $phone_id );
 
 		// Maybe cast previous Phone Record data as object and stash in a property.
 		if ( ! is_object( $phone_pre ) ) {
@@ -721,13 +736,13 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$post_id = 'user_' . $user_id;
 
 		// Convert to ACF Phone data.
-		$acf_phone = $this->acf_loader->civicrm->phone->prepare_from_civicrm( $phone );
+		$acf_phone = $this->civicrm->phone->prepare_from_civicrm( $phone );
 
 		// Unregister WordPress hooks.
 		$this->unregister_mapper_wp_hooks();
 
 		// Run the routine, but with a User reference.
-		$this->acf_loader->civicrm->phone->fields_update( $post_id, $phone, $acf_phone, $args );
+		$this->civicrm->phone->fields_update( $post_id, $phone, $acf_phone, $args );
 
 		// Re-register WordPress hooks.
 		$this->register_mapper_wp_hooks();
@@ -767,13 +782,13 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$post_id = 'user_' . $user_id;
 
 		// Convert to ACF Instant Messenger data.
-		$acf_im = $this->acf_loader->civicrm->im->prepare_from_civicrm( $im );
+		$acf_im = $this->civicrm->im->prepare_from_civicrm( $im );
 
 		// Unregister WordPress hooks.
 		$this->unregister_mapper_wp_hooks();
 
 		// Run the routine, but with a User reference.
-		$this->acf_loader->civicrm->im->fields_update( $post_id, $im, $acf_im, $args );
+		$this->civicrm->im->fields_update( $post_id, $im, $acf_im, $args );
 
 		// Re-register WordPress hooks.
 		$this->register_mapper_wp_hooks();
@@ -805,7 +820,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$im_id = (int) $args['objectId'];
 
 		// Grab the Instant Messenger Record data from the database.
-		$im_pre = $this->acf_loader->civicrm->im->im_get_by_id( $im_id );
+		$im_pre = $this->civicrm->im->im_get_by_id( $im_id );
 
 		// Maybe cast previous Instant Messenger Record data as object and stash in a property.
 		if ( ! is_object( $im_pre ) ) {
@@ -858,13 +873,13 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$post_id = 'user_' . $user_id;
 
 		// Convert to ACF Instant Messenger data.
-		$acf_im = $this->acf_loader->civicrm->im->prepare_from_civicrm( $im );
+		$acf_im = $this->civicrm->im->prepare_from_civicrm( $im );
 
 		// Unregister WordPress hooks.
 		$this->unregister_mapper_wp_hooks();
 
 		// Run the routine, but with a User reference.
-		$this->acf_loader->civicrm->im->fields_update( $post_id, $im, $acf_im, $args );
+		$this->civicrm->im->fields_update( $post_id, $im, $acf_im, $args );
 
 		// Re-register WordPress hooks.
 		$this->register_mapper_wp_hooks();
@@ -926,7 +941,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$this->unregister_mapper_wp_hooks();
 
 		// Run the routine, but with a User reference.
-		$this->acf_loader->civicrm->relationship->fields_update( $post_id, $relationship, $op );
+		$this->civicrm->relationship->fields_update( $post_id, $relationship, $op );
 
 		// Re-register WordPress hooks.
 		$this->register_mapper_wp_hooks();
@@ -966,13 +981,13 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$post_id = 'user_' . $user_id;
 
 		// Convert to ACF Address data.
-		$acf_address = $this->acf_loader->civicrm->addresses->prepare_from_civicrm( $address );
+		$acf_address = $this->civicrm->addresses->prepare_from_civicrm( $address );
 
 		// Unregister WordPress hooks.
 		$this->unregister_mapper_wp_hooks();
 
 		// Run the routine, but with a User reference.
-		$this->acf_loader->civicrm->addresses->fields_update( $post_id, $address, $acf_address, $args );
+		$this->civicrm->addresses->fields_update( $post_id, $address, $acf_address, $args );
 
 		// Re-register WordPress hooks.
 		$this->register_mapper_wp_hooks();
@@ -1004,7 +1019,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$address_id = (int) $args['objectId'];
 
 		// Grab the Address Record data from the database.
-		$address_pre = $this->acf_loader->civicrm->address->address_get_by_id( $address_id );
+		$address_pre = $this->civicrm->address->address_get_by_id( $address_id );
 
 		// Maybe cast previous Address Record data as object and stash in a property.
 		if ( ! is_object( $address_pre ) ) {
@@ -1057,13 +1072,13 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$post_id = 'user_' . $user_id;
 
 		// Convert to ACF Address data.
-		$acf_address = $this->acf_loader->civicrm->addresses->prepare_from_civicrm( $address );
+		$acf_address = $this->civicrm->addresses->prepare_from_civicrm( $address );
 
 		// Unregister WordPress hooks.
 		$this->unregister_mapper_wp_hooks();
 
 		// Run the routine, but with a User reference.
-		$this->acf_loader->civicrm->addresses->fields_update( $post_id, $address, $acf_address, $args );
+		$this->civicrm->addresses->fields_update( $post_id, $address, $acf_address, $args );
 
 		// Re-register WordPress hooks.
 		$this->register_mapper_wp_hooks();
@@ -1105,7 +1120,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		}
 
 		// Grab the previous Address data from the database via API.
-		$this->map_address_pre = $this->acf_loader->civicrm->address->address_get_by_id( $address->id );
+		$this->map_address_pre = $this->civicrm->address->address_get_by_id( $address->id );
 
 	}
 
@@ -1141,10 +1156,10 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$this->unregister_mapper_wp_hooks();
 
 		// Update the ACF Fields for this Post.
-		$this->acf_loader->civicrm->google_map->fields_update( $post_id, $address );
+		$this->civicrm->google_map->fields_update( $post_id, $address );
 
 		// If this address has no "Master Address" then it might be one itself.
-		$addresses_shared = $this->acf_loader->civicrm->address->addresses_shared_get_by_id( $address->id );
+		$addresses_shared = $this->civicrm->address->addresses_shared_get_by_id( $address->id );
 
 		// Bail if there are none.
 		if ( empty( $addresses_shared ) ) {
@@ -1169,7 +1184,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 			$post_id = 'user_' . $user_id;
 
 			// Now update the Fields.
-			$this->acf_loader->civicrm->google_map->fields_update( $post_id, $address_shared );
+			$this->civicrm->google_map->fields_update( $post_id, $address_shared );
 
 		}
 
@@ -1198,7 +1213,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		}
 
 		// Check if the edited Address has had its properties toggled.
-		$address = $this->acf_loader->civicrm->google_map->address_properties_check( $address, $this->map_address_pre );
+		$address = $this->civicrm->google_map->address_properties_check( $address, $this->map_address_pre );
 
 		// Bail if this Contact doesn't have a User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $address->contact_id );
@@ -1213,10 +1228,10 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$this->unregister_mapper_wp_hooks();
 
 		// Update the ACF Fields for this Post.
-		$this->acf_loader->civicrm->google_map->fields_update( $post_id, $address, $this->map_address_pre );
+		$this->civicrm->google_map->fields_update( $post_id, $address, $this->map_address_pre );
 
 		// If this address has no "Master Address" then it might be one itself.
-		$addresses_shared = $this->acf_loader->civicrm->address->addresses_shared_get_by_id( $address->id );
+		$addresses_shared = $this->civicrm->address->addresses_shared_get_by_id( $address->id );
 
 		// Bail if there are none.
 		if ( empty( $addresses_shared ) ) {
@@ -1241,7 +1256,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 			$post_id = 'user_' . $user_id;
 
 			// Now update the Fields.
-			$this->acf_loader->civicrm->google_map->fields_update( $post_id, $address_shared );
+			$this->civicrm->google_map->fields_update( $post_id, $address_shared );
 
 		}
 
@@ -1285,10 +1300,10 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$this->unregister_mapper_wp_hooks();
 
 		// Update the ACF Fields for this Post.
-		$this->acf_loader->civicrm->google_map->fields_update( $post_id, $address );
+		$this->civicrm->google_map->fields_update( $post_id, $address );
 
 		// If this address has no "Master Address" then it might be one itself.
-		$addresses_shared = $this->acf_loader->civicrm->address->addresses_shared_get_by_id( $address->id );
+		$addresses_shared = $this->civicrm->address->addresses_shared_get_by_id( $address->id );
 
 		// Bail if there are none.
 		if ( empty( $addresses_shared ) ) {
@@ -1313,7 +1328,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 			$post_id = 'user_' . $user_id;
 
 			// Now update the Fields.
-			$this->acf_loader->civicrm->google_map->fields_update( $post_id, $address_shared );
+			$this->civicrm->google_map->fields_update( $post_id, $address_shared );
 
 		}
 
@@ -1358,7 +1373,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$this->unregister_mapper_wp_hooks();
 
 		// Run the routine, but with a User reference.
-		$this->acf_loader->civicrm->address_city->fields_update( $post_id, $address, $args );
+		$this->civicrm->address_city->fields_update( $post_id, $address, $args );
 
 		// Re-register WordPress hooks.
 		$this->register_mapper_wp_hooks();
@@ -1389,7 +1404,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$address_id = (int) $args['objectId'];
 
 		// Grab the Address Record data from the database.
-		$address_pre = $this->acf_loader->civicrm->address->address_get_by_id( $address_id );
+		$address_pre = $this->civicrm->address->address_get_by_id( $address_id );
 
 		// Maybe cast previous Address Record data as object and stash in a property.
 		if ( ! is_object( $address_pre ) ) {
@@ -1445,7 +1460,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$this->unregister_mapper_wp_hooks();
 
 		// Run the routine, but with a User reference.
-		$this->acf_loader->civicrm->address_city->fields_update( $post_id, $address, $args );
+		$this->civicrm->address_city->fields_update( $post_id, $address, $args );
 
 		// Re-register WordPress hooks.
 		$this->register_mapper_wp_hooks();
@@ -1488,7 +1503,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$this->unregister_mapper_wp_hooks();
 
 		// Run the routine, but with a User reference.
-		$this->acf_loader->civicrm->address_state->fields_update( $post_id, $address, $args );
+		$this->civicrm->address_state->fields_update( $post_id, $address, $args );
 
 		// Re-register WordPress hooks.
 		$this->register_mapper_wp_hooks();
@@ -1519,7 +1534,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$address_id = (int) $args['objectId'];
 
 		// Grab the Address Record data from the database.
-		$address_pre = $this->acf_loader->civicrm->address->address_get_by_id( $address_id );
+		$address_pre = $this->civicrm->address->address_get_by_id( $address_id );
 
 		// Maybe cast previous Address Record data as object and stash in a property.
 		if ( ! is_object( $address_pre ) ) {
@@ -1575,7 +1590,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$this->unregister_mapper_wp_hooks();
 
 		// Run the routine, but with a User reference.
-		$this->acf_loader->civicrm->address_state->fields_update( $post_id, $address, $args );
+		$this->civicrm->address_state->fields_update( $post_id, $address, $args );
 
 		// Re-register WordPress hooks.
 		$this->register_mapper_wp_hooks();
@@ -1618,7 +1633,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$this->unregister_mapper_wp_hooks();
 
 		// Run the routine, but with a User reference.
-		$this->acf_loader->civicrm->contact_id->fields_update( $post_id, $args );
+		$this->civicrm->contact_id->fields_update( $post_id, $args );
 
 		// Re-register WordPress hooks.
 		$this->register_mapper_wp_hooks();
@@ -1691,6 +1706,129 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 
 	/**
+	 * Returns the choices for a Setting Field from this Entity when found.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $choices The existing array of choices for the Setting Field.
+	 * @param array $field The ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @param bool $skip_check True if the check for Field Group should be skipped. Default false.
+	 * @return array $choices The modified array of choices for the Setting Field.
+	 */
+	public function query_setting_choices( $choices, $field, $field_group, $skip_check = false ) {
+
+		// Bail if this is not a User Form Field Group.
+		$is_visible = $this->is_user_field_group( $field_group );
+		if ( $is_visible === false ) {
+			return $choices;
+		}
+
+		// Init Contact Fields array.
+		$contact_fields = [];
+
+		// Users can be mapped to any Contact Type.
+		$contact_types = $this->civicrm->contact_type->types_get_nested();
+
+		// Get the Contact Fields for each CiviCRM Contact Type.
+		foreach( $contact_types AS $contact_type ) {
+
+			// Get public fields of this type.
+			$contact_fields_for_type = $this->civicrm->contact_field->data_get( $contact_type['name'], $field['type'], 'public' );
+
+			// Merge with return array.
+			$contact_fields = array_merge( $contact_fields, $contact_fields_for_type );
+
+		}
+
+		// Init Custom Fields array.
+		$custom_fields = [];
+
+		// Get the Custom Fields for each CiviCRM Contact Type.
+		foreach( $contact_types AS $contact_type ) {
+
+			// Top level types first.
+			$type_name = $contact_type['name'];
+
+			// Get the Custom Fields for this Contact Type.
+			$custom_fields_for_type = $this->civicrm->custom_field->get_for_entity_type( $type_name, '' );
+
+			// Merge with return array.
+			$custom_fields = array_merge( $custom_fields, $custom_fields_for_type );
+
+			// Skip Sub-types if there aren't any.
+			if ( empty( $contact_type['children'] ) ) {
+				continue;
+			}
+
+			// Merge in children.
+			foreach( $contact_type['children'] AS $contact_subtype ) {
+
+				// Subtypes next.
+				$subtype_name = $contact_subtype['name'];
+
+				// Get the Custom Fields for this Contact Subtype.
+				$custom_fields_for_type = $this->civicrm->custom_field->get_for_entity_type( $type_name, $subtype_name );
+
+				// Merge with return array.
+				$custom_fields = array_merge( $custom_fields, $custom_fields_for_type );
+
+			}
+
+		}
+
+		/**
+		 * Filter the Custom Fields.
+		 *
+		 * @since 0.5
+		 *
+		 * @param array The initially empty array of filtered Custom Fields.
+		 * @param array $custom_fields The CiviCRM Custom Fields array.
+		 * @param array $field The ACF Field data array.
+		 */
+		$filtered_fields = apply_filters( 'cwps/acf/query_settings/custom_fields_filter', [], $custom_fields, $field );
+
+		// Pass if not populated.
+		if ( empty( $contact_fields ) AND empty( $filtered_fields ) ) {
+			return $choices;
+		}
+
+		// Build Contact Field choices array for dropdown.
+		if ( ! empty( $contact_fields ) ) {
+			$contact_fields_label = esc_attr__( 'Contact Fields', 'civicrm-wp-profile-sync' );
+			foreach( $contact_fields AS $contact_field ) {
+				$choices[$contact_fields_label][$this->civicrm->contact_field_prefix() . $contact_field['name']] = $contact_field['title'];
+			}
+		}
+
+		// Build Custom Field choices array for dropdown.
+		if ( ! empty( $filtered_fields ) ) {
+			$custom_field_prefix = $this->civicrm->custom_field_prefix();
+			foreach( $filtered_fields AS $custom_group_name => $custom_group ) {
+				$custom_fields_label = esc_attr( $custom_group_name );
+				foreach( $custom_group AS $custom_field ) {
+					$choices[$custom_fields_label][$custom_field_prefix . $custom_field['id']] = $custom_field['label'];
+				}
+			}
+		}
+
+		/**
+		 * Filter the choices to display in the "CiviCRM Field" select.
+		 *
+		 * @since 0.5
+		 *
+		 * @param array $choices The array of choices for the Setting Field.
+		 */
+		$choices = apply_filters( 'cwps/acf/user/civicrm_field/choices', $choices );
+
+		// Return populated array.
+		return $choices;
+
+	}
+
+
+
+	/**
 	 * Listen for queries from the Custom Field class.
 	 *
 	 * Users can potentially map to any kind of Contact Type and Sub-type. It is
@@ -1711,7 +1849,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		}
 
 		// Users can be mapped to any Contact Type.
-		$contact_types = $this->acf_loader->civicrm->contact_type->types_get_nested();
+		$contact_types = $this->civicrm->contact_type->types_get_nested();
 
 		// Get the Custom Fields for each CiviCRM Contact Type.
 		foreach( $contact_types AS $contact_type ) {
@@ -1720,7 +1858,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 			$type_name = $contact_type['name'];
 
 			// Get the Custom Fields for this Contact Type.
-			$custom_fields_for_type = $this->acf_loader->civicrm->custom_field->get_for_entity_type( $type_name, '' );
+			$custom_fields_for_type = $this->civicrm->custom_field->get_for_entity_type( $type_name, '' );
 
 			// Merge with return array.
 			$custom_fields = array_merge( $custom_fields, $custom_fields_for_type );
@@ -1737,7 +1875,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 				$subtype_name = $contact_subtype['name'];
 
 				// Get the Custom Fields for this Contact Subtype.
-				$custom_fields_for_type = $this->acf_loader->civicrm->custom_field->get_for_entity_type( $type_name, $subtype_name );
+				$custom_fields_for_type = $this->civicrm->custom_field->get_for_entity_type( $type_name, $subtype_name );
 
 				// Merge with return array.
 				$custom_fields = array_merge( $custom_fields, $custom_fields_for_type );
@@ -1775,13 +1913,13 @@ class CiviCRM_Profile_Sync_ACF_User {
 		}
 
 		// Users can be mapped to any Contact Type.
-		$contact_types = $this->acf_loader->civicrm->contact_type->types_get_nested();
+		$contact_types = $this->civicrm->contact_type->types_get_nested();
 
 		// Get the Custom Fields for each CiviCRM Contact Type.
 		foreach( $contact_types AS $contact_type ) {
 
 			// Get public fields of this type.
-			$contact_fields_for_type = $this->acf_loader->civicrm->contact_field->data_get( $contact_type['name'], $field['type'], 'public' );
+			$contact_fields_for_type = $this->civicrm->contact_field->data_get( $contact_type['name'], $field['type'], 'public' );
 
 			// Merge with return array.
 			$contact_fields = array_merge( $contact_fields, $contact_fields_for_type );
@@ -1820,7 +1958,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$relationships = [];
 
 		// Get all Relationship Types.
-		$relationship_types = $this->acf_loader->civicrm->relationship->types_get_all();
+		$relationship_types = $this->civicrm->relationship->types_get_all();
 
 		// Get the Custom Fields for each CiviCRM Relationship Type.
 		foreach( $relationship_types AS $relationship_type ) {

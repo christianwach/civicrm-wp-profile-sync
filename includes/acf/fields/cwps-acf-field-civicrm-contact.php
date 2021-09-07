@@ -144,13 +144,16 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 		$this->acf_loader = $parent->acf_loader;
 
 		// Store reference to ACF Utilities.
-		$this->acf = $parent;
+		$this->acf = $parent->acf;
 
 		// Store reference to CiviCRM Utilities.
 		$this->civicrm = $this->acf_loader->civicrm;
 
 		// Define label.
 		$this->label = __( 'CiviCRM Contact Reference', 'civicrm-wp-profile-sync' );
+
+		// Define category.
+		$this->category = __( 'CiviCRM Post Type Sync', 'civicrm-wp-profile-sync' );
 
 		// Define translations.
 		$this->l10n = [
@@ -165,32 +168,31 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 		add_action( 'wp_ajax_acf/fields/' . $this->name . '/query', [ $this, 'ajax_query' ] );
 		add_action( 'wp_ajax_nopriv_acf/fields/' . $this->name . '/query', [ $this, 'ajax_query' ] );
 
+		// Listen for queries from our Entity classes.
+		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'field_settings_filter' ], 10, 3 );
+
 	}
 
 
 
 	/**
-	 * Create extra Settings for this Field Type.
+	 * Filter the Custom Fields for the Setting of a "CiviCRM Contact" Field.
 	 *
-	 * These extra Settings will be visible when editing a Field.
+	 * @since 0.5
 	 *
-	 * @since 0.4
-	 *
-	 * @param array $field The Field being edited.
+	 * @param array $filtered_fields The existing array of filtered Custom Fields.
+	 * @param array $custom_fields The array of Custom Fields.
+	 * @param array $field The ACF Field data array.
+	 * @return array $filtered_fields The modified array of filtered Custom Fields.
 	 */
-	public function render_field_settings( $field ) {
+	public function field_settings_filter( $filtered_fields, $custom_fields, $field ) {
 
-		// Get the Participant Fields for this ACF Field Type.
-		$participant_fields = $this->civicrm->participant_field->get_for_acf_field( $field );
-
-		// Get the Contact Fields for this CiviCRM Contact Type.
-		$contact_fields = $this->civicrm->contact_field->get_for_acf_field( $field );
-
-		// Get the Custom Fields for this CiviCRM Contact Type.
-		$custom_fields = $this->civicrm->custom_field->get_for_acf_field( $field );
+		// Bail early if not our Field Type.
+		if ( $this->name !== $field['type'] ) {
+			return $filtered_fields;
+		}
 
 		// Filter fields to include only "Contact Reference".
-		$filtered_fields = [];
 		foreach( $custom_fields AS $custom_group_name => $custom_group ) {
 			foreach( $custom_group AS $custom_field ) {
 				if ( ! empty( $custom_field['data_type'] ) AND $custom_field['data_type'] == 'ContactReference' ) {
@@ -201,26 +203,8 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 			}
 		}
 
-		// Bail if there are no fields.
-		if ( empty( $filtered_fields ) AND empty( $contact_fields ) AND empty( $participant_fields ) ) {
-			return;
-		}
-
-		// Get Setting field.
-		if ( ! empty( $contact_fields ) ) {
-			$setting = $this->civicrm->contact->acf_field_get( $filtered_fields, $contact_fields );
-		}
-		if ( ! empty( $participant_fields ) ) {
-			$setting = $this->civicrm->participant->acf_field_get( $filtered_fields, $participant_fields );
-		}
-
-		// Bail if we have no setting.
-		if ( empty( $setting ) ) {
-			return;
-		}
-
-		// Now add it.
-		acf_render_field_setting( $field, $setting );
+		// --<
+		return $filtered_fields;
 
 	}
 
@@ -359,7 +343,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 		$args['contact_type'] = '';
 
 		// Restrict to target Contact Type if this Field is linked to Employer ID.
-		if ( $field[$acf_field_key] == $this->civicrm->contact_field_prefix() . 'employer_id' ) {
+		if ( ! empty( $field[$acf_field_key] ) AND $field[$acf_field_key] == $this->civicrm->contact_field_prefix() . 'employer_id' ) {
 			$args['contact_type'] = 'Organization';
 		}
 

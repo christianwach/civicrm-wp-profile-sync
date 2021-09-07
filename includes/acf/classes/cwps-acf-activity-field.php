@@ -63,6 +63,21 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 		'assignee_contact_id' => 'civicrm_activity_assignee',
 	];
 
+	/**
+	 * Case Fields to add for the Bypass Location Rule.
+	 *
+	 * These are not mapped for Past Type Sync, but need to be added for the
+	 * Bypass Location Rule.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array $bypass_fields The Case Fields to add for the Bypass Location Rule.
+	 */
+	public $bypass_fields = [
+		'subject' => 'text',
+		'details' => 'wysiwyg',
+	];
+
 
 
 	/**
@@ -153,8 +168,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 		// Get the mapped Activity Field name if present.
 		$activity_field_name = $this->acf_loader->civicrm->activity->activity_field_name_get( $field );
-
-		// Bail if we don't have one.
 		if ( $activity_field_name === false ) {
 			return $valid;
 		}
@@ -407,6 +420,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 	 */
 	public function option_group_get( $name ) {
 
+		// Only do this once per named Option Group.
+		static $pseudocache;
+		if ( isset( $pseudocache[$name] ) ) {
+			return $pseudocache[$name];
+		}
+
 		// Init return.
 		$options = [];
 
@@ -436,6 +455,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 		// The result set should contain only one item.
 		$options = array_pop( $result['values'] );
+
+		// Maybe add to pseudo-cache.
+		if ( ! isset( $pseudocache[$name] ) ) {
+			$pseudocache[$name] = $options;
+		}
 
 		// --<
 		return $options;
@@ -627,6 +651,103 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 		return $fields;
 
 	}
+
+
+
+	/**
+	 * Get the core Fields for all CiviCRM Activity Types.
+	 *
+	 * @since 0.4
+	 *
+	 * @param string $filter The token by which to filter the array of fields.
+	 * @return array $fields The array of field names.
+	 */
+	public function data_get_filtered( $filter = 'none' ) {
+
+		// Only do this once per filter.
+		static $pseudocache;
+		if ( isset( $pseudocache[$filter] ) ) {
+			return $pseudocache[$filter];
+		}
+
+		// Init return.
+		$fields = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $fields;
+		}
+
+		// Construct params.
+		$params = [
+			'version' => 3,
+			'options' => [
+				'limit' => 0, // No limit.
+			],
+		];
+
+		// Call the API.
+		$result = civicrm_api( 'Activity', 'getfields', $params );
+
+		// Override return if we get some.
+		if (
+			$result['is_error'] == 0 AND
+			isset( $result['values'] ) AND
+			count( $result['values'] ) > 0
+		) {
+
+			// Check for no filter.
+			if ( $filter == 'none' ) {
+
+				// Grab all of them.
+				$fields = $result['values'];
+
+			// Check public filter.
+			} elseif ( $filter == 'public' ) {
+
+				// Skip all but those defined in our Activity Fields array.
+				foreach ( $result['values'] AS $key => $value ) {
+					if ( array_key_exists( $value['name'], $this->activity_fields ) ) {
+						$fields[] = $value;
+					}
+				}
+
+			}
+
+		}
+
+		// Maybe add to pseudo-cache.
+		if ( ! isset( $pseudocache[$filter] ) ) {
+			$pseudocache[$filter] = $fields;
+		}
+
+		// --<
+		return $fields;
+
+	}
+
+
+
+	/**
+	 * Get the public Fields for all CiviCRM Activity Types.
+	 *
+	 * @since 0.5
+	 *
+	 * @return array $public_fields The array of CiviCRM Fields.
+	 */
+	public function get_public_fields() {
+
+		// Init return.
+		$public_fields = [];
+
+		// Get the public Fields for all CiviCRM Activity Types.
+		$public_fields = $this->data_get_filtered( 'public' );
+
+		// --<
+		return $public_fields;
+
+	}
+
 
 
 	/**

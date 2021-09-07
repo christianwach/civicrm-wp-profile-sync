@@ -95,6 +95,24 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	public $im;
 
 	/**
+	 * CiviCRM Note object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $note The CiviCRM Note object.
+	 */
+	public $note;
+
+	/**
+	 * CiviCRM Tag object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $tag The CiviCRM Tag object.
+	 */
+	public $tag;
+
+	/**
 	 * CiviCRM Contact ID object.
 	 *
 	 * @since 0.4
@@ -248,6 +266,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	public $participant_field;
 
 	/**
+	 * CiviCRM Campaign object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $campaign The CiviCRM Campaign object.
+	 */
+	public $campaign;
+
+	/**
 	 * "CiviCRM Field" field key in the ACF Field data.
 	 *
 	 * This "top level" field key is common to all CiviCRM Entities. The value
@@ -331,6 +358,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-activity-type.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-activity.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-activity-field.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-case-type.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-case.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-case-field.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-event.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-participant-role.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-participant.php';
@@ -340,6 +370,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-custom-group.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-custom-field.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-civicrm-group.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-civicrm-note.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-civicrm-tag.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-civicrm-campaign.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-address.php';
 
 		// Include Additional Entity class files.
@@ -376,6 +409,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		$this->activity = new CiviCRM_Profile_Sync_ACF_CiviCRM_Activity( $this );
 		$this->activity_field = new CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field( $this );
 
+		// Init Case Type, Case and Case Field objects.
+		$this->case_type = new CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Type( $this );
+		$this->case = new CiviCRM_Profile_Sync_ACF_CiviCRM_Case( $this );
+		$this->case_field = new CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field( $this );
+
 		// Init Event, Participant Role, Participant and Participant Field objects.
 		$this->event = new CiviCRM_Profile_Sync_ACF_CiviCRM_Event( $this );
 		$this->participant = new CiviCRM_Profile_Sync_ACF_CiviCRM_Participant( $this );
@@ -386,6 +424,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		$this->custom_group = new CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Group( $this );
 		$this->custom_field = new CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field( $this );
 		$this->group = new CiviCRM_Profile_Sync_ACF_CiviCRM_Group( $this );
+		$this->note = new CiviCRM_Profile_Sync_ACF_CiviCRM_Note( $this );
+		$this->tag = new CiviCRM_Profile_Sync_ACF_CiviCRM_Tag( $this );
+		$this->campaign = new CiviCRM_Profile_Sync_ACF_CiviCRM_Campaign( $this );
 		$this->address = new CiviCRM_Profile_Sync_ACF_CiviCRM_Address( $this );
 
 		// Init Additional Entity objects.
@@ -443,6 +484,39 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 
 		// Try and initialise CiviCRM.
 		return civi_wp()->initialize();
+
+	}
+
+
+
+	/**
+	 * Finds out if a CiviCRM Component is active.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $component The name of the CiviCRM Component, e.g. 'CiviContribute'.
+	 * @return bool True if the Component is active, false otherwise.
+	 */
+	public function is_component_enabled( $component = '' ) {
+
+		// Init return.
+		$active = false;
+
+		// Bail if we can't initialise CiviCRM.
+		if ( ! $this->is_initialised() ) {
+			return $active;
+		}
+
+		// Get the Component array. CiviCRM handles caching.
+		$components = CRM_Core_Component::getEnabledComponents();
+
+		// Override if Component is active.
+		if ( array_key_exists( $component, $components ) ) {
+			$active = true;
+		}
+
+		// --<
+		return $active;
 
 	}
 
@@ -518,6 +592,41 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 
 		// --<
 		return $link;
+
+	}
+
+
+
+	/**
+	 * Get a CiviCRM Setting.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $name The name of the CiviCRM Setting.
+	 * @return mixed $setting The value of the CiviCRM Setting, or false on failure.
+	 */
+	public function get_setting( $name ) {
+
+		// Init return.
+		$setting = false;
+
+		// Init CiviCRM or bail.
+		if ( ! $this->is_initialised() ) {
+			return $setting;
+		}
+
+		// Construct params.
+		$params = [
+			'version' => 3,
+			'sequential' => 1,
+			'name' => $name,
+		];
+
+		// Call the CiviCRM API.
+		$setting = civicrm_api( 'Setting', 'getvalue', $params );
+
+		// --<
+		return $setting;
 
 	}
 

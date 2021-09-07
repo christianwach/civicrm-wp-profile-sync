@@ -142,13 +142,16 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Ref extends acf_field {
 		$this->acf_loader = $parent->acf_loader;
 
 		// Store reference to ACF Utilities.
-		$this->acf = $parent;
+		$this->acf = $parent->acf;
 
 		// Store reference to CiviCRM Utilities.
 		$this->civicrm = $this->acf_loader->civicrm;
 
 		// Define label.
 		$this->label = __( 'CiviCRM Contact Ref', 'civicrm-wp-profile-sync' );
+
+		// Define category.
+		$this->category = __( 'CiviCRM Post Type Sync', 'civicrm-wp-profile-sync' );
 
 		// Define translations.
 		$this->l10n = [

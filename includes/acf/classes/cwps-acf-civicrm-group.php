@@ -683,6 +683,67 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 
 
 	/**
+	 * Add a CiviCRM Contact to a CiviCRM Group with Double Opt In.
+	 *
+	 * @since 0.5
+	 *
+	 * @param integer $group_id The ID of the CiviCRM Group.
+	 * @param array $contact_id The numeric ID of a CiviCRM Contact.
+	 * @return array|boolean $result The Group-Contact data, or false on failure.
+	 */
+	public function group_contact_create_via_opt_in( $group_id, $contact_id ) {
+
+		// Init return.
+		$result = false;
+
+		// Get the Contact's Primary Email record.
+		$primary_email = $this->civicrm->email->primary_email_get( $contact['id'] );
+
+		// Skip if we can't find it.
+		if ( $primary_email === false ) {
+			return $result;
+		}
+
+		// Define params to send the Opt In Email.
+		$params = [
+			'version' => 3,
+			'sequential' => 1,
+			'group_id' => $group['group_id'],
+			'contact_id' => $contact['id'],
+			'email' => $primary_email['email'],
+		];
+
+		// Call the CiviCRM API.
+		$result = civicrm_api( 'MailingEventSubscribe', 'create', $params );
+
+		// Add log entry on failure.
+		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+			$e = new \Exception();
+			$trace = $e->getTraceAsString();
+			error_log( print_r( [
+				'method' => __METHOD__,
+				'message' => __( 'Could not send Opt In Email.', 'civicrm-wp-profile-sync' ),
+				'group_id' => $group['group_id'],
+				'contact_id' => $contact['id'],
+				'params' => $params,
+				'result' => $result,
+				'backtrace' => $trace,
+			], true ) );
+			return false;
+		}
+
+		// --<
+		return $result;
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
 	 * Get "chunked" CiviCRM API Group Contact data for a given Group ID.
 	 *
 	 * This method is used internally by the "Manual Sync" admin page to get the

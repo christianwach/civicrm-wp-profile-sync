@@ -60,6 +60,34 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 	 */
 	public $shortcode;
 
+	/**
+	 * "CiviCRM Field" field value prefix in the ACF Field data.
+	 *
+	 * This distinguishes Phone Fields from Custom Fields.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var str $email_field_prefix The prefix of the "CiviCRM Field" value.
+	 */
+	public $phone_field_prefix = 'caiphone_';
+
+	/**
+	 * Public Phone Fields.
+	 *
+	 * Mapped to their corresponding ACF Field Types.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array $phone_fields The array of public Phone Fields.
+	 */
+	public $phone_fields = [
+		'is_primary' => 'true_false',
+		'is_billing' => 'true_false',
+		'phone' => 'text',
+		'phone_ext' => 'text',
+		//'phone_type_id' => 'select',
+	];
+
 
 
 	/**
@@ -160,6 +188,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 		// Maybe sync the Phone Record "Phone ID" to the ACF Subfields.
 		add_action( 'cwps/acf/civicrm/phone/created', [ $this, 'maybe_sync_phone_id' ], 10, 2 );
+
+		// Listen for queries from the ACF Bypass class.
+		add_filter( 'cwps/acf/bypass/query_settings_choices', [ $this, 'query_bypass_settings_choices' ], 20, 4 );
+
+		// Listen for queries from our ACF Field Group class.
+		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'select_settings_modify' ], 50, 2 );
+		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'text_settings_modify' ], 10, 2 );
 
 	}
 
@@ -317,6 +352,59 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 		// --<
 		return $phone;
+
+	}
+
+
+
+	/**
+	 * Get the data for a Contact's Phone Records by Type.
+	 *
+	 * @since 0.5
+	 *
+	 * @param integer $contact_id The numeric ID of the CiviCRM Contact.
+	 * @param integer $location_type_id The numeric ID of the Phone Location Type.
+	 * @param integer $phone_type_id The numeric ID of the Phone Type.
+	 * @param array $phones The array of Phone Record data, or empty if none.
+	 */
+	public function phones_get_by_type( $contact_id, $location_type_id, $phone_type_id ) {
+
+		// Init return.
+		$phones = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $phones;
+		}
+
+		// Construct API query.
+		$params = [
+			'version' => 3,
+			'contact_id' => $contact_id,
+			'location_type_id' => $location_type_id,
+			'phone_type_id' => $phone_type_id,
+		];
+
+		// Get Phone Record details via API.
+		$result = civicrm_api( 'Phone', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+			return $phones;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $phones;
+		}
+
+ 		// We want the result set.
+ 		foreach ( $result['values'] AS $value ) {
+			$phones[] =  (object) $value;
+		}
+
+		// --<
+		return $phones;
 
 	}
 
@@ -972,6 +1060,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 
 
+	// -------------------------------------------------------------------------
+
+
+
 	/**
 	 * Update Phone ACF Fields on an Entity mapped to a Contact ID.
 	 *
@@ -1336,6 +1428,338 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 		// Now update Field.
 		$this->acf_loader->acf->field->value_update( $params['selector'], $existing, $args['post_id'] );
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Gets the CiviCRM Phone Fields.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $field_type The type of ACF Field.
+	 * @param string $filter The token by which to filter the array of fields.
+	 * @return array $fields The array of field names.
+	 */
+	public function civicrm_fields_get( $filter = 'none' ) {
+
+		// Only do this once per Field Type and filter.
+		static $pseudocache;
+		if ( isset( $pseudocache[$filter] ) ) {
+			return $pseudocache[$filter];
+		}
+
+		// Init return.
+		$fields = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $fields;
+		}
+
+		// Construct params.
+		$params = [
+			'version' => 3,
+			'options' => [
+				'limit' => 0, // No limit.
+			],
+		];
+
+		// Call the API.
+		$result = civicrm_api( 'Phone', 'getfields', $params );
+
+		// Override return if we get some.
+		if ( $result['is_error'] == 0 AND ! empty( $result['values'] ) ) {
+
+			// Check for no filter.
+			if ( $filter == 'none' ) {
+
+				// Grab all of them.
+				$fields = $result['values'];
+
+			// Check public filter.
+			} elseif ( $filter == 'public' ) {
+
+				// Skip all but those defined in our public Phone Fields array.
+				foreach ( $result['values'] AS $key => $value ) {
+					if ( array_key_exists( $value['name'], $this->phone_fields ) ) {
+						$fields[] = $value;
+					}
+				}
+
+			}
+
+		}
+
+		// Maybe add to pseudo-cache.
+		if ( ! isset( $pseudocache[$filter] ) ) {
+			$pseudocache[$filter] = $fields;
+		}
+
+		// --<
+		return $fields;
+
+	}
+
+
+
+	/**
+	 * Get the Phone Field options for a given Field ID.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $name The name of the field.
+	 * @return array $field The array of field data.
+	 */
+	public function get_by_name( $name ) {
+
+		// Init return.
+		$field = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $field;
+		}
+
+		// Construct params.
+		$params = [
+			'version' => 3,
+			'name' => $name,
+			'action' => 'get',
+		];
+
+		// Call the API.
+		$result = civicrm_api( 'Phone', 'getfield', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+			return $field;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $field;
+		}
+
+		// The result set is the item.
+		$field = $result['values'];
+
+		// --<
+		return $field;
+
+	}
+
+
+
+	/**
+	 * Get the mapped Phone Field name if present.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $field The existing field data array.
+	 * @return string|boolean $phone_field_name The name of the Phone Field, or false if none.
+	 */
+	public function phone_field_name_get( $field ) {
+
+		// Init return.
+		$phone_field_name = false;
+
+		// Get the ACF CiviCRM Field key.
+		$acf_field_key = $this->civicrm->acf_field_key_get();
+
+		// Set the mapped Phone Field name if present.
+		if ( isset( $field[$acf_field_key] ) ) {
+			if ( false !== strpos( $field[$acf_field_key], $this->phone_field_prefix ) ) {
+				$phone_field_name = (string) str_replace( $this->phone_field_prefix, '', $field[$acf_field_key] );
+			}
+		}
+
+		/**
+		 * Filter the Phone Field name.
+		 *
+		 * @since 0.5
+		 *
+		 * @param integer $phone_field_name The existing Phone Field name.
+		 * @param array $field The array of ACF Field data.
+		 * @return integer $phone_field_name The modified Phone Field name.
+		 */
+		$phone_field_name = apply_filters( 'cwps/acf/civicrm/phone/phone_field/name', $phone_field_name, $field );
+
+		// --<
+		return $phone_field_name;
+
+	}
+
+
+
+	/**
+	 * Appends an array of Setting Field choices for a Bypass ACF Field Group when found.
+	 *
+	 * The Phone Entity cannot have Custom Fields attached to it, so we can skip
+	 * that part of the logic.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $choices The existing Setting Field choices array.
+	 * @param array $field The ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @param array $entity_array The Entity and ID array.
+	 * @return array|bool $setting_field The Setting Field array if populated, false if conflicting.
+	 */
+	public function query_bypass_settings_choices( $choices, $field, $field_group, $entity_array ) {
+
+		// Pass if a Contact Entity is not present.
+		if ( ! array_key_exists( 'contact', $entity_array ) ) {
+			return $choices;
+		}
+
+		// Get the public fields on the Entity for this Field Type.
+		$public_fields = $this->civicrm_fields_get( 'public' );
+		$fields_for_entity = [];
+		foreach ( $public_fields AS $key => $value ) {
+			if ( $field['type'] == $this->phone_fields[$value['name']] ) {
+				$fields_for_entity[] = $value;
+			}
+		}
+
+		// Pass if not populated.
+		if ( empty( $fields_for_entity ) ) {
+			return $choices;
+		}
+
+		// Build Phone Field choices array for dropdown.
+		$phone_fields_label = esc_attr__( 'Phone Fields', 'civicrm-wp-profile-sync' );
+		foreach( $fields_for_entity AS $phone_field ) {
+			$choices[$phone_fields_label][$this->phone_field_prefix . $phone_field['name']] = $phone_field['title'];
+		}
+
+		/**
+		 * Filter the choices to display in the "CiviCRM Field" select.
+		 *
+		 * @since 0.5
+		 *
+		 * @param array $choices The choices for the Setting Field array.
+		 */
+		$choices = apply_filters( 'cwps/acf/civicrm/phone/civicrm_field/choices', $choices );
+
+		// Return populated array.
+		return $choices;
+
+	}
+
+
+
+	/**
+	 * Modify the Settings of an ACF "Select" Field.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $field The existing ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @return array $field The modified ACF Field data array.
+	 */
+	public function select_settings_modify( $field, $field_group ) {
+
+		// Bail early if not our Field Type.
+		if ( 'select' !== $field['type'] ) {
+			return $field;
+		}
+
+		// Skip if the CiviCRM Field key isn't there or isn't populated.
+		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+			return $field;
+		}
+
+		// Get the mapped Phone Field name if present.
+		$field_name = $this->phone_field_name_get( $field );
+		if ( $field_name === false ) {
+			return $field;
+		}
+
+		// Get keyed array of options for this Phone Field.
+		$field['choices'] = $this->options_get( $field_name );
+
+		// "Phone Type ID" is optional.
+		$field['allow_null'] = 1;
+
+		// --<
+		return $field;
+
+	}
+
+
+
+	/**
+	 * Get the "select" options for a given CiviCRM Phone Field.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $name The name of the Phone Field.
+	 * @return array $options The array of field options.
+	 */
+	public function options_get( $name ) {
+
+		// Init return.
+		$options = [];
+
+		// We only have a few to account for.
+
+		// Phone Type.
+		if ( $name == 'phone_type_id' ) {
+			$options = $this->phone_types_get();
+		}
+
+		// --<
+		return $options;
+
+	}
+
+
+
+	/**
+	 * Modify the Settings of an ACF "Text" Field.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $field The existing ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @return array $field The modified ACF Field data array.
+	 */
+	public function text_settings_modify( $field, $field_group ) {
+
+		// Bail early if not our Field Type.
+		if ( 'text' !== $field['type'] ) {
+			return $field;
+		}
+
+		// Skip if the CiviCRM Field key isn't there or isn't populated.
+		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+			return $field;
+		}
+
+		// Get the mapped Phone Field name if present.
+		$phone_field_name = $this->phone_field_name_get( $field );
+		if ( $phone_field_name === false ) {
+			return $field;
+		}
+
+		// Get Phone Field data.
+		$field_data = $this->get_by_name( $phone_field_name );
+
+		// Set the "maxlength" attribute.
+		if ( ! empty( $field_data['maxlength'] ) ) {
+			$field['maxlength'] = $field_data['maxlength'];
+		}
+
+		// --<
+		return $field;
 
 	}
 

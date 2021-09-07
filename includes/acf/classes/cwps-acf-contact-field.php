@@ -41,7 +41,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	public $civicrm;
 
 	/**
-	 * Common Contact Fields.
+	 * Contact Fields that all Contact Types have in common.
 	 *
 	 * These are mapped to their corresponding ACF Field types.
 	 *
@@ -55,6 +55,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	public $contact_fields_common = [
 		'nick_name' => 'text',
 		'image_URL' => 'image',
+		'source' => 'text',
+		'do_not_email' => 'true_false',
+		'do_not_phone' => 'true_false',
+		'do_not_mail' => 'true_false',
+		'do_not_sms' => 'true_false',
+		'do_not_trade' => 'true_false',
+		'is_opt_out' => 'true_false',
+		'preferred_communication_method' => 'select',
+		'preferred_language' => 'select',
+		'preferred_mail_format' => 'select',
+		'legal_identifier' => 'text',
+		'external_identifier' => 'text',
+		'communication_style_id' => 'select',
 	];
 
 	/**
@@ -78,6 +91,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		'is_deceased' => 'true_false',
 		'deceased_date' => 'date_picker',
 		'employer_id' => 'civicrm_contact',
+		'formal_title' => 'text',
 	];
 
 	/**
@@ -157,6 +171,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		add_action( 'cwps/acf/post/created', [ $this, 'post_edited' ], 10 );
 		add_action( 'cwps/acf/post/edited', [ $this, 'post_edited' ], 10 );
 		add_action( 'cwps/acf/post/contact_sync_to_post', [ $this, 'contact_sync_to_post' ], 10 );
+
+		// Some Contact "Text" Fields need their own validation.
+		//add_filter( 'acf/validate_value/type=text', [ $this, 'value_validate' ], 10, 4 );
 
 		// Intercept Contact Image delete.
 		add_action( 'civicrm_postSave_civicrm_contact', [ $this, 'image_deleted' ], 10 );
@@ -501,6 +518,35 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 			}
 		}
 
+		// Preferred Communication Method.
+		if ( $name == 'preferred_communication_method' ) {
+			$option_group = $this->option_group_get( 'preferred_communication_method' );
+			if ( ! empty( $option_group ) ) {
+				$options = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
+			}
+		}
+
+		// Preferred Language.
+		if ( $name == 'preferred_language' ) {
+			$option_group = $this->option_group_get( 'languages' );
+			if ( ! empty( $option_group ) ) {
+				$options = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
+			}
+		}
+
+		// Preferred Mail Format.
+		if ( $name == 'preferred_mail_format' ) {
+			$options = CRM_Core_SelectValues::pmf();
+		}
+
+		// Communication Style.
+		if ( $name == 'communication_style_id' ) {
+			$option_group = $this->option_group_get( 'communication_style' );
+			if ( ! empty( $option_group ) ) {
+				$options = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
+			}
+		}
+
 		// --<
 		return $options;
 
@@ -605,6 +651,23 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 			}
 
+		}
+
+		// Prefix and Suffix cannot be shown for "Multi-Select" or "Autocomplete-Select".
+		if ( 'select' === $field['type'] ) {
+			if ( $field['multiple'] == 1 OR ( $field['ui'] == 1 AND $field['ajax'] == 1 ) ) {
+
+				// Re-build fields without them.
+				$filtered_fields = [];
+				foreach ( $contact_fields AS $contact_field ) {
+					if ( $contact_field['name'] == 'prefix_id' OR $contact_field['name'] == 'suffix_id' ) {
+						continue;
+					}
+					$filtered_fields[] = $contact_field;
+				}
+				$contact_fields = $filtered_fields;
+
+			}
 		}
 
 		/**
@@ -748,7 +811,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 					$contact_fields = $this->contact_fields_household;
 				}
 
-				// Combine these with commons fields.
+				// Combine these with common fields.
 				$contact_fields = array_merge( $contact_fields, $this->contact_fields_common );
 
 				// Skip all but those defined in our Contact Fields arrays.
@@ -783,6 +846,100 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 
 	/**
+	 * Get the core Fields for all CiviCRM Contact Types.
+	 *
+	 * @since 0.4
+	 *
+	 * @param string $filter The token by which to filter the array of fields.
+	 * @return array $fields The array of field names.
+	 */
+	public function data_get_filtered( $filter = 'none' ) {
+
+		// Only do this once per Contact Type, Field Type and filter.
+		static $pseudocache;
+		if ( isset( $pseudocache[$filter] ) ) {
+			return $pseudocache[$filter];
+		}
+
+		// Init return.
+		$fields = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $fields;
+		}
+
+		// Construct params.
+		$params = [
+			'version' => 3,
+			'sequential' => 1,
+			'options' => [
+				//'sort' => 'title',
+				'limit' => 0, // No limit.
+			],
+		];
+
+		// Call the API.
+		$result = civicrm_api( 'Contact', 'getfields', $params );
+
+		// Override return if we get some.
+		if (
+			$result['is_error'] == 0 AND
+			isset( $result['values'] ) AND
+			count( $result['values'] ) > 0
+		) {
+
+			// Check for no filter.
+			if ( $filter == 'none' ) {
+
+				// Grab all of them.
+				$fields = $result['values'];
+
+			// Check public filter.
+			} elseif ( $filter == 'public' ) {
+
+				// Get the top level Contact Types array.
+				$top_level = [];
+				$contact_types = $this->civicrm->contact_type->types_get_all();
+				foreach( $contact_types AS $contact_type ) {
+					if ( empty( $contact_type['parent_id'] ) ) {
+						$top_level[$contact_type['name']] = $contact_type['id'];
+					}
+				}
+
+				// Skip all but those defined in our Contact Fields arrays.
+				foreach ( $result['values'] AS $key => $value ) {
+					if ( array_key_exists( $value['name'], $this->contact_fields_individual ) ) {
+						$fields[$top_level['Individual']][] = $value;
+					}
+					if ( array_key_exists( $value['name'], $this->contact_fields_organization ) ) {
+						$fields[$top_level['Organization']][] = $value;
+					}
+					if ( array_key_exists( $value['name'], $this->contact_fields_household ) ) {
+						$fields[$top_level['Household']][] = $value;
+					}
+					if ( array_key_exists( $value['name'], $this->contact_fields_common ) ) {
+						$fields['common'][] = $value;
+					}
+				}
+
+			}
+
+		}
+
+		// Maybe add to pseudo-cache.
+		if ( ! isset( $pseudocache[$filter] ) ) {
+			$pseudocache[$filter] = $fields;
+		}
+
+		// --<
+		return $fields;
+
+	}
+
+
+
+	/**
 	 * Get the Fields for a CiviCRM Contact Type.
 	 *
 	 * @since 0.4
@@ -806,11 +963,33 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 			$contact_fields = $this->contact_fields_household;
 		}
 
-		// Combine these with commons fields.
+		// Combine these with common fields.
 		$contact_fields = array_merge( $contact_fields, $this->contact_fields_common );
 
 		// --<
 		return $contact_fields;
+
+	}
+
+
+
+	/**
+	 * Get the public Fields for all top-level CiviCRM Contact Types.
+	 *
+	 * @since 0.5
+	 *
+	 * @return array $public_fields The array of CiviCRM Fields.
+	 */
+	public function get_public_fields() {
+
+		// Init return.
+		$public_fields = [];
+
+		// Get the public Contact Fields for all top level Contact Types.
+		$public_fields = $this->data_get_filtered( 'public' );
+
+		// --<
+		return $public_fields;
 
 	}
 

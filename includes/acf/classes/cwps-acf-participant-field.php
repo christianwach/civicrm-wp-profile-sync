@@ -153,8 +153,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 
 		// Get the mapped Participant Field name if present.
 		$participant_field_name = $this->acf_loader->civicrm->participant->participant_field_name_get( $field );
-
-		// Bail if we don't have one.
 		if ( $participant_field_name === false ) {
 			return $valid;
 		}

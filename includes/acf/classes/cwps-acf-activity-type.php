@@ -359,6 +359,73 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 
 
 	/**
+	 * Gets the CiviCRM Activity Types as choices for an ACF "Select" Field.
+	 *
+	 * @since 0.5
+	 *
+	 * @return array $choices The choices array.
+	 */
+	public function choices_get() {
+
+		// Only do this once.
+		static $pseudocache;
+		if ( isset( $pseudocache ) ) {
+			return $pseudocache;
+		}
+
+		// Init return.
+		$choices = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $choices;
+		}
+
+		// Define params to get queried Activity Types.
+		$params = [
+			'version' => 3,
+			'sequential' => 1,
+			'field' => 'activity_type_id',
+			'options' => [
+				'limit' => 0, // No limit.
+			],
+		];
+
+		// Call the API.
+		$result = civicrm_api( 'Activity', 'getoptions', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+			return $choices;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $choices;
+		}
+
+		// The formatted result set is what we're after.
+		foreach ( $result['values'] AS $choice ) {
+			$choices[$choice['key']] = $choice['value'];
+		}
+
+		// Maybe add to pseudo-cache.
+		if ( ! isset( $pseudocache ) ) {
+			$pseudocache = $choices;
+		}
+
+		// --<
+		return $choices;
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
 	 * Get all Activity Types.
 	 *
 	 * @since 0.5

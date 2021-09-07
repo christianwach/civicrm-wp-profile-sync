@@ -40,6 +40,31 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 */
 	public $acf;
 
+	/**
+	 * Supported ACF Field Types.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array $field_types The supported ACF Field Types.
+	 */
+	public $field_types = [
+		'select',
+		'radio',
+		'checkbox',
+		'date_picker',
+		'date_time_picker',
+		'text',
+		'wysiwyg',
+		'textarea',
+		'true_false',
+		'url',
+		'email',
+		'image',
+		'google_map',
+		'civicrm_contact',
+		'civicrm_yes_no',
+	];
+
 
 
 	/**
@@ -77,13 +102,12 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		add_filter( 'acf/validate_value/type=text', [ $this, 'value_validate' ], 10, 4 );
 
 		// Add Setting Field to Fields.
-		add_action( 'acf/render_field_settings', [ $this, 'field_setting_add' ] );
+		//add_action( 'acf/render_field_settings', [ $this, 'field_setting_add' ] );
 
-		// Customise "Google Map" Fields.
-		add_action( 'acf/render_field/type=google_map', [ $this, 'google_map_styles_add' ] );
-		add_action( 'acf/load_value/type=google_map', [ $this, 'google_map_value_modify' ], 10, 3 );
-		add_action( 'acf/update_value/type=google_map', [ $this, 'google_map_value_modify' ], 10, 3 );
-		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'google_map_setting_modify' ], 10, 2 );
+		// For newly-added Fields, we need to specify our supported Fields.
+		foreach ( $this->field_types AS $field_type ) {
+			add_action( "acf/render_field_settings/type={$field_type}", [ $this, 'field_setting_add' ], 1 );
+		}
 
 	}
 
@@ -346,7 +370,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 
 	/**
-	 * Validate the content of a Field.
+	 * Validate the content of a Field mapped to a CiviCRM Custom Field.
 	 *
 	 * Unlike in ACF, CiviCRM "Text", "Select" and "Radio" Fields can be of
 	 * various kinds. We need to provide validation for the matching data types
@@ -361,6 +385,11 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 * @return string|boolean $valid A string to display a custom error message, boolean otherwise.
 	 */
 	public function value_validate( $valid, $value, $field, $input ) {
+
+		// Bail if it has no ID.
+		if ( empty( $field['ID'] ) ) {
+			return $valid;
+		}
 
 		// Bail if it's not required and is empty.
 		if ( $field['required'] == '0' AND empty( $value ) ) {
@@ -686,7 +715,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 
 	/**
-	 * Add Setting to "Text" Field Settings.
+	 * Add Setting to Field Settings.
 	 *
 	 * @since 0.4
 	 *
@@ -694,11 +723,27 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 */
 	public function field_setting_add( $field ) {
 
+		// Bail if this is the "clone" ACF Field.
+		if ( $field['key'] == 'acfcloneindex' ) {
+			return;
+		}
+
 		// Get the Field Group for this Field.
 		$field_group = $this->acf->field_group->get_for_field( $field );
 
 		/**
 		 * Request a Setting Field from Entity classes.
+		 *
+		 * Used internally by:
+		 *
+		 * * Email
+		 * * Google Map
+		 * * Website
+		 *
+		 * Also used by the custom "Bypass" Location, which calls a further filter
+		 * in order to populate the Settings Field.
+		 *
+		 * @see CiviCRM_Profile_Sync_ACF_ACFE_Form::query_settings_field()
 		 *
 		 * @since 0.5
 		 *
@@ -708,190 +753,53 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		 */
 		$setting = apply_filters( 'cwps/acf/query_settings_field', [], $field, $field_group );
 
-		// Bail if we have no setting.
-		if ( empty( $setting ) ) {
+		// Use it if we get a Setting Field returned.
+		if ( ! empty( $setting ) ) {
+
+			// Now add it.
+			acf_render_field_setting( $field, $setting );
+
+			// We're done.
+			return;
+
+		}
+
+		/**
+		 * Request the choices for a Setting Field from Entity classes.
+		 *
+		 * @since 0.5
+		 *
+		 * @param array The empty default Setting Field choices array.
+		 * @param array $field The ACF Field data array.
+		 * @param array $field_group The ACF Field Group data array.
+		 */
+		$choices = apply_filters( 'cwps/acf/field/query_setting_choices', [], $field, $field_group );
+
+		// Bail if we get no choices.
+		if ( empty( $choices ) ) {
 			return;
 		}
+
+		// Define Setting Field.
+		$setting_field = [
+			'key' => $this->acf_loader->civicrm->acf_field_key_get(),
+			'label' => __( 'CiviCRM Field', 'civicrm-wp-profile-sync' ),
+			'name' => $this->acf_loader->civicrm->acf_field_key_get(),
+			'type' => 'select',
+			'instructions' => __( 'Choose the CiviCRM Field that this ACF Field should sync with. (Optional)', 'civicrm-wp-profile-sync' ),
+			'default_value' => '',
+			'placeholder' => '',
+			'allow_null' => 1,
+			'multiple' => 0,
+			'ui' => 0,
+			'required' => 0,
+			'return_format' => 'value',
+			'parent' => $this->acf->field_group->placeholder_group_get(),
+			'choices' => $choices,
+		];
 
 		// Now add it.
-		acf_render_field_setting( $field, $setting );
-
-	}
-
-
-
-	// -------------------------------------------------------------------------
-
-
-
-	/**
-	 * Add CSS when "Google Map" Field is loaded.
-	 *
-	 * @since 0.4
-	 *
-	 * @param array $field The field data array.
-	 */
-	public function google_map_styles_add( $field ) {
-
-		// Get Google Map key.
-		$key = $this->acf_loader->civicrm->google_map->acf_field_key_get();
-
-		// Bail if it's not a linked field.
-		if ( empty( $field[$key] ) ) {
-			return;
-		}
-
-		// Get the "Make Read Only" key.
-		$edit_key = $this->acf_loader->civicrm->google_map->acf_field_key_edit_get();
-
-		// Only skip if it's explicitly *not* set to "Read Only".
-		if ( isset( $field[$edit_key] ) AND $field[$edit_key] !== 1 ) {
-			return;
-		}
-
-		// Hide search bar when "Read Only". Yeah I know it's a hack.
-		$style = '<style type="text/css">' .
-			'#' . $field['id'] . '.acf-google-map .title { display: none; }' .
-		'</style>';
-
-		// Write to page.
-		echo $style;
-
-	}
-
-
-
-	/**
-	 * Maybe modify the value of a "Google Map" Field.
-	 *
-	 * This merely ensures that we have an array to work with.
-	 *
-	 * @since 0.4
-	 *
-	 * @param mixed $value The existing value.
-	 * @param integer $post_id The Post ID from which the value was loaded.
-	 * @param array $field The field array holding all the field options.
-	 * @return mixed $value The modified value.
-	 */
-	public function google_map_value_modify( $value, $post_id, $field ) {
-
-		// Make sure we have an array.
-		if ( empty( $value ) AND ! is_array( $value ) ) {
-			$value = [];
-		}
-
-		// TODO: Maybe assign Address for this Field if empty.
-		if ( empty( $value ) ) {
-
-			// Skip if this Field isn't linked to a CiviCRM Address.
-			$key = $this->acf_loader->civicrm->google_map->acf_field_key_get();
-			if ( empty( $field[$key] ) ) {
-				return $value;
-			}
-
-			// Skip if there is no Contact ID for this ACF "Post ID".
-			$contact_id = $this->acf->field->query_contact_id( $post_id );
-			if ( $contact_id === false ) {
-				return $value;
-			}
-
-			// Get this Contact's Addresses.
-			$addresses = $this->acf_loader->civicrm->address->addresses_get_by_contact_id( $contact_id );
-
-			// Init location.
-			$location = false;
-
-			// Does this Field sync with the Primary Address?
-			if ( $field[$key] === 'primary' ) {
-
-				// Assign Location from the Primary Address.
-				foreach( $addresses AS $address ) {
-					if ( ! empty( $address->is_primary ) ) {
-						$location = $address;
-						break;
-					}
-				}
-
-			// Does this Field sync with the Billing Address?
-			} elseif ( $field[$key] === 'billing' ) {
-
-				// Assign Location from the Primary Address.
-				foreach( $addresses AS $address ) {
-					if ( ! empty( $address->is_billing ) ) {
-						$location = $address;
-						break;
-					}
-				}
-
-			// We need a Location Type.
-			} elseif ( is_numeric( $field[$key] ) ) {
-
-				// Assign Location from the type of Address.
-				foreach( $addresses AS $address ) {
-					if ( $address->location_type_id == $field[$key] ) {
-						$location = $address;
-						break;
-					}
-				}
-
-			}
-
-			// Overwrite if we get a value.
-			if ( $location !== false ) {
-				$value = $this->acf_loader->civicrm->google_map->field_map_prepare( $address );
-			}
-
-		}
-
-		// --<
-		return $value;
-
-	}
-
-
-
-	/**
-	 * Maybe modify the Setting of a "Google Map" Field.
-	 *
-	 * Only the Primary Address can be editable in the ACF Field because it is
-	 * the only CiviCRM Address that is guaranteed to be unique. There can be
-	 * multiple Addresses with the same Location Type but only one that is the
-	 * Primary Address.
-	 *
-	 * @since 0.4
-	 *
-	 * @param array $field The existing field data array.
-	 * @param array $field_group The array of ACF Field Group data.
-	 * @return array $field The modified field data array.
-	 */
-	public function google_map_setting_modify( $field, $field_group = [] ) {
-
-		// Bail early if not our Field Type.
-		if ( 'google_map' !== $field['type'] ) {
-			return $field;
-		}
-
-		// Bail if it's not a linked field.
-		$key = $this->acf_loader->civicrm->google_map->acf_field_key_get();
-		if ( empty( $field[$key] ) ) {
-			return $field;
-		}
-
-		// Get the "Make Read Only" key.
-		$edit_key = $this->acf_loader->civicrm->google_map->acf_field_key_edit_get();
-
-		// Always set to default if not set.
-		if ( ! isset( $field[$edit_key] ) ) {
-			$field[$edit_key] = 1;
-		}
-
-		// Always set to true if not a "Primary" Address.
-		if ( $field[$key] != 'primary' ) {
-			$field[$edit_key] = 1;
-		}
-
-		// --<
-		return $field;
+		acf_render_field_setting( $field, $setting_field );
 
 	}
 

@@ -60,6 +60,33 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 	 */
 	public $shortcode;
 
+	/**
+	 * "CiviCRM Field" field value prefix in the ACF Field data.
+	 *
+	 * This distinguishes Instant Messenger Fields from Custom Fields.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var str $email_field_prefix The prefix of the "CiviCRM Field" value.
+	 */
+	public $im_field_prefix = 'caiim_';
+
+	/**
+	 * Public Instant Messenger Fields.
+	 *
+	 * Mapped to their corresponding ACF Field Types.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array $im_fields The array of public Instant Messenger Fields.
+	 */
+	public $im_fields = [
+		'is_primary' => 'true_false',
+		'is_billing' => 'true_false',
+		'name' => 'text',
+		//'provider_id' => 'select',
+	];
+
 
 
 	/**
@@ -160,6 +187,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 		// Maybe sync the Instant Messenger Record "Instant Messenger ID" to the ACF Subfields.
 		add_action( 'cwps/acf/civicrm/im/created', [ $this, 'maybe_sync_im_id' ], 10, 2 );
+
+		// Listen for queries from the ACF Bypass class.
+		add_filter( 'cwps/acf/bypass/query_settings_choices', [ $this, 'query_bypass_settings_choices' ], 20, 4 );
+
+		// Listen for queries from our ACF Field Group class.
+		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'select_settings_modify' ], 50, 2 );
+		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'text_settings_modify' ], 50, 2 );
 
 	}
 
@@ -317,6 +351,59 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 		// --<
 		return $im;
+
+	}
+
+
+
+	/**
+	 * Get the data for a Contact's Instant Messenger Records by Type.
+	 *
+	 * @since 0.5
+	 *
+	 * @param integer $contact_id The numeric ID of the CiviCRM Contact.
+	 * @param integer $location_type_id The numeric ID of the Instant Messenger Location Type.
+	 * @param integer $provider_id The numeric ID of the Instant Messenger Type.
+	 * @param array $ims The array of Instant Messenger Record data, or empty if none.
+	 */
+	public function ims_get_by_type( $contact_id, $location_type_id, $provider_id ) {
+
+		// Init return.
+		$ims = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $ims;
+		}
+
+		// Construct API query.
+		$params = [
+			'version' => 3,
+			'contact_id' => $contact_id,
+			'location_type_id' => $location_type_id,
+			'provider_id' => $provider_id,
+		];
+
+		// Get Instant Messenger Record details via API.
+		$result = civicrm_api( 'Im', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+			return $ims;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $ims;
+		}
+
+ 		// We want the result set.
+ 		foreach ( $result['values'] AS $value ) {
+			$ims[] =  (object) $value;
+		}
+
+		// --<
+		return $ims;
 
 	}
 
@@ -968,6 +1055,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 
 
+	// -------------------------------------------------------------------------
+
+
+
 	/**
 	 * Update Instant Messenger ACF Fields on an Entity mapped to a Contact ID.
 	 *
@@ -1332,6 +1423,338 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 		// Now update Field.
 		$this->acf_loader->acf->field->value_update( $params['selector'], $existing, $args['post_id'] );
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Gets the CiviCRM Instant Messenger Fields.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $field_type The type of ACF Field.
+	 * @param string $filter The token by which to filter the array of fields.
+	 * @return array $fields The array of field names.
+	 */
+	public function civicrm_fields_get( $filter = 'none' ) {
+
+		// Only do this once per Field Type and filter.
+		static $pseudocache;
+		if ( isset( $pseudocache[$filter] ) ) {
+			return $pseudocache[$filter];
+		}
+
+		// Init return.
+		$fields = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $fields;
+		}
+
+		// Construct params.
+		$params = [
+			'version' => 3,
+			'options' => [
+				'limit' => 0, // No limit.
+			],
+		];
+
+		// Call the API.
+		$result = civicrm_api( 'Im', 'getfields', $params );
+
+		// Override return if we get some.
+		if ( $result['is_error'] == 0 AND ! empty( $result['values'] ) ) {
+
+			// Check for no filter.
+			if ( $filter == 'none' ) {
+
+				// Grab all of them.
+				$fields = $result['values'];
+
+			// Check public filter.
+			} elseif ( $filter == 'public' ) {
+
+				// Skip all but those defined in our public Instant Messenger Fields array.
+				foreach ( $result['values'] AS $key => $value ) {
+					if ( array_key_exists( $value['name'], $this->im_fields ) ) {
+						$fields[] = $value;
+					}
+				}
+
+			}
+
+		}
+
+		// Maybe add to pseudo-cache.
+		if ( ! isset( $pseudocache[$filter] ) ) {
+			$pseudocache[$filter] = $fields;
+		}
+
+		// --<
+		return $fields;
+
+	}
+
+
+
+	/**
+	 * Get the Instant Messenger Field options for a given Field ID.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $name The name of the field.
+	 * @return array $field The array of field data.
+	 */
+	public function get_by_name( $name ) {
+
+		// Init return.
+		$field = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $field;
+		}
+
+		// Construct params.
+		$params = [
+			'version' => 3,
+			'name' => $name,
+			'action' => 'get',
+		];
+
+		// Call the API.
+		$result = civicrm_api( 'Im', 'getfield', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+			return $field;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $field;
+		}
+
+		// The result set is the item.
+		$field = $result['values'];
+
+		// --<
+		return $field;
+
+	}
+
+
+
+	/**
+	 * Get the mapped Instant Messenger Field name if present.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $field The existing field data array.
+	 * @return string|boolean $im_field_name The name of the Instant Messenger Field, or false if none.
+	 */
+	public function im_field_name_get( $field ) {
+
+		// Init return.
+		$im_field_name = false;
+
+		// Get the ACF CiviCRM Field key.
+		$acf_field_key = $this->civicrm->acf_field_key_get();
+
+		// Set the mapped Instant Messenger Field name if present.
+		if ( isset( $field[$acf_field_key] ) ) {
+			if ( false !== strpos( $field[$acf_field_key], $this->im_field_prefix ) ) {
+				$im_field_name = (string) str_replace( $this->im_field_prefix, '', $field[$acf_field_key] );
+			}
+		}
+
+		/**
+		 * Filter the Instant Messenger Field name.
+		 *
+		 * @since 0.5
+		 *
+		 * @param integer $im_field_name The existing Instant Messenger Field name.
+		 * @param array $field The array of ACF Field data.
+		 * @return integer $im_field_name The modified Instant Messenger Field name.
+		 */
+		$im_field_name = apply_filters( 'cwps/acf/civicrm/im/im_field/name', $im_field_name, $field );
+
+		// --<
+		return $im_field_name;
+
+	}
+
+
+
+	/**
+	 * Appends an array of Setting Field choices for a Bypass ACF Field Group when found.
+	 *
+	 * The Instant Messenger Entity cannot have Custom Fields attached to it, so
+	 * we can skip that part of the logic.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $choices The existing Setting Field choices array.
+	 * @param array $field The ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @param array $entity_array The Entity and ID array.
+	 * @return array|bool $setting_field The Setting Field array if populated, false if conflicting.
+	 */
+	public function query_bypass_settings_choices( $choices, $field, $field_group, $entity_array ) {
+
+		// Pass if a Contact Entity is not present.
+		if ( ! array_key_exists( 'contact', $entity_array ) ) {
+			return $choices;
+		}
+
+		// Get the public fields on the Entity for this Field Type.
+		$public_fields = $this->civicrm_fields_get( 'public' );
+		$fields_for_entity = [];
+		foreach ( $public_fields AS $key => $value ) {
+			if ( $field['type'] == $this->im_fields[$value['name']] ) {
+				$fields_for_entity[] = $value;
+			}
+		}
+
+		// Pass if not populated.
+		if ( empty( $fields_for_entity ) ) {
+			return $choices;
+		}
+
+		// Build Instant Messenger Field choices array for dropdown.
+		$im_fields_label = esc_attr__( 'Instant Messenger Fields', 'civicrm-wp-profile-sync' );
+		foreach( $fields_for_entity AS $im_field ) {
+			$choices[$im_fields_label][$this->im_field_prefix . $im_field['name']] = $im_field['title'];
+		}
+
+		/**
+		 * Filter the choices to display in the "CiviCRM Field" select.
+		 *
+		 * @since 0.5
+		 *
+		 * @param array $choices The choices for the Setting Field array.
+		 */
+		$choices = apply_filters( 'cwps/acf/civicrm/im/civicrm_field/choices', $choices );
+
+		// Return populated array.
+		return $choices;
+
+	}
+
+
+
+	/**
+	 * Modify the Settings of an ACF "Select" Field.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $field The existing ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @return array $field The modified ACF Field data array.
+	 */
+	public function select_settings_modify( $field, $field_group ) {
+
+		// Bail early if not our Field Type.
+		if ( 'select' !== $field['type'] ) {
+			return $field;
+		}
+
+		// Skip if the CiviCRM Field key isn't there or isn't populated.
+		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+			return $field;
+		}
+
+		// Get the mapped Instant Messenger Field name if present.
+		$field_name = $this->im_field_name_get( $field );
+		if ( $field_name === false ) {
+			return $field;
+		}
+
+		// Get keyed array of options for this Instant Messenger Field.
+		$field['choices'] = $this->options_get( $field_name );
+
+		// "Provider ID" is optional.
+		$field['allow_null'] = 1;
+
+		// --<
+		return $field;
+
+	}
+
+
+
+	/**
+	 * Get the "select" options for a given CiviCRM Instant Messenger Field.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $name The name of the Instant Messenger Field.
+	 * @return array $options The array of field options.
+	 */
+	public function options_get( $name ) {
+
+		// Init return.
+		$options = [];
+
+		// We only have a few to account for.
+
+		// Provider IDs.
+		if ( $name == 'provider_id' ) {
+			$options = $this->im_providers_get();
+		}
+
+		// --<
+		return $options;
+
+	}
+
+
+
+	/**
+	 * Modify the Settings of an ACF "Text" Field.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $field The existing ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @return array $field The modified ACF Field data array.
+	 */
+	public function text_settings_modify( $field, $field_group ) {
+
+		// Bail early if not our Field Type.
+		if ( 'text' !== $field['type'] ) {
+			return $field;
+		}
+
+		// Skip if the CiviCRM Field key isn't there or isn't populated.
+		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+			return $field;
+		}
+
+		// Get the mapped Instant Messenger Field name if present.
+		$phone_field_name = $this->im_field_name_get( $field );
+		if ( $phone_field_name === false ) {
+			return $field;
+		}
+
+		// Get Instant Messenger Field data.
+		$field_data = $this->get_by_name( $phone_field_name );
+
+		// Set the "maxlength" attribute.
+		if ( ! empty( $field_data['maxlength'] ) ) {
+			$field['maxlength'] = $field_data['maxlength'];
+		}
+
+		// --<
+		return $field;
 
 	}
 

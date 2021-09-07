@@ -157,6 +157,9 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Yes_No extends acf_field {
 		// Define label.
 		$this->label = __( 'CiviCRM Yes / No', 'civicrm-wp-profile-sync' );
 
+		// Define category.
+		$this->category = __( 'CiviCRM Post Type Sync', 'civicrm-wp-profile-sync' );
+
 		// Define translations.
 		$this->l10n = [
 			// Example message.
@@ -173,26 +176,31 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Yes_No extends acf_field {
 		// Call parent.
 		parent::__construct();
 
+		// Listen for queries from our Entity classes.
+		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'field_settings_filter' ], 10, 3 );
+
 	}
 
 
 
 	/**
-	 * Create extra Settings for this Field Type.
+	 * Filter the Custom Fields for the Setting of a "CiviCRM Contact" Field.
 	 *
-	 * These extra Settings will be visible when editing a Field.
+	 * @since 0.5
 	 *
-	 * @since 0.4
-	 *
-	 * @param array $field The Field being edited.
+	 * @param array $filtered_fields The existing array of filtered Custom Fields.
+	 * @param array $custom_fields The array of Custom Fields.
+	 * @param array $field The ACF Field data array.
+	 * @return array $filtered_fields The modified array of filtered Custom Fields.
 	 */
-	public function render_field_settings( $field ) {
+	public function field_settings_filter( $filtered_fields, $custom_fields, $field ) {
 
-		// Get the Custom Fields for this CiviCRM Contact Type.
-		$custom_fields = $this->civicrm->custom_field->get_for_acf_field( $field );
+		// Bail early if not our Field Type.
+		if ( $this->name !== $field['type'] ) {
+			return $filtered_fields;
+		}
 
 		// Filter fields to include only "Yes/No".
-		$filtered_fields = [];
 		foreach( $custom_fields AS $custom_group_name => $custom_group ) {
 			foreach( $custom_group AS $custom_field ) {
 				if ( ! empty( $custom_field['data_type'] ) AND $custom_field['data_type'] == 'Boolean' ) {
@@ -203,16 +211,8 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Yes_No extends acf_field {
 			}
 		}
 
-		// Bail if there are no fields.
-		if ( empty( $filtered_fields ) ) {
-			return;
-		}
-
-		// Get Setting field.
-		$setting = $this->civicrm->custom_field->acf_field_get( $filtered_fields );
-
-		// Now add it.
-		acf_render_field_setting( $field, $setting );
+		// --<
+		return $filtered_fields;
 
 	}
 

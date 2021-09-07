@@ -171,6 +171,22 @@ class CiviCRM_Profile_Sync_ACF {
 
 
 
+	/**
+	 * Checks if ACF Pro is installed.
+	 *
+	 * @since 0.5
+	 *
+	 * @return bool $is_pro True if ACF Pro is installed, false otherwise.
+	 */
+	public function is_pro() {
+
+		// Return the property from the Loader object.
+		return $this->acf_loader->acf_pro;
+
+	}
+
+
+
 } // Class ends.
 
 

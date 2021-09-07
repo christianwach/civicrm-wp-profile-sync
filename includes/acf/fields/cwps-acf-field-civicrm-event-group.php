@@ -150,6 +150,9 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Group extends acf_field {
 		// Define label.
 		$this->label = __( 'CiviCRM Event with Type', 'civicrm-wp-profile-sync' );
 
+		// Define category.
+		$this->category = __( 'CiviCRM Post Type Sync', 'civicrm-wp-profile-sync' );
+
 		// Define translations.
 		$this->l10n = [
 			// Example message.
@@ -165,6 +168,35 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Group extends acf_field {
 		// Force validation.
 		add_filter( 'acf/validate_value/type=group', [ $this, 'validate_value' ], 10, 4 );
 
+		// Remove this Field from the list of available Fields.
+		add_filter( 'acf/get_field_types', [ $this, 'remove_field_type' ], 100, 1 );
+
+	}
+
+
+
+	/**
+	 * Removes this Field Type from the list of available Field Types.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $groups The Field being rendered.
+	 */
+	public function remove_field_type( $groups ) {
+
+		// Bail if the "CiviCRM" group is missing.
+		if ( empty( $groups[$this->category] ) ) {
+			return $groups;
+		}
+
+		// Remove this Field Type.
+		if ( isset( $groups[$this->category][$this->name] ) ) {
+			unset( $groups[$this->category][$this->name] );
+		}
+
+		// --<
+		return $groups;
+
 	}
 
 
@@ -178,8 +210,8 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Group extends acf_field {
 	 */
 	public function render_field( $field ) {
 
-		// Change Field into a Group.
-		$field['type'] = 'group';
+		// Get the ACF Field definition.
+		$field = $this->get_field_definition();
 
 		// Render.
 		acf_render_field( $field );

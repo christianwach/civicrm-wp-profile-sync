@@ -763,7 +763,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		}
 
 		// If we don't get one.
-		if ( $term_id === false ) {
+		if ( empty( $term_id ) ) {
 
 			// Create Term,
 			$result = $this->term_create( $new_role );

@@ -33,7 +33,7 @@ class CiviCRM_Profile_Sync_ACF_Location_Type_Bypass extends ACF_Location {
 
 		// Set up this Location Rule.
 		$this->name = 'form_civicrm';
-		$this->label = __( 'CiviCRM Entity', 'civicrm-wp-profile-sync' );
+		$this->label = __( 'CiviCRM Entity for ACFE', 'civicrm-wp-profile-sync' );
 		$this->category = 'forms';
 		$this->object_type = 'civicrm';
 

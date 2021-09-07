@@ -50,6 +50,17 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	public $acf_field_key = 'field_cacf_civicrm_website';
 
 	/**
+	 * "CiviCRM Field" field value prefix in the ACF Field data.
+	 *
+	 * This distinguishes Website Fields from Custom Fields.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var str $website_field_prefix The prefix of the "CiviCRM Field" value.
+	 */
+	public $website_field_prefix = 'caiwebsite_';
+
+	/**
 	 * Contact Fields which must be handled separately.
 	 *
 	 * @since 0.4
@@ -58,6 +69,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	 */
 	public $fields_handled = [
 		'url',
+	];
+
+	/**
+	 * Public Website Fields.
+	 *
+	 * Mapped to their corresponding ACF Field Types.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array $website_fields The array of public Website Fields.
+	 */
+	public $website_fields = [
+		'url' => 'url',
 	];
 
 
@@ -119,6 +143,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 
 		// Intercept Post created from Contact events.
 		add_action( 'cwps/acf/post/contact_sync_to_post', [ $this, 'contact_sync_to_post' ], 10 );
+
+		// Listen for queries from the ACF Field class.
+		add_filter( 'cwps/acf/query_settings_field', [ $this, 'query_settings_field' ], 51, 3 );
+
+		// Listen for queries from the ACF Bypass class.
+		add_filter( 'cwps/acf/bypass/query_settings_choices', [ $this, 'query_bypass_settings_choices' ], 20, 4 );
 
 	}
 
@@ -271,6 +301,55 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		$params = [
 			'version' => 3,
 			'id' => $website_id,
+		];
+
+		// Get Website details via API.
+		$result = civicrm_api( 'Website', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+			return $website;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $website;
+		}
+
+ 		// The result set should contain only one item.
+		$website = (object) array_pop( $result['values'] );
+
+		// --<
+		return $website;
+
+	}
+
+
+
+	/**
+	 * Get the data for a Website.
+	 *
+	 * @since 0.5
+	 *
+	 * @param integer $contact_id The numeric ID of the CiviCRM Contact.
+	 * @param integer $website_type_id The numeric ID of the Website Type.
+	 * @param object $website The array of Website data, or empty if none.
+	 */
+	public function website_get_by_type( $contact_id, $website_type_id ) {
+
+		// Init return.
+		$website = false;
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $website;
+		}
+
+		// Construct API query.
+		$params = [
+			'version' => 3,
+			'contact_id' => $contact_id,
+			'website_type_id' => $website_type_id,
 		];
 
 		// Get Website details via API.
@@ -666,6 +745,81 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 
 
 	/**
+	 * Gets the CiviCRM Website Fields.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $field_type The type of ACF Field.
+	 * @param string $filter The token by which to filter the array of fields.
+	 * @return array $fields The array of field names.
+	 */
+	public function civicrm_fields_get( $filter = 'none' ) {
+
+		// Only do this once per Field Type and filter.
+		static $pseudocache;
+		if ( isset( $pseudocache[$filter] ) ) {
+			return $pseudocache[$filter];
+		}
+
+		// Init return.
+		$fields = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $fields;
+		}
+
+		// Construct params.
+		$params = [
+			'version' => 3,
+			'options' => [
+				'limit' => 0, // No limit.
+			],
+		];
+
+		// Call the API.
+		$result = civicrm_api( 'Website', 'getfields', $params );
+
+		// Override return if we get some.
+		if ( $result['is_error'] == 0 AND ! empty( $result['values'] ) ) {
+
+			// Check for no filter.
+			if ( $filter == 'none' ) {
+
+				// Grab all of them.
+				$fields = $result['values'];
+
+			// Check public filter.
+			} elseif ( $filter == 'public' ) {
+
+				// Skip all but those defined in our public Website Fields array.
+				foreach ( $result['values'] AS $key => $value ) {
+					if ( array_key_exists( $value['name'], $this->website_fields ) ) {
+						$fields[] = $value;
+					}
+				}
+
+			}
+
+		}
+
+		// Maybe add to pseudo-cache.
+		if ( ! isset( $pseudocache[$filter] ) ) {
+			$pseudocache[$filter] = $fields;
+		}
+
+		// --<
+		return $fields;
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
 	 * Filter the Custom Field ID.
 	 *
 	 * Some Website Fields may be mapped to CiviCRM Custom Fields. This filter
@@ -707,20 +861,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	 * @since 0.4
 	 *
 	 * @param array $field The ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
 	 * @return array $website_types The array of possible Website Types.
 	 */
-	public function get_for_acf_field( $field ) {
+	public function get_for_acf_field( $field, $field_group = [] ) {
 
 		// Init return.
 		$website_types = [];
-
-		// Get field group for this field's parent.
-		$field_group = $this->acf_loader->acf->field_group->get_for_field( $field );
-
-		// Bail if there's no field group.
-		if ( empty( $field_group ) ) {
-			return $website_types;
-		}
 
 		// Try and init CiviCRM.
 		if ( ! $this->civicrm->is_initialised() ) {
@@ -735,8 +882,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 			return $website_types;
 		}
 
-		// Assign to return.
-		$website_types = $website_type_ids;
+		/**
+		 * Filter the Website Types.
+		 *
+		 * @since 0.5
+		 *
+		 * @param array $website_type_ids The array of CiviCRM Website Types.
+		 * @param array $field The ACF Field data array.
+		 * @param array $field_group The ACF Field Group data array.
+		 */
+		$website_types = apply_filters( 'cwps/acf/website/website_types', $website_type_ids, $field, $field_group );
 
 		// --<
 		return $website_types;
@@ -757,7 +912,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	public function acf_field_get( $custom_fields = [], $website_types = [] ) {
 
 		// Bail if empty.
-		if ( empty( $website_types ) ) {
+		if ( empty( $custom_fields ) AND empty( $website_types ) ) {
 			return;
 		}
 
@@ -765,9 +920,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		$choices = [];
 
 		// Build Website Types choices array for dropdown.
-		$website_types_label = esc_attr__( 'Contact Website Type', 'civicrm-wp-profile-sync' );
-		foreach( $website_types AS $website_type_id => $website_type_name ) {
-			$choices[$website_types_label][$website_type_id] = esc_attr( $website_type_name );
+		if ( ! empty( $website_types ) ) {
+			$website_types_label = esc_attr__( 'Contact Website Type', 'civicrm-wp-profile-sync' );
+			foreach( $website_types AS $website_type_id => $website_type_name ) {
+				$choices[$website_types_label][$website_type_id] = esc_attr( $website_type_name );
+			}
 		}
 
 		// Build Custom Field choices array for dropdown.
@@ -841,6 +998,146 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 
 		// --<
 		return $acf_fields;
+
+	}
+
+
+
+	/**
+	 * Returns a Setting Field for an ACF "URL" Field when found.
+	 *
+	 * The CiviCRM "Website Types" can only be attached to a Contact. This means
+	 * they can only be shown on a "Contact Field Group" or a "User Field Group"
+	 * in ACF.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $setting_field The existing Setting Field array.
+	 * @param array $field The ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @param bool $skip_check True if the check for Field Group should be skipped. Default false.
+	 * @return array|bool $setting_field The Setting Field array if populated, false if conflicting.
+	 */
+	public function query_settings_field( $setting_field, $field, $field_group, $skip_check = false ) {
+
+		// Pass if this is not our Field Type.
+		if ( 'url' !== $field['type'] ) {
+			return $setting_field;
+		}
+
+		// Assume Website Fields are not required.
+		$website_fields = [];
+
+		// Check if this is a Contact Field Group or a User Field Group.
+		$is_contact_field_group = $this->civicrm->contact->is_contact_field_group( $field_group );
+		$is_user_field_group = $this->acf_loader->user->is_user_field_group( $field_group );
+		if ( ! empty( $is_contact_field_group ) OR ! empty( $is_user_field_group ) ) {
+
+			// The Website Fields for this ACF Field are needed.
+			$website_fields = $this->get_for_acf_field( $field );
+
+			// Maybe exclude the synced "WordPress User Profile" Website Type.
+			if ( ! empty( $is_user_field_group ) ) {
+				$website_type_id = (int) $this->acf_loader->plugin->admin->setting_get( 'user_profile_website_type', 0 );
+				if ( $website_type_id > 0 AND isset( $website_fields[$website_type_id] ) ) {
+					unset( $website_fields[$website_type_id] );
+				}
+			}
+
+		}
+
+		// Get the Custom Fields for this Field Type.
+		$custom_fields = $this->acf_loader->civicrm->custom_field->get_for_acf_field( $field );
+
+		/**
+		 * Filter the Custom Fields.
+		 *
+		 * @since 0.5
+		 *
+		 * @param array The initially empty array of filtered Custom Fields.
+		 * @param array $custom_fields The CiviCRM Custom Fields array.
+		 * @param array $field The ACF Field data array.
+		 */
+		$filtered_fields = apply_filters( 'cwps/acf/query_settings/custom_fields_filter', [], $custom_fields, $field );
+
+		// Pass if not populated.
+		if ( empty( $website_fields ) AND empty( $filtered_fields ) ) {
+			return $setting_field;
+		}
+
+		// Get the Setting Field.
+		$setting_field = $this->acf_field_get( $filtered_fields, $website_fields );
+
+		// Return populated array.
+		return $setting_field;
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Appends an array of Setting Field choices for a Bypass ACF Field Group when found.
+	 *
+	 * The Website Entity cannot have Custom Fields attached to it, so we can skip
+	 * that part of the logic.
+	 *
+	 * In fact, this isn't really necessary at all - all the logic is handled in
+	 * the ACFE Form Action - but it might be confusing for people if they are
+	 * unable to map some ACF Fields when they're building a Field Group for an
+	 * ACFE Form... so here it is *shrug*
+	 *
+	 * To disable, comment out the "cwps/acf/bypass/query_settings_choices" filter.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $choices The existing Setting Field choices array.
+	 * @param array $field The ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @param array $entity_array The Entity and ID array.
+	 * @return array|bool $setting_field The Setting Field array if populated, false if conflicting.
+	 */
+	public function query_bypass_settings_choices( $choices, $field, $field_group, $entity_array ) {
+
+		// Pass if a Contact Entity is not present.
+		if ( ! array_key_exists( 'contact', $entity_array ) ) {
+			return $choices;
+		}
+
+		// Get the public fields on the Entity for this Field Type.
+		$public_fields = $this->civicrm_fields_get( 'public' );
+		$fields_for_entity = [];
+		foreach ( $public_fields AS $key => $value ) {
+			if ( $field['type'] == $this->website_fields[$value['name']] ) {
+				$fields_for_entity[] = $value;
+			}
+		}
+
+		// Pass if not populated.
+		if ( empty( $fields_for_entity ) ) {
+			return $choices;
+		}
+
+		// Build Website Field choices array for dropdown.
+		$website_fields_label = esc_attr__( 'Website Fields', 'civicrm-wp-profile-sync' );
+		foreach( $fields_for_entity AS $website_field ) {
+			$choices[$website_fields_label][$this->website_field_prefix . $website_field['name']] = $website_field['title'];
+		}
+
+		/**
+		 * Filter the choices to display in the "CiviCRM Field" select.
+		 *
+		 * @since 0.5
+		 *
+		 * @param array $choices The choices for the Setting Field array.
+		 */
+		$choices = apply_filters( 'cwps/acf/civicrm/website/civicrm_field/choices', $choices );
+
+		// Return populated array.
+		return $choices;
 
 	}
 

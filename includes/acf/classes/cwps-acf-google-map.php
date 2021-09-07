@@ -135,6 +135,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		// Intercept Post-Contact sync event.
 		add_action( 'cwps/acf/post/contact_sync_to_post', [ $this, 'contact_sync_to_post' ], 10 );
 
+		// Listen for queries from the ACF Field class.
+		add_filter( 'cwps/acf/query_settings_field', [ $this, 'query_settings_field' ], 51, 3 );
+
+		// Customise "Google Map" Fields.
+		add_action( 'acf/render_field/type=google_map', [ $this, 'google_map_styles_add' ] );
+		add_action( 'acf/load_value/type=google_map', [ $this, 'google_map_value_modify' ], 10, 3 );
+		add_action( 'acf/update_value/type=google_map', [ $this, 'google_map_value_modify' ], 10, 3 );
+		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'google_map_setting_modify' ], 10, 2 );
+
 	}
 
 
@@ -777,6 +786,20 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		$address->toggle_primary = '';
 		$address->toggle_billing = '';
 
+		// Make sure primary and billing properties exist.
+		if ( empty( $address->is_primary ) ) {
+			$address->is_primary = '0';
+		}
+		if ( empty( $address->is_billing ) ) {
+			$address->is_billing = '0';
+		}
+		if ( empty( $previous->is_primary ) ) {
+			$previous->is_primary = '0';
+		}
+		if ( empty( $previous->is_billing ) ) {
+			$previous->is_billing = '0';
+		}
+
 		// Check if "Primary" has been toggled.
 		if ( $address->is_primary != $previous->is_primary ) {
 
@@ -1249,25 +1272,33 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	/**
 	 * Return the "CiviCRM Google Map" ACF Settings Field.
 	 *
+	 * The "Google Map" Field cannot map to a CiviCRM Custom Field because there
+	 * isn't a matching CiviCRM Custom Field Type. The param is still present to
+	 * keep the method signature the same as all other Fields.
+	 *
 	 * @since 0.4
 	 *
+	 * @param array $custom_fields The Custom Fields to populate the ACF Field with.
 	 * @param array $location_types The Location Types to populate the ACF Field with.
+	 * @param boolean $skip_specific True skips adding the  "Primary Address" and "Billing Address" choices.
 	 * @return array $field The ACF Field data array.
 	 */
-	public function acf_field_get( $location_types = [] ) {
+	public function acf_field_get( $custom_fields = [], $location_types = [], $skip_specific = false ) {
 
 		// Bail if empty.
-		if ( empty( $location_types ) ) {
+		if ( empty( $custom_fields ) AND empty( $location_types ) ) {
 			return;
 		}
 
 		// Build choices array for dropdown.
 		$choices = [];
 
-		// Prepend "Primary Address" and "Billing Address" choices for dropdown.
-		$specific_address_label = esc_attr__( 'Specific Addresses', 'civicrm-wp-profile-sync' );
-		$choices[$specific_address_label]['primary'] = esc_attr__( 'Primary Address', 'civicrm-wp-profile-sync' );
-		$choices[$specific_address_label]['billing'] = esc_attr__( 'Billing Address', 'civicrm-wp-profile-sync' );
+		// Maybe prepend "Primary Address" and "Billing Address" choices for dropdown.
+		if ( $skip_specific === false ) {
+			$specific_address_label = esc_attr__( 'Specific Addresses', 'civicrm-wp-profile-sync' );
+			$choices[$specific_address_label]['primary'] = esc_attr__( 'Primary Address', 'civicrm-wp-profile-sync' );
+			$choices[$specific_address_label]['billing'] = esc_attr__( 'Billing Address', 'civicrm-wp-profile-sync' );
+		}
 
 		// Build Location Types choices array for dropdown.
 		$location_types_label = esc_attr__( 'Location Types', 'civicrm-wp-profile-sync' );
@@ -1409,6 +1440,232 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 		// --<
 		return $acf_fields;
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Returns a Setting Field for an ACF "Google Map" Field when found.
+	 *
+	 * The CiviCRM "Google Map" Entity can only be attached to a Contact. This means
+	 * it can be part of a "Contact Field Group" and a "User Field Group" in ACF.
+	 *
+	 * The "Google Map" Field cannot map to a CiviCRM Custom Field because there
+	 * isn't a matching CiviCRM Custom Field Type.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $setting_field The existing Setting Field array.
+	 * @param array $field The ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @param bool $skip_check True if the check for Field Group should be skipped. Default false.
+	 * @return array|bool $setting_field The Setting Field array if populated, false if conflicting.
+	 */
+	public function query_settings_field( $setting_field, $field, $field_group, $skip_check = false ) {
+
+		// Pass if this is not our Field Type.
+		if ( 'google_map' !== $field['type'] ) {
+			return $setting_field;
+		}
+
+		// Pass if this is not a Contact Field Group or a User Field Group.
+		$is_contact_field_group = $this->civicrm->contact->is_contact_field_group( $field_group );
+		$is_user_field_group = $this->acf_loader->user->is_user_field_group( $field_group );
+		if ( empty( $is_contact_field_group ) AND empty( $is_user_field_group ) ) {
+			return $setting_field;
+		}
+
+		// Get the Google Map Fields for this ACF Field.
+		$google_map_fields = $this->get_for_acf_field( $field );
+
+		// Pass if not populated.
+		if ( empty( $google_map_fields ) ) {
+			return $setting_field;
+		}
+
+		// Get the Setting Field.
+		$setting_field = $this->acf_field_get( [], $google_map_fields );
+
+		// Return populated array.
+		return $setting_field;
+
+	}
+
+
+
+	/**
+	 * Add CSS when "Google Map" Field is loaded.
+	 *
+	 * @since 0.4
+	 *
+	 * @param array $field The field data array.
+	 */
+	public function google_map_styles_add( $field ) {
+
+		// Get Google Map key.
+		$key = $this->acf_field_key_get();
+
+		// Bail if it's not a linked field.
+		if ( empty( $field[$key] ) ) {
+			return;
+		}
+
+		// Get the "Make Read Only" key.
+		$edit_key = $this->acf_field_key_edit_get();
+
+		// Only skip if it's explicitly *not* set to "Read Only".
+		if ( isset( $field[$edit_key] ) AND $field[$edit_key] !== 1 ) {
+			return;
+		}
+
+		// Hide search bar when "Read Only". Yeah I know it's a hack.
+		$style = '<style type="text/css">' .
+			'#' . $field['id'] . '.acf-google-map .title { display: none; }' .
+		'</style>';
+
+		// Write to page.
+		echo $style;
+
+	}
+
+
+
+	/**
+	 * Maybe modify the value of a "Google Map" Field.
+	 *
+	 * This merely ensures that we have an array to work with.
+	 *
+	 * @since 0.4
+	 *
+	 * @param mixed $value The existing value.
+	 * @param integer $post_id The Post ID from which the value was loaded.
+	 * @param array $field The field array holding all the field options.
+	 * @return mixed $value The modified value.
+	 */
+	public function google_map_value_modify( $value, $post_id, $field ) {
+
+		// Make sure we have an array.
+		if ( empty( $value ) AND ! is_array( $value ) ) {
+			$value = [];
+		}
+
+		// TODO: Maybe assign Address for this Field if empty.
+		if ( empty( $value ) ) {
+
+			// Skip if this Field isn't linked to a CiviCRM Address.
+			$key = $this->acf_field_key_get();
+			if ( empty( $field[$key] ) ) {
+				return $value;
+			}
+
+			// Skip if there is no Contact ID for this ACF "Post ID".
+			$contact_id = $this->acf_loader->acf->field->query_contact_id( $post_id );
+			if ( $contact_id === false ) {
+				return $value;
+			}
+
+			// Get this Contact's Addresses.
+			$addresses = $this->acf_loader->civicrm->address->addresses_get_by_contact_id( $contact_id );
+
+			// Init location.
+			$location = false;
+
+			// Does this Field sync with the Primary Address?
+			if ( $field[$key] === 'primary' ) {
+
+				// Assign Location from the Primary Address.
+				foreach( $addresses AS $address ) {
+					if ( ! empty( $address->is_primary ) ) {
+						$location = $address;
+						break;
+					}
+				}
+
+			// Does this Field sync with the Billing Address?
+			} elseif ( $field[$key] === 'billing' ) {
+
+				// Assign Location from the Primary Address.
+				foreach( $addresses AS $address ) {
+					if ( ! empty( $address->is_billing ) ) {
+						$location = $address;
+						break;
+					}
+				}
+
+			// We need a Location Type.
+			} elseif ( is_numeric( $field[$key] ) ) {
+
+				// Assign Location from the type of Address.
+				foreach( $addresses AS $address ) {
+					if ( $address->location_type_id == $field[$key] ) {
+						$location = $address;
+						break;
+					}
+				}
+
+			}
+
+			// Overwrite if we get a value.
+			if ( $location !== false ) {
+				$value = $this->field_map_prepare( $address );
+			}
+
+		}
+
+		// --<
+		return $value;
+
+	}
+
+
+
+	/**
+	 * Maybe modify the Setting of a "Google Map" Field.
+	 *
+	 * Only the Primary Address can be editable in the ACF Field because it is
+	 * the only CiviCRM Address that is guaranteed to be unique. There can be
+	 * multiple Addresses with the same Location Type but only one that is the
+	 * Primary Address.
+	 *
+	 * @since 0.4
+	 *
+	 * @param array $field The existing field data array.
+	 * @param array $field_group The array of ACF Field Group data.
+	 * @return array $field The modified field data array.
+	 */
+	public function google_map_setting_modify( $field, $field_group = [] ) {
+
+		// Bail early if not our Field Type.
+		if ( 'google_map' !== $field['type'] ) {
+			return $field;
+		}
+
+		// Bail if it's not a linked field.
+		$key = $this->acf_field_key_get();
+		if ( empty( $field[$key] ) ) {
+			return $field;
+		}
+
+		// Get the "Make Read Only" key.
+		$edit_key = $this->acf_field_key_edit_get();
+
+		// Always set to default if not set.
+		if ( ! isset( $field[$edit_key] ) ) {
+			$field[$edit_key] = 1;
+		}
+
+		// Always set to true if not a "Primary" Address.
+		if ( $field[$key] != 'primary' ) {
+			$field[$edit_key] = 1;
+		}
+
+		// --<
+		return $field;
 
 	}
 

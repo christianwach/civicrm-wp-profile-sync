@@ -50,6 +50,17 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	public $acf_field_key = 'field_cacf_civicrm_email';
 
 	/**
+	 * "CiviCRM Field" field value prefix in the ACF Field data.
+	 *
+	 * This distinguishes Email Fields from Custom Fields.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var str $email_field_prefix The prefix of the "CiviCRM Field" value.
+	 */
+	public $email_field_prefix = 'caiemail_';
+
+	/**
 	 * Contact Fields which must be handled separately.
 	 *
 	 * @since 0.4
@@ -58,6 +69,23 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 */
 	public $fields_handled = [
 		'email',
+	];
+
+	/**
+	 * Public Email Fields.
+	 *
+	 * Mapped to their corresponding ACF Field Types.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array $email_fields The array of public Email Fields.
+	 */
+	public $email_fields = [
+		'is_primary' => 'true_false',
+		'is_billing' => 'true_false',
+		'email' => 'email',
+		'on_hold' => 'true_false',
+		'is_bulkmail' => 'true_false',
 	];
 
 
@@ -116,6 +144,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 		// Intercept Post created from Contact events.
 		add_action( 'cwps/acf/post/contact_sync_to_post', [ $this, 'contact_sync_to_post' ], 10 );
+
+		// Listen for queries from the ACF Field class.
+		add_filter( 'cwps/acf/query_settings_field', [ $this, 'query_settings_field' ], 51, 3 );
+
+		// Listen for queries from the ACF Bypass class.
+		add_filter( 'cwps/acf/bypass/query_settings_choices', [ $this, 'query_bypass_settings_choices' ], 20, 4 );
 
 	}
 
@@ -254,7 +288,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 * @since 0.5
 	 *
 	 * @param integer $email_id The numeric ID of the Email.
-	 * @param array $email The array of Email data, or empty if none.
+	 * @param object $email The array of Email data, or empty if none.
 	 */
 	public function email_get_by_id( $email_id ) {
 
@@ -270,6 +304,55 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		$params = [
 			'version' => 3,
 			'id' => $email_id,
+		];
+
+		// Get Email details via API.
+		$result = civicrm_api( 'Email', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+			return $email;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $email;
+		}
+
+ 		// The result set should contain only one item.
+		$email = (object) array_pop( $result['values'] );
+
+		// --<
+		return $email;
+
+	}
+
+
+
+	/**
+	 * Get the data for a Contact's Email by Location Type.
+	 *
+	 * @since 0.5
+	 *
+	 * @param integer $contact_id The numeric ID of the CiviCRM Contact.
+	 * @param integer $location_type_id The numeric ID of the Email Location Type.
+	 * @param object $email The array of Email data, or empty if none.
+	 */
+	public function email_get_by_location( $contact_id, $location_type_id ) {
+
+		// Init return.
+		$email = false;
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $email;
+		}
+
+		// Construct API query.
+		$params = [
+			'version' => 3,
+			'contact_id' => $contact_id,
+			'location_type_id' => $location_type_id,
 		];
 
 		// Get Email details via API.
@@ -577,7 +660,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 
 	/**
-	 * Update a CiviCRM Contact's Email.
+	 * Update a CiviCRM Contact's Email Address.
 	 *
 	 * @since 0.4
 	 *
@@ -664,6 +747,91 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 				return $email;
 
 			}
+
+		}
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+			return $email;
+		}
+
+		// The result set should contain only one item.
+		$email = array_pop( $result['values'] );
+
+		// --<
+		return $email;
+
+	}
+
+
+
+	/**
+	 * Update a CiviCRM Contact's Email Address Record.
+	 *
+	 * @since 0.5
+	 *
+	 * @param integer $contact_id The numeric ID of the Contact.
+	 * @param array $data The Email data to save.
+	 * @return array|boolean $email The array of Email data, or false on failure.
+	 */
+	public function email_record_update( $contact_id, $data ) {
+
+		// Init return.
+		$email = false;
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $email;
+		}
+
+		// Get the current Email for this Location Type.
+		$params = [
+			'version' => 3,
+			'contact_id' => $contact_id,
+			'location_type_id' => $data['location_type_id'],
+		];
+
+		// Call the CiviCRM API.
+		$existing_email = civicrm_api( 'Email', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $existing_email['is_error'] ) AND $existing_email['is_error'] == 1 ) {
+			return $email;
+		}
+
+		// Create a new Email if there are no results.
+		if ( empty( $existing_email['values'] ) ) {
+
+			// Define params to create new Email.
+			$params = [
+				'version' => 3,
+				'contact_id' => $contact_id,
+			] + $data;
+
+			// Call the API.
+			$result = civicrm_api( 'Email', 'create', $params );
+
+		} else {
+
+			// There should be only one item.
+			$existing_data = array_pop( $existing_email['values'] );
+
+			/*
+			// Bail if it hasn't changed.
+			if ( $existing_data['email'] == $value ) {
+				return $existing_data;
+			}
+			*/
+
+			// Define default params to update this Email.
+			$params = [
+				'version' => 3,
+				'id' => $existing_data['id'],
+				'contact_id' => $contact_id,
+			]+ $data;
+
+			// Call the API.
+			$result = civicrm_api( 'Email', 'create', $params );
 
 		}
 
@@ -797,6 +965,81 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 
 	/**
+	 * Gets the CiviCRM Email Fields.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $field_type The type of ACF Field.
+	 * @param string $filter The token by which to filter the array of fields.
+	 * @return array $fields The array of field names.
+	 */
+	public function civicrm_fields_get( $filter = 'none' ) {
+
+		// Only do this once per Field Type and filter.
+		static $pseudocache;
+		if ( isset( $pseudocache[$filter] ) ) {
+			return $pseudocache[$filter];
+		}
+
+		// Init return.
+		$fields = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $fields;
+		}
+
+		// Construct params.
+		$params = [
+			'version' => 3,
+			'options' => [
+				'limit' => 0, // No limit.
+			],
+		];
+
+		// Call the API.
+		$result = civicrm_api( 'Email', 'getfields', $params );
+
+		// Override return if we get some.
+		if ( $result['is_error'] == 0 AND ! empty( $result['values'] ) ) {
+
+			// Check for no filter.
+			if ( $filter == 'none' ) {
+
+				// Grab all of them.
+				$fields = $result['values'];
+
+			// Check public filter.
+			} elseif ( $filter == 'public' ) {
+
+				// Skip all but those defined in our public Email Fields array.
+				foreach ( $result['values'] AS $key => $value ) {
+					if ( array_key_exists( $value['name'], $this->email_fields ) ) {
+						$fields[] = $value;
+					}
+				}
+
+			}
+
+		}
+
+		// Maybe add to pseudo-cache.
+		if ( ! isset( $pseudocache[$filter] ) ) {
+			$pseudocache[$filter] = $fields;
+		}
+
+		// --<
+		return $fields;
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
 	 * Get the Location Types that can be mapped to an ACF Field.
 	 *
 	 * @since 0.4
@@ -868,24 +1111,32 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	/**
 	 * Return the "CiviCRM Email" ACF Settings Field.
 	 *
+	 * The "Email" Field cannot map to a CiviCRM Custom Field because there isn't
+	 * a matching CiviCRM Custom Field Type. The param is still present to keep
+	 * the method signature the same as all other Fields.
+	 *
 	 * @since 0.4
 	 *
+	 * @param array $custom_fields The Custom Fields to populate the ACF Field with.
 	 * @param array $location_types The Location Types to populate the ACF Field with.
+	 * @param boolean $skip_specific True skips adding the "Primary Email" choice.
 	 * @return array $field The ACF Field data array.
 	 */
-	public function acf_field_get( $location_types = [] ) {
+	public function acf_field_get( $custom_fields = [], $location_types = [], $skip_specific = false ) {
 
 		// Bail if empty.
-		if ( empty( $location_types ) ) {
+		if ( empty( $custom_fields ) AND empty( $location_types ) ) {
 			return;
 		}
 
 		// Build choices array for dropdown.
 		$choices = [];
 
-		// Prepend "Primary Email" choice for dropdown.
-		$specific_email_label = esc_attr__( 'Specific Emails', 'civicrm-wp-profile-sync' );
-		$choices[$specific_email_label]['primary'] = esc_attr__( 'Primary Email', 'civicrm-wp-profile-sync' );
+		// Maybe prepend "Primary Email" choice for dropdown.
+		if ( $skip_specific === false ) {
+			$specific_email_label = esc_attr__( 'Specific Emails', 'civicrm-wp-profile-sync' );
+			$choices[$specific_email_label]['primary'] = esc_attr__( 'Primary Email', 'civicrm-wp-profile-sync' );
+		}
 
 		// Build Location Types choices array for dropdown.
 		$location_types_label = esc_attr__( 'Location Types', 'civicrm-wp-profile-sync' );
@@ -956,6 +1207,133 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 		// --<
 		return $acf_fields;
+
+	}
+
+
+
+	/**
+	 * Returns a Setting Field for an ACF "Email" Field when found.
+	 *
+	 * The CiviCRM "Email" Entity can only be attached to a Contact. This means
+	 * it can be part of a "Contact Field Group" and a "User Field Group" in ACF.
+	 *
+	 * It must exclude the "Primary Email" choice if the Field Group can be shown
+	 * on a "User Form" since this plugin already maps the built-in User Email
+	 * Field to the "Primary Email".
+	 *
+	 * The "Email" Field cannot map to a CiviCRM Custom Field because there isn't
+	 * a matching CiviCRM Custom Field Type.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $setting_field The existing Setting Field array.
+	 * @param array $field The ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @param bool $skip_check True if the check for Field Group should be skipped. Default false.
+	 * @return array|bool $setting_field The Setting Field array if populated, false if conflicting.
+	 */
+	public function query_settings_field( $setting_field, $field, $field_group, $skip_check = false ) {
+
+		// Pass if this is not our Field Type.
+		if ( 'email' !== $field['type'] ) {
+			return $setting_field;
+		}
+
+		// Pass if this is not a Contact Field Group or a User Field Group.
+		$is_contact_field_group = $this->civicrm->contact->is_contact_field_group( $field_group );
+		$is_user_field_group = $this->acf_loader->user->is_user_field_group( $field_group );
+		if ( empty( $is_contact_field_group ) AND empty( $is_user_field_group ) ) {
+			return $setting_field;
+		}
+
+		// Get the Email Fields for this ACF Field.
+		$email_fields = $this->get_for_acf_field( $field );
+
+		// Pass if not populated.
+		if ( empty( $email_fields ) ) {
+			return $setting_field;
+		}
+
+		// Maybe exclude the "Primary Email" choice.
+		$skip_primary = false;
+		if ( ! empty( $is_user_field_group ) ) {
+			$skip_primary = true;
+		}
+
+		// Get the Setting Field.
+		$setting_field = $this->acf_field_get( [], $email_fields, $skip_primary );
+
+		// Return populated array.
+		return $setting_field;
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Appends an array of Setting Field choices for a Bypass ACF Field Group when found.
+	 *
+	 * The Email Entity cannot have Custom Fields attached to it, so we can skip
+	 * that part of the logic.
+	 *
+	 * In fact, this isn't really necessary at all - all the logic is handled in
+	 * the ACFE Form Action - but it might be confusing for people if they are
+	 * unable to map some ACF Fields when they're building a Field Group for an
+	 * ACFE Form... so here it is *shrug*
+	 *
+	 * To disable, comment out the "cwps/acf/bypass/query_settings_choices" filter.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $choices The existing Setting Field choices array.
+	 * @param array $field The ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @param array $entity_array The Entity and ID array.
+	 * @return array|bool $setting_field The Setting Field array if populated, false if conflicting.
+	 */
+	public function query_bypass_settings_choices( $choices, $field, $field_group, $entity_array ) {
+
+		// Pass if a Contact Entity is not present.
+		if ( ! array_key_exists( 'contact', $entity_array ) ) {
+			return $choices;
+		}
+
+		// Get the public fields on the Entity for this Field Type.
+		$public_fields = $this->civicrm_fields_get( 'public' );
+		$fields_for_entity = [];
+		foreach ( $public_fields AS $key => $value ) {
+			if ( $field['type'] == $this->email_fields[$value['name']] ) {
+				$fields_for_entity[] = $value;
+			}
+		}
+
+		// Pass if not populated.
+		if ( empty( $fields_for_entity ) ) {
+			return $choices;
+		}
+
+		// Build Email Field choices array for dropdown.
+		$email_fields_label = esc_attr__( 'Email Fields', 'civicrm-wp-profile-sync' );
+		foreach( $fields_for_entity AS $email_field ) {
+			$choices[$email_fields_label][$this->email_field_prefix . $email_field['name']] = $email_field['title'];
+		}
+
+		/**
+		 * Filter the choices to display in the "CiviCRM Field" select.
+		 *
+		 * @since 0.5
+		 *
+		 * @param array $choices The choices for the Setting Field array.
+		 */
+		$choices = apply_filters( 'cwps/acf/civicrm/email/civicrm_field/choices', $choices );
+
+		// Return populated array.
+		return $choices;
 
 	}
 

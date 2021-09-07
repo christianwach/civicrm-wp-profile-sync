@@ -124,10 +124,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		add_filter( 'cwps/acf/query_post_id', [ $this, 'query_post_id' ], 10, 2 );
 
 		// Listen for queries from the ACF Field class.
-		add_filter( 'cwps/acf/query_settings_field', [ $this, 'query_settings_field' ], 50, 3 );
+		add_filter( 'cwps/acf/field/query_setting_choices', [ $this, 'query_setting_choices' ], 10, 3 );
 
 		// Listen for queries from the ACF Bypass class.
-		add_filter( 'cwps/acf/bypass/query_settings_field', [ $this, 'query_bypass_settings_field' ], 50, 4 );
+		//add_filter( 'cwps/acf/bypass/query_settings_field', [ $this, 'query_bypass_settings_field' ], 20, 4 );
+		add_filter( 'cwps/acf/bypass/query_settings_choices', [ $this, 'query_bypass_settings_choices' ], 20, 4 );
 
 		// Listen for queries from the ACF Bypass Location Rule class.
 		add_filter( 'cwps/acf/bypass/location/query_entities', [ $this, 'query_bypass_entities' ], 10, 2 );
@@ -391,6 +392,32 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 
 	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Gets the Contact data for the logged-in User.
+	 *
+	 * @since 0.5
+	 *
+	 * @param integer|boolean $contact_id The numeric ID of the Contact, or false on failure.
+	 */
+	public function get_for_current_user() {
+
+		// Only do this once.
+		static $contact_id;
+		if ( isset( $contact_id ) ) {
+			return $contact_id;
+		}
+
+		// Get the logged-in Contact.
+		$user = wp_get_current_user();
+		$contact_id = $this->acf_loader->plugin->mapper->ufmatch->contact_id_get_by_user_id( $user->ID );
+
+		// --<
+		return $contact_id;
+
+	}
 
 
 
@@ -666,6 +693,86 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		}
 
 		return $contact_id;
+
+	}
+
+
+
+	/**
+	 * Gets a suggested CiviCRM Contact ID using a specified Dedupe Rule.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $contact The array of Contact data.
+	 * @param string $contact_type The Contact Type.
+	 * @param int $dedupe_rule_id The Dedupe Rule ID.
+	 * @return int|bool $contact_id The numeric Contact ID, or false on failure.
+	 */
+	public function get_by_dedupe_rule( $contact, $contact_type = 'Individual', $dedupe_rule_id ) {
+
+		// Bail if we have no Contact data.
+		if ( empty( $contact ) ) {
+			return false;
+		}
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return false;
+		}
+
+		// Build the Dedupe params.
+		$dedupe_params = CRM_Dedupe_Finder::formatParams( $contact, $contact_type );
+		$dedupe_params['check_permission'] = false;
+
+		// Check for duplicates.
+		$contact_ids = CRM_Dedupe_Finder::dupesByParams( $dedupe_params, $contact_type, null, [], $dedupe_rule_id );
+
+		// Return the suggested Contact ID if present.
+		$contact_id = 0;
+		if ( ! empty( $contact_ids ) ) {
+			$contact_ids = array_reverse( $contact_ids );
+			$contact_id = array_pop( $contact_ids );
+		}
+
+		// --<
+		return $contact_id;
+
+	}
+
+
+
+	/**
+	 * Get Dedupe Rules.
+	 *
+	 * By default, all Dedupe Rules for all the top-level Contact Types will be
+	 * returned, but you can specify a Contact Type if you want to limit what is
+	 * returned.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $contact_type An optional Contact Type to filter rules by.
+	 * @return array $dedupe_rules The Dedupe Rules, or empty on failure.
+	 */
+	public function dedupe_rules_get( $contact_type = '' ) {
+
+		// Bail if we can't initialise CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return [];
+		}
+
+		// Add the Dedupe rules for all Contact Types.
+		$dedupe_rules = [];
+		$types = [ 'Organization', 'Household', 'Individual' ];
+		foreach( $types AS $type ) {
+			if ( empty( $contact_type ) ) {
+				$dedupe_rules[$type] = CRM_Dedupe_BAO_RuleGroup::getByType( $type );
+			} elseif ( $contact_type == $type ) {
+				$dedupe_rules[$type] = CRM_Dedupe_BAO_RuleGroup::getByType( $type );
+			}
+		}
+
+		// --<
+		return $dedupe_rules;
 
 	}
 
@@ -1004,7 +1111,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 * @since 0.4
 	 *
 	 * @param array $contact The CiviCRM Contact data.
-	 * @return array|boolean The array Contact data from the CiviCRM API, or false on failure.
+	 * @return array|boolean The array of Contact data from the CiviCRM API, or false on failure.
 	 */
 	public function update( $contact ) {
 
@@ -1318,7 +1425,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 *
 	 * @param array $fields The ACF Field data.
 	 * @param integer|string $post_id The ACF "Post ID".
-	 * @return array|boolean $contact_data The CiviCRM Contact data.
+	 * @return array $contact_data The CiviCRM Contact data.
 	 */
 	public function prepare_from_fields( $fields, $post_id = null ) {
 
@@ -1453,8 +1560,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		 *
 		 * @since 0.4
 		 *
-		 * @param array $choices The existing select options array.
-		 * @param array $choices The modified select options array.
+		 * @param array $choices The array of choices for the Setting Field.
 		 */
 		$choices = apply_filters( 'cwps/acf/contact/civicrm_field/choices', $choices );
 
@@ -1571,32 +1677,22 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 
 	/**
-	 * Returns a Setting Field from this Entity when found.
+	 * Returns the choices for a Setting Field from this Entity when found.
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $setting_field The existing Setting Field array.
+	 * @param array $choices The existing array of choices for the Setting Field.
 	 * @param array $field The ACF Field data array.
 	 * @param array $field_group The ACF Field Group data array.
 	 * @param bool $skip_check True if the check for Field Group should be skipped. Default false.
-	 * @return array|bool $setting_field The Setting Field array if populated, false if conflicting.
+	 * @return array $choices The modified array of choices for the Setting Field.
 	 */
-	public function query_settings_field( $setting_field, $field, $field_group, $skip_check = false ) {
-
-		// Pass if conflicting fields have been found.
-		if ( $setting_field === false ) {
-			return false;
-		}
+	public function query_setting_choices( $choices, $field, $field_group, $skip_check = false ) {
 
 		// Pass if this is not a Contact Field Group.
 		$is_contact_field_group = $this->is_contact_field_group( $field_group );
 		if ( empty( $is_contact_field_group ) ) {
-			return $setting_field;
-		}
-
-		// If already populated, then this is a conflicting field.
-		if ( ! empty( $setting_field ) ) {
-			return false;
+			return $choices;
 		}
 
 		// Get the Contact Fields for this ACF Field.
@@ -1638,21 +1734,47 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		 *
 		 * @since 0.5
 		 *
+		 * @param array The initially empty array of filtered Custom Fields.
 		 * @param array $custom_fields The CiviCRM Custom Fields array.
 		 * @param array $field The ACF Field data array.
 		 */
-		$filtered_fields = apply_filters( 'cwps/acf/query_settings/custom_fields_filter', $custom_fields, $field );
+		$filtered_fields = apply_filters( 'cwps/acf/query_settings/custom_fields_filter', [], $custom_fields, $field );
 
 		// Pass if not populated.
 		if ( empty( $contact_fields ) AND empty( $filtered_fields ) ) {
-			return $setting_field;
+			return $choices;
 		}
 
-		// Get the Setting Field.
-		$setting_field = $this->acf_field_get( $filtered_fields, $contact_fields );
+		// Build Contact Field choices array for dropdown.
+		if ( ! empty( $contact_fields ) ) {
+			$contact_fields_label = esc_attr__( 'Contact Fields', 'civicrm-wp-profile-sync' );
+			foreach( $contact_fields AS $contact_field ) {
+				$choices[$contact_fields_label][$this->contact_field_prefix . $contact_field['name']] = $contact_field['title'];
+			}
+		}
+
+		// Build Custom Field choices array for dropdown.
+		if ( ! empty( $filtered_fields ) ) {
+			$custom_field_prefix = $this->civicrm->custom_field_prefix();
+			foreach( $filtered_fields AS $custom_group_name => $custom_group ) {
+				$custom_fields_label = esc_attr( $custom_group_name );
+				foreach( $custom_group AS $custom_field ) {
+					$choices[$custom_fields_label][$custom_field_prefix . $custom_field['id']] = $custom_field['label'];
+				}
+			}
+		}
+
+		/**
+		 * Filter the choices to display in the "CiviCRM Field" select.
+		 *
+		 * @since 0.4
+		 *
+		 * @param array $choices The array of choices for the Setting Field.
+		 */
+		$choices = apply_filters( 'cwps/acf/contact/civicrm_field/choices', $choices );
 
 		// Return populated array.
-		return $setting_field;
+		return $choices;
 
 	}
 
@@ -1672,56 +1794,162 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	public function query_bypass_settings_field( $setting_field, $field, $field_group, $entity_array ) {
 
 		// Pass if not our Entity Type.
-		if ( $entity_array['entity'] !== $this->identifier ) {
-			return $setting_field;
+		if ( ! array_key_exists( $this->identifier, $entity_array ) ) {
+ 			return $setting_field;
 		}
 
-		// Get Contact Type hierarchy for this Entity ID.
-		$hierarchy = $this->civicrm->contact_type->hierarchy_get_by_id( $entity_array['entity_id'] );
+		// Handle each Contact Type in turn.
+		foreach ( $entity_array[$this->identifier] AS $entity_id ) {
 
-		// Get the public fields on the Entity for this Field Type.
-		$fields_for_entity = $this->acf_loader->civicrm->contact_field->data_get( $hierarchy['type'], $field['type'], 'public' );
+			// Get Contact Type hierarchy for this Entity ID.
+			$hierarchy = $this->civicrm->contact_type->hierarchy_get_by_id( $entity_id );
 
-		// Get the Custom Fields for this Entity.
-		$custom_fields = [];
+			// Get the public fields on the Entity for this Field Type.
+			$fields_for_entity = $this->acf_loader->civicrm->contact_field->data_get( $hierarchy['type'], $field['type'], 'public' );
 
-		// Get separated array of Contact Types.
-		$contact_types = $this->civicrm->contact_type->hierarchy_separate( $hierarchy );
+			// Get the Custom Fields for this Entity.
+			$custom_fields = [];
 
-		// Check each Contact Type in turn.
-		foreach( $contact_types AS $contact_type ) {
+			// Get separated array of Contact Types.
+			$contact_types = $this->civicrm->contact_type->hierarchy_separate( $hierarchy );
 
-			// Get the Custom Fields for this CiviCRM Contact Type.
-			$custom_fields_for_type = $this->civicrm->custom_field->get_for_entity_type(
-				$contact_type['type'],
-				$contact_type['subtype']
-			);
+			// Check each Contact Type in turn.
+			foreach( $contact_types AS $contact_type ) {
 
-			// Merge with return array.
-			$custom_fields = array_merge( $custom_fields, $custom_fields_for_type );
+				// Get the Custom Fields for this CiviCRM Contact Type.
+				$custom_fields_for_type = $this->civicrm->custom_field->get_for_entity_type(
+					$contact_type['type'],
+					$contact_type['subtype']
+				);
+
+				// Merge with return array.
+				$custom_fields = array_merge( $custom_fields, $custom_fields_for_type );
+
+			}
+
+			/**
+			 * Filter the Custom Fields.
+			 *
+			 * @since 0.5
+			 *
+			 * @param array The initially empty array of filtered Custom Fields.
+			 * @param array $custom_fields The CiviCRM Custom Fields array.
+			 * @param array $field The ACF Field data array.
+			 */
+			$filtered_fields = apply_filters( 'cwps/acf/query_settings/custom_fields_filter', [], $custom_fields, $field );
+
+			// Skip if not populated.
+			if ( empty( $fields_for_entity ) AND empty( $filtered_fields ) ) {
+				continue;
+			}
+
+			// Get the Setting Field.
+			$setting_field = $this->acf_field_get( $filtered_fields, $fields_for_entity );
 
 		}
-
-		/**
-		 * Filter the Custom Fields.
-		 *
-		 * @since 0.5
-		 *
-		 * @param array $custom_fields The CiviCRM Custom Fields array.
-		 * @param array $field The ACF Field data array.
-		 */
-		$filtered_fields = apply_filters( 'cwps/acf/query_settings/custom_fields_filter', $custom_fields, $field );
-
-		// Pass if not populated.
-		if ( empty( $fields_for_entity ) AND empty( $filtered_fields ) ) {
-			return $setting_field;
-		}
-
-		// Get the Setting Field.
-		$setting_field = $this->acf_field_get( $filtered_fields, $fields_for_entity );
 
 		// Return populated array.
 		return $setting_field;
+
+	}
+
+
+
+	/**
+	 * Appends an array of Setting Field choices for a Bypass ACF Field Group when found.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $choices The existing Setting Field choices array.
+	 * @param array $field The ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @param array $entity_array The Entity and ID array.
+	 * @return array|bool $setting_field The Setting Field array if populated, false if conflicting.
+	 */
+	public function query_bypass_settings_choices( $choices, $field, $field_group, $entity_array ) {
+
+		// Pass if not our Entity Type.
+		if ( ! array_key_exists( $this->identifier, $entity_array ) ) {
+			return $choices;
+		}
+
+		// Handle each Contact Type in turn.
+		foreach ( $entity_array[$this->identifier] AS $entity_id ) {
+
+			// Get Contact Type hierarchy for this Entity ID.
+			$hierarchy = $this->civicrm->contact_type->hierarchy_get_by_id( $entity_id );
+
+			// Get the public fields on the Entity for this Field Type.
+			$fields_for_entity = $this->acf_loader->civicrm->contact_field->data_get( $hierarchy['type'], $field['type'], 'public' );
+
+			// Get the Custom Fields for this Entity.
+			$custom_fields = [];
+
+			// Get separated array of Contact Types.
+			$contact_types = $this->civicrm->contact_type->hierarchy_separate( $hierarchy );
+
+			// Check each Contact Type in turn.
+			foreach( $contact_types AS $contact_type ) {
+
+				// Get the Custom Fields for this CiviCRM Contact Type.
+				$custom_fields_for_type = $this->civicrm->custom_field->get_for_entity_type(
+					$contact_type['type'],
+					$contact_type['subtype']
+				);
+
+				// Merge with return array.
+				$custom_fields = array_merge( $custom_fields, $custom_fields_for_type );
+
+			}
+
+			/**
+			 * Filter the Custom Fields.
+			 *
+			 * @since 0.5
+			 *
+			 * @param array The initially empty array of filtered Custom Fields.
+			 * @param array $custom_fields The CiviCRM Custom Fields array.
+			 * @param array $field The ACF Field data array.
+			 */
+			$filtered_fields = apply_filters( 'cwps/acf/query_settings/custom_fields_filter', [], $custom_fields, $field );
+
+			// Skip if not populated.
+			if ( empty( $fields_for_entity ) AND empty( $filtered_fields ) ) {
+				continue;
+			}
+
+			// Build Contact Field choices array for dropdown.
+			if ( ! empty( $fields_for_entity ) ) {
+				$contact_fields_label = esc_attr__( 'Contact Fields', 'civicrm-wp-profile-sync' );
+				foreach( $fields_for_entity AS $contact_field ) {
+					$choices[$contact_fields_label][$this->contact_field_prefix . $contact_field['name']] = $contact_field['title'];
+				}
+			}
+
+			// Build Custom Field choices array for dropdown.
+			if ( ! empty( $filtered_fields ) ) {
+				$custom_field_prefix = $this->civicrm->custom_field_prefix();
+				foreach( $filtered_fields AS $custom_group_name => $custom_group ) {
+					$custom_fields_label = esc_attr( $custom_group_name );
+					foreach( $custom_group AS $custom_field ) {
+						$choices[$custom_fields_label][$custom_field_prefix . $custom_field['id']] = $custom_field['label'];
+					}
+				}
+			}
+
+			/**
+			 * Filter the choices to display in the "CiviCRM Field" select.
+			 *
+			 * @since 0.4
+			 *
+			 * @param array $choices The array of choices for the Setting Field.
+			 */
+			$choices = apply_filters( 'cwps/acf/contact/civicrm_field/choices', $choices );
+
+		}
+
+		// Return populated array.
+		return $choices;
 
 	}
 
@@ -1737,7 +1965,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 * @param array $rule The current Location Rule.
 	 * @return array $entities The modified Entity values array.
 	 */
-	public function query_bypass_entities( $entities, $rule ) {
+	public function query_bypass_entities( $entities, $rule = [] ) {
 
 		// Get all Contact Types.
 		$contact_types = $this->civicrm->contact_type->types_get_nested();

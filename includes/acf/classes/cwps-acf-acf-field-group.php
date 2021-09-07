@@ -169,6 +169,26 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 			return $field_group;
 		}
 
+		// Recursively fire our "pre-update" filter.
+		$this->fields_update( $fields, $field_group );
+
+		// --<
+		return $field_group;
+
+	}
+
+
+
+	/**
+	 * Recursively fire our "pre-update" filter.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $fields The array of Fields.
+	 * @param array $field_group The array of ACF Field Group data.
+	 */
+	public function fields_update( $fields, $field_group ) {
+
 		// Loop through Fields and save them.
 		foreach( $fields AS $field ) {
 
@@ -185,10 +205,12 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 			// Save the Field.
 			acf_update_field( $field );
 
-		}
+			// Does the Field has Sub-fields?
+			if ( ! empty( $field['sub_fields'] ) ) {
+				$this->fields_update( $field['sub_fields'], $field_group );
+			}
 
-		// --<
-		return $field_group;
+		}
 
 	}
 
@@ -289,6 +311,35 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 
 
 	/**
+	 * Get the ACF Fields for a given Field Group.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $field_group The Field Group identifier.
+	 * @param integer $custom_group_id The numeric ID of the CiviCRM Custom Group.
+	 */
+	public function get_fields( $field_group ) {
+
+		// Init Field Group ID.
+		$field_group_id = false;
+
+		return;
+
+		// Get field group.
+		$field_group = acf_get_field_group( $field_group_id );
+
+		// --<
+		return $field_group;
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
 	 * Check if a Field Group has been mapped to a WordPress Entity.
 	 *
 	 * This method is an adapted version of acf_get_field_group_visibility().
@@ -348,9 +399,9 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 				 *
 				 * Internally, this is used by:
 				 *
-				 * @see CiviCRM_Profile_Sync_ACF_Bypass::query_supported_rules()
 				 * @see CiviCRM_Profile_Sync_ACF_User::query_supported_rules()
 				 * @see CiviCRM_Profile_Sync_ACF_Post_Type::query_supported_rules()
+				 * @see CiviCRM_Profile_Sync_ACF_ACFE_Form::query_supported_rules()
 				 *
 				 * @since 0.5
 				 *

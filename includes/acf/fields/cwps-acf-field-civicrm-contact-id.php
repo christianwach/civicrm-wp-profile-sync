@@ -135,10 +135,13 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_ID_Field extends acf_field {
 		$this->acf_loader = $parent->acf_loader;
 
 		// Store reference to parent.
-		$this->acf = $parent;
+		$this->acf = $parent->acf;
 
 		// Define label.
-		$this->label = __( 'CiviCRM Contact ID', 'civicrm-wp-profile-sync' );
+		$this->label = __( 'CiviCRM Contact ID (Read Only)', 'civicrm-wp-profile-sync' );
+
+		// Define category.
+		$this->category = __( 'CiviCRM Post Type Sync', 'civicrm-wp-profile-sync' );
 
 		// Define translations.
 		$this->l10n = [];

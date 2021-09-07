@@ -66,6 +66,25 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		'civicrm_relationship',
 	];
 
+	/**
+	 * Public Relationship Fields.
+	 *
+	 * Mapped to their corresponding ACF Field Types.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array $email_fields The array of public Relationship Fields.
+	 */
+	public $relationship_fields = [
+		'start_date' => 'date_picker',
+		'end_date' => 'date_picker',
+		'is_active' => 'true_false',
+		'description' => 'wysiwyg',
+		'is_permission_a_b' => 'radio',
+		'is_permission_b_a' => 'radio',
+		'case_id' => 'select',
+	];
+
 
 
 	/**
@@ -807,6 +826,225 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 
 
+	/**
+	 * Creates or updates a CiviCRM Relationship Record.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $params The params to create/update the Relationship with.
+	 * @return array|boolean $relationship The array of Relationship data, or false on failure.
+	 */
+	public function relationship_record_update( $params = [] ) {
+
+		// Init return.
+		$relationship = false;
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $relationship;
+		}
+
+		// Build params to create/update the Relationship.
+		$params['version'] = 3;
+
+		// Call the CiviCRM API.
+		$result = civicrm_api( 'Relationship', 'create', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+			return $relationship;
+		}
+
+		// The result set should contain only one item.
+		$relationship = array_pop( $result['values'] );
+
+		// --<
+		return $relationship;
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Create a CiviCRM Relationship.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $relationship The Relationship data.
+	 * @return array|boolean $relationship_data The array of Relationship data, or false on failure.
+	 */
+	public function create( $relationship ) {
+
+		// Init return.
+		$relationship_data = false;
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $relationship_data;
+		}
+
+		// Param to create the Relationship.
+		$params = [
+			'version' => 3,
+		] + $relationship;
+
+		// Call the CiviCRM API.
+		$result = civicrm_api( 'Relationship', 'create', $params );
+
+		// Log and bail if there's an error.
+		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+			$e = new \Exception();
+			$trace = $e->getTraceAsString();
+			error_log( print_r( [
+				'method' => __METHOD__,
+				'params' => $params,
+				'result' => $result,
+				'backtrace' => $trace,
+			], true ) );
+			return $relationship_data;
+		}
+
+		// The result set should contain only one item.
+		$relationship_data = array_pop( $result['values'] );
+
+		// --<
+		return $relationship_data;
+
+	}
+
+
+
+	/**
+	 * Update a CiviCRM Relationship with a given set of data.
+	 *
+	 * @since 0.4
+	 *
+	 * @param array $relationship The CiviCRM Relationship data.
+	 * @return array|boolean $relationship_data The array Relationship data from the CiviCRM API, or false on failure.
+	 */
+	public function update( $relationship ) {
+
+		// Log and bail if there's no Activity ID.
+		if ( empty( $relationship['id'] ) ) {
+			$e = new \Exception();
+			$trace = $e->getTraceAsString();
+			error_log( print_r( [
+				'method' => __METHOD__,
+				'message' => __( 'A numerical ID must be present to update a Relationship.', 'civicrm-wp-profile-sync' ),
+				'relationship' => $relationship,
+				'backtrace' => $trace,
+			], true ) );
+			return $relationship_data;
+		}
+
+		// Pass through.
+		return $this->create( $relationship );
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Get the data for a Relationship.
+	 *
+	 * @since 0.5
+	 *
+	 * @param integer $relationship_id The numeric ID of the Relationship.
+	 * @param object|boolean $relationship The Relationship data object, or false if none.
+	 */
+	public function get_by_id( $relationship_id ) {
+
+		// Init return.
+		$relationship = false;
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $relationship;
+		}
+
+		// Construct API query.
+		$params = [
+			'version' => 3,
+			'id' => $relationship_id,
+		];
+
+		// Get Relationship details via API.
+		$result = civicrm_api( 'Relationship', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+			return $relationship;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $relationship;
+		}
+
+ 		// The result set should contain only one item.
+		$relationship = (object) array_pop( $result['values'] );
+
+		// --<
+		return $relationship;
+
+	}
+
+
+
+	/**
+	 * Query for Relationships given a set of arguments.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $args The arguments to query the Relationship by.
+	 * @param array $relationships The array of Relationship data, or empty if none.
+	 */
+	public function get_by( $args ) {
+
+		// Init return.
+		$relationships = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $relationships;
+		}
+
+		// Construct API query.
+		$params = [
+			'version' => 3,
+		] + $args;
+
+		// Get Relationship details via API.
+		$result = civicrm_api( 'Relationship', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+			return $relationships;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $relationships;
+		}
+
+ 		// The result set is what we want.
+		$relationships = $result['values'];
+
+		// --<
+		return $relationships;
+
+	}
+
+
+
 	// -------------------------------------------------------------------------
 
 
@@ -980,6 +1218,81 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 
 	/**
+	 * Gets the CiviCRM Relationship Fields.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $field_type The type of ACF Field.
+	 * @param string $filter The token by which to filter the array of fields.
+	 * @return array $fields The array of field names.
+	 */
+	public function civicrm_fields_get( $filter = 'none' ) {
+
+		// Only do this once per Field Type and filter.
+		static $pseudocache;
+		if ( isset( $pseudocache[$filter] ) ) {
+			return $pseudocache[$filter];
+		}
+
+		// Init return.
+		$fields = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $fields;
+		}
+
+		// Construct params.
+		$params = [
+			'version' => 3,
+			'options' => [
+				'limit' => 0, // No limit.
+			],
+		];
+
+		// Call the API.
+		$result = civicrm_api( 'Relationship', 'getfields', $params );
+
+		// Override return if we get some.
+		if ( $result['is_error'] == 0 AND ! empty( $result['values'] ) ) {
+
+			// Check for no filter.
+			if ( $filter == 'none' ) {
+
+				// Grab all of them.
+				$fields = $result['values'];
+
+			// Check public filter.
+			} elseif ( $filter == 'public' ) {
+
+				// Skip all but those defined in our public Relationship Fields array.
+				foreach ( $result['values'] AS $key => $value ) {
+					if ( array_key_exists( $value['name'], $this->relationship_fields ) ) {
+						$fields[] = $value;
+					}
+				}
+
+			}
+
+		}
+
+		// Maybe add to pseudo-cache.
+		if ( ! isset( $pseudocache[$filter] ) ) {
+			$pseudocache[$filter] = $fields;
+		}
+
+		// --<
+		return $fields;
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
 	 * Get all Relationship Types.
 	 *
 	 * @since 0.4
@@ -1049,6 +1362,77 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 			'sequential' => 1,
 			'id' => $relationship_id,
 		];
+
+		// Call the CiviCRM API.
+		$result = civicrm_api( 'RelationshipType', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+			return $relationship;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $relationship;
+		}
+
+ 		// The result set should contain only one item.
+		$relationship = array_pop( $result['values'] );
+
+		// --<
+		return $relationship;
+
+	}
+
+
+
+	/**
+	 * Get a Relationship Type by its "name" or "label".
+	 *
+	 * @since 0.4
+	 *
+	 * @param integer $relationship_name The name of the Relationship Type.
+	 * @param integer $direction The direction of the Relationship. May be: 'ab' or 'ba'.
+	 * @return array $relationship The array of Relationship Type data.
+	 */
+	public function type_get_by_name_or_label( $relationship_name, $direction = 'ab' ) {
+
+		// Init return.
+		$relationship = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $relationship;
+		}
+
+		// Params to get the Relationship Type.
+		$params = [
+			'version' => 3,
+			'sequential' => 1,
+			'name_b_a' => $relationship_name,
+			'label_b_a' => $relationship_name,
+			'options' => [
+				'or' => [
+					[ 'name_b_a', 'label_b_a' ],
+				],
+			],
+		];
+
+		// Configure directionality.
+		if ( $direction === 'ab' ) {
+			$params['name_a_b'] = $relationship_name;
+			$params['label_a_b'] = $relationship_name;
+			$params['options']['or'] = [
+				[ 'name_a_b', 'label_a_b' ],
+			];
+		}
+		if ( $direction === 'ba' ) {
+			$params['name_b_a'] = $relationship_name;
+			$params['label_b_a'] = $relationship_name;
+			$params['options']['or'] = [
+				[ 'name_b_a', 'label_b_a' ],
+			];
+		}
 
 		// Call the CiviCRM API.
 		$result = civicrm_api( 'RelationshipType', 'get', $params );
@@ -1161,14 +1545,92 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 
 	/**
-	 * Get all the Relationships for a CiviCRM Contact.
+	 * Get all the Relationships for a given CiviCRM Contact.
+	 *
+	 * An optional Relationship Type ID can also be specified to limit the
+	 * Relationships that are retrieved.
 	 *
 	 * @since 0.4
 	 *
 	 * @param integer $contact_id The numeric ID of the Contact.
+	 * @param integer $type_id The numeric ID of the Relationship Type.
+	 * @param integer $direction The direction of the Relationship. May be: 'ab', 'ba' or 'equal'.
 	 * @return array|boolean $relationships The array of Relationship data.
 	 */
-	public function relationships_get_for_contact( $contact_id ) {
+	public function get_directional( $contact_id, $type_id = 0, $direction = 'ab' ) {
+
+		// Init return.
+		$relationships = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $relationships;
+		}
+
+		// Construct API query.
+		$params = [
+			'version' => 3,
+			'options' => [
+				'limit' => 0,
+			],
+		];
+
+		// Configure directionality.
+		if ( $direction === 'ab' ) {
+			$params['contact_id_a'] = $contact_id;
+		}
+		if ( $direction === 'ba' ) {
+			$params['contact_id_b'] = $contact_id;
+		}
+		if ( $direction === 'equal' ) {
+			$params['contact_id_a'] = $contact_id;
+			$params['contact_id_b'] = $contact_id;
+			$params['options']['or'] = [
+				[ 'contact_id_a', 'contact_id_b' ],
+			];
+		}
+
+		// Add Relationship Type ID if present.
+		if ( $type_id !== 0 and is_integer( $type_id ) ) {
+			$params['relationship_type_id'] = $type_id;
+		}
+
+		// Get Relationship details via API.
+		$result = civicrm_api( 'Relationship', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+			return $relationships;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $relationships;
+		}
+
+ 		// The result set is what we want.
+		$relationships = $result['values'];
+
+		// --<
+		return $relationships;
+
+	}
+
+
+
+	/**
+	 * Get all the Relationships for a given CiviCRM Contact.
+	 *
+	 * An optional Relationship Type ID can also be specified to limit the
+	 * Relationships that are retrieved.
+	 *
+	 * @since 0.4
+	 *
+	 * @param integer $contact_id The numeric ID of the Contact.
+	 * @param integer $type_id The numeric ID of the Relationship Type.
+	 * @return array|boolean $relationships The array of Relationship data.
+	 */
+	public function relationships_get_for_contact( $contact_id, $type_id = 0 ) {
 
 		// Init return.
 		$relationships = [];
@@ -1190,6 +1652,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 				],
 			],
 		];
+
+		// Add Relationship Type ID if present.
+		if ( $type_id !== 0 and is_integer( $type_id ) ) {
+			$params['relationship_type_id'] = $type_id;
+		}
 
 		// Get Relationship details via API.
 		$result = civicrm_api( 'Relationship', 'get', $params );

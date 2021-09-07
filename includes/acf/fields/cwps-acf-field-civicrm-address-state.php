@@ -144,13 +144,16 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_State_Field extends acf_field 
 		$this->acf_loader = $parent->acf_loader;
 
 		// Store reference to parent.
-		$this->acf = $parent;
+		$this->acf = $parent->acf;
 
 		// Store reference to CiviCRM Utilities.
 		$this->civicrm = $this->acf_loader->civicrm;
 
 		// Define label.
-		$this->label = __( 'CiviCRM State', 'civicrm-wp-profile-sync' );
+		$this->label = __( 'CiviCRM State (Read Only)', 'civicrm-wp-profile-sync' );
+
+		// Define category.
+		$this->category = __( 'CiviCRM Post Type Sync', 'civicrm-wp-profile-sync' );
 
 		// Define translations.
 		$this->l10n = [];

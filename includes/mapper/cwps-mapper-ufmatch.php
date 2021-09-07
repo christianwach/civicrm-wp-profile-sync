@@ -109,7 +109,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 	 * @param integer|string $domain_id The Domain ID (defaults to current Domain ID) or a string to search all Domains.
 	 * @return integer|boolean $contact_id The CiviCRM contact ID, or false on failure.
 	 */
-	public function contact_id_get_by_user_id( $user_id, $domain_id = 'all' ) {
+	public function contact_id_get_by_user_id( $user_id, $domain_id = '' ) {
 
 		/*
 		// Only do this once per Contact ID and Domain.

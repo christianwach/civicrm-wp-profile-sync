@@ -143,6 +143,179 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Group {
 
 
 	/**
+	 * Get all the Custom Fields for all CiviCRM Contact Types/Subtypes.
+	 *
+	 * @since 0.5
+	 *
+	 * @return array $custom_fields The array of Custom Fields.
+	 */
+	public function get_for_contacts() {
+
+		// Init array to build.
+		$custom_fields = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $custom_fields;
+		}
+
+		// Construct params.
+		$params = [
+			'version' => 3,
+			'sequential' => 1,
+			'is_active' => 1,
+			'options' => [
+				'limit' => 0,
+			],
+			'api.CustomField.get' => [
+				'is_active' => 1,
+				'options' => [
+					'limit' => 0,
+				]
+			],
+			'extends' => [
+				'IN' => [ "Individual", "Organization", "Household" ],
+			],
+		];
+
+		// Call the API.
+		$result = civicrm_api( 'CustomGroup', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+			return $custom_fields;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $custom_fields;
+		}
+
+ 		// The result set is what we want.
+		$custom_fields = $result['values'];
+
+		// --<
+		return $custom_fields;
+
+	}
+
+
+
+	/**
+	 * Get all the Custom Fields for all CiviCRM Activity Types.
+	 *
+	 * @since 0.5
+	 *
+	 * @return array $custom_fields The array of Custom Fields.
+	 */
+	public function get_for_activities() {
+
+		// Init array to build.
+		$custom_fields = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $custom_fields;
+		}
+
+		// Construct params.
+		$params = [
+			'version' => 3,
+			'sequential' => 1,
+			'is_active' => 1,
+			'options' => [
+				'limit' => 0,
+			],
+			'api.CustomField.get' => [
+				'is_active' => 1,
+				'options' => [
+					'limit' => 0,
+				]
+			],
+			'extends' => 'Activity',
+		];
+
+		// Call the API.
+		$result = civicrm_api( 'CustomGroup', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+			return $custom_fields;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $custom_fields;
+		}
+
+ 		// The result set is what we want.
+		$custom_fields = $result['values'];
+
+		// --<
+		return $custom_fields;
+
+	}
+
+
+
+	/**
+	 * Get all the Custom Fields for all CiviCRM Case Types.
+	 *
+	 * @since 0.5
+	 *
+	 * @return array $custom_fields The array of Custom Fields.
+	 */
+	public function get_for_cases() {
+
+		// Init array to build.
+		$custom_fields = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $custom_fields;
+		}
+
+		// Construct params.
+		$params = [
+			'version' => 3,
+			'sequential' => 1,
+			'is_active' => 1,
+			'options' => [
+				'limit' => 0,
+			],
+			'api.CustomField.get' => [
+				'is_active' => 1,
+				'options' => [
+					'limit' => 0,
+				]
+			],
+			'extends' => 'Case',
+		];
+
+		// Call the API.
+		$result = civicrm_api( 'CustomGroup', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+			return $custom_fields;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $custom_fields;
+		}
+
+ 		// The result set is what we want.
+		$custom_fields = $result['values'];
+
+		// --<
+		return $custom_fields;
+
+	}
+
+
+
+	/**
 	 * Get a Custom Group by its ID.
 	 *
 	 * @since 0.4
@@ -197,24 +370,28 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Group {
 	 *
 	 * @param string $type The Entity Type that the Custom Group applies to.
 	 * @param string $subtype The Entity Sub-type that the Custom Group applies to.
-	 * @param array $extra The additional Custom Group data.
+	 * @param boolean $with_fields Pass "true" to retrieve the Custom Fields as well.
 	 * @return array $custom_groups The array of Custom Groups.
 	 */
-	public function get_for_entity_type( $type = '', $subtype = '', $extra ) {
+	public function get_for_entity_type( $type = '', $subtype = '', $with_fields = false ) {
 
-		/*
 		// Maybe set a key for the subtype.
 		$key = $subtype;
 		if ( empty( $subtype ) ) {
 			$key = 'none';
 		}
 
+		// Maybe set a key for the boolean.
+		$subkey = 'raw';
+		if ( ! empty( $with_fields ) ) {
+			$subkey = '$with_fields';
+		}
+
 		// Only do this once per Entity Type.
 		static $pseudocache;
-		if ( isset( $pseudocache[$type][$key] ) ) {
-			return $pseudocache[$type][$key];
+		if ( isset( $pseudocache[$type][$key][$subkey] ) ) {
+			return $pseudocache[$type][$key][$subkey];
 		}
-		*/
 
 		// Init return.
 		$custom_groups = [];
@@ -240,6 +417,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Group {
 			$params['extends_entity_column_value'] = $subtype;
 		}
 
+		// Maybe include Fields query.
+		if ( ! empty( $with_fields ) ) {
+			$params['api.CustomField.get'] = [
+				'is_active' => 1,
+				'options' => [
+					'limit' => 0, // No limit.
+				],
+			];
+		}
+
 		// Call the API.
 		$result = civicrm_api( 'CustomGroup', 'get', $params );
 
@@ -256,12 +443,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Group {
  		// The result set is what we want.
 		$custom_groups = $result['values'];
 
-		/*
 		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$type][$key] ) ) {
-			$pseudocache[$type][$key] = $custom_groups;
+		if ( ! isset( $pseudocache[$type][$key][$subkey] ) ) {
+			$pseudocache[$type][$key][$subkey] = $custom_groups;
 		}
-		*/
 
 		// --<
 		return $custom_groups;

@@ -14,4 +14,8 @@
 	// Register it.
 	acf.registerFieldType( Field );
 
+	// Add basic condition types.
+	acf.registerConditionForFieldType( 'hasValue', 'civicrm_activity_assignee' );
+	acf.registerConditionForFieldType( 'hasNoValue', 'civicrm_activity_assignee' );
+
 })(jQuery);

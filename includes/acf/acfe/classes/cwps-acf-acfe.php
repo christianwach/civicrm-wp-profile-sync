@@ -32,13 +32,13 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 	public $acf_loader;
 
 	/**
-	 * ACF Bypass object.
+	 * ACF Form object.
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $bypass The ACF Bypass object.
+	 * @var object $form The ACF Form object.
 	 */
-	public $bypass;
+	public $form;
 
 
 
@@ -101,7 +101,15 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 	public function include_files() {
 
 		// Include class files.
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/classes/cwps-acf-acfe-bypass.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/classes/cwps-acf-acfe-form.php';
+
+		// Include Reference Field Types.
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/fields/cwps-acf-acfe-field-action-reference-contact.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/fields/cwps-acf-acfe-field-action-reference-case.php';
+
+		// Include Field Types.
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/fields/cwps-acf-acfe-field-address-state.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/fields/cwps-acf-acfe-field-address-country.php';
 
 	}
 
@@ -114,8 +122,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 	 */
 	public function setup_objects() {
 
-		// Init Bypass object.
-		$this->bypass = new CiviCRM_Profile_Sync_ACF_ACFE_Bypass( $this );
+		// Init Form object.
+		$this->form = new CiviCRM_Profile_Sync_ACF_ACFE_Form( $this );
 
 	}
 
@@ -127,6 +135,30 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 	 * @since 0.5
 	 */
 	public function register_hooks() {
+
+		// Include any Field Types that we have defined.
+		add_action( 'acf/include_field_types', [ $this, 'register_field_types' ] );
+
+	}
+
+
+
+	/**
+	 * Registers the Field Types for ACF5.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $version The installed version of ACF.
+	 */
+	public function register_field_types( $version ) {
+
+		// Init Reference Field Types.
+		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Contact_Action_Ref( $this );
+		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Case_Action_Ref( $this );
+
+		// Init Field Types.
+		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State( $this );
+		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_Country( $this );
 
 	}
 

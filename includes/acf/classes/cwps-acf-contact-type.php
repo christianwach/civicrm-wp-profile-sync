@@ -135,7 +135,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 
 
 	/**
-	 * Get all top-level CiviCRM contact types.
+	 * Get all top-level CiviCRM Contact Types.
 	 *
 	 * @since 0.4
 	 *
@@ -151,20 +151,73 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 
 
 	/**
-	 * Get all CiviCRM contact types, nested by parent.
+	 * Get all CiviCRM Contact Types.
+	 *
+	 * @since 0.5
+	 *
+	 * @return array $all The flat array CiviCRM Contact Types.
+	 */
+	public function types_get_all() {
+
+		// Only do this once.
+		static $all;
+		if ( ! empty( $all ) ) {
+			return $all;
+		}
+
+		// Init return.
+		$all = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $all;
+		}
+
+		// Define params to get all Contact Types.
+		$params = [
+			'version' => 3,
+			'sequential' => 1,
+			'is_active' => 1,
+			'options' => [
+				'limit' => 0, // No limit.
+			],
+		];
+
+		// Call API.
+		$result = civicrm_api( 'ContactType', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+			return $all;
+		}
+
+		// Populate return array.
+		if ( isset( $result['values'] ) AND count( $result['values'] ) > 0 ) {
+			$all = $result['values'];
+		}
+
+		// --<
+		return $all;
+
+	}
+
+
+
+	/**
+	 * Get all CiviCRM Contact Types, nested by parent.
 	 *
 	 * CiviCRM only allows one level of nesting, so we can parse the results
 	 * into a nested array to return.
 	 *
 	 * @since 0.4
 	 *
-	 * @return array $nested The nested CiviCRM contact types.
+	 * @return array $nested The nested CiviCRM Contact Types.
 	 */
 	public function types_get_nested() {
 
 		// Only do this once.
 		static $nested;
-		if ( isset( $nested ) ) {
+		if ( ! empty( $nested ) ) {
 			return $nested;
 		}
 
@@ -176,13 +229,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 			return $nested;
 		}
 
-		// Define params to get all contact types.
+		// Define params to get all Contact Types.
 		$params = [
 			'version' => 3,
 			'sequential' => 1,
 			'is_active' => 1,
 			'options' => [
-				'limit' => '0', // No limit.
+				'limit' => 0, // No limit.
 			],
 		];
 
@@ -194,21 +247,21 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 			return $nested;
 		}
 
-		// Populate contact types array.
+		// Populate Contact Types array.
 		$contact_types = [];
 		if ( isset( $result['values'] ) AND count( $result['values'] ) > 0 ) {
 			$contact_types = $result['values'];
 		}
 
-		// let's get the top level types
+		// Let's get the top level types.
 		$top_level = [];
 		foreach( $contact_types AS $contact_type ) {
-			if ( ! isset( $contact_type['parent_id'] ) ) {
+			if ( empty( $contact_type['parent_id'] ) ) {
 				$top_level[] = $contact_type;
 			}
 		}
 
-		// Build a nested array
+		// Build a nested array.
 		foreach( $top_level AS $item ) {
 			$item['children'] = [];
 			foreach( $contact_types AS $contact_type ) {
@@ -633,6 +686,131 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 
 		// --<
 		return $contact_type_id;
+
+	}
+
+
+
+	/**
+	 * Gets the CiviCRM Contact Types as choices for an ACF "Select" Field.
+	 *
+	 * @since 0.5
+	 *
+	 * @return array $choices The choices array.
+	 */
+	public function choices_get() {
+
+		// Init return.
+		$choices = [];
+
+		// Get all Contact Types.
+		$contact_types = $this->types_get_nested();
+
+		// Bail if there are none.
+		if ( empty( $contact_types ) ) {
+			return $choices;
+		}
+
+		// Add entries for each CiviCRM Contact Type.
+		foreach( $contact_types AS $contact_type ) {
+
+			// Top level types first.
+			$choices[$contact_type['id']] = $contact_type['label'];
+
+			// Skip Sub-types if there aren't any.
+			if ( empty( $contact_type['children'] ) ) {
+				continue;
+			}
+
+			// Add children.
+			foreach( $contact_type['children'] AS $contact_subtype ) {
+				$choices[$contact_subtype['id']] = '&mdash; ' . $contact_subtype['label'];
+			}
+
+		}
+
+		// --<
+		return $choices;
+
+	}
+
+
+
+	/**
+	 * Gets the top-level CiviCRM Contact Types as choices for an ACF "Select" Field.
+	 *
+	 * @since 0.5
+	 *
+	 * @return array $choices The choices array.
+	 */
+	public function choices_top_level_get() {
+
+		// Init return.
+		$choices = [];
+
+		// Get all Contact Types.
+		$contact_types = $this->types_get_nested();
+
+		// Bail if there are none.
+		if ( empty( $contact_types ) ) {
+			return $choices;
+		}
+
+		// Add entries for each CiviCRM Contact Type.
+		foreach( $contact_types AS $contact_type ) {
+
+			// Top level types only.
+			$choices[$contact_type['id']] = $contact_type['label'];
+
+		}
+
+		// --<
+		return $choices;
+
+	}
+
+
+
+	/**
+	 * Gets the CiviCRM Contact Sub-Types as choices for an ACF "Select" Field.
+	 *
+	 * @since 0.5
+	 *
+	 * @return array $choices The choices array.
+	 */
+	public function choices_sub_types_get() {
+
+		// Init return.
+		$choices = [];
+
+		// Get all Contact Types.
+		$contact_types = $this->types_get_nested();
+
+		// Bail if there are none.
+		if ( empty( $contact_types ) ) {
+			return $choices;
+		}
+
+		// Add entries for each CiviCRM Contact Type.
+		foreach( $contact_types AS $contact_type ) {
+
+			// Skip top level types.
+			//$choices[$contact_type['id']] = $contact_type['label'];
+
+			// Skip Sub-types if there aren't any.
+			if ( empty( $contact_type['children'] ) ) {
+				continue;
+			}
+
+			// Add children.
+			foreach( $contact_type['children'] AS $contact_subtype ) {
+				$choices[$contact_type['name']][$contact_subtype['id']] = $contact_subtype['label'];
+			}
+
+		}
+
+		// --<
+		return $choices;
 
 	}
 
