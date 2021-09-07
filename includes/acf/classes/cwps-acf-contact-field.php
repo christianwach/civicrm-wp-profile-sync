@@ -62,7 +62,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		'do_not_sms' => 'true_false',
 		'do_not_trade' => 'true_false',
 		'is_opt_out' => 'true_false',
-		'preferred_communication_method' => 'select',
+		'preferred_communication_method' => 'checkbox',
 		'preferred_language' => 'select',
 		'preferred_mail_format' => 'select',
 		'legal_identifier' => 'text',
@@ -181,6 +181,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Listen for queries from our ACF Field Group class.
 		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'select_settings_modify' ], 50, 2 );
+		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'checkbox_settings_modify' ], 50, 2 );
 		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'radio_settings_modify' ], 50, 2 );
 		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'date_picker_settings_modify' ], 10, 2 );
 		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'text_settings_modify' ], 10, 2 );
@@ -520,18 +521,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Preferred Communication Method.
 		if ( $name == 'preferred_communication_method' ) {
-			$option_group = $this->option_group_get( 'preferred_communication_method' );
-			if ( ! empty( $option_group ) ) {
-				$options = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
-			}
+			$options = CRM_Contact_BAO_Contact::buildOptions( 'preferred_communication_method' );
 		}
 
 		// Preferred Language.
 		if ( $name == 'preferred_language' ) {
-			$option_group = $this->option_group_get( 'languages' );
-			if ( ! empty( $option_group ) ) {
-				$options = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
-			}
+			$options = CRM_Contact_BAO_Contact::buildOptions( 'preferred_language' );
 		}
 
 		// Preferred Mail Format.
@@ -1092,7 +1087,48 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		// Get keyed array of options for this Contact Field.
 		$field['choices'] = $this->options_get( $contact_field_name );
 
-		// "Prefix" and "Suffix" are optional.
+		// All are optional.
+		$field['allow_null'] = 1;
+
+		// --<
+		return $field;
+
+	}
+
+
+
+	/**
+	 * Modify the Settings of an ACF "Checkbox" Field.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $field The existing ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @return array $field The modified ACF Field data array.
+	 */
+	public function checkbox_settings_modify( $field, $field_group ) {
+
+		// Bail early if not our Field Type.
+		if ( 'checkbox' !== $field['type'] ) {
+			return $field;
+		}
+
+		// Skip if the CiviCRM Field key isn't there or isn't populated.
+		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+			return $field;
+		}
+
+		// Get the mapped Contact Field name if present.
+		$contact_field_name = $this->acf_loader->civicrm->contact->contact_field_name_get( $field );
+		if ( $contact_field_name === false ) {
+			return $field;
+		}
+
+		// Get keyed array of options for this Contact Field.
+		$field['choices'] = $this->options_get( $contact_field_name );
+
+		// All are optional.
 		$field['allow_null'] = 1;
 
 		// --<
@@ -1133,7 +1169,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		// Get keyed array of options for this Contact Field.
 		$field['choices'] = $this->options_get( $contact_field_name );
 
-		// "Prefix" and "Suffix" are optional.
+		// All are optional.
 		$field['allow_null'] = 1;
 
 		// --<
