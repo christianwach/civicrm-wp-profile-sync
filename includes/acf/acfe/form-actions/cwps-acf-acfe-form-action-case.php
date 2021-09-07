@@ -370,7 +370,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 				'data-instruction-placement' => 'field'
 			],
 			'acfe_permissions' => '',
-			'default_value' => $this->civicrm->case_field->option_value_default_get( 'case_status' ),
+			'default_value' => $this->civicrm->option_value_default_get( 'case_status' ),
 			'placeholder' => '',
 			'allow_null' => 0,
 			'multiple' => 0,
@@ -395,7 +395,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 				'data-instruction-placement' => 'field'
 			],
 			'acfe_permissions' => '',
-			'default_value' => $this->civicrm->case_field->option_value_default_get( 'encounter_medium' ),
+			'default_value' => $this->civicrm->option_value_default_get( 'encounter_medium' ),
 			'placeholder' => '',
 			'allow_null' => 0,
 			'multiple' => 0,

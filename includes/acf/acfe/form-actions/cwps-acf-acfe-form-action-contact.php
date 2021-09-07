@@ -1342,6 +1342,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// Add Website Types choices and modify Field.
 		$website_type_field['choices'] = $this->website_types;
+		$website_type_field['default_value'] = $this->civicrm->option_value_default_get( 'website_type' );
 		$website_type_field['search_placeholder'] = '';
 		$website_type_field['allow_null'] = 0;
 		$website_type_field['ui'] = 0;

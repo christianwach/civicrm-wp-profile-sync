@@ -637,6 +637,171 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 
 
 	/**
+	 * Get the Option Group for a Case Field.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $name The name of the option group.
+	 * @return array $option_group The array of option group data.
+	 */
+	public function option_group_get( $name ) {
+
+		// Only do this once per named Option Group.
+		static $pseudocache;
+		if ( isset( $pseudocache[$name] ) ) {
+			return $pseudocache[$name];
+		}
+
+		// Init return.
+		$options = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->is_initialised() ) {
+			return $options;
+		}
+
+		// Define query params.
+		$params = [
+			'name' => $name,
+			'version' => 3,
+		];
+
+		// Call the CiviCRM API.
+		$result = civicrm_api( 'OptionGroup', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+			return $options;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $case_data;
+		}
+
+		// The result set should contain only one item.
+		$options = array_pop( $result['values'] );
+
+		// Maybe add to pseudo-cache.
+		if ( ! isset( $pseudocache[$name] ) ) {
+			$pseudocache[$name] = $options;
+		}
+
+		// --<
+		return $options;
+
+	}
+
+
+
+	/**
+	 * Get the values in a given Option Group.
+	 *
+	 * @since 0.5
+	 *
+	 * @param integer $option_group_id The numeric ID of the Option Group.
+	 * @return array $values The array of values.
+	 */
+	public function option_values_get( $option_group_id ) {
+
+		// Only do this once.
+		static $pseudocache;
+		if ( isset( $pseudocache[$option_group_id] ) ) {
+			return $pseudocache[$option_group_id];
+		}
+
+		// Init return.
+		$values = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->is_initialised() ) {
+			return $values;
+		}
+
+		// Define params to get all Participant Roles.
+		$params = [
+			'version' => 3,
+			'sequential' => 1,
+			'option_group_id' => $option_group_id,
+			'options' => [
+				'sort' => 'weight',
+				'limit' => 0, // No limit.
+			],
+		];
+
+		// Call the API.
+		$result = civicrm_api( 'OptionValue', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+			return $values;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $values;
+		}
+
+		// The result set is what we're after.
+		$values = $result['values'];
+
+		// Maybe add to pseudo-cache.
+		if ( ! isset( $pseudocache[$option_group_id] ) ) {
+			$pseudocache[$option_group_id] = $values;
+		}
+
+		// --<
+		return $values;
+
+	}
+
+
+
+	/**
+	 * Get the default value for a given Option Group name.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $name The name of the Option Group.
+	 * @return integer|boolean $default The default value, or false if not set.
+	 */
+	public function option_value_default_get( $name ) {
+
+		// Init return.
+		$default = false;
+
+		// Get the Option Group.
+		$option_group = $this->option_group_get( $name );
+		if ( empty( $option_group ) ) {
+			return $default;
+		}
+
+		// Get the Option Values for the requested Option Group.
+		$option_values = $this->option_values_get( $option_group['id'] );
+		if ( empty( $option_values ) ) {
+			return $default;
+		}
+
+		// Tease out the default if present.
+		foreach( $option_values AS $option_value ) {
+			if ( ! empty( $option_value['is_default'] ) ) {
+				$default = $option_value['value'];
+				break;
+			}
+		}
+
+		// --<
+		return $default;
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
 	 * Getter method for the "CiviCRM Field" key.
 	 *
 	 * @since 0.4

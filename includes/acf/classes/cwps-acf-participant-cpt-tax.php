@@ -1313,7 +1313,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		}
 
 		// Bail if it's not a CiviCRM Participant Role.
-		$opt_group_id = $this->participant_roles_option_group_get();
+		$opt_group_id = $this->civicrm->option_group_get( 'participant_role' );
 		if ( $opt_group_id === false OR $opt_group_id != $participant_role->option_group_id ) {
 			return;
 		}
@@ -1392,7 +1392,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		}
 
 		// Bail if it's not a CiviCRM Participant Role.
-		$opt_group_id = $this->participant_roles_option_group_get();
+		$opt_group_id = $this->civicrm->option_group_get( 'participant_role' );
 		if ( $opt_group_id === false OR $opt_group_id != $participant_role->option_group_id ) {
 			return;
 		}
@@ -1492,7 +1492,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		}
 
 		// Get Option Group ID.
-		$opt_group_id = $this->participant_roles_option_group_get();
+		$opt_group_id = $this->civicrm->option_group_get( 'participant_role' );
 		if ( $opt_group_id === false ) {
 			return false;
 		}
@@ -1620,7 +1620,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		}
 
 		// Get Option Group ID.
-		$opt_group_id = $this->participant_roles_option_group_get();
+		$opt_group_id = $this->civicrm->option_group_get( 'participant_role' );
 		if ( $opt_group_id === false ) {
 			return false;
 		}
@@ -1698,7 +1698,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		}
 
 		// Get Option Group ID,
-		$opt_group_id = $this->participant_roles_option_group_get();
+		$opt_group_id = $this->civicrm->option_group_get( 'participant_role' );
 		if ( $opt_group_id === false ) {
 			return [];
 		}
@@ -1839,7 +1839,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		}
 
 		// Get Option Group ID.
-		$opt_group_id = $this->participant_roles_option_group_get();
+		$opt_group_id = $this->civicrm->option_group_get( 'participant_role' );
 		if ( $opt_group_id === false ) {
 			return false;
 		}
@@ -1893,9 +1893,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		}
 
 		// Get Option Group ID.
-		$opt_group_id = $this->participant_roles_option_group_get();
-
-		// Error check.
+		$opt_group_id = $this->civicrm->option_group_get( 'participant_role' );
 		if ( $opt_group_id === false ) {
 			return false;
 		}
@@ -1928,59 +1926,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 		// --<
 		return $participant_role;
-
-	}
-
-
-
-	/**
-	 * Gets the ID of the Option Group for CiviCRM Participant Roles.
-	 *
-	 * @since 0.5
-	 *
-	 * @return integer|boolean $option_group_id The ID of the Option Group, or false on failure.
-	 */
-	public function participant_roles_option_group_get() {
-
-		// Only do this once.
-		static $option_group_id;
-		if ( isset( $option_group_id ) ) {
-			return $option_group_id;
-		}
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return false;
-		}
-
-		// Define params to get Participant Roles Option Group.
-		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'name' => 'participant_role',
-		];
-
-		// Call API.
-		$result = civicrm_api( 'OptionGroup', 'get', $params );
-
-		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
-			return false;
-		}
-
-		// Bail if there are no results.
-		if ( empty( $result['values'] ) ) {
-			return false;
-		}
-
-		// The result set should contain only one item.
-		$option_group = array_pop( $result['values'] );
-
-		// Assign the ID.
-		$option_group_id = (int) $option_group['id'];
-
-		// --<
-		return $option_group_id;
 
 	}
 

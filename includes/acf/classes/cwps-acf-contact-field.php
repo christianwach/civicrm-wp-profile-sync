@@ -497,7 +497,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Individual Prefix.
 		if ( $name == 'prefix_id' ) {
-			$option_group = $this->option_group_get( 'individual_prefix' );
+			$option_group = $this->civicrm->option_group_get( 'individual_prefix' );
 			if ( ! empty( $option_group ) ) {
 				$options = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
 			}
@@ -505,7 +505,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Individual Suffix.
 		if ( $name == 'suffix_id' ) {
-			$option_group = $this->option_group_get( 'individual_suffix' );
+			$option_group = $this->civicrm->option_group_get( 'individual_suffix' );
 			if ( ! empty( $option_group ) ) {
 				$options = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
 			}
@@ -513,7 +513,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Gender.
 		if ( $name == 'gender_id' ) {
-			$option_group = $this->option_group_get( 'gender' );
+			$option_group = $this->civicrm->option_group_get( 'gender' );
 			if ( ! empty( $option_group ) ) {
 				$options = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
 			}
@@ -536,62 +536,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Communication Style.
 		if ( $name == 'communication_style_id' ) {
-			$option_group = $this->option_group_get( 'communication_style' );
+			$option_group = $this->civicrm->option_group_get( 'communication_style' );
 			if ( ! empty( $option_group ) ) {
 				$options = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
 			}
 		}
-
-		// --<
-		return $options;
-
-	}
-
-
-
-	// -------------------------------------------------------------------------
-
-
-
-	/**
-	 * Get the Option Group for a Contact Field.
-	 *
-	 * @since 0.4
-	 *
-	 * @param string $name The name of the option group.
-	 * @return array $option_group The array of option group data.
-	 */
-	public function option_group_get( $name ) {
-
-		// Init return.
-		$options = [];
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $options;
-		}
-
-		// Define query params.
-		$params = [
-			'name' => $name,
-			'version' => 3,
-		];
-
-		// Call the CiviCRM API.
-		$result = civicrm_api( 'OptionGroup', 'get', $params );
-
-		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
-			return $options;
-		}
-
-		// Bail if there are no results.
-		if ( empty( $result['values'] ) ) {
-			return $contact_data;
-		}
-
-		// The result set should contain only one item.
-		$options = array_pop( $result['values'] );
 
 		// --<
 		return $options;
@@ -1089,6 +1038,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// All are optional.
 		$field['allow_null'] = 1;
+
+		// Set default "Communication Style".
+		if ( $name == 'communication_style_id' ) {
+			$field['default_value'] = $this->civicrm->option_value_default_get( 'communication_style' );
+		}
 
 		// --<
 		return $field;

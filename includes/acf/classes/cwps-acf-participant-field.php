@@ -536,57 +536,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 
 
 	/**
-	 * Get the Option Group for a Participant Field.
-	 *
-	 * @since 0.5
-	 *
-	 * @param string $name The name of the option group.
-	 * @return array $option_group The array of option group data.
-	 */
-	public function option_group_get( $name ) {
-
-		// Init return.
-		$options = [];
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $options;
-		}
-
-		// Define query params.
-		$params = [
-			'name' => $name,
-			'version' => 3,
-		];
-
-		// Call the CiviCRM API.
-		$result = civicrm_api( 'OptionGroup', 'get', $params );
-
-		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
-			return $options;
-		}
-
-		// Bail if there are no results.
-		if ( empty( $result['values'] ) ) {
-			return $options;
-		}
-
-		// The result set should contain only one item.
-		$options = array_pop( $result['values'] );
-
-		// --<
-		return $options;
-
-	}
-
-
-
-	// -------------------------------------------------------------------------
-
-
-
-	/**
 	 * Get the CiviCRM Participant Fields for an ACF Field.
 	 *
 	 * @since 0.5
