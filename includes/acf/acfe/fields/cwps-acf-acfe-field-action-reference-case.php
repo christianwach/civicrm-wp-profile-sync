@@ -72,7 +72,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Case_Action_Ref extends acf_field {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var str $name The Field Type name.
+	 * @var string $name The Field Type name.
 	 */
 	public $name = 'cwps_acfe_case_action_ref';
 
@@ -85,7 +85,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Case_Action_Ref extends acf_field {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var str $label The Field Type label.
+	 * @var string $label The Field Type label.
 	 */
 	public $label = '';
 
@@ -98,7 +98,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Case_Action_Ref extends acf_field {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var str $label The Field Type category.
+	 * @var string $label The Field Type category.
 	 */
 	public $category = 'CiviCRM';
 

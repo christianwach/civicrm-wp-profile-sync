@@ -88,7 +88,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Campaign {
 	 * @since 0.5
 	 *
 	 * @param string $data The Campaign data.
-	 * @return array|boolean $campaign The array of Campaign data, or false on failure.
+	 * @return array|bool $campaign The array of Campaign data, or false on failure.
 	 */
 	public function create( $data ) {
 
@@ -137,7 +137,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Campaign {
 	 * @since 0.5
 	 *
 	 * @param array $data The CiviCRM Campaign data.
-	 * @return array|boolean The array of data from the CiviCRM API, or false on failure.
+	 * @return array|bool The array of data from the CiviCRM API, or false on failure.
 	 */
 	public function update( $data ) {
 

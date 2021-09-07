@@ -70,7 +70,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var str $taxonomy_name The name of the Custom Taxonomy.
+	 * @var string $taxonomy_name The name of the Custom Taxonomy.
 	 */
 	public $taxonomy_name;
 
@@ -80,6 +80,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML {
 	 * Constructor.
 	 *
 	 * @since 0.5
+	 *
+	 * @param object $parent The parent object reference.
 	 */
 	public function __construct( $parent ) {
 

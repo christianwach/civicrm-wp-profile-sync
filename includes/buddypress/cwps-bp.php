@@ -207,8 +207,8 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 	 *
 	 * @since 0.4
 	 *
-	 * @param boolean $should_be_synced True if the Contact's name should be synced, false otherwise.
-	 * @return boolean $should_be_synced The modified value of the "should be synced" flag.
+	 * @param bool $should_be_synced True if the Contact's name should be synced, false otherwise.
+	 * @return bool $should_be_synced The modified value of the "should be synced" flag.
 	 */
 	public function name_update_allow( $should_be_synced ) {
 

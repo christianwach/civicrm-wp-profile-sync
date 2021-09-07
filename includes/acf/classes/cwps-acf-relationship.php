@@ -51,7 +51,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var str $acf_field_key The key of the "CiviCRM Relationship" in the ACF Field data.
+	 * @var string $acf_field_key The key of the "CiviCRM Relationship" in the ACF Field data.
 	 */
 	public $acf_field_key = 'field_cacf_civicrm_relationship';
 
@@ -236,7 +236,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	 * @since 0.4
 	 *
 	 * @param array $args The array of WordPress params.
-	 * @return boolean True if updates were successful, or false on failure.
+	 * @return bool True if updates were successful, or false on failure.
 	 */
 	public function fields_handled_update( $args ) {
 
@@ -278,7 +278,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	 * @param mixed $value The ACF Field value.
 	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param array $settings The ACF Field settings.
-	 * @return boolean True if updates were successful, or false on failure.
+	 * @return bool True if updates were successful, or false on failure.
 	 */
 	public function field_handled_update( $field, $value, $contact_id, $settings ) {
 
@@ -323,7 +323,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param array $target_contact_ids The array of Contact IDs in the ACF Field.
 	 * @param string $code The code that identifies the Relationship and direction.
-	 * @return array|boolean $relationships The array of Relationship data, or false on failure.
+	 * @return array|bool $relationships The array of Relationship data, or false on failure.
 	 */
 	public function relationships_update( $contact_id, $target_contact_ids, $code ) {
 
@@ -736,7 +736,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	 * @param integer $contact_id_a The numeric ID of Contact A.
 	 * @param integer $contact_id_b The numeric ID of Contact B.
 	 * @param integer $type_id The numeric ID of Relationship Type.
-	 * @return array|boolean $relationship The array of Relationship data, or false on failure.
+	 * @return array|bool $relationship The array of Relationship data, or false on failure.
 	 */
 	public function relationship_create( $contact_id_a, $contact_id_b, $type_id ) {
 
@@ -788,7 +788,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	 * @since 0.4
 	 *
 	 * @param array $params The params to update the Relationship with.
-	 * @return array|boolean $relationship The array of Relationship data, or false on failure.
+	 * @return array|bool $relationship The array of Relationship data, or false on failure.
 	 */
 	public function relationship_edit( $params = [] ) {
 
@@ -832,7 +832,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	 * @since 0.5
 	 *
 	 * @param array $params The params to create/update the Relationship with.
-	 * @return array|boolean $relationship The array of Relationship data, or false on failure.
+	 * @return array|bool $relationship The array of Relationship data, or false on failure.
 	 */
 	public function relationship_record_update( $params = [] ) {
 
@@ -875,7 +875,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	 * @since 0.5
 	 *
 	 * @param array $relationship The Relationship data.
-	 * @return array|boolean $relationship_data The array of Relationship data, or false on failure.
+	 * @return array|bool $relationship_data The array of Relationship data, or false on failure.
 	 */
 	public function create( $relationship ) {
 
@@ -924,7 +924,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	 * @since 0.4
 	 *
 	 * @param array $relationship The CiviCRM Relationship data.
-	 * @return array|boolean $relationship_data The array Relationship data from the CiviCRM API, or false on failure.
+	 * @return array|bool $relationship_data The array Relationship data from the CiviCRM API, or false on failure.
 	 */
 	public function update( $relationship ) {
 
@@ -958,7 +958,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	 * @since 0.5
 	 *
 	 * @param integer $relationship_id The numeric ID of the Relationship.
-	 * @param object|boolean $relationship The Relationship data object, or false if none.
+	 * @param object|bool $relationship The Relationship data object, or false if none.
 	 */
 	public function get_by_id( $relationship_id ) {
 
@@ -1222,7 +1222,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $field_type The type of ACF Field.
 	 * @param string $filter The token by which to filter the array of fields.
 	 * @return array $fields The array of field names.
 	 */
@@ -1555,7 +1554,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param integer $type_id The numeric ID of the Relationship Type.
 	 * @param integer $direction The direction of the Relationship. May be: 'ab', 'ba' or 'equal'.
-	 * @return array|boolean $relationships The array of Relationship data.
+	 * @return array|bool $relationships The array of Relationship data.
 	 */
 	public function get_directional( $contact_id, $type_id = 0, $direction = 'ab' ) {
 
@@ -1628,7 +1627,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	 *
 	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param integer $type_id The numeric ID of the Relationship Type.
-	 * @return array|boolean $relationships The array of Relationship data.
+	 * @return array|bool $relationships The array of Relationship data.
 	 */
 	public function relationships_get_for_contact( $contact_id, $type_id = 0 ) {
 

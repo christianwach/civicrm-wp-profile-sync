@@ -104,8 +104,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	 * @since 0.5
 	 *
 	 * @param array $form The array of Form data.
-	 * @param int $current_post_id The ID of the Post in which the Form has been embedded.
-	 * @param str $action The customised name of the action.
+	 * @param integer $current_post_id The ID of the Post in which the Form has been embedded.
+	 * @param string $action The customised name of the action.
 	 */
 	public function load( $form, $current_post_id, $action ) {
 		return $form;
@@ -144,8 +144,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	 * @since 0.5
 	 *
 	 * @param array $form The array of Form data.
-	 * @param int $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param str $action The customised name of the action.
+	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
+	 * @param string $action The customised name of the action.
 	 */
 	public function make( $form, $current_post_id, $action ) {}
 
@@ -157,8 +157,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	 * @since 0.5
 	 *
 	 * @param array $form The array of Form data.
-	 * @param int $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param str $action The customised name of the action.
+	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
+	 * @param string $action The customised name of the action.
 	 * @return bool $prepare The net result of the set of filters.
 	 */
 	public function make_skip( $form, $current_post_id, $action ) {
@@ -341,7 +341,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 		if ( ! empty( $action_extras ) ) {
 			$fields = array_merge(
 				$fields,
-				$action_extras,
+				$action_extras
 			);
 		}
 
@@ -411,7 +411,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 
 		// Combine Fields.
 		$fields = array_merge(
-			$mapping_tab,
+			$mapping_tab
 		);
 
 		// --<
@@ -474,7 +474,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 
 		// Combine Fields.
 		$fields = array_merge(
-			$relationship_tab,
+			$relationship_tab
 		);
 
 		// --<

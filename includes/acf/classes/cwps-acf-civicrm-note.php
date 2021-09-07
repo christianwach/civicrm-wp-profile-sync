@@ -102,7 +102,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Note {
 	 * @since 0.5
 	 *
 	 * @param string $data The Note data.
-	 * @return array|boolean $note The array of Note data, or false on failure.
+	 * @return array|bool $note The array of Note data, or false on failure.
 	 */
 	public function create( $data ) {
 
@@ -151,7 +151,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Note {
 	 * @since 0.5
 	 *
 	 * @param array $data The CiviCRM Note data.
-	 * @return array|boolean The array of data from the CiviCRM API, or false on failure.
+	 * @return array|bool The array of data from the CiviCRM API, or false on failure.
 	 */
 	public function update( $data ) {
 
@@ -291,7 +291,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Note {
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $field_type The type of ACF Field.
 	 * @param string $filter The token by which to filter the array of fields.
 	 * @return array $fields The array of field names.
 	 */

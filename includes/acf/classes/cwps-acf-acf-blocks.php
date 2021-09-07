@@ -142,8 +142,8 @@ class CiviCRM_Profile_Sync_ACF_Blocks {
 	 *
 	 * @param array $block The Block settings and attributes.
 	 * @param string $content The Block inner HTML (empty).
-	 * @param boolean $is_preview True during AJAX preview.
-	 * @param (integer|string ing) $post_id The Post ID this Block is saved to.
+	 * @param bool $is_preview True during AJAX preview.
+	 * @param integer|string $post_id The Post ID this Block is saved to.
 	 */
 	public function block_test_render( $block, $content = '', $is_preview = false, $post_id = 0 ) {
 

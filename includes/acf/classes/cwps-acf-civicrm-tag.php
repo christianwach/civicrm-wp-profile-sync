@@ -88,7 +88,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Tag {
 	 * @since 0.5
 	 *
 	 * @param string $data The Tag data.
-	 * @return array|boolean $tag The array of Tag data, or false on failure.
+	 * @return array|bool $tag The array of Tag data, or false on failure.
 	 */
 	public function create( $data ) {
 
@@ -137,7 +137,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Tag {
 	 * @since 0.5
 	 *
 	 * @param array $data The CiviCRM Tag data.
-	 * @return array|boolean The array of data from the CiviCRM API, or false on failure.
+	 * @return array|bool The array of data from the CiviCRM API, or false on failure.
 	 */
 	public function update( $data ) {
 
@@ -273,7 +273,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Tag {
 	 *
 	 * @param array $contact_id The numeric ID of a CiviCRM Contact.
 	 * @param integer $tag_id The numeric ID of the Tag.
-	 * @return boolean $has_tag True if the Contact has the Tag, or false otherwise.
+	 * @return bool $has_tag True if the Contact has the Tag, or false otherwise.
 	 */
 	public function contact_has_tag( $contact_id, $tag_id ) {
 
@@ -317,7 +317,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Tag {
 	 *
 	 * @param array $contact_id The numeric ID of a CiviCRM Contact.
 	 * @param integer $tag_id The numeric ID of the Tag.
-	 * @return array|boolean $result The Group-Contact data, or false on failure.
+	 * @return array|bool $result The Group-Contact data, or false on failure.
 	 */
 	public function contact_tag_add( $contact_id, $tag_id ) {
 

@@ -353,7 +353,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 *
 	 * @param integer $user_id The numeric ID of the WordPress User.
 	 * @param array $posted_field_ids The array of numeric IDs of the BuddyPress fields.
-	 * @param boolean $errors True if there are errors, false otherwise.
+	 * @param bool $errors True if there are errors, false otherwise.
 	 */
 	public function bp_xprofile_edited( $user_id = 0, $posted_field_ids, $errors ) {
 
@@ -407,7 +407,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 *
 	 * @param integer $user_id The numeric ID of the WordPress User.
 	 * @param array $posted_field_ids The array of numeric IDs of the BuddyPress fields.
-	 * @param boolean $errors True if there are errors, false otherwise.
+	 * @param bool $errors True if there are errors, false otherwise.
 	 */
 	public function bp_signup_user( $user_id = 0, $posted_field_ids, $errors ) {
 
@@ -461,7 +461,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 *
 	 * @param integer $user_id The numeric ID of the WordPress User.
 	 * @param array $posted_field_ids The array of numeric IDs of the BuddyPress fields.
-	 * @param boolean $errors True if there are errors, false otherwise.
+	 * @param bool $errors True if there are errors, false otherwise.
 	 */
 	public function bp_activated_user( $user_id = 0, $posted_field_ids, $errors ) {
 

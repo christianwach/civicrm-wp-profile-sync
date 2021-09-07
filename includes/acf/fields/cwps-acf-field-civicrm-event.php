@@ -45,7 +45,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Field extends acf_field {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var str $name The Field Type name.
+	 * @var string $name The Field Type name.
 	 */
 	public $name = 'civicrm_event';
 
@@ -58,7 +58,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Field extends acf_field {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var str $label The Field Type label.
+	 * @var string $label The Field Type label.
 	 */
 	public $label = '';
 
@@ -71,7 +71,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Field extends acf_field {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var str $label The Field Type category.
+	 * @var string $label The Field Type category.
 	 */
 	public $category = 'CiviCRM';
 

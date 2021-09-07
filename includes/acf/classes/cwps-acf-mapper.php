@@ -2986,7 +2986,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @param integer $post_id The ID of the Post or revision.
 	 * @param integer $post The Post object.
-	 * @param boolean $update True if the Post is being updated, false if new.
+	 * @param bool $update True if the Post is being updated, false if new.
 	 */
 	public function post_saved( $post_id, $post, $update ) {
 

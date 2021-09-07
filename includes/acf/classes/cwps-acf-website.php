@@ -45,7 +45,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var str $acf_field_key The key of the "CiviCRM Website" in the ACF Field data.
+	 * @var string $acf_field_key The key of the "CiviCRM Website" in the ACF Field data.
 	 */
 	public $acf_field_key = 'field_cacf_civicrm_website';
 
@@ -56,7 +56,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var str $website_field_prefix The prefix of the "CiviCRM Field" value.
+	 * @var string $website_field_prefix The prefix of the "CiviCRM Field" value.
 	 */
 	public $website_field_prefix = 'caiwebsite_';
 
@@ -198,7 +198,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	 * @since 0.4
 	 *
 	 * @param array $args The array of WordPress params.
-	 * @return boolean True if updates were successful, or false on failure.
+	 * @return bool True if updates were successful, or false on failure.
 	 */
 	public function fields_handled_update( $args ) {
 
@@ -240,7 +240,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	 * @param mixed $value The ACF Field value.
 	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param array $settings The ACF Field settings.
-	 * @return boolean True if updates were successful, or false on failure.
+	 * @return bool True if updates were successful, or false on failure.
 	 */
 	public function field_handled_update( $field, $value, $contact_id, $settings ) {
 
@@ -348,8 +348,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		// Construct API query.
 		$params = [
 			'version' => 3,
-			'contact_id' => $contact_id,
 			'website_type_id' => $website_type_id,
+			'contact_id' => $contact_id,
 		];
 
 		// Get Website details via API.
@@ -507,7 +507,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	 * @param integer $website_type_id The numeric ID of the Website Type.
 	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param string $value The Website URL to update the Contact with.
-	 * @return array|boolean $website The array of Website data, or false on failure.
+	 * @return array|bool $website The array of Website data, or false on failure.
 	 */
 	public function website_update( $website_type_id, $contact_id, $value ) {
 
@@ -749,7 +749,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $field_type The type of ACF Field.
 	 * @param string $filter The token by which to filter the array of fields.
 	 * @return array $fields The array of field names.
 	 */

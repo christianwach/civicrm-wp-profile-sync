@@ -334,7 +334,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 	 * @param integer $website_type_id The numeric ID of the Website Type.
 	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param string $value The Website URL to update the Contact with.
-	 * @return array|boolean $website The array of Website data, or false on failure.
+	 * @return array|bool $website The array of Website data, or false on failure.
 	 */
 	public function website_update_acf( $website_type_id, $contact_id, $value ) {
 
@@ -440,7 +440,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 	 * @param object $contact The CiviCRM Contact data object.
 	 * @param integer $website_type The numeric ID of the CiviCRM Website Type.
 	 * @param integer $website_id The numeric ID of the CiviCRM Website.
-	 * @return object|boolean $website The CiviCRM Website data, or false on failure.
+	 * @return object|bool $website The CiviCRM Website data, or false on failure.
 	 */
 	public function website_create( $contact, $website_type, $website_id = null ) {
 
@@ -456,7 +456,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 	 * @param object $contact The CiviCRM Contact data object.
 	 * @param integer $website_type The numeric ID of the CiviCRM Website Type.
 	 * @param integer $website_id The numeric ID of the CiviCRM Website.
-	 * @return object|boolean $website The CiviCRM Website data, or false on failure.
+	 * @return object|bool $website The CiviCRM Website data, or false on failure.
 	 */
 	public function website_edit( $contact, $website_type, $website_id ) {
 
@@ -470,7 +470,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 	 * @since 0.4
 	 *
 	 * @param integer $website_id The numeric ID of the CiviCRM Website.
-	 * @return object|boolean $website The CiviCRM Website data, or false on failure.
+	 * @return object|bool $website The CiviCRM Website data, or false on failure.
 	 */
 	public function website_delete( $website_id ) {
 
@@ -485,7 +485,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 	 *
 	 * @param object $contact The CiviCRM Contact data object.
 	 * @param integer $website_type The numeric ID of the CiviCRM Website Type.
-	 * @return object|boolean $website The CiviCRM Website data, or false on failure.
+	 * @return object|bool $website The CiviCRM Website data, or false on failure.
 	 */
 	public function website_get_by_type( $contact, $website_type ) {
 

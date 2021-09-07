@@ -45,7 +45,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var str $acf_field_key The key of the "CiviCRM Addresses" in the ACF Field data.
+	 * @var string $acf_field_key The key of the "CiviCRM Addresses" in the ACF Field data.
 	 */
 	public $acf_field_key = 'field_cacf_civicrm_addresses';
 
@@ -240,7 +240,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 	 * @since 0.4
 	 *
 	 * @param array $args The array of WordPress params.
-	 * @return boolean True if updates were successful, or false on failure.
+	 * @return bool True if updates were successful, or false on failure.
 	 */
 	public function fields_handled_update( $args ) {
 
@@ -283,7 +283,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param array $settings The ACF Field settings.
 	 * @param array $args The array of WordPress params.
-	 * @return boolean True if updates were successful, or false on failure.
+	 * @return bool True if updates were successful, or false on failure.
 	 */
 	public function field_handled_update( $field, $value, $contact_id, $settings, $args ) {
 
@@ -419,7 +419,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param string $selector The ACF Field selector.
 	 * @param array $args The array of WordPress params.
-	 * @return array|boolean $addresses The array of Address Record data, or false on failure.
+	 * @return array|bool $addresses The array of Address Record data, or false on failure.
 	 */
 	public function addresses_update( $values, $contact_id, $selector, $args = [] ) {
 
@@ -838,7 +838,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 					 * @since 0.4
 					 *
 					 * @param bool Default false disallows reverse edits. Return true to allow.
-					 * @param int $post_id The numeric ID of the WordPress Post.
+					 * @param integer $post_id The numeric ID of the WordPress Post.
 					 * @param array $args The array of CiviCRM params.
 					 */
 					if ( false === apply_filters( 'cwps/acf/addresses/address/reverse_edit', false, $post_id, $args ) ) {

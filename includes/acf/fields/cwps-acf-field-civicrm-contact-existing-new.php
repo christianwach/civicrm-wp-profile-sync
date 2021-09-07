@@ -45,7 +45,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var str $name The Field Type name.
+	 * @var string $name The Field Type name.
 	 */
 	public $name = 'civicrm_contact_existing_new';
 
@@ -58,7 +58,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var str $label The Field Type label.
+	 * @var string $label The Field Type label.
 	 */
 	public $label = '';
 
@@ -71,7 +71,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var str $label The Field Type category.
+	 * @var string $label The Field Type category.
 	 */
 	public $category = 'CiviCRM';
 
@@ -123,7 +123,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var str $acf_slug The ACF identifier.
+	 * @var string $acf_slug The ACF identifier.
 	 */
 	public $acf_slug = 'cwps_participant';
 
@@ -543,7 +543,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 	 * @since 0.5
 	 *
 	 * @param array $value The ACF Field values.
-	 * @return array|boolean $contact The CiviCRM Contact data, or false on failure.
+	 * @return array|bool $contact The CiviCRM Contact data, or false on failure.
 	 */
 	public function prepare_output( $value ) {
 
@@ -616,7 +616,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 	 *
 	 * @since 0.5
 	 *
-	 * @param array|int $contact_id The numeric ID of the CiviCRM Contact.
+	 * @param array|integer $contact_id The numeric ID of the CiviCRM Contact.
 	 * @return array|bool $field The Field data, or false on failure.
 	 */
 	public function prepare_input( $contact_id ) {
@@ -652,11 +652,11 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 	 *
 	 * @since 0.5
 	 *
-	 * @param boolean $valid The validation status.
+	 * @param bool $valid The validation status.
 	 * @param mixed $value The $_POST value.
 	 * @param array $field The field array holding all the field options.
 	 * @param string $input The corresponding input name for $_POST value.
-	 * @return string|boolean $valid False if not valid, or string for error message.
+	 * @return string|bool $valid False if not valid, or string for error message.
 	 */
 	public function validate_value( $valid, $value, $field, $input ) {
 

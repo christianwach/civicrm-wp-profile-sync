@@ -47,7 +47,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var str $address_field_prefix The prefix of the "CiviCRM Field" value.
+	 * @var string $address_field_prefix The prefix of the "CiviCRM Field" value.
 	 */
 	public $address_field_prefix = 'caiaddress_';
 
@@ -431,7 +431,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	 * @since 0.4
 	 *
 	 * @param integer $address_id The numeric ID of the Address.
-	 * @param object|boolean $address The Address data object, or false if none.
+	 * @param object|bool $address The Address data object, or false if none.
 	 */
 	public function address_get_by_id( $address_id ) {
 
@@ -733,7 +733,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	 *
 	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param string $data The Address data to update the Contact with.
-	 * @return array|boolean $address The array of Address Record data, or false on failure.
+	 * @return array|bool $address The array of Address Record data, or false on failure.
 	 */
 	public function update( $contact_id, $data ) {
 
@@ -780,7 +780,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	 * @since 0.4
 	 *
 	 * @param integer $address_id The numeric ID of the Address Record.
-	 * @return boolean $success True if successfully deleted, or false on failure.
+	 * @return bool $success True if successfully deleted, or false on failure.
 	 */
 	public function delete( $address_id ) {
 
@@ -828,7 +828,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	 *
 	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param array $data The Address data to save.
-	 * @return array|boolean $address The array of Address data, or false on failure.
+	 * @return array|bool $address The array of Address data, or false on failure.
 	 */
 	public function address_record_update( $contact_id, $data ) {
 
@@ -880,7 +880,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $field_type The type of ACF Field.
 	 * @param string $filter The token by which to filter the array of fields.
 	 * @return array $fields The array of field names.
 	 */
@@ -1000,7 +999,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	 * @since 0.5
 	 *
 	 * @param array $field The existing field data array.
-	 * @return string|boolean $address_field_name The name of the Address Field, or false if none.
+	 * @return string|bool $address_field_name The name of the Address Field, or false if none.
 	 */
 	public function address_field_name_get( $field ) {
 
@@ -1169,11 +1168,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	 *
 	 * @since 0.5
 	 *
-	 * @param boolean $valid The existing valid status.
+	 * @param bool $valid The existing valid status.
 	 * @param mixed $value The value of the Field.
 	 * @param array $field The Field data array.
 	 * @param string $input The input element's name attribute.
-	 * @return string|boolean $valid A string to display a custom error message, boolean otherwise.
+	 * @return string|bool $valid A string to display a custom error message, boolean otherwise.
 	 */
 	public function value_validate( $valid, $value, $field, $input ) {
 

@@ -99,7 +99,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Type {
 	 * @since 0.5
 	 *
 	 * @param integer $case_type_id The numeric ID of the Case Type.
-	 * @return array|boolean $case_type An array of Case Type data, or false on failure.
+	 * @return array|bool $case_type An array of Case Type data, or false on failure.
 	 */
 	public function get_by_id( $case_type_id ) {
 
@@ -214,7 +214,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Type {
 	 * @since 0.5
 	 *
 	 * @param string $post_type_name The name of Post Type.
-	 * @return integer|boolean $case_type_id The numeric ID of the Case Type, or false if not mapped.
+	 * @return integer|bool $case_type_id The numeric ID of the Case Type, or false if not mapped.
 	 */
 	public function id_get_for_post_type( $post_type_name ) {
 
@@ -456,7 +456,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Type {
 	 * @since 0.5
 	 *
 	 * @param integer $case_type_id The numeric ID of the Case Type.
-	 * @return string|boolean $is_linked The name of the Post Type, or false otherwise.
+	 * @return string|bool $is_linked The name of the Post Type, or false otherwise.
 	 */
 	public function is_mapped_to_post_type( $case_type_id ) {
 

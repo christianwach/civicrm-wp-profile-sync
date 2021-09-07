@@ -244,7 +244,7 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 	 *
 	 * @param object $user The WordPress User object.
 	 * @param object $contact The CiviCRM Contact object.
-	 * @return boolean $should_be_synced Whether or not the User should be synced.
+	 * @return bool $should_be_synced Whether or not the User should be synced.
 	 */
 	public function user_should_be_synced( $user, $contact ) {
 
@@ -258,10 +258,10 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 		 *
 		 * @since 0.3
 		 *
-		 * @param boolean $should_be_synced True if the User should be synced, false otherwise.
+		 * @param bool $should_be_synced True if the User should be synced, false otherwise.
 		 * @param object $user The WordPress User object.
 		 * @param object $contact The CiviCRM Contact object.
-		 * @return boolean $should_be_synced The modified value of the sync flag.
+		 * @return bool $should_be_synced The modified value of the sync flag.
 		 */
 		$should_be_synced = apply_filters( 'civicrm_wp_profile_sync_user_should_be_synced', $should_be_synced, $user, $contact );
 
@@ -270,10 +270,10 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 		 *
 		 * @since 0.4
 		 *
-		 * @param boolean $should_be_synced True if the User should be synced, false otherwise.
+		 * @param bool $should_be_synced True if the User should be synced, false otherwise.
 		 * @param object $user The WordPress User object.
 		 * @param object $contact The CiviCRM Contact object.
-		 * @return boolean $should_be_synced The modified value of the sync flag.
+		 * @return bool $should_be_synced The modified value of the sync flag.
 		 */
 		return apply_filters( 'cwps/user/should_be_synced', $should_be_synced, $user, $contact );
 

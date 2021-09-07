@@ -138,11 +138,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 	 *
 	 * @since 0.5
 	 *
-	 * @param boolean $valid The existing valid status.
+	 * @param bool $valid The existing valid status.
 	 * @param mixed $value The value of the Field.
 	 * @param array $field The Field data array.
 	 * @param string $input The input element's name attribute.
-	 * @return string|boolean $valid A string to display a custom error message, boolean otherwise.
+	 * @return string|bool $valid A string to display a custom error message, boolean otherwise.
 	 */
 	public function value_validate( $valid, $value, $field, $input ) {
 
@@ -486,7 +486,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 	 *
 	 * @since 0.5
 	 *
-	 * @param int $status_id The numeric ID of the Participant Status.
+	 * @param integer $status_id The numeric ID of the Participant Status.
 	 * @return array $options The array of Participant Status data.
 	 */
 	public function status_get_by_id( $status_id ) {
@@ -917,7 +917,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 	 * @since 0.5
 	 *
 	 * @param array $args The array of WordPress params.
-	 * @return boolean True if updates were successful, or false on failure.
+	 * @return bool True if updates were successful, or false on failure.
 	 */
 	public function maybe_sync_fields( $args ) {
 

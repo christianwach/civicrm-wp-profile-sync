@@ -287,7 +287,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var str $acf_field_key The key of the "CiviCRM Field" in the ACF Field data.
+	 * @var string $acf_field_key The key of the "CiviCRM Field" in the ACF Field data.
 	 */
 	public $acf_field_key = 'field_cacf_civicrm_custom_field';
 
@@ -465,7 +465,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 *
-	 * @return boolean $initialised True if CiviCRM initialised, false otherwise.
+	 * @return bool $initialised True if CiviCRM initialised, false otherwise.
 	 */
 	public function is_initialised() {
 
@@ -528,7 +528,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 * @since 0.4
 	 *
 	 * @param string $permission The permission string.
-	 * @return boolean $permitted True if allowed, false otherwise.
+	 * @return bool $permitted True if allowed, false otherwise.
 	 */
 	public function check_permission( $permission ) {
 
@@ -550,9 +550,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		 *
 		 * @since 0.4
 		 *
-		 * @param boolean $permitted True if allowed, false otherwise.
+		 * @param bool $permitted True if allowed, false otherwise.
 		 * @param string $permission The CiviCRM permission string.
-		 * @return boolean $permitted True if allowed, false otherwise.
+		 * @return bool $permitted True if allowed, false otherwise.
 		 */
 		return apply_filters( 'cwps/acf/civicrm/permitted', $permitted, $permission );
 
@@ -763,7 +763,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 * @since 0.5
 	 *
 	 * @param string $name The name of the Option Group.
-	 * @return integer|boolean $default The default value, or false if not set.
+	 * @return integer|bool $default The default value, or false if not set.
 	 */
 	public function option_value_default_get( $name ) {
 

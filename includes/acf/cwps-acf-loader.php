@@ -117,7 +117,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var boolean $loaded Loaded flag. True when conditions are met.
+	 * @var bool $loaded Loaded flag. True when conditions are met.
 	 */
 	public $loaded = false;
 
@@ -126,7 +126,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var boolean $acf_pro ACF Pro flag. True when ACF Pro is installed.
+	 * @var bool $acf_pro ACF Pro flag. True when ACF Pro is installed.
 	 */
 	public $acf_pro = false;
 
@@ -156,7 +156,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 	 *
 	 * @since 0.4
 	 *
-	 * @return boolean $loaded True if fully loaded, false otherwise.
+	 * @return bool $loaded True if fully loaded, false otherwise.
 	 */
 	public function is_loaded() {
 

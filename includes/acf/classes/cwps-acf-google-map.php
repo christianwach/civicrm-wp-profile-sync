@@ -48,7 +48,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var str $acf_field_key The key of the "CiviCRM Google Map" in the ACF Field data.
+	 * @var string $acf_field_key The key of the "CiviCRM Google Map" in the ACF Field data.
 	 */
 	public $acf_field_key = 'field_cacf_civicrm_address';
 
@@ -57,7 +57,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var str $acf_field_edit_key The key of the "Make Read Only" in the ACF Field data.
+	 * @var string $acf_field_edit_key The key of the "Make Read Only" in the ACF Field data.
 	 */
 	public $acf_field_edit_key = 'field_cacf_civicrm_address_readonly';
 
@@ -193,7 +193,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 * @since 0.4
 	 *
 	 * @param array $args The array of WordPress params.
-	 * @return boolean True if updates were successful, or false on failure.
+	 * @return bool True if updates were successful, or false on failure.
 	 */
 	public function fields_handled_update( $args ) {
 
@@ -236,7 +236,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param array $settings The ACF Field settings.
 	 * @param array $args The array of WordPress params.
-	 * @return boolean True if updates were successful, or false on failure.
+	 * @return bool True if updates were successful, or false on failure.
 	 */
 	public function field_handled_update( $field, $value, $contact_id, $settings, $args ) {
 
@@ -294,7 +294,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param array $settings The ACF Field settings.
 	 * @param array $args The array of WordPress params.
-	 * @return boolean True if updates were successful, or false on failure.
+	 * @return bool True if updates were successful, or false on failure.
 	 */
 	public function address_update( $field, $value, $contact_id, $settings, $args ) {
 
@@ -1280,7 +1280,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 *
 	 * @param array $custom_fields The Custom Fields to populate the ACF Field with.
 	 * @param array $location_types The Location Types to populate the ACF Field with.
-	 * @param boolean $skip_specific True skips adding the  "Primary Address" and "Billing Address" choices.
+	 * @param bool $skip_specific True skips adding the  "Primary Address" and "Billing Address" choices.
 	 * @return array $field The ACF Field data array.
 	 */
 	public function acf_field_get( $custom_fields = [], $location_types = [], $skip_specific = false ) {

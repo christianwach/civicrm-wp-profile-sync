@@ -183,8 +183,8 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param boolean $post_id The ACF "Post ID".
-	 * @return integer|boolean $contact_id The mapped Contact ID, or false if not mapped.
+	 * @param bool $post_id The ACF "Post ID".
+	 * @return integer|bool $contact_id The mapped Contact ID, or false if not mapped.
 	 */
 	public function query_contact_id( $post_id ) {
 
@@ -206,10 +206,10 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		 *
 		 * @since 0.4
 		 *
-		 * @param boolean $contact_id False, since we're asking for a Contact ID.
+		 * @param bool $contact_id False, since we're asking for a Contact ID.
 		 * @param integer|string $post_id The ACF "Post ID".
 		 * @param string $entity The kind of WordPress Entity.
-		 * @return integer|boolean $contact_id The mapped Contact ID, or false if not mapped.
+		 * @return integer|bool $contact_id The mapped Contact ID, or false if not mapped.
 		 */
 		$contact_id = apply_filters( 'cwps/acf/query_contact_id', $contact_id, $post_id, $entity );
 
@@ -378,11 +378,11 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param boolean $valid The existing valid status.
+	 * @param bool $valid The existing valid status.
 	 * @param mixed $value The value of the Field.
 	 * @param array $field The Field data array.
 	 * @param string $input The input element's name attribute.
-	 * @return string|boolean $valid A string to display a custom error message, boolean otherwise.
+	 * @return string|bool $valid A string to display a custom error message, boolean otherwise.
 	 */
 	public function value_validate( $valid, $value, $field, $input ) {
 

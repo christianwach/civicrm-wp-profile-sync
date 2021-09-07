@@ -46,7 +46,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Activity_Target extends acf_field {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var str $name The Field Type name.
+	 * @var string $name The Field Type name.
 	 */
 	public $name = 'civicrm_activity_target';
 
@@ -59,7 +59,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Activity_Target extends acf_field {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var str $label The Field Type label.
+	 * @var string $label The Field Type label.
 	 */
 	public $label = '';
 
@@ -72,7 +72,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Activity_Target extends acf_field {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var str $label The Field Type category.
+	 * @var string $label The Field Type category.
 	 */
 	public $category = 'CiviCRM';
 
@@ -551,11 +551,11 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Activity_Target extends acf_field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param boolean $valid The validation status based on the value and the field's required setting.
+	 * @param bool $valid The validation status based on the value and the field's required setting.
 	 * @param mixed $value The $_POST value.
 	 * @param array $field The field array holding all the field options.
 	 * @param string $input The corresponding input name for $_POST value.
-	 * @return string|boolean $valid False if not valid, or string for error message.
+	 * @return string|bool $valid False if not valid, or string for error message.
 	public function validate_value( $valid, $value, $field, $input ) {
 
 		// Basic usage.

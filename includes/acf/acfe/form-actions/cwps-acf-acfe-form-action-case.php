@@ -288,8 +288,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 	 * @since 0.5
 	 *
 	 * @param array $form The array of Form data.
-	 * @param int $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param str $action The customised name of the action.
+	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
+	 * @param string $action The customised name of the action.
 	 */
 	public function make( $form, $current_post_id, $action ) {
 
@@ -472,7 +472,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 			$mapping_tab_header,
 			$mapping_contacts_accordion,
 			$mapping_case_accordion,
-			$mapping_custom_accordion,
+			$mapping_custom_accordion
 		);
 
 		// --<
@@ -860,8 +860,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 	 * @since 0.5
 	 *
 	 * @param array $form The array of Form data.
-	 * @param int $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param str $action The customised name of the action.
+	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
+	 * @param string $action The customised name of the action.
 	 * @return array $data The array of Case data.
 	 */
 	public function form_case_data( $form, $current_post_id, $action ) {
@@ -942,10 +942,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 	 * @since 0.5
 	 *
 	 * @param array $case_data The array of Case data.
-	 * @param array $email_data The array of Email data.
-	 * @param array $relationship_data The array of Relationship data.
 	 * @param array $custom_data The array of Custom Field data.
-	 * @return array|boolean $case The Case data array, or false on failure.
+	 * @return array|bool $case The Case data array, or false on failure.
 	 */
 	public function form_case_save( $case_data, $custom_data ) {
 
@@ -1020,7 +1018,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 	 * @since 0.5
 	 *
 	 * @param string $action_name The name of the referenced Form Action.
-	 * @return integer|boolean $contact_id The numeric ID of the Contact, or false if not found.
+	 * @return integer|bool $contact_id The numeric ID of the Contact, or false if not found.
 	 */
 	public function form_contact_id_get_mapped( $action_name ) {
 
@@ -1053,8 +1051,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 	 * @since 0.5
 	 *
 	 * @param array $form The array of Form data.
-	 * @param int $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param str $action The customised name of the action.
+	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
+	 * @param string $action The customised name of the action.
 	 * @return array $data The array of Custom Fields data.
 	 */
 	public function form_custom_data( $form, $current_post_id, $action ) {

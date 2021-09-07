@@ -219,7 +219,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	 *
 	 * @since 0.4
 	 *
-	 * @return boolean True if CiviCRM initialised, false otherwise.
+	 * @return bool True if CiviCRM initialised, false otherwise.
 	 */
 	public function is_initialised() {
 

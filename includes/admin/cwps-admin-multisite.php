@@ -36,7 +36,7 @@ class CiviCRM_WP_Profile_Sync_Admin_Multisite {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var str $admin The single site admin object.
+	 * @var string $admin The single site admin object.
 	 */
 	public $admin;
 
@@ -54,7 +54,7 @@ class CiviCRM_WP_Profile_Sync_Admin_Multisite {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var str $network_page_slug The slug of the network Settings Page.
+	 * @var string $network_page_slug The slug of the network Settings Page.
 	 */
 	public $network_page_slug = 'cwps_network';
 
@@ -153,7 +153,7 @@ class CiviCRM_WP_Profile_Sync_Admin_Multisite {
 	 *
 	 * @param bool $show_notice The existing value. False by default.
 	 * @param bool $is_settings_screen True if on our Settings Page, or false otherwise.
-	 * @param str $screen_id The ID of the current screen.
+	 * @param string $screen_id The ID of the current screen.
 	 * @return bool $show_notice True if the Admin Notice should be shown, false otherwise.
 	 */
 	public function upgrade_warning_filter( $show_notice, $is_settings_screen, $screen_id ) {
@@ -284,8 +284,8 @@ class CiviCRM_WP_Profile_Sync_Admin_Multisite {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $capability The existing access capability.
-	 * @return str $capability The modified access capability.
+	 * @param string $capability The existing access capability.
+	 * @return string $capability The modified access capability.
 	 */
 	public function caps_filter( $capability ) {
 
@@ -327,15 +327,15 @@ class CiviCRM_WP_Profile_Sync_Admin_Multisite {
 	 * @param array $urls The default Settings Page Tab URLs.
 	 * @return array $urls The modified Settings Page Tab URLs.
 	 */
-	public function page_tab_urls_filter( $url ) {
+	public function page_tab_urls_filter( $urls ) {
 
 		// Build URL to Network Settings Page when needed.
 		if ( is_network_admin() ) {
-			$url['settings'] = network_admin_url( add_query_arg( 'page', $this->network_page_slug, 'settings.php' ) );
+			$urls['settings'] = network_admin_url( add_query_arg( 'page', $this->network_page_slug, 'settings.php' ) );
 		}
 
 		// --<
-		return $url;
+		return $urls;
 
 	}
 
@@ -350,8 +350,8 @@ class CiviCRM_WP_Profile_Sync_Admin_Multisite {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $url The default Settings Page URL.
-	 * @return str $url The modified Settings Page URL.
+	 * @param string $url The default Settings Page URL.
+	 * @return string $url The modified Settings Page URL.
 	 */
 	public function page_settings_url_filter( $url ) {
 
@@ -378,8 +378,8 @@ class CiviCRM_WP_Profile_Sync_Admin_Multisite {
 	 *
 	 * @since 0.4
 	 *
-	 * @param str $url The default Settings Page Submit URL.
-	 * @return str $url The modified Settings Page Submit URL.
+	 * @param string $url The default Settings Page Submit URL.
+	 * @return string $url The modified Settings Page Submit URL.
 	 */
 	public function page_settings_submit_url_filter( $url ) {
 

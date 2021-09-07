@@ -36,7 +36,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var str $mappings_key The Mappings option key.
+	 * @var string $mappings_key The Mappings option key.
 	 */
 	public $cwps_mappings_key = 'cwps_acf_mappings';
 
@@ -45,7 +45,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var str $settings_key The Settings option key.
+	 * @var string $settings_key The Settings option key.
 	 */
 	public $cwps_settings_key = 'cwps_acf_mapping_settings';
 
@@ -54,7 +54,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var str $mappings_key The Mappings option key.
+	 * @var string $mappings_key The Mappings option key.
 	 */
 	public $cai_mappings_key = 'civicrm_acf_integration_mappings';
 
@@ -63,7 +63,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var str $settings_key The Settings option key.
+	 * @var string $settings_key The Settings option key.
 	 */
 	public $cai_settings_key = 'civicrm_acf_integration_mapping_settings';
 
@@ -368,8 +368,8 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	 *
 	 * @since 0.4
 	 *
-	 * @param boolean $show_tabs True if tabs are shown, false otherwise.
-	 * @return boolean $show_tabs True if tabs are to be shown, false otherwise.
+	 * @param bool $show_tabs True if tabs are shown, false otherwise.
+	 * @return bool $show_tabs True if tabs are to be shown, false otherwise.
 	 */
 	public function page_show_tabs( $show_tabs ) {
 
@@ -638,7 +638,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	 * @since 0.4
 	 *
 	 * @param string $option_name The name of the option.
-	 * @return boolean $exists Whether or not the option exists.
+	 * @return bool $exists Whether or not the option exists.
 	 */
 	public function option_exists( $option_name = '' ) {
 
@@ -691,7 +691,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	 *
 	 * @param string $option_name The name of the option.
 	 * @param mixed $value The value to set the option to.
-	 * @return boolean $success True if the value of the option was successfully updated.
+	 * @return bool $success True if the value of the option was successfully updated.
 	 */
 	public function option_set( $option_name = '', $value = '' ) {
 
@@ -713,7 +713,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	 * @since 0.4
 	 *
 	 * @param string $option_name The name of the option.
-	 * @return boolean $success True if the option was successfully deleted.
+	 * @return bool $success True if the option was successfully deleted.
 	 */
 	public function option_delete( $option_name = '' ) {
 

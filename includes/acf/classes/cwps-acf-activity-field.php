@@ -153,11 +153,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param boolean $valid The existing valid status.
+	 * @param bool $valid The existing valid status.
 	 * @param mixed $value The value of the Field.
 	 * @param array $field The Field data array.
 	 * @param string $input The input element's name attribute.
-	 * @return string|boolean $valid A string to display a custom error message, boolean otherwise.
+	 * @return string|bool $valid A string to display a custom error message, boolean otherwise.
 	 */
 	public function value_validate( $valid, $value, $field, $input ) {
 
@@ -377,7 +377,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 		// Status ID.
 		if ( $name == 'status_id' ) {
-			$option_group = $this->option_group_get( 'activity_status' );
+			$option_group = $this->civicrm->option_group_get( 'activity_status' );
 			if ( ! empty( $option_group ) ) {
 				$options = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
 			}
@@ -385,7 +385,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 		// Priority ID.
 		if ( $name == 'priority_id' ) {
-			$option_group = $this->option_group_get( 'priority' );
+			$option_group = $this->civicrm->option_group_get( 'priority' );
 			if ( ! empty( $option_group ) ) {
 				$options = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
 			}
@@ -393,72 +393,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 		// Engagement Level.
 		if ( $name == 'engagement_level' ) {
-			$option_group = $this->option_group_get( 'engagement_index' );
+			$option_group = $this->civicrm->option_group_get( 'engagement_index' );
 			if ( ! empty( $option_group ) ) {
 				$options = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
 			}
-		}
-
-		// --<
-		return $options;
-
-	}
-
-
-
-	// -------------------------------------------------------------------------
-
-
-
-	/**
-	 * Get the Option Group for an Activity Field.
-	 *
-	 * @since 0.4
-	 *
-	 * @param string $name The name of the option group.
-	 * @return array $option_group The array of option group data.
-	 */
-	public function option_group_get( $name ) {
-
-		// Only do this once per named Option Group.
-		static $pseudocache;
-		if ( isset( $pseudocache[$name] ) ) {
-			return $pseudocache[$name];
-		}
-
-		// Init return.
-		$options = [];
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $options;
-		}
-
-		// Define query params.
-		$params = [
-			'name' => $name,
-			'version' => 3,
-		];
-
-		// Call the CiviCRM API.
-		$result = civicrm_api( 'OptionGroup', 'get', $params );
-
-		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
-			return $options;
-		}
-
-		// Bail if there are no results.
-		if ( empty( $result['values'] ) ) {
-			return $activity_data;
-		}
-
-		// The result set should contain only one item.
-		$options = array_pop( $result['values'] );
-
-		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$name] ) ) {
-			$pseudocache[$name] = $options;
 		}
 
 		// --<
@@ -949,7 +887,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 	 * @since 0.4
 	 *
 	 * @param array $args The array of WordPress params.
-	 * @return boolean True if updates were successful, or false on failure.
+	 * @return bool True if updates were successful, or false on failure.
 	 */
 	public function maybe_sync_fields( $args ) {
 

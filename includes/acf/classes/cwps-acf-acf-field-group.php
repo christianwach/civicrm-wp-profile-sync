@@ -150,9 +150,9 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 		 *
 		 * @since 0.4
 		 *
-		 * @param boolean $mapped False, since we're asking for a mapping.
+		 * @param bool $mapped False, since we're asking for a mapping.
 		 * @param array $field_group The array of ACF Field Group data.
-		 * @param boolean $mapped True if the Field Group is mapped, or false if not mapped.
+		 * @param bool $mapped True if the Field Group is mapped, or false if not mapped.
 		 */
 		$mapped = apply_filters( 'cwps/acf/query_field_group_mapped', $mapped, $field_group );
 
@@ -287,7 +287,7 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 	 * @since 0.4
 	 *
 	 * @param integer $custom_group_id The numeric ID of the CiviCRM Custom Group.
-	 * @return array|boolean $field_group The Field Group array, or false on failure.
+	 * @return array|bool $field_group The Field Group array, or false on failure.
 	 */
 	public function get_for_custom_group( $custom_group_id ) {
 
@@ -358,7 +358,7 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 	 *
 	 * @param array $field_group The Field Group to check.
 	 * @param array $params The params to query by.
-	 * @return boolean True if the Field Group has been mapped to the Event Post Type, or false otherwise.
+	 * @return bool True if the Field Group has been mapped to the Event Post Type, or false otherwise.
 	 */
 	public function is_visible( $field_group, $params ) {
 

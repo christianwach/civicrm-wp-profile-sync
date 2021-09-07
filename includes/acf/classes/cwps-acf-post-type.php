@@ -184,7 +184,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 	 * @since 0.4
 	 *
 	 * @param integer $contact_type_id The numeric ID of the Contact Type.
-	 * @return string|boolean $post_type The name of Post Type, or false if not mapped.
+	 * @return string|bool $post_type The name of Post Type, or false if not mapped.
 	 */
 	public function get_for_contact_type( $contact_type_id ) {
 
@@ -248,7 +248,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 	 * @since 0.4
 	 *
 	 * @param integer $activity_type_id The numeric ID of the Activity Type.
-	 * @return string|boolean $post_type The name of Post Type, or false if not mapped.
+	 * @return string|bool $post_type The name of Post Type, or false if not mapped.
 	 */
 	public function get_for_activity_type( $activity_type_id ) {
 
@@ -312,7 +312,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 	 * @since 0.5
 	 *
 	 * @param integer $participant_role_id The numeric ID of the Participant Role.
-	 * @return string|boolean $post_type The name of Post Type, or false if not mapped.
+	 * @return string|bool $post_type The name of Post Type, or false if not mapped.
 	 */
 	public function get_for_participant_role( $participant_role_id ) {
 
@@ -430,7 +430,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 	 * @since 0.4
 	 *
 	 * @param string $post_type The name of the Post Type.
-	 * @return boolean $is_linked True if the Post Type is mapped, false otherwise.
+	 * @return bool $is_linked True if the Post Type is mapped, false otherwise.
 	 */
 	public function is_mapped_to_contact_type( $post_type ) {
 
@@ -463,7 +463,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 	 * @since 0.4
 	 *
 	 * @param string $post_type The name of the Post Type.
-	 * @return boolean $is_linked True if the Post Type is mapped, false otherwise.
+	 * @return bool $is_linked True if the Post Type is mapped, false otherwise.
 	 */
 	public function is_mapped_to_activity_type( $post_type ) {
 
@@ -496,7 +496,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 	 * @since 0.5
 	 *
 	 * @param string $post_type The name of the Post Type.
-	 * @return boolean $is_linked True if the Post Type is mapped, false otherwise.
+	 * @return bool $is_linked True if the Post Type is mapped, false otherwise.
 	 */
 	public function is_mapped_to_participant_role( $post_type ) {
 

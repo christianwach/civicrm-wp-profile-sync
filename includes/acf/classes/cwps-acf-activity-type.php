@@ -98,7 +98,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 	 *
 	 * @since 0.4
 	 *
-	 * @return integer|boolean $option_group_id The ID of the Option Group, or false on failure.
+	 * @return integer|bool $option_group_id The ID of the Option Group, or false on failure.
 	 */
 	public function option_group_id_get() {
 
@@ -159,7 +159,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 	 * @since 0.4
 	 *
 	 * @param integer $activity_type_id The numeric ID of the Activity Type.
-	 * @return array|boolean $activity_type An array of Activity Type data, or false on failure.
+	 * @return array|bool $activity_type An array of Activity Type data, or false on failure.
 	 */
 	public function get_by_id( $activity_type_id ) {
 
@@ -215,7 +215,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 	 * @since 0.4
 	 *
 	 * @param integer $activity_type_value The numeric value of the Activity Type.
-	 * @return array|boolean $activity_type An array of Activity Type data, or false on failure.
+	 * @return array|bool $activity_type An array of Activity Type data, or false on failure.
 	 */
 	public function get_by_value( $activity_type_value ) {
 
@@ -331,7 +331,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 	 * @since 0.4
 	 *
 	 * @param string $post_type_name The name of Post Type.
-	 * @return integer|boolean $activity_type_id The numeric ID of the Activity Type, or false if not mapped.
+	 * @return integer|bool $activity_type_id The numeric ID of the Activity Type, or false if not mapped.
 	 */
 	public function id_get_for_post_type( $post_type_name ) {
 
@@ -571,7 +571,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 	 * @since 0.4
 	 *
 	 * @param integer $activity_type_id The numeric ID of the Activity Type.
-	 * @return string|boolean $is_linked The name of the Post Type, or false otherwise.
+	 * @return string|bool $is_linked The name of the Post Type, or false otherwise.
 	 */
 	public function is_mapped_to_post_type( $activity_type_id ) {
 

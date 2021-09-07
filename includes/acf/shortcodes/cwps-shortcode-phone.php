@@ -54,7 +54,7 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Phone {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var str $tag The Shortcode name.
+	 * @var string $tag The Shortcode name.
 	 */
 	public $tag = 'cwps_phone';
 
@@ -63,7 +63,7 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Phone {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var str $tag The Shortcode name.
+	 * @var string $tag The Shortcode name.
 	 */
 	public $cai_tag = 'cai_phone';
 

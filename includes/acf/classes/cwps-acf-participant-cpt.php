@@ -82,7 +82,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var str $taxonomy_name The name of the Custom Taxonomy.
+	 * @var string $taxonomy_name The name of the Custom Taxonomy.
 	 */
 	public $taxonomy_name = 'participant-role';
 
@@ -91,7 +91,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var str $taxonomy_tag_name The name of the Custom Free Taxonomy.
+	 * @var string $taxonomy_tag_name The name of the Custom Free Taxonomy.
 	 */
 	public $tag_name = 'participant-tag';
 
@@ -100,7 +100,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var str $acf_slug The ACF identifier.
+	 * @var string $acf_slug The ACF identifier.
 	 */
 	public $acf_slug = 'cwps_participant';
 
@@ -595,7 +595,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 * @param array $fields The ACF Field data.
 	 * @param WP_Post $post The WordPress Post object.
 	 * @param integer $post_id The numeric ID of the WordPress Post.
-	 * @return array|boolean $participant_data The CiviCRM Participant data.
+	 * @return array|bool $participant_data The CiviCRM Participant data.
 	 */
 	public function prepare_from_fields( $fields, $post, $post_id = null ) {
 
@@ -710,7 +710,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 * @param array $fields The ACF Field data.
 	 * @param WP_Post $post The WordPress Post object.
 	 * @param integer $post_id The numeric ID of the WordPress Post.
-	 * @return array|boolean $participant The CiviCRM Participant data, or false on failure.
+	 * @return array|bool $participant The CiviCRM Participant data, or false on failure.
 	 */
 	public function create_from_fields( $fields, $post, $post_id = null ) {
 
@@ -736,7 +736,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 * @param array $fields The ACF Field data.
 	 * @param WP_Post $post The WordPress Post object.
 	 * @param integer $post_id The numeric ID of the WordPress Post.
-	 * @return array|boolean $participant The CiviCRM Participant data, or false on failure.
+	 * @return array|bool $participant The CiviCRM Participant data, or false on failure.
 	 */
 	public function update_from_fields( $participant_id, $fields, $post, $post_id = null ) {
 
@@ -1022,9 +1022,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 *
 	 * @since 0.5
 	 *
-	 * @param boolean $mapped The existing mapping flag.
+	 * @param bool $mapped The existing mapping flag.
 	 * @param array $field_group The array of ACF Field Group data.
-	 * @param boolean $mapped True if the Field Group is mapped, or pass through if not mapped.
+	 * @param bool $mapped True if the Field Group is mapped, or pass through if not mapped.
 	 */
 	public function query_field_group_mapped( $mapped, $field_group ) {
 
@@ -1086,9 +1086,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array|boolean $post_ids The existing "Post IDs".
+	 * @param array|bool $post_ids The existing "Post IDs".
 	 * @param array $args The array of CiviCRM Custom Fields params.
-	 * @return array|boolean $post_id The mapped "Post IDs", or false if not mapped.
+	 * @return array|bool $post_id The mapped "Post IDs", or false if not mapped.
 	 */
 	public function query_post_id( $post_ids, $args ) {
 
@@ -1172,9 +1172,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array|boolean $is_participant_field_group The array of Post Types, false otherwise.
+	 * @param array|bool $is_participant_field_group The array of Post Types, false otherwise.
 	 * @param array $field_group The ACF Field Group data array.
-	 * @return array|boolean The array of Post Types if the Field Group has been mapped, or false otherwise.
+	 * @return array|bool The array of Post Types if the Field Group has been mapped, or false otherwise.
 	 */
 	public function is_field_group( $is_participant_field_group, $field_group ) {
 
@@ -1201,7 +1201,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 * @since 0.5
 	 *
 	 * @param array $field_group The Field Group to check.
-	 * @return array|boolean The array of Post Types if the Field Group has been mapped, or false otherwise.
+	 * @return array|bool The array of Post Types if the Field Group has been mapped, or false otherwise.
 	 */
 	public function is_participant_field_group( $field_group ) {
 
@@ -1593,21 +1593,21 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 *
 	 * @since 0.5
 	 *
-	 * @param str $title The existing title - usually "Add title".
-	 * @return str $title The modified title.
+	 * @param string $title The existing title - usually "Add title".
+	 * @return string $title The modified title.
 	 */
-	public function post_type_title( $input ) {
+	public function post_type_title( $title ) {
 
 		// Bail if not our Post Type.
 		if ( $this->post_type_name !== get_post_type() ) {
-			return $input;
+			return $title;
 		}
 
 		// Overwrite with our string.
-		$input = __( 'Add the name of the Participant', 'civicrm-wp-profile-sync' );
+		$title = __( 'Add the name of the Participant', 'civicrm-wp-profile-sync' );
 
 		// --<
-		return $input;
+		return $title;
 
 	}
 
@@ -1736,7 +1736,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 * @since 0.5
 	 *
 	 * @param array $args The existing arguments.
-	 * @param int $post_id The WordPress post ID.
+	 * @param integer $post_id The WordPress post ID.
 	 */
 	public function taxonomy_fix_metabox( $args, $post_id ) {
 

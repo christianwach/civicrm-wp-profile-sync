@@ -36,7 +36,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var str $plugin_version The plugin version.
+	 * @var string $plugin_version The plugin version.
 	 */
 	public $plugin_version;
 
@@ -581,8 +581,8 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	 *
 	 * @since 0.4
 	 *
-	 * @param boolean $show_tabs True if tabs are shown, false otherwise.
-	 * @return boolean $show_tabs True if tabs are to be shown, false otherwise.
+	 * @param bool $show_tabs True if tabs are shown, false otherwise.
+	 * @return bool $show_tabs True if tabs are to be shown, false otherwise.
 	 */
 	public function page_show_tabs( $show_tabs ) {
 

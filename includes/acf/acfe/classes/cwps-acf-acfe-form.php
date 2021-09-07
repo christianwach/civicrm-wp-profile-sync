@@ -314,9 +314,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 	 *
 	 * @since 0.5
 	 *
-	 * @param boolean $mapped The existing mapping flag.
+	 * @param bool $mapped The existing mapping flag.
 	 * @param array $field_group The array of ACF Field Group data.
-	 * @param boolean $mapped True if the Field Group should bypass ACF, or pass through if not.
+	 * @param bool $mapped True if the Field Group should bypass ACF, or pass through if not.
 	 */
 	public function query_field_group_mapped( $mapped, $field_group ) {
 
@@ -344,7 +344,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 	 * @since 0.5
 	 *
 	 * @param array $field_group The Field Group to check.
-	 * @return array|boolean The array of Entities if the Field Group should bypass ACF, or false otherwise.
+	 * @return array|bool The array of Entities if the Field Group should bypass ACF, or false otherwise.
 	 */
 	public function is_bypass_field_group( $field_group ) {
 

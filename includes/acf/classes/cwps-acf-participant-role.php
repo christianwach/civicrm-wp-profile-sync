@@ -98,7 +98,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 	 *
 	 * @since 0.5
 	 *
-	 * @return integer|boolean $option_group_id The ID of the Option Group, or false on failure.
+	 * @return integer|bool $option_group_id The ID of the Option Group, or false on failure.
 	 */
 	public function option_group_id_get() {
 
@@ -159,7 +159,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 	 * @since 0.5
 	 *
 	 * @param integer $participant_role_id The numeric ID of the Participant Role.
-	 * @return array|boolean $participant_role An array of Participant Role data, or false on failure.
+	 * @return array|bool $participant_role An array of Participant Role data, or false on failure.
 	 */
 	public function get_by_id( $participant_role_id ) {
 
@@ -215,7 +215,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 	 * @since 0.5
 	 *
 	 * @param integer $participant_role_value The numeric value of the Participant Role.
-	 * @return array|boolean $participant_role An array of Participant Role data, or false on failure.
+	 * @return array|bool $participant_role An array of Participant Role data, or false on failure.
 	 */
 	public function get_by_value( $participant_role_value ) {
 
@@ -328,7 +328,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 	 * @since 0.5
 	 *
 	 * @param string $post_type_name The name of Post Type.
-	 * @return integer|boolean $participant_role_id The numeric ID of the Participant Role, or false if not mapped.
+	 * @return integer|bool $participant_role_id The numeric ID of the Participant Role, or false if not mapped.
 	 */
 	public function id_get_for_post_type( $post_type_name ) {
 
@@ -501,7 +501,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 	 * @since 0.5
 	 *
 	 * @param integer $participant_role_id The numeric ID of the Participant Role.
-	 * @return string|boolean $is_linked The name of the Post Type, or false otherwise.
+	 * @return string|bool $is_linked The name of the Post Type, or false otherwise.
 	 */
 	public function is_mapped_to_post_type( $participant_role_id ) {
 

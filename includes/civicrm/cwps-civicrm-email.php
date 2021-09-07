@@ -160,7 +160,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 	 *
 	 * @since 0.4
 	 *
-	 * @return boolean $value Numeric 1 or 0 depending on the CiviCRM setting, or false otherwise.
+	 * @return bool $value Numeric 1 or 0 depending on the CiviCRM setting, or false otherwise.
 	 */
 	public function sync_setting_get() {
 
@@ -202,7 +202,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 	 *
 	 * @since 0.4
 	 *
-	 * @param boolean $value The value to apply to the setting.
+	 * @param bool $value The value to apply to the setting.
 	 */
 	public function sync_setting_set( $value = false ) {
 
@@ -229,7 +229,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 	 *
 	 * @since 0.4
 	 *
-	 * @param boolean $value The value to apply to the setting.
+	 * @param bool $value The value to apply to the setting.
 	 */
 	public function sync_setting_force( $value = false ) {
 
@@ -540,7 +540,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 	 * @since 0.4
 	 *
 	 * @param integer $email_id The numeric ID of the CiviCRM Email record.
-	 * @return object|boolean $email The CiviCRM Email record, or false on failure.
+	 * @return object|bool $email The CiviCRM Email record, or false on failure.
 	 */
 	public function primary_record_get_by_id( $email_id ) {
 
@@ -587,7 +587,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 	 * @since 0.4
 	 *
 	 * @param integer $contact_id The numeric ID of the CiviCRM Contact.
-	 * @return object|boolean $email The CiviCRM Email record, or false on failure.
+	 * @return object|bool $email The CiviCRM Email record, or false on failure.
 	 */
 	public function primary_record_get_by_contact_id( $contact_id ) {
 

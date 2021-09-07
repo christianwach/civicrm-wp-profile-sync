@@ -65,7 +65,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var str $taxonomy_name The name of the Custom Taxonomy.
+	 * @var string $taxonomy_name The name of the Custom Taxonomy.
 	 */
 	public $taxonomy_name;
 
@@ -102,6 +102,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 * Constructor.
 	 *
 	 * @since 0.5
+	 *
+	 * @param object $parent The parent object reference.
 	 */
 	public function __construct( $parent ) {
 
@@ -407,7 +409,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 *
 	 * @since 0.5
 	 *
-	 * @param int $post_id The numeric ID of the WordPress Participant Post.
+	 * @param integer $post_id The numeric ID of the WordPress Participant Post.
 	 * @return array $terms The found Terms in the Participant Role category.
 	 */
 	public function terms_get( $post_id = false ) {
@@ -680,7 +682,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 *
 	 * @since 0.5
 	 *
-	 * @param int $participant_role The CiviCRM Participant Role.
+	 * @param integer $participant_role The CiviCRM Participant Role.
 	 * @return array $result Array containing Participant Role category Term data.
 	 */
 	public function term_create( $participant_role ) {
@@ -742,7 +744,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 *
 	 * @param array $new_role The CiviCRM Participant Role.
 	 * @param array $old_role The CiviCRM Participant Role prior to the update.
-	 * @return int|bool $term_id The ID of the updated Participant Role category Term.
+	 * @return integer|bool $term_id The ID of the updated Participant Role category Term.
 	 */
 	public function term_update( $new_role, $old_role = null ) {
 
@@ -826,8 +828,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 *
 	 * @since 0.5
 	 *
-	 * @param int $term_id The Term to delete.
-	 * @return int|bool|WP_Error $term_id The ID of the updated Term in the Participant Role category.
+	 * @param integer $term_id The Term to delete.
+	 * @return integer|boolean|WP_Error $term_id The ID of the updated Term in the Participant Role category.
 	 */
 	public function term_delete( $term_id ) {
 
@@ -888,9 +890,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 *
 	 * @since 0.5
 	 *
-	 * @param str $output The existing output.
+	 * @param string $output The existing output.
 	 * @param array $parsed_args The arguments used to build the drop-down.
-	 * @return str $output The modified output.
+	 * @return string $output The modified output.
 	 */
 	public function terms_dropdown_clear( $output, $parsed_args ) {
 
@@ -916,7 +918,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 * @since 0.5
 	 *
 	 * @param array $args An array of arguments.
-	 * @param int $post_id The Post ID.
+	 * @param integer $post_id The Post ID.
 	 */
 	public function term_default_checked( $args, $post_id ) {
 
@@ -983,7 +985,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 *
 	 * @since 0.5
 	 *
-	 * @param int $participant_role_id The numeric ID of the CiviCRM Participant Role.
+	 * @param integer $participant_role_id The numeric ID of the CiviCRM Participant Role.
 	 * @return WP_Term|bool $term The Term object, or false on failure.
 	 */
 	public function term_get_by_meta( $participant_role_id ) {
@@ -1045,8 +1047,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 *
 	 * @since 0.5
 	 *
-	 * @param int $term_id The numeric ID of the Term.
-	 * @return int|bool $participant_role_id The ID of the CiviCRM Participant Role, or false on failure.
+	 * @param integer $term_id The numeric ID of the Term.
+	 * @return integer|bool $participant_role_id The ID of the CiviCRM Participant Role, or false on failure.
 	 */
 	public function term_meta_get( $term_id ) {
 
@@ -1070,9 +1072,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 *
 	 * @since 0.5
 	 *
-	 * @param int $term_id The numeric ID of the Term.
-	 * @param int $participant_role_id The numeric ID of the CiviCRM Participant Role.
-	 * @return int|bool $meta_id The ID of the meta, or false on failure.
+	 * @param integer $term_id The numeric ID of the Term.
+	 * @param integer $participant_role_id The numeric ID of the CiviCRM Participant Role.
+	 * @return integer|bool $meta_id The ID of the meta, or false on failure.
 	 */
 	public function term_meta_set( $term_id, $participant_role_id ) {
 
@@ -1131,8 +1133,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 *
 	 * @since 0.5
 	 *
-	 * @param int $term_id The numeric ID of the Term.
-	 * @return int $active 1 if the Term is active, 0 otherwise.
+	 * @param integer $term_id The numeric ID of the Term.
+	 * @return integer $active 1 if the Term is active, 0 otherwise.
 	 */
 	public function term_active_get( $term_id ) {
 
@@ -1156,9 +1158,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 *
 	 * @since 0.5
 	 *
-	 * @param int $term_id The numeric ID of the Term.
-	 * @param int|bool $active True if the Term is active, false otherwise.
-	 * @return int|bool $meta_id The ID of the meta, or false on failure.
+	 * @param integer $term_id The numeric ID of the Term.
+	 * @param integer|bool $active True if the Term is active, false otherwise.
+	 * @return integer|bool $meta_id The ID of the meta, or false on failure.
 	 */
 	public function term_active_set( $term_id, $active ) {
 
@@ -1213,8 +1215,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 *
 	 * @since 0.5
 	 *
-	 * @param int $term_id The numeric ID of the Term.
-	 * @return int $counted 1 if the Term is counted, 0 otherwise.
+	 * @param integer $term_id The numeric ID of the Term.
+	 * @return integer $counted 1 if the Term is counted, 0 otherwise.
 	 */
 	public function term_counted_get( $term_id ) {
 
@@ -1238,9 +1240,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 *
 	 * @since 0.5
 	 *
-	 * @param int $term_id The numeric ID of the Term.
-	 * @param int|bool $counted True if the Term is counted, false otherwise.
-	 * @return int|bool $meta_id The ID of the meta, or false on failure.
+	 * @param integer $term_id The numeric ID of the Term.
+	 * @param integer|bool $counted True if the Term is counted, false otherwise.
+	 * @return integer|bool $meta_id The ID of the meta, or false on failure.
 	 */
 	public function term_counted_set( $term_id, $counted ) {
 
@@ -1477,7 +1479,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 *
 	 * @param object $new_term The new Participant Role category Term.
 	 * @param object $old_term The Participant Role category Term as it was before update.
-	 * @return int|bool $participant_role_id The CiviCRM Participant Role ID, or false on failure.
+	 * @return integer|bool $participant_role_id The CiviCRM Participant Role ID, or false on failure.
 	 */
 	public function participant_role_update( $new_term, $old_term = null ) {
 
@@ -1609,8 +1611,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 *
 	 * @since 0.5
 	 *
-	 * @param int $participant_role_id The numeric ID of the CiviCRM Participant Role.
-	 * @return int|bool $value The value of the CiviCRM Participant Role (or false on failure)
+	 * @param integer $participant_role_id The numeric ID of the CiviCRM Participant Role.
+	 * @return integer|bool $value The value of the CiviCRM Participant Role (or false on failure)
 	 */
 	public function participant_role_value_get( $participant_role_id ) {
 
@@ -1744,7 +1746,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 *
 	 * @since 0.5
 	 *
-	 * @return str $html Markup containing select options.
+	 * @return string $html Markup containing select options.
 	 */
 	public function participant_roles_select_options_get() {
 
@@ -1802,7 +1804,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 * @since 0.5
 	 *
 	 * @param object $post The Participant Post object.
-	 * @return int|bool $first_value The numeric ID of the CiviCRM Participant Role.
+	 * @return integer|bool $first_value The numeric ID of the CiviCRM Participant Role.
 	 */
 	public function participant_role_default_value_get( $post = null ) {
 
@@ -1828,7 +1830,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 *
 	 * @since 0.5
 	 *
-	 * @param int $participant_role_id The numeric ID of a CiviCRM Participant Role.
+	 * @param integer $participant_role_id The numeric ID of a CiviCRM Participant Role.
 	 * @return array|bool $participant_role The CiviCRM Participant Role data.
 	 */
 	public function participant_role_get_by_id( $participant_role_id ) {
@@ -1882,7 +1884,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 *
 	 * @since 0.5
 	 *
-	 * @param int $participant_role_value The numeric value of a CiviCRM Participant Role.
+	 * @param integer $participant_role_value The numeric value of a CiviCRM Participant Role.
 	 * @return array|bool $participant_role CiviCRM Participant Role data.
 	 */
 	public function participant_role_get_by_value( $participant_role_value ) {

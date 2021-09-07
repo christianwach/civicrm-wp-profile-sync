@@ -45,7 +45,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var str $plugin_version The plugin version.
+	 * @var string $plugin_version The plugin version.
 	 */
 	public $plugin_version;
 
@@ -63,7 +63,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var boolean $is_upgrade An upgrade flag.
+	 * @var bool $is_upgrade An upgrade flag.
 	 */
 	public $is_upgrade = false;
 
@@ -72,7 +72,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var boolean $is_upgrade An upgrade flag.
+	 * @var bool $is_upgrade An upgrade flag.
 	 */
 	public $has_warning = false;
 
@@ -81,7 +81,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var str $parent_page The reference to the parent page.
+	 * @var string $parent_page The reference to the parent page.
 	 */
 	public $parent_page;
 
@@ -90,7 +90,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var str $parent_page_slug The slug of the parent page.
+	 * @var string $parent_page_slug The slug of the parent page.
 	 */
 	public $parent_page_slug = 'cwps_parent';
 
@@ -99,7 +99,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var str $settings_page The reference to the Settings Page.
+	 * @var string $settings_page The reference to the Settings Page.
 	 */
 	public $settings_page;
 
@@ -108,7 +108,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var str $settings_page_slug The slug of the Settings Page.
+	 * @var string $settings_page_slug The slug of the Settings Page.
 	 */
 	public $settings_page_slug = 'cwps_settings';
 
@@ -307,8 +307,8 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		 *
 		 * @since 0.4
 		 *
-		 * @param str The default capability for access to Settings Page.
-		 * @return str The modified capability for access to Settings Page.
+		 * @param string The default capability for access to Settings Page.
+		 * @return string The modified capability for access to Settings Page.
 		 */
 		$capability = apply_filters( 'cwps/admin/page/settings/cap', 'manage_options' );
 
@@ -395,7 +395,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 			 *
 			 * @param bool $show_notice False by default. True if not on Settings Screen.
 			 * @param bool $is_settings_screen True if on our Settings Page, or false otherwise.
-			 * @param str $screen_id The ID of the current screen.
+			 * @param string $screen_id The ID of the current screen.
 			 * @return bool $show_notice True if the Admin Notice should be shown, false otherwise.
 			 */
 			$show_notice = apply_filters( 'cwps/admin/notice/show', $show_notice, $is_settings_screen, $screen->id );
@@ -653,8 +653,8 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		 *
 		 * @since 0.4
 		 *
-		 * @param boolean False by default - do not show tabs.
-		 * @return boolean Modified flag for whether or not to show tabs.
+		 * @param bool False by default - do not show tabs.
+		 * @return bool Modified flag for whether or not to show tabs.
 		 */
 		$show_tabs = apply_filters( 'cwps/admin/settings/show_tabs', false );
 
@@ -829,8 +829,8 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		 *
 		 * @since 0.4
 		 *
-		 * @param str The default capability for access to Settings Page.
-		 * @return str The modified capability for access to Settings Page.
+		 * @param string The default capability for access to Settings Page.
+		 * @return string The modified capability for access to Settings Page.
 		 */
 		$capability = apply_filters( 'cwps/admin/page/settings/cap', 'manage_options' );
 
@@ -1039,7 +1039,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 *
 	 * @since 0.4
 	 *
-	 * @return boolean Success or failure.
+	 * @return bool Success or failure.
 	 */
 	public function settings_save() {
 
@@ -1056,7 +1056,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 * @since 0.4
 	 *
 	 * @param string $setting_name The name of the setting.
-	 * @return boolean Whether or not the setting exists.
+	 * @return bool Whether or not the setting exists.
 	 */
 	public function setting_exists( $setting_name = '' ) {
 
@@ -1128,7 +1128,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 * @since 0.4
 	 *
 	 * @param string $option_name The name of the option.
-	 * @return boolean $exists Whether or not the option exists.
+	 * @return bool $exists Whether or not the option exists.
 	 */
 	public function option_exists( $option_name = '' ) {
 
@@ -1171,7 +1171,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 *
 	 * @param string $option_name The name of the option.
 	 * @param mixed $value The value to set the option to.
-	 * @return boolean $success True if the value of the option was successfully updated.
+	 * @return bool $success True if the value of the option was successfully updated.
 	 */
 	public function option_set( $option_name = '', $value = '' ) {
 
@@ -1188,7 +1188,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 * @since 0.4
 	 *
 	 * @param string $option_name The name of the option.
-	 * @return boolean $success True if the option was successfully deleted.
+	 * @return bool $success True if the option was successfully deleted.
 	 */
 	public function option_delete( $option_name = '' ) {
 

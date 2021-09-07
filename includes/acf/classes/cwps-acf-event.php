@@ -88,7 +88,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 	 * @since 0.5
 	 *
 	 * @param array $event_ids The array of numeric IDs of the CiviCRM Events to query.
-	 * @return array|boolean $event_data An array of Event data, or false on failure.
+	 * @return array|bool $event_data An array of Event data, or false on failure.
 	 */
 	public function get_by_ids( $event_ids = [] ) {
 
@@ -141,7 +141,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 	 * @since 0.5
 	 *
 	 * @param integer $event_id The numeric ID of the CiviCRM Event to query.
-	 * @return array|boolean $event_data An array of Event data, or false on failure.
+	 * @return array|bool $event_data An array of Event data, or false on failure.
 	 */
 	public function get_by_id( $event_id ) {
 
@@ -197,7 +197,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 	 * @since 0.5
 	 *
 	 * @param string $search The search string to query.
-	 * @return array|boolean $event_data An array of Event data, or false on failure.
+	 * @return array|bool $event_data An array of Event data, or false on failure.
 	 */
 	public function get_by_search_string( $search ) {
 
@@ -349,7 +349,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 	 *
 	 * @since 0.5
 	 *
-	 * @return integer|boolean $option_group_id The ID of the Option Group, or false on failure.
+	 * @return integer|bool $option_group_id The ID of the Option Group, or false on failure.
 	 */
 	public function type_option_group_id_get() {
 
@@ -410,7 +410,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 	 * @since 0.5
 	 *
 	 * @param integer $event_type_id The numeric ID of the Event Type.
-	 * @return array|boolean $event_type An array of Event Type data, or false on failure.
+	 * @return array|bool $event_type An array of Event Type data, or false on failure.
 	 */
 	public function type_get_by_id( $event_type_id ) {
 
@@ -466,7 +466,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 	 * @since 0.5
 	 *
 	 * @param integer $event_type_value The numeric value of the Event Type.
-	 * @return array|boolean $event_type An array of Event Type data, or false on failure.
+	 * @return array|bool $event_type An array of Event Type data, or false on failure.
 	 */
 	public function type_get_by_value( $event_type_value ) {
 

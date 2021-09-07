@@ -290,7 +290,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 	 *
 	 * @param string|integer $contact_type The name of the CiviCRM Contact Type to query.
 	 * @param string $mode The param to query by: 'name' or 'id'.
-	 * @return array|boolean $contact_type_data An array of Contact Type data, or false on failure.
+	 * @return array|bool $contact_type_data An array of Contact Type data, or false on failure.
 	 */
 	public function get_data( $contact_type, $mode = 'name' ) {
 
@@ -371,7 +371,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 	 *
 	 * @param string $contact_type The name of the CiviCRM Contact Type to query.
 	 * @param string $mode The param to query by: 'name' or 'id'.
-	 * @return array|boolean $types An array of type and sub-type, or false on failure.
+	 * @return array|bool $types An array of type and sub-type, or false on failure.
 	 */
 	public function hierarchy_get( $contact_type, $mode = 'name' ) {
 
@@ -636,7 +636,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string|boolean $post_type_name The name of Post Type.
+	 * @param string|bool $post_type_name The name of Post Type.
 	 * @return array $types An associative array populated with parent type and sub-type.
 	 */
 	public function hierarchy_get_for_post_type( $post_type_name ) {
@@ -668,7 +668,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 	 * @since 0.4
 	 *
 	 * @param string $post_type_name The name of Post Type.
-	 * @return integer|boolean $contact_type_id The numeric ID of the Contact Type, or false if not mapped.
+	 * @return integer|bool $contact_type_id The numeric ID of the Contact Type, or false if not mapped.
 	 */
 	public function id_get_for_post_type( $post_type_name ) {
 
@@ -899,7 +899,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 	 * @since 0.4
 	 *
 	 * @param integer|string |array $contact_type The "ID", "name" or "hierarchy" of the Contact Type.
-	 * @return string|boolean $is_linked The name of the Post Type, or false otherwise.
+	 * @return string|bool $is_linked The name of the Post Type, or false otherwise.
 	 */
 	public function is_mapped_to_post_type( $contact_type ) {
 

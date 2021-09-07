@@ -554,7 +554,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 	 *
 	 * @param integer $group_id The ID of the CiviCRM Group.
 	 * @param array $contact_id The numeric ID of a CiviCRM Contact.
-	 * @return boolean $is_member True if the Contact is in the Group, or false otherwise.
+	 * @return bool $is_member True if the Contact is in the Group, or false otherwise.
 	 */
 	public function group_contact_exists( $group_id, $contact_id ) {
 
@@ -597,7 +597,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 	 *
 	 * @param integer $group_id The ID of the CiviCRM Group.
 	 * @param array $contact_id The numeric ID of a CiviCRM Contact.
-	 * @return array|boolean $result The Group-Contact data, or false on failure.
+	 * @return array|bool $result The Group-Contact data, or false on failure.
 	 */
 	public function group_contact_create( $group_id, $contact_id ) {
 
@@ -641,7 +641,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 	 *
 	 * @param integer $group_id The ID of the CiviCRM Group.
 	 * @param array $contact_id The numeric ID of a CiviCRM Contact.
-	 * @return array|boolean $result The Group-Contact data, or false on failure.
+	 * @return array|bool $result The Group-Contact data, or false on failure.
 	 */
 	public function group_contact_delete( $group_id, $contact_id ) {
 
@@ -689,7 +689,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 	 *
 	 * @param integer $group_id The ID of the CiviCRM Group.
 	 * @param array $contact_id The numeric ID of a CiviCRM Contact.
-	 * @return array|boolean $result The Group-Contact data, or false on failure.
+	 * @return array|bool $result The Group-Contact data, or false on failure.
 	 */
 	public function group_contact_create_via_opt_in( $group_id, $contact_id ) {
 

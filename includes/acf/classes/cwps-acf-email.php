@@ -45,7 +45,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var str $acf_field_key The key of the "CiviCRM Email" in the ACF Field data.
+	 * @var string $acf_field_key The key of the "CiviCRM Email" in the ACF Field data.
 	 */
 	public $acf_field_key = 'field_cacf_civicrm_email';
 
@@ -56,7 +56,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var str $email_field_prefix The prefix of the "CiviCRM Field" value.
+	 * @var string $email_field_prefix The prefix of the "CiviCRM Field" value.
 	 */
 	public $email_field_prefix = 'caiemail_';
 
@@ -197,7 +197,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 * @since 0.4
 	 *
 	 * @param array $args The array of WordPress params.
-	 * @return boolean True if updates were successful, or false on failure.
+	 * @return bool True if updates were successful, or false on failure.
 	 */
 	public function fields_handled_update( $args ) {
 
@@ -239,7 +239,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 * @param mixed $value The ACF Field value.
 	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param array $settings The ACF Field settings.
-	 * @return boolean True if updates were successful, or false on failure.
+	 * @return bool True if updates were successful, or false on failure.
 	 */
 	public function field_handled_update( $field, $value, $contact_id, $settings ) {
 
@@ -384,7 +384,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 * @since 0.4
 	 *
 	 * @param integer $contact_id The numeric ID of the CiviCRM Contact.
-	 * @return object|boolean $email The Primary Email data object, or false on failure.
+	 * @return object|bool $email The Primary Email data object, or false on failure.
 	 */
 	public function primary_email_get( $contact_id ) {
 
@@ -439,7 +439,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 *
 	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param string $value The email to update the Contact with.
-	 * @return array|boolean $email The array of Email data, or false on failure.
+	 * @return array|bool $email The array of Email data, or false on failure.
 	 */
 	public function primary_email_update( $contact_id, $value ) {
 
@@ -667,7 +667,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 * @param integer $location_type_id The numeric ID of the Location Type.
 	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param string $value The Email to update the Contact with.
-	 * @return array|boolean $email The array of Email data, or false on failure.
+	 * @return array|bool $email The array of Email data, or false on failure.
 	 */
 	public function email_update( $location_type_id, $contact_id, $value ) {
 
@@ -772,7 +772,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 *
 	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param array $data The Email data to save.
-	 * @return array|boolean $email The array of Email data, or false on failure.
+	 * @return array|bool $email The array of Email data, or false on failure.
 	 */
 	public function email_record_update( $contact_id, $data ) {
 
@@ -969,7 +969,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $field_type The type of ACF Field.
 	 * @param string $filter The token by which to filter the array of fields.
 	 * @return array $fields The array of field names.
 	 */
@@ -1119,7 +1118,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 *
 	 * @param array $custom_fields The Custom Fields to populate the ACF Field with.
 	 * @param array $location_types The Location Types to populate the ACF Field with.
-	 * @param boolean $skip_specific True skips adding the "Primary Email" choice.
+	 * @param bool $skip_specific True skips adding the "Primary Email" choice.
 	 * @return array $field The ACF Field data array.
 	 */
 	public function acf_field_get( $custom_fields = [], $location_types = [], $skip_specific = false ) {

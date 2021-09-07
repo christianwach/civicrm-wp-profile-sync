@@ -370,7 +370,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Group {
 	 *
 	 * @param string $type The Entity Type that the Custom Group applies to.
 	 * @param string $subtype The Entity Sub-type that the Custom Group applies to.
-	 * @param boolean $with_fields Pass "true" to retrieve the Custom Fields as well.
+	 * @param bool $with_fields Pass "true" to retrieve the Custom Fields as well.
 	 * @return array $custom_groups The array of Custom Groups.
 	 */
 	public function get_for_entity_type( $type = '', $subtype = '', $with_fields = false ) {
