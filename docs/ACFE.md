@@ -45,6 +45,18 @@ This will allow CiviCRM Profile Sync to help you map the Fields in the Field Gro
 
 Each of the Fields in your Field Group can now be connected to CiviCRM. Make sure you have used the correct ACF Field Types as detailed in the [ACF Integration Documentation](/docs/ACF.md). When you look at the settings for each Field, you should see an option that allows you to specify the Field on the CiviCRM Entity that the ACF Field should map to. If you don't see the proper mapping, then it could be that you have chosen the wrong ACF Field Type. Map as many Fields as you can in the Field Group - especially those which need “choices” from CiviCRM.
 
+### Custom ACF Fields
+
+The CiviCRM Profile Sync plugin also provides a number of custom ACF Fields for use in front-end ACFE Forms which you will see as choices in the "Field Type" dropdown when you add a new ACF Field to a Field Group. These are grouped under "CiviCRM ACFE Forms" and are:
+
+#### CiviCRM State
+
+This Field auto-populates with the States/Provinces in CiviCRM and returns the numeric ID of the CiviCRM State/Province for submission to CiviCRM. To use the Field in the Form, map it to "State/Province ID" in the "Address Actions" section of the CiviCRM Contact Action.
+
+#### CiviCRM Country
+
+This Field auto-populates with the Countries in CiviCRM and returns the numeric ID of the CiviCRM Country for submission to CiviCRM. To use the Field in the Form, map it to "Country ID" in the "Address Actions" section of the CiviCRM Contact Action.
+
 ## The ACF Extended Form
 
 The ACF Extended Form that you have created can now make use of the CiviCRM Actions (equivalent to "processors" in Caldera Forms CiviCRM) to send data to CiviCRM. The available Actions are:
