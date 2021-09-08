@@ -1,9 +1,21 @@
 Building Forms with ACF Extended
 ================================
 
-CiviCRM Profile Sync enables Forms to be built for the front-end of your website with the UI provided by the ACF Extended plugin. These Forms can send their data directly to CiviCRM in a similar (though more limited) way to the Caldera Forms CiviCRM plugin.
+CiviCRM Profile Sync enables Forms to be built for the front-end of your website with the UI provided by the [ACF Extended](https://wordpress.org/plugins/acf-extended/) (ACFE) plugin. These Forms can send their data directly to CiviCRM in a similar (though currently more limited) way to the Caldera Forms CiviCRM plugin.
 
-Please be aware that Form building with ACF Extended is at an early stage of development and is currently limited to submitting data for Contacts, Activities and Cases. This does, however, provide enough functionality to build some fairly powerful and useful Forms.
+Please be aware that Form building with ACFE is at an early stage of development and is currently limited to submitting data for Contacts, Activities and Cases. This does, however, provide enough functionality to build some fairly powerful and useful Forms.
+
+*Note:* ACFE requires the [Advanced Custom Fields Pro](https://www.advancedcustomfields.com/pro/) plugin.
+
+## Features
+
+* Add unlimited Contacts on the same Form
+* Auto-populate form if the Contact is logged in
+* Define Contact Type: Organization, Individual, Household, and Custom Contact Subtypes
+* Map Custom Fields data
+* Add Relationships to each Contact
+* Create Activities on Form submission
+* Open a Case on Form submission
 
 ## Getting Started
 
@@ -61,10 +73,23 @@ You will notice that choosing one of these sources causes the others to disappea
 
 Should you want to open a CiviCRM Case in the Form, you'll need to have added the relevant ACF Fields to the Field Group and added the Location Rule specifying the Case Type. You can then use the CiviCRM Case Action (with similar configuration options to the Actions detailed above) to open a Case.
 
-*Tip:* If you have used Caldera Forms CiviCRM, then the available options in each of the Actions should be relatively familiar to you. I hav tried to keep the functionality in this UI as recognisable as possible.
+*Tip:* If you have used Caldera Forms CiviCRM, then the available options in each of the Actions should be relatively familiar to you. I have tried to keep the functionality in this UI as recognisable as possible.
+
+## What's Missing?
+
+When compared to Cadera Forms CiviCRM, the following features are not available yet:
+
+* Select Email Template for notification (requires Email API Extension)
+* Checksum support to auto-populate form with URLs like `example.com/some-page?cid={contact.contact_id}&{contact.checksum}`
+* CiviDiscount integration for Participant Registration and special field (requires CiviDiscount Extension)
+* Add Memberships (CiviMember)
+* Add Participants (CiviEvent)
+* Add Contributions with Line Items (for live transactions)
+
+As you can see, most of these are related to payment transactions. The plan is for this plugin to work with [ACF Extended Pro](https://www.acf-extended.com/pro) for payments via Stripe. For more comprehensive payment integration, please look at the [Integrate CiviCRM with WooCommerce](https://github.com/WPCV/wpcv-woo-civi-integration) plugin.
 
 ## Credits
 
 Many thanks to:
 
-* [Tadpole Collective](https://tadpole.cc/) for funding the integration of CiviCRM with the ACFE Forms UI.
+* [Tadpole Collective](https://tadpole.cc/) for funding the integration of CiviCRM with the ACF Extended Forms UI.
