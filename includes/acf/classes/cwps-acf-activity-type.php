@@ -454,7 +454,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 			'sequential' => 1,
 			'option_group_id' => $this->option_group_id_get(),
 			'options' => [
-				'sort' => 'label',
+				'sort' => 'weight',
 				'limit' => 0, // No limit.
 			],
 		];

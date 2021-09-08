@@ -486,11 +486,16 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		}
 
 		// Get list of allowed Activity Types.
-		$allowed_activity_types = CRM_Core_PseudoConstant::activityType( false );
+		$allowed_activity_types = [];
+		$option_group = $this->acf_loader->civicrm->option_group_get( 'activity_type' );
+		if ( ! empty( $option_group ) ) {
+			$allowed_activity_types = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
+		}
 
-		// Remove "Print Document" Activity Type.
-		$unwanted = CRM_Core_OptionGroup::values( 'activity_type', false, false, false, "AND v.name = 'Print PDF Letter'" );
-		$allowed_activity_types = array_diff_key( $allowed_activity_types, $unwanted );
+		// Bail if there are none.
+		if ( empty( $allowed_activity_types ) ) {
+			return;
+		}
 
 		// Get displayed CiviCRM Activity Type.
 		$activity_type = $form->getVar( '_values' );
