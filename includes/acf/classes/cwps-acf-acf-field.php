@@ -413,15 +413,44 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 			case 'String' :
 
-				// CiviCRM string fields are varchar(255) or varchar(260).
-				if ( ! empty( $field_data['text_length'] ) ) {
-					if ( strlen( $value ) > $field_data['text_length'] ) {
-						$valid = sprintf( __( 'Must be maximum %s characters.', 'civicrm-wp-profile-sync' ), $field_data['text_length'] );
+				$e = new \Exception();
+				$trace = $e->getTraceAsString();
+				error_log( print_r( [
+					'method' => __METHOD__,
+					'field_data' => $field_data,
+					'value' => $value,
+					//'backtrace' => $trace,
+				], true ) );
+
+				// If it's a Multi-select.
+				if ( $field_data['html_type'] == 'Multi-Select' AND is_array( $value ) ) {
+
+					// Make sure values are all are varchar(255) or varchar(260).
+					foreach( $value AS $item ) {
+						if ( ! empty( $field_data['text_length'] ) ) {
+							if ( strlen( $item ) > $field_data['text_length'] ) {
+								$valid = sprintf( __( 'Must be maximum %s characters.', 'civicrm-wp-profile-sync' ), $field_data['text_length'] );
+							}
+						} else {
+							if ( strlen( $item ) > 255 ) {
+								$valid = __( 'Must be maximum 255 characters.', 'civicrm-wp-profile-sync' );
+							}
+						}
 					}
+
 				} else {
-					if ( strlen( $value ) > 255 ) {
-						$valid = __( 'Must be maximum 255 characters.', 'civicrm-wp-profile-sync' );
+
+					// CiviCRM string fields are varchar(255) or varchar(260).
+					if ( ! empty( $field_data['text_length'] ) ) {
+						if ( strlen( $value ) > $field_data['text_length'] ) {
+							$valid = sprintf( __( 'Must be maximum %s characters.', 'civicrm-wp-profile-sync' ), $field_data['text_length'] );
+						}
+					} else {
+						if ( strlen( $value ) > 255 ) {
+							$valid = __( 'Must be maximum 255 characters.', 'civicrm-wp-profile-sync' );
+						}
 					}
+
 				}
 
 				break;
