@@ -13,7 +13,7 @@ In general, think of what this plugin does as a way to make data in CiviCRM visi
 
 In addition, given that this plugin is still at an early stage of development, it is highly recommended that you try it out on a test site to gain familiarity with how it works. Test early, test often and make backups. Okay, now that we're clear about that, onwards...
 
-## Links between entities
+## Links between Entities
 
 At present the CiviCRM Profile Sync plugin allows you to specify links between:
 
@@ -21,6 +21,8 @@ At present the CiviCRM Profile Sync plugin allows you to specify links between:
 * CiviCRM Contact Types and WordPress Custom Post Types
 * CiviCRM Events and Event Organiser Events
 * CiviCRM Activity Types and WordPress Custom Post Types
+* All CiviCRM Participants and a WordPress Custom Post Type
+* CiviCRM Participant Roles and WordPress Custom Post Types
 * More entity links to follow...
 
 ### CiviCRM Contacts and WordPress Users
@@ -31,7 +33,7 @@ CiviCRM and CiviCRM Profile Sync between them already support syncing of built-i
 
 ### CiviCRM Contact Types and WordPress Custom Post Types
 
-To link these together, in CiviCRM go to *Administer* -> *Customize Data and Screens* -> *Contact Types* and edit a Contact Type. You will see a dropdown that allows you to choose a WordPress Post Type to link to the Contact Type you are editing. Choose one and save the Contact Type.
+To link these together, in CiviCRM go to *Administer* &rarr; *Customize Data and Screens* &rarr; *Contact Types* and edit a Contact Type. You will see a dropdown that allows you to choose a WordPress Post Type to link to the Contact Type you are editing. Choose one and save the Contact Type.
 
 From now on, each time you create a Contact of the Contact Type that you have linked, a new WordPress Post will be created. The "Display Name" of the Contact will become the WordPress Post Title. And - in the reverse direction - each time you create a WordPress Post which is of the Post Type you have linked to a Contact Type, a new Contact will be created with their "Display Name" set to the Title of the new Post.
 
@@ -43,9 +45,27 @@ If you want to make the same kind of links between Events in WordPress and CiviC
 
 ### CiviCRM Activity Types and WordPress Custom Post Types
 
-To link these together, in CiviCRM go to *Administer* -> *Customize Data and Screens* -> *Activity Types* and edit an Activity Type. You will see a dropdown that allows you to choose a WordPress Post Type to link to the Activity Type you are editing. Choose one and save the Activity Type.
+To link these together, in CiviCRM go to *Administer* &rarr; *Customize Data and Screens* &rarr; *Activity Types* and edit an Activity Type. You will see a dropdown that allows you to choose a WordPress Post Type to link to the Activity Type you are editing. Choose one and save the Activity Type.
 
 From now on, each time you create an Activity of the Activity Type that you have linked, a new WordPress Post will be created. The "Subject" of the Activity will become the WordPress Post Title. And - in the reverse direction - each time you create a WordPress Post which is of the Post Type you have linked to an Activity Type, a new Activity will be created with their "Subject" set to the Title of the new Post.
+
+### All CiviCRM Participants and a WordPress Custom Post Type
+
+CiviCRM Profile Sync provides a WordPress Custom Post Type to sync all Participants with. To enable this feature, in CiviCRM go to *Administer* &rarr; *CiviEvent* &rarr; *CiviEvent Component Settings* and check the box labelled *Enable the "Participant" Custom Post Type*. This will also enable a Custom Taxonomy on the "Participant" Custom Post Type which is kept in sync with the Participant Roles in CiviCRM. The Custom Post Type is pre-configured with the relevant ACF Fields.
+
+To add Custom Fields that are assigned to all Participants (and/or assigned to Participants in specific CiviEvents), create an ACF Field Group and add a Location Rule that targets *Post Type* - *is equal to* - *Participant*. You can then add the Fields you need and map them to the CiviCRM Custom Fields.
+
+To add Custom Fields that are assigned to Participants with a particular Participant Role, create an ACF Field Group and add two Location Rules: one that targets *Post Type* - *is equal to* - *Participant* and another that targets  *Post Taxonomy* - *is equal to* - *Your Target Participant Role*. You can then add the Fields you need and map them to the CiviCRM Custom Fields.
+
+*Note:* When properly configured, The ACF Fields assigned to the two Field Groups above will appear and disappear dynamically depending on the options chosen in the "Participant Data" and "Participant Roles" meta boxes.
+
+### CiviCRM Participant Roles and WordPress Custom Post Types
+
+To link these together, in CiviCRM go to *Administer* &rarr; *CiviEvent* &rarr; *Participant Roles* and edit a Participant Role. You will see a dropdown that allows you to choose a WordPress Post Type to link to the Participant Role you are editing. Choose one and save the Participant Role.
+
+From now on, each time you create a Participant of the Participant Role that you have linked, a new WordPress Post will be created. The "Display Name" of the Participant will become the WordPress Post Title. And - in the reverse direction - each time you create a WordPress Post which is of the Post Type you have linked to a Participant Role, a new Participant will be created with their "Display Name" set to the Title of the new Post.
+
+*Note:* Unlike the "All CiviCRM Participants and a WordPress Custom Post Type" functionality, you will have to configure the WordPress Custom Post Type, WordPress Taxonomies, ACF Field Groups and ACF Fields yourself.
 
 ## Links between Fields
 
@@ -85,6 +105,32 @@ The following are the Contact Fields and the kind of ACF Field needed to map the
 
 When you select a Field Type for an ACF Field, the "CiviCRM Field" dropdown in the ACF Field's Settings will only show you those CiviCRM Contact Fields which can be mapped to this type of ACF Field.
 
+### CiviCRM Contact "Communication Preferences" Fields
+
+The following are the Contact "Communication Preferences" Fields and the kind of ACF Field needed to map them to CiviCRM:
+
+* Do not phone - ACF True/False
+* Do not email - ACF True/False
+* Do not mail - ACF True/False
+* Do not sms - ACF True/False
+* Do not trade - ACF True/False
+* Preferred Communication Method - ACF Checkbox
+* Preferred Language - ACF Select
+* Email Format - ACF Select
+* Communication Style - ACF Select or ACF Radio
+
+### CiviCRM Participant Fields
+
+The following are the Participant Fields and the kind of ACF Field needed to map them to CiviCRM:
+
+* Registration Date - ACF Date Time Picker
+* Event - ACF CiviCRM Event Reference
+* Status ID - ACF Select
+* Contact - ACF CiviCRM Contact Existing/New
+* Source - ACF Text
+
+When you select a Field Type for an ACF Field, the "CiviCRM Field" dropdown in the ACF Field's Settings will only show you those CiviCRM Participant Fields which can be mapped to this type of ACF Field.
+
 ### CiviCRM Custom Fields
 
 When creating a Custom Field in CiviCRM, you need to specify the kind of Data Type that it is - e.g. "Alphanumeric", "Integer", "Number", etc - followed by the Field Type - e.g. "Text", "Select", "Radio", etc. The Field Type pretty much corresponds to the kind of ACF Field that will map to the Custom Field. When you select a Field Type for an ACF Field, the "CiviCRM Field" dropdown in the ACF Field's Settings will only show you those CiviCRM Custom Fields which can be mapped to this type of ACF Field.
@@ -93,7 +139,7 @@ When creating a Custom Field in CiviCRM, you need to specify the kind of Data Ty
 
 The CiviCRM Profile Sync plugin also provides a number of custom ACF Fields which you will see as choices in the "Field Type" dropdown when you add a new ACF Field to a Field Group. These are:
 
-#### CiviCRM Contact ID
+#### CiviCRM Contact ID (Read Only)
 
 Populates with the numeric ID of the synced CiviCRM Contact.
 
@@ -148,6 +194,18 @@ You can narrow down what you display with two other Shortcodes: `[cwps_city]` an
 `[cwps_state field="addresses" location_type="1"]`
 
 **Note:** the legacy CiviCRM ACF Integration `[cai_address]`, `[cai_city]` and `[cai_state]` Shortcodes are still supported.
+
+#### CiviCRM City (Read Only)
+
+Populates with the name of the City in the synced CiviCRM Address. You can specify either the "Primary Address" or select an Address of a particular "Location Type".
+
+#### CiviCRM State (Read Only)
+
+Populates with the name of the State in the synced CiviCRM Address. You can specify either the "Primary Address" or select an Address of a particular "Location Type".
+
+#### CiviCRM Country (Read Only)
+
+Populates with the name of the Country in the synced CiviCRM Address. You can specify either the "Primary Address" or select an Address of a particular "Location Type".
 
 #### CiviCRM Phone
 
@@ -234,6 +292,14 @@ Syncs between the ACF Field and the Targets of a CiviCRM Activity.
 #### CiviCRM Activity Assignee
 
 Syncs between the ACF Field and the Assignee of a CiviCRM Activity.
+
+#### CiviCRM Event Reference
+
+Syncs between the ACF Field and the CiviCRM Event for a Participant.
+
+#### CiviCRM Contact Existing/New
+
+Syncs between the ACF Field and the CiviCRM Contact for a Participant.
 
 ## Outstanding Issues
 
