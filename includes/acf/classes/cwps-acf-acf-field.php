@@ -413,15 +413,6 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 			case 'String' :
 
-				$e = new \Exception();
-				$trace = $e->getTraceAsString();
-				error_log( print_r( [
-					'method' => __METHOD__,
-					'field_data' => $field_data,
-					'value' => $value,
-					//'backtrace' => $trace,
-				], true ) );
-
 				// If it's a Multi-select.
 				if ( $field_data['html_type'] == 'Multi-Select' AND is_array( $value ) ) {
 
