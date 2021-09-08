@@ -126,7 +126,7 @@ Syncs between the ACF Field and a CiviCRM Yes/No Custom Field. This Field Type i
 
 **Note:** the legacy CiviCRM ACF Integration Address functions are still supported.
 
-You can also display Addresses using the [Shortcake](https://en-gb.wordpress.org/plugins/shortcode-ui/)-compatible `[cwps_address]` Shortcode. The available attributes are:
+You can also display Addresses using the [Shortcake](https://wordpress.org/plugins/shortcode-ui/)-compatible `[cwps_address]` Shortcode. The available attributes are:
 
 * `field` (required) The ACF Field selector.
 * `location_type` (optional) The desired Addresses Location Type ID.
@@ -173,7 +173,7 @@ You can narrow down what you display with two other Shortcodes: `[cwps_city]` an
 
 **Note:** the legacy CiviCRM ACF Integration Phone functions are still supported.
 
-You can also display Phone Numbers using the [Shortcake](https://en-gb.wordpress.org/plugins/shortcode-ui/)-compatible `[cwps_phone]` Shortcode. The available attributes are:
+You can also display Phone Numbers using the [Shortcake](https://wordpress.org/plugins/shortcode-ui/)-compatible `[cwps_phone]` Shortcode. The available attributes are:
 
 * `field` (required) The ACF Field selector.
 * `location_type` (optional) The desired Phone Location Type ID.
@@ -206,7 +206,7 @@ Some examples might be:
 
 **Note:** the legacy CiviCRM ACF Integration Instant Messenger functions are still supported.
 
-You can also display Instant Messenger Records using the [Shortcake](https://en-gb.wordpress.org/plugins/shortcode-ui/)-compatible `[cwps_im]` Shortcode. The available attributes are:
+You can also display Instant Messenger Records using the [Shortcake](https://wordpress.org/plugins/shortcode-ui/)-compatible `[cwps_im]` Shortcode. The available attributes are:
 
 * `field` (required) The ACF Field selector.
 * `location_type` (optional) The desired Instant Messenger Location Type ID.

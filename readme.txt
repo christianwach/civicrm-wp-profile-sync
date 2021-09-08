@@ -25,13 +25,21 @@ The plugin also supports syncing the "First Name" and "Last Name" fields of the 
 
 ### ACF Integration
 
-CiviCRM Profile Sync also enables integration between CiviCRM Entities and WordPress Entities with data synced via Advanced Custom Fields.
+CiviCRM Profile Sync enables integration between CiviCRM Entities and WordPress Entities with data synced via Advanced Custom Fields.
 
-Please be aware that ACF integration is at an early stage of development and (although it is limited in its coverage of the entities that can be linked) it is fairly comprehensive in its mapping of the built-in CiviCRM Custom Field Types with their corresponding ACF Field Types.
+ACF integration is at an early stage of development and (although it is limited in its coverage of the entities that can be linked) it is fairly comprehensive in its mapping of the built-in CiviCRM Custom Field Types with their corresponding ACF Field Types.
 
-So if, for example, you want to display (or create) a Contact Type on your WordPress site with ACF Fields that contain synced CiviCRM data, this plugin could work for you.
+So if, for example, you want to display (or create) a Contact Type on your WordPress site with ACF Fields that contain synced CiviCRM data, this feature could work for you.
 
 Please refer to the [ACF Integration Documentation](https://github.com/christianwach/civicrm-wp-profile-sync/docs/ACF.md) for details.
+
+### Form-building with ACF Extended
+
+CiviCRM Profile Sync enables Forms to be built for the front-end of your website with the UI provided by the ACF Extended plugin. These Forms can send their data directly to CiviCRM in a similar (though more limited) way to Caldera Forms CiviCRM.
+
+Form building with ACF Extended is at an early stage of development and is currently limited to submitting data for Contacts, Activities and Cases. This does, however, provide enough functionality to build some fairly powerful and useful Forms.
+
+Please refer to the [ACFE Form-building Documentation](https://github.com/christianwach/civicrm-wp-profile-sync/docs/ACFE.md) for details.
 
 ### Requirements
 
