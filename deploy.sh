@@ -66,6 +66,7 @@ svn propset svn:ignore "deploy.sh
 README.md
 .git
 .editorconfig
+docs
 .gitignore" "$SVNPATH/trunk/"
 
 echo "Changing directory to SVN and committing to trunk"
