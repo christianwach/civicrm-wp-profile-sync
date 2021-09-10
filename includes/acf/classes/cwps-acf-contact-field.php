@@ -1040,7 +1040,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		$field['allow_null'] = 1;
 
 		// Set default "Communication Style".
-		if ( $name == 'communication_style_id' ) {
+		if ( $contact_field_name == 'communication_style_id' ) {
 			$field['default_value'] = $this->civicrm->option_value_default_get( 'communication_style' );
 		}
 
