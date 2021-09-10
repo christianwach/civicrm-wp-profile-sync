@@ -396,6 +396,52 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 
 	/**
+	 * Gets the Contact ID for a given checksum.
+	 *
+	 * @since 0.5
+	 *
+	 * @param integer|bool $contact_id The numeric ID of the Contact, or false on failure.
+	 */
+	public function get_id_by_checksum() {
+
+		// Fail by default.
+		$contact_id = false;
+
+		// Bail if there is no checksum.
+		if ( empty( $_GET['cs'] ) ) {
+			return $contact_id;
+		}
+
+		// The checksum must be accompanied by a Contact ID.
+		if ( empty( $_GET['cid'] ) OR ! is_numeric( $_GET['cid'] ) ) {
+			return $contact_id;
+		}
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $contact_id;
+		}
+
+		// Bail if no "Edit Contact" permission or not a valid checksum.
+		$cid = (int) trim( $_GET['cid'] );
+		$checksum = trim( $_GET['cs'] );
+		$allowed = CRM_Contact_BAO_Contact_Permission::allow( $cid, CRM_Core_Permission::EDIT );
+		$valid = CRM_Contact_BAO_Contact_Utils::validChecksum( $cid, $checksum );
+		if ( ! $allowed AND ! $valid ) {
+			return $contact_id;
+		}
+
+		// Okay, looks good.
+		$contact_id = $cid;
+
+		// --<
+		return $contact_id;
+
+	}
+
+
+
+	/**
 	 * Gets the Contact data for the logged-in User.
 	 *
 	 * @since 0.5

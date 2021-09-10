@@ -2674,7 +2674,10 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			return $contact_id;
 		}
 
-		// We're just checking "logged in" status - we will also use a checksum later.
+		// First look for a Contact specified by a checksum.
+		$contact_id = $this->civicrm->contact->get_id_by_checksum();
+
+		// If there is a logged-in User, prefer their details.
 		if ( is_user_logged_in() ) {
 			$contact_id = $this->civicrm->contact->get_for_current_user();
 		}

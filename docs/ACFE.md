@@ -10,9 +10,10 @@ Please be aware that Form building with ACFE is at an early stage of development
 ## Features
 
 * Add unlimited Contacts on the same Form
-* Auto-populate form if the Contact is logged in
+* Auto-populate Form if the Contact is logged in
+* Checksum support to auto-populate Form with URLs like `example.org/some-page/?cid={contact.contact_id}&{contact.checksum}`
 * Define Contact Type: Organization, Individual, Household, and Custom Contact Subtypes
-* Map Custom Fields data
+* Map data from Custom Fields
 * Add Relationships to each Contact
 * Create Activities on Form submission
 * Open a Case on Form submission
@@ -69,7 +70,7 @@ For the Parent + Child + Feedback example above, you will need to add two CiviCR
 
 The first of the CiviCRM Contact Actions (the Parent) should be set as the Action for the Contact who is submitting the Form. Contact Type should be set to "Individual" and Contact Sub Type should be set to "Parent". Choose a Dedupe Rule and check the Contact Entities that are required. Contact Fields and Custom Fields can now be mapped in the "Mapping" tab.
 
-The second CiviCRM Contact Action (the Child) should be filled out similarly. The one important difference is that it should be set such that "Submitter" is off - this will mean that the Relationship to the Submitter can be defined in the "Relationships" tab of the Action.
+The second CiviCRM Contact Action (the Child) should be filled out similarly. The one important difference is that it should be set such that "Submitter" is off - this will mean that the Relationship to the Submitter can be defined in the "Relationships" tab of the Action. For this example, set a Relationship to "Child Of".
 
 *Tip:* Caldera Forms CiviCRM had separate "processors" for Email, Website, Relationship, Group etc. There is no need for separate ACFE Form Actions for these mappings because all of them are contained in the CiviCRM Contact Action.
 
@@ -89,10 +90,9 @@ Should you want to open a CiviCRM Case in the Form, you'll need to have added th
 
 ## What's Missing?
 
-When compared to Cadera Forms CiviCRM, the following features are not available yet:
+When compared to Caldera Forms CiviCRM, the following features are not available yet:
 
 * Select Email Template for notification (requires Email API Extension)
-* Checksum support to auto-populate form with URLs like `example.com/some-page?cid={contact.contact_id}&{contact.checksum}`
 * CiviDiscount integration for Participant Registration and special field (requires CiviDiscount Extension)
 * Add Memberships (CiviMember)
 * Add Participants (CiviEvent)
