@@ -178,7 +178,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_City extends CiviCRM_Profile_Sync
 		}
 
 		// Let's look at each ACF Field in turn.
-		foreach( $acf_fields['city'] AS $selector => $address_field ) {
+		foreach ( $acf_fields['city'] as $selector => $address_field ) {
 
 			// Init Field value.
 			$value = '';
@@ -187,7 +187,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_City extends CiviCRM_Profile_Sync
 			if ( $address_field === 'primary' ) {
 
 				// Assign City from the Primary Address.
-				foreach( $data AS $address ) {
+				foreach ( $data as $address ) {
 					if ( ! empty( $address->is_primary ) ) {
 						$value = $address->city;
 						break;
@@ -198,7 +198,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_City extends CiviCRM_Profile_Sync
 			} elseif ( is_int( $address_field ) ) {
 
 				// Assign City from the type of Address.
-				foreach( $data AS $address ) {
+				foreach ( $data as $address ) {
 					if ( $address->location_type_id == $address_field ) {
 						$value = $address->city;
 						break;
@@ -249,7 +249,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_City extends CiviCRM_Profile_Sync
 		}
 
 		// Update all of them.
-		foreach( $addresses_shared AS $address_shared ) {
+		foreach ( $addresses_shared as $address_shared ) {
 			$this->address_process( $address_shared, $args );
 		}
 
@@ -328,7 +328,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_City extends CiviCRM_Profile_Sync
 		}
 
 		// Process all of them.
-		foreach( $addresses_shared AS $address_shared ) {
+		foreach ( $addresses_shared as $address_shared ) {
 			$this->address_process( $address_shared, $args );
 		}
 
@@ -357,7 +357,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_City extends CiviCRM_Profile_Sync
 		if ( $post_types !== false ) {
 
 			// Handle each Post Type in turn.
-			foreach( $post_types AS $post_type ) {
+			foreach ( $post_types as $post_type ) {
 
 				// Get the Post ID for this Contact.
 				$post_id = $this->acf_loader->civicrm->contact->is_mapped_to_post( $contact, $post_type );
@@ -368,7 +368,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_City extends CiviCRM_Profile_Sync
 				}
 
 				// Exclude "reverse" edits when a Post is the originator.
-				if ( $entity['entity'] === 'post' AND $post_id == $entity['id'] ) {
+				if ( $entity['entity'] === 'post' && $post_id == $entity['id'] ) {
 					continue;
 				}
 
@@ -414,7 +414,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_City extends CiviCRM_Profile_Sync
 		}
 
 		// Let's look at each ACF Field in turn.
-		foreach( $acf_fields['city'] AS $selector => $address_field ) {
+		foreach ( $acf_fields['city'] as $selector => $address_field ) {
 
 			// Init value.
 			$value = '';
@@ -468,7 +468,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_City extends CiviCRM_Profile_Sync
 	public function acf_fields_get_for_post( $acf_fields, $field, $post_id ) {
 
 		// Add if it has a reference to a City Field.
-		if ( ! empty( $field['type'] ) AND $field['type'] == 'civicrm_address_city' ) {
+		if ( ! empty( $field['type'] ) && $field['type'] == 'civicrm_address_city' ) {
 			if ( $field['city_is_primary'] === 1 ) {
 				$acf_fields['city'][$field['name']] = 'primary';
 			} else {

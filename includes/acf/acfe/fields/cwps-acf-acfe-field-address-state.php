@@ -302,10 +302,10 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 
 		// Format and filter the choices for returning.
 		$formatted = [];
-		foreach ( $choices AS $title => $fields ) {
+		foreach ( $choices as $title => $fields ) {
 			$title = (string) $title;
 			$data = [];
-			foreach ( $fields AS $key => $label ) {
+			foreach ( $fields as $key => $label ) {
 				$label = (string) $label;
 				if ( ! empty( $search ) ) {
 					if (
@@ -350,7 +350,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 		}
 
 		// Look at each Field in turn.
-		foreach ( $fields AS $field ) {
+		foreach ( $fields as $field ) {
 
 			// Recurse when there are Sub-fields, e.g. when looking at Groups and Clones.
 			if ( acf_maybe_get( $field, 'sub_fields' ) ) {
@@ -568,7 +568,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 		$field['choices'] = [];
 		$field['default_value'] = 0;
 
-		// if there's a Country Field.
+		// If there's a Country Field.
 		if ( ! empty( $field['state_country'] ) ) {
 			$field['wrapper']['class'] = 'cwps-country-' . $field['state_country'];
 		} else {

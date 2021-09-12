@@ -176,7 +176,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 
 		// Only do this once.
 		static $done;
-		if ( isset( $done ) AND $done === true ) {
+		if ( isset( $done ) && $done === true ) {
 			return;
 		}
 

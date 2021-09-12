@@ -193,10 +193,10 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 		}
 
 		// Filter fields to include only "Contact Reference".
-		foreach( $custom_fields AS $custom_group_name => $custom_group ) {
-			foreach( $custom_group AS $custom_field ) {
-				if ( ! empty( $custom_field['data_type'] ) AND $custom_field['data_type'] == 'ContactReference' ) {
-					if ( ! empty( $custom_field['html_type'] ) AND $custom_field['html_type'] == 'Autocomplete-Select' ) {
+		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
+			foreach ( $custom_group as $custom_field ) {
+				if ( ! empty( $custom_field['data_type'] ) && $custom_field['data_type'] == 'ContactReference' ) {
+					if ( ! empty( $custom_field['html_type'] ) && $custom_field['html_type'] == 'Autocomplete-Select' ) {
 						$filtered_fields[$custom_group_name][] = $custom_field;
 					}
 				}
@@ -242,7 +242,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 
 			// Maybe append them.
 			if ( ! empty( $contacts ) ) {
-				foreach( $contacts AS $contact ) {
+				foreach ( $contacts as $contact ) {
 
 					// Add email address if present.
 					$name = $contact['display_name'];
@@ -343,7 +343,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 		$args['contact_type'] = '';
 
 		// Restrict to target Contact Type if this Field is linked to Employer ID.
-		if ( ! empty( $field[$acf_field_key] ) AND $field[$acf_field_key] == $this->civicrm->contact_field_prefix() . 'employer_id' ) {
+		if ( ! empty( $field[$acf_field_key] ) && $field[$acf_field_key] == $this->civicrm->contact_field_prefix() . 'employer_id' ) {
 			$args['contact_type'] = 'Organization';
 		}
 
@@ -366,7 +366,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 		// Maybe append results.
 		$results = [];
 		if ( ! empty( $contacts ) ) {
-			foreach( $contacts AS $contact ) {
+			foreach ( $contacts as $contact ) {
 
 				// Add email address if present.
 				$name = $contact['label'];

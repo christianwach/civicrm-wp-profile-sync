@@ -183,7 +183,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Country_Field extends acf_fiel
 		$choices = [];
 
 		// Build Location Types choices array for dropdown.
-		foreach( $location_types AS $location_type ) {
+		foreach ( $location_types as $location_type ) {
 			$choices[$location_type['id']] = esc_attr( $location_type['display_name'] );
 		}
 
@@ -344,7 +344,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Country_Field extends acf_fiel
 			if ( ! empty( $field['country_is_primary'] ) ) {
 
 				// Assign Country ID from the Primary Address.
-				foreach( $addresses AS $address ) {
+				foreach ( $addresses as $address ) {
 					if ( ! empty( $address->is_primary ) ) {
 						$country_id = (int) $address->country_id;
 						break;
@@ -355,7 +355,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Country_Field extends acf_fiel
 			} elseif ( ! empty( $field['country_location_type_id'] ) ) {
 
 				// Assign Country ID from the type of Address.
-				foreach( $addresses AS $address ) {
+				foreach ( $addresses as $address ) {
 					if ( $address->location_type_id == $field['country_location_type_id'] ) {
 						$country_id = (int) $address->country_id;
 						break;

@@ -374,7 +374,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 		// Construct Terms array.
 		$terms = [];
-		foreach ( $participant_role_ids AS $role_id ) {
+		foreach ( $participant_role_ids as $role_id ) {
 
 			// The "Role ID" is actually the "Role Value", so get the Role.
 			$participant_role = $this->participant_role_get_by_value( $role_id );
@@ -551,7 +551,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		$new_term = get_term_by( 'id', $args['term_id'], $this->taxonomy_name );
 
 		// Is this an Inline Edit?
-		if ( ! empty( $_POST['action'] ) AND $_POST['action'] == 'inline-save-tax' ) {
+		if ( ! empty( $_POST['action'] ) && $_POST['action'] == 'inline-save-tax' ) {
 
 			// There will be no change to "Is Active" or "Counted".
 
@@ -1316,7 +1316,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 		// Bail if it's not a CiviCRM Participant Role.
 		$opt_group_id = $this->civicrm->option_group_get( 'participant_role' );
-		if ( $opt_group_id === false OR $opt_group_id != $participant_role->option_group_id ) {
+		if ( $opt_group_id === false || $opt_group_id != $participant_role->option_group_id ) {
 			return;
 		}
 
@@ -1395,7 +1395,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 		// Bail if it's not a CiviCRM Participant Role.
 		$opt_group_id = $this->civicrm->option_group_get( 'participant_role' );
-		if ( $opt_group_id === false OR $opt_group_id != $participant_role->option_group_id ) {
+		if ( $opt_group_id === false || $opt_group_id != $participant_role->option_group_id ) {
 			return;
 		}
 
@@ -1528,7 +1528,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		$result = civicrm_api( 'OptionValue', 'create', $params );
 
 		// Bail if there is an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -1541,7 +1541,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		}
 
 		// Success, grab CiviCRM Participant Role ID.
-		if ( ! empty( $result['id'] ) AND is_numeric( $result['id'] ) ) {
+		if ( ! empty( $result['id'] ) && is_numeric( $result['id'] ) ) {
 			$participant_role_id = (int) $result['id'];
 		}
 
@@ -1587,7 +1587,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		$result = civicrm_api( 'OptionValue', 'delete', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -1641,7 +1641,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		$result = civicrm_api( 'OptionValue', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return false;
 		}
 
@@ -1677,7 +1677,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		}
 
 		// Create (or update) the corresponding Terms.
-		foreach ( $participant_roles AS $id => $participant_role ) {
+		foreach ( $participant_roles as $id => $participant_role ) {
 			$this->term_update( $participant_role );
 		}
 
@@ -1718,7 +1718,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		$result = civicrm_api( 'OptionValue', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -1770,7 +1770,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		// Get existing Participant Role value.
 		$existing_value = $this->participant_role_default_value_get();
 
-		foreach( $participant_roles AS $key => $participant_role ) {
+		foreach ( $participant_roles as $key => $participant_role ) {
 
 			// Get Participant Role value.
 			$participant_role_value = (int) $participant_role['value'];
@@ -1860,7 +1860,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		$result = civicrm_api( 'OptionValue', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return false;
 		}
 
@@ -1914,7 +1914,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		$result = civicrm_api( 'OptionValue', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return false;
 		}
 
@@ -2010,7 +2010,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 		// Bail if the current screen is not an Edit Taxonomy screen.
 		$screen = get_current_screen();
-		if ( $screen instanceof WP_Screen AND $screen->base != 'edit-tags' ) {
+		if ( $screen instanceof WP_Screen && $screen->base != 'edit-tags' ) {
 			return;
 		}
 

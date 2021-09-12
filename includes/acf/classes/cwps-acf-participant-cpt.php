@@ -397,7 +397,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		$data = $this->acf_loader->mapping->setting_get( $this->post_type_name );
 
 		// Only do this once.
-		if ( ! empty( $data['synced'] ) AND $data['synced'] === 1 ) {
+		if ( ! empty( $data['synced'] ) && $data['synced'] === 1 ) {
 			//return;
 		}
 
@@ -610,7 +610,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		// Always assign Participant Role Value(s).
 		$terms = $this->tax->terms_get( $post->ID );
 		if ( ! empty( $terms ) ) {
-			foreach ( $terms AS $term ) {
+			foreach ( $terms as $term ) {
 				$role_id = $this->tax->term_meta_get( $term->term_id );
 				if ( ! empty( $role_id ) ) {
 					$role_value = $this->tax->participant_role_value_get( $role_id );
@@ -620,7 +620,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		}
 
 		// Loop through the field data.
-		foreach( $fields AS $selector => $value ) {
+		foreach ( $fields as $selector => $value ) {
 
 			// Get the field settings.
 			$settings = get_field_object( $selector, $post_id );
@@ -630,7 +630,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 			$participant_field_name = $this->participant->participant_field_name_get( $settings );
 
 			// Do we have a synced Custom Field or Participant Field?
-			if ( ! empty( $custom_field_id ) OR ! empty( $participant_field_name ) ) {
+			if ( ! empty( $custom_field_id ) || ! empty( $participant_field_name ) ) {
 
 				// If it's a Custom Field.
 				if ( ! empty( $custom_field_id ) ) {
@@ -685,7 +685,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 				];
 
 				// Add it to the field data.
-				if ( in_array( $code, $cannot_be_empty ) AND empty( $value ) ) {
+				if ( in_array( $code, $cannot_be_empty ) && empty( $value ) ) {
 					// Skip.
 				} else {
 					$participant_data[$code] = $value;
@@ -842,7 +842,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		 *
 		 * Instead, the Participant ID needs to be reverse synced to the Post.
 		 */
-		if ( $entity['entity'] === 'post' AND $this->post_type_name == $entity['type'] ) {
+		if ( $entity['entity'] === 'post' && $this->post_type_name == $entity['type'] ) {
 
 			// Save correspondence and skip.
 			$this->acf_loader->post->participant_id_set( $entity['id'], $args['objectId'] );
@@ -917,7 +917,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		$entity = $this->acf_loader->mapper->entity_get();
 
 		// Exclude "reverse" edits when a Post is the originator.
-		if ( $entity['entity'] === 'post' AND $post_id == $entity['id'] ) {
+		if ( $entity['entity'] === 'post' && $post_id == $entity['id'] ) {
 			return;
 		}
 
@@ -1096,7 +1096,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		$participant_id = false;
 
 		// Let's tease out the context from the Custom Field data.
-		foreach( $args['custom_fields'] AS $field ) {
+		foreach ( $args['custom_fields'] as $field ) {
 
 			// Skip if it is not attached to a Participant.
 			if ( $field['entity_table'] != 'civicrm_participant' ) {
@@ -1135,10 +1135,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		}
 
 		// Add to Participant Post IDs array.
-		foreach( $ids AS $id ) {
+		foreach ( $ids as $id ) {
 
 			// Exclude "reverse" edits when a Post is the originator.
-			if ( $entity['entity'] !== 'post' OR $id != $entity['id'] ) {
+			if ( $entity['entity'] !== 'post' || $id != $entity['id'] ) {
 				$participant_post_ids[] = $id;
 			}
 
@@ -1330,7 +1330,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		// Bail if the current screen is not an Edit Participant screen.
 		if ( is_admin() ) {
 			$screen = get_current_screen();
-			if ( $screen instanceof WP_Screen AND $screen->base != 'post' ) {
+			if ( $screen instanceof WP_Screen && $screen->base != 'post' ) {
 				return;
 			}
 			if ( $screen->id != $this->post_type_name ) {
@@ -1348,7 +1348,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		}
 
 		// Bail if there's no Post and it's WordPress admin.
-		if ( empty( $post ) AND is_admin() ) {
+		if ( empty( $post ) && is_admin() ) {
 			return;
 		}
 
@@ -1425,7 +1425,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 		// Only call this once.
 		static $registered;
-		if ( isset( $registered ) AND $registered === true ) {
+		if ( isset( $registered ) && $registered === true ) {
 			return;
 		}
 
@@ -1626,7 +1626,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 		// Only call this once.
 		static $registered;
-		if ( isset( $registered ) AND $registered === true ) {
+		if ( isset( $registered ) && $registered === true ) {
 			return;
 		}
 
@@ -1741,7 +1741,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	public function taxonomy_fix_metabox( $args, $post_id ) {
 
 		// If rendering metabox for our Taxonomy.
-		if ( isset( $args['taxonomy'] ) AND $args['taxonomy'] == $this->taxonomy_name ) {
+		if ( isset( $args['taxonomy'] ) && $args['taxonomy'] == $this->taxonomy_name ) {
 
 			// Setting 'checked_ontop' to false seems to fix this.
 			$args['checked_ontop'] = false;
@@ -2035,7 +2035,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		// Set a condition for Fields that only show on Events.
 		if ( $custom_group['extends_entity_column_id'] == 2 ) {
 			$or = [];
-			foreach ( $custom_group['extends_entity_column_value'] AS $value ) {
+			foreach ( $custom_group['extends_entity_column_value'] as $value ) {
 				$or[] = [[
 					'field' => 'field_' . $this->acf_slug . '_event_id',
 					'operator' => '==',
@@ -2050,7 +2050,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		// Set a condition for Event Custom Groups.
 		if ( $custom_group['extends_entity_column_id'] == 3 ) {
 			$or = [];
-			foreach ( $custom_group['extends_entity_column_value'] AS $value ) {
+			foreach ( $custom_group['extends_entity_column_value'] as $value ) {
 				$or[] = [[
 					'field' => 'field_' . $this->acf_slug . '_event_type',
 					'operator' => '==',

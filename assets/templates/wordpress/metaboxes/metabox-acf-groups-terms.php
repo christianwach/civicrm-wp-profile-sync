@@ -18,7 +18,7 @@
 	<?php if ( ! empty( $groups ) ) : ?>
 		<table class="form-table">
 
-			<?php foreach( $groups AS $group_id => $label ) : ?>
+			<?php foreach ( $groups as $group_id => $label ) : ?>
 
 				<?php $identifier = $prefix . '_' . $group_id; ?>
 				<?php $stop = ''; ?>

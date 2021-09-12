@@ -109,7 +109,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Tag {
 		$result = civicrm_api( 'Tag', 'create', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $tag;
 		}
 
@@ -193,7 +193,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Tag {
 		$result = civicrm_api( 'Tag', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $tag;
 		}
 
@@ -247,7 +247,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Tag {
 		$result = civicrm_api( 'Tag', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $tag_data;
 		}
 
@@ -289,7 +289,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Tag {
 		$result = civicrm_api( 'EntityTag', 'get', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -333,7 +333,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Tag {
 		$result = civicrm_api( 'EntityTag', 'create', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [

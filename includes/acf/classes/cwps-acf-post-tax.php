@@ -124,10 +124,10 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 		// Add to stored array if we have some.
 		if ( ! empty( $synced_post_types ) ) {
-			foreach( $synced_post_types AS $synced_post_type ) {
+			foreach ( $synced_post_types as $synced_post_type ) {
 				$taxonomies = get_object_taxonomies( $synced_post_type );
 				if ( ! empty( $taxonomies ) ) {
-					foreach( $taxonomies AS $taxonomy ) {
+					foreach ( $taxonomies as $taxonomy ) {
 						$this->taxonomies[] = $taxonomy;
 					}
 				}
@@ -147,7 +147,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 		// Add actions for all associated Taxonomies.
 		if ( ! empty( $this->taxonomies ) ) {
-			foreach( $this->taxonomies AS $taxonomy ) {
+			foreach ( $this->taxonomies as $taxonomy ) {
 				add_action( "{$taxonomy}_add_form_fields", [ $this, 'form_element_add_term_add' ], 10 );
 				add_action( "{$taxonomy}_edit_form_fields", [ $this, 'form_element_edit_term_add' ], 10, 2 );
 			}
@@ -232,10 +232,10 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		// Get all the terms for these post types.
 		$terms_all = [];
 		if ( ! empty( $post_types ) ) {
-			foreach( $post_types AS $post_type ) {
+			foreach ( $post_types as $post_type ) {
 				$terms_for_post_type = $this->synced_terms_get_for_post_type( $post_type );
 				if ( ! empty( $terms_for_post_type ) ) {
-					foreach( $terms_for_post_type AS $term_for_post_type ) {
+					foreach ( $terms_for_post_type as $term_for_post_type ) {
 						$terms_all[] = $term_for_post_type;
 					}
 				}
@@ -249,7 +249,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		$filtered = array_diff( $group_ids, $term_ids_all );
 
 		// Add existing Group if it exists.
-		if ( ! is_null( $group_id ) AND $group_id !== 0 ) {
+		if ( ! is_null( $group_id ) && $group_id !== 0 ) {
 			$filtered[] = $group_id;
 		}
 
@@ -258,7 +258,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 		// Build Groups.
 		$groups = [];
-		foreach( $groups_all AS $group ) {
+		foreach ( $groups_all as $group ) {
 			if ( in_array( $group['id'], $filtered ) ) {
 				$groups[] = $group;
 			}
@@ -675,7 +675,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		$terms = get_terms( $args );
 
 		// Bail if there are no terms or there's an error.
-		if ( empty( $terms ) OR is_wp_error( $terms ) ) {
+		if ( empty( $terms ) || is_wp_error( $terms ) ) {
 			return [];
 		}
 
@@ -700,7 +700,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		$terms = wp_get_object_terms( $post_id, $this->taxonomies );
 
 		// Bail if there are no terms or there's an error.
-		if ( empty( $terms ) OR is_wp_error( $terms ) ) {
+		if ( empty( $terms ) || is_wp_error( $terms ) ) {
 			return [];
 		}
 
@@ -749,12 +749,12 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		$terms = get_terms( $args );
 
 		// Bail if there are no terms or there's an error.
-		if ( empty( $terms ) OR is_wp_error( $terms ) ) {
+		if ( empty( $terms ) || is_wp_error( $terms ) ) {
 			return [];
 		}
 
 		// Let's add the Group ID to the term object.
-		foreach( $terms AS $term ) {
+		foreach ( $terms as $term ) {
 			$term->group_id = $this->term_meta_get( $term->term_id );
 		}
 
@@ -789,12 +789,12 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		$terms = wp_get_object_terms( $post_id, $this->taxonomies, $params );
 
 		// Bail if there are no terms or there's an error.
-		if ( empty( $terms ) OR is_wp_error( $terms ) ) {
+		if ( empty( $terms ) || is_wp_error( $terms ) ) {
 			return [];
 		}
 
 		// Let's add the Group ID to the term object.
-		foreach( $terms AS $term ) {
+		foreach ( $terms as $term ) {
 			$term->group_id = $this->term_meta_get( $term->term_id );
 		}
 
@@ -882,12 +882,12 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		$terms = get_terms( $args );
 
 		// Bail if there are no terms or there's an error.
-		if ( empty( $terms ) OR is_wp_error( $terms ) ) {
+		if ( empty( $terms ) || is_wp_error( $terms ) ) {
 			return [];
 		}
 
 		// Let's add the Group ID to the term object.
-		foreach( $terms AS $term ) {
+		foreach ( $terms as $term ) {
 			$term->group_id = $this->term_meta_get( $term->term_id );
 		}
 
@@ -923,12 +923,12 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		$terms = get_terms( $args );
 
 		// Bail if there are no terms or there's an error.
-		if ( empty( $terms ) OR is_wp_error( $terms ) ) {
+		if ( empty( $terms ) || is_wp_error( $terms ) ) {
 			return [];
 		}
 
 		// Let's add the Group ID to the term object.
-		foreach( $terms AS $term ) {
+		foreach ( $terms as $term ) {
 			$term->group_id = $this->term_meta_get( $term->term_id );
 		}
 
@@ -1010,7 +1010,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 		// Loop through terms removed and collect Group IDs.
 		$group_ids_removed = [];
-		foreach( $terms_removed AS $term_id ) {
+		foreach ( $terms_removed as $term_id ) {
 			$group_id = $this->term_meta_get( $term_id );
 			if ( $group_id === false ) {
 				continue;
@@ -1020,7 +1020,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 		// Loop through terms added and collect Group IDs.
 		$group_ids_added = [];
-		foreach( $terms_added AS $term_id ) {
+		foreach ( $terms_added as $term_id ) {
 			$group_id = $this->term_meta_get( $term_id );
 			if ( $group_id === false ) {
 				continue;
@@ -1030,7 +1030,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 		// If there are Group IDs to add Contact to.
 		if ( ! empty( $group_ids_added ) ) {
-			foreach( $group_ids_added AS $term_id => $group_id ) {
+			foreach ( $group_ids_added as $term_id => $group_id ) {
 
 				// If not already a member.
 				$is_member = $this->acf_loader->civicrm->group->group_contact_exists( $group_id, $args['contact_id'] );
@@ -1057,7 +1057,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 		// If there are Group IDs to remove Contact from.
 		if ( ! empty( $group_ids_removed ) ) {
-			foreach( $group_ids_removed AS $term_id => $group_id ) {
+			foreach ( $group_ids_removed as $term_id => $group_id ) {
 
 				// If already a member.
 				$is_member = $this->acf_loader->civicrm->group->group_contact_exists( $group_id, $args['contact_id'] );
@@ -1130,7 +1130,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		$term_ids_for_group = wp_list_pluck( $terms_for_group, 'term_id' );
 
 		// Loop through added Contacts.
-		foreach( $contact_ids AS $contact_id ) {
+		foreach ( $contact_ids as $contact_id ) {
 
 			// Grab Contact.
 			$contact = $this->acf_loader->civicrm->contact->get_by_id( $contact_id );
@@ -1143,7 +1143,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 			if ( $post_types !== false ) {
 
 				// Handle each Post Type in turn.
-				foreach( $post_types AS $post_type ) {
+				foreach ( $post_types as $post_type ) {
 
 					// Get the Post ID that this Contact is mapped to.
 					$post_id = $this->acf_loader->civicrm->contact->is_mapped_to_post( $contact, $post_type );
@@ -1163,8 +1163,8 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 					// Find the term(s) from those the Group syncs with.
 					$terms_for_post = [];
-					foreach( $term_ids_for_post AS $term_id_for_post ) {
-						foreach( $terms_for_group AS $term_for_group ) {
+					foreach ( $term_ids_for_post as $term_id_for_post ) {
+						foreach ( $terms_for_group as $term_for_group ) {
 							if ( $term_for_group->term_id == $term_id_for_post ) {
 								$terms_for_post[$term_for_group->term_id] = $term_for_group;
 							}
@@ -1179,7 +1179,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 					if ( $op === 'add' ) {
 
 						// If the Post does not have the term(s), add them.
-						foreach( $term_ids_for_post AS $term_id_for_post ) {
+						foreach ( $term_ids_for_post as $term_id_for_post ) {
 							if ( ! in_array( $term_id_for_post, $term_ids_in_post ) ) {
 								$terms_in_post[] = $terms_for_post[$term_id_for_post];
 							}
@@ -1196,8 +1196,8 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 						// Rebuild terms-in-post array.
 						$terms_in_post_new = [];
 
-						foreach( $term_ids_final AS $term_id_final ) {
-							foreach( $terms_in_post AS $term_in_post ) {
+						foreach ( $term_ids_final as $term_id_final ) {
+							foreach ( $terms_in_post as $term_in_post ) {
 								if ( $term_in_post->term_id == $term_id_final ) {
 									$terms_in_post_new[] = $term_in_post;
 									continue;
@@ -1214,7 +1214,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 					$taxonomies = array_unique( wp_list_pluck( $synced_terms_for_post_type, 'taxonomy' ) );
 
 					// Loop through them.
-					foreach( $taxonomies AS $taxonomy ) {
+					foreach ( $taxonomies as $taxonomy ) {
 
 						// Find the terms in this taxonomy.
 						$args = [ 'taxonomy' => $taxonomy ];

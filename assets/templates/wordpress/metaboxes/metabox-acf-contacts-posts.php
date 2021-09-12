@@ -18,7 +18,7 @@
 	<?php if ( ! empty( $contact_types ) ) : ?>
 		<table class="form-table">
 
-			<?php foreach( $contact_types AS $contact_type_id => $label ) : ?>
+			<?php foreach ( $contact_types as $contact_type_id => $label ) : ?>
 
 				<?php $identifier = $prefix . '_' . $contact_type_id; ?>
 				<?php $stop = ''; ?>

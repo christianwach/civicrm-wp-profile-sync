@@ -400,7 +400,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$result = civicrm_api( 'Case', 'get', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -472,7 +472,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$post_id = $this->acf_loader->post->get_by_case_id( $case->id, $post_type );
 
 		// Create the Post if it's missing.
-		if ( $post_id === false AND $create_post === 'create' ) {
+		if ( $post_id === false && $create_post === 'create' ) {
 
 			// Prevent recursion and the resulting unexpected Post creation.
 			if ( ! doing_action( 'cwps/acf/post/case/sync' ) ) {
@@ -609,7 +609,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$result = civicrm_api( 'Case', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $case_data;
 		}
 
@@ -659,7 +659,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$case_data = false;
 
 		// Bail if we have no Case Type ID or Contact ID.
-		if ( empty( $case_type_id ) OR empty( $contact_id ) ) {
+		if ( empty( $case_type_id ) || empty( $contact_id ) ) {
 			return $case_data;
 		}
 
@@ -685,7 +685,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$result = civicrm_api( 'Case', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $case_data;
 		}
 
@@ -769,7 +769,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$result = civicrm_api( 'CaseContact', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $contact_ids;
 		}
 
@@ -833,7 +833,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$result = civicrm_api( 'CaseContact', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $contact_ids;
 		}
 
@@ -910,7 +910,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$result = civicrm_api( 'Case', 'create', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $case_data;
 		}
 
@@ -978,8 +978,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		}
 
 		// Fill out missing Case data.
-		foreach( $case_full AS $key => $item ) {
-			if ( empty( $case->$key ) AND ! empty( $item ) ) {
+		foreach ( $case_full as $key => $item ) {
+			if ( empty( $case->$key ) && ! empty( $item ) ) {
 				$case->$key = $item;
 			}
 		}
@@ -1022,7 +1022,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$result = civicrm_api( 'CaseContact', 'create', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $case_contact_data;
 		}
 
@@ -1058,7 +1058,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 	public function manager_add( $case_data, $case ) {
 
 		// Bail if there is no Manager ID.
-		if ( empty( $case_data['manager_id'] ) OR ! is_numeric( $case_data['manager_id'] ) ) {
+		if ( empty( $case_data['manager_id'] ) || ! is_numeric( $case_data['manager_id'] ) ) {
 			return;
 		}
 
@@ -1088,7 +1088,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 		// Get the Manager Case Role.
 		$manager_role = [];
-		foreach ( $case_roles AS $case_role ) {
+		foreach ( $case_roles as $case_role ) {
 			if ( ! empty( $case_role['manager'] ) ) {
 				$manager_role = $case_role;
 			}
@@ -1311,7 +1311,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		}
 
 		// Loop through the field data.
-		foreach( $fields AS $field => $value ) {
+		foreach ( $fields as $field => $value ) {
 
 			// Get the field settings.
 			$settings = get_field_object( $field, $post_id );
@@ -1321,7 +1321,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 			$case_field_name = $this->case_field_name_get( $settings );
 
 			// Do we have a synced Custom Field or Case Field?
-			if ( ! empty( $custom_field_id ) OR ! empty( $case_field_name ) ) {
+			if ( ! empty( $custom_field_id ) || ! empty( $case_field_name ) ) {
 
 				// If it's a Custom Field.
 				if ( ! empty( $custom_field_id ) ) {
@@ -1358,7 +1358,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 				];
 
 				// Add it to the field data.
-				if ( in_array( $code, $cannot_be_empty ) AND empty( $value ) ) {
+				if ( in_array( $code, $cannot_be_empty ) && empty( $value ) ) {
 					// Skip.
 				} else {
 					$case_data[$code] = $value;
@@ -1423,15 +1423,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 		// Build Case Field choices array for dropdown.
 		$case_fields_label = esc_attr__( 'Case Fields', 'civicrm-wp-profile-sync' );
-		foreach( $case_fields AS $case_field ) {
+		foreach ( $case_fields as $case_field ) {
 			$choices[$case_fields_label][$this->case_field_prefix . $case_field['name']] = $case_field['title'];
 		}
 
 		// Build Custom Field choices array for dropdown.
 		$custom_field_prefix = $this->civicrm->custom_field_prefix();
-		foreach( $custom_fields AS $custom_group_name => $custom_group ) {
+		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			$custom_fields_label = esc_attr( $custom_group_name );
-			foreach( $custom_group AS $custom_field ) {
+			foreach ( $custom_group as $custom_field ) {
 				$choices[$custom_fields_label][$custom_field_prefix . $custom_field['id']] = $custom_field['label'];
 			}
 		}
@@ -1552,14 +1552,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$filtered_fields = apply_filters( 'cwps/acf/query_settings/custom_fields_filter', [], $custom_fields, $field );
 
 		// Pass if not populated.
-		if ( empty( $case_fields ) AND empty( $filtered_fields ) ) {
+		if ( empty( $case_fields ) && empty( $filtered_fields ) ) {
 			return $choices;
 		}
 
 		// Build Case Field choices array for dropdown.
 		if ( ! empty( $case_fields ) ) {
 			$case_fields_label = esc_attr__( 'Case Fields', 'civicrm-wp-profile-sync' );
-			foreach( $case_fields AS $case_field ) {
+			foreach ( $case_fields as $case_field ) {
 				$choices[$case_fields_label][$this->case_field_prefix . $case_field['name']] = $case_field['title'];
 			}
 		}
@@ -1567,9 +1567,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		// Build Custom Field choices array for dropdown.
 		if ( ! empty( $filtered_fields ) ) {
 			$custom_field_prefix = $this->civicrm->custom_field_prefix();
-			foreach( $filtered_fields AS $custom_group_name => $custom_group ) {
+			foreach ( $filtered_fields as $custom_group_name => $custom_group ) {
 				$custom_fields_label = esc_attr( $custom_group_name );
-				foreach( $custom_group AS $custom_field ) {
+				foreach ( $custom_group as $custom_field ) {
 					$choices[$custom_fields_label][$custom_field_prefix . $custom_field['id']] = $custom_field['label'];
 				}
 			}
@@ -1627,7 +1627,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$filtered_fields = apply_filters( 'cwps/acf/query_settings/custom_fields_filter', [], $custom_fields, $field );
 
 		// Pass if not populated.
-		if ( empty( $fields_for_entity ) AND empty( $filtered_fields ) ) {
+		if ( empty( $fields_for_entity ) && empty( $filtered_fields ) ) {
 			return $setting_field;
 		}
 
@@ -1663,7 +1663,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$fields_for_entity = $this->acf_loader->civicrm->case_field->data_get( $field['type'], 'public' );
 
 		// Prepend the ones that are needed in ACFE Forms (i.e. Subject and Details).
-		foreach ( $this->civicrm->case_field->bypass_fields AS $name => $field_type ) {
+		foreach ( $this->civicrm->case_field->bypass_fields as $name => $field_type ) {
 			if ( $field_type == $field['type'] ) {
 				array_unshift( $fields_for_entity, $this->civicrm->case_field->get_by_name( $name ) );
 			}
@@ -1684,14 +1684,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$filtered_fields = apply_filters( 'cwps/acf/query_settings/custom_fields_filter', [], $custom_fields, $field );
 
 		// Pass if not populated.
-		if ( empty( $fields_for_entity ) AND empty( $filtered_fields ) ) {
+		if ( empty( $fields_for_entity ) && empty( $filtered_fields ) ) {
 			return $choices;
 		}
 
 		// Build Case Field choices array for dropdown.
 		if ( ! empty( $fields_for_entity ) ) {
 			$case_fields_label = esc_attr__( 'Case Fields', 'civicrm-wp-profile-sync' );
-			foreach( $fields_for_entity AS $case_field ) {
+			foreach ( $fields_for_entity as $case_field ) {
 				$choices[$case_fields_label][$this->case_field_prefix . $case_field['name']] = $case_field['title'];
 			}
 		}
@@ -1699,9 +1699,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		// Build Custom Field choices array for dropdown.
 		if ( ! empty( $filtered_fields ) ) {
 			$custom_field_prefix = $this->civicrm->custom_field_prefix();
-			foreach( $filtered_fields AS $custom_group_name => $custom_group ) {
+			foreach ( $filtered_fields as $custom_group_name => $custom_group ) {
 				$custom_fields_label = esc_attr( $custom_group_name );
-				foreach( $custom_group AS $custom_field ) {
+				foreach ( $custom_group as $custom_field ) {
 					$choices[$custom_fields_label][$custom_field_prefix . $custom_field['id']] = $custom_field['label'];
 				}
 			}
@@ -1746,7 +1746,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		// Add Option Group and add entries for each Case Type.
 		$case_types_title = esc_attr( __( 'Case Types', 'civicrm-wp-profile-sync' ) );
 		$entities[$case_types_title] = [];
-		foreach( $case_types AS $id => $label ) {
+		foreach ( $case_types as $id => $label ) {
 			$entities[$case_types_title][$this->identifier . '-' . $id] = $label;
 		}
 
@@ -1839,7 +1839,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$case_id = false;
 
 		// Let's tease out the context from the Custom Field data.
-		foreach( $args['custom_fields'] AS $field ) {
+		foreach ( $args['custom_fields'] as $field ) {
 
 			// Skip if it is not attached to a Case.
 			if ( $field['entity_table'] != 'civicrm_case' ) {
@@ -1881,10 +1881,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$ids = $this->acf_loader->post->get_by_case_id( $case_id, $post_type );
 
 		// Add to Case Post IDs array.
-		foreach( $ids AS $id ) {
+		foreach ( $ids as $id ) {
 
 			// Exclude "reverse" edits when a Post is the originator.
-			if ( $entity['entity'] !== 'post' OR $id != $entity['id'] ) {
+			if ( $entity['entity'] !== 'post' || $id != $entity['id'] ) {
 				$case_post_ids[] = $id;
 			}
 
@@ -1942,7 +1942,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 			if ( ! empty( $post_types ) ) {
 
 				// Loop through them.
-				foreach( $post_types AS $post_type ) {
+				foreach ( $post_types as $post_type ) {
 
 					// Define params to test for a mapped Post Type.
 					$params = [

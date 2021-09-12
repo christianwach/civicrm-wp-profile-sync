@@ -6,7 +6,7 @@
 			<?php if ( ! empty( $options ) ) : ?>
 				<p>
 					<select id="cwps_website_type_select" name="cwps_website_type_select">
-						<?php foreach( $options AS $key => $option ) : ?>
+						<?php foreach ( $options as $key => $option ) : ?>
 							<?php if ( $key === $website_type_selected ) : ?>
 								<option value="<?php echo $key; ?>" selected="selected"><?php echo $option; ?></option>
 							<?php else : ?>

@@ -123,7 +123,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Group {
 		$result = civicrm_api( 'CustomGroup', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $custom_groups;
 		}
 
@@ -182,7 +182,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Group {
 		$result = civicrm_api( 'CustomGroup', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $custom_fields;
 		}
 
@@ -239,7 +239,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Group {
 		$result = civicrm_api( 'CustomGroup', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $custom_fields;
 		}
 
@@ -296,7 +296,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Group {
 		$result = civicrm_api( 'CustomGroup', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $custom_fields;
 		}
 
@@ -344,7 +344,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Group {
 		$result = civicrm_api( 'CustomGroup', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $custom_group;
 		}
 
@@ -431,7 +431,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Group {
 		$result = civicrm_api( 'CustomGroup', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $custom_groups;
 		}
 

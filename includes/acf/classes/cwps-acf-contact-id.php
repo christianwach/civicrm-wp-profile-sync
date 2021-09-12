@@ -169,7 +169,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_ID extends CiviCRM_Profile_Sync_A
 		}
 
 		// Let's update each ACF Field in turn.
-		foreach( $acf_fields['contact_id'] AS $selector => $dummy ) {
+		foreach ( $acf_fields['contact_id'] as $selector => $dummy ) {
 			$this->acf_loader->acf->field->value_update( $selector, $contact_id, $args['post_id'] );
 		}
 
@@ -201,7 +201,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_ID extends CiviCRM_Profile_Sync_A
 		if ( $post_types !== false ) {
 
 			// Handle each Post Type in turn.
-			foreach( $post_types AS $post_type ) {
+			foreach ( $post_types as $post_type ) {
 
 				// Get the Post ID for this Contact.
 				$post_id = $this->acf_loader->civicrm->contact->is_mapped_to_post( $contact, $post_type );
@@ -212,7 +212,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_ID extends CiviCRM_Profile_Sync_A
 				}
 
 				// Exclude "reverse" edits when a Post is the originator.
-				if ( $entity['entity'] === 'post' AND $post_id == $entity['id'] ) {
+				if ( $entity['entity'] === 'post' && $post_id == $entity['id'] ) {
 					continue;
 				}
 
@@ -256,7 +256,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_ID extends CiviCRM_Profile_Sync_A
 		}
 
 		// Let's update each ACF Field in turn.
-		foreach( $acf_fields['contact_id'] AS $selector => $dummy ) {
+		foreach ( $acf_fields['contact_id'] as $selector => $dummy ) {
 			$this->acf_loader->acf->field->value_update( $selector, $args['objectId'], $post_id );
 		}
 
@@ -281,7 +281,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_ID extends CiviCRM_Profile_Sync_A
 	public function acf_fields_get_for_post( $acf_fields, $field, $post_id ) {
 
 		// Add if it is a Contact ID Field.
-		if ( ! empty( $field['type'] ) AND $field['type'] == 'civicrm_contact_id' ) {
+		if ( ! empty( $field['type'] ) && $field['type'] == 'civicrm_contact_id' ) {
 			$acf_fields['contact_id'][$field['name']] = 1;
 		}
 

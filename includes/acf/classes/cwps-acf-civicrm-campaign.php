@@ -109,7 +109,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Campaign {
 		$result = civicrm_api( 'Campaign', 'create', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $campaign;
 		}
 
@@ -193,7 +193,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Campaign {
 		$result = civicrm_api( 'Campaign', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $campaign;
 		}
 
@@ -298,7 +298,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Campaign {
 
 		// Build return array.
 		$campaigns = [];
-		foreach ( $current AS $key => $value ) {
+		foreach ( $current as $key => $value ) {
 			$campaigns[ $value['id'] ] = $value['title'];
 		}
 

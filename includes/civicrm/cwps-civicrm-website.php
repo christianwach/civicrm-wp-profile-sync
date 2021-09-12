@@ -224,7 +224,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		$website_type_id = $this->plugin->admin->setting_get( 'user_profile_website_type', 0 );
 
 		// Bail if we didn't get one.
-		if ( empty( $website_type_id ) OR $website_type_id === 0 ) {
+		if ( empty( $website_type_id ) || $website_type_id === 0 ) {
 			return;
 		}
 
@@ -246,7 +246,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 			$result = civicrm_api( 'Website', 'create', $params );
 
 			// Log something on failure.
-			if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+			if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 				$e = new \Exception;
 				$trace = $e->getTraceAsString();
 				error_log( print_r( [
@@ -260,7 +260,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		} else {
 
 			// Bail if it hasn't changed.
-			if ( ! empty( $existing->url ) AND $existing->url == $user->user_url ) {
+			if ( ! empty( $existing->url ) && $existing->url == $user->user_url ) {
 				return;
 			}
 
@@ -280,7 +280,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 				$result = civicrm_api( 'Website', 'create', $params );
 
 				// Log something on failure.
-				if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+				if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 					$e = new \Exception;
 					$trace = $e->getTraceAsString();
 					error_log( print_r( [
@@ -303,7 +303,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 				$result = civicrm_api( 'Website', 'delete', $params );
 
 				// Log something on failure.
-				if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+				if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 					$e = new \Exception;
 					$trace = $e->getTraceAsString();
 					error_log( print_r( [
@@ -357,7 +357,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		$existing_website = civicrm_api( 'Website', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $existing_website['is_error'] ) AND $existing_website['is_error'] == 1 ) {
+		if ( ! empty( $existing_website['is_error'] ) && $existing_website['is_error'] == 1 ) {
 			return $website;
 		}
 
@@ -381,7 +381,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 			$existing_data = array_pop( $existing_website['values'] );
 
 			// Bail if it hasn't changed.
-			if ( !empty( $existing_data['url'] ) AND $existing_data['url'] == $value ) {
+			if ( !empty( $existing_data['url'] ) && $existing_data['url'] == $value ) {
 				return $existing_data;
 			}
 
@@ -418,7 +418,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		}
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $website;
 		}
 
@@ -503,7 +503,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		$result = civicrm_api( 'Website', 'get', $params );
 
 		// Bail on failure.
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			return $website;
 		}
 
@@ -582,7 +582,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		}
 
 		// Add to return array keyed by ID.
-		foreach( $website_types AS $website_type_id => $website_type_name ) {
+		foreach ( $website_types as $website_type_id => $website_type_name ) {
 			$options[$website_type_id] = esc_attr( $website_type_name );
 		}
 

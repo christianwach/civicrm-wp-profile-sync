@@ -670,7 +670,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		$result = civicrm_api( 'OptionGroup', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $options;
 		}
 
@@ -733,7 +733,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		$result = civicrm_api( 'OptionValue', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $values;
 		}
 
@@ -783,7 +783,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		}
 
 		// Tease out the default if present.
-		foreach( $option_values AS $option_value ) {
+		foreach ( $option_values as $option_value ) {
 			if ( ! empty( $option_value['is_default'] ) ) {
 				$default = $option_value['value'];
 				break;
@@ -954,7 +954,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	public function denullify( $value ) {
 
 		// Catch inconsistent CiviCRM "empty-ish" values.
-		if ( empty( $value ) OR $value == 'null' OR $value == 'NULL' ) {
+		if ( empty( $value ) || $value == 'null' || $value == 'NULL' ) {
 			$value = '';
 		}
 

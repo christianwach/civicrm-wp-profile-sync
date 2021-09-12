@@ -127,7 +127,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 		$result = civicrm_api( 'OptionGroup', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $option_group_id;
 		}
 
@@ -190,7 +190,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 		$result = civicrm_api( 'OptionValue', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $activity_type;
 		}
 
@@ -247,7 +247,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 		$result = civicrm_api( 'OptionValue', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $activity_type;
 		}
 
@@ -301,7 +301,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 		$result = civicrm_api( 'Activity', 'get', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -395,7 +395,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 		$result = civicrm_api( 'Activity', 'getoptions', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $choices;
 		}
 
@@ -405,7 +405,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 		}
 
 		// The formatted result set is what we're after.
-		foreach ( $result['values'] AS $choice ) {
+		foreach ( $result['values'] as $choice ) {
 			$choices[$choice['key']] = $choice['value'];
 		}
 
@@ -463,7 +463,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 		$result = civicrm_api( 'OptionValue', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $activity_types;
 		}
 
@@ -539,7 +539,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 		$result = civicrm_api( 'OptionValue', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $activity_types;
 		}
 

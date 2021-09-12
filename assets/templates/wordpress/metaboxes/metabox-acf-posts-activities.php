@@ -18,7 +18,7 @@
 	<?php if ( ! empty( $activity_post_types ) ) : ?>
 		<table class="form-table">
 
-			<?php foreach( $activity_post_types AS $activity_post_type => $label ) : ?>
+			<?php foreach ( $activity_post_types as $activity_post_type => $label ) : ?>
 
 				<?php $identifier = $prefix . '_' . $activity_post_type; ?>
 				<?php $stop = ''; ?>

@@ -119,7 +119,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		$result = civicrm_api( 'Event', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $event_data;
 		}
 
@@ -172,7 +172,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		$result = civicrm_api( 'Event', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $event_data;
 		}
 
@@ -231,7 +231,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		$result = civicrm_api( 'Event', 'getlist', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $event_data;
 		}
 
@@ -284,7 +284,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		$result = civicrm_api( 'OptionValue', 'get', $params );
 
 		// Bail if we get an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -329,7 +329,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 
 		// Build array.
 		$options = [ '' => __( 'None', 'civicrm-wp-profile-sync' ) ];
-		foreach ( $event_types AS $event_type ) {
+		foreach ( $event_types as $event_type ) {
 			$options[$event_type['value']] = $event_type['label'];
 		}
 
@@ -378,7 +378,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		$result = civicrm_api( 'OptionGroup', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $option_group_id;
 		}
 
@@ -441,7 +441,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		$result = civicrm_api( 'OptionValue', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $event_type;
 		}
 
@@ -498,7 +498,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		$result = civicrm_api( 'OptionValue', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $event_type;
 		}
 

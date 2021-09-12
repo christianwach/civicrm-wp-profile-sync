@@ -237,7 +237,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Relationship extends acf_field {
 
 			// Maybe append them.
 			if ( ! empty( $contacts ) ) {
-				foreach( $contacts AS $contact ) {
+				foreach ( $contacts as $contact ) {
 
 					// Add email address if present.
 					$name = $contact['display_name'];
@@ -389,7 +389,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Relationship extends acf_field {
 		// Maybe append results.
 		$results = [];
 		if ( ! empty( $contacts ) ) {
-			foreach( $contacts AS $contact ) {
+			foreach ( $contacts as $contact ) {
 
 				// Add email address if present.
 				$name = $contact['label'];
@@ -717,10 +717,10 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Relationship extends acf_field {
 		$contact_types = $this->civicrm->contact_type->hierarchy_separate( $hierarchy );
 
 		// Filter fields to include each Relationship in both directions when possible.
-		foreach( $relationships AS $relationship ) {
+		foreach ( $relationships as $relationship ) {
 
 			// Check each Contact Type in turn.
-			foreach( $contact_types AS $contact_type ) {
+			foreach ( $contact_types as $contact_type ) {
 
 				// Check the A-to-B relationship.
 				if ( $relationship['contact_type_a'] == $contact_type['type'] ) {

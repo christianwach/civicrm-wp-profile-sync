@@ -1167,7 +1167,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		}
 
 		// Update all of them.
-		foreach( $addresses_shared AS $address_shared ) {
+		foreach ( $addresses_shared as $address_shared ) {
 
 			// We need a Contact ID in the shared Address.
 			if ( empty( $address_shared->contact_id ) ) {
@@ -1239,7 +1239,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		}
 
 		// Update all of them.
-		foreach( $addresses_shared AS $address_shared ) {
+		foreach ( $addresses_shared as $address_shared ) {
 
 			// We need a Contact ID in the shared Address.
 			if ( empty( $address_shared->contact_id ) ) {
@@ -1311,7 +1311,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		}
 
 		// Update all of them.
-		foreach( $addresses_shared AS $address_shared ) {
+		foreach ( $addresses_shared as $address_shared ) {
 
 			// We need a Contact ID in the shared Address.
 			if ( empty( $address_shared->contact_id ) ) {
@@ -1731,7 +1731,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$contact_types = $this->civicrm->contact_type->types_get_nested();
 
 		// Get the Contact Fields for each CiviCRM Contact Type.
-		foreach( $contact_types AS $contact_type ) {
+		foreach ( $contact_types as $contact_type ) {
 
 			// Get public fields of this type.
 			$contact_fields_for_type = $this->civicrm->contact_field->data_get( $contact_type['name'], $field['type'], 'public' );
@@ -1745,7 +1745,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$custom_fields = [];
 
 		// Get the Custom Fields for each CiviCRM Contact Type.
-		foreach( $contact_types AS $contact_type ) {
+		foreach ( $contact_types as $contact_type ) {
 
 			// Top level types first.
 			$type_name = $contact_type['name'];
@@ -1762,7 +1762,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 			}
 
 			// Merge in children.
-			foreach( $contact_type['children'] AS $contact_subtype ) {
+			foreach ( $contact_type['children'] as $contact_subtype ) {
 
 				// Subtypes next.
 				$subtype_name = $contact_subtype['name'];
@@ -1789,14 +1789,14 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$filtered_fields = apply_filters( 'cwps/acf/query_settings/custom_fields_filter', [], $custom_fields, $field );
 
 		// Pass if not populated.
-		if ( empty( $contact_fields ) AND empty( $filtered_fields ) ) {
+		if ( empty( $contact_fields ) && empty( $filtered_fields ) ) {
 			return $choices;
 		}
 
 		// Build Contact Field choices array for dropdown.
 		if ( ! empty( $contact_fields ) ) {
 			$contact_fields_label = esc_attr__( 'Contact Fields', 'civicrm-wp-profile-sync' );
-			foreach( $contact_fields AS $contact_field ) {
+			foreach ( $contact_fields as $contact_field ) {
 				$choices[$contact_fields_label][$this->civicrm->contact_field_prefix() . $contact_field['name']] = $contact_field['title'];
 			}
 		}
@@ -1804,9 +1804,9 @@ class CiviCRM_Profile_Sync_ACF_User {
 		// Build Custom Field choices array for dropdown.
 		if ( ! empty( $filtered_fields ) ) {
 			$custom_field_prefix = $this->civicrm->custom_field_prefix();
-			foreach( $filtered_fields AS $custom_group_name => $custom_group ) {
+			foreach ( $filtered_fields as $custom_group_name => $custom_group ) {
 				$custom_fields_label = esc_attr( $custom_group_name );
-				foreach( $custom_group AS $custom_field ) {
+				foreach ( $custom_group as $custom_field ) {
 					$choices[$custom_fields_label][$custom_field_prefix . $custom_field['id']] = $custom_field['label'];
 				}
 			}
@@ -1852,7 +1852,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$contact_types = $this->civicrm->contact_type->types_get_nested();
 
 		// Get the Custom Fields for each CiviCRM Contact Type.
-		foreach( $contact_types AS $contact_type ) {
+		foreach ( $contact_types as $contact_type ) {
 
 			// Top level types first.
 			$type_name = $contact_type['name'];
@@ -1869,7 +1869,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 			}
 
 			// Merge in children.
-			foreach( $contact_type['children'] AS $contact_subtype ) {
+			foreach ( $contact_type['children'] as $contact_subtype ) {
 
 				// Subtypes next.
 				$subtype_name = $contact_subtype['name'];
@@ -1916,7 +1916,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$contact_types = $this->civicrm->contact_type->types_get_nested();
 
 		// Get the Custom Fields for each CiviCRM Contact Type.
-		foreach( $contact_types AS $contact_type ) {
+		foreach ( $contact_types as $contact_type ) {
 
 			// Get public fields of this type.
 			$contact_fields_for_type = $this->civicrm->contact_field->data_get( $contact_type['name'], $field['type'], 'public' );
@@ -1961,7 +1961,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$relationship_types = $this->civicrm->relationship->types_get_all();
 
 		// Get the Custom Fields for each CiviCRM Relationship Type.
-		foreach( $relationship_types AS $relationship_type ) {
+		foreach ( $relationship_types as $relationship_type ) {
 
 			// Define key.
 			$key = $relationship_type['id'] . '_ab';
@@ -2032,7 +2032,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$contact_id = false;
 
 		// Let's tease out the context from the Custom Field data.
-		foreach( $args['custom_fields'] AS $field ) {
+		foreach ( $args['custom_fields'] as $field ) {
 
 			// Skip if it is not attached to a Contact.
 			if ( $field['entity_table'] != 'civicrm_contact' ) {
@@ -2133,7 +2133,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		}
 
 		// Loop through our rule names to see if the query contains one.
-		foreach ( $this->rule_names AS $rule_name ) {
+		foreach ( $this->rule_names as $rule_name ) {
 			 if ( ! empty( $params[$rule_name] ) ) {
 				$supported = true;
 				break;

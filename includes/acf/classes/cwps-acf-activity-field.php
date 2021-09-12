@@ -162,7 +162,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 	public function value_validate( $valid, $value, $field, $input ) {
 
 		// Bail if it's not required and is empty.
-		if ( $field['required'] == '0' AND empty( $value ) ) {
+		if ( $field['required'] == '0' && empty( $value ) ) {
 			return $valid;
 		}
 
@@ -233,7 +233,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 		}
 
 		// Let's look at each ACF Field in turn.
-		foreach( $acf_fields['activity'] AS $selector => $activity_field ) {
+		foreach ( $acf_fields['activity'] as $selector => $activity_field ) {
 
 			// Skip if it's not a public Activity Field.
 			if ( ! array_key_exists( $activity_field, $this->activity_fields ) ) {
@@ -440,7 +440,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 		// TODO: Do we need this loop?
 
 		// Loop through the Post Types.
-		foreach( $is_activity_field_group AS $post_type_name ) {
+		foreach ( $is_activity_field_group as $post_type_name ) {
 
 			// Get public fields of this type.
 			$activity_fields_for_type = $this->data_get( $field['type'], 'public' );
@@ -490,7 +490,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 		$result = civicrm_api( 'Activity', 'getfield', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $field;
 		}
 
@@ -563,14 +563,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 				// Skip all but those defined in our Activity Fields array.
 				$public_fields = [];
-				foreach ( $result['values'] AS $key => $value ) {
+				foreach ( $result['values'] as $key => $value ) {
 					if ( array_key_exists( $value['name'], $this->activity_fields ) ) {
 						$public_fields[] = $value;
 					}
 				}
 
 				// Skip all but those mapped to the type of ACF Field.
-				foreach ( $public_fields AS $key => $value ) {
+				foreach ( $public_fields as $key => $value ) {
 					if ( $field_type == $this->activity_fields[$value['name']] ) {
 						$fields[] = $value;
 					}
@@ -644,7 +644,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 			} elseif ( $filter == 'public' ) {
 
 				// Skip all but those defined in our Activity Fields array.
-				foreach ( $result['values'] AS $key => $value ) {
+				foreach ( $result['values'] as $key => $value ) {
 					if ( array_key_exists( $value['name'], $this->activity_fields ) ) {
 						$fields[] = $value;
 					}
@@ -702,7 +702,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 		$activity_fields = [];
 
 		// Skip all but those mapped to the type of ACF Field.
-		foreach ( $this->activity_fields AS $key => $value ) {
+		foreach ( $this->activity_fields as $key => $value ) {
 			if ( $type == $value ) {
 				$activity_fields[$key] = $value;
 			}
@@ -762,7 +762,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->acf_loader->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
 
@@ -803,7 +803,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->acf_loader->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
 

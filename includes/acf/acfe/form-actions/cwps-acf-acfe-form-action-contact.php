@@ -158,8 +158,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		$this->public_contact_fields = $this->civicrm->contact_field->get_public_fields();
 
 		// Populate public mapping Fields.
-		foreach ( $this->public_contact_fields AS $contact_type => $fields_for_type ) {
-			foreach ( $fields_for_type AS $field ) {
+		foreach ( $this->public_contact_fields as $contact_type => $fields_for_type ) {
+			foreach ( $fields_for_type as $field ) {
 				$this->mapping_field_filters_add( $field['name'] );
 			}
 		}
@@ -169,9 +169,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		$this->custom_field_ids = [];
 
 		// Populate mapping Fields.
-		foreach ( $this->custom_fields AS $key => $custom_group ) {
+		foreach ( $this->custom_fields as $key => $custom_group ) {
 			if ( ! empty( $custom_group['api.CustomField.get']['values'] ) ) {
-				foreach ( $custom_group['api.CustomField.get']['values'] AS $custom_field ) {
+				foreach ( $custom_group['api.CustomField.get']['values'] as $custom_field ) {
 					$this->mapping_field_filters_add( 'custom_' . $custom_field['id'] );
 					// Also build Custom Field IDs.
 					$this->custom_field_ids[] = (int) $custom_field['id'];
@@ -184,7 +184,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// Get default Location Type.
 		$this->location_type_default = false;
-		foreach( $this->location_types AS $location_type ) {
+		foreach ( $this->location_types as $location_type ) {
 			if ( ! empty( $location_type['is_default'] ) ) {
 				$this->location_type_default = $location_type['id'];
 				break;
@@ -195,7 +195,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		$this->email_fields = $this->civicrm->email->civicrm_fields_get( 'public' );
 
 		// Populate public mapping Fields.
-		foreach ( $this->email_fields AS $email_field ) {
+		foreach ( $this->email_fields as $email_field ) {
 			$this->mapping_field_filters_add( 'email_' . $email_field['name'] );
 		}
 
@@ -206,7 +206,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		$this->website_fields = $this->civicrm->website->civicrm_fields_get( 'public' );
 
 		// Populate public mapping Fields.
-		foreach ( $this->website_fields AS $website_field ) {
+		foreach ( $this->website_fields as $website_field ) {
 			$this->mapping_field_filters_add( 'website_' . $website_field['name'] );
 		}
 
@@ -214,7 +214,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		$this->address_fields = $this->civicrm->address->civicrm_fields_get( 'public' );
 
 		// Populate public mapping Fields.
-		foreach ( $this->address_fields AS $address_field ) {
+		foreach ( $this->address_fields as $address_field ) {
 			$this->mapping_field_filters_add( 'address_' . $address_field['name'] );
 		}
 
@@ -225,7 +225,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		$this->phone_fields = $this->civicrm->phone->civicrm_fields_get( 'public' );
 
 		// Populate public mapping Fields.
-		foreach ( $this->phone_fields AS $phone_field ) {
+		foreach ( $this->phone_fields as $phone_field ) {
 			$this->mapping_field_filters_add( 'phone_' . $phone_field['name'] );
 		}
 
@@ -236,7 +236,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		$this->im_fields = $this->civicrm->im->civicrm_fields_get( 'public' );
 
 		// Populate public mapping Fields.
-		foreach ( $this->im_fields AS $im_field ) {
+		foreach ( $this->im_fields as $im_field ) {
 			$this->mapping_field_filters_add( 'im_' . $im_field['name'] );
 		}
 
@@ -247,7 +247,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		$this->note_fields = $this->civicrm->note->civicrm_fields_get( 'public' );
 
 		// Populate public mapping Fields.
-		foreach ( $this->note_fields AS $note_field ) {
+		foreach ( $this->note_fields as $note_field ) {
 			$this->mapping_field_filters_add( 'note_' . $note_field['name'] );
 		}
 
@@ -258,7 +258,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		$this->relationship_fields = $this->civicrm->relationship->civicrm_fields_get( 'public' );
 
 		// Populate public mapping Fields.
-		foreach ( $this->relationship_fields AS $relationship_field ) {
+		foreach ( $this->relationship_fields as $relationship_field ) {
 			$this->mapping_field_filters_add( $relationship_field['name'] );
 		}
 
@@ -310,11 +310,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Populate the Contact Fields.
-		foreach ( $this->public_contact_fields AS $contact_type => $fields_for_type ) {
-			foreach ( $fields_for_type AS $key => $field_for_type ) {
+		foreach ( $this->public_contact_fields as $contact_type => $fields_for_type ) {
+			foreach ( $fields_for_type as $key => $field_for_type ) {
 				$field = get_sub_field( $this->field_key . 'map_' . $field_for_type['name'] );
 				$field = acfe_form_map_field_value_load( $field, $current_post_id, $form );
-				if ( acf_is_field_key( $field ) AND ! empty( $contact[ $field_for_type['name'] ] ) ) {
+				if ( acf_is_field_key( $field ) && ! empty( $contact[ $field_for_type['name'] ] ) ) {
 					$form['map'][$field]['value'] = $contact[ $field_for_type['name'] ];
 				}
 			}
@@ -322,24 +322,24 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// Get the Custom Field values for this Contact.
 		$custom_field_values = $this->civicrm->custom_field->values_get_by_contact_id( $contact['id'], $this->custom_field_ids );
-		foreach ( $custom_field_values AS $custom_field_id => $custom_field_value ) {
+		foreach ( $custom_field_values as $custom_field_id => $custom_field_value ) {
 			$contact[ 'custom_' . $custom_field_id ] = $custom_field_value;
 		}
 
 		// Handle population of Custom Fields.
-		foreach ( $this->custom_fields AS $key => $custom_group ) {
+		foreach ( $this->custom_fields as $key => $custom_group ) {
 
 			// Get the Group Field.
 			$custom_group_field = get_sub_field( $this->field_key . 'custom_group_' . $custom_group['id'] );
 
 			// Populate the Custom Fields.
-			foreach ( $custom_group['api.CustomField.get']['values'] AS $custom_field ) {
+			foreach ( $custom_group['api.CustomField.get']['values'] as $custom_field ) {
 				$code = 'custom_' . $custom_field['id'];
 				$field = $custom_group_field[ $this->field_name . 'map_' . $code ];
 				$field = acfe_form_map_field_value_load( $field, $current_post_id, $form );
 				if ( acf_is_field_key( $field ) ) {
 					// Allow (string) "0" as valid data.
-					if ( empty( $contact[ $code ] ) AND $contact[ $code ] !== '0' ) {
+					if ( empty( $contact[ $code ] ) && $contact[ $code ] !== '0' ) {
 						continue;
 					}
 					$form['map'][$field]['value'] = $contact[$code];
@@ -354,7 +354,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// Get the raw Email Actions.
 		$email_actions = get_sub_field( $this->field_key . 'email_repeater' );
 		if ( ! empty( $email_actions ) ) {
-			foreach ( $email_actions AS $email_action ) {
+			foreach ( $email_actions as $email_action ) {
 
 				// Try and get the Email Record.
 				$location_type_id = $email_action[$this->field_name . 'map_email_location_type_id'];
@@ -367,10 +367,10 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				$emails[] = $email;
 
 				// Populate the Email Fields.
-				foreach ( $this->email_fields AS $email_field ) {
+				foreach ( $this->email_fields as $email_field ) {
 					$field = $email_action[ $this->field_name . 'map_email_' . $email_field['name'] ];
 					$field = acfe_form_map_field_value_load( $field, $current_post_id, $form );
-					if ( acf_is_field_key( $field ) AND ! empty( $email[ $email_field['name'] ] ) ) {
+					if ( acf_is_field_key( $field ) && ! empty( $email[ $email_field['name'] ] ) ) {
 						$form['map'][$field]['value'] = $email[ $email_field['name'] ];
 					}
 				}
@@ -384,7 +384,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// Get the raw Website Actions.
 		$website_actions = get_sub_field( $this->field_key . 'website_repeater' );
 		if ( ! empty( $website_actions ) ) {
-			foreach ( $website_actions AS $website_action ) {
+			foreach ( $website_actions as $website_action ) {
 
 				// Try and get the Website Record.
 				$website_type_id = $website_action[$this->field_name . 'map_website_type_id'];
@@ -398,10 +398,10 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				$websites[] = $website_record;
 
 				// Populate the Website Fields.
-				foreach ( $this->website_fields AS $website_field ) {
+				foreach ( $this->website_fields as $website_field ) {
 					$field = $website_action[ $this->field_name . 'map_website_' . $website_field['name'] ];
 					$field = acfe_form_map_field_value_load( $field, $current_post_id, $form );
-					if ( acf_is_field_key( $field ) AND ! empty( $website_record[ $website_field['name'] ] ) ) {
+					if ( acf_is_field_key( $field ) && ! empty( $website_record[ $website_field['name'] ] ) ) {
 						$form['map'][$field]['value'] = $website_record[ $website_field['name'] ];
 					}
 				}
@@ -415,7 +415,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// Get the raw Address Actions.
 		$address_actions = get_sub_field( $this->field_key . 'address_repeater' );
 		if ( ! empty( $address_actions ) ) {
-			foreach ( $address_actions AS $address_action ) {
+			foreach ( $address_actions as $address_action ) {
 
 				// Try and get the Address Record.
 				$location_type_id = $address_action[$this->field_name . 'map_address_location_type_id'];
@@ -428,10 +428,10 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				$addresses[] = $address;
 
 				// Populate the Address Fields.
-				foreach ( $this->address_fields AS $address_field ) {
+				foreach ( $this->address_fields as $address_field ) {
 					$field = $address_action[ $this->field_name . 'map_address_' . $address_field['name'] ];
 					$field = acfe_form_map_field_value_load( $field, $current_post_id, $form );
-					if ( acf_is_field_key( $field ) AND ! empty( $address[ $address_field['name'] ] ) ) {
+					if ( acf_is_field_key( $field ) && ! empty( $address[ $address_field['name'] ] ) ) {
 						$form['map'][$field]['value'] = $address[ $address_field['name'] ];
 					}
 				}
@@ -445,7 +445,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// Get the raw Phone Actions.
 		$phone_actions = get_sub_field( $this->field_key . 'phone_repeater' );
 		if ( ! empty( $phone_actions ) ) {
-			foreach ( $phone_actions AS $phone_action ) {
+			foreach ( $phone_actions as $phone_action ) {
 
 				// Try and get the Phone Record.
 				$location_type_id = $phone_action[$this->field_name . 'map_phone_location_type_id'];
@@ -453,7 +453,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				$phone_records = $this->civicrm->phone->phones_get_by_type( $contact['id'], $location_type_id, $phone_type_id );
 
 				// We can only handle exactly one, though CiviCRM allows many.
-				if ( empty( $phone_records ) OR count( $phone_records ) > 1 ) {
+				if ( empty( $phone_records ) || count( $phone_records ) > 1 ) {
 					continue;
 				}
 
@@ -462,10 +462,10 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				$phones[] = $phone_record;
 
 				// Populate the Phone Fields.
-				foreach ( $this->phone_fields AS $phone_field ) {
+				foreach ( $this->phone_fields as $phone_field ) {
 					$field = $phone_action[ $this->field_name . 'map_phone_' . $phone_field['name'] ];
 					$field = acfe_form_map_field_value_load( $field, $current_post_id, $form );
-					if ( acf_is_field_key( $field ) AND ! empty( $phone_record[ $phone_field['name'] ] ) ) {
+					if ( acf_is_field_key( $field ) && ! empty( $phone_record[ $phone_field['name'] ] ) ) {
 						$form['map'][$field]['value'] = $phone_record[ $phone_field['name'] ];
 					}
 				}
@@ -479,7 +479,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// Get the raw Instant Messenger Actions.
 		$im_actions = get_sub_field( $this->field_key . 'im_repeater' );
 		if ( ! empty( $im_actions ) ) {
-			foreach ( $im_actions AS $im_action ) {
+			foreach ( $im_actions as $im_action ) {
 
 				// Try and get the Instant Messenger Record.
 				$location_type_id = $im_action[$this->field_name . 'map_im_location_type_id'];
@@ -487,7 +487,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				$im_records = $this->civicrm->im->ims_get_by_type( $contact['id'], $location_type_id, $provider_id );
 
 				// We can only handle exactly one, though CiviCRM allows many.
-				if ( empty( $im_records ) OR count( $im_records ) > 1 ) {
+				if ( empty( $im_records ) || count( $im_records ) > 1 ) {
 					continue;
 				}
 
@@ -496,10 +496,10 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				$ims[] = $im_record;
 
 				// Populate the Instant Messenger Fields.
-				foreach ( $this->im_fields AS $im_field ) {
+				foreach ( $this->im_fields as $im_field ) {
 					$field = $im_action[ $this->field_name . 'map_im_' . $im_field['name'] ];
 					$field = acfe_form_map_field_value_load( $field, $current_post_id, $form );
-					if ( acf_is_field_key( $field ) AND ! empty( $im_record[ $im_field['name'] ] ) ) {
+					if ( acf_is_field_key( $field ) && ! empty( $im_record[ $im_field['name'] ] ) ) {
 						$form['map'][$field]['value'] = $im_record[ $im_field['name'] ];
 					}
 				}
@@ -923,8 +923,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		];
 
 		// Add "Mapping" Fields.
-		foreach ( $this->public_contact_fields AS $contact_type => $fields_for_type ) {
-			foreach ( $fields_for_type AS $field ) {
+		foreach ( $this->public_contact_fields as $contact_type => $fields_for_type ) {
+			foreach ( $fields_for_type as $field ) {
 
 				// Common Fields do not need extra conditional logic.
 				$conditional_logic = [];
@@ -1015,7 +1015,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		$contact_sub_types = $this->civicrm->contact_type->choices_sub_types_get();
 
 		// Add "Mapping" Fields.
-		foreach ( $this->custom_fields AS $key => $custom_group ) {
+		foreach ( $this->custom_fields as $key => $custom_group ) {
 
 			// Skip if there are no Custom Fields.
 			if ( empty( $custom_group['api.CustomField.get']['values'] ) ) {
@@ -1028,7 +1028,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			// Get the Contact Sub-type IDs.
 			$contact_sub_type_ids = [];
 			if ( ! empty( $custom_group['extends_entity_column_value'] ) ) {
-				foreach( $custom_group['extends_entity_column_value'] AS $sub_type ) {
+				foreach ( $custom_group['extends_entity_column_value'] as $sub_type ) {
 					$contact_sub_type_ids[] = array_search( $sub_type, $contact_sub_types[$custom_group['extends']] );
 				}
 			}
@@ -1045,7 +1045,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 			// Add Sub-types as OR conditionals if present.
 			if ( ! empty( $contact_sub_type_ids ) ) {
-				foreach ( $contact_sub_type_ids AS $contact_sub_type_id ) {
+				foreach ( $contact_sub_type_ids as $contact_sub_type_id ) {
 
 					$sub_type = [
 						'field' => $this->field_key . 'contact_sub_types',
@@ -1084,7 +1084,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$sub_fields = [];
 
 			// Add "Map" Fields for the Custom Fields.
-			foreach ( $custom_group['api.CustomField.get']['values'] AS $custom_field ) {
+			foreach ( $custom_group['api.CustomField.get']['values'] as $custom_field ) {
 				$code = 'custom_' . $custom_field['id'];
 				$sub_fields[] = $this->mapping_field_mapping_field_get( $code, $custom_field['label'], $conditional_logic );
 			}
@@ -1202,7 +1202,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// Build Location Types choices array for dropdown.
 		$choices = [];
-		foreach( $this->location_types AS $location_type ) {
+		foreach ( $this->location_types as $location_type ) {
 			$choices[$location_type['id']] = esc_attr( $location_type['display_name'] );
 		}
 
@@ -1219,7 +1219,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// ---------------------------------------------------------------------
 
 		// Add "Mapping" Fields to Repeater's Sub-Fields.
-		foreach ( $this->email_fields AS $email_field ) {
+		foreach ( $this->email_fields as $email_field ) {
 			$sub_fields[] = $this->mapping_field_mapping_field_get( 'email_' . $email_field['name'], $email_field['title'] );
 		}
 
@@ -1353,7 +1353,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// ---------------------------------------------------------------------
 
 		// Add "Mapping" Fields to Repeater's Sub-Fields.
-		foreach ( $this->website_fields AS $website_field ) {
+		foreach ( $this->website_fields as $website_field ) {
 			$sub_fields[] = $this->mapping_field_mapping_field_get( 'website_' . $website_field['name'], $website_field['title'] );
 		}
 
@@ -1476,7 +1476,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// Build Location Types choices array for dropdown.
 		$choices = [];
-		foreach( $this->location_types AS $location_type ) {
+		foreach ( $this->location_types as $location_type ) {
 			$choices[$location_type['id']] = esc_attr( $location_type['display_name'] );
 		}
 
@@ -1516,7 +1516,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		];
 
 		// Add "Mapping" Fields to Repeater's Sub-Fields.
-		foreach ( $this->address_fields AS $address_field ) {
+		foreach ( $this->address_fields as $address_field ) {
 			$sub_fields[] = $this->mapping_field_mapping_field_get( 'address_' . $address_field['name'], $address_field['title'] );
 		}
 
@@ -1657,7 +1657,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// Build Location Types choices array for dropdown.
 		$choices = [];
-		foreach( $this->location_types AS $location_type ) {
+		foreach ( $this->location_types as $location_type ) {
 			$choices[$location_type['id']] = esc_attr( $location_type['display_name'] );
 		}
 
@@ -1674,7 +1674,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// ---------------------------------------------------------------------
 
 		// Add "Mapping" Fields to Repeater's Sub-Fields.
-		foreach ( $this->phone_fields AS $phone_field ) {
+		foreach ( $this->phone_fields as $phone_field ) {
 			$sub_fields[] = $this->mapping_field_mapping_field_get( 'phone_' . $phone_field['name'], $phone_field['title'] );
 		}
 
@@ -1815,7 +1815,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// Build Location Types choices array for dropdown.
 		$choices = [];
-		foreach( $this->location_types AS $location_type ) {
+		foreach ( $this->location_types as $location_type ) {
 			$choices[$location_type['id']] = esc_attr( $location_type['display_name'] );
 		}
 
@@ -1832,7 +1832,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// ---------------------------------------------------------------------
 
 		// Add "Mapping" Fields to Repeater's Sub-Fields.
-		foreach ( $this->im_fields AS $im_field ) {
+		foreach ( $this->im_fields as $im_field ) {
 			$sub_fields[] = $this->mapping_field_mapping_field_get( 'im_' . $im_field['name'], $im_field['title'] );
 		}
 
@@ -1956,7 +1956,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// Get all Groups from CiviCRM.
 		$groups_all = $this->civicrm->group->groups_get_all();
 		$choices = [];
-		foreach ( $groups_all AS $group ) {
+		foreach ( $groups_all as $group ) {
 			$choices[$group['id']] = $group['name'];
 		}
 
@@ -2115,7 +2115,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		$sub_fields = [];
 
 		// Add "Mapping" Fields to Repeater's Sub-Fields.
-		foreach ( $this->note_fields AS $note_field ) {
+		foreach ( $this->note_fields as $note_field ) {
 			$sub_fields[] = $this->mapping_field_mapping_field_get( 'note_' . $note_field['name'], $note_field['title'] );
 		}
 
@@ -2231,7 +2231,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		$tags = $this->civicrm->tag->get_for_contacts();
 
 		$choices = [];
-		foreach ( $tags AS $tag ) {
+		foreach ( $tags as $tag ) {
 			$choices[$tag['id']] = esc_html( $tag['name'] );
 		}
 
@@ -2422,7 +2422,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// Build the choices for the Relationship Types.
 		$choices = [];
 		$relationship_types = $this->civicrm->relationship->types_get_all();
-		foreach( $relationship_types AS $relationship ) {
+		foreach ( $relationship_types as $relationship ) {
 			if ( $relationship['label_a_b'] !== $relationship['label_b_a'] ) {
 				$choices[$relationship['contact_type_a']][$relationship['id'] . '_ab'] = esc_html( $relationship['label_a_b'] );
 				$choices[$relationship['contact_type_b']][$relationship['id'] . '_ba'] = esc_html( $relationship['label_b_a'] );
@@ -2464,7 +2464,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		];
 
 		// Add "Mapping" Fields to Repeater's Sub-Fields.
-		foreach ( $this->relationship_fields AS $field ) {
+		foreach ( $this->relationship_fields as $field ) {
 
 			// Custom conditional logic.
 			$conditional_logic = [
@@ -2512,8 +2512,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// Build Fields array.
 		$fields = [];
-		foreach ( $this->public_contact_fields AS $contact_type => $fields_for_type ) {
-			foreach ( $fields_for_type AS $field ) {
+		foreach ( $this->public_contact_fields as $contact_type => $fields_for_type ) {
+			foreach ( $fields_for_type as $field ) {
 				$fields[ $field['name'] ] = get_sub_field( $this->field_key . 'map_' . $field['name'] );
 			}
 		}
@@ -2603,7 +2603,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// Add to the Domain Group if necessary.
 		$domain_group_id = $this->civicrm->get_setting( 'domain_group_id' );
-		if ( ! empty( $domain_group_id ) AND is_numeric( $domain_group_id ) ) {
+		if ( ! empty( $domain_group_id ) && is_numeric( $domain_group_id ) ) {
 			$this->civicrm->group->group_contact_create( $domain_group_id, $contact['id'] );
 		}
 
@@ -2716,7 +2716,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Let's inspect each of them.
-		foreach ( $relationship_data AS $field ) {
+		foreach ( $relationship_data as $field ) {
 
 			// Get the related Contact Action Name.
 			$action_name = $field['action_ref'];
@@ -2767,7 +2767,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// Add the Primary Email.
 		$primary_email = '';
-		foreach( $email_data AS $email_array ) {
+		foreach ( $email_data as $email_array ) {
 			if ( $email_array['is_primary'] ) {
 				$contact_data['email'] = $email_array['email'];
 				break;
@@ -2813,17 +2813,17 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		$data = [];
 
 		// Build data array.
-		foreach ( $this->custom_fields AS $key => $custom_group ) {
+		foreach ( $this->custom_fields as $key => $custom_group ) {
 
 			// Fresh Fields array.
 			$fields = [];
 
 			// Get Group Field.
 			$custom_group_field = get_sub_field( $this->field_key . 'custom_group_' . $custom_group['id'] );
-			foreach( $custom_group_field AS $field ) {
+			foreach ( $custom_group_field as $field ) {
 
 				// Get mapped Fields.
-				foreach ( $custom_group['api.CustomField.get']['values'] AS $custom_field ) {
+				foreach ( $custom_group['api.CustomField.get']['values'] as $custom_field ) {
 					$code = 'custom_' . $custom_field['id'];
 					$fields[ $code ] = $custom_group_field[ $this->field_name . 'map_' . $code ];
 				}
@@ -2870,7 +2870,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Loop through the Action Fields.
-		foreach( $email_repeater AS $field ) {
+		foreach ( $email_repeater as $field ) {
 
 			// Init Fields.
 			$fields = [];
@@ -2879,7 +2879,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$fields['location_type_id'] = $field[ $this->field_name . 'map_email_location_type_id' ];
 
 			// Get mapped Fields.
-			foreach ( $this->email_fields AS $email_field ) {
+			foreach ( $this->email_fields as $email_field ) {
 				$fields[ $email_field['name'] ] = $field[ $this->field_name . 'map_email_' . $email_field['name'] ];
 			}
 
@@ -2920,7 +2920,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Handle each nested Action in turn.
-		foreach ( $email_data AS $email ) {
+		foreach ( $email_data as $email ) {
 
 			// Strip out empty Fields.
 			$email = $this->form_data_prepare( $email );
@@ -2973,7 +2973,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Loop through the Action Fields.
-		foreach( $relationship_repeater AS $field ) {
+		foreach ( $relationship_repeater as $field ) {
 
 			// Init Fields.
 			$fields = [];
@@ -2983,7 +2983,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$fields['relationship_type'] = $field[ $this->field_name . 'relationship_type' ];
 
 			// Get mapped Fields.
-			foreach ( $this->relationship_fields AS $relationship_field ) {
+			foreach ( $this->relationship_fields as $relationship_field ) {
 				$fields[ $relationship_field['name'] ] = $field[ $this->field_name . 'map_' . $relationship_field['name'] ];
 			}
 
@@ -2996,7 +2996,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		$relationship_parsed = [];
 
 		// Let's inspect each of them.
-		foreach ( $relationship_data AS $field ) {
+		foreach ( $relationship_data as $field ) {
 
 			// Get the related Contact Action Name.
 			$action_name = $field['action_ref'];
@@ -3080,7 +3080,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$relationship_update = [];
 
 			// Overwrite when there is an incoming value.
-			foreach ( $relationship AS $key => $value ) {
+			foreach ( $relationship as $key => $value ) {
 				if ( ! empty( $field[$key] ) ) {
 					$relationship_update[$key] = $field[$key];
 				} else {
@@ -3089,7 +3089,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			}
 
 			// Add in any entries that don't exist.
-			foreach ( $field AS $key => $value ) {
+			foreach ( $field as $key => $value ) {
 				if ( ! array_key_exists( $key, $relationship ) ) {
 					$relationship_update[$key] = $field[$key];
 				}
@@ -3132,7 +3132,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Handle each nested Action in turn.
-		foreach ( $relationship_data AS $relationship ) {
+		foreach ( $relationship_data as $relationship ) {
 
 			// Strip out empty Fields.
 			$relationship = $this->form_data_prepare( $relationship );
@@ -3196,7 +3196,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Look at each to determine the offset.
-		foreach ( $form_actions AS $key => $form_action ) {
+		foreach ( $form_actions as $key => $form_action ) {
 
 			// Skip the "previous Action of this kind".
 			if ( $key == $this->action_name ) {
@@ -3204,7 +3204,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			}
 
 			// Skip Actions that are not Contact Actions.
-			if ( empty( $form_action['form_action'] ) OR $form_action['form_action'] !== $this->action_name ) {
+			if ( empty( $form_action['form_action'] ) || $form_action['form_action'] !== $this->action_name ) {
 				continue;
 			}
 
@@ -3214,7 +3214,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			}
 
 			// See if there are any of the same Type.
-			foreach ( $form_action['relationships'] AS $relationship ) {
+			foreach ( $form_action['relationships'] as $relationship ) {
 
 				// Make sure it's an array.
 				$relationship = (array) $relationship;
@@ -3241,7 +3241,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				}
 
 				// Skip those that don't relate to the same Contact.
-				if ( $direction !== 'equal' AND $contact_id != $related_contact_id ) {
+				if ( $direction !== 'equal' && $contact_id != $related_contact_id ) {
 					continue;
 				}
 
@@ -3287,7 +3287,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Loop through the Action Fields.
-		foreach( $website_repeater AS $field ) {
+		foreach ( $website_repeater as $field ) {
 
 			// Init Fields.
 			$fields = [];
@@ -3296,7 +3296,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$fields['website_type_id'] = $field[ $this->field_name . 'map_website_type_id' ];
 
 			// Get mapped Fields.
-			foreach ( $this->website_fields AS $website_field ) {
+			foreach ( $this->website_fields as $website_field ) {
 				$fields[ $website_field['name'] ] = $field[ $this->field_name . 'map_website_' . $website_field['name'] ];
 			}
 
@@ -3337,7 +3337,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Handle each nested Action in turn.
-		foreach ( $website_data AS $website ) {
+		foreach ( $website_data as $website ) {
 
 			// Strip out empty Fields.
 			$website = $this->form_data_prepare( $website );
@@ -3395,7 +3395,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Loop through the Action Fields.
-		foreach( $address_repeater AS $field ) {
+		foreach ( $address_repeater as $field ) {
 
 			// Init Fields.
 			$fields = [];
@@ -3407,7 +3407,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$fields['is_override'] = $field[ $this->field_name . 'is_override' ];
 
 			// Get mapped Fields.
-			foreach ( $this->address_fields AS $address_field ) {
+			foreach ( $this->address_fields as $address_field ) {
 				$fields[ $address_field['name'] ] = $field[ $this->field_name . 'map_address_' . $address_field['name'] ];
 			}
 
@@ -3448,14 +3448,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Handle each nested Action in turn.
-		foreach ( $address_data AS $address ) {
+		foreach ( $address_data as $address ) {
 
 			// Strip out empty Fields.
 			$address = $this->form_data_prepare( $address );
 
 			// Add in empty Fields when requested.
 			if ( ! empty( $address['is_override'] ) ) {
-				foreach ( $this->address_fields AS $address_field ) {
+				foreach ( $this->address_fields as $address_field ) {
 					if ( ! array_key_exists( $address_field['name'], $address ) ) {
 						$address[$address_field['name']] = '';
 					}
@@ -3510,7 +3510,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Loop through the Action Fields.
-		foreach( $phone_repeater AS $field ) {
+		foreach ( $phone_repeater as $field ) {
 
 			// Init Fields.
 			$fields = [];
@@ -3522,7 +3522,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$fields['phone_type_id'] = $field[ $this->field_name . 'map_phone_type_id' ];
 
 			// Get mapped Fields.
-			foreach ( $this->phone_fields AS $phone_field ) {
+			foreach ( $this->phone_fields as $phone_field ) {
 				$fields[ $phone_field['name'] ] = $field[ $this->field_name . 'map_phone_' . $phone_field['name'] ];
 			}
 
@@ -3563,7 +3563,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Handle each nested Action in turn.
-		foreach ( $phone_data AS $phone ) {
+		foreach ( $phone_data as $phone ) {
 
 			// Strip out empty Fields.
 			$phone = $this->form_data_prepare( $phone );
@@ -3637,7 +3637,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Loop through the Action Fields.
-		foreach( $im_repeater AS $field ) {
+		foreach ( $im_repeater as $field ) {
 
 			// Init Fields.
 			$fields = [];
@@ -3649,7 +3649,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$fields['provider_id'] = $field[ $this->field_name . 'map_provider_id' ];
 
 			// Get mapped Fields.
-			foreach ( $this->im_fields AS $im_field ) {
+			foreach ( $this->im_fields as $im_field ) {
 				$fields[ $im_field['name'] ] = $field[ $this->field_name . 'map_im_' . $im_field['name'] ];
 			}
 
@@ -3690,7 +3690,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Handle each nested Action in turn.
-		foreach ( $im_data AS $im ) {
+		foreach ( $im_data as $im ) {
 
 			// Strip out empty Fields.
 			$im = $this->form_data_prepare( $im );
@@ -3764,7 +3764,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Loop through the Action Fields.
-		foreach( $group_repeater AS $field ) {
+		foreach ( $group_repeater as $field ) {
 
 			// Init Fields.
 			$fields = [];
@@ -3821,7 +3821,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Handle each nested Action in turn.
-		foreach ( $group_data AS $group ) {
+		foreach ( $group_data as $group ) {
 
 			// Skip if there's no Group ID.
 			if ( empty( $group['group_id'] ) ) {
@@ -3894,13 +3894,13 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Loop through the Action Fields.
-		foreach( $note_repeater AS $field ) {
+		foreach ( $note_repeater as $field ) {
 
 			// Init Fields.
 			$fields = [];
 
 			// Get mapped Fields.
-			foreach ( $this->note_fields AS $note_field ) {
+			foreach ( $this->note_fields as $note_field ) {
 				$fields[ $note_field['name'] ] = $field[ $this->field_name . 'map_note_' . $note_field['name'] ];
 			}
 
@@ -3941,7 +3941,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Handle each nested Action in turn.
-		foreach ( $note_data AS $note ) {
+		foreach ( $note_data as $note ) {
 
 			// Strip out empty Fields.
 			$note = $this->form_data_prepare( $note );
@@ -4006,7 +4006,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Loop through the Action Fields.
-		foreach( $tag_repeater AS $field ) {
+		foreach ( $tag_repeater as $field ) {
 
 			// Init Fields.
 			$fields = [];
@@ -4060,7 +4060,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Handle each nested Action in turn.
-		foreach ( $tag_data AS $tag ) {
+		foreach ( $tag_data as $tag ) {
 
 			// Skip if there's no Tag ID.
 			if ( empty( $tag['tag_ids'] ) ) {
@@ -4076,7 +4076,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			}
 
 			// Handle each Tag in turn.
-			foreach ( $tag['tag_ids'] AS $tag_id ) {
+			foreach ( $tag['tag_ids'] as $tag_id ) {
 
 				// Skip if Contact already has the Tag.
 				$has_tag = $this->civicrm->tag->contact_has_tag( $contact['id'], $tag_id );

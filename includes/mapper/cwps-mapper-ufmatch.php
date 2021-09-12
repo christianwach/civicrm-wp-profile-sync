@@ -138,7 +138,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 
 				// Get the Contact ID from the returned array.
 				if ( is_array( $entry ) ) {
-					foreach( $entry AS $item ) {
+					foreach ( $entry as $item ) {
 						$contact_id = absint( $item->contact_id );
 						break;
 					}
@@ -230,7 +230,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 
 			// Get the User ID from the returned array.
 			if ( is_array( $entry ) ) {
-				foreach( $entry AS $item ) {
+				foreach ( $entry as $item ) {
 					$user_id = absint( $item->uf_id );
 					break;
 				}
@@ -306,7 +306,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		}
 
 		// Sanity checks.
-		if ( ! is_numeric( $contact_id ) OR ! is_numeric( $user_id ) ) {
+		if ( ! is_numeric( $contact_id ) || ! is_numeric( $user_id ) ) {
 			return false;
 		}
 
@@ -327,7 +327,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		$result = civicrm_api( 'UFMatch', 'create', $params );
 
 		// Log and bail on failure.
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception;
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -376,7 +376,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		$result = civicrm_api( 'UFMatch', 'delete', $params );
 
 		// Log and bail on failure.
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception;
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -439,7 +439,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		}
 
 		// Maybe add Domain ID if passed as an integer.
-		if ( ! empty( $domain_id ) AND is_numeric( $domain_id ) ) {
+		if ( ! empty( $domain_id ) && is_numeric( $domain_id ) ) {
 			$params['domain_id'] = $domain_id;
 		}
 
@@ -447,7 +447,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		$result = civicrm_api( 'UFMatch', 'get', $params );
 
 		// Log and bail on failure.
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception;
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -473,7 +473,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		// Assign entries to an array if there's more than one.
 		if ( count( $result['values'] ) > 1 ) {
 			$entry = [];
-			foreach( $result['values'] AS $item ) {
+			foreach ( $result['values'] as $item ) {
 				$entry[] = (object) $item;
 			}
 		}
@@ -525,7 +525,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		}
 
 		// Maybe add Domain ID if passed as an integer.
-		if ( ! empty( $domain_id ) AND is_numeric( $domain_id ) ) {
+		if ( ! empty( $domain_id ) && is_numeric( $domain_id ) ) {
 			$params['domain_id'] = $domain_id;
 		}
 
@@ -533,7 +533,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		$result = civicrm_api( 'UFMatch', 'get', $params );
 
 		// Log and bail on failure.
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception;
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -559,7 +559,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		// Assign entries to an array if there's more than one.
 		if ( count( $result['values'] ) > 1 ) {
 			$entry = [];
-			foreach( $result['values'] AS $item ) {
+			foreach ( $result['values'] as $item ) {
 				$entry[] = (object) $item;
 			}
 		}
@@ -611,7 +611,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		}
 
 		// Maybe add Domain ID if passed as an integer.
-		if ( ! empty( $domain_id ) AND is_numeric( $domain_id ) ) {
+		if ( ! empty( $domain_id ) && is_numeric( $domain_id ) ) {
 			$params['domain_id'] = $domain_id;
 		}
 
@@ -619,7 +619,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		$result = civicrm_api( 'UFMatch', 'get', $params );
 
 		// Log and bail on failure.
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception;
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -645,7 +645,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		// Assign entries to an array if there's more than one.
 		if ( count( $result['values'] ) > 1 ) {
 			$entry = [];
-			foreach( $result['values'] AS $item ) {
+			foreach ( $result['values'] as $item ) {
 				$entry[] = (object) $item;
 			}
 		}

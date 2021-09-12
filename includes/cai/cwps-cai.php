@@ -1169,7 +1169,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		}
 
 		// Update all of them.
-		foreach( $addresses_shared AS $address_shared ) {
+		foreach ( $addresses_shared as $address_shared ) {
 
 			// We need a Contact ID in the shared Address.
 			if ( empty( $address_shared->contact_id ) ) {
@@ -1241,7 +1241,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		}
 
 		// Update all of them.
-		foreach( $addresses_shared AS $address_shared ) {
+		foreach ( $addresses_shared as $address_shared ) {
 
 			// We need a Contact ID in the shared Address.
 			if ( empty( $address_shared->contact_id ) ) {
@@ -1313,7 +1313,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		}
 
 		// Update all of them.
-		foreach( $addresses_shared AS $address_shared ) {
+		foreach ( $addresses_shared as $address_shared ) {
 
 			// We need a Contact ID in the shared Address.
 			if ( empty( $address_shared->contact_id ) ) {
@@ -1731,7 +1731,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		$contact_types = $this->cai->civicrm->contact_type->types_get_nested();
 
 		// Get the Custom Fields for each CiviCRM Contact Type.
-		foreach( $contact_types AS $contact_type ) {
+		foreach ( $contact_types as $contact_type ) {
 
 			// Top level types first.
 			$type_name = $contact_type['name'];
@@ -1748,7 +1748,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 			}
 
 			// Merge in children.
-			foreach( $contact_type['children'] AS $contact_subtype ) {
+			foreach ( $contact_type['children'] as $contact_subtype ) {
 
 				// Subtypes next.
 				$subtype_name = $contact_subtype['name'];
@@ -1795,7 +1795,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		$contact_types = $this->cai->civicrm->contact_type->types_get_nested();
 
 		// Get the Custom Fields for each CiviCRM Contact Type.
-		foreach( $contact_types AS $contact_type ) {
+		foreach ( $contact_types as $contact_type ) {
 
 			// Get public fields of this type.
 			$contact_fields_for_type = $this->cai->civicrm->contact_field->data_get( $contact_type['name'], $field['type'], 'public' );
@@ -1840,7 +1840,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		$relationship_types = $this->cai->civicrm->relationship->types_get_all();
 
 		// Get the Custom Fields for each CiviCRM Relationship Type.
-		foreach( $relationship_types AS $relationship_type ) {
+		foreach ( $relationship_types as $relationship_type ) {
 
 			// Define key.
 			$key = $relationship_type['id'] . '_ab';
@@ -1911,7 +1911,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		$contact_id = false;
 
 		// Let's tease out the context from the Custom Field data.
-		foreach( $args['custom_fields'] AS $field ) {
+		foreach ( $args['custom_fields'] as $field ) {
 
 			// Skip if it is not attached to a Contact.
 			if ( $field['entity_table'] != 'civicrm_contact' ) {

@@ -145,7 +145,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		}
 
 		// Loop through the field data.
-		foreach( $args['fields'] AS $field => $value ) {
+		foreach ( $args['fields'] as $field => $value ) {
 
 			// Get the field settings.
 			$settings = get_field_object( $field );
@@ -256,7 +256,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		$result = civicrm_api( 'Im', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $multiset_data;
 		}
 
@@ -307,13 +307,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		}
 
 		// Let's look at each ACF Field in turn.
-		foreach( $acf_fields['multiset'] AS $selector => $multiset_field ) {
+		foreach ( $acf_fields['multiset'] as $selector => $multiset_field ) {
 
 			// Init Field value.
 			$value = [];
 
 			// Let's look at each Multiple Record Set in turn.
-			foreach( $data AS $multiset ) {
+			foreach ( $data as $multiset ) {
 
 				// Convert to ACF Multiple Record Set data.
 				$acf_multiset = $this->prepare_from_civicrm( $multiset );
@@ -360,7 +360,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		if ( empty( $current ) ) {
 
 			// Create a Multiple Record Set from each value.
-			foreach( $values AS $key => $value ) {
+			foreach ( $values as $key => $value ) {
 
 				// Build required data.
 				$multiset_data = $this->prepare_from_field( $value );
@@ -407,7 +407,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		];
 
 		// Let's look at each ACF Record and check its Multiple Record Set ID.
-		foreach( $values AS $key => $value ) {
+		foreach ( $values as $key => $value ) {
 
 			// New Records have no Multiple Record Set ID.
 			if ( empty( $value['field_multiset_id'] ) ) {
@@ -432,7 +432,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		} );
 
 		// Records to delete are missing from the ACF data.
-		foreach( $current AS $current_multiset ) {
+		foreach ( $current as $current_multiset ) {
 			if ( ! in_array( $current_multiset['id'], $acf_multiset_ids ) ) {
 				$actions['delete'][] = $current_multiset['id'];
 				continue;
@@ -440,7 +440,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		}
 
 		// Create CiviCRM Multiple Record Sets.
-		foreach( $actions['create'] AS $key => $value ) {
+		foreach ( $actions['create'] as $key => $value ) {
 
 			// Build required data.
 			$multiset_data = $this->prepare_from_field( $value );
@@ -475,7 +475,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		}
 
 		// Update CiviCRM Multiple Record Sets.
-		foreach( $actions['update'] AS $key => $value ) {
+		foreach ( $actions['update'] as $key => $value ) {
 
 			// Build required data.
 			$multiset_data = $this->prepare_from_field( $value, $value['field_multiset_id'] );
@@ -508,7 +508,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		}
 
 		// Delete CiviCRM Multiple Record Sets.
-		foreach( $actions['delete'] AS $multiset_id ) {
+		foreach ( $actions['delete'] as $multiset_id ) {
 
 			// Okay, let's do it.
 			$multiset = $this->delete( $multiset_id );
@@ -634,7 +634,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		$result = civicrm_api( 'Im', 'create', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $multiset;
 		}
 
@@ -681,7 +681,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		$result = civicrm_api( 'Im', 'delete', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $success;
 		}
 
@@ -821,7 +821,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		}
 
 		// Handle each Post Type in turn.
-		foreach( $post_types AS $post_type ) {
+		foreach ( $post_types as $post_type ) {
 
 			// Get the Post ID for this Contact.
 			$post_id = $this->acf_loader->civicrm->contact->is_mapped_to_post( $contact, $post_type );
@@ -843,7 +843,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 			//$fields_to_update = $this->fields_to_update_get( $acf_fields, $multiset, $args['op'] );
 
 			// Let's look at each ACF Field in turn.
-			foreach( $acf_fields['multiset'] AS $selector => $multiset_field ) {
+			foreach ( $acf_fields['multiset'] as $selector => $multiset_field ) {
 
 				// Get existing Field value.
 				$existing = get_field( $selector, $post_id );
@@ -879,8 +879,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 					case 'create' :
 
 						// Make sure no other Multiple Record Set is Primary if this one is.
-						if ( $acf_multiset['field_multiset_primary'] == '1' AND ! empty( $existing ) ) {
-							foreach( $existing AS $key => $record ) {
+						if ( $acf_multiset['field_multiset_primary'] == '1' && ! empty( $existing ) ) {
+							foreach ( $existing as $key => $record ) {
 								$existing[$key]['field_multiset_id'] = '0';
 							}
 						}
@@ -893,7 +893,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 					case 'edit' :
 
 						// Overwrite array record.
-						foreach( $existing AS $key => $record ) {
+						foreach ( $existing as $key => $record ) {
 							if ( $multiset->id == $record['field_multiset_id'] ) {
 								$existing[$key] = $acf_multiset;
 								break;
@@ -905,7 +905,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 					case 'delete' :
 
 						// Remove array record.
-						foreach( $existing AS $key => $record ) {
+						foreach ( $existing as $key => $record ) {
 							if ( $multiset->id == $record['field_multiset_id'] ) {
 								unset( $existing[$key] );
 								break;
@@ -991,7 +991,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 		// Filter groups to include only "Multiple".
 		$filtered_groups = [];
-		foreach( $custom_groups AS $custom_group_name => $custom_group ) {
+		foreach ( $custom_groups as $custom_group_name => $custom_group ) {
 			$filtered_groups[$custom_group_name][] = $custom_group;
 		}
 
@@ -1027,9 +1027,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		/*
 		// Build Custom Group choices array for dropdown.
 		$custom_group_prefix = $this->civicrm->custom_group_prefix();
-		foreach( $custom_groups AS $custom_group_name => $custom_group ) {
+		foreach ( $custom_groups as $custom_group_name => $custom_group ) {
 			$custom_groups_label = esc_attr( $custom_group_name );
-			foreach( $custom_group AS $custom_field ) {
+			foreach ( $custom_group as $custom_field ) {
 				$choices[$custom_fields_label][$custom_field_prefix . $custom_field['id']] = $custom_field['label'];
 			}
 		}

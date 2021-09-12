@@ -372,7 +372,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set extends acf_field 
 	public function validate_value( $valid, $value, $field, $input ) {
 
 		// Bail if it's not required and is empty.
-		if ( $field['required'] == '0' AND empty( $value ) ) {
+		if ( $field['required'] == '0' && empty( $value ) ) {
 			return $valid;
 		}
 
@@ -420,7 +420,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set extends acf_field 
 		if ( ! empty( $field['sub_fields'] ) ) {
 
 			// Validate field first.
-			foreach( $field['sub_fields'] AS $sub_field ) {
+			foreach ( $field['sub_fields'] as $sub_field ) {
 				$sub_fields[] = acf_validate_field( $sub_field );
 			}
 
@@ -532,7 +532,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set extends acf_field 
 
 		// Build Location Types choices array for dropdown.
 		$locations = [];
-		foreach( $location_types AS $location_type ) {
+		foreach ( $location_types as $location_type ) {
 			$locations[$location_type['id']] = esc_attr( $location_type['display_name'] );
 		}
 

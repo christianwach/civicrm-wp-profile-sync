@@ -178,7 +178,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 		}
 
 		// Let's look at each ACF Field in turn.
-		foreach( $acf_fields['state'] AS $selector => $address_field ) {
+		foreach ( $acf_fields['state'] as $selector => $address_field ) {
 
 			// Init State/Province ID.
 			$state_id = false;
@@ -187,7 +187,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 			if ( $address_field === 'primary' ) {
 
 				// Assign State from the Primary Address.
-				foreach( $data AS $address ) {
+				foreach ( $data as $address ) {
 					if ( ! empty( $address->is_primary ) ) {
 						$state_id = (int) $address->state_province_id;
 						break;
@@ -198,7 +198,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 			} elseif ( is_int( $address_field ) ) {
 
 				// Assign State from the type of Address.
-				foreach( $data AS $address ) {
+				foreach ( $data as $address ) {
 					if ( $address->location_type_id == $address_field ) {
 						$state_id = (int) $address->state_province_id;
 						break;
@@ -258,7 +258,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 		}
 
 		// Update all of them.
-		foreach( $addresses_shared AS $address_shared ) {
+		foreach ( $addresses_shared as $address_shared ) {
 			$this->address_process( $address_shared, $args );
 		}
 
@@ -337,7 +337,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 		}
 
 		// Process all of them.
-		foreach( $addresses_shared AS $address_shared ) {
+		foreach ( $addresses_shared as $address_shared ) {
 			$this->address_process( $address_shared, $args );
 		}
 
@@ -366,7 +366,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 		if ( $post_types !== false ) {
 
 			// Handle each Post Type in turn.
-			foreach( $post_types AS $post_type ) {
+			foreach ( $post_types as $post_type ) {
 
 				// Get the Post ID for this Contact.
 				$post_id = $this->acf_loader->civicrm->contact->is_mapped_to_post( $contact, $post_type );
@@ -377,7 +377,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 				}
 
 				// Exclude "reverse" edits when a Post is the originator.
-				if ( $entity['entity'] === 'post' AND $post_id == $entity['id'] ) {
+				if ( $entity['entity'] === 'post' && $post_id == $entity['id'] ) {
 					continue;
 				}
 
@@ -423,7 +423,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 		}
 
 		// Let's look at each ACF Field in turn.
-		foreach( $acf_fields['state'] AS $selector => $address_field ) {
+		foreach ( $acf_fields['state'] as $selector => $address_field ) {
 
 			// Init State/Province ID.
 			$state_id = false;
@@ -486,7 +486,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 	public function acf_fields_get_for_post( $acf_fields, $field, $post_id ) {
 
 		// Add if it has a reference to a State Field.
-		if ( ! empty( $field['type'] ) AND $field['type'] == 'civicrm_address_state' ) {
+		if ( ! empty( $field['type'] ) && $field['type'] == 'civicrm_address_state' ) {
 			if ( $field['state_is_primary'] === 1 ) {
 				$acf_fields['state'][$field['name']] = 'primary';
 			} else {

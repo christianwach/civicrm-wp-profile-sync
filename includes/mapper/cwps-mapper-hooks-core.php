@@ -274,7 +274,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	public function user_registered( $user_id ) {
 
 		// Bail if there was a Multisite switch.
-		if ( is_multisite() AND ms_is_switched() ) {
+		if ( is_multisite() && ms_is_switched() ) {
 			return;
 		}
 
@@ -315,7 +315,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	public function user_edited( $user_id, $old_user_data ) {
 
 		// Bail if there was a Multisite switch.
-		if ( is_multisite() AND ms_is_switched() ) {
+		if ( is_multisite() && ms_is_switched() ) {
 			return;
 		}
 
@@ -729,7 +729,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		];
 
 		// Maybe save extra data.
-		foreach( $extra_data AS $property ) {
+		foreach ( $extra_data as $property ) {
 			if ( isset( $objectRef->$property ) ) {
 				$contact[$property] = $objectRef->$property;
 			}

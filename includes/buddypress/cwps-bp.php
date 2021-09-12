@@ -213,7 +213,7 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 	public function name_update_allow( $should_be_synced ) {
 
 		// Disallow if this is a BuddyPress User's "General Settings" update.
-		if ( function_exists( 'bp_is_current_action' ) AND bp_is_current_action( 'general' ) ) {
+		if ( function_exists( 'bp_is_current_action' ) && bp_is_current_action( 'general' ) ) {
 			$should_be_synced = false;
 		}
 

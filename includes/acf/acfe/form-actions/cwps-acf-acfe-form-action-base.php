@@ -625,9 +625,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 		}
 
 		// Populate Activity data from the Form data.
-		foreach( $form_data AS $param => $value ) {
+		foreach ( $form_data as $param => $value ) {
 			// Allow (string) "0" as valid data.
-			if ( ! empty( $value ) OR $value === '0' ) {
+			if ( ! empty( $value ) || $value === '0' ) {
 				$filtered_data[$param] = $value;
 			}
 		}

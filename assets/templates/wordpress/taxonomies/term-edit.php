@@ -19,7 +19,7 @@
 				<option value="0" selected="selected"><?php _e( 'None', 'civicrm-wp-profile-sync' ); ?></option>
 			<?php endif; ?>
 			<?php if ( ! empty( $groups ) ) : ?>
-				<?php foreach ( $groups AS $group ) : ?>
+				<?php foreach ( $groups as $group ) : ?>
 					<?php if ( $group['id'] == $group_id ) : ?>
 						<option value="<?php echo $group['id'] ?>" selected="selected"><?php echo $group['title']; ?></option>
 					<?php else : ?>

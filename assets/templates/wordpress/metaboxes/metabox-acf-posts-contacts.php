@@ -18,7 +18,7 @@
 	<?php if ( ! empty( $contact_post_types ) ) : ?>
 		<table class="form-table">
 
-			<?php foreach( $contact_post_types AS $contact_post_type => $label ) : ?>
+			<?php foreach ( $contact_post_types as $contact_post_type => $label ) : ?>
 
 				<?php $identifier = $prefix . '_' . $contact_post_type; ?>
 				<?php $stop = ''; ?>

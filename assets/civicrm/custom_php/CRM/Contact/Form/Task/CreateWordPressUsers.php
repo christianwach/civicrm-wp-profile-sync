@@ -98,7 +98,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
     ]);
 
     // Bail on failure.
-    if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+    if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
       return $rows;
     }
 
@@ -111,7 +111,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
     $this->contactsRaw = $result['values'];
 
     // Build rows.
-    foreach( $this->contactsRaw AS $contact ) {
+    foreach ( $this->contactsRaw as $contact ) {
 
       // Check if this Contact already has a WordPress User.
       $params = [
@@ -124,14 +124,14 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
       $uf_result = civicrm_api( 'UFMatch', 'get', $params );
 
       // Skip on failure.
-      if ( isset( $uf_result['is_error'] ) AND $uf_result['is_error'] == '1' ) {
+      if ( isset( $uf_result['is_error'] ) && $uf_result['is_error'] == '1' ) {
         continue;
       }
 
       // Show if there's a UFMatch.
       $match = false;
       $has_user = __( 'No', 'civicrm-wp-profile-sync' );
-      if ( ! empty( $uf_result['values'] ) AND count( $uf_result['values'] ) === 1 ) {
+      if ( ! empty( $uf_result['values'] ) && count( $uf_result['values'] ) === 1 ) {
         $has_user = __( 'Yes', 'civicrm-wp-profile-sync' );
         $match = true;
       }
@@ -216,7 +216,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
     $failure = [];
 
     // Process data.
-    foreach( $rows AS $row ) {
+    foreach ( $rows as $row ) {
 
       // Skip if User already exists.
       if ( $row['user_exists'] === 'y' ) {
@@ -279,7 +279,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
       $user_id = wp_insert_user( $user_data );
 
       // Create UFMatch record if successful.
-      if ( ! is_wp_error( $user_id ) AND isset( $row['id'] ) ) {
+      if ( ! is_wp_error( $user_id ) && isset( $row['id'] ) ) {
 
         // Construct params.
         $uf_params = [
@@ -294,7 +294,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
         $result = civicrm_api( 'UFMatch', 'create', $uf_params );
 
         // Log something on failure.
-        if ( isset( $uf_result['is_error'] ) AND $uf_result['is_error'] == '1' ) {
+        if ( isset( $uf_result['is_error'] ) && $uf_result['is_error'] == '1' ) {
           error_log( print_r( [
             'method' => __METHOD__,
             'message' => __( 'Could not create UFMatch record.', 'civicrm-wp-profile-sync' ),

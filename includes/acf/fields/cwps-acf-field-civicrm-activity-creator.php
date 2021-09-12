@@ -218,7 +218,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Activity_Creator extends acf_field {
 
 			// Maybe append them.
 			if ( ! empty( $contacts ) ) {
-				foreach( $contacts AS $contact ) {
+				foreach ( $contacts as $contact ) {
 
 					// Add email address if present.
 					$name = $contact['display_name'];
@@ -339,7 +339,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Activity_Creator extends acf_field {
 		// Maybe append results.
 		$results = [];
 		if ( ! empty( $contacts ) ) {
-			foreach( $contacts AS $contact ) {
+			foreach ( $contacts as $contact ) {
 
 				// Add email address if present.
 				$name = $contact['label'];

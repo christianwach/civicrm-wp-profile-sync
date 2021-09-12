@@ -245,7 +245,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Field extends acf_field {
 
 			// Maybe append them.
 			if ( ! empty( $events ) ) {
-				foreach( $events AS $event ) {
+				foreach ( $events as $event ) {
 
 					// Add Event Date if present.
 					$title = $event['title'];
@@ -363,7 +363,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Field extends acf_field {
 		// Maybe append results.
 		$results = [];
 		if ( ! empty( $events ) ) {
-			foreach( $events AS $event ) {
+			foreach ( $events as $event ) {
 
 				// Add Event Date if present.
 				$title = $event['label'];

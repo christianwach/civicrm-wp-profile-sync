@@ -252,7 +252,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		}
 
 		// Let's look at each ACF Field in turn.
-		foreach( $acf_fields['contact'] AS $selector => $contact_field ) {
+		foreach ( $acf_fields['contact'] as $selector => $contact_field ) {
 
 			// Skip if it's not a public Contact Field.
 			if ( ! array_key_exists( $contact_field, $public_fields ) ) {
@@ -375,7 +375,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 			// Maybe grab the email from the array.
 			if ( is_array( $value ) ) {
-				foreach( $value AS $email ) {
+				foreach ( $value as $email ) {
 					if ( $email->is_primary == '1' ) {
 						$value = $email->email;
 						break;
@@ -465,7 +465,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		}
 
 		// Maybe construct string for less than a month.
-		if ( empty( $years ) AND $months === 0 ) {
+		if ( empty( $years ) && $months === 0 ) {
 			$age_string = __( 'Under a month', 'civicrm-wp-profile-sync' );
 		}
 
@@ -579,7 +579,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		if ( $is_contact_field_group !== false ) {
 
 			// Loop through the Post Types.
-			foreach( $is_contact_field_group AS $post_type_name ) {
+			foreach ( $is_contact_field_group as $post_type_name ) {
 
 				// Get the Contact Type ID.
 				$contact_type_id = $this->civicrm->contact_type->id_get_for_post_type( $post_type_name );
@@ -599,12 +599,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Prefix and Suffix cannot be shown for "Multi-Select" or "Autocomplete-Select".
 		if ( 'select' === $field['type'] ) {
-			if ( $field['multiple'] == 1 OR ( $field['ui'] == 1 AND $field['ajax'] == 1 ) ) {
+			if ( $field['multiple'] == 1 || ( $field['ui'] == 1 && $field['ajax'] == 1 ) ) {
 
 				// Re-build fields without them.
 				$filtered_fields = [];
-				foreach ( $contact_fields AS $contact_field ) {
-					if ( $contact_field['name'] == 'prefix_id' OR $contact_field['name'] == 'suffix_id' ) {
+				foreach ( $contact_fields as $contact_field ) {
+					if ( $contact_field['name'] == 'prefix_id' || $contact_field['name'] == 'suffix_id' ) {
 						continue;
 					}
 					$filtered_fields[] = $contact_field;
@@ -669,7 +669,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		$result = civicrm_api( 'Contact', 'getfield', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $field;
 		}
 
@@ -760,14 +760,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 				// Skip all but those defined in our Contact Fields arrays.
 				$public_fields = [];
-				foreach ( $result['values'] AS $key => $value ) {
+				foreach ( $result['values'] as $key => $value ) {
 					if ( array_key_exists( $value['name'], $contact_fields ) ) {
 						$public_fields[] = $value;
 					}
 				}
 
 				// Skip all but those mapped to the type of ACF Field.
-				foreach ( $public_fields AS $key => $value ) {
+				foreach ( $public_fields as $key => $value ) {
 					if ( $field_type == $contact_fields[$value['name']] ) {
 						$fields[] = $value;
 					}
@@ -845,14 +845,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 				// Get the top level Contact Types array.
 				$top_level = [];
 				$contact_types = $this->civicrm->contact_type->types_get_all();
-				foreach( $contact_types AS $contact_type ) {
+				foreach ( $contact_types as $contact_type ) {
 					if ( empty( $contact_type['parent_id'] ) ) {
 						$top_level[$contact_type['name']] = $contact_type['id'];
 					}
 				}
 
 				// Skip all but those defined in our Contact Fields arrays.
-				foreach ( $result['values'] AS $key => $value ) {
+				foreach ( $result['values'] as $key => $value ) {
 					if ( array_key_exists( $value['name'], $this->contact_fields_individual ) ) {
 						$fields[$top_level['Individual']][] = $value;
 					}
@@ -957,7 +957,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		$public_fields = $this->get_public( $types );
 
 		// Skip all but those mapped to the type of ACF Field.
-		foreach ( $public_fields AS $key => $value ) {
+		foreach ( $public_fields as $key => $value ) {
 			if ( $type == $value ) {
 				$contact_fields[$key] = $value;
 			}
@@ -1023,7 +1023,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->acf_loader->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
 
@@ -1069,7 +1069,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->acf_loader->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
 
@@ -1110,7 +1110,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->acf_loader->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
 
@@ -1151,7 +1151,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->acf_loader->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
 
@@ -1196,7 +1196,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->acf_loader->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
 
@@ -1244,7 +1244,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->acf_loader->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
 
@@ -1295,7 +1295,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 			$url = wp_get_attachment_image_url( (int) $existing, 'full' );
 
 			// If the URL has changed.
-			if ( ! empty( $url ) AND $url != $value ) {
+			if ( ! empty( $url ) && $url != $value ) {
 
 				// Sync the new image.
 				$sync = true;
@@ -1406,7 +1406,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 					] );
 
 					// Bail if the Base Page was not found.
-					if ( empty( $pages ) OR ! is_array( $pages ) ) {
+					if ( empty( $pages ) || ! is_array( $pages ) ) {
 						return '';
 					}
 
@@ -1555,7 +1555,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		$image_path = parse_url( $path );
 
 		// Force the protocols to match if needed.
-		if ( isset( $image_path['scheme'] ) AND ( $image_path['scheme'] !== $site_url['scheme'] ) ) {
+		if ( isset( $image_path['scheme'] ) && ( $image_path['scheme'] !== $site_url['scheme'] ) ) {
 			$path = str_replace( $image_path['scheme'], $site_url['scheme'], $path );
 		}
 
@@ -1577,12 +1577,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		);
 
 		$results = $wpdb->get_results( $sql );
-		foreach( $results AS $row ) {
+		foreach ( $results as $row ) {
 
 			if ( '_wp_attachment_metadata' === $row->meta_key ) {
 
 				$meta = maybe_unserialize( $row->meta_value );
-				if ( dirname( $meta['file'] ) === $dirname AND in_array( $basename, wp_list_pluck( $meta['sizes'], 'file' ) ) ) {
+				if ( dirname( $meta['file'] ) === $dirname && in_array( $basename, wp_list_pluck( $meta['sizes'], 'file' ) ) ) {
 					// URL is for a registered intermediate size.
 					$post_id = $row->post_id;
 					break;
@@ -1607,7 +1607,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 					);
 
 					$meta = maybe_unserialize( $wpdb->get_var( $sql ) );
-					if ( isset( $meta['file'] ) AND dirname( $meta['file'] ) === $dirname ) {
+					if ( isset( $meta['file'] ) && dirname( $meta['file'] ) === $dirname ) {
 						// URL is for a "backup" of an edited image.
 						$post_id = $row->post_id;
 						break;
@@ -1655,22 +1655,22 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		}
 
 		// Bail if GET doesn't contain the path we want.
-		if ( empty( $_GET['q'] ) OR $_GET['q'] != 'civicrm/contact/image' ) {
+		if ( empty( $_GET['q'] ) || $_GET['q'] != 'civicrm/contact/image' ) {
 			return;
 		}
 
 		// Bail if GET doesn't contain the matching Contact ID.
-		if ( empty( $_GET['cid'] ) OR $_GET['cid'] != $objectRef->id ) {
+		if ( empty( $_GET['cid'] ) || $_GET['cid'] != $objectRef->id ) {
 			return;
 		}
 
 		// Bail if GET doesn't contain the delete action.
-		if ( empty( $_GET['action'] ) OR $_GET['action'] != 'delete' ) {
+		if ( empty( $_GET['action'] ) || $_GET['action'] != 'delete' ) {
 			return;
 		}
 
 		// Bail if GET doesn't contain the confirmed flag.
-		if ( empty( $_GET['confirmed'] ) OR $_GET['confirmed'] != 1 ) {
+		if ( empty( $_GET['confirmed'] ) || $_GET['confirmed'] != 1 ) {
 			return;
 		}
 
@@ -1728,7 +1728,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		}
 
 		// Process all of them.
-		foreach( $contacts AS $contact ) {
+		foreach ( $contacts as $contact ) {
 
 			// Bare-bones data.
 			$contact_data = [

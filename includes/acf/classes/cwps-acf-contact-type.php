@@ -187,12 +187,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 		$result = civicrm_api( 'ContactType', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $all;
 		}
 
 		// Populate return array.
-		if ( isset( $result['values'] ) AND count( $result['values'] ) > 0 ) {
+		if ( isset( $result['values'] ) && count( $result['values'] ) > 0 ) {
 			$all = $result['values'];
 		}
 
@@ -243,29 +243,29 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 		$result = civicrm_api( 'ContactType', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $nested;
 		}
 
 		// Populate Contact Types array.
 		$contact_types = [];
-		if ( isset( $result['values'] ) AND count( $result['values'] ) > 0 ) {
+		if ( isset( $result['values'] ) && count( $result['values'] ) > 0 ) {
 			$contact_types = $result['values'];
 		}
 
 		// Let's get the top level types.
 		$top_level = [];
-		foreach( $contact_types AS $contact_type ) {
+		foreach ( $contact_types as $contact_type ) {
 			if ( empty( $contact_type['parent_id'] ) ) {
 				$top_level[] = $contact_type;
 			}
 		}
 
 		// Build a nested array.
-		foreach( $top_level AS $item ) {
+		foreach ( $top_level as $item ) {
 			$item['children'] = [];
-			foreach( $contact_types AS $contact_type ) {
-				if ( isset( $contact_type['parent_id'] ) AND $contact_type['parent_id'] == $item['id'] ) {
+			foreach ( $contact_types as $contact_type ) {
+				if ( isset( $contact_type['parent_id'] ) && $contact_type['parent_id'] == $item['id'] ) {
 					$item['children'][] = $contact_type;
 				}
 			}
@@ -333,7 +333,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 		$result = civicrm_api( 'ContactType', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $contact_type_data;
 		}
 
@@ -416,7 +416,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 			$result = civicrm_api( 'ContactType', 'getsingle', $params );
 
 			// Bail if there's an error.
-			if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+			if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 				return $types;
 			}
 
@@ -553,7 +553,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 		if ( empty( $hierarchy['subtype'] ) ) {
 			$contact_types = [ $hierarchy ];
 		} else {
-			foreach( $hierarchy['subtype'] AS $subtype ) {
+			foreach ( $hierarchy['subtype'] as $subtype ) {
 				$contact_types[] = [
 					'type' => $hierarchy['type'],
 					'subtype' => $subtype,
@@ -607,7 +607,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 		$result = civicrm_api( 'Contact', 'get', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -712,7 +712,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 		}
 
 		// Add entries for each CiviCRM Contact Type.
-		foreach( $contact_types AS $contact_type ) {
+		foreach ( $contact_types as $contact_type ) {
 
 			// Top level types first.
 			$choices[$contact_type['id']] = $contact_type['label'];
@@ -723,7 +723,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 			}
 
 			// Add children.
-			foreach( $contact_type['children'] AS $contact_subtype ) {
+			foreach ( $contact_type['children'] as $contact_subtype ) {
 				$choices[$contact_subtype['id']] = '&mdash; ' . $contact_subtype['label'];
 			}
 
@@ -757,7 +757,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 		}
 
 		// Add entries for each CiviCRM Contact Type.
-		foreach( $contact_types AS $contact_type ) {
+		foreach ( $contact_types as $contact_type ) {
 
 			// Top level types only.
 			$choices[$contact_type['id']] = $contact_type['label'];
@@ -792,7 +792,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 		}
 
 		// Add entries for each CiviCRM Contact Type.
-		foreach( $contact_types AS $contact_type ) {
+		foreach ( $contact_types as $contact_type ) {
 
 			// Skip top level types.
 			//$choices[$contact_type['id']] = $contact_type['label'];
@@ -803,7 +803,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 			}
 
 			// Add children.
-			foreach( $contact_type['children'] AS $contact_subtype ) {
+			foreach ( $contact_type['children'] as $contact_subtype ) {
 				$choices[$contact_type['name']][$contact_subtype['id']] = $contact_subtype['label'];
 			}
 
@@ -867,7 +867,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 		$result = civicrm_api( 'ContactType', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $contact_types;
 		}
 

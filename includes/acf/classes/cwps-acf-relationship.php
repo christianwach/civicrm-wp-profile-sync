@@ -207,7 +207,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		}
 
 		// Process each in turn.
-		foreach( $relationships AS $relationship ) {
+		foreach ( $relationships as $relationship ) {
 
 			// Build params.
 			$params = [
@@ -249,7 +249,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		$success = true;
 
 		// Loop through the field data.
-		foreach( $args['fields'] AS $field => $value ) {
+		foreach ( $args['fields'] as $field => $value ) {
 
 			// Get the field settings.
 			$settings = get_field_object( $field, $args['post_id'] );
@@ -357,7 +357,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		$current = civicrm_api( 'Relationship', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $current['is_error'] ) AND $current['is_error'] == 1 ) {
+		if ( ! empty( $current['is_error'] ) && $current['is_error'] == 1 ) {
 			return $relationships;
 		}
 
@@ -370,7 +370,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 			}
 
 			// Create a Relationship for each target.
-			foreach( $target_contact_ids AS $target_contact_id ) {
+			foreach ( $target_contact_ids as $target_contact_id ) {
 
 				// Assign the correct Source and Target.
 				if ( $relationship_direction == 'ab' ) {
@@ -415,7 +415,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		$unhandled_contact_ids = $target_contact_ids;
 
 		// Let's look at them.
-		foreach( $current['values'] AS $current_relationship ) {
+		foreach ( $current['values'] as $current_relationship ) {
 
 			// Maybe deactivate when there are no target Contacts.
 			if ( empty( $target_contact_ids ) ) {
@@ -432,7 +432,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 			$inactive_match = false;
 
 			// Check against each target Contact.
-			foreach( $target_contact_ids AS $key => $target_contact_id ) {
+			foreach ( $target_contact_ids as $key => $target_contact_id ) {
 
 				// We need to assign the correct Source and Target.
 				if ( $relationship_direction == 'ab' ) {
@@ -541,7 +541,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		}
 
 		// First update all Relationships that must be deactivated.
-		foreach( $existing['deactivate'] AS $current_relationship ) {
+		foreach ( $existing['deactivate'] as $current_relationship ) {
 
 			// Copy minimum values.
 			$params = [
@@ -578,7 +578,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		}
 
 		// Next update all Relationships that must be activated.
-		foreach( $existing['activate'] AS $current_relationship ) {
+		foreach ( $existing['activate'] as $current_relationship ) {
 
 			// Copy minimum values.
 			$params = [
@@ -616,7 +616,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 		// Finally create a Relationship for each unhandled target.
 		if ( ! empty( $unhandled_contact_ids ) ) {
-			foreach( $unhandled_contact_ids AS $target_contact_id ) {
+			foreach ( $unhandled_contact_ids as $target_contact_id ) {
 
 				// We need to assign the correct Source and Target.
 				if ( $relationship_direction == 'ab' ) {
@@ -760,7 +760,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		$result = civicrm_api( 'Relationship', 'create', $params );
 
 		// Log and bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -812,7 +812,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		$result = civicrm_api( 'Relationship', 'create', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $relationship;
 		}
 
@@ -851,7 +851,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		$result = civicrm_api( 'Relationship', 'create', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $relationship;
 		}
 
@@ -896,7 +896,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		$result = civicrm_api( 'Relationship', 'create', $params );
 
 		// Log and bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -980,7 +980,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		$result = civicrm_api( 'Relationship', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $relationship;
 		}
 
@@ -1026,7 +1026,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		$result = civicrm_api( 'Relationship', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $relationships;
 		}
 
@@ -1088,7 +1088,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		if ( $post_types !== false ) {
 
 			// Handle each Post Type in turn.
-			foreach( $post_types AS $post_type ) {
+			foreach ( $post_types as $post_type ) {
 
 				// Get the Post ID that this Contact is mapped to.
 				$post_id = $this->acf_loader->civicrm->contact->is_mapped_to_post( $contact, $post_type );
@@ -1140,7 +1140,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		}
 
 		// Let's look at each ACF Field in turn.
-		foreach( $acf_fields['relationship'] AS $selector => $value ) {
+		foreach ( $acf_fields['relationship'] as $selector => $value ) {
 
 			// Get the Relationship data.
 			$relationship_data = explode( '_', $value );
@@ -1156,7 +1156,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 			$existing = get_field( $selector, $post_id );
 
 			// If it isn't one, let's make it an empty array.
-			if ( ! is_array( $existing ) OR empty( $existing ) ) {
+			if ( ! is_array( $existing ) || empty( $existing ) ) {
 				$existing = [];
 			}
 
@@ -1253,7 +1253,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		$result = civicrm_api( 'Relationship', 'getfields', $params );
 
 		// Override return if we get some.
-		if ( $result['is_error'] == 0 AND ! empty( $result['values'] ) ) {
+		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
 
 			// Check for no filter.
 			if ( $filter == 'none' ) {
@@ -1265,7 +1265,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 			} elseif ( $filter == 'public' ) {
 
 				// Skip all but those defined in our public Relationship Fields array.
-				foreach ( $result['values'] AS $key => $value ) {
+				foreach ( $result['values'] as $key => $value ) {
 					if ( array_key_exists( $value['name'], $this->relationship_fields ) ) {
 						$fields[] = $value;
 					}
@@ -1318,7 +1318,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		$result = civicrm_api( 'RelationshipType', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $relationships;
 		}
 
@@ -1366,7 +1366,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		$result = civicrm_api( 'RelationshipType', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $relationship;
 		}
 
@@ -1437,7 +1437,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		$result = civicrm_api( 'RelationshipType', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $relationship;
 		}
 
@@ -1486,7 +1486,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		if ( $is_contact_field_group !== false ) {
 
 			// Loop through the Post Types.
-			foreach( $is_contact_field_group AS $post_type_name ) {
+			foreach ( $is_contact_field_group as $post_type_name ) {
 
 				// Get the Contact Type ID.
 				$contact_type_id = $this->civicrm->contact_type->id_get_for_post_type( $post_type_name );
@@ -1598,7 +1598,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		$result = civicrm_api( 'Relationship', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $relationships;
 		}
 
@@ -1661,7 +1661,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		$result = civicrm_api( 'Relationship', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $relationships;
 		}
 
@@ -1717,7 +1717,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		$result = civicrm_api( 'RelationshipType', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $relationships;
 		}
 

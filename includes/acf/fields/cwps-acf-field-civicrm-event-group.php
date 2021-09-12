@@ -237,7 +237,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Group extends acf_field {
 		if ( ! empty( $field['sub_fields'] ) ) {
 
 			// Validate field first.
-			foreach( $field['sub_fields'] AS $sub_field ) {
+			foreach ( $field['sub_fields'] as $sub_field ) {
 				$sub_fields[] = acf_validate_field( $sub_field );
 			}
 
@@ -434,7 +434,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Group extends acf_field {
 
 		// Grab the Event ID.
 		$event_id = $value[$prefix . '_event_id'];
-		if ( ! empty( $event_id ) AND is_numeric( $event_id ) ) {
+		if ( ! empty( $event_id ) && is_numeric( $event_id ) ) {
 			return (int) $event_id;
 		}
 

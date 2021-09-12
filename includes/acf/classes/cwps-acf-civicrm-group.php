@@ -124,7 +124,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 
 		// Process terms for "current" Group Contacts.
 		if ( ! empty( $current ) ) {
-			foreach( $current AS $group_membership ) {
+			foreach ( $current as $group_membership ) {
 
 				// Get params.
 				$group_id = $group_membership['group_id'];
@@ -138,7 +138,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 
 		// Process terms for "removed" Group Contacts.
 		if ( ! empty( $removed ) ) {
-			foreach( $removed AS $group_membership ) {
+			foreach ( $removed as $group_membership ) {
 
 				// Get params.
 				$group_id = $group_membership['group_id'];
@@ -245,7 +245,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 		$result = civicrm_api( 'Group', 'get', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -295,7 +295,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 		$result = civicrm_api( 'Group', 'get', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -409,7 +409,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 		*/
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -472,7 +472,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 		$result = civicrm_api( 'GroupContact', 'get', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -527,7 +527,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 		$result = civicrm_api( 'GroupContact', 'get', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -569,7 +569,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 		$result = civicrm_api( 'GroupContact', 'get', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -613,7 +613,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 		$result = civicrm_api( 'GroupContact', 'create', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -657,7 +657,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 		$result = civicrm_api( 'GroupContact', 'create', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -717,7 +717,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 		$result = civicrm_api( 'MailingEventSubscribe', 'create', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -775,7 +775,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 		$result = civicrm_api( 'GroupContact', 'get', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -819,7 +819,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 		}
 
 		// Delete the term meta for each term.
-		foreach( $terms_for_group AS $term ) {
+		foreach ( $terms_for_group as $term ) {
 			$this->acf_loader->post->tax->term_meta_delete( $term->term_id );
 		}
 

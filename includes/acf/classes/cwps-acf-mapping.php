@@ -267,7 +267,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		$contact_type = $form->getVar( '_values' );
 
 		// Determine form mode by whether we have a Contact Type.
-		if ( isset( $contact_type ) AND ! empty( $contact_type ) ) {
+		if ( isset( $contact_type ) && ! empty( $contact_type ) ) {
 			$mode = 'edit';
 		} else {
 			$mode = 'create';
@@ -289,7 +289,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 		// Add select option for those which are public.
 		if ( count( $post_types ) > 0 ) {
-			foreach( $post_types AS $post_type ) {
+			foreach ( $post_types as $post_type ) {
 
 				/*
 				 * Exclude built-in WordPress private Post Types.
@@ -301,7 +301,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 				 *
 				 * ACF does not support these.
 				 */
-				if ( $post_type->_builtin AND ! $post_type->public ) continue;
+				if ( $post_type->_builtin && ! $post_type->public ) continue;
 
 				// ACF does not support the built-in WordPress Media Post Type.
 				if ( $post_type->name == 'attachment' ) continue;
@@ -501,14 +501,14 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		$activity_type = $form->getVar( '_values' );
 
 		// Determine form mode by whether we have an Activity Type.
-		if ( isset( $activity_type ) AND ! empty( $activity_type ) ) {
+		if ( isset( $activity_type ) && ! empty( $activity_type ) ) {
 			$mode = 'edit';
 		} else {
 			$mode = 'create';
 		}
 
 		// Bail if not an allowed Activity Type.
-		if ( $mode == 'edit' AND ! array_key_exists( $activity_type['value'], $allowed_activity_types ) ) {
+		if ( $mode == 'edit' && ! array_key_exists( $activity_type['value'], $allowed_activity_types ) ) {
 			return;
 		}
 
@@ -528,7 +528,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 		// Add select option for those which are public.
 		if ( count( $post_types ) > 0 ) {
-			foreach( $post_types AS $post_type ) {
+			foreach ( $post_types as $post_type ) {
 
 				/*
 				 * Exclude built-in WordPress private Post Types.
@@ -540,7 +540,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 				 *
 				 * ACF does not support these.
 				 */
-				if ( $post_type->_builtin AND ! $post_type->public ) continue;
+				if ( $post_type->_builtin && ! $post_type->public ) continue;
 
 				// ACF does not support the built-in WordPress Media Post Type.
 				if ( $post_type->name == 'attachment' ) continue;
@@ -767,7 +767,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		$participant_role = $form->getVar( '_values' );
 
 		// Determine form mode by whether we have a Participant Role.
-		if ( isset( $participant_role ) AND ! empty( $participant_role ) ) {
+		if ( isset( $participant_role ) && ! empty( $participant_role ) ) {
 			$mode = 'edit';
 		} else {
 			$mode = 'create';
@@ -789,7 +789,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 		// Add select option for those which are public.
 		if ( count( $post_types ) > 0 ) {
-			foreach( $post_types AS $post_type ) {
+			foreach ( $post_types as $post_type ) {
 
 				/*
 				 * Exclude built-in WordPress private Post Types.
@@ -801,7 +801,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 				 *
 				 * ACF does not support these.
 				 */
-				if ( $post_type->_builtin AND ! $post_type->public ) continue;
+				if ( $post_type->_builtin && ! $post_type->public ) continue;
 
 				// ACF does not support the built-in WordPress Media Post Type.
 				if ( $post_type->name == 'attachment' ) continue;
@@ -1038,7 +1038,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 		// Set status of checkbox based on setting.
 		if ( $settings !== false ) {
-			if ( isset( $settings['enabled'] ) AND $settings['enabled'] === 1 ) {
+			if ( isset( $settings['enabled'] ) && $settings['enabled'] === 1 ) {
 				$checkbox->setChecked( true );
 			}
 		}
@@ -1079,7 +1079,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 		// Assume the "Enable CPT" checkbox is not checked, but override if it is.
 		$current = 0;
-		if ( isset( $values['cwps_acf_enable_cpt'] ) AND $values['cwps_acf_enable_cpt'] == '1' ) {
+		if ( isset( $values['cwps_acf_enable_cpt'] ) && $values['cwps_acf_enable_cpt'] == '1' ) {
 			$current = 1;
 		}
 
@@ -1102,7 +1102,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 		// Fire one of two actions depending on what has happened.
 		$action = 'enabled';
-		if ( $previous === 1 AND $current === 0 ) {
+		if ( $previous === 1 && $current === 0 ) {
 			$action = 'disabled';
 		}
 

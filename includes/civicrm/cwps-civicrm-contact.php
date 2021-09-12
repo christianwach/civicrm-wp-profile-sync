@@ -507,7 +507,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		$result = civicrm_api( 'Contact', 'create', $params );
 
         // Log something on failure.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			$e = new \Exception;
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -599,7 +599,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		$result = civicrm_api( 'Contact', 'create', $params );
 
         // Log something on failure.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			$e = new \Exception;
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -673,7 +673,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		$contact = civicrm_api( 'Contact', 'getsingle', $params );
 
 		// Log and bail on failure.
-		if ( isset( $contact['is_error'] ) AND $contact['is_error'] == '1' ) {
+		if ( isset( $contact['is_error'] ) && $contact['is_error'] == '1' ) {
 			$e = new \Exception;
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [

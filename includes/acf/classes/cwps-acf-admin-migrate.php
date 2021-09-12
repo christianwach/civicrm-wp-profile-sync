@@ -189,7 +189,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	public function admin_menu() {
 
 		// We must be network admin in Multisite.
-		if ( is_multisite() AND ! is_super_admin() ) {
+		if ( is_multisite() && ! is_super_admin() ) {
 			return;
 		}
 
@@ -307,7 +307,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	public function page_acf_migrate() {
 
 		// We must be network admin in multisite.
-		if ( is_multisite() AND ! is_super_admin() ) {
+		if ( is_multisite() && ! is_super_admin() ) {
 			wp_die( __( 'You do not have permission to access this page.', 'civicrm-wp-profile-sync' ) );
 		}
 

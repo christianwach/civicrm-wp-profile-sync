@@ -190,7 +190,7 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 	public function fields_update( $fields, $field_group ) {
 
 		// Loop through Fields and save them.
-		foreach( $fields AS $field ) {
+		foreach ( $fields as $field ) {
 
 			/**
 			 * Filters the mapped ACF Field before saving.
@@ -371,7 +371,7 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 		$or_group_match = false;
 
 		// Loop through location OR groups.
-		foreach( $field_group['location'] AS $group ) {
+		foreach ( $field_group['location'] as $group ) {
 
 			// Skip group if it has no rules.
 			if ( empty( $group ) ) {
@@ -392,7 +392,7 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 			 * we get a match to the requested Entity in the params passed in, then
 			 * the Field Group may be visible and should return `true`.
 			 */
-			foreach( $group AS $rule ) {
+			foreach ( $group as $rule ) {
 
 				/**
 				 * Check for any supported Location Rules.
@@ -432,7 +432,7 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 			}
 
 			// Apply AND group to the OR group match.
-			if ( $and_group_match === true AND $queried_entity_present === true ) {
+			if ( $and_group_match === true && $queried_entity_present === true ) {
 				$or_group_match = true;
 				break;
 			}

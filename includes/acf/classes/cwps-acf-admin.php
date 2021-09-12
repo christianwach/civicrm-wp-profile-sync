@@ -109,7 +109,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	public function register_hooks() {
 
 		// Bail if WordPress Network Admin.
-		if ( is_multisite() AND is_network_admin() ) {
+		if ( is_multisite() && is_network_admin() ) {
 			return;
 		}
 
@@ -250,7 +250,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Loop through them and get the data we want.
 		$contact_post_types = [];
-		foreach( $mapped_contact_post_types AS $contact_post_type ) {
+		foreach ( $mapped_contact_post_types as $contact_post_type ) {
 			$contact_post_types[$contact_post_type->name] = [
 				'label' => esc_html( $contact_post_type->label ),
 				'count' => $this->acf_loader->post_type->post_count( $contact_post_type->name ),
@@ -262,7 +262,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Loop through them and get the data we want.
 		$contact_types = [];
-		foreach( $mapped_contact_types AS $contact_type ) {
+		foreach ( $mapped_contact_types as $contact_type ) {
 			$contact_types[$contact_type['id']] = [
 				'label' => esc_html( $contact_type['label'] ),
 				'count' => $this->acf_loader->civicrm->contact_type->contact_count( $contact_type['id'] ),
@@ -274,7 +274,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Loop through them and get the data we want.
 		$groups = [];
-		foreach( $mapped_groups AS $group ) {
+		foreach ( $mapped_groups as $group ) {
 			$groups[$group['id']] = [
 				'label' => esc_html( $group['title'] ),
 				'count' => $this->acf_loader->civicrm->group->group_contact_count( $group['id'] ),
@@ -286,7 +286,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Loop through them and get the data we want.
 		$activity_post_types = [];
-		foreach( $mapped_activity_post_types AS $activity_post_type ) {
+		foreach ( $mapped_activity_post_types as $activity_post_type ) {
 			$activity_post_types[$activity_post_type->name] = [
 				'label' => esc_html( $activity_post_type->label ),
 				'count' => $this->acf_loader->post_type->post_count( $activity_post_type->name ),
@@ -298,7 +298,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Loop through them and get the data we want.
 		$activity_types = [];
-		foreach( $mapped_activity_types AS $activity_type ) {
+		foreach ( $mapped_activity_types as $activity_type ) {
 			$activity_types[$activity_type['value']] = [
 				'label' => esc_html( $activity_type['label'] ),
 				'count' => $this->acf_loader->civicrm->activity_type->activity_count( $activity_type['value'] ),
@@ -322,7 +322,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Loop through them and get the data we want.
 		$participant_post_types = [];
-		foreach( $mapped_participant_post_types AS $participant_post_type ) {
+		foreach ( $mapped_participant_post_types as $participant_post_type ) {
 			$participant_post_types[$participant_post_type->name] = [
 				'label' => esc_html( $participant_post_type->label ),
 				'count' => $this->acf_loader->post_type->post_count( $participant_post_type->name ),
@@ -346,7 +346,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Loop through them and get the data we want.
 		$participant_roles = [];
-		foreach( $mapped_participant_roles AS $participant_role ) {
+		foreach ( $mapped_participant_roles as $participant_role ) {
 			if ( $participant_role['value'] == 'cpt' ) {
 				$count = $this->acf_loader->civicrm->participant_role->participant_count();
 			} else {
@@ -516,7 +516,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	public function page_manual_sync() {
 
 		// We must be network admin in multisite.
-		if ( is_multisite() AND ! is_super_admin() ) {
+		if ( is_multisite() && ! is_super_admin() ) {
 			wp_die( __( 'You do not have permission to access this page.', 'civicrm-wp-profile-sync' ) );
 		}
 
@@ -782,7 +782,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Loop through them and get the data we want.
 		$contact_post_types = [];
-		foreach( $mapped_contact_post_types AS $contact_post_type ) {
+		foreach ( $mapped_contact_post_types as $contact_post_type ) {
 			$contact_post_types[$contact_post_type->name] = $contact_post_type->label;
 		}
 
@@ -805,7 +805,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Loop through them and get the data we want.
 		$contact_types = [];
-		foreach( $mapped_contact_types AS $contact_type ) {
+		foreach ( $mapped_contact_types as $contact_type ) {
 			$contact_types[$contact_type['id']] = $contact_type['label'];
 		}
 
@@ -828,7 +828,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Loop through them and get the data we want.
 		$activity_post_types = [];
-		foreach( $mapped_activity_post_types AS $activity_post_type ) {
+		foreach ( $mapped_activity_post_types as $activity_post_type ) {
 			$activity_post_types[$activity_post_type->name] = $activity_post_type->label;
 		}
 
@@ -851,7 +851,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Loop through them and get the data we want.
 		$activity_types = [];
-		foreach( $mapped_activity_types AS $activity_type ) {
+		foreach ( $mapped_activity_types as $activity_type ) {
 			$activity_types[$activity_type['value']] = $activity_type['label'];
 		}
 
@@ -874,7 +874,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Loop through them and get the data we want.
 		$post_types = [];
-		foreach( $mapped_participant_role_post_types AS $participant_role_post_type ) {
+		foreach ( $mapped_participant_role_post_types as $participant_role_post_type ) {
 			$post_types[$participant_role_post_type->name] = $participant_role_post_type->label;
 		}
 
@@ -906,7 +906,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Loop through them and get the data we want.
 		$participant_roles = [];
-		foreach( $mapped_participant_roles AS $participant_role ) {
+		foreach ( $mapped_participant_roles as $participant_role ) {
 			$participant_roles[$participant_role['value']] = $participant_role['label'];
 		}
 
@@ -938,7 +938,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Loop through them and get the data we want.
 		$groups = [];
-		foreach( $mapped_groups AS $group ) {
+		foreach ( $mapped_groups as $group ) {
 			$groups[$group['id']] = $group['title'];
 		}
 
@@ -965,7 +965,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Loop through them and get the data we want.
 		$contact_post_types = [];
-		foreach( $mapped_contact_post_types AS $contact_post_type ) {
+		foreach ( $mapped_contact_post_types as $contact_post_type ) {
 			$contact_post_types[$contact_post_type->name] = 'cwps_acf_post_to_contact_' . $contact_post_type->name . '_stop';
 		}
 
@@ -974,7 +974,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Loop through them and get the data we want.
 		$contact_types = [];
-		foreach( $mapped_contact_types AS $contact_type ) {
+		foreach ( $mapped_contact_types as $contact_type ) {
 			$contact_types[$contact_type['id']] = 'cwps_acf_contact_to_post_' . $contact_type['id'] . '_stop';
 		}
 
@@ -983,7 +983,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Loop through them and get the data we want.
 		$groups = [];
-		foreach( $mapped_groups AS $group ) {
+		foreach ( $mapped_groups as $group ) {
 			$groups[$group['id']] = 'cwps_acf_group_to_term_' . $group['id'] . '_stop';
 		}
 
@@ -992,7 +992,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Loop through them and get the data we want.
 		$activity_post_types = [];
-		foreach( $mapped_activity_post_types AS $activity_post_type ) {
+		foreach ( $mapped_activity_post_types as $activity_post_type ) {
 			$activity_post_types[$activity_post_type->name] = 'cwps_acf_post_to_activity_' . $activity_post_type->name . '_stop';
 		}
 
@@ -1001,7 +1001,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Loop through them and get the data we want.
 		$activity_types = [];
-		foreach( $mapped_activity_types AS $activity_type ) {
+		foreach ( $mapped_activity_types as $activity_type ) {
 			$activity_types[$activity_type['id']] = 'cwps_acf_activity_to_post_' . $activity_type['id'] . '_stop';
 		}
 
@@ -1022,7 +1022,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Loop through them and get the data we want.
 		$participant_role_post_types = [];
-		foreach( $mapped_participant_role_post_types AS $participant_role_post_type ) {
+		foreach ( $mapped_participant_role_post_types as $participant_role_post_type ) {
 			$participant_role_post_types[$participant_role_post_type->name] = 'cwps_acf_post_to_participant_role_' . $participant_role_post_type->name . '_stop';
 		}
 
@@ -1043,7 +1043,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Loop through them and get the data we want.
 		$participant_roles = [];
-		foreach( $mapped_participant_roles AS $participant_role ) {
+		foreach ( $mapped_participant_roles as $participant_role ) {
 			$participant_roles[$participant_role['value']] = 'cwps_acf_participant_role_to_post_' . $participant_role['value'] . '_stop';
 		}
 
@@ -1054,7 +1054,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		$entity_id = false;
 
 		// Find out if a Contact Post Type button has been pressed.
-		foreach( $contact_post_types AS $contact_post_type => $stop_code ) {
+		foreach ( $contact_post_types as $contact_post_type => $stop_code ) {
 
 			// Define replacements.
 			$replacements = [ 'cwps_acf_post_to_contact_', '_stop' ];
@@ -1079,8 +1079,8 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// Find out if a Contact Type button has been pressed.
-		if ( $stop === false AND $continue === false ) {
-			foreach( $contact_types AS $contact_type_id => $stop_code ) {
+		if ( $stop === false && $continue === false ) {
+			foreach ( $contact_types as $contact_type_id => $stop_code ) {
 
 				// Define replacements.
 				$replacements = [ 'cwps_acf_contact_to_post_', '_stop' ];
@@ -1107,7 +1107,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Find out if a Group "Stop Sync" button has been pressed.
 		if ( $stop === false ) {
-			foreach( $groups AS $group_id => $stop_code ) {
+			foreach ( $groups as $group_id => $stop_code ) {
 
 				// Define replacements.
 				$replacements = [ 'cwps_acf_group_to_term_', '_stop' ];
@@ -1133,7 +1133,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// Find out if an Activity Post Type button has been pressed.
-		foreach( $activity_post_types AS $activity_post_type => $stop_code ) {
+		foreach ( $activity_post_types as $activity_post_type => $stop_code ) {
 
 			// Define replacements.
 			$replacements = [ 'cwps_acf_post_to_activity_', '_stop' ];
@@ -1158,8 +1158,8 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// Find out if an Activity Type button has been pressed.
-		if ( $stop === false AND $continue === false ) {
-			foreach( $activity_types AS $activity_type_id => $stop_code ) {
+		if ( $stop === false && $continue === false ) {
+			foreach ( $activity_types as $activity_type_id => $stop_code ) {
 
 				// Define replacements.
 				$replacements = [ 'cwps_acf_activity_to_post_', '_stop' ];
@@ -1185,7 +1185,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// Find out if a Participant Role Post Type button has been pressed.
-		foreach( $participant_role_post_types AS $participant_role_post_type => $stop_code ) {
+		foreach ( $participant_role_post_types as $participant_role_post_type => $stop_code ) {
 
 			// Define replacements.
 			$replacements = [ 'cwps_acf_post_to_participant_role_', '_stop' ];
@@ -1210,8 +1210,8 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// Find out if a Participant Role button has been pressed.
-		if ( $stop === false AND $continue === false ) {
-			foreach( $participant_roles AS $participant_role_id => $stop_code ) {
+		if ( $stop === false && $continue === false ) {
+			foreach ( $participant_roles as $participant_role_id => $stop_code ) {
 
 				// Define replacements.
 				$replacements = [ 'cwps_acf_participant_role_to_post_', '_stop' ];
@@ -1237,7 +1237,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 	 	// Bail if no button was pressed.
-		if ( empty( $stop ) AND empty( $continue ) ) {
+		if ( empty( $stop ) && empty( $continue ) ) {
 			return;
 		}
 
@@ -1333,7 +1333,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Loop through them and get the data we want.
 		$contact_post_types = [];
-		foreach( $mapped_contact_post_types AS $contact_post_type ) {
+		foreach ( $mapped_contact_post_types as $contact_post_type ) {
 			$contact_post_types[] = $contact_post_type->name;
 		}
 
@@ -1368,7 +1368,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// If we get an error.
-		if ( $contact_post_type === '' OR $result === false ) {
+		if ( $contact_post_type === '' || $result === false ) {
 
 			// Set finished flag.
 			$data['finished'] = 'true';
@@ -1416,7 +1416,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			$this->acf_loader->mapper->hooks_civicrm_remove();
 
 			// Sync each Post in turn.
-			foreach( $posts AS $post ) {
+			foreach ( $posts as $post ) {
 
 				// Let's make an array of params.
 				$args = [
@@ -1514,7 +1514,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// If we get an error.
-		if ( $contact_type_id === 0 OR $result === false ) {
+		if ( $contact_type_id === 0 || $result === false ) {
 
 			// Set finished flag.
 			$data['finished'] = 'true';
@@ -1552,12 +1552,12 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Did we get an error?
 		$error = false;
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$error = true;
 		}
 
 		// Finish sync on failure or empty result.
-		if ( $error OR empty( $result['values'] ) ) {
+		if ( $error || empty( $result['values'] ) ) {
 
 			// Set finished flag.
 			$data['finished'] = 'true';
@@ -1585,7 +1585,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			$this->acf_loader->mapper->hooks_wordpress_remove();
 
 			// Trigger sync for each Contact in turn.
-			foreach( $result['values'] AS $contact ) {
+			foreach ( $result['values'] as $contact ) {
 
 				// Let's make an array of params.
 				$args = [
@@ -1642,7 +1642,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Loop through them and get the data we want.
 		$activity_post_types = [];
-		foreach( $mapped_activity_post_types AS $activity_post_type ) {
+		foreach ( $mapped_activity_post_types as $activity_post_type ) {
 			$activity_post_types[] = $activity_post_type->name;
 		}
 
@@ -1677,7 +1677,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// If we get an error.
-		if ( $activity_post_type === '' OR $result === false ) {
+		if ( $activity_post_type === '' || $result === false ) {
 
 			// Set finished flag.
 			$data['finished'] = 'true';
@@ -1725,7 +1725,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			$this->acf_loader->mapper->hooks_civicrm_remove();
 
 			// Sync each Post in turn.
-			foreach( $posts AS $post ) {
+			foreach ( $posts as $post ) {
 
 				// Let's make an array of params.
 				$args = [
@@ -1822,7 +1822,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// If we get an error.
-		if ( $activity_type_id === 0 OR $result === false ) {
+		if ( $activity_type_id === 0 || $result === false ) {
 
 			// Set finished flag.
 			$data['finished'] = 'true';
@@ -1860,12 +1860,12 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Did we get an error?
 		$error = false;
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$error = true;
 		}
 
 		// Finish sync on failure or empty result.
-		if ( $error OR empty( $result['values'] ) ) {
+		if ( $error || empty( $result['values'] ) ) {
 
 			// Set finished flag.
 			$data['finished'] = 'true';
@@ -1893,7 +1893,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			$this->acf_loader->mapper->hooks_wordpress_remove();
 
 			// Trigger sync for each Activity in turn.
-			foreach( $result['values'] AS $activity ) {
+			foreach ( $result['values'] as $activity ) {
 
 				// Let's make an array of params.
 				$args = [
@@ -1949,7 +1949,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Loop through them and get the data we want.
 		$participant_post_types = [];
-		foreach( $mapped_participant_post_types AS $participant_post_type ) {
+		foreach ( $mapped_participant_post_types as $participant_post_type ) {
 			$participant_post_types[] = $participant_post_type->name;
 		}
 
@@ -1989,7 +1989,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// If we get an error.
-		if ( $participant_post_type === '' OR $result === false ) {
+		if ( $participant_post_type === '' || $result === false ) {
 
 			// Set finished flag.
 			$data['finished'] = 'true';
@@ -2037,7 +2037,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			$this->acf_loader->mapper->hooks_civicrm_remove();
 
 			// Sync each Post in turn.
-			foreach( $posts AS $post ) {
+			foreach ( $posts as $post ) {
 
 				// Let's make an array of params.
 				$args = [
@@ -2139,7 +2139,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// If we get an error.
-		if ( $participant_role_id === 0 OR $result === false ) {
+		if ( $participant_role_id === 0 || $result === false ) {
 
 			// Set finished flag.
 			$data['finished'] = 'true';
@@ -2177,12 +2177,12 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Did we get an error?
 		$error = false;
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$error = true;
 		}
 
 		// Finish sync on failure or empty result.
-		if ( $error OR empty( $result['values'] ) ) {
+		if ( $error || empty( $result['values'] ) ) {
 
 			// Set finished flag.
 			$data['finished'] = 'true';
@@ -2210,7 +2210,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			$this->acf_loader->mapper->hooks_wordpress_remove();
 
 			// Trigger sync for each Participant in turn.
-			foreach( $result['values'] AS $participant ) {
+			foreach ( $result['values'] as $participant ) {
 
 				// Let's make an array of params.
 				$args = [
@@ -2330,7 +2330,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			$this->acf_loader->mapper->hooks_civicrm_remove();
 
 			// Sync each Post in turn.
-			foreach( $posts AS $post ) {
+			foreach ( $posts as $post ) {
 
 				// Let's make an array of params.
 				$args = [
@@ -2432,7 +2432,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// If we get an error.
-		if ( $entity_id === 0 OR $result === false ) {
+		if ( $entity_id === 0 || $result === false ) {
 
 			// Set finished flag.
 			$data['finished'] = 'true';
@@ -2469,12 +2469,12 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Did we get an error?
 		$error = false;
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$error = true;
 		}
 
 		// Finish sync on failure or empty result.
-		if ( $error OR empty( $result['values'] ) ) {
+		if ( $error || empty( $result['values'] ) ) {
 
 			// Set finished flag.
 			$data['finished'] = 'true';
@@ -2502,7 +2502,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			$this->acf_loader->mapper->hooks_wordpress_remove();
 
 			// Trigger sync for each Participant in turn.
-			foreach( $result['values'] AS $participant ) {
+			foreach ( $result['values'] as $participant ) {
 
 				// Let's make an array of params.
 				$args = [
@@ -2574,7 +2574,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// If we get an error.
-		if ( $group_id === 0 OR $result === false ) {
+		if ( $group_id === 0 || $result === false ) {
 
 			// Set finished flag.
 			$data['finished'] = 'true';
@@ -2612,12 +2612,12 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Did we get an error?
 		$error = false;
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$error = true;
 		}
 
 		// Finish sync on failure or empty result.
-		if ( $error OR empty( $result['values'] ) ) {
+		if ( $error || empty( $result['values'] ) ) {
 
 			// Set finished flag.
 			$data['finished'] = 'true';

@@ -356,7 +356,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		$weight = 30;
 
 		// Handle each Post Type in turn.
-		foreach( $post_types AS $post_type ) {
+		foreach ( $post_types as $post_type ) {
 
 			// Get the Post ID that this Contact is mapped to.
 			$post_id = $this->acf_loader->civicrm->contact->is_mapped_to_post( $contact, $post_type );
@@ -430,7 +430,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		// Bail if the current screen is not an Edit screen.
 		if ( is_admin() ) {
 			$screen = get_current_screen();
-			if ( $screen instanceof WP_Screen AND $screen->base != 'post' ) {
+			if ( $screen instanceof WP_Screen && $screen->base != 'post' ) {
 				return;
 			}
 		}
@@ -441,7 +441,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		}
 
 		// Bail if there's no Post and it's WordPress admin.
-		if ( empty( $post ) AND is_admin() ) {
+		if ( empty( $post ) && is_admin() ) {
 			return;
 		}
 
@@ -681,7 +681,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Do the loop.
 		if ( $query->have_posts() ) {
-			foreach( $query->get_posts() AS $found ) {
+			foreach ( $query->get_posts() as $found ) {
 
 				// Add if we want *all* Posts.
 				if ( $post_type === 'any' ) {
@@ -732,7 +732,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		}
 
 		// Handle each Post Type in turn.
-		foreach( $post_types AS $post_type ) {
+		foreach ( $post_types as $post_type ) {
 			$this->contact_sync_to_post( $args, $post_type );
 		}
 
@@ -814,7 +814,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 			$entity = $this->acf_loader->mapper->entity_get();
 
 			// Handle each Post Type in turn.
-			foreach( $post_types AS $post_type ) {
+			foreach ( $post_types as $post_type ) {
 
 				// Check if the Post ID for this Contact already exists.
 				$post_id = $this->acf_loader->civicrm->contact->is_mapped_to_post( $args['objectRef'], $post_type );
@@ -828,7 +828,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 				 *
 				 * Instead, the Contact ID needs to be reverse synced to the Post.
 				 */
-				if ( $entity['entity'] === 'post' AND $post_type == $entity['type'] ) {
+				if ( $entity['entity'] === 'post' && $post_type == $entity['type'] ) {
 
 					// Save correspondence and skip to next.
 					$this->contact_id_set( $entity['id'], $args['objectId'] );
@@ -894,13 +894,13 @@ class CiviCRM_Profile_Sync_ACF_Post {
 			$entity = $this->acf_loader->mapper->entity_get();
 
 			// Handle each Post Type in turn.
-			foreach( $post_types AS $post_type ) {
+			foreach ( $post_types as $post_type ) {
 
 				// Get the Post ID for this Contact.
 				$post_id = $this->acf_loader->civicrm->contact->is_mapped_to_post( $args['objectRef'], $post_type );
 
 				// Exclude "reverse" edits when a Post is the originator.
-				if ( $entity['entity'] === 'post' AND $post_id == $entity['id'] ) {
+				if ( $entity['entity'] === 'post' && $post_id == $entity['id'] ) {
 					continue;
 				}
 
@@ -947,7 +947,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		}
 
 		// Process the Contact Types.
-		foreach( $removed_types AS $contact_type ) {
+		foreach ( $removed_types as $contact_type ) {
 
 			// Get the mapped Post Type.
 			$post_type = $this->acf_loader->civicrm->contact_type->is_mapped_to_post_type( $contact_type );
@@ -966,7 +966,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 			}
 
 			// Process them.
-			foreach( $post_ids AS $post_id ) {
+			foreach ( $post_ids as $post_id ) {
 
 				// Delete the Contact ID meta.
 				$this->contact_id_delete( $post_id );
@@ -1069,8 +1069,8 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// If there are some, prime them with an empty string.
 		if ( ! empty( $acf_fields ) ) {
-			foreach( $acf_fields AS $field_group ) {
-				foreach( $field_group AS $selector => $contact_field ) {
+			foreach ( $acf_fields as $field_group ) {
+				foreach ( $field_group as $selector => $contact_field ) {
 					$this->acf_loader->acf->field->value_update( $selector, '', $post_id );
 				}
 			}
@@ -1107,7 +1107,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		];
 
 		// Overwrite Permalink if the current Post Title is empty.
-		if ( ! is_null( $post ) AND $post instanceof WP_Post ) {
+		if ( ! is_null( $post ) && $post instanceof WP_Post ) {
 			if ( empty( $post->post_title ) ) {
 				$args['post_name'] = sanitize_title( $contact['display_name'] );
 			}
@@ -1248,7 +1248,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Do the loop.
 		if ( $query->have_posts() ) {
-			foreach( $query->get_posts() AS $found ) {
+			foreach ( $query->get_posts() as $found ) {
 
 				// Add if we want *all* Posts.
 				if ( $post_type === 'any' ) {
@@ -1392,7 +1392,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		 *
 		 * Instead, the Activity ID needs to be reverse synced to the Post.
 		 */
-		if ( $entity['entity'] === 'post' AND $post_type == $entity['type'] ) {
+		if ( $entity['entity'] === 'post' && $post_type == $entity['type'] ) {
 
 			// Save correspondence and bail.
 			$this->activity_id_set( $entity['id'], $args['objectId'] );
@@ -1462,7 +1462,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		$post_id = $this->acf_loader->civicrm->activity->is_mapped_to_post( $args['objectRef'], $post_type );
 
 		// Exclude "reverse" edits when a Post is the originator.
-		if ( $entity['entity'] === 'post' AND $post_id == $entity['id'] ) {
+		if ( $entity['entity'] === 'post' && $post_id == $entity['id'] ) {
 			return;
 		}
 
@@ -1558,8 +1558,8 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// If there are some, prime them with an empty string.
 		if ( ! empty( $acf_fields ) ) {
-			foreach( $acf_fields AS $field_group ) {
-				foreach( $field_group AS $selector => $activity_field ) {
+			foreach ( $acf_fields as $field_group ) {
+				foreach ( $field_group as $selector => $activity_field ) {
 					$this->acf_loader->acf->field->value_update( $selector, '', $post_id );
 				}
 			}
@@ -1601,7 +1601,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		];
 
 		// Overwrite Permalink if the current Post Title is empty.
-		if ( ! is_null( $post ) AND $post instanceof WP_Post ) {
+		if ( ! is_null( $post ) && $post instanceof WP_Post ) {
 			if ( empty( $post->post_title ) ) {
 				$args['post_name'] = sanitize_title( $activity->subject );
 			}
@@ -1742,7 +1742,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Do the loop.
 		if ( $query->have_posts() ) {
-			foreach( $query->get_posts() AS $found ) {
+			foreach ( $query->get_posts() as $found ) {
 
 				// Add if we want *all* Posts.
 				if ( $post_type === 'any' ) {
@@ -1792,7 +1792,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		}
 
 		// Handle each Post Type in turn.
-		foreach( $post_types AS $post_type ) {
+		foreach ( $post_types as $post_type ) {
 			$this->participant_sync_to_post( $args, $post_type );
 		}
 
@@ -1877,7 +1877,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		$entity = $this->acf_loader->mapper->entity_get();
 
 		// Handle each Post Type in turn.
-		foreach( $post_types AS $post_type ) {
+		foreach ( $post_types as $post_type ) {
 
 			// Check if the Post ID for this Participant already exists.
 			$post_id = $this->acf_loader->civicrm->participant->is_mapped_to_post( $args['objectRef'], $post_type );
@@ -1891,7 +1891,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 			 *
 			 * Instead, the Participant ID needs to be reverse synced to the Post.
 			 */
-			if ( $entity['entity'] === 'post' AND $post_type == $entity['type'] ) {
+			if ( $entity['entity'] === 'post' && $post_type == $entity['type'] ) {
 
 				// Save correspondence and skip.
 				$this->participant_id_set( $entity['id'], $args['objectId'] );
@@ -1960,13 +1960,13 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		$entity = $this->acf_loader->mapper->entity_get();
 
 		// Handle each Post Type in turn.
-		foreach( $post_types AS $post_type ) {
+		foreach ( $post_types as $post_type ) {
 
 			// Get the Post ID for this Participant.
 			$post_id = $this->acf_loader->civicrm->participant->is_mapped_to_post( $args['objectRef'], $post_type );
 
 			// Exclude "reverse" edits when a Post is the originator.
-			if ( $entity['entity'] === 'post' AND $post_id == $entity['id'] ) {
+			if ( $entity['entity'] === 'post' && $post_id == $entity['id'] ) {
 				continue;
 			}
 
@@ -2085,7 +2085,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		}
 
 		// Handle each Post Type in turn.
-		foreach( $post_types AS $post_type ) {
+		foreach ( $post_types as $post_type ) {
 
 			// Find the Post ID of this Post Type that this Participant is synced with.
 			$post_id = false;
@@ -2208,8 +2208,8 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// If there are some, prime them with an empty string.
 		if ( ! empty( $acf_fields ) ) {
-			foreach( $acf_fields AS $field_group ) {
-				foreach( $field_group AS $selector => $participant_field ) {
+			foreach ( $acf_fields as $field_group ) {
+				foreach ( $field_group as $selector => $participant_field ) {
 					$this->acf_loader->acf->field->value_update( $selector, '', $post_id );
 				}
 			}
@@ -2265,7 +2265,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		];
 
 		// Overwrite Permalink if the current Post slug is auto-generated.
-		if ( ! is_null( $post ) AND $post instanceof WP_Post ) {
+		if ( ! is_null( $post ) && $post instanceof WP_Post ) {
 			$args['post_name'] = sanitize_title( $title );
 		}
 
@@ -2309,7 +2309,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		$post = wp_delete_post( $post_id, true );
 
 		// Bail on failure.
-		if ( is_wp_error( $post ) OR empty( $post ) ) {
+		if ( is_wp_error( $post ) || empty( $post ) ) {
 			return false;
 		}
 
@@ -2434,7 +2434,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		}
 
 		// Bail if this is a draft or an auto-draft.
-		if ( $post_obj->post_status == 'draft' OR $post_obj->post_status == 'auto-draft' ) {
+		if ( $post_obj->post_status == 'draft' || $post_obj->post_status == 'auto-draft' ) {
 			return $post;
 		}
 

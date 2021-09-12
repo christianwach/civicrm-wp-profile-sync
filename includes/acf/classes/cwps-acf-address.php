@@ -184,7 +184,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		$result = civicrm_api( 'Country', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $country;
 		}
 
@@ -232,7 +232,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		$result = civicrm_api( 'Country', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $country;
 		}
 
@@ -308,7 +308,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		$result = civicrm_api( 'StateProvince', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $state_provinces;
 		}
 
@@ -318,7 +318,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		}
 
 		// Build the array.
-		foreach ( $result['values'] AS $value ) {
+		foreach ( $result['values'] as $value ) {
 			$state_provinces[ $value['country_id'] ][] = [
 				'id' => $value['id'],
 				'text' => $value['name'],
@@ -361,7 +361,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		$result = civicrm_api( 'StateProvince', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $state_province;
 		}
 
@@ -409,7 +409,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		$result = civicrm_api( 'StateProvince', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $state_province;
 		}
 
@@ -590,7 +590,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		$result = civicrm_api( 'Address', 'get', $params );
 
 		// Bail on failure.
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			return $shared;
 		}
 
@@ -600,7 +600,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		}
 
  		// Return the result set as an array of objects.
- 		foreach( $result['values'] AS $item ) {
+ 		foreach ( $result['values'] as $item ) {
 			$shared[] = (object) $item;
 		}
 
@@ -639,7 +639,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		$result = civicrm_api( 'Address', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $address;
 		}
 
@@ -688,7 +688,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		$result = civicrm_api( 'Address', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $address;
 		}
 
@@ -735,7 +735,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		$result = civicrm_api( 'Address', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $addresses;
 		}
 
@@ -745,7 +745,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		}
 
  		// Return the result set as an array of objects.
- 		foreach( $result['values'] AS $item ) {
+ 		foreach ( $result['values'] as $item ) {
 			$addresses[] = (object) $item;
 		}
 
@@ -785,7 +785,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		$result = civicrm_api( 'Address', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $address;
 		}
 
@@ -837,7 +837,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		$result = civicrm_api( 'LocationType', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $location_type;
 		}
 
@@ -886,7 +886,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		$result = civicrm_api( 'LocationType', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $location_types;
 		}
 
@@ -941,7 +941,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		$result = civicrm_api( 'Address', 'create', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $address;
 		}
 
@@ -988,7 +988,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		$result = civicrm_api( 'Address', 'delete', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $success;
 		}
 
@@ -1037,7 +1037,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		$existing_address = civicrm_api( 'Address', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $existing_address['is_error'] ) AND $existing_address['is_error'] == 1 ) {
+		if ( ! empty( $existing_address['is_error'] ) && $existing_address['is_error'] == 1 ) {
 			return $address;
 		}
 
@@ -1097,7 +1097,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		$result = civicrm_api( 'Address', 'getfields', $params );
 
 		// Override return if we get some.
-		if ( $result['is_error'] == 0 AND ! empty( $result['values'] ) ) {
+		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
 
 			// Check for no filter.
 			if ( $filter == 'none' ) {
@@ -1109,7 +1109,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 			} elseif ( $filter == 'public' ) {
 
 				// Skip all but those defined in our public Address Fields array.
-				foreach ( $result['values'] AS $key => $value ) {
+				foreach ( $result['values'] as $key => $value ) {
 					if ( array_key_exists( $value['name'], $this->address_fields ) ) {
 						$fields[] = $value;
 					}
@@ -1160,7 +1160,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		$result = civicrm_api( 'Address', 'getfield', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $field;
 		}
 
@@ -1241,7 +1241,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		// Get the public fields on the Entity for this Field Type.
 		$public_fields = $this->civicrm_fields_get( 'public' );
 		$fields_for_entity = [];
-		foreach ( $public_fields AS $key => $value ) {
+		foreach ( $public_fields as $key => $value ) {
 			if ( $field['type'] == $this->address_fields[$value['name']] ) {
 				// Skip the ones that are not needed in ACFE Forms.
 				if ( ! array_key_exists( $value['name'], $this->bypass_fields_to_remove ) ) {
@@ -1265,14 +1265,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		$filtered_fields = apply_filters( 'cwps/acf/query_settings/custom_fields_filter', [], $custom_fields, $field );
 
 		// Pass if not populated.
-		if ( empty( $fields_for_entity ) AND empty( $filtered_fields ) ) {
+		if ( empty( $fields_for_entity ) && empty( $filtered_fields ) ) {
 			return $choices;
 		}
 
 		// Build Address Field choices array for dropdown.
 		if ( ! empty( $fields_for_entity ) ) {
 			$address_fields_label = esc_attr__( 'Address Fields', 'civicrm-wp-profile-sync' );
-			foreach( $fields_for_entity AS $address_field ) {
+			foreach ( $fields_for_entity as $address_field ) {
 				$choices[$address_fields_label][$this->address_field_prefix . $address_field['name']] = $address_field['title'];
 			}
 		}
@@ -1280,9 +1280,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		// Build Custom Field choices array for dropdown.
 		if ( ! empty( $filtered_fields ) ) {
 			$custom_field_prefix = $this->civicrm->custom_field_prefix();
-			foreach( $filtered_fields AS $custom_group_name => $custom_group ) {
+			foreach ( $filtered_fields as $custom_group_name => $custom_group ) {
 				$custom_fields_label = esc_attr( $custom_group_name );
-				foreach( $custom_group AS $custom_field ) {
+				foreach ( $custom_group as $custom_field ) {
 					$choices[$custom_fields_label][$custom_field_prefix . $custom_field['id']] = $custom_field['label'];
 				}
 			}
@@ -1322,7 +1322,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->acf_loader->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
 
@@ -1363,7 +1363,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	public function value_validate( $valid, $value, $field, $input ) {
 
 		// Bail if it's not required and is empty.
-		if ( $field['required'] == '0' AND empty( $value ) ) {
+		if ( $field['required'] == '0' && empty( $value ) ) {
 			return $valid;
 		}
 

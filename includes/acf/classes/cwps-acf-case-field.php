@@ -160,7 +160,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 	public function value_validate( $valid, $value, $field, $input ) {
 
 		// Bail if it's not required and is empty.
-		if ( $field['required'] == '0' AND empty( $value ) ) {
+		if ( $field['required'] == '0' && empty( $value ) ) {
 			return $valid;
 		}
 
@@ -231,7 +231,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 		}
 
 		// Let's look at each ACF Field in turn.
-		foreach( $acf_fields['case'] AS $selector => $case_field ) {
+		foreach ( $acf_fields['case'] as $selector => $case_field ) {
 
 			// Skip if it's not a public Case Field.
 			if ( ! array_key_exists( $case_field, $this->case_fields ) ) {
@@ -379,7 +379,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 		}
 
 		// Case Status ID.
-		if ( $name == 'case_status_id' OR $name == 'status_id' ) {
+		if ( $name == 'case_status_id' || $name == 'status_id' ) {
 			$option_group = $this->civicrm->option_group_get( 'case_status' );
 			if ( ! empty( $option_group ) ) {
 				$options = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
@@ -387,7 +387,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 		}
 
 		// Medium ID.
-		if ( $name == 'case_medium_id' OR $name == 'medium_id' ) {
+		if ( $name == 'case_medium_id' || $name == 'medium_id' ) {
 			$options = CRM_Case_PseudoConstant::encounterMedium();
 		}
 
@@ -432,7 +432,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 		// TODO: Do we need this loop?
 
 		// Loop through the Post Types.
-		foreach( $is_case_field_group AS $post_type_name ) {
+		foreach ( $is_case_field_group as $post_type_name ) {
 
 			// Get public fields of this type.
 			$case_fields_for_type = $this->data_get( $field['type'], 'public' );
@@ -486,7 +486,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 		$result = civicrm_api( 'Case', 'getfield', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $field;
 		}
 
@@ -560,14 +560,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 				// Skip all but those defined in our Case Fields array.
 				$public_fields = [];
-				foreach ( $result['values'] AS $key => $value ) {
+				foreach ( $result['values'] as $key => $value ) {
 					if ( array_key_exists( $value['name'], $this->case_fields ) ) {
 						$public_fields[] = $value;
 					}
 				}
 
 				// Skip all but those mapped to the type of ACF Field.
-				foreach ( $public_fields AS $key => $value ) {
+				foreach ( $public_fields as $key => $value ) {
 					if ( $field_type == $this->case_fields[$value['name']] ) {
 						$fields[] = $value;
 					}
@@ -653,7 +653,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 			} elseif ( $filter == 'public' ) {
 
 				// Skip all but those defined in our Case Fields array.
-				foreach ( $result['values'] AS $key => $value ) {
+				foreach ( $result['values'] as $key => $value ) {
 					if ( array_key_exists( $value['name'], $this->case_fields ) ) {
 						$fields[] = $value;
 					}
@@ -712,7 +712,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 		$case_fields = [];
 
 		// Skip all but those mapped to the type of ACF Field.
-		foreach ( $this->case_fields AS $key => $value ) {
+		foreach ( $this->case_fields as $key => $value ) {
 			if ( $type == $value ) {
 				$case_fields[$key] = $value;
 			}
@@ -772,7 +772,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->acf_loader->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
 
@@ -786,7 +786,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 		$field['choices'] = $this->options_get( $case_field_name );
 
 		// Set a default for "Case Status".
-		if ( $case_field_name == 'status_id' OR $case_field_name == 'case_status_id' ) {
+		if ( $case_field_name == 'status_id' || $case_field_name == 'case_status_id' ) {
 			$status_id_default = $this->civicrm->option_value_default_get( 'case_status' );
 			if ( $status_id_default !== false ) {
 				$field['default_value'] = $status_id_default;
@@ -794,7 +794,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 		}
 
 		// Set a default for "Activity Medium".
-		if ( $case_field_name == 'medium_id' OR $case_field_name == 'case_medium_id' ) {
+		if ( $case_field_name == 'medium_id' || $case_field_name == 'case_medium_id' ) {
 			$medium_id_default = $this->civicrm->option_value_default_get( 'encounter_medium' );
 			if ( $medium_id_default !== false ) {
 				$field['default_value'] = $medium_id_default;
@@ -826,7 +826,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->acf_loader->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
 

@@ -14,7 +14,7 @@
 	<select name="cwps-civicrm-group" id="cwps-civicrm-group" class="postform">
 		<option value="0" selected="selected"><?php _e( 'None', 'civicrm-wp-profile-sync' ); ?></option>
 		<?php if ( ! empty( $groups ) ) : ?>
-			<?php foreach ( $groups AS $group ) : ?>
+			<?php foreach ( $groups as $group ) : ?>
 				<option value="<?php echo $group['id'] ?>"><?php echo $group['title']; ?></option>
 			<?php endforeach; ?>
 		<?php endif; ?>

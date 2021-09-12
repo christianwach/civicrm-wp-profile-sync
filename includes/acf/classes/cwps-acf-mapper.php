@@ -1050,7 +1050,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		];
 
 		// Maybe save extra data.
-		foreach( $extra_data AS $property ) {
+		foreach ( $extra_data as $property ) {
 			if ( isset( $objectRef->$property ) ) {
 				$contact[$property] = $objectRef->$property;
 			}
@@ -2991,7 +2991,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function post_saved( $post_id, $post, $update ) {
 
 		// Bail if there was a Multisite switch.
-		if ( is_multisite() AND ms_is_switched() ) {
+		if ( is_multisite() && ms_is_switched() ) {
 			return;
 		}
 
@@ -3032,7 +3032,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		// TODO: Do we need to specify is_admin()?
 
 		// Bail if there was a Multisite switch.
-		if ( is_multisite() AND ms_is_switched() ) {
+		if ( is_multisite() && ms_is_switched() ) {
 			return;
 		}
 
@@ -3070,7 +3070,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function term_created( $term_id, $tt_id, $taxonomy ) {
 
 		// Bail if there was a Multisite switch.
-		if ( is_multisite() AND ms_is_switched() ) {
+		if ( is_multisite() && ms_is_switched() ) {
 			return;
 		}
 
@@ -3105,7 +3105,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function term_pre_edit( $term_id, $taxonomy = null ) {
 
 		// Bail if there was a Multisite switch.
-		if ( is_multisite() AND ms_is_switched() ) {
+		if ( is_multisite() && ms_is_switched() ) {
 			return;
 		}
 
@@ -3140,7 +3140,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function term_edited( $term_id, $tt_id, $taxonomy ) {
 
 		// Bail if there was a Multisite switch.
-		if ( is_multisite() AND ms_is_switched() ) {
+		if ( is_multisite() && ms_is_switched() ) {
 			return;
 		}
 
@@ -3175,7 +3175,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function term_pre_delete( $term_id, $taxonomy = null ) {
 
 		// Bail if there was a Multisite switch.
-		if ( is_multisite() AND ms_is_switched() ) {
+		if ( is_multisite() && ms_is_switched() ) {
 			return;
 		}
 
@@ -3211,7 +3211,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function term_deleted( $term_id, $tt_id, $taxonomy, $deleted_term ) {
 
 		// Bail if there was a Multisite switch.
-		if ( is_multisite() AND ms_is_switched() ) {
+		if ( is_multisite() && ms_is_switched() ) {
 			return;
 		}
 

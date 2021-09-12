@@ -18,7 +18,7 @@
 	<?php if ( ! empty( $participant_role_post_types ) ) : ?>
 		<table class="form-table">
 
-			<?php foreach( $participant_role_post_types AS $participant_post_type => $label ) : ?>
+			<?php foreach ( $participant_role_post_types as $participant_post_type => $label ) : ?>
 
 				<?php $identifier = $prefix . '_' . $participant_post_type; ?>
 				<?php $stop = ''; ?>

@@ -238,7 +238,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 		if ( ! ( $screen instanceof WP_Screen ) ) {
 			return;
 		}
-		if ( $screen->base != 'post' OR $screen->id != 'acfe-form' ) {
+		if ( $screen->base != 'post' || $screen->id != 'acfe-form' ) {
 			return;
 		}
 
@@ -401,7 +401,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 		}
 
 		// Test for this Location Rule.
-		if ( $rule['param'] == $this->rule_name AND ! empty( $params[$this->rule_name] ) ) {
+		if ( $rule['param'] == $this->rule_name && ! empty( $params[$this->rule_name] ) ) {
 			$supported = true;
 		}
 
@@ -503,7 +503,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 		$entity_mapping = [];
 
 		// The Location Rules outer array is made of "grouos".
-		foreach ( $location_rules AS $group ) {
+		foreach ( $location_rules as $group ) {
 
 			// Skip group if it has no rules.
 			if ( empty( $group ) ) {
@@ -511,7 +511,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 			}
 
 			// The Location Rules inner array is made of "rules".
-			foreach( $group AS $rule ) {
+			foreach ( $group as $rule ) {
 
 				// Is this a Bypass rule?
 				if ( $rule['param'] === $this->rule_name ) {

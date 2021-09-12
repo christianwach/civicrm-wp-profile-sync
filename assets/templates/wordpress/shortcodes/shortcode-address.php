@@ -36,7 +36,7 @@
 <?php if ( ! empty( $postal_code ) ) : ?>
 	 <?php echo $postal_code; ?>
 <?php endif; ?>
-<?php if ( ! empty( $city ) OR ! empty( $postal_code ) ) : ?>
+<?php if ( ! empty( $city ) || ! empty( $postal_code ) ) : ?>
 	<br>
 <?php endif; ?>
 

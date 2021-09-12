@@ -253,7 +253,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		}
 
 		// Loop through the field data.
-		foreach( $args['fields'] AS $field => $value ) {
+		foreach ( $args['fields'] as $field => $value ) {
 
 			// Get the field settings.
 			$settings = get_field_object( $field, $args['post_id'] );
@@ -334,13 +334,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		}
 
 		// Let's look at each ACF Field in turn.
-		foreach( $acf_fields['addresses'] AS $selector => $address_field ) {
+		foreach ( $acf_fields['addresses'] as $selector => $address_field ) {
 
 			// Init Field value.
 			$value = [];
 
 			// Let's look at each Address in turn.
-			foreach( $data AS $address ) {
+			foreach ( $data as $address ) {
 
 				// Convert to ACF Address data.
 				$acf_address = $this->prepare_from_civicrm( $address );
@@ -438,7 +438,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		if ( empty( $current ) ) {
 
 			// Create an Address Record from each value.
-			foreach( $values AS $key => $value ) {
+			foreach ( $values as $key => $value ) {
 
 				// Build required data.
 				$address_data = $this->prepare_from_field( $value );
@@ -485,7 +485,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		];
 
 		// Let's look at each ACF Record and check its Address ID.
-		foreach( $values AS $key => $value ) {
+		foreach ( $values as $key => $value ) {
 
 			// New Records have no Address ID.
 			if ( empty( $value['field_address_id'] ) ) {
@@ -510,7 +510,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		} );
 
 		// Records to delete are missing from the ACF data.
-		foreach( $current AS $current_address ) {
+		foreach ( $current as $current_address ) {
 			if ( ! in_array( $current_address->id, $acf_address_ids ) ) {
 				$actions['delete'][] = $current_address->id;
 				continue;
@@ -518,7 +518,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		}
 
 		// Create CiviCRM Address Records.
-		foreach( $actions['create'] AS $key => $value ) {
+		foreach ( $actions['create'] as $key => $value ) {
 
 			// Build required data.
 			$address_data = $this->prepare_from_field( $value );
@@ -553,7 +553,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		}
 
 		// Update CiviCRM Address Records.
-		foreach( $actions['update'] AS $key => $value ) {
+		foreach ( $actions['update'] as $key => $value ) {
 
 			// Build required data.
 			$address_data = $this->prepare_from_field( $value, $value['field_address_id'] );
@@ -586,7 +586,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		}
 
 		// Delete CiviCRM Address Records.
-		foreach( $actions['delete'] AS $address_id ) {
+		foreach ( $actions['delete'] as $address_id ) {
 
 			// Okay, let's do it.
 			$address = $this->civicrm->address->delete( $address_id );
@@ -692,7 +692,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		}
 
 		// Update all of them.
-		foreach( $addresses_shared AS $address_shared ) {
+		foreach ( $addresses_shared as $address_shared ) {
 			$this->address_process( $address_shared, $args );
 		}
 
@@ -776,7 +776,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		}
 
 		// Clear all of them.
-		foreach( $addresses_shared AS $address_shared ) {
+		foreach ( $addresses_shared as $address_shared ) {
 			$this->address_process( $address_shared, $args );
 		}
 
@@ -808,7 +808,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		if ( $post_types !== false ) {
 
 			// Handle each Post Type in turn.
-			foreach( $post_types AS $post_type ) {
+			foreach ( $post_types as $post_type ) {
 
 				// Get the Post ID for this Contact.
 				$post_id = $this->acf_loader->civicrm->contact->is_mapped_to_post( $contact, $post_type );
@@ -819,7 +819,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 				}
 
 				// Exclude "reverse" edits when a Post is the originator.
-				if ( $entity['entity'] === 'post' AND $post_id == $entity['id'] ) {
+				if ( $entity['entity'] === 'post' && $post_id == $entity['id'] ) {
 
 					/**
 					 * Allow "reverse" edit to happen if another plugin has specifically
@@ -891,7 +891,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		}
 
 		// Let's look at each ACF Field in turn.
-		foreach( $acf_fields['addresses'] AS $selector => $address_field ) {
+		foreach ( $acf_fields['addresses'] as $selector => $address_field ) {
 
 			// Get existing Field value.
 			$existing = get_field( $selector, $post_id );
@@ -927,8 +927,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 				case 'create' :
 
 					// Make sure no other Address is Primary if this one is.
-					if ( $acf_address['field_address_primary'] == '1' AND ! empty( $existing ) ) {
-						foreach( $existing AS $key => $record ) {
+					if ( $acf_address['field_address_primary'] == '1' && ! empty( $existing ) ) {
+						foreach ( $existing as $key => $record ) {
 							$existing[$key]['field_address_primary'] = '0';
 						}
 					}
@@ -942,13 +942,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 
 					// Make sure no other Address is Primary if this one is.
 					if ( $acf_address['field_address_primary'] == '1' ) {
-						foreach( $existing AS $key => $record ) {
+						foreach ( $existing as $key => $record ) {
 							$existing[$key]['field_address_primary'] = '0';
 						}
 					}
 
 					// Overwrite array record.
-					foreach( $existing AS $key => $record ) {
+					foreach ( $existing as $key => $record ) {
 						if ( $address->id == $record['field_address_id'] ) {
 							$existing[$key] = $acf_address;
 							break;
@@ -960,7 +960,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 				case 'delete' :
 
 					// Remove array record.
-					foreach( $existing AS $key => $record ) {
+					foreach ( $existing as $key => $record ) {
 						if ( $address->id == $record['field_address_id'] ) {
 							unset( $existing[$key] );
 							break;
@@ -1067,7 +1067,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 	public function acf_fields_get_for_post( $acf_fields, $field, $post_id ) {
 
 		// Add if it has a reference to an Addresses Field.
-		if ( ! empty( $field['type'] ) AND $field['type'] == 'civicrm_address' ) {
+		if ( ! empty( $field['type'] ) && $field['type'] == 'civicrm_address' ) {
 			$acf_fields['addresses'][$field['name']] = $field['type'];
 		}
 

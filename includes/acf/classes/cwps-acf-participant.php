@@ -442,7 +442,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		$result = civicrm_api( 'Participant', 'get', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -458,8 +458,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 		// Copy various "participant_*" params to "*" params. Grr.
 		if ( ! empty( $result['values'] ) ) {
-			foreach ( $result['values'] AS &$item ) {
-				foreach ( $this->copy_params AS $copy ) {
+			foreach ( $result['values'] as &$item ) {
+				foreach ( $this->copy_params as $copy ) {
 					if ( isset( $item['participant_' . $copy] ) ) {
 						$item[$copy] = $item['participant_' . $copy];
 					}
@@ -507,7 +507,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		$result = civicrm_api( 'Participant', 'get', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -524,8 +524,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 		// Copy various "participant_*" params to "*" params. Grr.
 		if ( ! empty( $result['values'] ) ) {
-			foreach ( $result['values'] AS &$item ) {
-				foreach ( $this->copy_params AS $copy ) {
+			foreach ( $result['values'] as &$item ) {
+				foreach ( $this->copy_params as $copy ) {
 					if ( isset( $item['participant_' . $copy] ) ) {
 						$item[$copy] = $item['participant_' . $copy];
 					}
@@ -586,7 +586,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		}
 
 		// Inspect each Participant Role ID in turn.
-		foreach ( $participant_role_ids AS $participant_role_id ) {
+		foreach ( $participant_role_ids as $participant_role_id ) {
 
 			// Get the Post Type mapped to this Participant Role.
 			$post_type = $this->acf_loader->civicrm->participant_role->is_mapped_to_post_type( $participant_role_id );
@@ -608,7 +608,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 			$post_id = $this->acf_loader->post->get_by_participant_id( $participant->id, $post_type );
 
 			// Create the Post if it's missing.
-			if ( $post_id === false AND $create_post === 'create' ) {
+			if ( $post_id === false && $create_post === 'create' ) {
 
 				// Prevent recursion and the resulting unexpected Post creation.
 				if ( ! doing_action( 'cwps/acf/post/participant/sync' ) ) {
@@ -749,7 +749,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		$result = civicrm_api( 'Participant', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $participant_data;
 		}
 
@@ -762,7 +762,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		$participant_data = array_pop( $result['values'] );
 
 		// Copy various "participant_*" params to "*" params. Grr.
-		foreach ( $this->copy_params AS $copy ) {
+		foreach ( $this->copy_params as $copy ) {
 			if ( isset( $participant_data['participant_' . $copy] ) ) {
 				$participant_data[$copy] = $participant_data['participant_' . $copy];
 			}
@@ -833,7 +833,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		$result = civicrm_api( 'Participant', 'create', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $participant_data;
 		}
 
@@ -899,8 +899,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		}
 
 		// Fill out missing Participant data.
-		foreach( $participant_full AS $key => $item ) {
-			if ( empty( $participant->$key ) AND ! empty( $item ) ) {
+		foreach ( $participant_full as $key => $item ) {
+			if ( empty( $participant->$key ) && ! empty( $item ) ) {
 				$participant->$key = $item;
 			}
 		}
@@ -949,7 +949,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		$participant_data['role_id'] = $this->acf_loader->civicrm->participant_role->id_get_for_post_type( $post->post_type );
 
 		// Loop through the field data.
-		foreach( $fields AS $selector => $value ) {
+		foreach ( $fields as $selector => $value ) {
 
 			// Get the field settings.
 			$settings = get_field_object( $selector, $post_id );
@@ -959,7 +959,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 			$participant_field_name = $this->participant_field_name_get( $settings );
 
 			// Do we have a synced Custom Field or Participant Field?
-			if ( ! empty( $custom_field_id ) OR ! empty( $participant_field_name ) ) {
+			if ( ! empty( $custom_field_id ) || ! empty( $participant_field_name ) ) {
 
 				// If it's a Custom Field.
 				if ( ! empty( $custom_field_id ) ) {
@@ -1014,7 +1014,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 				];
 
 				// Add it to the field data.
-				if ( in_array( $code, $cannot_be_empty ) AND empty( $value ) ) {
+				if ( in_array( $code, $cannot_be_empty ) && empty( $value ) ) {
 					// Skip.
 				} else {
 					$participant_data[$code] = $value;
@@ -1156,15 +1156,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 		// Build Participant Field choices array for dropdown.
 		$participant_fields_label = esc_attr__( 'Participant Fields', 'civicrm-wp-profile-sync' );
-		foreach( $participant_fields AS $participant_field ) {
+		foreach ( $participant_fields as $participant_field ) {
 			$choices[$participant_fields_label][$this->participant_field_prefix . $participant_field['name']] = $participant_field['title'];
 		}
 
 		// Build Custom Field choices array for dropdown.
 		$custom_field_prefix = $this->civicrm->custom_field_prefix();
-		foreach( $custom_fields AS $custom_group_name => $custom_group ) {
+		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			$custom_fields_label = esc_attr( $custom_group_name );
-			foreach( $custom_group AS $custom_field ) {
+			foreach ( $custom_group as $custom_field ) {
 				$choices[$custom_fields_label][$custom_field_prefix . $custom_field['id']] = $custom_field['label'];
 			}
 		}
@@ -1285,14 +1285,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		$filtered_fields = apply_filters( 'cwps/acf/query_settings/custom_fields_filter', [], $custom_fields, $field );
 
 		// Pass if not populated.
-		if ( empty( $participant_fields ) AND empty( $filtered_fields ) ) {
+		if ( empty( $participant_fields ) && empty( $filtered_fields ) ) {
 			return $choices;
 		}
 
 		// Build Participant Field choices array for dropdown.
 		if ( ! empty( $participant_fields ) ) {
 			$participant_fields_label = esc_attr__( 'Participant Fields', 'civicrm-wp-profile-sync' );
-			foreach( $participant_fields AS $participant_field ) {
+			foreach ( $participant_fields as $participant_field ) {
 				$choices[$participant_fields_label][$this->participant_field_prefix . $participant_field['name']] = $participant_field['title'];
 			}
 		}
@@ -1300,9 +1300,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		// Build Custom Field choices array for dropdown.
 		if ( ! empty( $filtered_fields ) ) {
 			$custom_field_prefix = $this->civicrm->custom_field_prefix();
-			foreach( $filtered_fields AS $custom_group_name => $custom_group ) {
+			foreach ( $filtered_fields as $custom_group_name => $custom_group ) {
 				$custom_fields_label = esc_attr( $custom_group_name );
-				foreach( $custom_group AS $custom_field ) {
+				foreach ( $custom_group as $custom_field ) {
 					$choices[$custom_fields_label][$custom_field_prefix . $custom_field['id']] = $custom_field['label'];
 				}
 			}
@@ -1360,7 +1360,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		$filtered_fields = apply_filters( 'cwps/acf/query_settings/custom_fields_filter', [], $custom_fields, $field );
 
 		// Pass if not populated.
-		if ( empty( $fields_for_entity ) AND empty( $filtered_fields ) ) {
+		if ( empty( $fields_for_entity ) && empty( $filtered_fields ) ) {
 			return $setting_field;
 		}
 
@@ -1410,14 +1410,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		$filtered_fields = apply_filters( 'cwps/acf/query_settings/custom_fields_filter', [], $custom_fields, $field );
 
 		// Pass if not populated.
-		if ( empty( $fields_for_entity ) AND empty( $filtered_fields ) ) {
+		if ( empty( $fields_for_entity ) && empty( $filtered_fields ) ) {
 			return $choices;
 		}
 
 		// Build Participant Field choices array for dropdown.
 		if ( ! empty( $fields_for_entity ) ) {
 			$participant_fields_label = esc_attr__( 'Participant Fields', 'civicrm-wp-profile-sync' );
-			foreach( $fields_for_entity AS $participant_field ) {
+			foreach ( $fields_for_entity as $participant_field ) {
 				$choices[$participant_fields_label][$this->participant_field_prefix . $participant_field['name']] = $participant_field['title'];
 			}
 		}
@@ -1425,9 +1425,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		// Build Custom Field choices array for dropdown.
 		if ( ! empty( $filtered_fields ) ) {
 			$custom_field_prefix = $this->civicrm->custom_field_prefix();
-			foreach( $filtered_fields AS $custom_group_name => $custom_group ) {
+			foreach ( $filtered_fields as $custom_group_name => $custom_group ) {
 				$custom_fields_label = esc_attr( $custom_group_name );
-				foreach( $custom_group AS $custom_field ) {
+				foreach ( $custom_group as $custom_field ) {
 					$choices[$custom_fields_label][$custom_field_prefix . $custom_field['id']] = $custom_field['label'];
 				}
 			}
@@ -1472,7 +1472,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		// Add Option Group and add entries for each Participant Role.
 		$participant_roles_title = esc_attr( __( 'Participant Roles', 'civicrm-wp-profile-sync' ) );
 		$entities[$participant_roles_title] = [];
-		foreach( $participant_roles AS $participant_role ) {
+		foreach ( $participant_roles as $participant_role ) {
 			$entities[$participant_roles_title][$this->identifier . '-' . $participant_role['value']] = $participant_role['label'];
 		}
 
@@ -1565,7 +1565,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		$participant_id = false;
 
 		// Let's tease out the context from the Custom Field data.
-		foreach( $args['custom_fields'] AS $field ) {
+		foreach ( $args['custom_fields'] as $field ) {
 
 			// Skip if it is not attached to a Participant.
 			if ( $field['entity_table'] != 'civicrm_participant' ) {
@@ -1604,7 +1604,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		$participant_post_ids = [];
 
 		// Get the Post IDs that this Contact is mapped to.
-		foreach( $post_types AS $post_type ) {
+		foreach ( $post_types as $post_type ) {
 
 			// Get array of IDs for this Post Type.
 			$ids = $this->acf_loader->post->get_by_participant_id( $participant_id, $post_type );
@@ -1615,10 +1615,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 			}
 
 			// Add to Participant Post IDs array.
-			foreach( $ids AS $id ) {
+			foreach ( $ids as $id ) {
 
 				// Exclude "reverse" edits when a Post is the originator.
-				if ( $entity['entity'] !== 'post' OR $id != $entity['id'] ) {
+				if ( $entity['entity'] !== 'post' || $id != $entity['id'] ) {
 					$participant_post_ids[] = $id;
 				}
 
@@ -1678,7 +1678,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 			if ( ! empty( $post_types ) ) {
 
 				// Loop through them.
-				foreach( $post_types AS $post_type ) {
+				foreach ( $post_types as $post_type ) {
 
 					// Define params to test for a mapped Post Type.
 					$params = [
@@ -1805,7 +1805,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		// Bail if the current screen is not an Edit Participant screen.
 		if ( is_admin() ) {
 			$screen = get_current_screen();
-			if ( $screen instanceof WP_Screen AND $screen->base != 'post' ) {
+			if ( $screen instanceof WP_Screen && $screen->base != 'post' ) {
 				return;
 			}
 			if ( $screen->id == 'add' ) {
@@ -1820,7 +1820,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		}
 
 		// Bail if there's no Post and it's WordPress admin.
-		if ( empty( $post ) AND is_admin() ) {
+		if ( empty( $post ) && is_admin() ) {
 			return;
 		}
 

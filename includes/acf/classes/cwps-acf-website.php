@@ -211,7 +211,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		$success = true;
 
 		// Loop through the field data.
-		foreach( $args['fields'] AS $field => $value ) {
+		foreach ( $args['fields'] as $field => $value ) {
 
 			// Get the field settings.
 			$settings = get_field_object( $field, $args['post_id'] );
@@ -307,7 +307,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		$result = civicrm_api( 'Website', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $website;
 		}
 
@@ -356,7 +356,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		$result = civicrm_api( 'Website', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $website;
 		}
 
@@ -416,7 +416,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		$result = civicrm_api( 'Website', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $website_data;
 		}
 
@@ -467,10 +467,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		}
 
 		// Let's look at each ACF Field in turn.
-		foreach( $acf_fields['website'] AS $selector => $website_field ) {
+		foreach ( $acf_fields['website'] as $selector => $website_field ) {
 
 			// Let's look at each Website in turn.
-			foreach( $data AS $website ) {
+			foreach ( $data as $website ) {
 
 				// Cast as object.
 				$website = (object) $website;
@@ -530,7 +530,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		$existing_website = civicrm_api( 'Website', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $existing_website['is_error'] ) AND $existing_website['is_error'] == 1 ) {
+		if ( ! empty( $existing_website['is_error'] ) && $existing_website['is_error'] == 1 ) {
 			return $website;
 		}
 
@@ -554,7 +554,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 			$existing_data = array_pop( $existing_website['values'] );
 
 			// Bail if it hasn't changed.
-			if ( !empty( $existing_data['url'] ) AND $existing_data['url'] == $value ) {
+			if ( !empty( $existing_data['url'] ) && $existing_data['url'] == $value ) {
 				return $existing_data;
 			}
 
@@ -591,7 +591,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		}
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $website;
 		}
 
@@ -669,7 +669,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		if ( $post_types !== false ) {
 
 			// Handle each Post Type in turn.
-			foreach( $post_types AS $post_type ) {
+			foreach ( $post_types as $post_type ) {
 
 				// Get the Post ID for this Contact.
 				$post_id = $this->acf_loader->civicrm->contact->is_mapped_to_post( $contact, $post_type );
@@ -719,7 +719,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		}
 
 		// Let's look at each ACF Field in turn.
-		foreach( $acf_fields['website'] AS $selector => $website_field ) {
+		foreach ( $acf_fields['website'] as $selector => $website_field ) {
 
 			// Skip if it's a Custom Field.
 			if ( false !== strpos( $website_field, $this->civicrm->custom_field_prefix() ) ) {
@@ -780,7 +780,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		$result = civicrm_api( 'Website', 'getfields', $params );
 
 		// Override return if we get some.
-		if ( $result['is_error'] == 0 AND ! empty( $result['values'] ) ) {
+		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
 
 			// Check for no filter.
 			if ( $filter == 'none' ) {
@@ -792,7 +792,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 			} elseif ( $filter == 'public' ) {
 
 				// Skip all but those defined in our public Website Fields array.
-				foreach ( $result['values'] AS $key => $value ) {
+				foreach ( $result['values'] as $key => $value ) {
 					if ( array_key_exists( $value['name'], $this->website_fields ) ) {
 						$fields[] = $value;
 					}
@@ -911,7 +911,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	public function acf_field_get( $custom_fields = [], $website_types = [] ) {
 
 		// Bail if empty.
-		if ( empty( $custom_fields ) AND empty( $website_types ) ) {
+		if ( empty( $custom_fields ) && empty( $website_types ) ) {
 			return;
 		}
 
@@ -921,15 +921,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		// Build Website Types choices array for dropdown.
 		if ( ! empty( $website_types ) ) {
 			$website_types_label = esc_attr__( 'Contact Website Type', 'civicrm-wp-profile-sync' );
-			foreach( $website_types AS $website_type_id => $website_type_name ) {
+			foreach ( $website_types as $website_type_id => $website_type_name ) {
 				$choices[$website_types_label][$website_type_id] = esc_attr( $website_type_name );
 			}
 		}
 
 		// Build Custom Field choices array for dropdown.
-		foreach( $custom_fields AS $custom_group_name => $custom_group ) {
+		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			$custom_fields_label = esc_attr( $custom_group_name );
-			foreach( $custom_group AS $custom_field ) {
+			foreach ( $custom_group as $custom_field ) {
 				$choices[$custom_fields_label][$this->civicrm->custom_field_prefix() . $custom_field['id']] = $custom_field['label'];
 			}
 		}
@@ -1030,7 +1030,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		// Check if this is a Contact Field Group or a User Field Group.
 		$is_contact_field_group = $this->civicrm->contact->is_contact_field_group( $field_group );
 		$is_user_field_group = $this->acf_loader->user->is_user_field_group( $field_group );
-		if ( ! empty( $is_contact_field_group ) OR ! empty( $is_user_field_group ) ) {
+		if ( ! empty( $is_contact_field_group ) || ! empty( $is_user_field_group ) ) {
 
 			// The Website Fields for this ACF Field are needed.
 			$website_fields = $this->get_for_acf_field( $field );
@@ -1038,7 +1038,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 			// Maybe exclude the synced "WordPress User Profile" Website Type.
 			if ( ! empty( $is_user_field_group ) ) {
 				$website_type_id = (int) $this->acf_loader->plugin->admin->setting_get( 'user_profile_website_type', 0 );
-				if ( $website_type_id > 0 AND isset( $website_fields[$website_type_id] ) ) {
+				if ( $website_type_id > 0 && isset( $website_fields[$website_type_id] ) ) {
 					unset( $website_fields[$website_type_id] );
 				}
 			}
@@ -1060,7 +1060,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		$filtered_fields = apply_filters( 'cwps/acf/query_settings/custom_fields_filter', [], $custom_fields, $field );
 
 		// Pass if not populated.
-		if ( empty( $website_fields ) AND empty( $filtered_fields ) ) {
+		if ( empty( $website_fields ) && empty( $filtered_fields ) ) {
 			return $setting_field;
 		}
 
@@ -1109,7 +1109,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		// Get the public fields on the Entity for this Field Type.
 		$public_fields = $this->civicrm_fields_get( 'public' );
 		$fields_for_entity = [];
-		foreach ( $public_fields AS $key => $value ) {
+		foreach ( $public_fields as $key => $value ) {
 			if ( $field['type'] == $this->website_fields[$value['name']] ) {
 				$fields_for_entity[] = $value;
 			}
@@ -1122,7 +1122,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 
 		// Build Website Field choices array for dropdown.
 		$website_fields_label = esc_attr__( 'Website Fields', 'civicrm-wp-profile-sync' );
-		foreach( $fields_for_entity AS $website_field ) {
+		foreach ( $fields_for_entity as $website_field ) {
 			$choices[$website_fields_label][$this->website_field_prefix . $website_field['name']] = $website_field['title'];
 		}
 

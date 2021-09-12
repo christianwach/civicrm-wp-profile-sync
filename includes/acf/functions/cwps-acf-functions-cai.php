@@ -109,7 +109,7 @@ function cacf_get_phone_numbers( $selector, $post_id = null ) {
 
 	// Build Location Types array for reference.
 	$locations = [];
-	foreach( $location_types AS $location_type ) {
+	foreach ( $location_types as $location_type ) {
 		$locations[$location_type['id']] = esc_html( $location_type['display_name'] );
 	}
 
@@ -117,7 +117,7 @@ function cacf_get_phone_numbers( $selector, $post_id = null ) {
 	$phone_types = $cwps->civicrm->phone->phone_types_get();
 
 	// Format them.
-	foreach( $records AS $record ) {
+	foreach ( $records as $record ) {
 
 		// Skip if the Phone Number is empty.
 		if ( empty( $record['field_phone_number'] ) ) {
@@ -202,7 +202,7 @@ function cacf_get_phone_numbers_by_type_ids( $selector, $location_type_id, $phon
 	}
 
 	// If we are looking for all records.
-	if ( empty( $location_type_id ) AND empty( $phone_type_id ) ) {
+	if ( empty( $location_type_id ) && empty( $phone_type_id ) ) {
 		return cacf_get_phone_numbers( $selector, $post_id );
 	}
 
@@ -210,7 +210,7 @@ function cacf_get_phone_numbers_by_type_ids( $selector, $location_type_id, $phon
 	$filtered = [];
 
 	// Format them.
-	foreach( $records AS $record ) {
+	foreach ( $records as $record ) {
 
 		// Skip if the Phone Number is empty.
 		if ( empty( $record['field_phone_number'] ) ) {
@@ -304,10 +304,10 @@ function cacf_get_phone_records_by_type_ids( $selector, $location_type_id, $phon
 	}
 
 	// If we are looking for just the Location Type ID.
-	if ( ! empty( $location_type_id ) AND empty( $phone_type_id ) ) {
+	if ( ! empty( $location_type_id ) && empty( $phone_type_id ) ) {
 
 		// Try and find the Phone Records that match the Location Type ID.
-		foreach( $records AS $record ) {
+		foreach ( $records as $record ) {
 			if ( $record['field_phone_location'] == $location_type_id ) {
 				$phones[] = $record;
 			}
@@ -316,10 +316,10 @@ function cacf_get_phone_records_by_type_ids( $selector, $location_type_id, $phon
 	}
 
 	// If we are looking for just the Phone Type ID.
-	if ( empty( $location_type_id ) AND ! empty( $phone_type_id ) ) {
+	if ( empty( $location_type_id ) && ! empty( $phone_type_id ) ) {
 
 		// Try and find the Phone Records that match the Phone Type ID.
-		foreach( $records AS $record ) {
+		foreach ( $records as $record ) {
 			if ( $record['field_phone_type'] == $phone_type_id ) {
 				$phones[] = $record;
 			}
@@ -328,10 +328,10 @@ function cacf_get_phone_records_by_type_ids( $selector, $location_type_id, $phon
 	}
 
 	// If we are looking for a combination of Location Type ID and Phone Type ID.
-	if ( ! empty( $location_type_id ) AND ! empty( $phone_type_id ) ) {
+	if ( ! empty( $location_type_id ) && ! empty( $phone_type_id ) ) {
 
 		// Try and find the Phone Records that match both the Location and Phone Type IDs.
-		foreach( $records AS $record ) {
+		foreach ( $records as $record ) {
 			if (
 				$record['field_phone_location'] == $location_type_id
 				AND
@@ -344,7 +344,7 @@ function cacf_get_phone_records_by_type_ids( $selector, $location_type_id, $phon
 	}
 
 	// If we are looking for a neither Location Type ID nor Phone Type ID.
-	if ( empty( $location_type_id ) AND empty( $phone_type_id ) ) {
+	if ( empty( $location_type_id ) && empty( $phone_type_id ) ) {
 		$phones = $records;
 	}
 
@@ -449,7 +449,7 @@ function cacf_get_primary_phone_record( $selector, $post_id = null ) {
 	$records = cacf_get_phone_records( $selector, $post_id );
 
 	// Now try and find the Primary Phone Record.
-	foreach( $records AS $record ) {
+	foreach ( $records as $record ) {
 		if ( $record['field_phone_primary'] == '1' ) {
 			$phone = $record;
 			break;
@@ -570,7 +570,7 @@ function cacf_get_ims( $selector, $post_id = null ) {
 
 	// Build Location Types array for reference.
 	$locations = [];
-	foreach( $location_types AS $location_type ) {
+	foreach ( $location_types as $location_type ) {
 		$locations[$location_type['id']] = esc_html( $location_type['display_name'] );
 	}
 
@@ -578,7 +578,7 @@ function cacf_get_ims( $selector, $post_id = null ) {
 	$im_providers = $cwps->civicrm->im->im_providers_get();
 
 	// Format them.
-	foreach( $records AS $record ) {
+	foreach ( $records as $record ) {
 
 		// Skip if the Instant Messenger is empty.
 		if ( empty( $record['field_im_name'] ) ) {
@@ -654,7 +654,7 @@ function cacf_get_ims_by_type_ids( $selector, $location_type_id, $im_provider_id
 	}
 
 	// If we are looking for all records.
-	if ( empty( $location_type_id ) AND empty( $im_provider_id ) ) {
+	if ( empty( $location_type_id ) && empty( $im_provider_id ) ) {
 		return cacf_get_ims( $selector, $post_id );
 	}
 
@@ -662,7 +662,7 @@ function cacf_get_ims_by_type_ids( $selector, $location_type_id, $im_provider_id
 	$filtered = [];
 
 	// Format them.
-	foreach( $records AS $record ) {
+	foreach ( $records as $record ) {
 
 		// Skip if the Instant Messenger is empty.
 		if ( empty( $record['field_im_name'] ) ) {
@@ -747,10 +747,10 @@ function cacf_get_im_records_by_type_ids( $selector, $location_type_id, $im_prov
 	}
 
 	// If we are looking for just the Location Type ID.
-	if ( ! empty( $location_type_id ) AND empty( $im_provider_id ) ) {
+	if ( ! empty( $location_type_id ) && empty( $im_provider_id ) ) {
 
 		// Try and find the Instant Messenger Records that match the Location Type ID.
-		foreach( $records AS $record ) {
+		foreach ( $records as $record ) {
 			if ( $record['field_im_location'] == $location_type_id ) {
 				$ims[] = $record;
 			}
@@ -759,10 +759,10 @@ function cacf_get_im_records_by_type_ids( $selector, $location_type_id, $im_prov
 	}
 
 	// If we are looking for just the Provider ID.
-	if ( empty( $location_type_id ) AND ! empty( $im_provider_id ) ) {
+	if ( empty( $location_type_id ) && ! empty( $im_provider_id ) ) {
 
 		// Try and find the Instant Messenger Records that match the Provider ID.
-		foreach( $records AS $record ) {
+		foreach ( $records as $record ) {
 			if ( $record['field_im_provider'] == $im_provider_id ) {
 				$ims[] = $record;
 			}
@@ -771,10 +771,10 @@ function cacf_get_im_records_by_type_ids( $selector, $location_type_id, $im_prov
 	}
 
 	// If we are looking for a combination of Location Type ID and Provider ID.
-	if ( ! empty( $location_type_id ) AND ! empty( $im_provider_id ) ) {
+	if ( ! empty( $location_type_id ) && ! empty( $im_provider_id ) ) {
 
 		// Try and find the Instant Messenger Records that match both the Location and Provider IDs.
-		foreach( $records AS $record ) {
+		foreach ( $records as $record ) {
 			if (
 				$record['field_im_location'] == $location_type_id
 				AND
@@ -787,7 +787,7 @@ function cacf_get_im_records_by_type_ids( $selector, $location_type_id, $im_prov
 	}
 
 	// If we are looking for a neither Location Type ID nor Provider ID.
-	if ( empty( $location_type_id ) AND empty( $im_provider_id ) ) {
+	if ( empty( $location_type_id ) && empty( $im_provider_id ) ) {
 		$ims = $records;
 	}
 
@@ -893,7 +893,7 @@ function cacf_get_primary_im_record( $selector, $post_id = null ) {
 	$records = cacf_get_im_records( $selector, $post_id );
 
 	// Now try and find the Primary Instant Messenger Record.
-	foreach( $records AS $record ) {
+	foreach ( $records as $record ) {
 		if ( $record['field_im_primary'] == '1' ) {
 			$im = $record;
 			break;
@@ -1014,12 +1014,12 @@ function cacf_get_addresses( $selector, $post_id = null ) {
 
 	// Build Location Types array for reference.
 	$locations = [];
-	foreach( $location_types AS $location_type ) {
+	foreach ( $location_types as $location_type ) {
 		$locations[$location_type['id']] = esc_html( $location_type['display_name'] );
 	}
 
 	// Format them.
-	foreach( $records AS $record ) {
+	foreach ( $records as $record ) {
 
 		// Build "heading" from Location.
 		$heading = sprintf(
@@ -1134,7 +1134,7 @@ function cacf_get_address_by_type_id( $selector, $location_type_id, $post_id = n
 	$filtered = [];
 
 	// Format what should be a single Address Record.
-	foreach( $records AS $record ) {
+	foreach ( $records as $record ) {
 
 		// Convert basic ACF data to template data.
 		$street_address = esc_html( trim( $record['field_address_street_address'] ) );
@@ -1224,7 +1224,7 @@ function cacf_get_address_records_by_type_id( $selector, $location_type_id, $pos
 	if ( ! empty( $location_type_id ) ) {
 
 		// Try and find the Address Records that match the Location Type ID.
-		foreach( $records AS $record ) {
+		foreach ( $records as $record ) {
 			if ( $record['field_address_location_type'] == $location_type_id ) {
 				$addresses[] = $record;
 			}
@@ -1353,7 +1353,7 @@ function cacf_get_primary_address_record( $selector, $post_id = null ) {
 	$records = cacf_get_address_records( $selector, $post_id );
 
 	// Now try and find the Primary Address Record.
-	foreach( $records AS $record ) {
+	foreach ( $records as $record ) {
 		if ( $record['field_address_primary'] == '1' ) {
 			$address = $record;
 			break;
@@ -1475,12 +1475,12 @@ function cacf_get_cities( $selector, $post_id = null ) {
 
 	// Build Location Types array for reference.
 	$locations = [];
-	foreach( $location_types AS $location_type ) {
+	foreach ( $location_types as $location_type ) {
 		$locations[$location_type['id']] = esc_html( $location_type['display_name'] );
 	}
 
 	// Format them.
-	foreach( $records AS $record ) {
+	foreach ( $records as $record ) {
 
 		// Skip if the City is empty.
 		if ( empty( $record['field_address_city'] ) ) {
@@ -1562,7 +1562,7 @@ function cacf_get_city_by_type_id( $selector, $location_type_id, $return = 'list
 	$filtered = [];
 
 	// Format them.
-	foreach( $records AS $record ) {
+	foreach ( $records as $record ) {
 
 		// Skip if the City is empty.
 		if ( empty( $record['field_address_city'] ) ) {
@@ -1688,7 +1688,7 @@ function cacf_get_states( $selector, $post_id = null ) {
 
 	// Build Location Types array for reference.
 	$locations = [];
-	foreach( $location_types AS $location_type ) {
+	foreach ( $location_types as $location_type ) {
 		$locations[$location_type['id']] = esc_html( $location_type['display_name'] );
 	}
 
@@ -1696,7 +1696,7 @@ function cacf_get_states( $selector, $post_id = null ) {
 	$state_provinces = $cwps->civicrm->address->state_provinces_get();
 
 	// Format them.
-	foreach( $records AS $record ) {
+	foreach ( $records as $record ) {
 
 		// Skip if the State is empty.
 		if ( empty( $record['field_address_state_province_id'] ) ) {
@@ -1784,7 +1784,7 @@ function cacf_get_state_by_type_id( $selector, $location_type_id, $return = 'lis
 	$filtered = [];
 
 	// Format them.
-	foreach( $records AS $record ) {
+	foreach ( $records as $record ) {
 
 		// Skip if the State is empty.
 		if ( empty( $record['field_address_state_province_id'] ) ) {

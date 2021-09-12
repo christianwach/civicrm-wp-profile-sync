@@ -127,7 +127,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 		$result = civicrm_api( 'OptionGroup', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $option_group_id;
 		}
 
@@ -190,7 +190,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 		$result = civicrm_api( 'OptionValue', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $participant_role;
 		}
 
@@ -247,7 +247,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 		$result = civicrm_api( 'OptionValue', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $participant_role;
 		}
 
@@ -298,7 +298,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 		$result = civicrm_api( 'Participant', 'get', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -393,7 +393,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 		$result = civicrm_api( 'OptionValue', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $participant_roles;
 		}
 
@@ -469,7 +469,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 		$result = civicrm_api( 'OptionValue', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $participant_roles;
 		}
 

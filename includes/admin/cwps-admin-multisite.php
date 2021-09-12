@@ -170,7 +170,7 @@ class CiviCRM_WP_Profile_Sync_Admin_Multisite {
 		 */
 
 		// TODO: Show warning in correct places in Multisite.
-		if ( $this->plugin->is_civicrm_main_site_only() AND ! is_main_site() ) {
+		if ( $this->plugin->is_civicrm_main_site_only() && ! is_main_site() ) {
 			return false;
 		}
 
@@ -215,7 +215,7 @@ class CiviCRM_WP_Profile_Sync_Admin_Multisite {
 	public function admin_menu() {
 
 		// Bail if not Multisite or not WordPress Network Admin.
-		if ( ! is_multisite() OR ! is_network_admin() ) {
+		if ( ! is_multisite() || ! is_network_admin() ) {
 			return;
 		}
 

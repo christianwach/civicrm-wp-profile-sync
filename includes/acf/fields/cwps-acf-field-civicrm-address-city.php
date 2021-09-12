@@ -183,7 +183,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_City_Field extends acf_field {
 		$choices = [];
 
 		// Build Location Types choices array for dropdown.
-		foreach( $location_types AS $location_type ) {
+		foreach ( $location_types as $location_type ) {
 			$choices[$location_type['id']] = esc_attr( $location_type['display_name'] );
 		}
 
@@ -344,7 +344,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_City_Field extends acf_field {
 			if ( ! empty( $field['city_is_primary'] ) ) {
 
 				// Assign City from the Primary Address.
-				foreach( $addresses AS $address ) {
+				foreach ( $addresses as $address ) {
 					if ( ! empty( $address->is_primary ) ) {
 						$city = $address->city;
 						break;
@@ -355,7 +355,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_City_Field extends acf_field {
 			} elseif ( ! empty( $field['city_location_type_id'] ) ) {
 
 				// Assign City from the type of Address.
-				foreach( $addresses AS $address ) {
+				foreach ( $addresses as $address ) {
 					if ( $address->location_type_id == $field['city_location_type_id'] ) {
 						$city = $address->city;
 						break;

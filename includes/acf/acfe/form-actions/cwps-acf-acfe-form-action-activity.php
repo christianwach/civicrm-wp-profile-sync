@@ -203,19 +203,19 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		$this->public_activity_fields = $this->civicrm->activity_field->get_public_fields();
 
 		// Prepend the ones that are needed in ACFE Forms (i.e. Subject and Details).
-		foreach ( $this->fields_to_add AS $name => $field_type ) {
+		foreach ( $this->fields_to_add as $name => $field_type ) {
 			array_unshift( $this->public_activity_fields, $this->civicrm->activity_field->get_by_name( $name ) );
 		}
 
 		// Populate public mapping Fields.
-		foreach ( $this->public_activity_fields AS $field ) {
+		foreach ( $this->public_activity_fields as $field ) {
 			if ( ! array_key_exists( $field['name'], $this->fields_to_ignore ) ) {
 				$this->mapping_field_filters_add( $field['name'] );
 			}
 		}
 
 		// Handle Contact Fields.
-		foreach ( $this->contact_fields AS $name => $field_type ) {
+		foreach ( $this->contact_fields as $name => $field_type ) {
 
 			// Populate mapping Fields.
 			$field = $this->civicrm->activity_field->get_by_name( $name );
@@ -238,9 +238,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		$this->custom_field_ids = [];
 
 		// Populate mapping Fields.
-		foreach ( $this->custom_fields AS $key => $custom_group ) {
+		foreach ( $this->custom_fields as $key => $custom_group ) {
 			if ( ! empty( $custom_group['api.CustomField.get']['values'] ) ) {
-				foreach ( $custom_group['api.CustomField.get']['values'] AS $custom_field ) {
+				foreach ( $custom_group['api.CustomField.get']['values'] as $custom_field ) {
 					$this->mapping_field_filters_add( 'custom_' . $custom_field['id'] );
 					// Also build Custom Field IDs.
 					$this->custom_field_ids[] = (int) $custom_field['id'];
@@ -541,7 +541,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		];
 
 		// Add Contact Reference Fields.
-		foreach ( $this->fields_for_contacts AS $field ) {
+		foreach ( $this->fields_for_contacts as $field ) {
 
 			// Bundle them into a container group.
 			$contact_group_field = [
@@ -717,7 +717,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		];
 
 		// Add "Mapping" Fields.
-		foreach ( $this->public_activity_fields AS $field ) {
+		foreach ( $this->public_activity_fields as $field ) {
 			if ( ! array_key_exists( $field['name'], $this->fields_to_ignore ) ) {
 				$fields[] = $this->mapping_field_mapping_field_get( $field['name'], $field['title'] );
 			}
@@ -786,7 +786,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		$activity_types = $this->civicrm->activity_type->choices_get();
 
 		// Add "Mapping" Fields.
-		foreach ( $this->custom_fields AS $key => $custom_group ) {
+		foreach ( $this->custom_fields as $key => $custom_group ) {
 
 			// Skip if there are no Custom Fields.
 			if ( empty( $custom_group['api.CustomField.get']['values'] ) ) {
@@ -804,7 +804,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 
 			// Add Sub-types as OR conditionals if present.
 			if ( ! empty( $activity_type_ids ) ) {
-				foreach ( $activity_type_ids AS $activity_type_id ) {
+				foreach ( $activity_type_ids as $activity_type_id ) {
 
 					$activity_type = [
 						'field' => $this->field_key . 'activity_types',
@@ -836,7 +836,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 			$sub_fields = [];
 
 			// Add "Map" Fields for the Custom Fields.
-			foreach ( $custom_group['api.CustomField.get']['values'] AS $custom_field ) {
+			foreach ( $custom_group['api.CustomField.get']['values'] as $custom_field ) {
 				$code = 'custom_' . $custom_field['id'];
 				$sub_fields[] = $this->mapping_field_mapping_field_get( $code, $custom_field['label'], $conditional_logic );
 			}
@@ -894,7 +894,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 
 		// Build Fields array.
 		$fields = [];
-		foreach ( $this->public_activity_fields AS $field ) {
+		foreach ( $this->public_activity_fields as $field ) {
 			if ( ! array_key_exists( $field['name'], $this->fields_to_ignore ) ) {
 				$fields[ $field['name'] ] = get_sub_field( $this->field_key . 'map_' . $field['name'] );
 			}
@@ -908,7 +908,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		$data['status_id'] = get_sub_field( $this->field_key . 'activity_status_id' );
 
 		// Get the Activity Contacts.
-		foreach ( $this->fields_for_contacts AS $field ) {
+		foreach ( $this->fields_for_contacts as $field ) {
 
 			// Get Group Field.
 			$contact_group_field = get_sub_field( $this->field_key . 'contact_group_' . $field['name'] );
@@ -932,14 +932,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 				if ( ! empty( $contact_group_field[ $this->field_name . 'map_' . $field['name'] ] ) ) {
 					$reference = [ $field['name'] => $contact_group_field[ $this->field_name . 'map_' . $field['name'] ] ];
 					$reference = acfe_form_map_vs_fields( $reference, $reference, $current_post_id, $form );
-					if ( ! empty( $reference[ $field['name'] ] ) AND is_numeric( $reference[ $field['name'] ] ) ) {
+					if ( ! empty( $reference[ $field['name'] ] ) && is_numeric( $reference[ $field['name'] ] ) ) {
 						$contact_id = $reference[ $field['name'] ];
 					}
 				}
 			}
 
 			// Assign to data.
-			if ( ! empty( $contact_id ) AND is_numeric( $contact_id ) ) {
+			if ( ! empty( $contact_id ) && is_numeric( $contact_id ) ) {
 				$data[ $field['name'] ] = $contact_id;
 			}
 
@@ -1083,17 +1083,17 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		$data = [];
 
 		// Build data array.
-		foreach ( $this->custom_fields AS $key => $custom_group ) {
+		foreach ( $this->custom_fields as $key => $custom_group ) {
 
 			// Fresh Fields array.
 			$fields = [];
 
 			// Get Group Field.
 			$custom_group_field = get_sub_field( $this->field_key . 'custom_group_' . $custom_group['id'] );
-			foreach( $custom_group_field AS $field ) {
+			foreach ( $custom_group_field as $field ) {
 
 				// Get mapped Fields.
-				foreach ( $custom_group['api.CustomField.get']['values'] AS $custom_field ) {
+				foreach ( $custom_group['api.CustomField.get']['values'] as $custom_field ) {
 					$code = 'custom_' . $custom_field['id'];
 					$fields[ $code ] = $custom_group_field[ $this->field_name . 'map_' . $code ];
 				}

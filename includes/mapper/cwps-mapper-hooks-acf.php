@@ -203,7 +203,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_ACF {
 	public function acf_fields_saved( $post_id ) {
 
 		// Bail if there was a Multisite switch.
-		if ( is_multisite() AND ms_is_switched() ) {
+		if ( is_multisite() && ms_is_switched() ) {
 			return;
 		}
 

@@ -105,7 +105,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		//add_action( 'acf/render_field_settings', [ $this, 'field_setting_add' ] );
 
 		// For newly-added Fields, we need to specify our supported Fields.
-		foreach ( $this->field_types AS $field_type ) {
+		foreach ( $this->field_types as $field_type ) {
 			add_action( "acf/render_field_settings/type={$field_type}", [ $this, 'field_setting_add' ], 1 );
 		}
 
@@ -278,13 +278,13 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		$acf_field_groups = acf_get_field_groups( $params );
 
 		// Build our equivalent array to that returned by `get_fields()`.
-		foreach( $acf_field_groups AS $acf_field_group ) {
+		foreach ( $acf_field_groups as $acf_field_group ) {
 
 			// Get all the fields in this Field Group.
 			$fields_in_group = acf_get_fields( $acf_field_group );
 
 			// Add their Field "name" to the return.
-			foreach( $fields_in_group AS $field_in_group ) {
+			foreach ( $fields_in_group as $field_in_group ) {
 
 				// Get the CiviCRM Custom Field and add if it has a reference to a CiviCRM Field.
 				$custom_field_id = $this->acf_loader->civicrm->custom_field->custom_field_id_get( $field_in_group );
@@ -392,7 +392,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		}
 
 		// Bail if it's not required and is empty.
-		if ( $field['required'] == '0' AND empty( $value ) ) {
+		if ( $field['required'] == '0' && empty( $value ) ) {
 			return $valid;
 		}
 
@@ -414,10 +414,10 @@ class CiviCRM_Profile_Sync_ACF_Field {
 			case 'String' :
 
 				// If it's a Multi-select.
-				if ( $field_data['html_type'] == 'Multi-Select' AND is_array( $value ) ) {
+				if ( $field_data['html_type'] == 'Multi-Select' && is_array( $value ) ) {
 
 					// Make sure values are all are varchar(255) or varchar(260).
-					foreach( $value AS $item ) {
+					foreach ( $value as $item ) {
 						if ( ! empty( $field_data['text_length'] ) ) {
 							if ( strlen( $item ) > $field_data['text_length'] ) {
 								$valid = sprintf( __( 'Must be maximum %s characters.', 'civicrm-wp-profile-sync' ), $field_data['text_length'] );
@@ -449,17 +449,17 @@ class CiviCRM_Profile_Sync_ACF_Field {
 			case 'Int' :
 
 				// If it's a Multi-select.
-				if ( $field_data['html_type'] == 'Multi-Select' AND is_array( $value ) ) {
+				if ( $field_data['html_type'] == 'Multi-Select' && is_array( $value ) ) {
 
 					// Make sure values are all integers.
-					foreach( $value AS $item ) {
+					foreach ( $value as $item ) {
 						if ( ! ctype_digit( $item ) ) {
 							$valid = __( 'Values must all be integers.', 'civicrm-wp-profile-sync' );
 						}
 					}
 
 					// CiviCRM integer fields are signed int(11).
-					foreach( $value AS $item ) {
+					foreach ( $value as $item ) {
 						if ( (int) $value > 2147483647 ) {
 							$valid = __( 'Values must all be less than 2147483647.', 'civicrm-wp-profile-sync' );
 						}
@@ -484,10 +484,10 @@ class CiviCRM_Profile_Sync_ACF_Field {
 			case 'Float' :
 
 				// If it's a Multi-select.
-				if ( $field_data['html_type'] == 'Multi-Select' AND is_array( $value ) ) {
+				if ( $field_data['html_type'] == 'Multi-Select' && is_array( $value ) ) {
 
 					// Make sure values are all numeric.
-					foreach( $value AS $item ) {
+					foreach ( $value as $item ) {
 						if ( ! is_numeric( $item ) ) {
 							$valid = __( 'Values must all be numbers.', 'civicrm-wp-profile-sync' );
 						}
@@ -506,10 +506,10 @@ class CiviCRM_Profile_Sync_ACF_Field {
 			case 'Money' :
 
 				// If it's a Multi-select.
-				if ( $field_data['html_type'] == 'Multi-Select' AND is_array( $value ) ) {
+				if ( $field_data['html_type'] == 'Multi-Select' && is_array( $value ) ) {
 
 					// Make sure values are all numeric.
-					foreach( $value AS $item ) {
+					foreach ( $value as $item ) {
 
 						// Must be a number.
 						if ( ! is_numeric( $item ) ) {
@@ -621,7 +621,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		}
 
 		// Convert empty value.
-		if ( empty( $value ) OR $value === 0 ) {
+		if ( empty( $value ) || $value === 0 ) {
 			$value = '0';
 		}
 

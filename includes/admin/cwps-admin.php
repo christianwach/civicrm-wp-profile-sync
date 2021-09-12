@@ -377,7 +377,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		}
 
 		// If either setting has no valid value.
-		if ( $website_type_undefined OR $email_sync_undefined ) {
+		if ( $website_type_undefined || $email_sync_undefined ) {
 
 			// Set warning flag.
 			$this->has_warning = true;

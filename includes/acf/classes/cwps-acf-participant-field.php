@@ -147,7 +147,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 	public function value_validate( $valid, $value, $field, $input ) {
 
 		// Bail if it's not required and is empty.
-		if ( $field['required'] == '0' AND empty( $value ) ) {
+		if ( $field['required'] == '0' && empty( $value ) ) {
 			return $valid;
 		}
 
@@ -220,7 +220,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 		}
 
 		// Let's look at each ACF Field in turn.
-		foreach( $acf_fields['participant'] AS $selector => $participant_field ) {
+		foreach ( $acf_fields['participant'] as $selector => $participant_field ) {
 
 			// Skip if it's not a public Participant Field.
 			if ( ! array_key_exists( $participant_field, $this->participant_fields ) ) {
@@ -406,7 +406,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 			$statuses = $this->statuses_get();
 			if ( ! empty( $statuses ) ) {
 				$options = [];
-				foreach( $statuses AS $status ) {
+				foreach ( $statuses as $status ) {
 					$options[$status['id']] = $status['label'];
 				}
 			}
@@ -462,7 +462,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 		$result = civicrm_api( 'ParticipantStatusType', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $options;
 		}
 
@@ -512,7 +512,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 		$result = civicrm_api( 'ParticipantStatusType', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $options;
 		}
 
@@ -565,7 +565,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 		// TODO: Do we need this loop?
 
 		// Loop through the Post Types.
-		foreach( $is_participant_field_group AS $post_type_name ) {
+		foreach ( $is_participant_field_group as $post_type_name ) {
 
 			// Get public fields of this type.
 			$participant_fields_for_type = $this->data_get( $field['type'], 'public' );
@@ -615,7 +615,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 		$result = civicrm_api( 'Participant', 'getfield', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $field;
 		}
 
@@ -688,14 +688,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 
 				// Skip all but those defined in our Participant Fields array.
 				$public_fields = [];
-				foreach ( $result['values'] AS $key => $value ) {
+				foreach ( $result['values'] as $key => $value ) {
 					if ( array_key_exists( $value['name'], $this->participant_fields ) ) {
 						$public_fields[] = $value;
 					}
 				}
 
 				// Skip all but those mapped to the type of ACF Field.
-				foreach ( $public_fields AS $key => $value ) {
+				foreach ( $public_fields as $key => $value ) {
 					if ( is_array( $this->participant_fields[$value['name']] ) ) {
 						if ( in_array( $field_type, $this->participant_fields[$value['name']] ) ) {
 							$fields[] = $value;
@@ -738,7 +738,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 		$participant_fields = [];
 
 		// Skip all but those mapped to the type of ACF Field.
-		foreach ( $this->participant_fields AS $key => $value ) {
+		foreach ( $this->participant_fields as $key => $value ) {
 			if ( $type == $value ) {
 				$participant_fields[$key] = $value;
 			}
@@ -798,7 +798,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->acf_loader->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
 
@@ -836,7 +836,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->acf_loader->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
 

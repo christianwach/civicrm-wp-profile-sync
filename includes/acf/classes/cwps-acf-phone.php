@@ -257,7 +257,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		}
 
 		// Loop through the field data.
-		foreach( $args['fields'] AS $field => $value ) {
+		foreach ( $args['fields'] as $field => $value ) {
 
 			// Get the field settings.
 			$settings = get_field_object( $field, $args['post_id'] );
@@ -338,7 +338,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		$result = civicrm_api( 'Phone', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $phone;
 		}
 
@@ -389,7 +389,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		$result = civicrm_api( 'Phone', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $phones;
 		}
 
@@ -399,7 +399,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		}
 
  		// We want the result set.
- 		foreach ( $result['values'] AS $value ) {
+ 		foreach ( $result['values'] as $value ) {
 			$phones[] =  (object) $value;
 		}
 
@@ -451,7 +451,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		$result = civicrm_api( 'Phone', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $phone_data;
 		}
 
@@ -502,13 +502,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		}
 
 		// Let's look at each ACF Field in turn.
-		foreach( $acf_fields['phone'] AS $selector => $phone_field ) {
+		foreach ( $acf_fields['phone'] as $selector => $phone_field ) {
 
 			// Init Field value.
 			$value = [];
 
 			// Let's look at each Phone in turn.
-			foreach( $data AS $phone ) {
+			foreach ( $data as $phone ) {
 
 				// Convert to ACF Phone data.
 				$acf_phone = $this->prepare_from_civicrm( $phone );
@@ -555,7 +555,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		if ( empty( $current ) ) {
 
 			// Create a Phone Record from each value.
-			foreach( $values AS $key => $value ) {
+			foreach ( $values as $key => $value ) {
 
 				// Build required data.
 				$phone_data = $this->prepare_from_field( $value );
@@ -602,7 +602,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		];
 
 		// Let's look at each ACF Record and check its Phone ID.
-		foreach( $values AS $key => $value ) {
+		foreach ( $values as $key => $value ) {
 
 			// New Records have no Phone ID.
 			if ( empty( $value['field_phone_id'] ) ) {
@@ -627,7 +627,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		} );
 
 		// Records to delete are missing from the ACF data.
-		foreach( $current AS $current_phone ) {
+		foreach ( $current as $current_phone ) {
 			if ( ! in_array( $current_phone['id'], $acf_phone_ids ) ) {
 				$actions['delete'][] = $current_phone['id'];
 				continue;
@@ -635,7 +635,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		}
 
 		// Create CiviCRM Phone Records.
-		foreach( $actions['create'] AS $key => $value ) {
+		foreach ( $actions['create'] as $key => $value ) {
 
 			// Build required data.
 			$phone_data = $this->prepare_from_field( $value );
@@ -670,7 +670,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		}
 
 		// Update CiviCRM Phone Records.
-		foreach( $actions['update'] AS $key => $value ) {
+		foreach ( $actions['update'] as $key => $value ) {
 
 			// Build required data.
 			$phone_data = $this->prepare_from_field( $value, $value['field_phone_id'] );
@@ -703,7 +703,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		}
 
 		// Delete CiviCRM Phone Records.
-		foreach( $actions['delete'] AS $phone_id ) {
+		foreach ( $actions['delete'] as $phone_id ) {
 
 			// Okay, let's do it.
 			$phone = $this->delete( $phone_id );
@@ -833,7 +833,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		$result = civicrm_api( 'Phone', 'create', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $phone;
 		}
 
@@ -880,7 +880,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		$result = civicrm_api( 'Phone', 'delete', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $success;
 		}
 
@@ -1022,7 +1022,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		if ( $post_types !== false ) {
 
 			// Handle each Post Type in turn.
-			foreach( $post_types AS $post_type ) {
+			foreach ( $post_types as $post_type ) {
 
 				// Get the Post ID for this Contact.
 				$post_id = $this->acf_loader->civicrm->contact->is_mapped_to_post( $contact, $post_type );
@@ -1033,7 +1033,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 				}
 
 				// Exclude "reverse" edits when a Post is the originator.
-				if ( $entity['entity'] === 'post' AND $post_id == $entity['id'] ) {
+				if ( $entity['entity'] === 'post' && $post_id == $entity['id'] ) {
 					continue;
 				}
 
@@ -1085,7 +1085,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		}
 
 		// Let's look at each ACF Field in turn.
-		foreach( $acf_fields['phone'] AS $selector => $phone_field ) {
+		foreach ( $acf_fields['phone'] as $selector => $phone_field ) {
 
 			// Get existing Field value.
 			$existing = get_field( $selector, $post_id );
@@ -1121,8 +1121,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 				case 'create' :
 
 					// Make sure no other Phone is Primary if this one is.
-					if ( $acf_phone['field_phone_primary'] == '1' AND ! empty( $existing ) ) {
-						foreach( $existing AS $key => $record ) {
+					if ( $acf_phone['field_phone_primary'] == '1' && ! empty( $existing ) ) {
+						foreach ( $existing as $key => $record ) {
 							$existing[$key]['field_phone_primary'] = '0';
 						}
 					}
@@ -1136,13 +1136,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 					// Make sure no other Phone is Primary if this one is.
 					if ( $acf_phone['field_phone_primary'] == '1' ) {
-						foreach( $existing AS $key => $record ) {
+						foreach ( $existing as $key => $record ) {
 							$existing[$key]['field_phone_primary'] = '0';
 						}
 					}
 
 					// Overwrite array record.
-					foreach( $existing AS $key => $record ) {
+					foreach ( $existing as $key => $record ) {
 						if ( $phone->id == $record['field_phone_id'] ) {
 							$existing[$key] = $acf_phone;
 							break;
@@ -1154,7 +1154,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 				case 'delete' :
 
 					// Remove array record.
-					foreach( $existing AS $key => $record ) {
+					foreach ( $existing as $key => $record ) {
 						if ( $phone->id == $record['field_phone_id'] ) {
 							unset( $existing[$key] );
 							break;
@@ -1208,7 +1208,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		$result = civicrm_api( 'LocationType', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $location_types;
 		}
 
@@ -1370,7 +1370,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 	public function acf_fields_get_for_post( $acf_fields, $field, $post_id ) {
 
 		// Add if it has a reference to a Phone Field.
-		if ( ! empty( $field['type'] ) AND $field['type'] == 'civicrm_phone' ) {
+		if ( ! empty( $field['type'] ) && $field['type'] == 'civicrm_phone' ) {
 			$acf_fields['phone'][$field['name']] = $field['type'];
 		}
 
@@ -1473,7 +1473,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		$result = civicrm_api( 'Phone', 'getfields', $params );
 
 		// Override return if we get some.
-		if ( $result['is_error'] == 0 AND ! empty( $result['values'] ) ) {
+		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
 
 			// Check for no filter.
 			if ( $filter == 'none' ) {
@@ -1485,7 +1485,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 			} elseif ( $filter == 'public' ) {
 
 				// Skip all but those defined in our public Phone Fields array.
-				foreach ( $result['values'] AS $key => $value ) {
+				foreach ( $result['values'] as $key => $value ) {
 					if ( array_key_exists( $value['name'], $this->phone_fields ) ) {
 						$fields[] = $value;
 					}
@@ -1536,7 +1536,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		$result = civicrm_api( 'Phone', 'getfield', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $field;
 		}
 
@@ -1620,7 +1620,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		// Get the public fields on the Entity for this Field Type.
 		$public_fields = $this->civicrm_fields_get( 'public' );
 		$fields_for_entity = [];
-		foreach ( $public_fields AS $key => $value ) {
+		foreach ( $public_fields as $key => $value ) {
 			if ( $field['type'] == $this->phone_fields[$value['name']] ) {
 				$fields_for_entity[] = $value;
 			}
@@ -1633,7 +1633,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 		// Build Phone Field choices array for dropdown.
 		$phone_fields_label = esc_attr__( 'Phone Fields', 'civicrm-wp-profile-sync' );
-		foreach( $fields_for_entity AS $phone_field ) {
+		foreach ( $fields_for_entity as $phone_field ) {
 			$choices[$phone_fields_label][$this->phone_field_prefix . $phone_field['name']] = $phone_field['title'];
 		}
 
@@ -1671,7 +1671,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->acf_loader->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
 
@@ -1739,7 +1739,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->acf_loader->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) OR empty( $field[$key] ) ) {
+		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
 

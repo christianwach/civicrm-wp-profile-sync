@@ -237,7 +237,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 		if ( ! empty( $field['sub_fields'] ) ) {
 
 			// Validate field first.
-			foreach( $field['sub_fields'] AS $sub_field ) {
+			foreach ( $field['sub_fields'] as $sub_field ) {
 				$sub_fields[] = acf_validate_field( $sub_field );
 			}
 
@@ -552,7 +552,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 
 		// Return early if there is an existing Contact ID.
 		$contact_id = $value[$prefix . '_contact_id'];
-		if ( ! empty( $contact_id ) AND is_numeric( $contact_id ) ) {
+		if ( ! empty( $contact_id ) && is_numeric( $contact_id ) ) {
 			return (int) $contact_id;
 		}
 
@@ -667,7 +667,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 
 		// Return early if there is an existing Contact ID.
 		$contact_id = $value['field_' . $this->acf_slug . '_contact_id'];
-		if ( ! empty( $contact_id ) AND is_numeric( $contact_id ) ) {
+		if ( ! empty( $contact_id ) && is_numeric( $contact_id ) ) {
 			return $valid;
 		}
 
@@ -723,7 +723,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 				$contact_data['first_name'] = $first_name;
 				$last_name = $new_contact['field_' . $this->acf_slug . '_contact_last_name'];
 				$contact_data['last_name'] = $last_name;
-				if ( empty( $first_name ) AND empty( $last_name ) ) {
+				if ( empty( $first_name ) && empty( $last_name ) ) {
 					$valid = __( 'Please enter a First Name and a Last Name for the New Contact.', 'civicrm-wp-profile-sync' );
 					return $valid;
 				}

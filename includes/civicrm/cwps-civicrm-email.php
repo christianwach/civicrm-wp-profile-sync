@@ -264,12 +264,12 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		}
 
 		// Bail if not the "Sync CMS Email" setting.
-		if ( ! isset( $dao->name ) OR $dao->name != 'syncCMSEmail' ) {
+		if ( ! isset( $dao->name ) && $dao->name != 'syncCMSEmail' ) {
 			return;
 		}
 
 		// Bail if setting is already "off".
-		if ( isset( $dao->value ) AND '1' != unserialize( $dao->value ) ) {
+		if ( isset( $dao->value ) && '1' != unserialize( $dao->value ) ) {
 			return;
 		}
 
@@ -511,7 +511,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 				$result = civicrm_api( 'Email', 'create', $params );
 
 				// Log something on failure.
-				if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+				if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 					$e = new \Exception;
 					$trace = $e->getTraceAsString();
 					error_log( print_r( [
@@ -562,7 +562,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		$result = civicrm_api( 'Email', 'get', $params );
 
 		// Bail on failure.
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			return $email;
 		}
 
@@ -610,7 +610,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		$result = civicrm_api( 'Email', 'get', $params );
 
 		// Bail on failure.
-		if ( isset( $result['is_error'] ) AND $result['is_error'] == '1' ) {
+		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			return $email;
 		}
 
