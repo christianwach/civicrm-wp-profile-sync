@@ -252,7 +252,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 
 
 	/**
-	 * Get a State/Province by its numeric ID.
+	 * Get all State/Provinces as an array keyed by State ID.
 	 *
 	 * @since 0.4
 	 *
@@ -279,6 +279,60 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 
 
 	/**
+	 * Get all State/Provinces as an array keyed by Country ID.
+	 *
+	 * @since 0.4
+	 *
+	 * @return array $state_provinces The array of State/Province data.
+	 */
+	public function states_get_for_countries() {
+
+		// Init return.
+		$state_provinces = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $state_provinces;
+		}
+
+		// Params to get the Address Type.
+		$params = [
+			'version' => 3,
+			'sequential' => 1,
+			'options' => [
+				'limit' => 0,
+			],
+		];
+
+		// Call the CiviCRM API.
+		$result = civicrm_api( 'StateProvince', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+			return $state_provinces;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $state_provinces;
+		}
+
+		// Build the array.
+		foreach ( $result['values'] AS $value ) {
+			$state_provinces[ $value['country_id'] ][] = [
+				'id' => $value['id'],
+				'text' => $value['name'],
+			];
+		}
+
+		// --<
+		return $state_provinces;
+
+	}
+
+
+
+	/**
 	 * Get a State/Province by its numeric ID.
 	 *
 	 * @since 0.4
@@ -296,7 +350,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 			return $state_province;
 		}
 
-		// Params to get the Address Type.
+		// Params to get the State/Province.
 		$params = [
 			'version' => 3,
 			'sequential' => 1,
@@ -344,7 +398,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 			return $state_province;
 		}
 
-		// Params to get the Address Type.
+		// Params to get the State/Province.
 		$params = [
 			'version' => 3,
 			'sequential' => 1,
@@ -369,6 +423,138 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 
 		// --<
 		return $state_province;
+
+	}
+
+
+
+	/**
+	 * Get all Counties keyed by County ID.
+	 *
+	 * @since 0.5
+	 *
+	 * @return array $counties The array of Counties data.
+	 */
+	public function counties_get() {
+
+		// Only do this once.
+		static $counties;
+		if ( isset( $counties ) ) {
+			return $counties;
+		}
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return [];
+		}
+
+		// Init return.
+		$counties = [];
+
+		// Build the query.
+		$query = 'SELECT name, id, state_province_id, abbreviation FROM civicrm_county';
+		$dao = CRM_Core_DAO::executeQuery( $query );
+
+		// Build the array.
+		while ( $dao->fetch() ) {
+			$counties[$dao->id] = [
+				'name' => $dao->name,
+				'state_province_id' => $dao->state_province_id,
+				'abbreviation' => $dao->abbreviation,
+			];
+		}
+
+		// --<
+		return $counties;
+
+	}
+
+
+
+	/**
+	 * Get all Counties keyed by State ID.
+	 *
+	 * This is formatted for Select2.
+	 *
+	 * @since 0.5
+	 *
+	 * @return array $counties The array of Counties data.
+	 */
+	public function counties_get_for_states() {
+
+		// Only do this once.
+		static $counties;
+		if ( isset( $counties ) ) {
+			return $counties;
+		}
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return [];
+		}
+
+		// Init return.
+		$counties = [];
+
+		// Build the query.
+		$query = 'SELECT name, id, state_province_id, abbreviation FROM civicrm_county';
+		$dao = CRM_Core_DAO::executeQuery( $query );
+
+		// Build the array.
+		while ( $dao->fetch() ) {
+			$counties[$dao->state_province_id][] = [
+				'id' => $dao->id,
+				'text' => $dao->name,
+			];
+		}
+
+		// --<
+		return $counties;
+
+	}
+
+
+
+	/**
+	 * Get the State ID for a given County ID.
+	 *
+	 * @since 0.5
+	 *
+	 * @param integer $county_id The numeric ID of the CiviCRM County.
+	 * @return integer|bool $state_id The numeric ID of the CiviCRM State/Province, or false on failure.
+	 */
+	public function state_get_for_county( $county_id ) {
+
+		// Only do this once per Field Type and filter.
+		static $pseudocache;
+		if ( isset( $pseudocache[$county_id] ) ) {
+			return $pseudocache[$county_id];
+		}
+
+		// Init return.
+		$state_id = false;
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $state_id;
+		}
+
+		// Query directly.
+		$query = 'SELECT state_province_id FROM civicrm_county WHERE id = ' . (int) $county_id;
+		$state_id = CRM_Core_DAO::singleValueQuery( $query );
+
+		// Bail on failure.
+		if ( empty( $state_id ) ) {
+			return $state_id;
+		}
+
+		// Maybe add to pseudo-cache.
+		if ( ! isset( $pseudocache[$county_id] ) ) {
+			$pseudocache[$county_id] = (int) $state_id;
+		}
+
+		// --<
+		return (int) $state_id;
 
 	}
 

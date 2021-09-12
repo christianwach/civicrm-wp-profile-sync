@@ -1,5 +1,5 @@
 /**
- * CiviCRM Profile Sync Custom ACF Field Type - CiviCRM Activity Assignee Field.
+ * CiviCRM Profile Sync Custom ACF Field Type - CiviCRM ACFE Country Field.
  *
  * @package CiviCRM_WP_Profile_Sync
  */

@@ -108,6 +108,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/fields/cwps-acf-acfe-field-action-reference-case.php';
 
 		// Include Field Types.
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/fields/cwps-acf-acfe-field-address-county.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/fields/cwps-acf-acfe-field-address-state.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/fields/cwps-acf-acfe-field-address-country.php';
 
@@ -157,6 +158,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Case_Action_Ref( $this );
 
 		// Init Field Types.
+		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_County( $this );
 		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State( $this );
 		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_Country( $this );
 
