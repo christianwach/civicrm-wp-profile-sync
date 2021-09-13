@@ -15,8 +15,9 @@ Please be aware that Form building with ACFE is at an early stage of development
 * Define Contact Type: Organization, Individual, Household, and Custom Contact Subtypes
 * Map data from Custom Fields
 * Add Relationships to each Contact
+* Add Free Memberships (CiviMember Component must be active)
 * Create Activities on Form submission
-* Open a Case on Form submission
+* Open a Case on Form submission (CiviCase Component must be active)
 
 ## Getting Started
 
@@ -50,13 +51,17 @@ Each of the Fields in your Field Group can now be connected to CiviCRM. Make sur
 
 The CiviCRM Profile Sync plugin also provides a number of custom ACF Fields for use in front-end ACFE Forms which you will see as choices in the "Field Type" dropdown when you add a new ACF Field to a Field Group. These are grouped under "CiviCRM ACFE Forms" and are:
 
-#### CiviCRM State
-
-This Field auto-populates with the States/Provinces in CiviCRM and returns the numeric ID of the CiviCRM State/Province for submission to CiviCRM. To use the Field in the Form, map it to "State/Province ID" in the "Address Actions" section of the CiviCRM Contact Action.
-
 #### CiviCRM Country
 
 This Field auto-populates with the Countries in CiviCRM and returns the numeric ID of the CiviCRM Country for submission to CiviCRM. To use the Field in the Form, map it to "Country ID" in the "Address Actions" section of the CiviCRM Contact Action.
+
+#### CiviCRM State
+
+This Field auto-populates with the States/Provinces in CiviCRM and returns the numeric ID of the CiviCRM State/Province for submission to CiviCRM. To filter the list of States/Provinces by Country on the front-end, you will need to link to the CiviCRM Country Field, which must be in the same ACF Field Group. To use the Field in the Form, map it to "State/Province ID" in the "Address Actions" section of the CiviCRM Contact Action.
+
+#### CiviCRM County
+
+This Field auto-populates with the Counties in CiviCRM and returns the numeric ID of the CiviCRM County for submission to CiviCRM. To filter the list of Counties by State/Province on the front-end, you will need to link to the CiviCRM State Field, which must be in the same ACF Field Group. To use the Field in the Form, map it to "County ID" in the "Address Actions" section of the CiviCRM Contact Action.
 
 ## The ACF Extended Form
 
@@ -94,8 +99,8 @@ When compared to Caldera Forms CiviCRM, the following features are not available
 
 * Select Email Template for notification (requires Email API Extension)
 * CiviDiscount integration for Participant Registration and special field (requires CiviDiscount Extension)
-* Add Memberships (CiviMember)
-* Add Participants (CiviEvent)
+* Add Non-free Memberships (CiviMember Component must be active)
+* Add Participants (CiviEvent Component must be active)
 * Add Contributions with Line Items (for live transactions)
 
 As you can see, most of these are related to payment transactions. The plan is for this plugin to work with [ACF Extended Pro](https://www.acf-extended.com/pro) for payments via Stripe. For more comprehensive payment integration, please look at the [Integrate CiviCRM with WooCommerce](https://github.com/WPCV/wpcv-woo-civi-integration) plugin.
