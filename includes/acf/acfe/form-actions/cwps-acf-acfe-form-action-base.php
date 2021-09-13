@@ -498,7 +498,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	 * @param array $conditional_logic The conditional logic for the Field.
 	 * @return array $field The array of Field data.
 	 */
-	public function mapping_field_mapping_field_get( $code, $label, $conditional_logic = [] ) {
+	public function mapping_field_get( $code, $label, $conditional_logic = [] ) {
 
 		// Build the Field array.
 		$field = [

@@ -59,6 +59,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	public $group;
 
 	/**
+	 * CiviCRM Membership object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $membership The CiviCRM Membership object.
+	 */
+	public $membership;
+
+	/**
 	 * CiviCRM Email object.
 	 *
 	 * @since 0.4
@@ -370,6 +379,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-custom-group.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-custom-field.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-civicrm-group.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-civicrm-membership.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-civicrm-note.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-civicrm-tag.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-civicrm-campaign.php';
@@ -424,6 +434,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		$this->custom_group = new CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Group( $this );
 		$this->custom_field = new CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field( $this );
 		$this->group = new CiviCRM_Profile_Sync_ACF_CiviCRM_Group( $this );
+		$this->membership = new CiviCRM_Profile_Sync_ACF_CiviCRM_Membership( $this );
 		$this->note = new CiviCRM_Profile_Sync_ACF_CiviCRM_Note( $this );
 		$this->tag = new CiviCRM_Profile_Sync_ACF_CiviCRM_Tag( $this );
 		$this->campaign = new CiviCRM_Profile_Sync_ACF_CiviCRM_Campaign( $this );

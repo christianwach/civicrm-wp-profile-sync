@@ -608,7 +608,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 
 			// Define Custom Contact Reference Field.
 			$title = sprintf( __( 'Custom Contact Reference', 'civicrm-wp-profile-sync' ), $field['title'] );
-			$mapping_field = $this->mapping_field_mapping_field_get( $field['name'], $title );
+			$mapping_field = $this->mapping_field_get( $field['name'], $title );
 			$mapping_field['instructions'] = __( 'Define a custom Contact Reference.', 'civicrm-wp-profile-sync' );
 			$mapping_field['conditional_logic'] = [
 				[
@@ -693,7 +693,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 		// Add "Mapping" Fields.
 		foreach ( $this->public_case_fields as $field ) {
 			if ( ! array_key_exists( $field['name'], $this->fields_to_ignore ) ) {
-				$fields[] = $this->mapping_field_mapping_field_get( $field['name'], $field['title'] );
+				$fields[] = $this->mapping_field_get( $field['name'], $field['title'] );
 			}
 		}
 
@@ -812,7 +812,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 			// Add "Map" Fields for the Custom Fields.
 			foreach ( $custom_group['api.CustomField.get']['values'] as $custom_field ) {
 				$code = 'custom_' . $custom_field['id'];
-				$sub_fields[] = $this->mapping_field_mapping_field_get( $code, $custom_field['label'], $conditional_logic );
+				$sub_fields[] = $this->mapping_field_get( $code, $custom_field['label'], $conditional_logic );
 			}
 
 			// Add the Sub-fields.
