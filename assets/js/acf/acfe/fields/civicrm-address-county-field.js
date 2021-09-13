@@ -129,7 +129,13 @@
 	 */
 	acf.addAction( 'ready_field/type=cwps_acfe_address_county', function( field ) {
 
-		var classes, classes_array, state_field_key = '', $state_field;
+		var classes,
+			classes_array,
+			state_field_key = '',
+			$state_field,
+			initial_state_id,
+			initial_counties,
+			initial_options = [];
 
 		// Get the declared classes.
 		classes = field.$el.prop('class');
@@ -156,6 +162,28 @@
 		// Get the CiviCRM ACFE State Field.
 		$state_field = acf.findField( state_field_key );
 
+		// Does it have a value?
+		initial_state_id = $state_field.find( 'select' ).val();
+		if ( initial_state_id ) {
+
+			// Get Counties for this State ID.
+			initial_counties = cwps_acfe_county_settings.get_counties_for_state( initial_state_id );
+			if ( initial_counties.length ) {
+
+				// Populate the options.
+				initial_options.push( new Option( '- ' + field.get( 'placeholder' ) + ' -', '', false, false ) );
+				for ( data of initial_counties ) {
+					initial_options.push( new Option( data.text, data.id, false, false ) );
+				}
+				field.$el.find( 'select' ).append( initial_options ).trigger( 'change' );
+
+				// Cache these.
+				cwps_acfe_county_settings.set_counties_markup( initial_state_id, initial_options );
+
+			}
+
+		}
+
 		/**
 		 * Acts when the CiviCRM ACFE State Field is changed.
 		 *
@@ -165,7 +193,7 @@
 		 */
 		$state_field.on( 'change', 'select', function( e ) {
 
-			var state_id = $(this).val(), counties, new_options = [];
+			var state_id = $(this).val(), counties, new_options = [], data;
 
 			// Clear it.
 			field.$el.val( null ).trigger( 'change' );

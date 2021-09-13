@@ -203,18 +203,50 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 	 */
 	public function render_field_settings( $field ) {
 
-		// Define Country ID setting field.
-		$country = [
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $field;
+		}
+
+		// Define "Source Country" setting field.
+		$country_source = [
+			'label' => __( 'Source Country', 'civicrm-wp-profile-sync' ),
+			'name' => 'country_source',
+			'type' => 'radio',
+			'instructions' => __( 'The source for the States/Provinces in this Field.', 'civicrm-wp-profile-sync' ),
+			'allow_null' => 0,
+			'required' => 0,
+			'default_value' => 1,
+			'layout' => 'vertical',
+			'return_format' => 'value',
+			'choices' => [
+				1 => __( 'The default Country in CiviCRM', 'civicrm-wp-profile-sync' ),
+				2 => __( 'A CiviCRM Country Field', 'civicrm-wp-profile-sync' ),
+				3 => __( 'A specific Country', 'civicrm-wp-profile-sync' ),
+			],
+		];
+
+		// Now add it.
+		acf_render_field_setting( $field, $country_source );
+
+		// Define "Country Field Reference" setting field.
+		$country_ref = [
 			'label' => __( 'Country Field', 'civicrm-wp-profile-sync' ),
 			'name' => 'state_country',
 			'type' => 'select',
 			'instructions' => __( 'Filter the visible States/Provinces by the selected Country Field.', 'civicrm-wp-profile-sync' ),
+			'allow_null' => 1,
 			'ui' => 1,
 			'ajax' => 1,
             'ajax_action' => 'cwps_get_country_field',
             'placeholder' => __( 'Select the Country Field', 'civicrm-wp-profile-sync' ),
 			'default_value' => 0,
 			'required' => 0,
+			'conditional_logic' => [ [ [
+				'field' => 'country_source',
+				'operator' => '==contains',
+				'value' => 2,
+			] ] ],
 		];
 
 		// Add existing choice if present.
@@ -222,12 +254,35 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 			$country_field = acf_get_field( $field['state_country'] );
 			if( ! empty( $country_field ) ) {
 				$label = acf_maybe_get( $country_field, 'label', $country_field['name'] );
-				$country['choices'] = [ $field['state_country'] => "{$label} ({$country_field['key']})" ];
+				$country_ref['choices'] = [ $field['state_country'] => "{$label} ({$country_field['key']})" ];
 			}
 		}
 
 		// Now add it.
-		acf_render_field_setting( $field, $country );
+		acf_render_field_setting( $field, $country_ref );
+
+		// Define "Country ID" setting field.
+		$country_id = [
+			'label' => __( 'Country', 'civicrm-wp-profile-sync' ),
+			'name' => 'country_id',
+			'type' => 'select',
+			'instructions' => __( 'Use the States/Provinces in this Country.', 'civicrm-wp-profile-sync' ),
+			'allow_null' => 1,
+			'ui' => 1,
+			'ajax' => 0,
+            'placeholder' => __( 'Select the Country', 'civicrm-wp-profile-sync' ),
+			'default_value' => 0,
+			'required' => 0,
+			'choices' => CRM_Core_PseudoConstant::country(),
+			'conditional_logic' => [ [ [
+				'field' => 'country_source',
+				'operator' => '==contains',
+				'value' => 3,
+			] ] ],
+		];
+
+		// Now add it.
+		acf_render_field_setting( $field, $country_id );
 
 	}
 
@@ -394,18 +449,42 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 		// Change Field into a select field.
 		$field['type'] = 'select';
 
-		// Add existing choice if present.
+		// Get CiviCRM config.
+		$config = CRM_Core_Config::singleton();
+
+		// Given precedence to the saved value.
 		if ( ! empty( $field['value'] ) ) {
+
+			// Add existing choice if present.
 			$state = CRM_Core_PseudoConstant::stateProvince( $field['value'] );
 			if( ! empty( $state ) ) {
 
 				// Try and get the Country ID.
 				$country_id = CRM_Core_PseudoConstant::countryIDForStateID( $field['value'] );
 				if ( ! empty( $country_id ) ) {
-					$field['choices'] = CRM_Core_PseudoConstant::stateProvinceForCountry( $country_id );;
+					$field['choices'] = CRM_Core_PseudoConstant::stateProvinceForCountry( $country_id );
 				}
 
 			}
+
+		} elseif ( ! empty( $field['country_id'] ) ) {
+
+			// Add choices from specific Country ID if present.
+			$field['choices'] = CRM_Core_PseudoConstant::stateProvinceForCountry( $field['country_id'] );
+
+		} else {
+
+			// Add choices from the default Country.
+			$country_id = $config->defaultContactCountry;
+			if ( ! empty( $config->defaultContactCountry ) ) {
+				$field['choices'] = CRM_Core_PseudoConstant::stateProvinceForCountry( $country_id );
+				// Also try and set the default value.
+				if ( ! empty( $config->defaultContactStateProvince ) ) {
+					$field['default_value'] = $config->defaultContactStateProvince;
+					$field['value'] = $config->defaultContactStateProvince;
+				}
+			}
+
 		}
 
 		// Render.
