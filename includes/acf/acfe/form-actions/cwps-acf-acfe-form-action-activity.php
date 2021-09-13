@@ -254,6 +254,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 			$this->js_model_case_reference_field_add( $this->field_name . 'activity_case_id' );
 		}
 
+		// Activity Conditional Field.
+		$this->mapping_field_filters_add( 'activity_conditional' );
+
 	}
 
 
@@ -460,6 +463,15 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 			];
 
 		}
+
+		// Add Conditional Field.
+		$code = 'activity_conditional';
+		$label = __( 'Conditional On', 'civicrm-wp-profile-sync' );
+		$conditional = $this->mapping_field_get( $code, $label );
+		$conditional['placeholder'] = __( 'Always add', 'civicrm-wp-profile-sync' );
+		$conditional['wrapper']['data-instruction-placement'] = 'field';
+		$conditional['instructions'] = __( 'To add the Activity only when conditions are met, link this to a Hidden Field with value "1" where the conditional logic of that Field shows it when the conditions are met.', 'civicrm-wp-profile-sync' );
+		$fields[] = $conditional;
 
 		// --<
 		return $fields;
@@ -958,6 +970,16 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 			$data['case_id'] = $this->form_case_id_get_mapped( $action_name );
 		}
 
+		// Get Activity Conditional.
+		$data['activity_conditional'] = get_sub_field( $this->field_key . 'map_activity_conditional' );
+		$conditionals = [ $data['activity_conditional'] ];
+
+		// Populate array with mapped Conditional Field values.
+		$conditionals = acfe_form_map_vs_fields( $conditionals, $conditionals, $current_post_id, $form );
+
+		// Save Activity Conditional Reference.
+		$data['activity_conditional_ref'] = get_sub_field( $this->field_key . 'map_activity_conditional' );
+
 		// --<
 		return $data;
 
@@ -978,6 +1000,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 
 		// Init return.
 		$activity = false;
+
+		// Skip if the Activity Conditional Reference Field has a value.
+		if ( ! empty( $activity_data['activity_conditional_ref'] ) ) {
+			// And the Activity Conditional Field has no value.
+			if ( empty( $activity_data['activity_conditional'] ) ) {
+				return $activity;
+			}
+		}
 
 		// Add Custom Field data if present.
 		if ( ! empty ( $custom_data ) ) {

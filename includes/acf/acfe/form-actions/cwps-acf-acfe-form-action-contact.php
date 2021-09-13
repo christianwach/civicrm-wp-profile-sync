@@ -3995,7 +3995,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$fields['group_id'] = $field[ $this->field_name . 'map_group_id' ];
 
 			// Get Group Conditional.
-			$fields[ 'group_conditional' ] = $field[ $this->field_name . 'map_group_conditional' ];
+			$fields['group_conditional'] = $field[ $this->field_name . 'map_group_conditional' ];
 
 			// Get "Enable double opt-in".
 			$fields['double_optin'] = $field[ $this->field_name . 'double_optin' ];
@@ -4004,7 +4004,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$fields = acfe_form_map_vs_fields( $fields, $fields, $current_post_id, $form );
 
 			// Save Group Conditional Reference.
-			$fields[ 'group_conditional_ref' ] = $field[ $this->field_name . 'map_group_conditional' ];
+			$fields['group_conditional_ref'] = $field[ $this->field_name . 'map_group_conditional' ];
 
 			// Add the data.
 			$group_data[] = $fields;
@@ -4371,13 +4371,13 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$fields['tag_ids'] = $field[ $this->field_name . 'contact_tags' ];
 
 			// Get Tag Conditional.
-			$fields[ 'tag_conditional' ] = $field[ $this->field_name . 'map_tag_conditional' ];
+			$fields['tag_conditional'] = $field[ $this->field_name . 'map_tag_conditional' ];
 
 			// Populate array with mapped Field values.
 			$fields = acfe_form_map_vs_fields( $fields, $fields, $current_post_id, $form );
 
 			// Save Tag Conditional Reference.
-			$fields[ 'tag_conditional_ref' ] = $field[ $this->field_name . 'map_tag_conditional' ];
+			$fields['tag_conditional_ref'] = $field[ $this->field_name . 'map_tag_conditional' ];
 
 			// Add the data.
 			$tag_data[] = $fields;
