@@ -269,7 +269,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		}
 
 		// Bail if setting is already "off".
-		if ( isset( $dao->value ) && '1' != unserialize( $dao->value ) ) {
+		if ( isset( $dao->value ) && '1' != maybe_unserialize( $dao->value ) ) {
 			return;
 		}
 
