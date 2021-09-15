@@ -276,6 +276,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 	 */
 	public function groups_get_all() {
 
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return [];
+		}
+
 		// Params to get all Groups (except Smart Groups).
 		$params = [
 			'version' => 3,
@@ -332,6 +337,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 
 		// Bail if we have no Contact ID.
 		if ( empty( $contact_id ) ) {
+			return $group_data;
+		}
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
 			return $group_data;
 		}
 
@@ -455,6 +465,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 			return $group_data;
 		}
 
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $group_data;
+		}
+
 		// Params to query Group membership.
 		$params = [
 			'version' => 3,
@@ -514,6 +529,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 	 */
 	public function group_contact_count( $group_id ) {
 
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return 0;
+		}
+
 		// Params to query Group membership.
 		$params = [
 			'version' => 3,
@@ -558,6 +578,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 	 */
 	public function group_contact_exists( $group_id, $contact_id ) {
 
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return false;
+		}
+
 		// Params to query Group membership.
 		$params = [
 			'version' => 3,
@@ -600,6 +625,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 	 * @return array|bool $result The Group-Contact data, or false on failure.
 	 */
 	public function group_contact_create( $group_id, $contact_id ) {
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return false;
+		}
 
 		// Params to add Group membership.
 		$params = [
@@ -644,6 +674,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 	 * @return array|bool $result The Group-Contact data, or false on failure.
 	 */
 	public function group_contact_delete( $group_id, $contact_id ) {
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return false;
+		}
 
 		// Params to remove Group membership.
 		$params = [
@@ -695,6 +730,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 
 		// Init return.
 		$result = false;
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $result;
+		}
 
 		// Get the Contact's Primary Email record.
 		$primary_email = $this->civicrm->email->primary_email_get( $contact['id'] );
@@ -757,6 +797,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 	 * @return array $result The array of Group Contact data from the CiviCRM API.
 	 */
 	public function group_contacts_chunked_data_get( $group_id, $offset, $limit ) {
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return [];
+		}
 
 		// Params to query Group membership.
 		$params = [
