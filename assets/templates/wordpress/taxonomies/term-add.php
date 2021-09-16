@@ -5,7 +5,7 @@
  * Injects markup into the Add Term page.
  *
  * @package CiviCRM_WP_Profile_Sync
- * @since 0.6.4
+ * @since 0.4
  */
 
 ?><!-- assets/templates/wordpress/term-add.php -->

@@ -15,7 +15,7 @@
  * This works as a "namespace" of sorts, allowing us to hang properties, methods
  * and "sub-namespaces" from it.
  *
- * @since 0.6.4
+ * @since 0.4
  */
 var CiviCRM_Profile_Sync_ACF_Sync = CiviCRM_Profile_Sync_ACF_Sync || {};
 
@@ -24,7 +24,7 @@ var CiviCRM_Profile_Sync_ACF_Sync = CiviCRM_Profile_Sync_ACF_Sync || {};
 /**
  * Pass the jQuery shortcut in.
  *
- * @since 0.6.4
+ * @since 0.4
  *
  * @param {Object} $ The jQuery object.
  */
@@ -33,7 +33,7 @@ var CiviCRM_Profile_Sync_ACF_Sync = CiviCRM_Profile_Sync_ACF_Sync || {};
 	/**
 	 * Create Settings Singleton.
 	 *
-	 * @since 0.6.4
+	 * @since 0.4
 	 */
 	CiviCRM_Profile_Sync_ACF_Sync.settings = new function() {
 
@@ -45,7 +45,7 @@ var CiviCRM_Profile_Sync_ACF_Sync = CiviCRM_Profile_Sync_ACF_Sync || {};
 		 *
 		 * This method should only be called once.
 		 *
-		 * @since 0.6.4
+		 * @since 0.4
 		 */
 		this.init = function() {
 
@@ -62,7 +62,7 @@ var CiviCRM_Profile_Sync_ACF_Sync = CiviCRM_Profile_Sync_ACF_Sync || {};
 		 *
 		 * This method should only be called once.
 		 *
-		 * @since 0.6.4
+		 * @since 0.4
 		 */
 		this.dom_ready = function() {
 
@@ -74,7 +74,7 @@ var CiviCRM_Profile_Sync_ACF_Sync = CiviCRM_Profile_Sync_ACF_Sync || {};
 		/**
 		 * Init localisation from settings object.
 		 *
-		 * @since 0.6.4
+		 * @since 0.4
 		 */
 		this.init_localisation = function() {
 			if ( 'undefined' !== typeof CiviCRM_Profile_Sync_ACF_Sync_Vars ) {
@@ -85,7 +85,7 @@ var CiviCRM_Profile_Sync_ACF_Sync = CiviCRM_Profile_Sync_ACF_Sync || {};
 		/**
 		 * Getter for localisation.
 		 *
-		 * @since 0.6.4
+		 * @since 0.4
 		 *
 		 * @param {String} key The key for the desired localisation group.
 		 * @param {String} identifier The identifier for the desired localisation string.
@@ -101,7 +101,7 @@ var CiviCRM_Profile_Sync_ACF_Sync = CiviCRM_Profile_Sync_ACF_Sync || {};
 		/**
 		 * Init settings from settings object.
 		 *
-		 * @since 0.6.4
+		 * @since 0.4
 		 */
 		this.init_settings = function() {
 			if ( 'undefined' !== typeof CiviCRM_Profile_Sync_ACF_Sync_Vars ) {
@@ -112,7 +112,7 @@ var CiviCRM_Profile_Sync_ACF_Sync = CiviCRM_Profile_Sync_ACF_Sync || {};
 		/**
 		 * Getter for retrieving a setting.
 		 *
-		 * @since 0.6.4
+		 * @since 0.4
 		 *
 		 * @param {String} The identifier for the desired setting.
 		 * @return The value of the setting.
@@ -126,7 +126,7 @@ var CiviCRM_Profile_Sync_ACF_Sync = CiviCRM_Profile_Sync_ACF_Sync || {};
 	/**
 	 * Create Progress Bar Class.
 	 *
-	 * @since 0.6.4
+	 * @since 0.4
 	 *
 	 * @param {Object} options The setup options for the object.
 	 */
@@ -195,7 +195,7 @@ var CiviCRM_Profile_Sync_ACF_Sync = CiviCRM_Profile_Sync_ACF_Sync || {};
 		/**
 		 * Send AJAX request.
 		 *
-		 * @since 0.6.4
+		 * @since 0.4
 		 *
 		 * @param {Array} data The data received from the server.
 		 */
@@ -238,7 +238,7 @@ var CiviCRM_Profile_Sync_ACF_Sync = CiviCRM_Profile_Sync_ACF_Sync || {};
 		/**
 		 * Send AJAX request.
 		 *
-		 * @since 0.6.4
+		 * @since 0.4
 		 */
 		this.send = function() {
 
@@ -290,7 +290,7 @@ var CiviCRM_Profile_Sync_ACF_Sync = CiviCRM_Profile_Sync_ACF_Sync || {};
 	/**
 	 * Create Progress Bar Singleton.
 	 *
-	 * @since 0.6.4
+	 * @since 0.4
 	 */
 	CiviCRM_Profile_Sync_ACF_Sync.progress_bar = new function() {
 
@@ -305,7 +305,7 @@ var CiviCRM_Profile_Sync_ACF_Sync = CiviCRM_Profile_Sync_ACF_Sync || {};
 		 *
 		 * This method should only be called once.
 		 *
-		 * @since 0.6.4
+		 * @since 0.4
 		 */
 		this.init = function() {
 
@@ -316,7 +316,7 @@ var CiviCRM_Profile_Sync_ACF_Sync = CiviCRM_Profile_Sync_ACF_Sync || {};
 		 *
 		 * This method should only be called once.
 		 *
-		 * @since 0.6.4
+		 * @since 0.4
 		 */
 		this.dom_ready = function() {
 
@@ -328,7 +328,7 @@ var CiviCRM_Profile_Sync_ACF_Sync = CiviCRM_Profile_Sync_ACF_Sync || {};
 		/**
 		 * Set up Progress Bar instances.
 		 *
-		 * @since 0.6.4
+		 * @since 0.4
 		 */
 		this.setup = function() {
 
@@ -466,7 +466,7 @@ var CiviCRM_Profile_Sync_ACF_Sync = CiviCRM_Profile_Sync_ACF_Sync || {};
 /**
  * Trigger dom_ready methods where necessary.
  *
- * @since 0.6.4
+ * @since 0.4
  */
 jQuery(document).ready(function($) {
 
