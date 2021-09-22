@@ -1173,6 +1173,68 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 
 	/**
+	 * Get the Custom Fields for all CiviCRM Contacts.
+	 *
+	 * CiviCRM has a special setting for "extends" that allows Custom Fields to
+	 * be attached to any Contact Type - it's called "Contact".
+	 *
+	 * This should not be confused with "get_for_all_contact_types" which gets
+	 * the Custom Fields for all top level CiviCRM Contact Types.
+	 *
+	 * @since 0.5
+	 *
+	 * @return array $custom_fields The array of Custom Fields.
+	 */
+	public function get_for_contacts() {
+
+		// Init array to build.
+		$custom_fields = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $custom_fields;
+		}
+
+		// Construct params to get Fields for all Contacts.
+		$params = [
+			'version' => 3,
+			'sequential' => 1,
+			'is_active' => 1,
+			'extends' => 'Contact',
+			'api.CustomField.get' => [
+				'is_active' => 1,
+				'options' => [
+					'limit' => 0, // No limit.
+				],
+			],
+			'options' => [
+				'limit' => 0, // No limit.
+			],
+		];
+
+		// Call the API.
+		$result = civicrm_api( 'CustomGroup', 'get', $params );
+
+		// Override return if we get some.
+		if ( $result['is_error'] == 0 AND ! empty( $result['values'] ) ) {
+
+			// Add the Custom Fields from the chained API data.
+			foreach( $result['values'] as $key => $value ) {
+				foreach( $value['api.CustomField.get']['values'] as $subkey => $item ) {
+					$custom_fields[$value['title']][] = $item;
+				}
+			}
+
+		}
+
+		// --<
+		return $custom_fields;
+
+	}
+
+
+
+	/**
 	 * Get all the Custom Fields for all CiviCRM Contact Types/Subtypes.
 	 *
 	 * @since 0.4
@@ -1270,6 +1332,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		if ( ! $this->civicrm->is_initialised() ) {
 			return $custom_fields;
 		}
+
+		// Start with the Custom Fields for all Contact Types.
+		$custom_fields = $this->get_for_contacts();
 
 		// Construct params.
 		$params = [
@@ -1371,6 +1436,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		// Try and init CiviCRM.
 		if ( ! $this->civicrm->is_initialised() ) {
 			return $custom_fields;
+		}
+
+		// Start with the Custom Fields for all Contact Types.
+		if ( in_array( $type, $this->civicrm->contact_type->types_get_top_level() ) ) {
+			$custom_fields = $this->get_for_contacts();
 		}
 
 		// Construct params.
