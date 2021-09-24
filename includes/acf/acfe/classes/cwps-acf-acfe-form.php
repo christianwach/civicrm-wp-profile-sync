@@ -124,17 +124,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 	 */
 	public function include_files() {
 
-		// Include Form Action classes.
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-base.php';
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-contact.php';
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-activity.php';
-
-		// Include Case Action if the CiviCase component is active.
-		$case_active = $this->civicrm->is_component_enabled( 'CiviCase' );
-		if ( $case_active ) {
-			include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-case.php';
-		}
-
 	}
 
 
@@ -212,6 +201,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 	 */
 	public function register_form_actions() {
 
+		// Include Form Action classes.
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-base.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-contact.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-activity.php';
+
 		// Init Form Actions.
 		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact( $this );
 		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity( $this );
@@ -219,6 +213,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 		// Init Case Action if the CiviCase component is active.
 		$case_active = $this->civicrm->is_component_enabled( 'CiviCase' );
 		if ( $case_active ) {
+			include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-case.php';
 			new CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case( $this );
 		}
 
