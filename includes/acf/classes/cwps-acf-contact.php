@@ -1003,7 +1003,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		} else {
 
 			// Get the full Contact data.
-			$contact = $this->get_by_id( $contact_id );
+			$contact = $this->plugin->civicrm->contact->get_by_id( $contact_id );
 
 			// Get current Contact Type hierarchy for the Contact.
 			$hierarchy = $this->plugin->civicrm->contact_type->hierarchy_get_for_contact( $contact );
@@ -2014,6 +2014,26 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		// --<
 		return $is_contact_field_group;
 
+	}
+
+
+
+	// -------------------------------------------------------------------------
+	// Retained methods to provide backwards compatibility.
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Get the CiviCRM Contact data for a given ID.
+	 *
+	 * @since 0.4
+	 *
+	 * @param integer $contact_id The numeric ID of the CiviCRM Contact to query.
+	 * @return array|bool $contact_data An array of Contact data, or false on failure.
+	 */
+	public function get_by_id( $contact_id ) {
+		return $this->plugin->civicrm->contact->get_by_id( $contact_id );
 	}
 
 

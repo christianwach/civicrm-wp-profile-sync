@@ -391,6 +391,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 				// Okay, let's do it.
 				$relationship = $this->relationship_create( $contact_id_a, $contact_id_b, $relationship_type_id );
+				if ( $relationship === false ) {
+					continue;
+				}
 
 				// Add to return array.
 				$relationships[] = $relationship;
@@ -633,8 +636,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 				// Okay, let's do it.
 				$relationship = $this->relationship_create( $contact_id_a, $contact_id_b, $relationship_type_id );
-
-				// Continue on failure.
 				if ( $relationship === false ) {
 					continue;
 				}

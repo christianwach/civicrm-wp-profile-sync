@@ -455,7 +455,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 	 *
 	 * @since 0.4
 	 *
-	 * @param integer|string |array $contact_type The "ID", "name" or "hierarchy" of the Contact Type.
+	 * @param integer|string|array $contact_type The "ID", "name" or "hierarchy" of the Contact Type.
 	 * @return string|bool $is_linked The name of the Post Type, or false otherwise.
 	 */
 	public function is_mapped_to_post_type( $contact_type ) {
@@ -576,6 +576,25 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 			'added' => $types_added,
 		];
 
+	}
+
+
+
+	// -------------------------------------------------------------------------
+	// Retained methods to provide backwards compatibility.
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Get all top-level CiviCRM Contact Types.
+	 *
+	 * @since 0.4
+	 *
+	 * @return array $top_level_types The top level CiviCRM Contact Types.
+	 */
+	public function types_get_top_level() {
+		return $this->plugin->civicrm->contact_type->types_get_top_level();
 	}
 
 

@@ -646,7 +646,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 				$email = (object) $email;
 
 				// If this is mapped to the Primary Email.
-				if ( $email_field == 'primary' && $email->is_primary == '1' ) {
+				if ( $email_field == 'primary' && ! empty( $email->is_primary ) && $email->is_primary == '1' ) {
 					$this->acf_loader->acf->field->value_update( $selector, $email->email, $args['post_id'] );
 					continue;
 				}

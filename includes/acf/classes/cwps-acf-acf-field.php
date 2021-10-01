@@ -370,6 +370,11 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 */
 	public function value_update( $selector, $value, $post_id ) {
 
+		// Protect against (string) 'null' which CiviCRM uses for some reason.
+		if ( $value === 'null' || $value === 'NULL' ) {
+			$value = '';
+		}
+
 		// Pass through to ACF.
 		$success = update_field( $selector, $value, $post_id );
 

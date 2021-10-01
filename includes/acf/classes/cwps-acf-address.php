@@ -446,6 +446,39 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 
 
 
+	// -------------------------------------------------------------------------
+	// Retained methods to provide backwards compatibility.
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Get the data for an Address.
+	 *
+	 * @since 0.4
+	 *
+	 * @param integer $address_id The numeric ID of the Address.
+	 * @param object|bool $address The Address data object, or false if none.
+	 */
+	public function address_get_by_id( $address_id ) {
+		return $this->plugin->civicrm->address->address_get_by_id( $address_id );
+	}
+
+
+
+	/**
+	 * Get the Addresses for a Contact ID.
+	 *
+	 * @since 0.4
+	 *
+	 * @param integer $contact_id The numeric ID of the Contact.
+	 * @param array $addresses The array of data for the Addresses, or empty if none.
+	 */
+	public function addresses_get_by_contact_id( $contact_id ) {
+		return $this->plugin->civicrm->address->addresses_get_by_contact_id( $contact_id );
+	}
+
+
 } // Class ends.
 
 

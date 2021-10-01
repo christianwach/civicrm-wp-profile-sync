@@ -88,7 +88,8 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_State {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin = $parent->plugin;
+		$this->acf_loader = $parent->acf_loader;
 		$this->civicrm = $parent->civicrm;
 		$this->addresses = $parent;
 
