@@ -210,10 +210,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		// Filter the Custom Fields array.
 		$filtered = [];
 		foreach ( $custom_field_ids as $selector => $custom_field_id ) {
-			foreach ( $custom_fields_for_contact as $key => $custom_field_data ) {
-				if ( $custom_field_data['id'] == $custom_field_id ) {
-					$filtered[$selector] = $custom_field_data;
-					break;
+			foreach ( $custom_fields_for_contact as $label => $custom_fields_data ) {
+				foreach ( $custom_fields_data as $key => $custom_field_data ) {
+					if ( $custom_field_data['id'] == $custom_field_id ) {
+						$filtered[$selector] = $custom_field_data;
+						break;
+					}
 				}
 			}
 		}
