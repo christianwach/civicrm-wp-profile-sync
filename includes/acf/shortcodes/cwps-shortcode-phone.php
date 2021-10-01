@@ -25,6 +25,15 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Phone {
 	/**
 	 * Plugin object.
 	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
+	/**
+	 * Plugin object.
+	 *
 	 * @since 0.4
 	 * @access public
 	 * @var object $acf_loader The ACF Loader object.
@@ -78,13 +87,10 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Phone {
 	 */
 	public function __construct( $parent ) {
 
-		// Store reference to ACF Loader object.
+		// Store references to objects.
+		$this->plugin = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-
-		// Store reference to CiviCRM object.
 		$this->civicrm = $parent->civicrm;
-
-		// Store reference to Phone object.
 		$this->phone = $parent;
 
 		// Init when the CiviCRM Phone object is loaded.
@@ -326,8 +332,8 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Phone {
 		// Init return.
 		$options = [ '' => __( 'Select a Location Type', 'civicrm-wp-profile-sync' ) ];
 
-		// Get Locations.
-		$location_types = $this->phone->location_types_get();
+		// Phone Locations are standard Location Types.
+		$location_types = $this->plugin->civicrm->address->location_types_get();
 
 		// Build Location Types choices array for dropdown.
 		foreach ( $location_types as $location_type ) {
@@ -354,7 +360,7 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Phone {
 		$options = [ '' => __( 'Select a Phone Type', 'civicrm-wp-profile-sync' ) ];
 
 		// Add Phone Types.
-		$options = $options + $this->phone->phone_types_get();
+		$options = $options + $this->plugin->civicrm->phone->phone_types_get();
 
 		// --<
 		return $options;

@@ -105,19 +105,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 	 */
 	public function __construct( $parent ) {
 
-		// Store reference to plugin object.
+		// Store references to objects.
 		$this->plugin = $parent->acf_loader->plugin;
-
-		// Store reference to ACF Loader object.
 		$this->acf_loader = $parent->acf_loader;
-
-		// Store reference to ACFE object.
 		$this->acfe = $parent->acfe;
-
-		// Store reference to Form object.
 		$this->form = $parent;
-
-		// Store reference to CiviCRM object.
 		$this->civicrm = $this->acf_loader->civicrm;
 
 		// Label this Form Action.
@@ -164,8 +156,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			}
 		}
 
-		// Get the Custom Groups and Fields for all Contact Types.
-		$this->custom_fields = $this->civicrm->custom_group->get_for_contacts();
+		// Get the Custom Fields for all Contact Types.
+		$this->custom_fields = $this->plugin->civicrm->custom_group->get_for_all_contact_types();
 		$this->custom_field_ids = [];
 
 		// Populate mapping Fields.
@@ -180,7 +172,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Get Location Types.
-		$this->location_types = $this->civicrm->address->location_types_get();
+		$this->location_types = $this->plugin->civicrm->address->location_types_get();
 
 		// Get default Location Type.
 		$this->location_type_default = false;
@@ -219,7 +211,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Get Phone Types.
-		$this->phone_types = $this->civicrm->phone->phone_types_get();
+		$this->phone_types = $this->plugin->civicrm->phone->phone_types_get();
 
 		// Get the public Phone Fields.
 		$this->phone_fields = $this->civicrm->phone->civicrm_fields_get( 'public' );
@@ -320,7 +312,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// Maybe get the Contact.
 		if ( ! empty( $contact_id ) ) {
-			$contact = $this->civicrm->contact->get_by_id( $contact_id );
+			$contact = $this->plugin->civicrm->contact->get_by_id( $contact_id );
 		}
 
 		// Bail if we don't find a Contact.
@@ -340,7 +332,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Get the Custom Field values for this Contact.
-		$custom_field_values = $this->civicrm->custom_field->values_get_by_contact_id( $contact['id'], $this->custom_field_ids );
+		$custom_field_values = $this->plugin->civicrm->custom_field->values_get_by_contact_id( $contact['id'], $this->custom_field_ids );
 		foreach ( $custom_field_values as $custom_field_id => $custom_field_value ) {
 			$contact[ 'custom_' . $custom_field_id ] = $custom_field_value;
 		}
@@ -438,7 +430,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 				// Try and get the Address Record.
 				$location_type_id = $address_action[$this->field_name . 'map_address_location_type_id'];
-				$address = (array) $this->civicrm->address->address_get_by_location( $contact['id'], $location_type_id );
+				$address = (array) $this->plugin->civicrm->address->address_get_by_location( $contact['id'], $location_type_id );
 				if ( empty( $address ) ) {
 					continue;
 				}
@@ -469,7 +461,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				// Try and get the Phone Record.
 				$location_type_id = $phone_action[$this->field_name . 'map_phone_location_type_id'];
 				$phone_type_id = $phone_action[$this->field_name . 'map_phone_type_id'];
-				$phone_records = $this->civicrm->phone->phones_get_by_type( $contact['id'], $location_type_id, $phone_type_id );
+				$phone_records = $this->plugin->civicrm->phone->phones_get_by_type( $contact['id'], $location_type_id, $phone_type_id );
 
 				// We can only handle exactly one, though CiviCRM allows many.
 				if ( empty( $phone_records ) || count( $phone_records ) > 1 ) {
@@ -666,7 +658,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 	 */
 	public function tab_action_append() {
 
-		// Define "Submitting Contact" field.
+		// Define "Submitting Contact" Field.
 		$submitting_contact_field = [
 			'key' => $this->field_key . 'submitting_contact',
 			'label' => __( 'Submitter', 'civicrm-wp-profile-sync' ),
@@ -2745,14 +2737,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// Get the Contact Type.
 		$contact_type_id = get_sub_field( $this->field_key . 'contact_types' );
-		$contact_type = $this->civicrm->contact_type->get_data( $contact_type_id, 'id' );
+		$contact_type = $this->plugin->civicrm->contact_type->get_data( $contact_type_id, 'id' );
 		if ( ! empty( $contact_type ) ) {
 			$data['contact_type'] = $contact_type['name'];
 		}
 
 		// Get the Contact Sub-type.
 		$contact_sub_type_id = get_sub_field( $this->field_key . 'contact_sub_types' );
-		$contact_sub_type = $this->civicrm->contact_type->get_data( $contact_sub_type_id, 'id' );
+		$contact_sub_type = $this->plugin->civicrm->contact_type->get_data( $contact_sub_type_id, 'id' );
 		if ( ! empty( $contact_sub_type ) ) {
 			$data['contact_sub_type'] = $contact_sub_type['name'];
 		}
@@ -2793,7 +2785,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// Create or update depending on the presence of an ID.
 		if ( $contact_id === false ) {
-			$result = $this->civicrm->contact->create( $contact_data );
+			$result = $this->plugin->civicrm->contact->create( $contact_data );
 		} else {
 
 			// Use the Contact ID to update.
@@ -2801,7 +2793,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 			// We need to ensure any existing Contact Sub-types are retained.
 			if ( ! empty( $contact_data['contact_sub_type'] ) ) {
-				$existing_contact = $this->civicrm->contact->get_by_id( $contact_id );
+				$existing_contact = $this->plugin->civicrm->contact->get_by_id( $contact_id );
 				if ( is_array( $existing_contact['contact_sub_type'] ) ) {
 					if ( ! in_array( $contact_data['contact_sub_type'], $existing_contact['contact_sub_type'] ) ) {
 						$existing_contact['contact_sub_type'][] = $contact_data['contact_sub_type'];
@@ -2811,7 +2803,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			}
 
 			// Okay, we're good to update now.
-			$result = $this->civicrm->contact->update( $contact_data );
+			$result = $this->plugin->civicrm->contact->update( $contact_data );
 
 		}
 
@@ -2821,10 +2813,10 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Get the full Contact data.
-		$contact = $this->civicrm->contact->get_by_id( $result['id'] );
+		$contact = $this->plugin->civicrm->contact->get_by_id( $result['id'] );
 
 		// Add to the Domain Group if necessary.
-		$domain_group_id = $this->civicrm->get_setting( 'domain_group_id' );
+		$domain_group_id = $this->plugin->civicrm->get_setting( 'domain_group_id' );
 		if ( ! empty( $domain_group_id ) && is_numeric( $domain_group_id ) ) {
 			$this->civicrm->group->group_contact_create( $domain_group_id, $contact['id'] );
 		}
@@ -3685,7 +3677,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			}
 
 			// Update the Address.
-			$result = $this->civicrm->address->address_record_update( $contact['id'], $address );
+			$result = $this->plugin->civicrm->address->address_record_update( $contact['id'], $address );
 
 			// Skip on failure.
 			if ( $result === false ) {
@@ -3693,7 +3685,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			}
 
 			// Get the full Address data.
-			$addresses[] = $this->civicrm->address->address_get_by_id( $result['id'] );
+			$addresses[] = $this->plugin->civicrm->address->address_get_by_id( $result['id'] );
 
 		}
 
@@ -3798,7 +3790,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			// Try and get the Phone Record.
 			$location_type_id = $phone['location_type_id'];
 			$phone_type_id = $phone['phone_type_id'];
-			$phone_records = $this->civicrm->phone->phones_get_by_type( $contact['id'], $location_type_id, $phone_type_id );
+			$phone_records = $this->plugin->civicrm->phone->phones_get_by_type( $contact['id'], $location_type_id, $phone_type_id );
 
 			// We cannot handle more than one, though CiviCRM allows many.
 			if ( count( $phone_records ) > 1 ) {
@@ -3812,7 +3804,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			}
 
 			// Create/update the Phone Record.
-			$result = $this->civicrm->phone->update( $contact['id'], $phone );
+			$result = $this->plugin->civicrm->phone->update( $contact['id'], $phone );
 
 			// Skip on failure.
 			if ( $result === false ) {
@@ -3820,7 +3812,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			}
 
 			// Get the full Phone data.
-			$phones[] = $this->civicrm->phone->phone_get_by_id( $result['id'] );
+			$phones[] = $this->plugin->civicrm->phone->phone_get_by_id( $result['id'] );
 
 		}
 

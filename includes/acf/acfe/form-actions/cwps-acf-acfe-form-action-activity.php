@@ -150,19 +150,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 	 */
 	public function __construct( $parent ) {
 
-		// Store reference to plugin object.
+		// Store references to objects.
 		$this->plugin = $parent->acf_loader->plugin;
-
-		// Store reference to ACF Loader object.
 		$this->acf_loader = $parent->acf_loader;
-
-		// Store reference to ACFE object.
 		$this->acfe = $parent->acfe;
-
-		// Store reference to Form object.
 		$this->form = $parent;
-
-		// Store reference to CiviCRM object.
 		$this->civicrm = $this->acf_loader->civicrm;
 
 		// Label this Form Action.
@@ -234,7 +226,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		}
 
 		// Get the Custom Groups and Fields for all Activity Types.
-		$this->custom_fields = $this->civicrm->custom_group->get_for_activities();
+		$this->custom_fields = $this->plugin->civicrm->custom_group->get_for_activities();
 		$this->custom_field_ids = [];
 
 		// Populate mapping Fields.
@@ -1028,8 +1020,53 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		// Get the full Activity data.
 		$activity = $this->civicrm->activity->get_by_id( $result['id'] );
 
+		// Maybe notify Assigneee.
+		$this->form_activity_notify( $activity );
+
 		// --<
 		return $activity;
+
+	}
+
+
+
+	/**
+	 * Notifies the CiviCRM Activity Assignees.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $activity The array of Activity data.
+	 */
+	public function form_activity_notify( $activity ) {
+
+		// Skip if there are no assignees.
+		if ( empty( $activity['assignee_contact_id'] ) ) {
+			return;
+		}
+
+		// Skip if the CiviCRM setting is not set.
+		$assignee_notification = $this->plugin->civicrm->get_setting( 'activity_assignee_notification' );
+		if ( ! $assignee_notification ) {
+			return;
+		}
+
+		// Skip if CiviCRM does not allow it for this Activity Type.
+		$do_not_notify_for = $this->plugin->civicrm->get_setting( 'do_not_notify_assignees_for' );
+		if ( in_array( $activity['activity_type_id'], $do_not_notify_for ) ) {
+			return;
+		}
+
+		// Get the Contact details of the Assignees.
+		$assignee_contacts = CRM_Activity_BAO_ActivityAssignment::getAssigneeNames( [ $activity['id'] ], true, false );
+
+		// Build an associative array of unique Email Addresses.
+		$mail_to_contacts = [];
+		foreach ( $activity['assignee_contact_id'] as $contact_id ) {
+			$mail_to_contacts[ $assignee_contacts[$contact_id]['email'] ] = $assignee_contacts[$contact_id];
+		}
+
+		// Fire off the email.
+		$sent = CRM_Activity_BAO_Activity::sendToAssignee( (object) $activity, $mail_to_contacts );
 
 	}
 

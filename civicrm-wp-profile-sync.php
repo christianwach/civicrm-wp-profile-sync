@@ -37,6 +37,11 @@ if ( ! defined( 'CIVICRM_WP_PROFILE_SYNC_PATH' ) ) {
 	define( 'CIVICRM_WP_PROFILE_SYNC_PATH', plugin_dir_path( CIVICRM_WP_PROFILE_SYNC_FILE ) );
 }
 
+// Set BuddyPress development environment.
+if ( ! defined( 'CIVICRM_WP_PROFILE_SYNC_BUDDYPRESS' ) ) {
+	define( 'CIVICRM_WP_PROFILE_SYNC_BUDDYPRESS', false );
+}
+
 
 
 /**

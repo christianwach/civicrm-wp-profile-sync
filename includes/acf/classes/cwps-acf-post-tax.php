@@ -23,6 +23,15 @@ defined( 'ABSPATH' ) || exit;
 class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 	/**
+	 * Plugin object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
+	/**
 	 * ACF Loader object.
 	 *
 	 * @since 0.4
@@ -60,10 +69,9 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	 */
 	public function __construct( $parent ) {
 
-		// Store reference to ACF Loader object.
+		// Store references to objects.
+		$this->plugin = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-
-		// Store reference to parent.
 		$this->post = $parent;
 
 		// Init when the "mapping" class has loaded.
@@ -1133,7 +1141,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		foreach ( $contact_ids as $contact_id ) {
 
 			// Grab Contact.
-			$contact = $this->acf_loader->civicrm->contact->get_by_id( $contact_id );
+			$contact = $this->plugin->civicrm->contact->get_by_id( $contact_id );
 			if ( $contact === false ) {
 				continue;
 			}

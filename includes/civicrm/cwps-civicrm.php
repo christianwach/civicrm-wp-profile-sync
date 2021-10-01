@@ -32,6 +32,15 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	public $plugin;
 
 	/**
+	 * CiviCRM Contact Type object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $contact_type The CiviCRM Contact Type object.
+	 */
+	public $contact_type;
+
+	/**
 	 * CiviCRM Contact object.
 	 *
 	 * @since 0.4
@@ -39,6 +48,33 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	 * @var object $contact The CiviCRM Contact object.
 	 */
 	public $contact;
+
+	/**
+	 * CiviCRM Contact Field object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $contact_field The CiviCRM Contact Field object.
+	 */
+	public $contact_field;
+
+	/**
+	 * CiviCRM Custom Field object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $custom_field The CiviCRM Custom Field object.
+	 */
+	public $custom_field;
+
+	/**
+	 * CiviCRM Custom Group object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $custom_group The CiviCRM Custom Group object.
+	 */
+	public $custom_group;
 
 	/**
 	 * CiviCRM Email object.
@@ -57,6 +93,24 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	 * @var object $website The CiviCRM Website object.
 	 */
 	public $website;
+
+	/**
+	 * CiviCRM Address object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $address The CiviCRM Address object.
+	 */
+	public $address;
+
+	/**
+	 * CiviCRM Phone object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $phone The CiviCRM Phone object.
+	 */
+	public $phone;
 
 	/**
 	 * CiviCRM Bulk Operations object.
@@ -120,9 +174,15 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	public function include_files() {
 
 		// Include class files.
+		require CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/civicrm/cwps-civicrm-contact-type.php';
 		require CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/civicrm/cwps-civicrm-contact.php';
+		require CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/civicrm/cwps-civicrm-contact-field.php';
+		require CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/civicrm/cwps-civicrm-custom-field.php';
+		require CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/civicrm/cwps-civicrm-custom-group.php';
 		require CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/civicrm/cwps-civicrm-email.php';
 		require CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/civicrm/cwps-civicrm-website.php';
+		require CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/civicrm/cwps-civicrm-address.php';
+		require CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/civicrm/cwps-civicrm-phone.php';
 		require CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/civicrm/cwps-civicrm-bulk.php';
 
 	}
@@ -137,9 +197,15 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	public function setup_objects() {
 
 		// Initialise objects.
+		$this->contact_type = new CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Type( $this );
 		$this->contact = new CiviCRM_WP_Profile_Sync_CiviCRM_Contact( $this );
+		$this->contact_field = new CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Field( $this );
+		$this->custom_field = new CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field( $this );
+		$this->custom_group = new CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group( $this );
 		$this->email = new CiviCRM_WP_Profile_Sync_CiviCRM_Email( $this );
 		$this->website = new CiviCRM_WP_Profile_Sync_CiviCRM_Website( $this );
+		$this->address = new CiviCRM_WP_Profile_Sync_CiviCRM_Address( $this );
+		$this->phone = new CiviCRM_WP_Profile_Sync_CiviCRM_Phone( $this );
 		$this->bulk = new CiviCRM_WP_Profile_Sync_CiviCRM_Bulk( $this );
 
 	}
@@ -171,6 +237,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 
 		// Remove all CiviCRM callbacks.
 		$this->contact->unregister_hooks();
+		$this->custom_field->unregister_hooks();
 		$this->email->unregister_hooks();
 		$this->website->unregister_hooks();
 
@@ -248,6 +315,41 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 
 
 	/**
+	 * Get a CiviCRM Setting.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $name The name of the CiviCRM Setting.
+	 * @return mixed $setting The value of the CiviCRM Setting, or false on failure.
+	 */
+	public function get_setting( $name ) {
+
+		// Init return.
+		$setting = false;
+
+		// Init CiviCRM or bail.
+		if ( ! $this->is_initialised() ) {
+			return $setting;
+		}
+
+		// Construct params.
+		$params = [
+			'version' => 3,
+			'sequential' => 1,
+			'name' => $name,
+		];
+
+		// Call the CiviCRM API.
+		$setting = civicrm_api( 'Setting', 'getvalue', $params );
+
+		// --<
+		return $setting;
+
+	}
+
+
+
+	/**
 	 * Get a CiviCRM admin link.
 	 *
 	 * @since 0.4
@@ -268,17 +370,150 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 
 		// Use CiviCRM to construct link.
 		$link = CRM_Utils_System::url(
-			$path,
-			$params,
-			true,
-			null,
-			true,
-			false,
-			true
+			$path, // Path to the resource.
+			$params, // Params to pass to resource.
+			true, // Force an absolute link.
+			null, // Fragment (#anchor) to append.
+			true, // Encode special HTML characters.
+			false, // CMS front end.
+			true // CMS back end.
 		);
 
 		// --<
 		return $link;
+
+	}
+
+
+
+	/**
+	 * Utility for de-nullifying CiviCRM data.
+	 *
+	 * @since 0.4
+	 * @since 0.5 Moved to this class.
+	 *
+	 * @param mixed $value The existing value.
+	 * @return mixed $value The cleaned value.
+	 */
+	public function denullify( $value ) {
+
+		// Catch inconsistent CiviCRM "empty-ish" values.
+		if ( empty( $value ) || $value == 'null' || $value == 'NULL' ) {
+			$value = '';
+		}
+
+		// --<
+		return $value;
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Gets a CiviCRM Option Group by name.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $name The name of the Option Group.
+	 * @return array $option_group The array of Option Group data.
+	 */
+	public function option_group_get( $name ) {
+
+		// Only do this once per named Option Group.
+		static $pseudocache;
+		if ( isset( $pseudocache[$name] ) ) {
+			return $pseudocache[$name];
+		}
+
+		// Init return.
+		$options = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->is_initialised() ) {
+			return $options;
+		}
+
+		// Define query params.
+		$params = [
+			'name' => $name,
+			'version' => 3,
+		];
+
+		// Call the CiviCRM API.
+		$result = civicrm_api( 'OptionGroup', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+			return $options;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $options;
+		}
+
+		// The result set should contain only one item.
+		$options = array_pop( $result['values'] );
+
+		// Maybe add to pseudo-cache.
+		if ( ! isset( $pseudocache[$name] ) ) {
+			$pseudocache[$name] = $options;
+		}
+
+		// --<
+		return $options;
+
+	}
+
+
+
+	/**
+	 * Get the CiviCRM Option Group data for a given ID.
+	 *
+	 * @since 0.4
+	 *
+	 * @param string|integer $option_group_id The numeric ID of the Option Group.
+	 * @return array|bool $option_group An array of Option Group data, or false on failure.
+	 */
+	public function option_group_get_by_id( $option_group_id ) {
+
+		// Init return.
+		$option_group = false;
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $option_group;
+		}
+
+		// Build params to get Option Group data.
+		$params = [
+			'version' => 3,
+			'sequential' => 1,
+			'id' => $option_group_id,
+		];
+
+		// Call the CiviCRM API.
+		$result = civicrm_api( 'OptionGroup', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+			return $option_group;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $option_group;
+		}
+
+		// The result set should contain only one item.
+		$option_group = array_pop( $result['values'] );
+
+		// --<
+		return $option_group;
 
 	}
 

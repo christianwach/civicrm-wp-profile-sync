@@ -23,6 +23,15 @@ defined( 'ABSPATH' ) || exit;
 class CiviCRM_Profile_Sync_ACF_Field {
 
 	/**
+	 * Plugin object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
+	/**
 	 * ACF Loader object.
 	 *
 	 * @since 0.4
@@ -76,10 +85,9 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 */
 	public function __construct( $parent ) {
 
-		// Store reference to ACF Loader object.
+		// Store references to objects.
+		$this->plugin = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-
-		// Store reference to parent.
 		$this->acf = $parent;
 
 		// Init when this plugin is loaded.
@@ -231,7 +239,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 * DO NOT return the full set - only those with values that have been saved
 	 * at one time or another and therefore exist as `post_meta`.
 	 *
-	 * As a result, this is not a reliable way to get ALL fields for a Post.
+	 * As a result, this is not a reliable way to get ALL Fields for a Post.
 	 *
 	 * Instead, we need to find all the Field Groups for a Post, then find
 	 * all the Fields attached to the Field Group, then filter those so that
@@ -280,7 +288,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		// Build our equivalent array to that returned by `get_fields()`.
 		foreach ( $acf_field_groups as $acf_field_group ) {
 
-			// Get all the fields in this Field Group.
+			// Get all the Fields in this Field Group.
 			$fields_in_group = acf_get_fields( $acf_field_group );
 
 			// Add their Field "name" to the return.
@@ -356,7 +364,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $selector The field name or key.
+	 * @param string $selector The Field name or key.
 	 * @param mixed $value The value to save in the database.
 	 * @param integer|string $post_id The ACF "Post ID".
 	 */
@@ -403,7 +411,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		}
 
 		// Get Custom Field data.
-		$field_data = $this->acf_loader->civicrm->custom_field->get_by_id( $custom_field_id );
+		$field_data = $this->plugin->civicrm->custom_field->get_by_id( $custom_field_id );
 		if ( $field_data === false ) {
 			return $valid;
 		}
@@ -431,7 +439,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 				} else {
 
-					// CiviCRM string fields are varchar(255) or varchar(260).
+					// CiviCRM string Fields are varchar(255) or varchar(260).
 					if ( ! empty( $field_data['text_length'] ) ) {
 						if ( strlen( $value ) > $field_data['text_length'] ) {
 							$valid = sprintf( __( 'Must be maximum %s characters.', 'civicrm-wp-profile-sync' ), $field_data['text_length'] );
@@ -458,7 +466,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 						}
 					}
 
-					// CiviCRM integer fields are signed int(11).
+					// CiviCRM integer Fields are signed int(11).
 					foreach ( $value as $item ) {
 						if ( (int) $value > 2147483647 ) {
 							$valid = __( 'Values must all be less than 2147483647.', 'civicrm-wp-profile-sync' );
@@ -472,7 +480,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 						$valid = __( 'Must be an integer.', 'civicrm-wp-profile-sync' );
 					}
 
-					// CiviCRM integer fields are signed int(11).
+					// CiviCRM integer Fields are signed int(11).
 					if ( (int) $value > 2147483647 ) {
 						$valid = __( 'Must be less than 2147483647.', 'civicrm-wp-profile-sync' );
 					}
@@ -563,15 +571,15 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param mixed $value The ACF field value.
-	 * @param string $type The ACF Field type.
+	 * @param mixed $value The ACF Field value.
+	 * @param string $type The ACF Field Type.
 	 * @param array $settings The ACF Field settings.
 	 * @param array $args Any additional arguments.
-	 * @return mixed $value The field value formatted for CiviCRM.
+	 * @return mixed $value The Field value formatted for CiviCRM.
 	 */
 	public function value_get_for_civicrm( $value = 0, $type, $settings, $args = [] ) {
 
-		// Set appropriate value per field type.
+		// Set appropriate value per Field Type.
 		switch( $type ) {
 
 	 		// Parse the value of a "True/False" Field.
@@ -610,7 +618,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param integer|null $value The field value, or empty when "false".
+	 * @param integer|null $value The Field value, or empty when "false".
 	 * @return string $value The "Yes/No" value expressed as "1" or "0".
 	 */
 	public function true_false_value_get( $value = '0' ) {
@@ -636,7 +644,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 * Get the value of an "Image" Field formatted for CiviCRM.
 	 *
 	 * The only kind of sync that an ACF Image Field can do at the moment is to
-	 * sync with the CiviCRM Contact Image. This is a built-in field for Contacts
+	 * sync with the CiviCRM Contact Image. This is a built-in Field for Contacts
 	 * and consists simply of the URL of the image.
 	 *
 	 * The ACF Image Field return format can be either 'array', 'url' or 'id' so
@@ -644,7 +652,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param integer|null $value The field value (the Attachment data).
+	 * @param integer|null $value The Field value (the Attachment data).
 	 * @return string $value The URL of the full size image.
 	 */
 	public function image_value_get( $value ) {
@@ -689,7 +697,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $value The existing field value.
+	 * @param string $value The existing Field value.
 	 * @param array $settings The ACF Field settings.
 	 * @return string $value The modified value for CiviCRM.
 	 */
@@ -712,7 +720,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $value The existing field value.
+	 * @param string $value The existing Field value.
 	 * @param array $settings The ACF Field settings.
 	 * @return string $value The modified value for CiviCRM.
 	 */
@@ -739,7 +747,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $field The field data array.
+	 * @param array $field The Field data array.
 	 */
 	public function field_setting_add( $field ) {
 

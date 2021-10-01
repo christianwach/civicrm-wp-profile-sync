@@ -25,6 +25,15 @@ defined( 'ABSPATH' ) || exit;
 class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 	/**
+	 * Plugin object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
+	/**
 	 * ACF Loader object.
 	 *
 	 * @since 0.5
@@ -107,16 +116,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 */
 	public function __construct( $parent ) {
 
-		// Store reference to ACF Loader object.
+		// Store references to objects.
+		$this->plugin = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-
-		// Store reference to CiviCRM object.
-		$this->civicrm = $parent->civicrm;
-
-		// Store reference to parent.
+		$this->civicrm = $parent;
 		$this->participant = $parent->participant;
-
-		// Store reference to parent.
 		$this->cpt = $parent;
 
 		// Store Taxonomy name.
@@ -1315,14 +1319,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		}
 
 		// Bail if it's not a CiviCRM Participant Role.
-		$opt_group_id = $this->civicrm->option_group_get( 'participant_role' );
+		$opt_group_id = $this->plugin->civicrm->option_group_get( 'participant_role' );
 		if ( $opt_group_id === false || $opt_group_id != $participant_role->option_group_id ) {
 			return;
 		}
 
 		// Denullify the description.
 		if ( ! empty( $participant_role->description ) ) {
-			$description = $this->acf_loader->civicrm->denullify( $participant_role->description );
+			$description = $this->plugin->civicrm->denullify( $participant_role->description );
 		} else {
 			$description = '';
 		}
@@ -1394,7 +1398,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		}
 
 		// Bail if it's not a CiviCRM Participant Role.
-		$opt_group_id = $this->civicrm->option_group_get( 'participant_role' );
+		$opt_group_id = $this->plugin->civicrm->option_group_get( 'participant_role' );
 		if ( $opt_group_id === false || $opt_group_id != $participant_role->option_group_id ) {
 			return;
 		}
@@ -1407,7 +1411,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 		// Denullify the description.
 		if ( ! empty( $role_full['description'] ) ) {
-			$role_full['description'] = $this->acf_loader->civicrm->denullify( $role_full['description'] );
+			$role_full['description'] = $this->plugin->civicrm->denullify( $role_full['description'] );
 		} else {
 			$role_full['description'] = '';
 		}
@@ -1494,7 +1498,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		}
 
 		// Get Option Group ID.
-		$opt_group_id = $this->civicrm->option_group_get( 'participant_role' );
+		$opt_group_id = $this->plugin->civicrm->option_group_get( 'participant_role' );
 		if ( $opt_group_id === false ) {
 			return false;
 		}
@@ -1622,7 +1626,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		}
 
 		// Get Option Group ID.
-		$opt_group_id = $this->civicrm->option_group_get( 'participant_role' );
+		$opt_group_id = $this->plugin->civicrm->option_group_get( 'participant_role' );
 		if ( $opt_group_id === false ) {
 			return false;
 		}
@@ -1700,7 +1704,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		}
 
 		// Get Option Group ID,
-		$opt_group_id = $this->civicrm->option_group_get( 'participant_role' );
+		$opt_group_id = $this->plugin->civicrm->option_group_get( 'participant_role' );
 		if ( $opt_group_id === false ) {
 			return [];
 		}
@@ -1841,7 +1845,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		}
 
 		// Get Option Group ID.
-		$opt_group_id = $this->civicrm->option_group_get( 'participant_role' );
+		$opt_group_id = $this->plugin->civicrm->option_group_get( 'participant_role' );
 		if ( $opt_group_id === false ) {
 			return false;
 		}
@@ -1895,7 +1899,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		}
 
 		// Get Option Group ID.
-		$opt_group_id = $this->civicrm->option_group_get( 'participant_role' );
+		$opt_group_id = $this->plugin->civicrm->option_group_get( 'participant_role' );
 		if ( $opt_group_id === false ) {
 			return false;
 		}
@@ -2022,7 +2026,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		// TODO: Check permission to view Participant Roles.
 
 		// Get the URL for the Participant Roles page in CiviCRM.
-		$url = $this->acf_loader->civicrm->get_link( 'civicrm/admin/options/participant_role', 'reset=1' );
+		$url = $this->plugin->civicrm->get_link( 'civicrm/admin/options/participant_role', 'reset=1' );
 
 		// Add item to CAU menu.
 		$wp_admin_bar->add_node( [

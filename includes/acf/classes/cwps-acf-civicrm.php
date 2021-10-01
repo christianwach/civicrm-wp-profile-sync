@@ -23,6 +23,15 @@ defined( 'ABSPATH' ) || exit;
 class CiviCRM_Profile_Sync_ACF_CiviCRM {
 
 	/**
+	 * Plugin object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
+	/**
 	 * ACF Loader object.
 	 *
 	 * @since 0.4
@@ -138,15 +147,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 * @var object $contact_field The CiviCRM Contact Field object.
 	 */
 	public $contact_field;
-
-	/**
-	 * CiviCRM Custom Group object.
-	 *
-	 * @since 0.4
-	 * @access public
-	 * @var object $custom_group The CiviCRM Custom Group object.
-	 */
-	public $custom_group;
 
 	/**
 	 * CiviCRM Custom Field object.
@@ -284,10 +284,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	public $campaign;
 
 	/**
-	 * "CiviCRM Field" field key in the ACF Field data.
+	 * "CiviCRM Field" Field key in the ACF Field data.
 	 *
-	 * This "top level" field key is common to all CiviCRM Entities. The value
-	 * of the field has a prefix which distiguishes the target Entity.
+	 * This "top level" Field key is common to all CiviCRM Entities. The value
+	 * of the Field has a prefix which distiguishes the target Entity.
 	 *
 	 * @see self::custom_field_prefix()
 	 * @see self::contact_field_prefix()
@@ -316,7 +316,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 			return;
 		}
 
-		// Store reference to ACF Loader object.
+		// Store references to objects.
+		$this->plugin = $acf_loader->plugin;
 		$this->acf_loader = $acf_loader;
 
 		// Init when this plugin is loaded.
@@ -376,7 +377,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-participant-field.php';
 
 		// Include Standalone class files.
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-custom-group.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-custom-field.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-civicrm-group.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-civicrm-membership.php';
@@ -431,7 +431,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		$this->participant_role = new CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role( $this );
 
 		// Init Standalone objects.
-		$this->custom_group = new CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Group( $this );
 		$this->custom_field = new CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field( $this );
 		$this->group = new CiviCRM_Profile_Sync_ACF_CiviCRM_Group( $this );
 		$this->membership = new CiviCRM_Profile_Sync_ACF_CiviCRM_Membership( $this );
@@ -571,137 +570,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 
 
 
-	/**
-	 * Get a CiviCRM admin link.
-	 *
-	 * @since 0.4
-	 *
-	 * @param string $path The CiviCRM path.
-	 * @param string $params The CiviCRM parameters.
-	 * @return string $link The URL of the CiviCRM page.
-	 */
-	public function get_link( $path = '', $params = null ) {
-
-		// Init link.
-		$link = '';
-
-		// Init CiviCRM or bail.
-		if ( ! $this->is_initialised() ) {
-			return $link;
-		}
-
-		// Use CiviCRM to construct link.
-		$link = CRM_Utils_System::url(
-			$path, // Path to the resource.
-			$params, // Params to pass to resource.
-			true, // Force an absolute link.
-			null, // Fragment (#anchor) to append.
-			true, // Encode special HTML characters.
-			false, // CMS front end.
-			true // CMS back end.
-		);
-
-		// --<
-		return $link;
-
-	}
-
-
-
-	/**
-	 * Get a CiviCRM Setting.
-	 *
-	 * @since 0.5
-	 *
-	 * @param string $name The name of the CiviCRM Setting.
-	 * @return mixed $setting The value of the CiviCRM Setting, or false on failure.
-	 */
-	public function get_setting( $name ) {
-
-		// Init return.
-		$setting = false;
-
-		// Init CiviCRM or bail.
-		if ( ! $this->is_initialised() ) {
-			return $setting;
-		}
-
-		// Construct params.
-		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'name' => $name,
-		];
-
-		// Call the CiviCRM API.
-		$setting = civicrm_api( 'Setting', 'getvalue', $params );
-
-		// --<
-		return $setting;
-
-	}
-
-
-
 	// -------------------------------------------------------------------------
-
-
-
-	/**
-	 * Get the Option Group for a Case Field.
-	 *
-	 * @since 0.5
-	 *
-	 * @param string $name The name of the option group.
-	 * @return array $option_group The array of option group data.
-	 */
-	public function option_group_get( $name ) {
-
-		// Only do this once per named Option Group.
-		static $pseudocache;
-		if ( isset( $pseudocache[$name] ) ) {
-			return $pseudocache[$name];
-		}
-
-		// Init return.
-		$options = [];
-
-		// Try and init CiviCRM.
-		if ( ! $this->is_initialised() ) {
-			return $options;
-		}
-
-		// Define query params.
-		$params = [
-			'name' => $name,
-			'version' => 3,
-		];
-
-		// Call the CiviCRM API.
-		$result = civicrm_api( 'OptionGroup', 'get', $params );
-
-		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			return $options;
-		}
-
-		// Bail if there are no results.
-		if ( empty( $result['values'] ) ) {
-			return $case_data;
-		}
-
-		// The result set should contain only one item.
-		$options = array_pop( $result['values'] );
-
-		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$name] ) ) {
-			$pseudocache[$name] = $options;
-		}
-
-		// --<
-		return $options;
-
-	}
 
 
 
@@ -782,7 +651,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		$default = false;
 
 		// Get the Option Group.
-		$option_group = $this->option_group_get( $name );
+		$option_group = $this->plugin->civicrm->option_group_get( $name );
 		if ( empty( $option_group ) ) {
 			return $default;
 		}
@@ -945,32 +814,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 			'objectRef' => $objectRef,
 			//'backtrace' => $trace,
 		], true ) );
-
-	}
-
-
-
-	// -------------------------------------------------------------------------
-
-
-
-	/**
-	 * Utility for de-nullifying CiviCRM data.
-	 *
-	 * @since 0.4
-	 *
-	 * @param mixed $value The existing value.
-	 * @return mixed $value The cleaned value.
-	 */
-	public function denullify( $value ) {
-
-		// Catch inconsistent CiviCRM "empty-ish" values.
-		if ( empty( $value ) || $value == 'null' || $value == 'NULL' ) {
-			$value = '';
-		}
-
-		// --<
-		return $value;
 
 	}
 

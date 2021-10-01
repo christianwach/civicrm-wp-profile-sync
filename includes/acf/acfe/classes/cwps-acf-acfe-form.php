@@ -23,6 +23,15 @@ defined( 'ABSPATH' ) || exit;
 class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 
 	/**
+	 * Plugin object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
+	/**
 	 * ACF Loader object.
 	 *
 	 * @since 0.5
@@ -78,16 +87,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 	 */
 	public function __construct( $parent ) {
 
-		// Store reference to ACF Loader object.
+		// Store references to objects.
+		$this->plugin = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-
-		// Store reference to CiviCRM object.
 		$this->civicrm = $this->acf_loader->civicrm;
-
-		// Store reference to ACF object.
 		$this->acf = $this->acf_loader->acf;
-
-		// Store reference to parent.
 		$this->acfe = $parent;
 
 		// Init when this plugin is loaded.
@@ -151,6 +155,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 		// Add Form Actions Javascript.
 		add_action( 'acfe/form/submit', [ $this, 'form_action_query_vars_clear' ] );
 
+		// Set a better Form Wrapper class.
+		add_filter( 'acfe/form/load', [ $this, 'form_wrapper' ], 10, 2 );
+
 	}
 
 
@@ -167,6 +174,29 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 
 		// Clear the array of Action results.
 		set_query_var( 'acfe_form_actions', [] );
+
+	}
+
+
+
+	/**
+	 * Alters the default "Success Wrapper" class.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $form The ACF Form data array.
+	 * @param integer $post_id The numeric ID of the WordPress Post.
+	 * @return array $form The modified ACF Form data array.
+	 */
+	public function form_wrapper( $form, $post_id ) {
+
+		// Alter the default "Success Wrapper".
+		if ( $form['html_updated_message'] === '<div id="message" class="updated">%s</div>' ) {
+			$form['html_updated_message'] = '<div id="message" class="acfe-success">%s</div>';
+		}
+
+		// --<
+		return $form;
 
 	}
 
@@ -423,7 +453,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 	 */
 	public function query_settings_field( $setting_field, $field, $field_group ) {
 
-		// Pass if conflicting fields have been found.
+		// Pass if conflicting Fields have been found.
 		if ( $setting_field === false ) {
 			return false;
 		}
@@ -434,7 +464,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 			return $setting_field;
 		}
 
-		// If already populated, then this is a conflicting field.
+		// If already populated, then this is a conflicting Field.
 		if ( ! empty( $setting_field ) ) {
 			return false;
 		}
@@ -461,9 +491,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 
 		// Define Setting Field.
 		$setting_field = [
-			'key' => $this->acf_loader->civicrm->acf_field_key_get(),
+			'key' => $this->civicrm->acf_field_key_get(),
 			'label' => __( 'CiviCRM Field', 'civicrm-wp-profile-sync' ),
-			'name' => $this->acf_loader->civicrm->acf_field_key_get(),
+			'name' => $this->civicrm->acf_field_key_get(),
 			'type' => 'select',
 			'instructions' => __( 'Choose the CiviCRM Field that this ACF Field should sync with. (Optional)', 'civicrm-wp-profile-sync' ),
 			'default_value' => '',

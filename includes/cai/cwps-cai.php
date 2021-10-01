@@ -398,10 +398,10 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		$args['post'] = '';
 
 		/*
-		 * Get existing field values.
+		 * Get existing Field values.
 		 *
 		 * These are actually the *new* values because we are hooking in *after*
-		 * the fields have been saved.
+		 * the Fields have been saved.
 		 *
 		 * When getting values here, we pass in the Post ID, which is "user_N":
 		 *
@@ -1797,7 +1797,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		// Get the Custom Fields for each CiviCRM Contact Type.
 		foreach ( $contact_types as $contact_type ) {
 
-			// Get public fields of this type.
+			// Get public Fields of this type.
 			$contact_fields_for_type = $this->cai->civicrm->contact_field->data_get( $contact_type['name'], $field['type'], 'public' );
 
 			// Merge with return array.

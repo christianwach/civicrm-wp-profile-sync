@@ -23,6 +23,15 @@ defined( 'ABSPATH' ) || exit;
 class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile_Sync_ACF_CiviCRM_Base {
 
 	/**
+	 * Plugin object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
+	/**
 	 * ACF Loader object.
 	 *
 	 * @since 0.4
@@ -61,7 +70,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 	public $shortcode;
 
 	/**
-	 * "CiviCRM Field" field value prefix in the ACF Field data.
+	 * "CiviCRM Field" Field value prefix in the ACF Field data.
 	 *
 	 * This distinguishes Instant Messenger Fields from Custom Fields.
 	 *
@@ -98,10 +107,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 	 */
 	public function __construct( $parent ) {
 
-		// Store reference to ACF Loader object.
+		// Store references to objects.
+		$this->plugin = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-
-		// Store reference to parent.
 		$this->civicrm = $parent;
 
 		// Init when the CiviCRM object is loaded.
@@ -250,15 +258,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		// Init success.
 		$success = true;
 
-		// Bail if we have no field data to save.
+		// Bail if we have no Field data to save.
 		if ( empty( $args['fields'] ) ) {
 			return $success;
 		}
 
-		// Loop through the field data.
+		// Loop through the Field data.
 		foreach ( $args['fields'] as $field => $value ) {
 
-			// Get the field settings.
+			// Get the Field settings.
 			$settings = get_field_object( $field, $args['post_id'] );
 
 			// Maybe update an Instant Messenger Record.
@@ -1007,20 +1015,20 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		$acf_im = $this->prepare_from_civicrm( $im );
 
 		// Get the Contact data.
-		$contact = $this->acf_loader->civicrm->contact->get_by_id( $im->contact_id );
+		$contact = $this->plugin->civicrm->contact->get_by_id( $im->contact_id );
 
 		// Get originating Entity.
 		$entity = $this->acf_loader->mapper->entity_get();
 
 		// Test if any of this Contact's Contact Types is mapped to a Post Type.
-		$post_types = $this->acf_loader->civicrm->contact->is_mapped( $contact, 'create' );
+		$post_types = $this->civicrm->contact->is_mapped( $contact, 'create' );
 		if ( $post_types !== false ) {
 
 			// Handle each Post Type in turn.
 			foreach ( $post_types as $post_type ) {
 
 				// Get the Post ID for this Contact.
-				$post_id = $this->acf_loader->civicrm->contact->is_mapped_to_post( $contact, $post_type );
+				$post_id = $this->civicrm->contact->is_mapped_to_post( $contact, $post_type );
 
 				// Skip if not mapped or Post doesn't yet exist.
 				if ( $post_id === false ) {
@@ -1174,55 +1182,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 
 	/**
-	 * Get the Instant Messenger Locations that are defined in CiviCRM.
-	 *
-	 * @since 0.4
-	 *
-	 * @return array $location_types The array of possible Instant Messenger Locations.
-	 */
-	public function location_types_get() {
-
-		// Init return.
-		$location_types = [];
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $location_types;
-		}
-
-		// Params to get all Location Types.
-		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'options' => [
-				'limit' => 0,
-			],
-		];
-
-		// Call the CiviCRM API.
-		$result = civicrm_api( 'LocationType', 'get', $params );
-
-		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			return $location_types;
-		}
-
-		// Bail if there are no results.
-		if ( empty( $result['values'] ) ) {
-			return $location_types;
-		}
-
-		// Assign results to return.
-		$location_types = $result['values'];
-
-		// --<
-		return $location_types;
-
-	}
-
-
-
-	/**
 	 * Get the Instant Messenger Locations that can be mapped to an ACF Field.
 	 *
 	 * @since 0.4
@@ -1235,16 +1194,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		// Init return.
 		$location_types = [];
 
-		// Get field group for this field's parent.
+		// Get Field Group for this Field's parent.
 		$field_group = $this->acf_loader->acf->field_group->get_for_field( $field );
 
-		// Bail if there's no field group.
+		// Bail if there's no Field Group.
 		if ( empty( $field_group ) ) {
 			return $location_types;
 		}
 
-		// Get Location Types.
-		$location_types = $this->location_types_get();
+		// Instant Messenger Locations are standard Location Types.
+		$location_types = $this->plugin->civicrm->address->location_types_get();
 
 		/**
 		 * Filter the retrieved Location Types.
@@ -1326,10 +1285,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		// Init return.
 		$im_providers = [];
 
-		// Get field group for this field's parent.
+		// Get Field Group for this Field's parent.
 		$field_group = $this->acf_loader->acf->field_group->get_for_field( $field );
 
-		// Bail if there's no field group.
+		// Bail if there's no Field Group.
 		if ( empty( $field_group ) ) {
 			return $im_providers;
 		}
@@ -1437,8 +1396,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $filter The token by which to filter the array of fields.
-	 * @return array $fields The array of field names.
+	 * @param string $filter The token by which to filter the array of Fields.
+	 * @return array $fields The array of Field names.
 	 */
 	public function civicrm_fields_get( $filter = 'none' ) {
 
@@ -1507,8 +1466,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $name The name of the field.
-	 * @return array $field The array of field data.
+	 * @param string $name The name of the Field.
+	 * @return array $field The array of Field data.
 	 */
 	public function get_by_name( $name ) {
 
@@ -1555,7 +1514,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $field The existing field data array.
+	 * @param array $field The existing Field data array.
 	 * @return string|bool $im_field_name The name of the Instant Messenger Field, or false if none.
 	 */
 	public function im_field_name_get( $field ) {
@@ -1612,7 +1571,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 			return $choices;
 		}
 
-		// Get the public fields on the Entity for this Field Type.
+		// Get the public Fields on the Entity for this Field Type.
 		$public_fields = $this->civicrm_fields_get( 'public' );
 		$fields_for_entity = [];
 		foreach ( $public_fields as $key => $value ) {
@@ -1665,7 +1624,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		}
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
-		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		$key = $this->civicrm->acf_field_key_get();
 		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
@@ -1695,7 +1654,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 	 * @since 0.5
 	 *
 	 * @param string $name The name of the Instant Messenger Field.
-	 * @return array $options The array of field options.
+	 * @return array $options The array of Field options.
 	 */
 	public function options_get( $name ) {
 
@@ -1733,7 +1692,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		}
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
-		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		$key = $this->civicrm->acf_field_key_get();
 		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}

@@ -67,10 +67,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Base {
 	 */
 	public function fields_handled_hooks_add() {
 
-		// Add our handled fields.
+		// Add our handled Fields.
 		add_filter( 'cwps/acf/civicrm/fields_handled', [ $this, 'fields_handled_add' ] );
 
-		// Process our handled fields.
+		// Process our handled Fields.
 		add_action( 'cwps/acf/contact/acf_fields_saved', [ $this, 'fields_handled_update' ], 10 );
 
 	}
@@ -84,10 +84,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Base {
 	 */
 	public function fields_handled_hooks_remove() {
 
-		// Remove our handled fields.
+		// Remove our handled Fields.
 		remove_filter( 'cwps/acf/civicrm/fields_handled', [ $this, 'fields_handled_add' ] );
 
-		// Suspend processing our handled fields.
+		// Suspend processing our handled Fields.
 		remove_action( 'cwps/acf/contact/acf_fields_saved', [ $this, 'fields_handled_update' ], 10 );
 
 	}

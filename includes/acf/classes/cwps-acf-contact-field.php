@@ -23,6 +23,15 @@ defined( 'ABSPATH' ) || exit;
 class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 	/**
+	 * Plugin object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
+	/**
 	 * ACF Loader object.
 	 *
 	 * @since 0.4
@@ -133,10 +142,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 */
 	public function __construct( $parent ) {
 
-		// Store reference to ACF Loader object.
+		// Store references to objects.
+		$this->plugin = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-
-		// Store reference to parent.
 		$this->civicrm = $parent;
 
 		// Init when the CiviCRM object is loaded.
@@ -238,7 +246,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		$originating_entity = $this->acf_loader->mapper->entity_get();
 
 		// Get the Contact Type hierarchy.
-		$hierarchy = $this->acf_loader->civicrm->contact_type->hierarchy_get_for_contact( $args['objectRef'] );
+		$hierarchy = $this->plugin->civicrm->contact_type->hierarchy_get_for_contact( $args['objectRef'] );
 
 		// Get the public Contact Fields for the top level type.
 		$public_fields = $this->get_public( $hierarchy );
@@ -294,7 +302,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 * @param array $name The Contact Field name.
 	 * @param string $selector The ACF Field selector.
 	 * @param mixed $post_id The ACF "Post ID".
-	 * @return mixed $value The formatted field value.
+	 * @return mixed $value The formatted Field value.
 	 */
 	public function value_get_for_acf( $value, $name, $selector, $post_id ) {
 
@@ -329,7 +337,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 			case 'date_picker' :
 			case 'date_time_picker' :
 
-				// Get field setting.
+				// Get Field setting.
 				$acf_setting = get_field_object( $selector, $post_id );
 
 				// Date Picker test.
@@ -429,53 +437,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 
 
-	/**
-	 * Get "age" as a string for a given date.
-	 *
-	 * @since 0.4
-	 *
-	 * @param string $date The date in CiviCRM-style "Ymdhis" format.
-	 * @return string $age_string The age expressed as a string.
-	 */
-	public function date_age_get( $date ) {
-
-		// Init return.
-		$age_string = '';
-
-		// CiviCRM has handy methods for this.
-		$age_date = CRM_Utils_Date::customFormat( $date, '%Y%m%d' );
-		$age = CRM_Utils_Date::calculateAge( $age_date );
-		$years = CRM_Utils_Array::value( 'years', $age );
-		$months = CRM_Utils_Array::value( 'months', $age );
-
-		// Maybe construct string from years.
-		if ( $years ) {
-			$age_string = sprintf(
-				_n( '%d year', '%d years', $years, 'civicrm-wp-profile-sync' ),
-				$years
-			);
-		}
-
-		// Maybe construct string from months.
-		if ( $months ) {
-			$age_string = sprintf(
-				_n( '%d month', '%d months', $months, 'civicrm-wp-profile-sync' ),
-				$months
-			);
-		}
-
-		// Maybe construct string for less than a month.
-		if ( empty( $years ) && $months === 0 ) {
-			$age_string = __( 'Under a month', 'civicrm-wp-profile-sync' );
-		}
-
-		// --<
-		return $age_string;
-
-	}
-
-
-
 	// -------------------------------------------------------------------------
 
 
@@ -486,7 +447,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 * @since 0.4
 	 *
 	 * @param string $name The name of the Contact Field.
-	 * @return array $options The array of field options.
+	 * @return array $options The array of Field options.
 	 */
 	public function options_get( $name ) {
 
@@ -497,7 +458,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Individual Prefix.
 		if ( $name == 'prefix_id' ) {
-			$option_group = $this->civicrm->option_group_get( 'individual_prefix' );
+			$option_group = $this->plugin->civicrm->option_group_get( 'individual_prefix' );
 			if ( ! empty( $option_group ) ) {
 				$options = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
 			}
@@ -505,7 +466,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Individual Suffix.
 		if ( $name == 'suffix_id' ) {
-			$option_group = $this->civicrm->option_group_get( 'individual_suffix' );
+			$option_group = $this->plugin->civicrm->option_group_get( 'individual_suffix' );
 			if ( ! empty( $option_group ) ) {
 				$options = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
 			}
@@ -513,7 +474,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Gender.
 		if ( $name == 'gender_id' ) {
-			$option_group = $this->civicrm->option_group_get( 'gender' );
+			$option_group = $this->plugin->civicrm->option_group_get( 'gender' );
 			if ( ! empty( $option_group ) ) {
 				$options = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
 			}
@@ -536,7 +497,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Communication Style.
 		if ( $name == 'communication_style_id' ) {
-			$option_group = $this->civicrm->option_group_get( 'communication_style' );
+			$option_group = $this->plugin->civicrm->option_group_get( 'communication_style' );
 			if ( ! empty( $option_group ) ) {
 				$options = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
 			}
@@ -566,10 +527,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		// Init return.
 		$contact_fields = [];
 
-		// Get field group for this field's parent.
+		// Get Field Group for this Field's parent.
 		$field_group = $this->acf_loader->acf->field_group->get_for_field( $field );
 
-		// Bail if there's no field group.
+		// Bail if there's no Field Group.
 		if ( empty( $field_group ) ) {
 			return $contact_fields;
 		}
@@ -585,9 +546,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 				$contact_type_id = $this->civicrm->contact_type->id_get_for_post_type( $post_type_name );
 
 				// Get Contact Type hierarchy.
-				$contact_types = $this->civicrm->contact_type->hierarchy_get_by_id( $contact_type_id );
+				$contact_types = $this->plugin->civicrm->contact_type->hierarchy_get_by_id( $contact_type_id );
 
-				// Get public fields of this type.
+				// Get public Fields of this type.
 				$contact_fields_for_type = $this->data_get( $contact_types['type'], $field['type'], 'public' );
 
 				// Merge with return array.
@@ -601,7 +562,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		if ( 'select' === $field['type'] ) {
 			if ( $field['multiple'] == 1 || ( $field['ui'] == 1 && $field['ajax'] == 1 ) ) {
 
-				// Re-build fields without them.
+				// Re-build Fields without them.
 				$filtered_fields = [];
 				foreach ( $contact_fields as $contact_field ) {
 					if ( $contact_field['name'] == 'prefix_id' || $contact_field['name'] == 'suffix_id' ) {
@@ -641,62 +602,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 
 	/**
-	 * Get the Contact Field options for a given Field ID.
-	 *
-	 * @since 0.4
-	 *
-	 * @param string $name The name of the field.
-	 * @return array $field The array of field data.
-	 */
-	public function get_by_name( $name ) {
-
-		// Init return.
-		$field = [];
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $field;
-		}
-
-		// Construct params.
-		$params = [
-			'version' => 3,
-			'name' => $name,
-			'action' => 'get',
-		];
-
-		// Call the API.
-		$result = civicrm_api( 'Contact', 'getfield', $params );
-
-		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			return $field;
-		}
-
-		// Bail if there are no results.
-		if ( empty( $result['values'] ) ) {
-			return $field;
-		}
-
-		// The result set is the item.
-		$field = $result['values'];
-
-		// --<
-		return $field;
-
-	}
-
-
-
-	/**
 	 * Get the core Fields for a CiviCRM Contact Type.
 	 *
 	 * @since 0.4
 	 *
 	 * @param array $contact_type The Contact Type to query.
 	 * @param string $field_type The type of ACF Field.
-	 * @param string $filter The token by which to filter the array of fields.
-	 * @return array $fields The array of field names.
+	 * @param string $filter The token by which to filter the array of Fields.
+	 * @return array $fields The array of Field names.
 	 */
 	public function data_get( $contact_type = 'Individual', $field_type = '', $filter = 'none' ) {
 
@@ -726,11 +639,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		$result = civicrm_api( 'Contact', 'getfields', $params );
 
 		// Override return if we get some.
-		if (
-			$result['is_error'] == 0 AND
-			isset( $result['values'] ) AND
-			count( $result['values'] ) > 0
-		) {
+		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
 
 			// Check for no filter.
 			if ( $filter == 'none' ) {
@@ -741,10 +650,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 			// Check public filter.
 			} elseif ( $filter == 'public' ) {
 
-				// Init fields array.
+				// Init Fields array.
 				$contact_fields = [];
 
-				// Check against different field sets per type.
+				// Check against different Field sets per type.
 				if ( $contact_type == 'Individual' ) {
 					$contact_fields = $this->contact_fields_individual;
 				}
@@ -755,7 +664,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 					$contact_fields = $this->contact_fields_household;
 				}
 
-				// Combine these with common fields.
+				// Combine these with common Fields.
 				$contact_fields = array_merge( $contact_fields, $this->contact_fields_common );
 
 				// Skip all but those defined in our Contact Fields arrays.
@@ -794,8 +703,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $filter The token by which to filter the array of fields.
-	 * @return array $fields The array of field names.
+	 * @param string $filter The token by which to filter the array of Fields.
+	 * @return array $fields The array of Field names.
 	 */
 	public function data_get_filtered( $filter = 'none' ) {
 
@@ -827,11 +736,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		$result = civicrm_api( 'Contact', 'getfields', $params );
 
 		// Override return if we get some.
-		if (
-			$result['is_error'] == 0 AND
-			isset( $result['values'] ) AND
-			count( $result['values'] ) > 0
-		) {
+		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
 
 			// Check for no filter.
 			if ( $filter == 'none' ) {
@@ -844,7 +749,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 				// Get the top level Contact Types array.
 				$top_level = [];
-				$contact_types = $this->civicrm->contact_type->types_get_all();
+				$contact_types = $this->plugin->civicrm->contact_type->types_get_all();
 				foreach ( $contact_types as $contact_type ) {
 					if ( empty( $contact_type['parent_id'] ) ) {
 						$top_level[$contact_type['name']] = $contact_type['id'];
@@ -889,14 +794,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 * @since 0.4
 	 *
 	 * @param array $types The Contact Type(s) to query.
-	 * @return array $fields The array of field names.
+	 * @return array $fields The array of Field names.
 	 */
 	public function get_public( $types = [ 'Individual' ] ) {
 
 		// Init return.
 		$contact_fields = [];
 
-		// Check against different field sets per type.
+		// Check against different Field sets per type.
 		if ( in_array( 'Individual', $types ) ) {
 			$contact_fields = $this->contact_fields_individual;
 		}
@@ -907,7 +812,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 			$contact_fields = $this->contact_fields_household;
 		}
 
-		// Combine these with common fields.
+		// Combine these with common Fields.
 		$contact_fields = array_merge( $contact_fields, $this->contact_fields_common );
 
 		// --<
@@ -946,14 +851,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 *
 	 * @param array $types The Contact Type(s) to query.
 	 * @param string $type The type of ACF Field.
-	 * @return array $fields The array of field names.
+	 * @return array $fields The array of Field names.
 	 */
 	public function get_by_acf_type( $types = [ 'Individual' ], $type = '' ) {
 
 		// Init return.
 		$contact_fields = [];
 
-		// Get the public fields defined in this class.
+		// Get the public Fields defined in this class.
 		$public_fields = $this->get_public( $types );
 
 		// Skip all but those mapped to the type of ACF Field.
@@ -976,7 +881,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 * @since 0.4
 	 *
 	 * @param string $name The name of the Contact Field.
-	 * @return array $fields The array of field names.
+	 * @return array $fields The array of Field names.
 	 */
 	public function get_acf_type( $name = '' ) {
 
@@ -1022,7 +927,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		}
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
-		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		$key = $this->civicrm->acf_field_key_get();
 		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
@@ -1068,13 +973,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		}
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
-		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		$key = $this->civicrm->acf_field_key_get();
 		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
 
 		// Get the mapped Contact Field name if present.
-		$contact_field_name = $this->acf_loader->civicrm->contact->contact_field_name_get( $field );
+		$contact_field_name = $this->civicrm->contact->contact_field_name_get( $field );
 		if ( $contact_field_name === false ) {
 			return $field;
 		}
@@ -1109,13 +1014,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		}
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
-		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		$key = $this->civicrm->acf_field_key_get();
 		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
 
 		// Get the mapped Contact Field name if present.
-		$contact_field_name = $this->acf_loader->civicrm->contact->contact_field_name_get( $field );
+		$contact_field_name = $this->civicrm->contact->contact_field_name_get( $field );
 		if ( $contact_field_name === false ) {
 			return $field;
 		}
@@ -1150,13 +1055,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		}
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
-		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		$key = $this->civicrm->acf_field_key_get();
 		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
 
 		// Get the mapped Contact Field name if present.
-		$contact_field_name = $this->acf_loader->civicrm->contact->contact_field_name_get( $field );
+		$contact_field_name = $this->civicrm->contact->contact_field_name_get( $field );
 		if ( $contact_field_name === false ) {
 			return $field;
 		}
@@ -1195,7 +1100,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		}
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
-		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		$key = $this->civicrm->acf_field_key_get();
 		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
@@ -1207,7 +1112,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		}
 
 		// Get Contact Field data.
-		$field_data = $this->get_by_name( $contact_field_name );
+		$field_data = $this->plugin->civicrm->contact_field->get_by_name( $contact_field_name );
 
 		// Set the "maxlength" attribute.
 		if ( ! empty( $field_data['maxlength'] ) ) {
@@ -1243,7 +1148,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		}
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
-		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		$key = $this->civicrm->acf_field_key_get();
 		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
@@ -1273,7 +1178,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 * @param array $name The Contact Field name.
 	 * @param string $selector The ACF Field selector.
 	 * @param mixed $post_id The ACF "Post ID".
-	 * @return mixed $value The formatted field value.
+	 * @return mixed $value The formatted Field value.
 	 */
 	public function image_value_get_for_acf( $value, $name, $selector, $post_id ) {
 
@@ -1321,7 +1226,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 			}
 
 			// Get full Contact data.
-			$contact = $this->acf_loader->civicrm->contact->get_by_id( $contact_id );
+			$contact = $this->plugin->civicrm->contact->get_by_id( $contact_id );
 
 			/*
 			 * Decode the current Image URL.
@@ -1469,7 +1374,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 				];
 
 				// Save the Attachment URL back to the Contact.
-				$result = $this->civicrm->contact->update( $contact_data );
+				$result = $this->plugin->civicrm->contact->update( $contact_data );
 
 				/**
 				 * Broadcast that we have reverse-synced to a Contact.
@@ -1675,7 +1580,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		}
 
 		// Get the full Contact data.
-		$contact = $this->acf_loader->civicrm->contact->get_by_id( $objectRef->id );
+		$contact = $this->plugin->civicrm->contact->get_by_id( $objectRef->id );
 
 		// Bail if something went wrong.
 		if ( $contact === false ) {
@@ -1737,7 +1642,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 			];
 
 			// Clear the Image URL for the Contact.
-			$result = $this->civicrm->contact->update( $contact_data );
+			$result = $this->plugin->civicrm->contact->update( $contact_data );
 
 		}
 

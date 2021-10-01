@@ -23,6 +23,15 @@ defined( 'ABSPATH' ) || exit;
 class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 
 	/**
+	 * Plugin object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
+	/**
 	 * ACF Loader object.
 	 *
 	 * @since 0.4
@@ -78,7 +87,8 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	 */
 	public function __construct( $acf_loader ) {
 
-		// Store reference to ACF Loader object.
+		// Store references to objects.
+		$this->plugin = $acf_loader->plugin;
 		$this->acf_loader = $acf_loader;
 
 		// Init on admin init.
@@ -157,7 +167,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 		}
 
 		// Bail if there is already a warning.
-		if ( $this->acf_loader->plugin->admin->has_warning === true ) {
+		if ( $this->plugin->admin->has_warning === true ) {
 			return;
 		}
 
@@ -212,7 +222,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 		add_action( 'load-' . $this->migrate_page, [ $this, 'form_submitted' ] );
 
 		// Ensure correct menu item is highlighted.
-		add_action( 'admin_head-' . $this->migrate_page, [ $this->acf_loader->plugin->admin, 'admin_menu_highlight' ], 50 );
+		add_action( 'admin_head-' . $this->migrate_page, [ $this->plugin->admin, 'admin_menu_highlight' ], 50 );
 
 		// Add styles and scripts only on our "ACF Integration" page.
 		// @see wp-admin/admin-header.php
@@ -334,7 +344,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 		$columns = ( 1 == $screen->get_columns() ? '1' : '2' );
 
 		// Get admin page URLs.
-		$urls = $this->acf_loader->plugin->admin->page_tab_urls_get();
+		$urls = $this->plugin->admin->page_tab_urls_get();
 
 		// Include template file.
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/pages/page-admin-acf-migrate.php';
@@ -470,11 +480,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 
 		// Have we already migrated?
 		$data['migrated'] = false;
-		if (
-			$this->option_exists( $this->cwps_mappings_key )
-			AND
-			$this->option_exists( $this->cwps_settings_key )
-		) {
+		if ( $this->option_exists( $this->cwps_mappings_key ) && $this->option_exists( $this->cwps_settings_key ) ) {
 			$data['migrated'] = true;
 		}
 

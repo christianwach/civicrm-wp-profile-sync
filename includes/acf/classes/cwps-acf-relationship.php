@@ -21,12 +21,21 @@ defined( 'ABSPATH' ) || exit;
  * There are oddities in CiviCRM's relationships, particularly the "Employer Of"
  * relationship - which is both a Relationship and a "Contact Field". The ID of
  * the "Current Employer" Contact may be present in the values returned for a
- * "Contact" in the "current_employer" field and can be set via the API by
- * populating the "employer_id" field. I'm not sure how to handle this yet.
+ * "Contact" in the "current_employer" Field and can be set via the API by
+ * populating the "employer_id" Field. I'm not sure how to handle this yet.
  *
  * @since 0.4
  */
 class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync_ACF_CiviCRM_Base {
+
+	/**
+	 * Plugin object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
 
 	/**
 	 * ACF Loader object.
@@ -47,7 +56,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	public $civicrm;
 
 	/**
-	 * "CiviCRM Relationship" field key in the ACF Field data.
+	 * "CiviCRM Relationship" Field key in the ACF Field data.
 	 *
 	 * @since 0.4
 	 * @access public
@@ -96,10 +105,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	 */
 	public function __construct( $parent ) {
 
-		// Store reference to ACF Loader object.
+		// Store references to objects.
+		$this->plugin = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-
-		// Store reference to parent.
 		$this->civicrm = $parent;
 
 		// Init when the CiviCRM object is loaded.
@@ -240,7 +248,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	 */
 	public function fields_handled_update( $args ) {
 
-		// Bail if we have no field data to save.
+		// Bail if we have no Field data to save.
 		if ( empty( $args['fields'] ) ) {
 			return true;
 		}
@@ -248,10 +256,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		// Init success.
 		$success = true;
 
-		// Loop through the field data.
+		// Loop through the Field data.
 		foreach ( $args['fields'] as $field => $value ) {
 
-			// Get the field settings.
+			// Get the Field settings.
 			$settings = get_field_object( $field, $args['post_id'] );
 
 			// Maybe update a Relationship.
@@ -298,7 +306,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		// The Relationship code is the setting.
 		$code = $settings[$relationship_key];
 
-		// Parse value by field type.
+		// Parse value by Field Type.
 		$value = $this->acf_loader->acf->field->value_get_for_civicrm( $value, $settings['type'], $settings );
 
 		// Update the Relationships.
@@ -444,11 +452,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 				}
 
 				// Is there a match?
-				if (
-					$current_relationship['contact_id_a'] == $contact_id_a
-					AND
-					$current_relationship['contact_id_b'] == $contact_id_b
-				) {
+				if ( $current_relationship['contact_id_a'] == $contact_id_a && $current_relationship['contact_id_b'] == $contact_id_b ) {
 
 					// Flag as "active match" if the Relationship is active.
 					if ( $current_relationship['is_active'] == '1' ) {
@@ -480,8 +484,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 				// Add to the list of existing Relationships to be ignored.
 				if (
-					! array_key_exists( $current_relationship['id'], $existing['ignore'] ) AND
-					! array_key_exists( $current_relationship['id'], $existing['activate'] ) AND
+					! array_key_exists( $current_relationship['id'], $existing['ignore'] ) &&
+					! array_key_exists( $current_relationship['id'], $existing['activate'] ) &&
 					! array_key_exists( $current_relationship['id'], $existing['deactivate'] )
 				) {
 					$existing['ignore'][$current_relationship['id']] = $current_relationship;
@@ -501,8 +505,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 				// Add to the list of existing Relationships to be activated.
 				if (
-					! array_key_exists( $current_relationship['id'], $existing['ignore'] ) AND
-					! array_key_exists( $current_relationship['id'], $existing['activate'] ) AND
+					! array_key_exists( $current_relationship['id'], $existing['ignore'] ) &&
+					! array_key_exists( $current_relationship['id'], $existing['activate'] ) &&
 					! array_key_exists( $current_relationship['id'], $existing['deactivate'] )
 				) {
 					$existing['activate'][$current_relationship['id']] = $current_relationship;
@@ -522,8 +526,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 				// Add to the list of existing Relationships to be deactivated.
 				if (
-					! array_key_exists( $current_relationship['id'], $existing['ignore'] ) AND
-					! array_key_exists( $current_relationship['id'], $existing['activate'] ) AND
+					! array_key_exists( $current_relationship['id'], $existing['ignore'] ) &&
+					! array_key_exists( $current_relationship['id'], $existing['activate'] ) &&
 					! array_key_exists( $current_relationship['id'], $existing['deactivate'] )
 				) {
 
@@ -1081,17 +1085,17 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	public function relationship_update( $contact_id, $relationship, $op ) {
 
 		// Grab Contact.
-		$contact = $this->acf_loader->civicrm->contact->get_by_id( $contact_id );
+		$contact = $this->plugin->civicrm->contact->get_by_id( $contact_id );
 
 		// Test if any of this Contact's Contact Types is mapped.
-		$post_types = $this->acf_loader->civicrm->contact->is_mapped( $contact );
+		$post_types = $this->civicrm->contact->is_mapped( $contact );
 		if ( $post_types !== false ) {
 
 			// Handle each Post Type in turn.
 			foreach ( $post_types as $post_type ) {
 
 				// Get the Post ID that this Contact is mapped to.
-				$post_id = $this->acf_loader->civicrm->contact->is_mapped_to_post( $contact, $post_type );
+				$post_id = $this->civicrm->contact->is_mapped_to_post( $contact, $post_type );
 
 				// Skip if not mapped.
 				if ( $post_id === false ) {
@@ -1222,8 +1226,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $filter The token by which to filter the array of fields.
-	 * @return array $fields The array of field names.
+	 * @param string $filter The token by which to filter the array of Fields.
+	 * @return array $fields The array of Field names.
 	 */
 	public function civicrm_fields_get( $filter = 'none' ) {
 
@@ -1476,7 +1480,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		// Get Field Group for this Field's parent.
 		$field_group = $this->acf_loader->acf->field_group->get_for_field( $field );
 
-		// Bail if there's no field group.
+		// Bail if there's no Field Group.
 		if ( empty( $field_group ) ) {
 			return $relationships;
 		}
@@ -1492,7 +1496,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 				$contact_type_id = $this->civicrm->contact_type->id_get_for_post_type( $post_type_name );
 
 				// Get Contact Type hierarchy.
-				$contact_types = $this->civicrm->contact_type->hierarchy_get_by_id( $contact_type_id );
+				$contact_types = $this->plugin->civicrm->contact_type->hierarchy_get_by_id( $contact_type_id );
 
 				// Get relationships for the top-level Contact Type.
 				$relationships_for_type = $this->relationships_get_for_contact_type( $contact_types['type'] );
@@ -1755,7 +1759,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 			return;
 		}
 
-		// Define field.
+		// Define Field.
 		$field = [
 			'key' => $this->acf_field_key_get(),
 			'label' => __( 'CiviCRM Relationship', 'civicrm-wp-profile-sync' ),

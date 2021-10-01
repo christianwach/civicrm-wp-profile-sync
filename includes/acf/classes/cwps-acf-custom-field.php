@@ -23,6 +23,15 @@ defined( 'ABSPATH' ) || exit;
 class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	/**
+	 * Plugin object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
+	/**
 	 * ACF Loader object.
 	 *
 	 * @since 0.4
@@ -41,7 +50,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	public $civicrm;
 
 	/**
-	 * "CiviCRM Field" field value prefix in the ACF Field data.
+	 * "CiviCRM Field" Field value prefix in the ACF Field data.
 	 *
 	 * This distinguishes Contact Fields from Custom Fields.
 	 *
@@ -97,10 +106,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 */
 	public function __construct( $parent ) {
 
-		// Store reference to ACF Loader object.
+		// Store references to objects.
+		$this->plugin = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-
-		// Store reference to parent.
 		$this->civicrm = $parent;
 
 		// Init when the CiviCRM object is loaded.
@@ -189,7 +197,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	public function contact_sync_to_post( $args ) {
 
 		// Get the Custom Fields for this CiviCRM Contact.
-		$custom_fields_for_contact = $this->get_for_contact( $args['objectRef'] );
+		$custom_fields_for_contact = $this->plugin->civicrm->custom_field->get_for_contact( $args['objectRef'] );
 
 		// Bail if we don't have any Custom Fields for this Contact.
 		if ( empty( $custom_fields_for_contact ) ) {
@@ -214,7 +222,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		$custom_field_mappings = wp_list_pluck( $filtered, 'id' );
 
 		// Get the Custom Field values for this Contact.
-		$custom_field_values = $this->values_get_by_contact_id( $args['objectId'], $custom_field_mappings );
+		$custom_field_values = $this->plugin->civicrm->custom_field->values_get_by_contact_id( $args['objectId'], $custom_field_mappings );
 
 		// Build a final data array.
 		$final = [];
@@ -245,79 +253,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 
 	/**
-	 * Get the values for a given CiviCRM Contact ID and set of Custom Fields.
-	 *
-	 * @since 0.4
-	 *
-	 * @param integer $contact_id The numeric ID of the CiviCRM Contact to query.
-	 * @param array $custom_field_ids The Custom Field IDs to query.
-	 * @return array $contact_data An array of Contact data.
-	 */
-	public function values_get_by_contact_id( $contact_id, $custom_field_ids = [] ) {
-
-		// Init return.
-		$contact_data = [];
-
-		// Bail if we have no Custom Field IDs.
-		if ( empty( $custom_field_ids ) ) {
-			return $contact_data;
-		}
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $contact_data;
-		}
-
-		// Format codes.
-		$codes = [];
-		foreach ( $custom_field_ids as $custom_field_id ) {
-			$codes[] = 'custom_' . $custom_field_id;
-		}
-
-		// Define params to get queried Contact.
-		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'id' => $contact_id,
-			'return' => $codes,
-			'options' => [
-				'limit' => 0, // No limit.
-			],
-		];
-
-		// Call the API.
-		$result = civicrm_api( 'Contact', 'get', $params );
-
-		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			return $contact_data;
-		}
-
-		// Bail if there are no results.
-		if ( empty( $result['values'] ) ) {
-			return $contact_data;
-		}
-
-		// Overwrite return.
-		foreach ( $result['values'] as $item ) {
-			foreach ( $item as $key => $value ) {
-				if ( substr( $key, 0, 7 ) == 'custom_' ) {
-					$index = str_replace( 'custom_', '', $key );
-					$contact_data[$index] = $value;
-				}
-			}
-		}
-
-		// Maybe filter here?
-
-		// --<
-		return $contact_data;
-
-	}
-
-
-
-	/**
 	 * Get the Custom Field correspondences for a given Contact ID and Post Type.
 	 *
 	 * @since 0.4
@@ -332,7 +267,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		$custom_field_ids = [];
 
 		// Grab Contact.
-		$contact = $this->civicrm->contact->get_by_id( $contact_id );
+		$contact = $this->plugin->civicrm->contact->get_by_id( $contact_id );
 		if ( $contact === false ) {
 			return $custom_field_ids;
 		}
@@ -343,7 +278,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 			return $custom_field_ids;
 		}
 
-		// Get all fields for the Post.
+		// Get all Fields for the Post.
 		$acf_fields = $this->acf_loader->acf->field->fields_get_for_post( $post_id );
 
 		// Bail if we don't have any Custom Fields.
@@ -710,7 +645,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		}
 
 		// Get the Option Group to which this Option Value is attached.
-		$option_group = $this->option_group_get_by_id( $objectRef->option_group_id );
+		$option_group = $this->plugin->civicrm->option_group_get_by_id( $objectRef->option_group_id );
 
 		// Bail if something went wrong.
 		if ( $option_group === false ) {
@@ -718,54 +653,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		}
 
 		// TODO: Find the ACF Fields which map to this Option Group.
-
-	}
-
-
-
-	/**
-	 * Get the CiviCRM Option Group data for a given ID.
-	 *
-	 * @since 0.4
-	 *
-	 * @param string|integer $option_group_id The numeric ID of the Custom Group.
-	 * @return array|bool $option_group An array of Option Group data, or false on failure.
-	 */
-	public function option_group_get_by_id( $option_group_id ) {
-
-		// Init return.
-		$option_group = false;
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $option_group;
-		}
-
-		// Build params to get Option Group data.
-		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'id' => $option_group_id,
-		];
-
-		// Call the CiviCRM API.
-		$result = civicrm_api( 'OptionGroup', 'get', $params );
-
-		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			return $option_group;
-		}
-
-		// Bail if there are no results.
-		if ( empty( $result['values'] ) ) {
-			return $option_group;
-		}
-
-		// The result set should contain only one item.
-		$option_group = array_pop( $result['values'] );
-
-		// --<
-		return $option_group;
 
 	}
 
@@ -887,7 +774,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 * @param array $field The Custom Field data.
 	 * @param string $selector The ACF Field selector.
 	 * @param integer|string $post_id The ACF "Post ID".
-	 * @return mixed $value The formatted field value.
+	 * @return mixed $value The formatted Field value.
 	 */
 	public function value_get_for_acf( $value, $field, $selector, $post_id ) {
 
@@ -896,7 +783,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 			return $value;
 		}
 
-		// Convert CiviCRM value to ACF value by field type.
+		// Convert CiviCRM value to ACF value by Field Type.
 		switch( $field['type'] ) {
 
 			// Used by "CheckBox" and others.
@@ -913,14 +800,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 				break;
 
-			// Contact Reference fields may return the Contact's "sort_name".
+			// Contact Reference Fields may return the Contact's "sort_name".
 			case 'ContactReference' :
 
 				// Test for a numeric value.
 				if ( ! is_numeric( $value ) ) {
 
 					/*
-					 * This definitely happens when Contact Reference fields are
+					 * This definitely happens when Contact Reference Fields are
 					 * attached to Events - when retrieving the Event from the
 					 * CiviCRM API, the Custom Field values are helpfully added
 					 * to the returned data. However, the value in "custom_N" is
@@ -948,7 +835,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 			// Used by "Date Select" and  "Date Time Select".
 			case 'Timestamp' :
 
-				// Get field setting.
+				// Get Field setting.
 				$acf_setting = get_field_object( $selector, $post_id );
 
 				// Convert to ACF format.
@@ -975,113 +862,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 
 	/**
-	 * Get the CiviCRM Custom Field data for a given ID.
-	 *
-	 * This is called on a per-Field basis. If it ends up slowing things down
-	 * too much, an alternative would be to query *all* Custom Fields, stash
-	 * that data set, then query it locally for each subsequent request.
-	 *
-	 * @since 0.4
-	 *
-	 * @param string|integer $field_id The numeric ID of the Custom Field.
-	 * @return array|bool $field An array of Custom Field data, or false on failure.
-	 */
-	public function get_by_id( $field_id ) {
-
-		// Init return.
-		$field = false;
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $field;
-		}
-
-		// Build params to get Custom Group data.
-		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'id' => $field_id,
-		];
-
-		// Call the CiviCRM API.
-		$result = civicrm_api( 'CustomField', 'get', $params );
-
-		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			return $field;
-		}
-
-		// Bail if there are no results.
-		if ( empty( $result['values'] ) ) {
-			return $field;
-		}
-
-		// The result set should contain only one item.
-		$field = array_pop( $result['values'] );
-
-		// --<
-		return $field;
-
-	}
-
-
-
-	/**
-	 * Get the CiviCRM Custom Field data for a given Custom Group ID.
-	 *
-	 * @since 0.4
-	 *
-	 * @param integer $custom_group_id The numeric ID of the Custom Group.
-	 * @return array $fields An array of Custom Field data.
-	 */
-	public function get_by_group_id( $custom_group_id ) {
-
-		// Init return.
-		$fields = [];
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $fields;
-		}
-
-		// Build params to get Custom Group data.
-		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'custom_group_id' => $custom_group_id,
-			'options' => [
-				'limit' => 0, // No limit.
-			],
-		];
-
-		// Call the CiviCRM API.
-		$result = civicrm_api( 'CustomField', 'get', $params );
-
-		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			return $fields;
-		}
-
-		// Bail if there are no results.
-		if ( empty( $result['values'] ) ) {
-			return $fields;
-		}
-
-		// The result set is what we want.
-		$fields = $result['values'];
-
-		// --<
-		return $fields;
-
-	}
-
-
-
-	// -------------------------------------------------------------------------
-
-
-
-	/**
 	 * Get the CiviCRM Custom Fields for an ACF Field.
 	 *
 	 * @since 0.4
@@ -1094,10 +874,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		// Init return.
 		$custom_fields = [];
 
-		// Get field group for this field's parent.
+		// Get Field Group for this Field's parent.
 		$field_group = $this->acf_loader->acf->field_group->get_for_field( $field );
 
-		// Bail if there's no field group.
+		// Bail if there's no Field Group.
 		if ( empty( $field_group ) ) {
 			return $custom_fields;
 		}
@@ -1130,377 +910,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 
 
-	/**
-	 * Get the Custom Fields for a given CiviCRM Contact.
-	 *
-	 * @since 0.4
-	 *
-	 * @param array $contact The CiviCRM Contact data.
-	 * @return array $custom_fields The array of Custom Fields.
-	 */
-	public function get_for_contact( $contact ) {
-
-		// Init array to build.
-		$custom_fields = [];
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $custom_fields;
-		}
-
-		// Get Contact Type hierarchy.
-		$hierarchy = $this->civicrm->contact_type->hierarchy_get_for_contact( $contact );
-
-		// Get separated array of Contact Types.
-		$contact_types = $this->civicrm->contact_type->hierarchy_separate( $hierarchy );
-
-		// Check each Contact Type in turn.
-		foreach ( $contact_types as $contact_type ) {
-
-			// Call the method for the Contact Type.
-			$fields_for_contact_type = $this->get_for_contact_type( $contact_type['type'], $contact_type['subtype'] );
-
-			// Add to return array.
-			$custom_fields = $custom_fields + $fields_for_contact_type;
-
-		}
-
-		// --<
-		return $custom_fields;
-
-	}
-
-
-
-	/**
-	 * Get the Custom Fields for all CiviCRM Contacts.
-	 *
-	 * CiviCRM has a special setting for "extends" that allows Custom Fields to
-	 * be attached to any Contact Type - it's called "Contact".
-	 *
-	 * This should not be confused with "get_for_all_contact_types" which gets
-	 * the Custom Fields for all top level CiviCRM Contact Types.
-	 *
-	 * @since 0.5
-	 *
-	 * @return array $custom_fields The array of Custom Fields.
-	 */
-	public function get_for_contacts() {
-
-		// Init array to build.
-		$custom_fields = [];
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $custom_fields;
-		}
-
-		// Construct params to get Fields for all Contacts.
-		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'is_active' => 1,
-			'extends' => 'Contact',
-			'api.CustomField.get' => [
-				'is_active' => 1,
-				'options' => [
-					'limit' => 0, // No limit.
-				],
-			],
-			'options' => [
-				'limit' => 0, // No limit.
-			],
-		];
-
-		// Call the API.
-		$result = civicrm_api( 'CustomGroup', 'get', $params );
-
-		// Override return if we get some.
-		if ( $result['is_error'] == 0 AND ! empty( $result['values'] ) ) {
-
-			// Add the Custom Fields from the chained API data.
-			foreach( $result['values'] as $key => $value ) {
-				foreach( $value['api.CustomField.get']['values'] as $subkey => $item ) {
-					$custom_fields[$value['title']][] = $item;
-				}
-			}
-
-		}
-
-		// --<
-		return $custom_fields;
-
-	}
-
-
-
-	/**
-	 * Get all the Custom Fields for all CiviCRM Contact Types/Subtypes.
-	 *
-	 * @since 0.4
-	 *
-	 * @return array $custom_fields The array of Custom Fields.
-	 */
-	public function get_for_all_contact_types() {
-
-		// Init array to build.
-		$custom_fields = [];
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $custom_fields;
-		}
-
-		// Construct params.
-		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'is_active' => 1,
-			'options' => [
-				'limit' => 0,
-			],
-			'api.CustomField.get' => [
-				'is_active' => 1,
-				'options' => [
-					'limit' => 0,
-				]
-			],
-			'extends' => [
-				'IN' => [ "Individual", "Organization", "Household" ],
-			],
-		];
-
-		// Call the API.
-		$result = civicrm_api( 'CustomGroup', 'get', $params );
-
-		// Override return if we get some.
-		if (
-			$result['is_error'] == 0 AND
-			isset( $result['values'] ) AND
-			count( $result['values'] ) > 0
-		) {
-
-			// We only need the results from the chained API data.
-			foreach ( $result['values'] as $key => $value ) {
-
-				// Add the Custom Fields.
-				foreach ( $value['api.CustomField.get']['values'] as $subkey => $item ) {
-					$custom_fields[$value['title']][] = $item;
-				}
-
-			}
-
-		}
-
-		// --<
-		return $custom_fields;
-
-	}
-
-
-
-	/**
-	 * Get the Custom Fields for a CiviCRM Contact Type/Subtype.
-	 *
-	 * @since 0.4
-	 *
-	 * @param string $type The Contact Type that the Option Group applies to.
-	 * @param string $subtype The Contact Sub-type that the Option Group applies to.
-	 * @return array $custom_fields The array of Custom Fields.
-	 */
-	public function get_for_contact_type( $type = '', $subtype = '' ) {
-
-		// TODO: Maybe write a get_all() method and parse from there?
-		// See Profile Sync, which queries *all* Contact Types :(
-
-		// Maybe set a key for the subtype.
-		$index = $subtype;
-		if ( empty( $subtype ) ) {
-			$index = 'none';
-		}
-
-		// Only do this once per Entity Type.
-		static $pseudocache;
-		if ( isset( $pseudocache[$type][$index] ) ) {
-			return $pseudocache[$type][$index];
-		}
-
-		// Init array to build.
-		$custom_fields = [];
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $custom_fields;
-		}
-
-		// Start with the Custom Fields for all Contact Types.
-		$custom_fields = $this->get_for_contacts();
-
-		// Construct params.
-		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'is_active' => 1,
-			'extends' => $type,
-			'api.CustomField.get' => [
-				'is_active' => 1,
-				'options' => [
-					'limit' => 0, // No limit.
-				],
-			],
-			'options' => [
-				'limit' => 0, // No limit.
-			],
-		];
-
-		// Call the API.
-		$result = civicrm_api( 'CustomGroup', 'get', $params );
-
-		// Override return if we get some.
-		if (
-			$result['is_error'] == 0 AND
-			isset( $result['values'] ) AND
-			count( $result['values'] ) > 0
-		) {
-
-			// We only need the results from the chained API data.
-			foreach ( $result['values'] as $key => $value ) {
-
-				// Skip adding if it extends a sibling subtype.
-				if ( ! empty( $subtype ) && ! empty( $value['extends_entity_column_value'] ) ) {
-					if ( ! in_array( $subtype, $value['extends_entity_column_value'] ) ) {
-						continue;
-					}
-				}
-
-				// Add the Custom Fields.
-				foreach ( $value['api.CustomField.get']['values'] as $subkey => $item ) {
-					$custom_fields[] = $item;
-				}
-
-			}
-
-		}
-
-		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$type][$index] ) ) {
-			$pseudocache[$type][$index] = $custom_fields;
-		}
-
-		// --<
-		return $custom_fields;
-
-	}
-
-
-
-	/**
-	 * Get the Custom Fields for a CiviCRM Entity Type/Subtype.
-	 *
-	 * There's a discussion to be had about whether or not to include Custom Groups
-	 * for a Contact Subtype or not. The code in this method can return data
-	 * specific to the Subtype, but it's presumably desirable to include all
-	 * Custom Groups that apply to a Contact Type.
-	 *
-	 * There's also a slight weakness in this code, in that the returned array is
-	 * keyed by the "title" of the Custom Group. It is possible (though unlikely)
-	 * that two Custom Groups may have the same "title", in which case the Custom
-	 * Fields will be grouped together in the "CiviCRM Field" dropdown. The unique
-	 * element is the Custom Group's "name" property, but then we would have to
-	 * retrieve the "title" somewhere else - as it stands, the return array has
-	 * all the data required to build the select, so I'm leaving it as is for now.
-	 *
-	 * @since 0.4
-	 *
-	 * @param string $type The Entity Type that the Option Group applies to.
-	 * @param string $subtype The Entity Sub-type that the Option Group applies to.
-	 * @return array $custom_fields The array of Custom Fields.
-	 */
-	public function get_for_entity_type( $type = '', $subtype = '' ) {
-
-		// Maybe set a key for the subtype.
-		$index = $subtype;
-		if ( empty( $subtype ) ) {
-			$index = 'none';
-		}
-
-		// Only do this once per Entity Type.
-		static $pseudocache = [];
-		if ( isset( $pseudocache[$type][$index] ) ) {
-			return $pseudocache[$type][$index];
-		}
-
-		// Init array to build.
-		$custom_fields = [];
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $custom_fields;
-		}
-
-		// Start with the Custom Fields for all Contact Types.
-		if ( in_array( $type, $this->civicrm->contact_type->types_get_top_level() ) ) {
-			$custom_fields = $this->get_for_contacts();
-		}
-
-		// Construct params.
-		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'is_active' => 1,
-			'extends' => $type,
-			'api.CustomField.get' => [
-				'is_active' => 1,
-				'options' => [
-					'limit' => 0, // No limit.
-				],
-			],
-			'options' => [
-				'limit' => 0, // No limit.
-			],
-		];
-
-		// Call the API.
-		$result = civicrm_api( 'CustomGroup', 'get', $params );
-
-		// Override return if we get some.
-		if (
-			$result['is_error'] == 0 AND
-			isset( $result['values'] ) AND
-			count( $result['values'] ) > 0
-		) {
-
-			// We only need the results from the chained API data.
-			foreach ( $result['values'] as $key => $value ) {
-
-				// Skip adding if it extends a sibling subtype.
-				if ( ! empty( $subtype ) && ! empty( $value['extends_entity_column_value'] ) ) {
-					if ( ! in_array( $subtype, $value['extends_entity_column_value'] ) ) {
-						continue;
-					}
-				}
-
-				// Add the Custom Fields.
-				foreach ( $value['api.CustomField.get']['values'] as $subkey => $item ) {
-					$custom_fields[$value['title']][] = $item;
-				}
-
-			}
-
-		}
-
-		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$type][$index] ) ) {
-			$pseudocache[$type][$index] = $custom_fields;
-		}
-
-		// --<
-		return $custom_fields;
-
-	}
-
-
-
 	// -------------------------------------------------------------------------
 
 
@@ -1510,7 +919,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $field The existing field data array.
+	 * @param array $field The existing Field data array.
 	 * @return integer|bool $custom_field_id The numeric ID of the Custom Field, or false if none.
 	 */
 	public function custom_field_id_get( $field ) {
@@ -1579,7 +988,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		 */
 		$choices = apply_filters( 'cwps/acf/custom_field/choices', $choices );
 
-		// Define field.
+		// Define Field.
 		$field = [
 			'key' => $this->civicrm->acf_field_key_get(),
 			'label' => __( 'CiviCRM Field', 'civicrm-wp-profile-sync' ),
@@ -1625,7 +1034,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		}
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
-		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		$key = $this->civicrm->acf_field_key_get();
 		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
@@ -1652,7 +1061,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 * @since 0.4
 	 *
 	 * @param string $custom_field_id The numeric ID of the CiviCRM Custom Field.
-	 * @return array $choices The choices for the field.
+	 * @return array $choices The choices for the Field.
 	 */
 	public function select_choices_get( $custom_field_id ) {
 
@@ -1660,7 +1069,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		$choices = [];
 
 		// Get Custom Field data.
-		$field_data = $this->get_by_id( $custom_field_id );
+		$field_data = $this->plugin->civicrm->custom_field->get_by_id( $custom_field_id );
 
 		// Bail if we don't get any.
 		if ( $field_data === false ) {
@@ -1721,24 +1130,24 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		// ACF "Multi-Select".
 		if ( $field['multiple'] == 1 ) {
 
-			// Filter fields to include only Multi-Select types.
+			// Filter Fields to include only Multi-Select types.
 			$select_types = [ 'Multi-Select', 'Multi-Select Country', 'Multi-Select State/Province' ];
 
 		// ACF "Autocomplete-Select". Sort of.
 		} elseif ( $field['ui'] == 1 && $field['ajax'] == 1 ) {
 
-			// Filter fields to include only Autocomplete-Select.
+			// Filter Fields to include only Autocomplete-Select.
 			$select_types = [ 'Autocomplete-Select' ];
 
 		// Otherwise, fall back.
 		} else {
 
-			// Filter fields to include only "Select" types.
+			// Filter Fields to include only "Select" types.
 			$select_types = [ 'Select', 'Select Country', 'Select State/Province' ];
 
 		}
 
-		// Filter fields to include only those which are compatible.
+		// Filter Fields to include only those which are compatible.
 		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			foreach ( $custom_group as $custom_field ) {
 				if ( ! empty( $custom_field['data_type'] ) && in_array( $custom_field['data_type'], $this->data_types ) ) {
@@ -1773,7 +1182,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		}
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
-		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		$key = $this->civicrm->acf_field_key_get();
 		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
@@ -1800,7 +1209,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 * @since 0.4
 	 *
 	 * @param string $custom_field_id The numeric ID of the CiviCRM Custom Field.
-	 * @return array $choices The choices for the field.
+	 * @return array $choices The choices for the Field.
 	 */
 	public function radio_choices_get( $custom_field_id ) {
 
@@ -1808,7 +1217,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		$choices = [];
 
 		// Get Custom Field data.
-		$field_data = $this->get_by_id( $custom_field_id );
+		$field_data = $this->plugin->civicrm->custom_field->get_by_id( $custom_field_id );
 
 		// Bail if we don't get any.
 		if ( $field_data === false ) {
@@ -1854,7 +1263,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 			return $filtered_fields;
 		}
 
-		// Filter fields to include only "Radio" HTML types.
+		// Filter Fields to include only "Radio" HTML types.
 		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			foreach ( $custom_group as $custom_field ) {
 				if ( ! empty( $custom_field['data_type'] ) && in_array( $custom_field['data_type'], $this->data_types ) ) {
@@ -1889,7 +1298,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		}
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
-		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		$key = $this->civicrm->acf_field_key_get();
 		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
@@ -1916,7 +1325,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 * @since 0.4
 	 *
 	 * @param string $custom_field_id The numeric ID of the CiviCRM Custom Field.
-	 * @return array $choices The choices for the field.
+	 * @return array $choices The choices for the Field.
 	 */
 	public function checkbox_choices_get( $custom_field_id ) {
 
@@ -1924,7 +1333,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		$choices = [];
 
 		// Get Custom Field data.
-		$field_data = $this->acf_loader->civicrm->custom_field->get_by_id( $custom_field_id );
+		$field_data = $this->plugin->civicrm->custom_field->get_by_id( $custom_field_id );
 
 		// Bail if we don't get any.
 		if ( $field_data === false ) {
@@ -1970,7 +1379,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 			return $filtered_fields;
 		}
 
-		// Filter fields to include only Boolean/Radio.
+		// Filter Fields to include only Boolean/Radio.
 		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			foreach ( $custom_group as $custom_field ) {
 				if ( ! empty( $custom_field['data_type'] ) && $custom_field['data_type'] == 'String' ) {
@@ -2005,7 +1414,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		}
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
-		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		$key = $this->civicrm->acf_field_key_get();
 		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
@@ -2017,7 +1426,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		}
 
 		// Get Custom Field data.
-		$field_data = $this->get_by_id( $custom_field_id );
+		$field_data = $this->plugin->civicrm->custom_field->get_by_id( $custom_field_id );
 
 		// Bail if we don't get any.
 		if ( $field_data === false ) {
@@ -2073,7 +1482,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 			return $filtered_fields;
 		}
 
-		// Filter fields to include only Date/Select Date.
+		// Filter Fields to include only Date/Select Date.
 		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			foreach ( $custom_group as $custom_field ) {
 				if ( ! empty( $custom_field['data_type'] ) && $custom_field['data_type'] == 'Date' ) {
@@ -2110,7 +1519,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		}
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
-		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		$key = $this->civicrm->acf_field_key_get();
 		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
@@ -2122,7 +1531,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		}
 
 		// Get Custom Field data.
-		$field_data = $this->get_by_id( $custom_field_id );
+		$field_data = $this->plugin->civicrm->custom_field->get_by_id( $custom_field_id );
 		if ( $field_data === false ) {
 			return $field;
 		}
@@ -2184,7 +1593,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 			return $filtered_fields;
 		}
 
-		// Filter fields to include only Date/Select Date.
+		// Filter Fields to include only Date/Select Date.
 		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			foreach ( $custom_group as $custom_field ) {
 				if ( ! empty( $custom_field['data_type'] ) && $custom_field['data_type'] == 'Date' ) {
@@ -2221,7 +1630,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		}
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
-		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		$key = $this->civicrm->acf_field_key_get();
 		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
@@ -2233,7 +1642,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		}
 
 		// Get Custom Field data.
-		$field_data = $this->get_by_id( $custom_field_id );
+		$field_data = $this->plugin->civicrm->custom_field->get_by_id( $custom_field_id );
 
 		// Bail if we don't get any.
 		if ( $field_data === false ) {
@@ -2282,7 +1691,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 			return $filtered_fields;
 		}
 
-		// Filter fields to include only those of HTML type "Text".
+		// Filter Fields to include only those of HTML type "Text".
 		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			foreach ( $custom_group as $custom_field ) {
 				if ( ! empty( $custom_field['data_type'] ) && in_array( $custom_field['data_type'], $this->data_types ) ) {
@@ -2317,7 +1726,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 			return $filtered_fields;
 		}
 
-		// Filter fields to include only Memo/RichTextEditor.
+		// Filter Fields to include only Memo/RichTextEditor.
 		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			foreach ( $custom_group as $custom_field ) {
 				if ( ! empty( $custom_field['data_type'] ) && $custom_field['data_type'] == 'Memo' ) {
@@ -2352,7 +1761,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 			return $filtered_fields;
 		}
 
-		// Filter fields to include only Memo/TextArea.
+		// Filter Fields to include only Memo/TextArea.
 		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			foreach ( $custom_group as $custom_field ) {
 				if ( ! empty( $custom_field['data_type'] ) && $custom_field['data_type'] == 'Memo' ) {
@@ -2387,7 +1796,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 			return $filtered_fields;
 		}
 
-		// Filter fields to include only Boolean/Radio.
+		// Filter Fields to include only Boolean/Radio.
 		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			foreach ( $custom_group as $custom_field ) {
 				if ( ! empty( $custom_field['data_type'] ) && $custom_field['data_type'] == 'Boolean' ) {
@@ -2422,7 +1831,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 			return $filtered_fields;
 		}
 
-		// Filter fields to include only "Link".
+		// Filter Fields to include only "Link".
 		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			foreach ( $custom_group as $custom_field ) {
 				if ( ! empty( $custom_field['data_type'] ) && $custom_field['data_type'] == 'Link' ) {

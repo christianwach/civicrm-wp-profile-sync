@@ -24,6 +24,15 @@ defined( 'ABSPATH' ) || exit;
 class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	/**
+	 * Plugin object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
+	/**
 	 * ACF Loader object.
 	 *
 	 * @since 0.5
@@ -115,13 +124,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 */
 	public function __construct( $parent ) {
 
-		// Store reference to ACF Loader object.
+		// Store references to objects.
+		$this->plugin = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-
-		// Store reference to CiviCRM object.
 		$this->civicrm = $parent->civicrm;
-
-		// Store reference to parent.
 		$this->participant = $parent;
 
 		// Determine if the CPT is enabled.
@@ -518,10 +524,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		}
 
 		/*
-		 * Get existing field values.
+		 * Get existing Field values.
 		 *
 		 * These are actually the *new* values because we are hooking in *after*
-		 * the fields have been saved.
+		 * the Fields have been saved.
 		 */
 		$fields = get_fields( $post->ID, false );
 
@@ -599,10 +605,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 */
 	public function prepare_from_fields( $fields, $post, $post_id = null ) {
 
-		// Init data for fields.
+		// Init data for Fields.
 		$participant_data = [];
 
-		// Bail if we have no field data to save.
+		// Bail if we have no Field data to save.
 		if ( empty( $fields ) ) {
 			return $participant_data;
 		}
@@ -619,10 +625,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 			}
 		}
 
-		// Loop through the field data.
+		// Loop through the Field data.
 		foreach ( $fields as $selector => $value ) {
 
-			// Get the field settings.
+			// Get the Field settings.
 			$settings = get_field_object( $selector, $post_id );
 
 			// Get the CiviCRM Custom Field and Participant Field.
@@ -675,7 +681,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 				}
 
-				// Parse value by field type.
+				// Parse value by Field Type.
 				$value = $this->acf_loader->acf->field->value_get_for_civicrm( $value, $settings['type'], $settings );
 
 				// Some Participant Fields cannot be empty.
@@ -684,7 +690,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 					'event_id',
 				];
 
-				// Add it to the field data.
+				// Add it to the Field data.
 				if ( in_array( $code, $cannot_be_empty ) && empty( $value ) ) {
 					// Skip.
 				} else {
@@ -775,7 +781,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		}
 
 		// Backfill the Participant data.
-		$args['objectRef'] = $this->acf_loader->civicrm->participant->backfill( $args['objectRef'] );
+		$args['objectRef'] = $this->civicrm->participant->backfill( $args['objectRef'] );
 
 		// Find the Post ID of this Post Type that this Participant is synced with.
 		$post_id = false;
@@ -828,7 +834,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		}
 
 		// Backfill the Participant data.
-		$args['objectRef'] = $this->acf_loader->civicrm->participant->backfill( $args['objectRef'] );
+		$args['objectRef'] = $this->civicrm->participant->backfill( $args['objectRef'] );
 
 		// Get originating Entity.
 		$entity = $this->acf_loader->mapper->entity_get();
@@ -904,7 +910,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		}
 
 		// Backfill the Participant data.
-		$args['objectRef'] = $this->acf_loader->civicrm->participant->backfill( $args['objectRef'] );
+		$args['objectRef'] = $this->civicrm->participant->backfill( $args['objectRef'] );
 
 		// Find the Post ID of this Post Type that this Participant is synced with.
 		$post_id = false;
@@ -1064,7 +1070,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		}
 
 		// Get the Custom Fields for CiviCRM Participants.
-		$entity_custom_fields = $this->acf_loader->civicrm->custom_field->get_for_entity_type( 'Participant', '' );
+		$entity_custom_fields = $this->plugin->civicrm->custom_field->get_for_entity_type( 'Participant', '' );
 
 		// Maybe merge with passed in array.
 		if ( ! empty( $entity_custom_fields ) ) {
@@ -1291,14 +1297,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		}
 
 		// Check permission to view this Contact.
-		if ( ! $this->acf_loader->civicrm->contact->user_can_view( $contact_id ) ) {
+		if ( ! $this->civicrm->contact->user_can_view( $contact_id ) ) {
 			return $actions;
 		}
 
 		// Get the "View" URL for this Participant.
 		$query_base = 'reset=1&id=' . $participant_id . '&cid=' . $contact_id;
 		$view_query = $query_base . '&action=view&context=participant';
-		$view_url = $this->acf_loader->civicrm->get_link( 'civicrm/contact/view/participant', $view_query );
+		$view_url = $this->plugin->civicrm->get_link( 'civicrm/contact/view/participant', $view_query );
 
 		// Add link to actions.
 		$actions['civicrm'] = sprintf(
@@ -1371,18 +1377,18 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		}
 
 		// Check permission to view this Contact.
-		if ( ! $this->acf_loader->civicrm->contact->user_can_view( $contact_id ) ) {
+		if ( ! $this->civicrm->contact->user_can_view( $contact_id ) ) {
 			return;
 		}
 
 		// Get the "View" URL for this Participant.
 		$query_base = 'reset=1&id=' . $participant_id . '&cid=' . $contact_id;
 		$view_query = $query_base . '&action=view&context=participant';
-		$view_url = $this->acf_loader->civicrm->get_link( 'civicrm/contact/view/participant', $view_query );
+		$view_url = $this->plugin->civicrm->get_link( 'civicrm/contact/view/participant', $view_query );
 
 		// Get the "Edit" URL for this Participant.
 		$edit_query = $query_base . '&action=update&context=participant&selectedChild=event';
-		$edit_url = $this->acf_loader->civicrm->get_link( 'civicrm/contact/view/participant', $edit_query );
+		$edit_url = $this->plugin->civicrm->get_link( 'civicrm/contact/view/participant', $edit_query );
 
 		// Add item to Edit menu.
 		$wp_admin_bar->add_node( [
@@ -1493,7 +1499,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 
 	/**
-	 * Removes the Title field from our Custom Post Type.
+	 * Removes the Title Field from our Custom Post Type.
 	 *
 	 * @since 0.5
 	 */
@@ -1531,7 +1537,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 				esc_url( get_permalink( $post_ID ) )
 			),
 
-			// Custom fields.
+			// Custom Fields.
 			2 => __( 'Custom field updated.', 'civicrm-wp-profile-sync' ),
 			3 => __( 'Custom field deleted.', 'civicrm-wp-profile-sync' ),
 			4 => __( 'Participant updated.', 'civicrm-wp-profile-sync' ),
@@ -1887,7 +1893,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 */
 	public function field_register_date_get() {
 
-		// Define field.
+		// Define Field.
 		$field = [
 			'key' => 'field_' . $this->acf_slug . '_register_date',
 			'label' => __( 'Registration Date', 'civicrm-wp-profile-sync' ),
@@ -1917,7 +1923,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 */
 	public function field_status_get() {
 
-		// Define field.
+		// Define Field.
 		$field = [
 			'key' => 'field_' . $this->acf_slug . '_status_id',
 			'label' => __ ( 'Status', 'civicrm-wp-profile-sync' ),
@@ -1950,7 +1956,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 */
 	public function field_source_get() {
 
-		// Define field.
+		// Define Field.
 		$field = [
 			'key' => 'field_' . $this->acf_slug . '_source',
 			'label' => __ ( 'Source', 'civicrm-wp-profile-sync' ),
@@ -1987,19 +1993,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	public function maybe_hide_field( $field ) {
 
 		// Get the CiviCRM Custom Field ID.
-		$custom_field_id = $this->acf_loader->civicrm->custom_field->custom_field_id_get( $field );
+		$custom_field_id = $this->civicrm->custom_field->custom_field_id_get( $field );
 		if ( empty( $custom_field_id ) ) {
 			return $field;
 		}
 
 		// Get the CiviCRM Custom Field.
-		$custom_field = $this->acf_loader->civicrm->custom_field->get_by_id( $custom_field_id );
+		$custom_field = $this->plugin->civicrm->custom_field->get_by_id( $custom_field_id );
 		if ( empty( $custom_field ) ) {
 			return $field;
 		}
 
 		// Get the CiviCRM Custom Group.
-		$custom_group = $this->acf_loader->civicrm->custom_group->get_by_id( $custom_field['custom_group_id'] );
+		$custom_group = $this->plugin->civicrm->custom_group->get_by_id( $custom_field['custom_group_id'] );
 		if ( empty( $custom_group ) ) {
 			return $field;
 		}

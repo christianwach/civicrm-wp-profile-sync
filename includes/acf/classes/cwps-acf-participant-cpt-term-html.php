@@ -30,6 +30,15 @@ defined( 'ABSPATH' ) || exit;
 class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML {
 
 	/**
+	 * Plugin object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
+	/**
 	 * ACF Loader object.
 	 *
 	 * @since 0.5
@@ -85,16 +94,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML {
 	 */
 	public function __construct( $parent ) {
 
-		// Store reference to ACF Loader object.
+		// Store references to objects.
+		$this->plugin = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-
-		// Store reference to CiviCRM object.
 		$this->civicrm = $parent->civicrm;
-
-		// Store reference to parent.
 		$this->participant = $parent->participant;
-
-		// Store reference to parent.
 		$this->cpt = $parent;
 
 		// Store Taxonomy name.
@@ -160,7 +164,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML {
 
 
 	/**
-	 * Add the WYSIWYG editor to the "Edit" field.
+	 * Add the WYSIWYG editor to the "Edit" Field.
 	 *
 	 * @since 0.5
 	 *
@@ -182,7 +186,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML {
 			<td><?php wp_editor( htmlspecialchars_decode( $term->description ), 'html-description', $settings ); ?>
 			<span class="description"><?php _e( 'The description is not prominent by default, however some themes may show it.', 'civicrm-wp-profile-sync' ); ?></span></td>
 			<script type="text/javascript">
-				// Remove the non-HTML field.
+				// Remove the non-HTML Field.
 				jQuery( 'textarea#description' ).closest( '.form-field' ).remove();
 			</script>
 		</tr>
@@ -193,7 +197,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML {
 
 
 	/**
-	 * Add the WYSIWYG editor to the "Add" field.
+	 * Add the WYSIWYG editor to the "Add" Field.
 	 *
 	 * @since 0.5
 	 *
@@ -214,7 +218,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML {
 			<?php wp_editor( '', 'html-tag-description', $settings ); ?>
 			<p class="description"><?php _e( 'The description is not prominent by default, however some themes may show it.', 'civicrm-wp-profile-sync' ); ?></p>
 			<script type="text/javascript">
-				// Remove the non-HTML field.
+				// Remove the non-HTML Field.
 				jQuery( 'textarea#tag-description' ).closest( '.form-field' ).remove();
 				// Trigger save.
 				jQuery( function() {

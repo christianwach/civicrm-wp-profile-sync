@@ -23,6 +23,15 @@ defined( 'ABSPATH' ) || exit;
 class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	/**
+	 * Plugin object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
+	/**
 	 * ACF Loader object.
 	 *
 	 * @since 0.4
@@ -52,7 +61,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	public $identifier = 'contact';
 
 	/**
-	 * "CiviCRM Field" field value prefix in the ACF Field data.
+	 * "CiviCRM Field" Field value prefix in the ACF Field data.
 	 *
 	 * This distinguishes Contact Fields from Custom Fields.
 	 *
@@ -73,10 +82,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 */
 	public function __construct( $parent ) {
 
-		// Store reference to ACF Loader object.
+		// Store references to objects.
+		$this->plugin = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-
-		// Store reference to parent.
 		$this->civicrm = $parent;
 
 		// Init when the CiviCRM object is loaded.
@@ -315,10 +323,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		$originating_entity = $this->acf_loader->mapper->entity_get();
 
 		/*
-		 * Get existing field values.
+		 * Get existing Field values.
 		 *
 		 * These are actually the *new* values because we are hooking in *after*
-		 * the fields have been saved.
+		 * the Fields have been saved.
 		 */
 		$fields = get_fields( $post->ID );
 
@@ -375,7 +383,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		/**
 		 * Filter the "Handled Fields" array.
 		 *
-		 * Classes in this plugin add the fields they handle via this filter.
+		 * Classes in this plugin add the Fields they handle via this filter.
 		 *
 		 * @since 0.4
 		 *
@@ -458,119 +466,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 		// Get the logged-in Contact.
 		$user = wp_get_current_user();
-		$contact_id = $this->acf_loader->plugin->mapper->ufmatch->contact_id_get_by_user_id( $user->ID );
+		$contact_id = $this->plugin->mapper->ufmatch->contact_id_get_by_user_id( $user->ID );
 
 		// --<
 		return $contact_id;
-
-	}
-
-
-
-	/**
-	 * Get the CiviCRM Contact data for a set of given IDs.
-	 *
-	 * @since 0.4
-	 *
-	 * @param array $contact_ids The array of numeric IDs of the CiviCRM Contacts to query.
-	 * @return array|bool $contact_data An array of Contact data, or false on failure.
-	 */
-	public function get_by_ids( $contact_ids = [] ) {
-
-		// Init return.
-		$contact_data = false;
-
-		// Bail if we have no Contact IDs.
-		if ( empty( $contact_ids ) ) {
-			return $contact_data;
-		}
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $contact_data;
-		}
-
-		// Define params to get queried Contacts.
-		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'id' => [ 'IN' => $contact_ids ],
-			'options' => [
-				'limit' => 0, // No limit.
-			],
-		];
-
-		// Call the API.
-		$result = civicrm_api( 'Contact', 'get', $params );
-
-		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			return $contact_data;
-		}
-
-		// Bail if there are no results.
-		if ( empty( $result['values'] ) ) {
-			return $contact_data;
-		}
-
-		// --<
-		return $result['values'];
-
-	}
-
-
-
-	/**
-	 * Get the CiviCRM Contact data for a given ID.
-	 *
-	 * @since 0.4
-	 *
-	 * @param integer $contact_id The numeric ID of the CiviCRM Contact to query.
-	 * @return array|bool $contact_data An array of Contact data, or false on failure.
-	 */
-	public function get_by_id( $contact_id ) {
-
-		// Init return.
-		$contact_data = false;
-
-		// Bail if we have no Contact ID.
-		if ( empty( $contact_id ) ) {
-			return $contact_data;
-		}
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $contact_data;
-		}
-
-		// Define params to get queried Contact.
-		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'id' => $contact_id,
-			'options' => [
-				'limit' => 0, // No limit.
-			],
-		];
-
-		// Call the API.
-		$result = civicrm_api( 'Contact', 'get', $params );
-
-		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			return $contact_data;
-		}
-
-		// Bail if there are no results.
-		if ( empty( $result['values'] ) ) {
-			return $contact_data;
-		}
-
-		// The result set should contain only one item.
-		$contact_data = array_pop( $result['values'] );
-
-		// --<
-		return $contact_data;
 
 	}
 
@@ -843,7 +742,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	public function contacts_chunked_data_get( $contact_type_id, $offset, $limit ) {
 
 		// Get the hierarchy for the Contact Type ID.
-		$hierarchy = $this->civicrm->contact_type->hierarchy_get_by_id( $contact_type_id, 'id' );
+		$hierarchy = $this->plugin->civicrm->contact_type->hierarchy_get_by_id( $contact_type_id, 'id' );
 
 		// Bail if we didn't get any.
 		if ( $hierarchy === false ) {
@@ -917,16 +816,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		}
 
 		// Get the Contact Type hierarchy.
-		$hierarchy = $this->acf_loader->civicrm->contact_type->hierarchy_get_for_contact( $contact );
+		$hierarchy = $this->plugin->civicrm->contact_type->hierarchy_get_for_contact( $contact );
 
 		// Get separated array of Contact Types.
-		$contact_types = $this->civicrm->contact_type->hierarchy_separate( $hierarchy );
+		$contact_types = $this->plugin->civicrm->contact_type->hierarchy_separate( $hierarchy );
 
 		// Check each Contact Type in turn.
 		foreach ( $contact_types as $contact_type ) {
 
 			// Get the Post Type mapped to this Contact Type.
-			$post_type = $this->acf_loader->civicrm->contact_type->is_mapped_to_post_type( $contact_type );
+			$post_type = $this->civicrm->contact_type->is_mapped_to_post_type( $contact_type );
 
 			// Skip if this Contact Type is not mapped.
 			if ( $post_type === false ) {
@@ -1066,185 +965,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 
 	/**
-	 * Create a CiviCRM Contact for a given set of data.
-	 *
-	 * @since 0.4
-	 *
-	 * @param array $contact The CiviCRM Contact data.
-	 * @return array|bool $contact_data The array Contact data from the CiviCRM API, or false on failure.
-	 */
-	public function create( $contact ) {
-
-		// Init as failure.
-		$contact_data = false;
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $contact_data;
-		}
-
-		// Build params to create Contact.
-		$params = [
-			'version' => 3,
-			'debug' => 1,
-		] + $contact;
-
-		/*
-		 * Minimum array to create a Contact:
-		 *
-		 * $params = [
-		 *   'version' => 3,
-		 *   'contact_type' => "Individual",
-		 *   'contact_sub_type' => "Dog",
-		 *   'display_name' => "Rover",
-		 * ];
-		 *
-		 * Updates are triggered by:
-		 *
-		 * $params['id'] = 255;
-		 *
-		 * Custom Fields are addressed by ID:
-		 *
-		 * $params['custom_9'] = "Blah";
-		 * $params['custom_7'] = 1;
-		 * $params['custom_8'] = 0;
-		 *
-		 * CiviCRM kindly ignores any Custom Fields which are passed to it that
-		 * aren't attached to the Entity. This is of significance when a Field
-		 * Group is attached to multiple Post Types (for example) and the Fields
-		 * refer to different Entities (e.g. "Dog" and "Student").
-		 *
-		 * Nice.
-		 */
-
-		// Call the API.
-		$result = civicrm_api( 'Contact', 'create', $params );
-
-		// Log and bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			$e = new Exception;
-			$trace = $e->getTraceAsString();
-			error_log( print_r( array(
-				'method' => __METHOD__,
-				'params' => $params,
-				'result' => $result,
-				//'backtrace' => $trace,
-			), true ) );
-			return $contact_data;
-		}
-
-		// Bail if there are no results.
-		if ( empty( $result['values'] ) ) {
-			return $contact_data;
-		}
-
-		// The result set should contain only one item.
-		$contact_data = array_pop( $result['values'] );
-
-		// --<
-		return $contact_data;
-
-	}
-
-
-
-	/**
-	 * Update a CiviCRM Contact with a given set of data.
-	 *
-	 * This is an alias of `self::create()` except that we expect a
-	 * Contact ID to have been set in the Contact data.
-	 *
-	 * @since 0.4
-	 *
-	 * @param array $contact The CiviCRM Contact data.
-	 * @return array|bool The array of Contact data from the CiviCRM API, or false on failure.
-	 */
-	public function update( $contact ) {
-
-		// Log and bail if there's no Contact ID.
-		if ( empty( $contact['id'] ) ) {
-			$e = new \Exception();
-			$trace = $e->getTraceAsString();
-			error_log( print_r( [
-				'method' => __METHOD__,
-				'message' => __( 'A numerical ID must be present to update a Contact.', 'civicrm-wp-profile-sync' ),
-				'contact' => $contact,
-				'backtrace' => $trace,
-			], true ) );
-			return false;
-		}
-
-		// Pass through.
-		return $this->create( $contact );
-
-	}
-
-
-
-	/**
-	 * Delete a CiviCRM Contact for a given set of data.
-	 *
-	 * @since 0.4
-	 *
-	 * @param array $contact The CiviCRM Contact data.
-	 * @return array|bool $contact_data The array Contact data from the CiviCRM API, or false on failure.
-	 */
-	public function delete( $contact ) {
-
-		// Init as failure.
-		$contact_data = false;
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $contact_data;
-		}
-
-		// Log and bail if there's no Contact ID.
-		if ( empty( $contact['id'] ) ) {
-			$e = new \Exception();
-			$trace = $e->getTraceAsString();
-			error_log( print_r( [
-				'method' => __METHOD__,
-				'message' => __( 'A numerical ID must be present to delete a Contact.', 'civicrm-wp-profile-sync' ),
-				'contact' => $contact,
-				'backtrace' => $trace,
-			], true ) );
-			return false;
-		}
-
-		// Build params to delete Contact.
-		$params = [
-			'version' => 3,
-		] + $contact;
-
-		// Call the API.
-		$result = civicrm_api( 'Contact', 'delete', $params );
-
-		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			return $contact_data;
-		}
-
-		// Bail if there are no results.
-		if ( empty( $result['values'] ) ) {
-			return $contact_data;
-		}
-
-		// The result set should contain only one item.
-		$contact_data = array_pop( $result['values'] );
-
-		// --<
-		return $contact_data;
-
-	}
-
-
-
-	// -------------------------------------------------------------------------
-
-
-
-	/**
 	 * Prepare the required CiviCRM Contact data from a WordPress Post.
 	 *
 	 * @since 0.4
@@ -1286,7 +1006,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 			$contact = $this->get_by_id( $contact_id );
 
 			// Get current Contact Type hierarchy for the Contact.
-			$hierarchy = $this->civicrm->contact_type->hierarchy_get_for_contact( $contact );
+			$hierarchy = $this->plugin->civicrm->contact_type->hierarchy_get_for_contact( $contact );
 
 			// Contact Type is always the same.
 			$contact_data['contact_type'] = $hierarchy['type'];
@@ -1298,7 +1018,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		}
 
 		// Flatten the hierarchy.
-		$flattened = $this->civicrm->contact_type->hierarchy_separate( $contact_types );
+		$flattened = $this->plugin->civicrm->contact_type->hierarchy_separate( $contact_types );
 
 		// Are all Subtypes empty?
 		$empty_subtype = true;
@@ -1314,7 +1034,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 			unset( $contact_data['contact_sub_type'] );
 		}
 
-		// Set mandatory fields for Contacts depending on their Contact Type.
+		// Set mandatory Fields for Contacts depending on their Contact Type.
 		if ( $contact_data['contact_type'] == 'Organization' ) {
 			$contact_data['organization_name'] = $contact_data['display_name'];
 		}
@@ -1341,18 +1061,18 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		 * The question, therefore, is how to manage the sync between the WordPress
 		 * "post_title" and the CiviCRM Contact "display_name"...
 		 *
-		 * When there are mapped ACF fields for "first_name" and "last_name", this
+		 * When there are mapped ACF Fields for "first_name" and "last_name", this
 		 * becomes less of a problem, though it's not clear how to populate these
-		 * fields for a Contact with just one name that is not a Contact Type which
+		 * Fields for a Contact with just one name that is not a Contact Type which
 		 * extends "Organisation" or "Household" (a dog, for example).
 		 *
 		 * Let's take the example of a dog called "Rover":
 		 *
 		 * - The WordPress "post_title" would be "Rover".
 		 * - The Contact "display_name" should be "Rover".
-		 * - The CiviCRM API requires the "first_name" and "last_name" fields.
+		 * - The CiviCRM API requires the "first_name" and "last_name" Fields.
 		 * - The CiviCRM API does not update the "display_name" directly.
-		 * - There are no "first_name" and "last_name" ACF fields.
+		 * - There are no "first_name" and "last_name" ACF Fields.
 		 *
 		 * In this situation, there is no obvious way of configuring this in either
 		 * the WordPress or CiviCRM UIs. WordPress has no UI for Post Types (except
@@ -1361,7 +1081,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		 * these options are configurable.
 		 *
 		 * At present, I can't think of other situations where there's a mismatch
-		 * between these fields, so perhaps a plugin Settings Page might be needed
+		 * between these Fields, so perhaps a plugin Settings Page might be needed
 		 * with a checkbox per Post Type selecting between:
 		 *
 		 * - Sync where the Contact has just one name
@@ -1398,9 +1118,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		$contact_data = $this->prepare_from_post( $post );
 
 		/*
-		 * Should we save the Post ID in the "External ID" field?
+		 * Should we save the Post ID in the "External ID" Field?
 		 *
-		 * The problem with this is that people actually use the field!
+		 * The problem with this is that people actually use the Field!
 		 *
 		 * Reverse look-ups (i.e. from CiviCRM) can be done by querying Posts
 		 * with a meta query.
@@ -1409,7 +1129,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		 */
 
 		// Create the Contact.
-		$contact = $this->create( $contact_data );
+		$contact = $this->plugin->civicrm->contact->create( $contact_data );
 
 		// --<
 		return $contact;
@@ -1439,7 +1159,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		$contact_data = $this->prepare_from_post( $post, $existing_id );
 
 		// Update the Contact.
-		$contact = $this->update( $contact_data );
+		$contact = $this->plugin->civicrm->contact->update( $contact_data );
 
 		// --<
 		return $contact;
@@ -1475,10 +1195,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 */
 	public function prepare_from_fields( $fields, $post_id = null ) {
 
-		// Init data for fields.
+		// Init data for Fields.
 		$contact_data = [];
 
-		// Bail if we have no field data to save.
+		// Bail if we have no Field data to save.
 		if ( empty( $fields ) ) {
 			return $contact_data;
 		}
@@ -1486,10 +1206,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		// Get all Fields that are handled separately.
 		$fields_handled = $this->fields_handled_get();
 
-		// Loop through the field data.
+		// Loop through the Field data.
 		foreach ( $fields as $selector => $value ) {
 
-			// Get the field settings.
+			// Get the Field settings.
 			$settings = get_field_object( $selector, $post_id );
 
 			// Get the CiviCRM Custom Field and Contact Field.
@@ -1523,10 +1243,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 					'contact_field_name' => $contact_field_name,
 				];
 
-				// Parse value by field type.
+				// Parse value by Field Type.
 				$value = $this->acf_loader->acf->field->value_get_for_civicrm( $value, $settings['type'], $settings, $args );
 
-				// Add it to the field data.
+				// Add it to the Field data.
 				$contact_data[$code] = $value;
 
 			}
@@ -1559,7 +1279,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		$contact_data['id'] = $contact_id;
 
 		// Update the Contact.
-		$contact = $this->update( $contact_data );
+		$contact = $this->plugin->civicrm->contact->update( $contact_data );
 
 		// --<
 		return $contact;
@@ -1610,7 +1330,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		 */
 		$choices = apply_filters( 'cwps/acf/contact/civicrm_field/choices', $choices );
 
-		// Define field.
+		// Define Field.
 		$field = [
 			'key' => $this->civicrm->acf_field_key_get(),
 			'label' => __( 'CiviCRM Field', 'civicrm-wp-profile-sync' ),
@@ -1640,7 +1360,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $field The existing field data array.
+	 * @param array $field The existing Field data array.
 	 * @return string|bool $contact_field_name The name of the Contact Field, or false if none.
 	 */
 	public function contact_field_name_get( $field ) {
@@ -1742,7 +1462,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		}
 
 		// Get the Contact Fields for this ACF Field.
-		$contact_fields = $this->acf_loader->civicrm->contact_field->get_for_acf_field( $field );
+		$contact_fields = $this->civicrm->contact_field->get_for_acf_field( $field );
 
 		// Init Custom Fields array.
 		$custom_fields = [];
@@ -1754,16 +1474,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 			$contact_type_id = $this->civicrm->contact_type->id_get_for_post_type( $post_type_name );
 
 			// Get Contact Type hierarchy.
-			$hierarchy = $this->civicrm->contact_type->hierarchy_get_by_id( $contact_type_id );
+			$hierarchy = $this->plugin->civicrm->contact_type->hierarchy_get_by_id( $contact_type_id );
 
 			// Get separated array of Contact Types.
-			$contact_types = $this->civicrm->contact_type->hierarchy_separate( $hierarchy );
+			$contact_types = $this->plugin->civicrm->contact_type->hierarchy_separate( $hierarchy );
 
 			// Check each Contact Type in turn.
 			foreach ( $contact_types as $contact_type ) {
 
 				// Get the Custom Fields for this CiviCRM Contact Type.
-				$custom_fields_for_type = $this->civicrm->custom_field->get_for_entity_type(
+				$custom_fields_for_type = $this->plugin->civicrm->custom_field->get_for_entity_type(
 					$contact_type['type'],
 					$contact_type['subtype']
 				);
@@ -1848,22 +1568,22 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		foreach ( $entity_array[$this->identifier] as $entity_id ) {
 
 			// Get Contact Type hierarchy for this Entity ID.
-			$hierarchy = $this->civicrm->contact_type->hierarchy_get_by_id( $entity_id );
+			$hierarchy = $this->plugin->civicrm->contact_type->hierarchy_get_by_id( $entity_id );
 
-			// Get the public fields on the Entity for this Field Type.
-			$fields_for_entity = $this->acf_loader->civicrm->contact_field->data_get( $hierarchy['type'], $field['type'], 'public' );
+			// Get the public Fields on the Entity for this Field Type.
+			$fields_for_entity = $this->civicrm->contact_field->data_get( $hierarchy['type'], $field['type'], 'public' );
 
 			// Get the Custom Fields for this Entity.
 			$custom_fields = [];
 
 			// Get separated array of Contact Types.
-			$contact_types = $this->civicrm->contact_type->hierarchy_separate( $hierarchy );
+			$contact_types = $this->plugin->civicrm->contact_type->hierarchy_separate( $hierarchy );
 
 			// Check each Contact Type in turn.
 			foreach ( $contact_types as $contact_type ) {
 
 				// Get the Custom Fields for this CiviCRM Contact Type.
-				$custom_fields_for_type = $this->civicrm->custom_field->get_for_entity_type(
+				$custom_fields_for_type = $this->plugin->civicrm->custom_field->get_for_entity_type(
 					$contact_type['type'],
 					$contact_type['subtype']
 				);
@@ -1923,22 +1643,22 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		foreach ( $entity_array[$this->identifier] as $entity_id ) {
 
 			// Get Contact Type hierarchy for this Entity ID.
-			$hierarchy = $this->civicrm->contact_type->hierarchy_get_by_id( $entity_id );
+			$hierarchy = $this->plugin->civicrm->contact_type->hierarchy_get_by_id( $entity_id );
 
-			// Get the public fields on the Entity for this Field Type.
-			$fields_for_entity = $this->acf_loader->civicrm->contact_field->data_get( $hierarchy['type'], $field['type'], 'public' );
+			// Get the public Fields on the Entity for this Field Type.
+			$fields_for_entity = $this->civicrm->contact_field->data_get( $hierarchy['type'], $field['type'], 'public' );
 
 			// Get the Custom Fields for this Entity.
 			$custom_fields = [];
 
 			// Get separated array of Contact Types.
-			$contact_types = $this->civicrm->contact_type->hierarchy_separate( $hierarchy );
+			$contact_types = $this->plugin->civicrm->contact_type->hierarchy_separate( $hierarchy );
 
 			// Check each Contact Type in turn.
 			foreach ( $contact_types as $contact_type ) {
 
 				// Get the Custom Fields for this CiviCRM Contact Type.
-				$custom_fields_for_type = $this->civicrm->custom_field->get_for_entity_type(
+				$custom_fields_for_type = $this->plugin->civicrm->custom_field->get_for_entity_type(
 					$contact_type['type'],
 					$contact_type['subtype']
 				);
@@ -2014,7 +1734,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	public function query_bypass_entities( $entities, $rule = [] ) {
 
 		// Get all Contact Types.
-		$contact_types = $this->civicrm->contact_type->types_get_nested();
+		$contact_types = $this->plugin->civicrm->contact_type->types_get_nested();
 
 		// Bail if there are none.
 		if ( empty( $contact_types ) ) {
@@ -2106,16 +1826,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 			$contact_type_id = $this->civicrm->contact_type->id_get_for_post_type( $post_type_name );
 
 			// Get Contact Type hierarchy.
-			$hierarchy = $this->civicrm->contact_type->hierarchy_get_by_id( $contact_type_id );
+			$hierarchy = $this->plugin->civicrm->contact_type->hierarchy_get_by_id( $contact_type_id );
 
 			// Get separated array of Contact Types.
-			$contact_types = $this->civicrm->contact_type->hierarchy_separate( $hierarchy );
+			$contact_types = $this->plugin->civicrm->contact_type->hierarchy_separate( $hierarchy );
 
 			// Check each Contact Type in turn.
 			foreach ( $contact_types as $contact_type ) {
 
 				// Get the Custom Fields for this CiviCRM Contact Type.
-				$custom_fields_for_type = $this->civicrm->custom_field->get_for_entity_type(
+				$custom_fields_for_type = $this->plugin->civicrm->custom_field->get_for_entity_type(
 					$contact_type['type'],
 					$contact_type['subtype']
 				);

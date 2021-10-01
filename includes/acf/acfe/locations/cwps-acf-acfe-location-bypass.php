@@ -56,7 +56,7 @@ class CiviCRM_Profile_Sync_ACF_Location_Type_Bypass extends ACF_Location {
 	 *
 	 * @param array $rule The Location Rule.
 	 * @param array $screen The screen args.
-	 * @param array $field_group The field group settings.
+	 * @param array $field_group The Field Group settings.
 	 * @return bool True if the rule applies, false otherwise.
 	 */
 	public function match( $rule, $screen, $field_group ) {

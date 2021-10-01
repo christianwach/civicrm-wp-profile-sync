@@ -396,10 +396,10 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$args['post'] = '';
 
 		/*
-		 * Get existing field values.
+		 * Get existing Field values.
 		 *
 		 * These are actually the *new* values because we are hooking in *after*
-		 * the fields have been saved.
+		 * the Fields have been saved.
 		 *
 		 * When getting values here, we pass in the Post ID, which is "user_N":
 		 *
@@ -683,7 +683,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$phone_id = (int) $args['objectId'];
 
 		// Grab the Phone Record data from the database.
-		$phone_pre = $this->civicrm->phone->phone_get_by_id( $phone_id );
+		$phone_pre = $this->plugin->civicrm->phone->phone_get_by_id( $phone_id );
 
 		// Maybe cast previous Phone Record data as object and stash in a property.
 		if ( ! is_object( $phone_pre ) ) {
@@ -1019,7 +1019,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$address_id = (int) $args['objectId'];
 
 		// Grab the Address Record data from the database.
-		$address_pre = $this->civicrm->address->address_get_by_id( $address_id );
+		$address_pre = $this->plugin->civicrm->address->address_get_by_id( $address_id );
 
 		// Maybe cast previous Address Record data as object and stash in a property.
 		if ( ! is_object( $address_pre ) ) {
@@ -1120,7 +1120,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		}
 
 		// Grab the previous Address data from the database via API.
-		$this->map_address_pre = $this->civicrm->address->address_get_by_id( $address->id );
+		$this->map_address_pre = $this->plugin->civicrm->address->address_get_by_id( $address->id );
 
 	}
 
@@ -1159,7 +1159,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$this->civicrm->google_map->fields_update( $post_id, $address );
 
 		// If this address has no "Master Address" then it might be one itself.
-		$addresses_shared = $this->civicrm->address->addresses_shared_get_by_id( $address->id );
+		$addresses_shared = $this->plugin->civicrm->address->addresses_shared_get_by_id( $address->id );
 
 		// Bail if there are none.
 		if ( empty( $addresses_shared ) ) {
@@ -1231,7 +1231,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$this->civicrm->google_map->fields_update( $post_id, $address, $this->map_address_pre );
 
 		// If this address has no "Master Address" then it might be one itself.
-		$addresses_shared = $this->civicrm->address->addresses_shared_get_by_id( $address->id );
+		$addresses_shared = $this->plugin->civicrm->address->addresses_shared_get_by_id( $address->id );
 
 		// Bail if there are none.
 		if ( empty( $addresses_shared ) ) {
@@ -1303,7 +1303,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$this->civicrm->google_map->fields_update( $post_id, $address );
 
 		// If this address has no "Master Address" then it might be one itself.
-		$addresses_shared = $this->civicrm->address->addresses_shared_get_by_id( $address->id );
+		$addresses_shared = $this->plugin->civicrm->address->addresses_shared_get_by_id( $address->id );
 
 		// Bail if there are none.
 		if ( empty( $addresses_shared ) ) {
@@ -1404,7 +1404,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$address_id = (int) $args['objectId'];
 
 		// Grab the Address Record data from the database.
-		$address_pre = $this->civicrm->address->address_get_by_id( $address_id );
+		$address_pre = $this->plugin->civicrm->address->address_get_by_id( $address_id );
 
 		// Maybe cast previous Address Record data as object and stash in a property.
 		if ( ! is_object( $address_pre ) ) {
@@ -1534,7 +1534,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$address_id = (int) $args['objectId'];
 
 		// Grab the Address Record data from the database.
-		$address_pre = $this->civicrm->address->address_get_by_id( $address_id );
+		$address_pre = $this->plugin->civicrm->address->address_get_by_id( $address_id );
 
 		// Maybe cast previous Address Record data as object and stash in a property.
 		if ( ! is_object( $address_pre ) ) {
@@ -1728,12 +1728,12 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$contact_fields = [];
 
 		// Users can be mapped to any Contact Type.
-		$contact_types = $this->civicrm->contact_type->types_get_nested();
+		$contact_types = $this->plugin->civicrm->contact_type->types_get_nested();
 
 		// Get the Contact Fields for each CiviCRM Contact Type.
 		foreach ( $contact_types as $contact_type ) {
 
-			// Get public fields of this type.
+			// Get public Fields of this type.
 			$contact_fields_for_type = $this->civicrm->contact_field->data_get( $contact_type['name'], $field['type'], 'public' );
 
 			// Merge with return array.
@@ -1751,7 +1751,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 			$type_name = $contact_type['name'];
 
 			// Get the Custom Fields for this Contact Type.
-			$custom_fields_for_type = $this->civicrm->custom_field->get_for_entity_type( $type_name, '' );
+			$custom_fields_for_type = $this->plugin->civicrm->custom_field->get_for_entity_type( $type_name, '' );
 
 			// Merge with return array.
 			$custom_fields = array_merge( $custom_fields, $custom_fields_for_type );
@@ -1768,7 +1768,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 				$subtype_name = $contact_subtype['name'];
 
 				// Get the Custom Fields for this Contact Subtype.
-				$custom_fields_for_type = $this->civicrm->custom_field->get_for_entity_type( $type_name, $subtype_name );
+				$custom_fields_for_type = $this->plugin->civicrm->custom_field->get_for_entity_type( $type_name, $subtype_name );
 
 				// Merge with return array.
 				$custom_fields = array_merge( $custom_fields, $custom_fields_for_type );
@@ -1849,7 +1849,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		}
 
 		// Users can be mapped to any Contact Type.
-		$contact_types = $this->civicrm->contact_type->types_get_nested();
+		$contact_types = $this->plugin->civicrm->contact_type->types_get_nested();
 
 		// Get the Custom Fields for each CiviCRM Contact Type.
 		foreach ( $contact_types as $contact_type ) {
@@ -1858,7 +1858,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 			$type_name = $contact_type['name'];
 
 			// Get the Custom Fields for this Contact Type.
-			$custom_fields_for_type = $this->civicrm->custom_field->get_for_entity_type( $type_name, '' );
+			$custom_fields_for_type = $this->plugin->civicrm->custom_field->get_for_entity_type( $type_name, '' );
 
 			// Merge with return array.
 			$custom_fields = array_merge( $custom_fields, $custom_fields_for_type );
@@ -1875,7 +1875,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 				$subtype_name = $contact_subtype['name'];
 
 				// Get the Custom Fields for this Contact Subtype.
-				$custom_fields_for_type = $this->civicrm->custom_field->get_for_entity_type( $type_name, $subtype_name );
+				$custom_fields_for_type = $this->plugin->civicrm->custom_field->get_for_entity_type( $type_name, $subtype_name );
 
 				// Merge with return array.
 				$custom_fields = array_merge( $custom_fields, $custom_fields_for_type );
@@ -1913,12 +1913,12 @@ class CiviCRM_Profile_Sync_ACF_User {
 		}
 
 		// Users can be mapped to any Contact Type.
-		$contact_types = $this->civicrm->contact_type->types_get_nested();
+		$contact_types = $this->plugin->civicrm->contact_type->types_get_nested();
 
 		// Get the Custom Fields for each CiviCRM Contact Type.
 		foreach ( $contact_types as $contact_type ) {
 
-			// Get public fields of this type.
+			// Get public Fields of this type.
 			$contact_fields_for_type = $this->civicrm->contact_field->data_get( $contact_type['name'], $field['type'], 'public' );
 
 			// Merge with return array.

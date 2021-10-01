@@ -23,6 +23,15 @@ defined( 'ABSPATH' ) || exit;
 class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_CiviCRM_Base {
 
 	/**
+	 * Plugin object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
+	/**
 	 * ACF Loader object.
 	 *
 	 * @since 0.4
@@ -61,7 +70,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 	public $shortcode;
 
 	/**
-	 * "CiviCRM Field" field value prefix in the ACF Field data.
+	 * "CiviCRM Field" Field value prefix in the ACF Field data.
 	 *
 	 * This distinguishes Phone Fields from Custom Fields.
 	 *
@@ -99,10 +108,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 	 */
 	public function __construct( $parent ) {
 
-		// Store reference to ACF Loader object.
+		// Store references to objects.
+		$this->plugin = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-
-		// Store reference to parent.
 		$this->civicrm = $parent;
 
 		// Init when the CiviCRM object is loaded.
@@ -251,15 +259,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		// Init success.
 		$success = true;
 
-		// Bail if we have no field data to save.
+		// Bail if we have no Field data to save.
 		if ( empty( $args['fields'] ) ) {
 			return $success;
 		}
 
-		// Loop through the field data.
+		// Loop through the Field data.
 		foreach ( $args['fields'] as $field => $value ) {
 
-			// Get the field settings.
+			// Get the Field settings.
 			$settings = get_field_object( $field, $args['post_id'] );
 
 			// Maybe update a Phone Record.
@@ -311,170 +319,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 
 	/**
-	 * Get the data for a Phone Record.
-	 *
-	 * @since 0.4
-	 *
-	 * @param integer $phone_id The numeric ID of the Phone Record.
-	 * @param array $phone The array of Phone Record data, or empty if none.
-	 */
-	public function phone_get_by_id( $phone_id ) {
-
-		// Init return.
-		$phone = [];
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $phone;
-		}
-
-		// Construct API query.
-		$params = [
-			'version' => 3,
-			'id' => $phone_id,
-		];
-
-		// Get Phone Record details via API.
-		$result = civicrm_api( 'Phone', 'get', $params );
-
-		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			return $phone;
-		}
-
-		// Bail if there are no results.
-		if ( empty( $result['values'] ) ) {
-			return $phone;
-		}
-
- 		// The result set should contain only one item.
-		$phone = array_pop( $result['values'] );
-
-		// --<
-		return $phone;
-
-	}
-
-
-
-	/**
-	 * Get the data for a Contact's Phone Records by Type.
-	 *
-	 * @since 0.5
-	 *
-	 * @param integer $contact_id The numeric ID of the CiviCRM Contact.
-	 * @param integer $location_type_id The numeric ID of the Phone Location Type.
-	 * @param integer $phone_type_id The numeric ID of the Phone Type.
-	 * @param array $phones The array of Phone Record data, or empty if none.
-	 */
-	public function phones_get_by_type( $contact_id, $location_type_id, $phone_type_id ) {
-
-		// Init return.
-		$phones = [];
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $phones;
-		}
-
-		// Construct API query.
-		$params = [
-			'version' => 3,
-			'contact_id' => $contact_id,
-			'location_type_id' => $location_type_id,
-			'phone_type_id' => $phone_type_id,
-		];
-
-		// Get Phone Record details via API.
-		$result = civicrm_api( 'Phone', 'get', $params );
-
-		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			return $phones;
-		}
-
-		// Bail if there are no results.
-		if ( empty( $result['values'] ) ) {
-			return $phones;
-		}
-
- 		// We want the result set.
- 		foreach ( $result['values'] as $value ) {
-			$phones[] =  (object) $value;
-		}
-
-		// --<
-		return $phones;
-
-	}
-
-
-
-	// -------------------------------------------------------------------------
-
-
-
-	/**
-	 * Get the Phone Records for a given Contact ID.
-	 *
-	 * @since 0.4
-	 *
-	 * @param integer $contact_id The numeric ID of the CiviCRM Contact.
-	 * @return array $phone_data The array of Phone Record data for the CiviCRM Contact.
-	 */
-	public function phones_get_for_contact( $contact_id ) {
-
-		// Init return.
-		$phone_data = [];
-
-		// Bail if we have no Contact ID.
-		if ( empty( $contact_id ) ) {
-			return $phone_data;
-		}
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $phone_data;
-		}
-
-		// Define params to get queried Phone Records.
-		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'contact_id' => $contact_id,
-			'options' => [
-				'limit' => 0, // No limit.
-			],
-		];
-
-		// Call the API.
-		$result = civicrm_api( 'Phone', 'get', $params );
-
-		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			return $phone_data;
-		}
-
-		// Bail if there are no results.
-		if ( empty( $result['values'] ) ) {
-			return $phone_data;
-		}
-
-		// The result set it what we want.
-		$phone_data = $result['values'];
-
-		// --<
-		return $phone_data;
-
-	}
-
-
-
-	// -------------------------------------------------------------------------
-
-
-
-	/**
 	 * Intercept when a Post is been synced from a Contact.
 	 *
 	 * Sync any associated ACF Fields mapped to Custom Fields.
@@ -486,7 +330,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 	public function contact_sync_to_post( $args ) {
 
 		// Get all Phone Records for this Contact.
-		$data = $this->phones_get_for_contact( $args['objectId'] );
+		$data = $this->plugin->civicrm->phone->phones_get_for_contact( $args['objectId'] );
 
 		// Bail if there are no Phone Record Fields.
 		if ( empty( $data ) ) {
@@ -549,7 +393,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		}
 
 		// Get the current Phone Records.
-		$current = $this->phones_get_for_contact( $contact_id );
+		$current = $this->plugin->civicrm->phone->phones_get_for_contact( $contact_id );
 
 		// If there are no existing Phone Records.
 		if ( empty( $current ) ) {
@@ -561,7 +405,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 				$phone_data = $this->prepare_from_field( $value );
 
 				// Okay, let's do it.
-				$phone = $this->update( $contact_id, $phone_data );
+				$phone = $this->plugin->civicrm->phone->update( $contact_id, $phone_data );
 
 				// Add to return array.
 				$phones[] = $phone;
@@ -641,7 +485,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 			$phone_data = $this->prepare_from_field( $value );
 
 			// Okay, let's do it.
-			$phone = $this->update( $contact_id, $phone_data );
+			$phone = $this->plugin->civicrm->phone->update( $contact_id, $phone_data );
 
 			// Add to return array.
 			$phones[] = $phone;
@@ -676,7 +520,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 			$phone_data = $this->prepare_from_field( $value, $value['field_phone_id'] );
 
 			// Okay, let's do it.
-			$phone = $this->update( $contact_id, $phone_data );
+			$phone = $this->plugin->civicrm->phone->update( $contact_id, $phone_data );
 
 			// Add to return array.
 			$phones[] = $phone;
@@ -788,7 +632,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 		// Convert CiviCRM data to ACF data.
 		$phone_data['field_phone_number'] = trim( $value->phone );
-		$phone_data['field_phone_extension'] = $this->acf_loader->civicrm->denullify( $phone_ext );
+		$phone_data['field_phone_extension'] = $this->plugin->civicrm->denullify( $phone_ext );
 		$phone_data['field_phone_location'] = (int) $value->location_type_id;
 		$phone_data['field_phone_type'] = (int) $value->phone_type_id;
 		$phone_data['field_phone_primary'] = empty( $value->is_primary ) ? '0' : '1';
@@ -796,104 +640,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 		// --<
 		return $phone_data;
-
-	}
-
-
-
-	/**
-	 * Update a CiviCRM Contact's Phone Record.
-	 *
-	 * If you want to "create" a Phone Record, do not pass $data['id'] in. The
-	 * presence of an ID will cause an update to that Phone Record.
-	 *
-	 * @since 0.4
-	 *
-	 * @param integer $contact_id The numeric ID of the Contact.
-	 * @param string $data The Phone data to update the Contact with.
-	 * @return array|bool $phone The array of Phone Record data, or false on failure.
-	 */
-	public function update( $contact_id, $data ) {
-
-		// Init return.
-		$phone = false;
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $phone;
-		}
-
-		// Define params to create new Phone Record.
-		$params = [
-			'version' => 3,
-			'contact_id' => $contact_id,
-		] + $data;
-
-		// Call the API.
-		$result = civicrm_api( 'Phone', 'create', $params );
-
-		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			return $phone;
-		}
-
-		// Bail if there are no results.
-		if ( empty( $result['values'] ) ) {
-			return $phone;
-		}
-
-		// The result set should contain only one item.
-		$phone = array_pop( $result['values'] );
-
-		// --<
-		return $phone;
-
-	}
-
-
-
-	/**
-	 * Delete a Phone Record in CiviCRM.
-	 *
-	 * @since 0.4
-	 *
-	 * @param integer $phone_id The numeric ID of the Phone Record.
-	 * @return bool $success True if successfully deleted, or false on failure.
-	 */
-	public function delete( $phone_id ) {
-
-		// Init return.
-		$success = false;
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $success;
-		}
-
-		// Define params to delete this Phone Record.
-		$params = [
-			'version' => 3,
-			'id' => $phone_id,
-		];
-
-		// Call the API.
-		$result = civicrm_api( 'Phone', 'delete', $params );
-
-		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			return $success;
-		}
-
-		// Bail if there are no results.
-		if ( empty( $result['values'] ) ) {
-			return $success;
-		}
-
-		// The result set should contain only one item.
-		$success = ( $result['values'] == '1' ) ? true : false;
-
-		// --<
-		return $success;
 
 	}
 
@@ -951,7 +697,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		$phone_id = (int) $args['objectId'];
 
 		// Grab the Phone Record data from the database.
-		$phone_pre = $this->phone_get_by_id( $phone_id );
+		$phone_pre = $this->plugin->civicrm->phone->phone_get_by_id( $phone_id );
 
 		// Maybe cast previous Phone Record data as object and stash in a property.
 		if ( ! is_object( $phone_pre ) ) {
@@ -1012,20 +758,20 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		$acf_phone = $this->prepare_from_civicrm( $phone );
 
 		// Get the Contact data.
-		$contact = $this->acf_loader->civicrm->contact->get_by_id( $phone->contact_id );
+		$contact = $this->plugin->civicrm->contact->get_by_id( $phone->contact_id );
 
 		// Get originating Entity.
 		$entity = $this->acf_loader->mapper->entity_get();
 
 		// Test if any of this Contact's Contact Types is mapped to a Post Type.
-		$post_types = $this->acf_loader->civicrm->contact->is_mapped( $contact, 'create' );
+		$post_types = $this->civicrm->contact->is_mapped( $contact, 'create' );
 		if ( $post_types !== false ) {
 
 			// Handle each Post Type in turn.
 			foreach ( $post_types as $post_type ) {
 
 				// Get the Post ID for this Contact.
-				$post_id = $this->acf_loader->civicrm->contact->is_mapped_to_post( $contact, $post_type );
+				$post_id = $this->civicrm->contact->is_mapped_to_post( $contact, $post_type );
 
 				// Skip if not mapped or Post doesn't yet exist.
 				if ( $post_id === false ) {
@@ -1179,55 +925,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 
 	/**
-	 * Get the Phone Locations that are defined in CiviCRM.
-	 *
-	 * @since 0.4
-	 *
-	 * @return array $location_types The array of possible Phone Locations.
-	 */
-	public function location_types_get() {
-
-		// Init return.
-		$location_types = [];
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $location_types;
-		}
-
-		// Params to get all Location Types.
-		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'options' => [
-				'limit' => 0,
-			],
-		];
-
-		// Call the CiviCRM API.
-		$result = civicrm_api( 'LocationType', 'get', $params );
-
-		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			return $location_types;
-		}
-
-		// Bail if there are no results.
-		if ( empty( $result['values'] ) ) {
-			return $location_types;
-		}
-
-		// Assign results to return.
-		$location_types = $result['values'];
-
-		// --<
-		return $location_types;
-
-	}
-
-
-
-	/**
 	 * Get the Phone Locations that can be mapped to an ACF Field.
 	 *
 	 * @since 0.4
@@ -1240,16 +937,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		// Init return.
 		$location_types = [];
 
-		// Get field group for this field's parent.
+		// Get Field Group for this Field's parent.
 		$field_group = $this->acf_loader->acf->field_group->get_for_field( $field );
 
-		// Bail if there's no field group.
+		// Bail if there's no Field Group.
 		if ( empty( $field_group ) ) {
 			return $location_types;
 		}
 
-		// Get Location Types.
-		$location_types = $this->location_types_get();
+		// Phone Locations are standard Location Types.
+		$location_types = $this->plugin->civicrm->address->location_types_get();
 
 		/**
 		 * Filter the retrieved Location Types.
@@ -1273,52 +970,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 
 	/**
-	 * Get the Phone Types that are defined in CiviCRM.
-	 *
-	 * @since 0.4
-	 *
-	 * @return array $phone_types The array of possible Phone Types.
-	 */
-	public function phone_types_get() {
-
-		// Only do this once per Field Group.
-		static $pseudocache;
-		if ( isset( $pseudocache ) ) {
-			return $pseudocache;
-		}
-
-		// Init return.
-		$phone_types = [];
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $phone_types;
-		}
-
-		// Get the Phone Types array.
-		$phone_type_ids = CRM_Core_PseudoConstant::get( 'CRM_Core_DAO_Phone', 'phone_type_id' );
-
-		// Bail if there are no results.
-		if ( empty( $phone_type_ids ) ) {
-			return $phone_types;
-		}
-
-		// Assign to return.
-		$phone_types = $phone_type_ids;
-
-		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache ) ) {
-			$pseudocache = $phone_types;
-		}
-
-		// --<
-		return $phone_types;
-
-	}
-
-
-
-	/**
 	 * Get the Phone Types that can be mapped to an ACF Field.
 	 *
 	 * @since 0.4
@@ -1331,16 +982,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		// Init return.
 		$phone_types = [];
 
-		// Get field group for this field's parent.
+		// Get Field Group for this Field's parent.
 		$field_group = $this->acf_loader->acf->field_group->get_for_field( $field );
 
-		// Bail if there's no field group.
+		// Bail if there's no Field Group.
 		if ( empty( $field_group ) ) {
 			return $phone_types;
 		}
 
 		// Get the Phone Types array.
-		$phone_type_ids = $this->phone_types_get();
+		$phone_type_ids = $this->plugin->civicrm->phone->phone_types_get();
 
 		// Bail if there are no results.
 		if ( empty( $phone_type_ids ) ) {
@@ -1442,8 +1093,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $filter The token by which to filter the array of fields.
-	 * @return array $fields The array of field names.
+	 * @param string $filter The token by which to filter the array of Fields.
+	 * @return array $fields The array of Field names.
 	 */
 	public function civicrm_fields_get( $filter = 'none' ) {
 
@@ -1508,59 +1159,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 
 	/**
-	 * Get the Phone Field options for a given Field ID.
-	 *
-	 * @since 0.5
-	 *
-	 * @param string $name The name of the field.
-	 * @return array $field The array of field data.
-	 */
-	public function get_by_name( $name ) {
-
-		// Init return.
-		$field = [];
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $field;
-		}
-
-		// Construct params.
-		$params = [
-			'version' => 3,
-			'name' => $name,
-			'action' => 'get',
-		];
-
-		// Call the API.
-		$result = civicrm_api( 'Phone', 'getfield', $params );
-
-		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			return $field;
-		}
-
-		// Bail if there are no results.
-		if ( empty( $result['values'] ) ) {
-			return $field;
-		}
-
-		// The result set is the item.
-		$field = $result['values'];
-
-		// --<
-		return $field;
-
-	}
-
-
-
-	/**
 	 * Get the mapped Phone Field name if present.
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $field The existing field data array.
+	 * @param array $field The existing Field data array.
 	 * @return string|bool $phone_field_name The name of the Phone Field, or false if none.
 	 */
 	public function phone_field_name_get( $field ) {
@@ -1617,7 +1220,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 			return $choices;
 		}
 
-		// Get the public fields on the Entity for this Field Type.
+		// Get the public Fields on the Entity for this Field Type.
 		$public_fields = $this->civicrm_fields_get( 'public' );
 		$fields_for_entity = [];
 		foreach ( $public_fields as $key => $value ) {
@@ -1670,7 +1273,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		}
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
-		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		$key = $this->civicrm->acf_field_key_get();
 		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
@@ -1700,7 +1303,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 	 * @since 0.5
 	 *
 	 * @param string $name The name of the Phone Field.
-	 * @return array $options The array of field options.
+	 * @return array $options The array of Field options.
 	 */
 	public function options_get( $name ) {
 
@@ -1711,7 +1314,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 		// Phone Type.
 		if ( $name == 'phone_type_id' ) {
-			$options = $this->phone_types_get();
+			$options = $this->plugin->civicrm->phone->phone_types_get();
 		}
 
 		// --<
@@ -1738,7 +1341,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		}
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
-		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		$key = $this->civicrm->acf_field_key_get();
 		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
@@ -1750,7 +1353,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		}
 
 		// Get Phone Field data.
-		$field_data = $this->get_by_name( $phone_field_name );
+		$field_data = $this->plugin->civicrm->phone->get_by_name( $phone_field_name );
 
 		// Set the "maxlength" attribute.
 		if ( ! empty( $field_data['maxlength'] ) ) {

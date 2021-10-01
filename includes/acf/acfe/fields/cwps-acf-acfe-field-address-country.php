@@ -83,7 +83,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_Country extends acf_field {
 	 *
 	 * This must be populated in the class constructor because it is translatable.
 	 *
-	 * Multiple words, can include spaces, visible when selecting a field type.
+	 * Multiple words, can include spaces, visible when selecting a Field Type.
 	 *
 	 * @since 0.5
 	 * @access public
@@ -107,7 +107,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_Country extends acf_field {
 	/**
 	 * Field Type defaults.
 	 *
-	 * Array of default settings which are merged into the field object.
+	 * Array of default settings which are merged into the Field object.
 	 * These are used later in settings.
 	 *
 	 * @since 0.5
@@ -158,19 +158,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_Country extends acf_field {
 	 */
 	public function __construct( $parent ) {
 
-		// Store reference to plugin object.
+		// Store references to objects.
 		$this->plugin = $parent->acf_loader->plugin;
-
-		// Store reference to ACF Loader object.
 		$this->acf_loader = $parent->acf_loader;
-
-		// Store reference to ACF Utilities.
 		$this->acf = $parent->acf_loader->acf;
-
-		// Store reference to ACFE Utilities.
 		$this->acfe = $parent;
-
-		// Store reference to CiviCRM Utilities.
 		$this->civicrm = $this->acf_loader->civicrm;
 
 		// Define label.
@@ -198,7 +190,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_Country extends acf_field {
 	 */
 	public function render_field( $field ) {
 
-		// Change Field into a select field.
+		// Change Field into a "select" Field.
 		$field['type'] = 'select';
 
 		// Render.
@@ -215,7 +207,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_Country extends acf_field {
 	 *
 	 * @param mixed $value The value found in the database.
 	 * @param integer|string $post_id The ACF "Post ID" from which the value was loaded.
-	 * @param array $field The field array holding all the field options.
+	 * @param array $field The Field array holding all the Field options.
 	 * @return mixed $value The modified value.
 	public function load_value( $value, $post_id, $field ) {
 
@@ -239,7 +231,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_Country extends acf_field {
 	 *
 	 * @param mixed $value The value found in the database.
 	 * @param integer $post_id The Post ID from which the value was loaded.
-	 * @param array $field The field array holding all the field options.
+	 * @param array $field The Field array holding all the Field options.
 	 * @return mixed $value The modified value.
 	public function update_value( $value, $post_id, $field ) {
 
@@ -264,7 +256,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_Country extends acf_field {
 	 *
 	 * @param mixed $value The value which was loaded from the database.
 	 * @param mixed $post_id The Post ID from which the value was loaded.
-	 * @param array $field The field array holding all the field options.
+	 * @param array $field The Field array holding all the Field options.
 	 * @return mixed $value The modified value.
 	public function format_value( $value, $post_id, $field ) {
 
@@ -292,15 +284,15 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_Country extends acf_field {
 	/**
 	 * This filter is used to perform validation on the value prior to saving.
 	 *
-	 * All values are validated regardless of the field's required setting.
+	 * All values are validated regardless of the Field's required setting.
 	 * This allows you to validate and return messages to the user if the value
 	 * is not correct.
 	 *
 	 * @since 0.5
 	 *
-	 * @param bool $valid The validation status based on the value and the field's required setting.
+	 * @param bool $valid The validation status based on the value and the Field's required setting.
 	 * @param mixed $value The $_POST value.
-	 * @param array $field The field array holding all the field options.
+	 * @param array $field The Field array holding all the Field options.
 	 * @param string $input The corresponding input name for $_POST value.
 	 * @return string|bool $valid False if not valid, or string for error message.
 	public function validate_value( $valid, $value, $field, $input ) {
@@ -344,8 +336,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_Country extends acf_field {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $field The field array holding all the field options.
-	 * @return array $field The modified field data.
+	 * @param array $field The Field array holding all the Field options.
+	 * @return array $field The modified Field data.
 	 */
 	public function load_field( $field ) {
 
@@ -377,8 +369,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_Country extends acf_field {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $field The field array holding all the field options.
-	 * @return array $field The modified field data.
+	 * @param array $field The Field array holding all the Field options.
+	 * @return array $field The modified Field data.
 	public function update_field( $field ) {
 
 		// Try and init CiviCRM.
@@ -410,7 +402,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_Country extends acf_field {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $field The field array holding all the field options.
+	 * @param array $field The Field array holding all the Field options.
 	public function delete_field( $field ) {
 
 	}

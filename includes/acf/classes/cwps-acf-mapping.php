@@ -28,6 +28,15 @@ defined( 'ABSPATH' ) || exit;
 class CiviCRM_Profile_Sync_ACF_Mapping {
 
 	/**
+	 * Plugin object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
+	/**
 	 * ACF Loader object.
 	 *
 	 * @since 0.4
@@ -117,7 +126,8 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 */
 	public function __construct( $acf_loader ) {
 
-		// Store reference to ACF Loader object.
+		// Store references to objects.
+		$this->plugin = $acf_loader->plugin;
 		$this->acf_loader = $acf_loader;
 
 		// Init when this plugin is loaded.
@@ -487,7 +497,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 		// Get list of allowed Activity Types.
 		$allowed_activity_types = [];
-		$option_group = $this->acf_loader->civicrm->option_group_get( 'activity_type' );
+		$option_group = $this->plugin->civicrm->option_group_get( 'activity_type' );
 		if ( ! empty( $option_group ) ) {
 			$allowed_activity_types = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
 		}

@@ -183,7 +183,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		$result = civicrm_api( 'Setting', 'getvalue', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) AND $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $value;
 		}
 

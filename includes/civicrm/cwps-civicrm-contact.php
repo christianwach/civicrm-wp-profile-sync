@@ -40,19 +40,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 	 */
 	public $civicrm;
 
-	/**
-	 * Top-level Contact Types which can be mapped.
-	 *
-	 * @since 0.4
-	 * @access public
-	 * @var array $top_level_types The top level CiviCRM Contact Types.
-	 */
-	public $top_level_types = [
-		'Individual',
-		'Household',
-		'Organization',
-	];
-
 
 
 	/**
@@ -64,10 +51,8 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 	 */
 	public function __construct( $parent ) {
 
-		// Store plugin reference.
+		// Store references to objects.
 		$this->plugin = $parent->plugin;
-
-		// Store CiviCRM object reference.
 		$this->civicrm = $parent;
 
 		// Init when the CiviCRM object is loaded.
@@ -128,6 +113,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		// Remove all other callbacks.
 		remove_action( 'init', [ $this, 'hooks_core_remove' ], 100 );
 		remove_action( 'cwps/wordpress/user_sync', [ $this, 'name_update' ], 10 );
+		remove_action( 'cwps/wordpress/user_sync', [ $this, 'nickname_update' ], 10 );
 
 	}
 
@@ -373,7 +359,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 
 	/**
-	 * Update a WordPress User when a CiviCRM Contact is edited.
+	 * Update a CiviCRM Contact when a WordPress User is edited.
 	 *
 	 * @since 0.1
 	 *
@@ -391,7 +377,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		}
 
 		// Init CiviCRM.
-		if ( ! $this->plugin->civicrm->is_initialised() ) {
+		if ( ! $this->civicrm->is_initialised() ) {
 			return $ufmatch;
 		}
 
@@ -495,6 +481,11 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 			return;
 		}
 
+		// Init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return;
+		}
+
 		// Update the CiviCRM Contact "First Name" and "Last Name".
 		$params = [
 			'version' => 3,
@@ -502,6 +493,17 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 			'first_name' => $user->first_name,
 			'last_name' => $user->last_name,
 		];
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'args' => $args,
+			'params' => $params,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
 
 		// Call the CiviCRM API.
 		$result = civicrm_api( 'Contact', 'create', $params );
@@ -588,6 +590,11 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 			return;
 		}
 
+		// Init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return;
+		}
+
 		// Update the CiviCRM Contact "First Name" and "Last Name".
 		$params = [
 			'version' => 3,
@@ -649,45 +656,182 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 
 	/**
-	 * Get a Contact's Details.
+	 * Create a CiviCRM Contact for a given set of data.
 	 *
 	 * @since 0.4
+	 * @since 0.5 Moved to this class.
 	 *
-	 * @param integer $contact_id The numeric ID of the Contact.
-	 * @param array|bool $contact The array of Contact data, or false if none.
+	 * @param array $contact The CiviCRM Contact data.
+	 * @return array|bool $contact_data The array Contact data from the CiviCRM API, or false on failure.
 	 */
-	public function get_by_id( $contact_id ) {
+	public function create( $contact ) {
 
-		// Bail if CiviCRM is not active.
+		// Init as failure.
+		$contact_data = false;
+
+		// Try and init CiviCRM.
 		if ( ! $this->civicrm->is_initialised() ) {
-			return false;
+			return $contact_data;
 		}
 
-		// Construct API query.
+		// Build params to create Contact.
 		$params = [
 			'version' => 3,
-			'id' => $contact_id,
-		];
+			'debug' => 1,
+		] + $contact;
 
-		// Get Contact details via API.
-		$contact = civicrm_api( 'Contact', 'getsingle', $params );
+		/*
+		 * Minimum array to create a Contact:
+		 *
+		 * $params = [
+		 *   'version' => 3,
+		 *   'contact_type' => "Individual",
+		 *   'contact_sub_type' => "Student",
+		 *   'display_name' => "John",
+		 * ];
+		 *
+		 * Updates are triggered by:
+		 *
+		 * $params['id'] = 255;
+		 *
+		 * Custom Fields are addressed by ID:
+		 *
+		 * $params['custom_9'] = "Blah";
+		 * $params['custom_7'] = 1;
+		 * $params['custom_8'] = 0;
+		 *
+		 * CiviCRM kindly ignores any Custom Fields which are passed to it that
+		 * aren't attached to the Entity. This is of significance when a Field
+		 * Group is attached to multiple Post Types (for example) and the Fields
+		 * refer to different Entities (e.g. "Parent" and "Student").
+		 *
+		 * Nice.
+		 *
+		 * It seems the Custom Field data is actually saved to the Contact - but
+		 * it never shows up anywhere. Perhaps needs a deeper look to see what's
+		 * going on under the hood in CiviCRM.
+		 */
 
-		// Log and bail on failure.
-		if ( isset( $contact['is_error'] ) && $contact['is_error'] == '1' ) {
-			$e = new \Exception;
+		// Call the API.
+		$result = civicrm_api( 'Contact', 'create', $params );
+
+		// Log and bail if there's an error.
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+			$e = new Exception;
+			$trace = $e->getTraceAsString();
+			error_log( print_r( array(
+				'method' => __METHOD__,
+				'params' => $params,
+				'result' => $result,
+				//'backtrace' => $trace,
+			), true ) );
+			return $contact_data;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $contact_data;
+		}
+
+		// The result set should contain only one item.
+		$contact_data = array_pop( $result['values'] );
+
+		// --<
+		return $contact_data;
+
+	}
+
+
+
+	/**
+	 * Update a CiviCRM Contact with a given set of data.
+	 *
+	 * This is an alias of `self::create()` except that we expect a
+	 * Contact ID to have been set in the Contact data.
+	 *
+	 * @since 0.4
+	 * @since 0.5 Moved to this class.
+	 *
+	 * @param array $contact The CiviCRM Contact data.
+	 * @return array|bool The array of Contact data from the CiviCRM API, or false on failure.
+	 */
+	public function update( $contact ) {
+
+		// Log and bail if there's no Contact ID.
+		if ( empty( $contact['id'] ) ) {
+			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
 				'method' => __METHOD__,
-				'contact_id' => $contact_id,
-				'params' => $params,
+				'message' => __( 'A numerical ID must be present to update a Contact.', 'civicrm-wp-profile-sync' ),
 				'contact' => $contact,
 				'backtrace' => $trace,
 			], true ) );
 			return false;
 		}
 
+		// Pass through.
+		return $this->create( $contact );
+
+	}
+
+
+
+	/**
+	 * Delete a CiviCRM Contact for a given set of data.
+	 *
+	 * @since 0.4
+	 * @since 0.5 Moved to this class.
+	 *
+	 * @param array $contact The CiviCRM Contact data.
+	 * @return array|bool $contact_data The array Contact data from the CiviCRM API, or false on failure.
+	 */
+	public function delete( $contact ) {
+
+		// Init as failure.
+		$contact_data = false;
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $contact_data;
+		}
+
+		// Log and bail if there's no Contact ID.
+		if ( empty( $contact['id'] ) ) {
+			$e = new \Exception();
+			$trace = $e->getTraceAsString();
+			error_log( print_r( [
+				'method' => __METHOD__,
+				'message' => __( 'A numerical ID must be present to delete a Contact.', 'civicrm-wp-profile-sync' ),
+				'contact' => $contact,
+				'backtrace' => $trace,
+			], true ) );
+			return false;
+		}
+
+		// Build params to delete Contact.
+		$params = [
+			'version' => 3,
+		] + $contact;
+
+		// Call the API.
+		$result = civicrm_api( 'Contact', 'delete', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+			return $contact_data;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $contact_data;
+		}
+
+		// The result set should contain only one item.
+		$contact_data = array_pop( $result['values'] );
+
 		// --<
-		return $contact;
+		return $contact_data;
 
 	}
 
@@ -698,16 +842,220 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 
 	/**
-	 * Get all top-level CiviCRM Contact Types.
+	 * Get the CiviCRM Contact data for a given ID.
 	 *
 	 * @since 0.4
+	 * @since 0.5 Moved to this class.
 	 *
-	 * @return array $top_level_types The top level CiviCRM Contact Types.
+	 * @param integer $contact_id The numeric ID of the CiviCRM Contact to query.
+	 * @return array|bool $contact_data An array of Contact data, or false on failure.
 	 */
-	public function types_get_top_level() {
+	public function get_by_id( $contact_id ) {
+
+		// Init return.
+		$contact_data = false;
+
+		// Bail if we have no Contact ID.
+		if ( empty( $contact_id ) ) {
+			return $contact_data;
+		}
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $contact_data;
+		}
+
+		// Define params to get queried Contact.
+		$params = [
+			'version' => 3,
+			'sequential' => 1,
+			'id' => $contact_id,
+			'options' => [
+				'limit' => 0, // No limit.
+			],
+		];
+
+		// Call the API.
+		$result = civicrm_api( 'Contact', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+			return $contact_data;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $contact_data;
+		}
+
+		// The result set should contain only one item.
+		$contact_data = array_pop( $result['values'] );
 
 		// --<
-		return $this->top_level_types;
+		return $contact_data;
+
+	}
+
+
+
+	/**
+	 * Get the CiviCRM Contact data for a set of given IDs.
+	 *
+	 * @since 0.4
+	 * @since 0.5 Moved to this class.
+	 *
+	 * @param array $contact_ids The array of numeric IDs of the CiviCRM Contacts to query.
+	 * @return array|bool $contact_data An array of Contact data, or false on failure.
+	 */
+	public function get_by_ids( $contact_ids = [] ) {
+
+		// Init return.
+		$contact_data = false;
+
+		// Bail if we have no Contact IDs.
+		if ( empty( $contact_ids ) ) {
+			return $contact_data;
+		}
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $contact_data;
+		}
+
+		// Define params to get queried Contacts.
+		$params = [
+			'version' => 3,
+			'sequential' => 1,
+			'id' => [ 'IN' => $contact_ids ],
+			'options' => [
+				'limit' => 0, // No limit.
+			],
+		];
+
+		// Call the API.
+		$result = civicrm_api( 'Contact', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+			return $contact_data;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $contact_data;
+		}
+
+		// --<
+		return $result['values'];
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Get all CiviCRM Contact Types.
+	 *
+	 * @since 0.5
+	 *
+	 * @return array $all The flat array CiviCRM Contact Types.
+	 */
+	public function types_get_all() {
+
+		// Only do this once.
+		static $all;
+		if ( ! empty( $all ) ) {
+			return $all;
+		}
+
+		// Init return.
+		$all = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $all;
+		}
+
+		// Define params to get all Contact Types.
+		$params = [
+			'version' => 3,
+			'sequential' => 1,
+			'is_active' => 1,
+			'options' => [
+				'limit' => 0, // No limit.
+			],
+		];
+
+		// Call API.
+		$result = civicrm_api( 'ContactType', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+			return $all;
+		}
+
+		// Populate return array.
+		if ( isset( $result['values'] ) && count( $result['values'] ) > 0 ) {
+			$all = $result['values'];
+		}
+
+		// --<
+		return $all;
+
+	}
+
+
+
+	/**
+	 * Get a CiviCRM Contact Type.
+	 *
+	 * @since 0.5
+	 *
+	 * @param integer $contact_type_id The numeric ID of the CiviCRM Contact Type.
+	 * @return array $contact_type The array of CiviCRM Contact Type data.
+	 */
+	public function type_get_by_id( $contact_type_id ) {
+
+		// Init return.
+		$contact_type = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $contact_type;
+		}
+
+		// Define params to get all Contact Types.
+		$params = [
+			'version' => 3,
+			'sequential' => 1,
+			'id' => $contact_type_id,
+			'is_active' => 1,
+			'options' => [
+				'limit' => 0, // No limit.
+			],
+		];
+
+		// Call API.
+		$result = civicrm_api( 'ContactType', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+			return $contact_type;
+		}
+
+		// Bail if there are none.
+		if ( empty( $result['values'] ) ) {
+			return $contact_type;
+		}
+
+		// Populate return array.
+		$contact_type = array_pop( $result['values'] );
+
+		// --<
+		return $contact_type;
 
 	}
 
@@ -749,7 +1097,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		}
 
 		// Get the link to the Contact.
-		$link = $this->civicrm->get_link( 'civicrm/contact/view', 'reset=1&cid=' . $contact['id'] );
+		$link = $this->plugin->civicrm->get_link( 'civicrm/contact/view', 'reset=1&cid=' . $contact['id'] );
 
 		// Add menu item.
 		$wp_admin_bar->add_node( [
@@ -778,7 +1126,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		$permitted = false;
 
 		// Always deny if CiviCRM is not active.
-		if ( ! $this->plugin->civicrm->is_initialised() ) {
+		if ( ! $this->civicrm->is_initialised() ) {
 			return $permitted;
 		}
 

@@ -23,6 +23,15 @@ defined( 'ABSPATH' ) || exit;
 class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 
 	/**
+	 * Plugin object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
+	/**
 	 * ACF Loader object.
 	 *
 	 * @since 0.4
@@ -65,7 +74,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 	 *
 	 * This must be populated in the class constructor because it is translatable.
 	 *
-	 * Multiple words, can include spaces, visible when selecting a field type.
+	 * Multiple words, can include spaces, visible when selecting a Field Type.
 	 *
 	 * @since 0.4
 	 * @access public
@@ -89,7 +98,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 	/**
 	 * Field Type defaults.
 	 *
-	 * Array of default settings which are merged into the field object.
+	 * Array of default settings which are merged into the Field object.
 	 * These are used later in settings.
 	 *
 	 * @since 0.4
@@ -140,13 +149,10 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 	 */
 	public function __construct( $parent ) {
 
-		// Store reference to ACF Loader object.
+		// Store references to objects.
+		$this->plugin = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-
-		// Store reference to ACF Utilities.
 		$this->acf = $parent->acf;
-
-		// Store reference to CiviCRM Utilities.
 		$this->civicrm = $this->acf_loader->civicrm;
 
 		// Define label.
@@ -192,7 +198,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 			return $filtered_fields;
 		}
 
-		// Filter fields to include only "Contact Reference".
+		// Filter Fields to include only "Contact Reference".
 		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			foreach ( $custom_group as $custom_field ) {
 				if ( ! empty( $custom_field['data_type'] ) && $custom_field['data_type'] == 'ContactReference' ) {
@@ -238,7 +244,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 			$contact_ids = array_map( 'intval', acf_array( $field['value'] ) );
 
 			// Get existing Contacts.
-			$contacts = $this->civicrm->contact->get_by_ids( $contact_ids );
+			$contacts = $this->plugin->civicrm->contact->get_by_ids( $contact_ids );
 
 			// Maybe append them.
 			if ( ! empty( $contacts ) ) {
@@ -321,7 +327,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 			return $response;
 		}
 
- 		// Load field.
+ 		// Load Field.
 		$field = acf_get_field( $options['field_key'] );
 		if ( ! $field ) {
 			return $response;

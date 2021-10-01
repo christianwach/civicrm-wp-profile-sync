@@ -23,6 +23,15 @@ defined( 'ABSPATH' ) || exit;
 class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_ACF_CiviCRM_Base {
 
 	/**
+	 * Plugin object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
+	/**
 	 * ACF Loader object.
 	 *
 	 * @since 0.4
@@ -41,7 +50,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 	public $civicrm;
 
 	/**
-	 * "CiviCRM Addresses" field key in the ACF Field data.
+	 * "CiviCRM Addresses" Field key in the ACF Field data.
 	 *
 	 * @since 0.4
 	 * @access public
@@ -98,10 +107,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 	 */
 	public function __construct( $parent ) {
 
-		// Store reference to ACF Loader object.
+		// Store references to objects.
+		$this->plugin = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-
-		// Store reference to parent.
 		$this->civicrm = $parent;
 
 		// Init when the CiviCRM object is loaded.
@@ -247,15 +255,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		// Init success.
 		$success = true;
 
-		// Bail if we have no field data to save.
+		// Bail if we have no Field data to save.
 		if ( empty( $args['fields'] ) ) {
 			return $success;
 		}
 
-		// Loop through the field data.
+		// Loop through the Field data.
 		foreach ( $args['fields'] as $field => $value ) {
 
-			// Get the field settings.
+			// Get the Field settings.
 			$settings = get_field_object( $field, $args['post_id'] );
 
 			// Maybe update an Address Record.
@@ -318,7 +326,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 	public function contact_sync_to_post( $args ) {
 
 		// Get all Address Records for this Contact.
-		$data = $this->civicrm->address->addresses_get_by_contact_id( $args['objectId'] );
+		$data = $this->plugin->civicrm->address->addresses_get_by_contact_id( $args['objectId'] );
 
 		// Bail if there are no Address Records.
 		if ( empty( $data ) ) {
@@ -387,9 +395,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		$address_data['field_address_primary'] = empty( $value->is_primary ) ? '0' : '1';
 		$address_data['field_address_billing'] = empty( $value->is_billing ) ? '0' : '1';
 		$address_data['field_address_street_address'] = trim( $value->street_address );
-		$address_data['field_address_supplemental_address_1'] = $this->acf_loader->civicrm->denullify( $address_1 );
-		$address_data['field_address_supplemental_address_2'] = $this->acf_loader->civicrm->denullify( $address_2 );
-		$address_data['field_address_supplemental_address_3'] = $this->acf_loader->civicrm->denullify( $address_3 );
+		$address_data['field_address_supplemental_address_1'] = $this->plugin->civicrm->denullify( $address_1 );
+		$address_data['field_address_supplemental_address_2'] = $this->plugin->civicrm->denullify( $address_2 );
+		$address_data['field_address_supplemental_address_3'] = $this->plugin->civicrm->denullify( $address_3 );
 		$address_data['field_address_city'] = empty( $value->city ) ? '' : trim( $value->city );
 		$address_data['field_address_postal_code'] = empty( $value->postal_code ) ? '' : trim( $value->postal_code );
 		$address_data['field_address_country_id'] = empty( $value->country_id ) ? '' : (int) $value->country_id;
@@ -432,7 +440,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		}
 
 		// Get the current Address Records.
-		$current = $this->civicrm->address->addresses_get_by_contact_id( $contact_id );
+		$current = $this->plugin->civicrm->address->addresses_get_by_contact_id( $contact_id );
 
 		// If there are no existing Address Records.
 		if ( empty( $current ) ) {
@@ -444,7 +452,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 				$address_data = $this->prepare_from_field( $value );
 
 				// Okay, let's do it.
-				$address = $this->civicrm->address->update( $contact_id, $address_data );
+				$address = $this->plugin->civicrm->address->update( $contact_id, $address_data );
 
 				// Add to return array.
 				$addresses[] = $address;
@@ -524,7 +532,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 			$address_data = $this->prepare_from_field( $value );
 
 			// Okay, let's do it.
-			$address = $this->civicrm->address->update( $contact_id, $address_data );
+			$address = $this->plugin->civicrm->address->update( $contact_id, $address_data );
 
 			// Add to return array.
 			$addresses[] = $address;
@@ -559,7 +567,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 			$address_data = $this->prepare_from_field( $value, $value['field_address_id'] );
 
 			// Okay, let's do it.
-			$address = $this->civicrm->address->update( $contact_id, $address_data );
+			$address = $this->plugin->civicrm->address->update( $contact_id, $address_data );
 
 			// Add to return array.
 			$addresses[] = $address;
@@ -589,7 +597,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		foreach ( $actions['delete'] as $address_id ) {
 
 			// Okay, let's do it.
-			$address = $this->civicrm->address->delete( $address_id );
+			$address = $this->plugin->civicrm->address->delete( $address_id );
 
 			// Make an array of our params.
 			$params = [
@@ -684,7 +692,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		$this->address_process( $address, $args );
 
 		// If this address is a "Master Address" then it will return "Shared Addresses".
-		$addresses_shared = $this->civicrm->address->addresses_shared_get_by_id( $address->id );
+		$addresses_shared = $this->plugin->civicrm->address->addresses_shared_get_by_id( $address->id );
 
 		// Bail if there are none.
 		if ( empty( $addresses_shared ) ) {
@@ -724,7 +732,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		$address_id = (int) $args['objectId'];
 
 		// Grab the Address Record data from the database.
-		$address_pre = $this->civicrm->address->address_get_by_id( $address_id );
+		$address_pre = $this->plugin->civicrm->address->address_get_by_id( $address_id );
 
 		// Maybe cast previous Address Record data as object and stash in a property.
 		if ( ! is_object( $address_pre ) ) {
@@ -768,7 +776,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		$this->address_process( $this->address_pre, $args );
 
 		// If this address is a "Master Address" then it will return "Shared Addresses".
-		$addresses_shared = $this->civicrm->address->addresses_shared_get_by_id( $this->address_pre->id );
+		$addresses_shared = $this->plugin->civicrm->address->addresses_shared_get_by_id( $this->address_pre->id );
 
 		// Bail if there are none.
 		if ( empty( $addresses_shared ) ) {
@@ -798,20 +806,20 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		$acf_address = $this->prepare_from_civicrm( $address );
 
 		// Get the Contact data.
-		$contact = $this->acf_loader->civicrm->contact->get_by_id( $address->contact_id );
+		$contact = $this->plugin->civicrm->contact->get_by_id( $address->contact_id );
 
 		// Get originating Entity.
 		$entity = $this->acf_loader->mapper->entity_get();
 
 		// Test if any of this Contact's Contact Types is mapped to a Post Type.
-		$post_types = $this->acf_loader->civicrm->contact->is_mapped( $contact, 'create' );
+		$post_types = $this->civicrm->contact->is_mapped( $contact, 'create' );
 		if ( $post_types !== false ) {
 
 			// Handle each Post Type in turn.
 			foreach ( $post_types as $post_type ) {
 
 				// Get the Post ID for this Contact.
-				$post_id = $this->acf_loader->civicrm->contact->is_mapped_to_post( $contact, $post_type );
+				$post_id = $this->civicrm->contact->is_mapped_to_post( $contact, $post_type );
 
 				// Skip if not mapped or Post doesn't yet exist.
 				if ( $post_id === false ) {
@@ -997,16 +1005,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		// Init return.
 		$location_types = [];
 
-		// Get field group for this field's parent.
+		// Get Field group for this Field's parent.
 		$field_group = $this->acf_loader->acf->field_group->get_for_field( $field );
 
-		// Bail if there's no field group.
+		// Bail if there's no Field group.
 		if ( empty( $field_group ) ) {
 			return $location_types;
 		}
 
 		// Get all Location Types.
-		$types = $this->civicrm->address->location_types_get();
+		$types = $this->plugin->civicrm->address->location_types_get();
 
 		// Bail if there are none.
 		if ( empty( $types ) ) {
@@ -1086,7 +1094,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 	 * Sync new CiviCRM Address data back to the ACF Fields on a WordPress Post.
 	 *
 	 * The Address ID needs to be reverse-synced to the relevant array element
-	 * in the field. Addresses may be run through geolocation, so also include
+	 * in the Field. Addresses may be run through geolocation, so also include
 	 * that data if it exists.
 	 *
 	 * @since 0.4

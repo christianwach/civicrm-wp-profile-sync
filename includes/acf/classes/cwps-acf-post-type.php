@@ -23,6 +23,15 @@ defined( 'ABSPATH' ) || exit;
 class CiviCRM_Profile_Sync_ACF_Post_Type {
 
 	/**
+	 * Plugin object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
+	/**
 	 * ACF Loader object.
 	 *
 	 * @since 0.4
@@ -51,7 +60,8 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 	 */
 	public function __construct( $acf_loader ) {
 
-		// Store reference to ACF Loader object.
+		// Store references to objects.
+		$this->plugin = $acf_loader->plugin;
 		$this->acf_loader = $acf_loader;
 
 		// Init when this plugin is loaded.
@@ -381,7 +391,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 		$post_types = [];
 
 		// Get all Post Types.
-		$all_post_types = $this->acf_loader->post_type->post_types_get_all();
+		$all_post_types = $this->post_types_get_all();
 
 		// Get all used Post Types by Entity.
 		switch ( $entity_type ) {

@@ -23,6 +23,15 @@ defined( 'ABSPATH' ) || exit;
 class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_ACF_CiviCRM_Base {
 
 	/**
+	 * Plugin object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
+	/**
 	 * ACF Loader object.
 	 *
 	 * @since 0.4
@@ -41,10 +50,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	public $civicrm;
 
 	/**
-	 * "CiviCRM Google Map" field key in the ACF Field data.
+	 * "CiviCRM Google Map" Field key in the ACF Field data.
 	 *
 	 * Sorry that this key name is slightly misleading - it is a leftover from
-	 * when the Google Map field was the only kind of supported Address field.
+	 * when the Google Map Field was the only kind of supported Address Field.
 	 *
 	 * @since 0.4
 	 * @access public
@@ -53,7 +62,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	public $acf_field_key = 'field_cacf_civicrm_address';
 
 	/**
-	 * "Make Read Only" field key in the ACF Field data.
+	 * "Make Read Only" Field key in the ACF Field data.
 	 *
 	 * @since 0.4
 	 * @access public
@@ -83,10 +92,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 */
 	public function __construct( $parent ) {
 
-		// Store reference to ACF Loader object.
+		// Store references to objects.
+		$this->plugin = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-
-		// Store reference to parent.
 		$this->civicrm = $parent;
 
 		// Init when the CiviCRM object is loaded.
@@ -200,15 +208,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		// Init success.
 		$success = true;
 
-		// Bail if we have no field data to save.
+		// Bail if we have no Field data to save.
 		if ( empty( $args['fields'] ) ) {
 			return $success;
 		}
 
-		// Loop through the field data.
+		// Loop through the Field data.
 		foreach ( $args['fields'] as $field => $value ) {
 
-			// Get the field settings.
+			// Get the Field settings.
 			$settings = get_field_object( $field, $args['post_id'] );
 
 			// Maybe update an Address Record.
@@ -434,7 +442,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		if ( ! empty( $address['country_short'] ) ) {
 
 			// Add the Country data if we get one.
-			$country = $this->civicrm->address->country_get_by_short( $address['country_short'] );
+			$country = $this->plugin->civicrm->address->country_get_by_short( $address['country_short'] );
 			if ( ! empty( $country ) ) {
 				$address_data['country_id'] = $country['id'];
 				$address_data['country'] = $country['name'];
@@ -492,7 +500,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		if ( ! empty( $contact->address ) && is_array( $contact->address ) ) {
 
 			// Get the full Addresses data and add to property, cast as object.
-			$contact_addresses_pre = $this->civicrm->address->addresses_get_by_contact_id( $contact->contact_id );
+			$contact_addresses_pre = $this->plugin->civicrm->address->addresses_get_by_contact_id( $contact->contact_id );
 			foreach ( $contact_addresses_pre as $contact_address ) {
 				$key = $contact_address->id;
 				$this->contact_addresses_pre[$key] = $contact_address;
@@ -525,7 +533,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 		// Get the current Contact Addresses.
 		$contact_addresses = [];
-		$current_addresses = $this->civicrm->address->addresses_get_by_contact_id( $args['objectId'] );
+		$current_addresses = $this->plugin->civicrm->address->addresses_get_by_contact_id( $args['objectId'] );
 		foreach ( $current_addresses as $current_address ) {
 			$key = $current_address->id;
 			$contact_addresses[$key] = $current_address;
@@ -568,7 +576,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 				/*
 				// If this address is a "Master Address" then it will return "Shared Addresses".
-				$addresses_shared = $this->civicrm->address->addresses_shared_get_by_id( $address->id );
+				$addresses_shared = $this->plugin->civicrm->address->addresses_shared_get_by_id( $address->id );
 
 				// Bail if there are none.
 				if ( empty( $addresses_shared ) ) {
@@ -623,7 +631,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		$this->address_fields_update( $address );
 
 		// If this address is a "Master Address" then it will return "Shared Addresses".
-		$addresses_shared = $this->civicrm->address->addresses_shared_get_by_id( $address->id );
+		$addresses_shared = $this->plugin->civicrm->address->addresses_shared_get_by_id( $address->id );
 
 		// Bail if there are none.
 		if ( empty( $addresses_shared ) ) {
@@ -668,7 +676,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		}
 
 		// Grab the previous Address data from the database via API.
-		$this->address_pre = $this->civicrm->address->address_get_by_id( $address->id );
+		$this->address_pre = $this->plugin->civicrm->address->address_get_by_id( $address->id );
 
 	}
 
@@ -698,7 +706,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		$this->address_fields_update( $address, $this->address_pre );
 
 		// If this address is a "Master Address" then it will return "Shared Addresses".
-		$addresses_shared = $this->civicrm->address->addresses_shared_get_by_id( $address->id );
+		$addresses_shared = $this->plugin->civicrm->address->addresses_shared_get_by_id( $address->id );
 
 		// Bail if there are none.
 		if ( empty( $addresses_shared ) ) {
@@ -738,7 +746,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		$this->address_fields_update( $address );
 
 		// If this address is a "Master Address" then it will return "Shared Addresses".
-		$addresses_shared = $this->civicrm->address->addresses_shared_get_by_id( $address->id );
+		$addresses_shared = $this->plugin->civicrm->address->addresses_shared_get_by_id( $address->id );
 
 		// Bail if there are none.
 		if ( empty( $addresses_shared ) ) {
@@ -854,20 +862,20 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		}
 
 		// Bail if there's no Contact.
-		$contact = $this->acf_loader->civicrm->contact->get_by_id( $address->contact_id );
+		$contact = $this->plugin->civicrm->contact->get_by_id( $address->contact_id );
 		if ( $contact === false ) {
 			return;
 		}
 
 		// Test if of this Contact's Contact Types is mapped to a Post Type.
-		$post_types = $this->acf_loader->civicrm->contact->is_mapped( $contact, 'create' );
+		$post_types = $this->civicrm->contact->is_mapped( $contact, 'create' );
 		if ( $post_types !== false ) {
 
 			// Handle each Post Type in turn.
 			foreach ( $post_types as $post_type ) {
 
 				// Bail if this Contact has no mapped Post.
-				$post_id = $this->acf_loader->civicrm->contact->is_mapped_to_post( $contact, $post_type );
+				$post_id = $this->civicrm->contact->is_mapped_to_post( $contact, $post_type );
 				if ( $post_id === false ) {
 					continue;
 				}
@@ -905,7 +913,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 */
 	public function fields_update( $post_id, $address, $previous = null ) {
 
-		// Bail if there are no Google Map fields for this "Post ID".
+		// Bail if there are no Google Map Fields for this "Post ID".
 		$acf_fields = $this->acf_loader->acf->field->fields_get_for_post( $post_id );
 		if ( empty( $acf_fields['google_map'] ) ) {
 			return;
@@ -939,7 +947,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 */
 	public function field_update( $address, $selector, $post_id, $action = '' ) {
 
-		// Get the field settings.
+		// Get the Field settings.
 		$settings = get_field_object( $selector, $post_id );
 
 		// Init Field data.
@@ -955,7 +963,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 				break;
 			*/
 
-			// Prepare data for Google Map field (our default).
+			// Prepare data for Google Map Field (our default).
 			case 'google_map' :
 			default :
 				$field_data = $this->field_map_prepare( $address, $action );
@@ -977,7 +985,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 *
 	 * @param array|object $address The CiviCRM Address data.
 	 * @param string $action The kind of action to perform on the ACF Field.
-	 * @return array $field_data The Address data prepared for an ACF Google Map field.
+	 * @return array $field_data The Address data prepared for an ACF Google Map Field.
 	 */
 	public function field_map_prepare( $address, $action = '' ) {
 
@@ -1022,7 +1030,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 		// Add the State/Province if we get one.
 		if ( ! empty( $address->state_province_id ) ) {
-			$state_province = $this->civicrm->address->state_province_get_by_id( $address->state_province_id );
+			$state_province = $this->plugin->civicrm->address->state_province_get_by_id( $address->state_province_id );
 			if ( ! empty( $state_province ) ) {
 				$field_data['state'] = $state_province['name'];
 				$field_data['state_short'] = $state_province['abbreviation'];
@@ -1033,7 +1041,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		if ( ! empty( $address->country_id ) ) {
 
 			// Add the Country if we get one.
-			$country = $this->civicrm->address->country_get_by_id( $address->country_id );
+			$country = $this->plugin->civicrm->address->country_get_by_id( $address->country_id );
 			if ( ! empty( $country ) ) {
 				$field_data['country'] = $country['name'];
 				$field_data['country_short'] = $country['iso_code'];
@@ -1046,7 +1054,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 				// Add the Country if we get one.
 				if ( ! empty( $state_province['country_id'] ) ) {
-					$country = $this->civicrm->address->country_get_by_id( $state_province['country_id'] );
+					$country = $this->plugin->civicrm->address->country_get_by_id( $state_province['country_id'] );
 					if ( ! empty( $country ) ) {
 						$field_data['country'] = $country['name'];
 						$field_data['country_short'] = $country['iso_code'];
@@ -1109,7 +1117,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 				// TODO: Do we need to update the Address that is now Primary?
 
-				// We still need to update the field though.
+				// We still need to update the Field though.
 				if ( $address->is_primary == '1' ) {
 
 					// Always update.
@@ -1155,8 +1163,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 				// If this Address WAS the "Billing Address" but is NOT NOW, it
 				// means we have to clear the ACF Field.
 				if (
-					$address->is_billing == '0' AND
-					isset( $address->toggle_billing ) AND
+					$address->is_billing == '0' &&
+					isset( $address->toggle_billing ) &&
 					$address->toggle_billing == 'off'
 				) {
 					$fields_to_update[$selector] = [
@@ -1188,9 +1196,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 			// If this Field has CHANGED its Location Type.
 			if (
-				$address->location_type_id != $address_field AND
-				isset( $previous->location_type_id ) AND
-				$previous->location_type_id != $address->location_type_id AND
+				$address->location_type_id != $address_field &&
+				isset( $previous->location_type_id ) &&
+				$previous->location_type_id != $address->location_type_id &&
 				$previous->location_type_id == $address_field
 			) {
 
@@ -1228,16 +1236,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		// Init return.
 		$location_types = [];
 
-		// Get field group for this field's parent.
+		// Get Field Group for this Field's parent.
 		$field_group = $this->acf_loader->acf->field_group->get_for_field( $field );
 
-		// Bail if there's no field group.
+		// Bail if there's no Field Group.
 		if ( empty( $field_group ) ) {
 			return $location_types;
 		}
 
 		// Get all Location Types.
-		$types = $this->civicrm->address->location_types_get();
+		$types = $this->plugin->civicrm->address->location_types_get();
 
 		// Bail if there are none.
 		if ( empty( $types ) ) {
@@ -1306,7 +1314,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 			$choices[$location_types_label][$location_type['id']] = esc_attr( $location_type['display_name'] );
 		}
 
-		// Define field.
+		// Define Field.
 		$field = [
 			'key' => $this->acf_field_key_get(),
 			'label' => __( 'CiviCRM Address', 'civicrm-wp-profile-sync' ),
@@ -1346,7 +1354,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 			return;
 		}
 
-		// Define field.
+		// Define Field.
 		$field = [
 			'key' => $this->acf_field_key_edit_get(),
 			'label' => __( 'Make Read Only', 'civicrm-wp-profile-sync' ),
@@ -1370,7 +1378,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		];
 
 		/**
-		 * Filter the "Make Read Only" settings field.
+		 * Filter the "Make Read Only" settings Field.
 		 *
 		 * @since 0.4
 		 *
@@ -1503,14 +1511,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $field The field data array.
+	 * @param array $field The Field data array.
 	 */
 	public function google_map_styles_add( $field ) {
 
 		// Get Google Map key.
 		$key = $this->acf_field_key_get();
 
-		// Bail if it's not a linked field.
+		// Bail if it's not a linked Field.
 		if ( empty( $field[$key] ) ) {
 			return;
 		}
@@ -1544,7 +1552,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 *
 	 * @param mixed $value The existing value.
 	 * @param integer $post_id The Post ID from which the value was loaded.
-	 * @param array $field The field array holding all the field options.
+	 * @param array $field The Field array holding all the Field options.
 	 * @return mixed $value The modified value.
 	 */
 	public function google_map_value_modify( $value, $post_id, $field ) {
@@ -1570,7 +1578,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 			}
 
 			// Get this Contact's Addresses.
-			$addresses = $this->acf_loader->civicrm->address->addresses_get_by_contact_id( $contact_id );
+			$addresses = $this->plugin->civicrm->address->addresses_get_by_contact_id( $contact_id );
 
 			// Init location.
 			$location = false;
@@ -1634,9 +1642,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $field The existing field data array.
+	 * @param array $field The existing Field data array.
 	 * @param array $field_group The array of ACF Field Group data.
-	 * @return array $field The modified field data array.
+	 * @return array $field The modified Field data array.
 	 */
 	public function google_map_setting_modify( $field, $field_group = [] ) {
 
@@ -1645,7 +1653,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 			return $field;
 		}
 
-		// Bail if it's not a linked field.
+		// Bail if it's not a linked Field.
 		$key = $this->acf_field_key_get();
 		if ( empty( $field[$key] ) ) {
 			return $field;

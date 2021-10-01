@@ -81,7 +81,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Contact_Action_Ref extends acf_field {
 	 *
 	 * This must be populated in the class constructor because it is translatable.
 	 *
-	 * Multiple words, can include spaces, visible when selecting a field type.
+	 * Multiple words, can include spaces, visible when selecting a Field Type.
 	 *
 	 * @since 0.5
 	 * @access public
@@ -105,7 +105,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Contact_Action_Ref extends acf_field {
 	/**
 	 * Field Type defaults.
 	 *
-	 * Array of default settings which are merged into the field object.
+	 * Array of default settings which are merged into the Field object.
 	 * These are used later in settings.
 	 *
 	 * @since 0.5
@@ -156,20 +156,12 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Contact_Action_Ref extends acf_field {
 	 */
 	public function __construct( $parent ) {
 
-		// Store reference to plugin object.
+		// Store references to objects.
 		$this->plugin = $parent->acf_loader->plugin;
-
-		// Store reference to ACF Loader object.
 		$this->acf_loader = $parent->acf_loader;
-
-		// Store reference to ACF Utilities.
-		$this->acf = $parent->acf_loader->acf;
-
-		// Store reference to ACFE Utilities.
-		$this->acfe = $parent;
-
-		// Store reference to CiviCRM Utilities.
 		$this->civicrm = $this->acf_loader->civicrm;
+		$this->acf = $this->acf_loader->acf;
+		$this->acfe = $parent;
 
 		// Define label.
 		$this->label = __( 'CiviCRM Form Action Reference', 'civicrm-wp-profile-sync' );

@@ -23,6 +23,15 @@ defined( 'ABSPATH' ) || exit;
 class CiviCRM_Profile_Sync_ACF_Field_Group {
 
 	/**
+	 * Plugin object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
+	/**
 	 * ACF Loader object.
 	 *
 	 * @since 0.4
@@ -45,7 +54,7 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var string $placeholder_group The key of the Placeholder field group.
+	 * @var string $placeholder_group The key of the Placeholder Field Group.
 	 */
 	public $placeholder_group = 'group_cacf_placeholder_group';
 
@@ -60,10 +69,9 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 	 */
 	public function __construct( $parent ) {
 
-		// Store reference to ACF Loader object.
+		// Store references to objects.
+		$this->plugin = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-
-		// Store reference to parent.
 		$this->acf = $parent;
 
 		// Init when this plugin is loaded.
@@ -127,8 +135,8 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $field_group The existing field group data array.
-	 * @return array $field_group The modified field group data array.
+	 * @param array $field_group The existing Field Group data array.
+	 * @return array $field_group The modified Field Group data array.
 	 */
 	public function field_group_updated( $field_group ) {
 
@@ -236,10 +244,10 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 			return $pseudocache[$field['ID']];
 		}
 
-		// Get field parent safely.
+		// Get Field parent safely.
 		$field_parent = acf_maybe_get( $field, 'parent' );
 
-		// If there's no field parent.
+		// If there's no Field parent.
 		if ( ! $field_parent ) {
 
 			// Flag in pseudo-cache.
@@ -247,7 +255,7 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 
 		} else {
 
-			// If this field has no ancestors.
+			// If this Field has no ancestors.
 			$field_ancestors = acf_get_field_ancestors( $field );
 			if ( ! $field_ancestors ) {
 
@@ -256,7 +264,7 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 
 			} else {
 
-				// It has ancestors - get top-most field's field group.
+				// It has ancestors - get top-most Field's Field Group.
 				$topmost_field = array_pop( $field_ancestors );
 				$field_data = acf_get_field( $topmost_field );
 				$field_group = acf_get_field_group( $field_data['parent'] );
@@ -296,7 +304,7 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 
 		return;
 
-		// Get field group.
+		// Get Field Group.
 		$field_group = acf_get_field_group( $field_group_id );
 
 		// --<
@@ -325,7 +333,7 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 
 		return;
 
-		// Get field group.
+		// Get Field Group.
 		$field_group = acf_get_field_group( $field_group_id );
 
 		// --<

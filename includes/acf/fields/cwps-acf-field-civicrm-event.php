@@ -21,6 +21,15 @@ defined( 'ABSPATH' ) || exit;
 class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Field extends acf_field {
 
 	/**
+	 * Plugin object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
+	/**
 	 * ACF Loader object.
 	 *
 	 * @since 0.5
@@ -54,7 +63,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Field extends acf_field {
 	 *
 	 * This must be populated in the class constructor because it is translatable.
 	 *
-	 * Multiple words, can include spaces, visible when selecting a field type.
+	 * Multiple words, can include spaces, visible when selecting a Field Type.
 	 *
 	 * @since 0.5
 	 * @access public
@@ -78,7 +87,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Field extends acf_field {
 	/**
 	 * Field Type defaults.
 	 *
-	 * Array of default settings which are merged into the field object.
+	 * Array of default settings which are merged into the Field object.
 	 * These are used later in settings.
 	 *
 	 * @since 0.5
@@ -129,10 +138,9 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Field extends acf_field {
 	 */
 	public function __construct( $parent ) {
 
-		// Store reference to ACF Loader object.
+		// Store references to objects.
+		$this->plugin = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-
-		// Store reference to parent.
 		$this->acf = $parent;
 
 		// Define label.
@@ -204,7 +212,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Field extends acf_field {
 			return;
 		}
 
-		// Get Setting field.
+		// Get Setting Field.
 		$setting = $this->acf_loader->civicrm->participant->acf_field_get( [], $participant_fields );
 
 		// Now add it.
@@ -324,10 +332,10 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Field extends acf_field {
 			return $response;
 		}
 
- 		// Load field.
+ 		// Load Field.
 		$field = acf_get_field( $options['field_key'] );
 
-		// Bail if field did not load.
+		// Bail if Field did not load.
 		if ( ! $field ) {
 			return $response;
 		}

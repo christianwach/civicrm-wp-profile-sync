@@ -24,6 +24,15 @@ defined( 'ABSPATH' ) || exit;
 class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	/**
+	 * Plugin object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
+	/**
 	 * ACF Loader object.
 	 *
 	 * @since 0.4
@@ -102,7 +111,8 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 */
 	public function __construct( $acf_loader ) {
 
-		// Store reference to ACF Loader object.
+		// Store references to objects.
+		$this->plugin = $acf_loader->plugin;
 		$this->acf_loader = $acf_loader;
 
 		// Init when this plugin is loaded.
@@ -233,10 +243,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 */
 	public function hooks_wordpress_acf_add() {
 
-		// Intercept ACF fields prior to save.
+		// Intercept ACF Fields prior to save.
 		//add_action( 'acf/save_post', [ $this, 'acf_fields_saved' ], 5, 1 );
 
-		// Intercept ACF fields after save.
+		// Intercept ACF Fields after save.
 		add_action( 'acf/save_post', [ $this, 'acf_fields_saved' ], 20, 1 );
 
 	}
@@ -310,10 +320,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 */
 	public function hooks_wordpress_acf_remove() {
 
-		// Remove ACF fields update hook.
+		// Remove ACF Fields update hook.
 		//remove_action( 'acf/save_post', [ $this, 'acf_fields_saved' ], 5 );
 
-		// Remove ACF fields update hook.
+		// Remove ACF Fields update hook.
 		remove_action( 'acf/save_post', [ $this, 'acf_fields_saved' ], 20 );
 
 	}
@@ -862,7 +872,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		}
 
 		// Bail if this is not a Contact.
-		$top_level_types = $this->acf_loader->civicrm->contact_type->types_get_top_level();
+		$top_level_types = $this->plugin->civicrm->contact_type->types_get_top_level();
 		if ( ! in_array( $objectName, $top_level_types ) ) {
 			return;
 		}
@@ -908,7 +918,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		}
 
 		// Bail if this is not a Contact.
-		$top_level_types = $this->acf_loader->civicrm->contact_type->types_get_top_level();
+		$top_level_types = $this->plugin->civicrm->contact_type->types_get_top_level();
 		if ( ! in_array( $objectName, $top_level_types ) ) {
 			return;
 		}
@@ -963,7 +973,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		}
 
 		// Bail if this is not a Contact.
-		$top_level_types = $this->acf_loader->civicrm->contact_type->types_get_top_level();
+		$top_level_types = $this->plugin->civicrm->contact_type->types_get_top_level();
 		if ( ! in_array( $objectName, $top_level_types ) ) {
 			return;
 		}
@@ -1017,13 +1027,13 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		}
 
 		// Bail if this is not a Contact.
-		$top_level_types = $this->acf_loader->civicrm->contact_type->types_get_top_level();
+		$top_level_types = $this->plugin->civicrm->contact_type->types_get_top_level();
 		if ( ! in_array( $objectName, $top_level_types ) ) {
 			return;
 		}
 
 		// Get the full Contact data.
-		$contact = $this->acf_loader->civicrm->contact->get_by_id( $objectId );
+		$contact = $this->plugin->civicrm->contact->get_by_id( $objectId );
 
 		// Bail if something went wrong.
 		if ( $contact === false ) {
@@ -1041,7 +1051,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		 * There are mismatches between the Contact data that is passed in to
 		 * this callback and the Contact data that is retrieved by the API -
 		 * particularly the "employer_id" which may exist in this data but does
-		 * not exist in the data from the API (which has an "employer" field
+		 * not exist in the data from the API (which has an "employer" Field
 		 * whose value is the "Name" of the Employer instead) so we save the
 		 * "extra" data here for use later.
 		 */

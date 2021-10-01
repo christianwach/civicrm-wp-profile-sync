@@ -49,6 +49,31 @@ class CiviCRM_WP_Profile_Sync_Mapper {
 	 */
 	public $ufmatch;
 
+	/**
+	 * Define date format mappings (CiviCRM to PHP).
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array $date_mappings The CiviCRM to PHP date format mappings.
+	 */
+	public $date_mappings = [
+		'mm/dd/yy' => 'm/d/Y',
+		'dd/mm/yy' => 'd/m/Y',
+		'yy-mm-dd' => 'Y-m-d',
+		'dd-mm-yy' => 'd-m-Y',
+		'dd.mm.yy' => 'd.m.Y',
+		'M d, yy' => 'M d, Y',
+		'd M yy' => 'j M Y',
+		'MM d, yy' => 'F j, Y',
+		'd MM yy' => 'd F Y',
+		'DD, d MM yy' => 'l, d F Y',
+		'mm/dd' => 'm/d',
+		'dd-mm' => 'd-m',
+		'M yy' => 'm Y',
+		'M Y' => 'm Y',
+		'yy' => 'Y',
+	];
+
 
 
 	/**

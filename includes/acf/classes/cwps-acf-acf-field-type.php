@@ -23,6 +23,15 @@ defined( 'ABSPATH' ) || exit;
 class CiviCRM_Profile_Sync_ACF_Field_Type {
 
 	/**
+	 * Plugin object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
+	/**
 	 * ACF Loader object.
 	 *
 	 * @since 0.5
@@ -69,10 +78,9 @@ class CiviCRM_Profile_Sync_ACF_Field_Type {
 	 */
 	public function __construct( $parent ) {
 
-		// Store reference to ACF Loader object.
+		// Store references to objects.
+		$this->plugin = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-
-		// Store reference to ACF object.
 		$this->acf = $parent;
 
 		// Init when the ACF  is loaded.
@@ -176,7 +184,7 @@ class CiviCRM_Profile_Sync_ACF_Field_Type {
 	 */
 	public function setup_field_types( $version ) {
 
-		// Create fields.
+		// Create Fields.
 		new CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_ID_Field( $this );
 		new CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field( $this );
 		new CiviCRM_Profile_Sync_Custom_CiviCRM_Relationship( $this );

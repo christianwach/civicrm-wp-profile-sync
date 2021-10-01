@@ -23,6 +23,15 @@ defined( 'ABSPATH' ) || exit;
 class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Sync_ACF_CiviCRM_Base {
 
 	/**
+	 * Plugin object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
+	/**
 	 * ACF Loader object.
 	 *
 	 * @since 0.4
@@ -62,10 +71,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 	 */
 	public function __construct( $parent ) {
 
-		// Store reference to ACF Loader object.
+		// Store references to objects.
+		$this->plugin = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-
-		// Store reference to parent.
 		$this->civicrm = $parent;
 
 		// Init when the CiviCRM object is loaded.
@@ -162,7 +170,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 	public function contact_sync_to_post( $args ) {
 
 		// Get all Address Records for this Contact.
-		$data = $this->civicrm->address->addresses_get_by_contact_id( $args['objectId'] );
+		$data = $this->plugin->civicrm->address->addresses_get_by_contact_id( $args['objectId'] );
 
 		// Bail if there are no Address Records.
 		if ( empty( $data ) ) {
@@ -212,7 +220,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 
 			// Overwrite if we get a value.
 			if ( $state_id !== false ) {
-				$state = $this->civicrm->address->state_province_get_by_id( $state_id );
+				$state = $this->plugin->civicrm->address->state_province_get_by_id( $state_id );
 				$value = $state['name'];
 			}
 
@@ -250,7 +258,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 		$this->address_process( $address, $args );
 
 		// If this address is a "Master Address" then it will return "Shared Addresses".
-		$addresses_shared = $this->civicrm->address->addresses_shared_get_by_id( $address->id );
+		$addresses_shared = $this->plugin->civicrm->address->addresses_shared_get_by_id( $address->id );
 
 		// Bail if there are none.
 		if ( empty( $addresses_shared ) ) {
@@ -290,7 +298,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 		$address_id = (int) $args['objectId'];
 
 		// Grab the Address Record data from the database.
-		$address_pre = $this->civicrm->address->address_get_by_id( $address_id );
+		$address_pre = $this->plugin->civicrm->address->address_get_by_id( $address_id );
 
 		// Maybe cast previous Address Record data as object and stash in a property.
 		if ( ! is_object( $address_pre ) ) {
@@ -329,7 +337,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 		$this->address_process( $this->address_pre, $args );
 
 		// If this address is a "Master Address" then it will return "Shared Addresses".
-		$addresses_shared = $this->civicrm->address->addresses_shared_get_by_id( $this->address_pre->id );
+		$addresses_shared = $this->plugin->civicrm->address->addresses_shared_get_by_id( $this->address_pre->id );
 
 		// Bail if there are none.
 		if ( empty( $addresses_shared ) ) {
@@ -356,20 +364,20 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 	public function address_process( $address, $args ) {
 
 		// Get the Contact data.
-		$contact = $this->acf_loader->civicrm->contact->get_by_id( $address->contact_id );
+		$contact = $this->plugin->civicrm->contact->get_by_id( $address->contact_id );
 
 		// Get originating Entity.
 		$entity = $this->acf_loader->mapper->entity_get();
 
 		// Test if any of this Contact's Contact Types is mapped to a Post Type.
-		$post_types = $this->acf_loader->civicrm->contact->is_mapped( $contact, 'create' );
+		$post_types = $this->civicrm->contact->is_mapped( $contact, 'create' );
 		if ( $post_types !== false ) {
 
 			// Handle each Post Type in turn.
 			foreach ( $post_types as $post_type ) {
 
 				// Get the Post ID for this Contact.
-				$post_id = $this->acf_loader->civicrm->contact->is_mapped_to_post( $contact, $post_type );
+				$post_id = $this->civicrm->contact->is_mapped_to_post( $contact, $post_type );
 
 				// Skip if not mapped or Post doesn't yet exist.
 				if ( $post_id === false ) {
@@ -456,7 +464,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 
 			// Overwrite if we get a value.
 			if ( $state_id !== false ) {
-				$state = $this->civicrm->address->state_province_get_by_id( $state_id );
+				$state = $this->plugin->civicrm->address->state_province_get_by_id( $state_id );
 				$value = $state['name'];
 			}
 

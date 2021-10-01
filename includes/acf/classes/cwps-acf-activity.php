@@ -23,6 +23,15 @@ defined( 'ABSPATH' ) || exit;
 class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 	/**
+	 * Plugin object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
+	/**
 	 * ACF Loader object.
 	 *
 	 * @since 0.4
@@ -52,7 +61,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 	public $identifier = 'activity';
 
 	/**
-	 * "CiviCRM Field" field value prefix in the ACF Field data.
+	 * "CiviCRM Field" Field value prefix in the ACF Field data.
 	 *
 	 * This distinguishes Activity Fields from Custom Fields.
 	 *
@@ -73,10 +82,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 	 */
 	public function __construct( $parent ) {
 
-		// Store reference to ACF Loader object.
+		// Store references to objects.
+		$this->plugin = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-
-		// Store reference to parent.
 		$this->civicrm = $parent;
 
 		// Init when the CiviCRM object is loaded.
@@ -320,10 +328,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		}
 
 		/*
-		 * Get existing field values.
+		 * Get existing Field values.
 		 *
 		 * These are actually the *new* values because we are hooking in *after*
-		 * the fields have been saved.
+		 * the Fields have been saved.
 		 */
 		$fields = get_fields( $post->ID, false );
 
@@ -1076,18 +1084,18 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 	 */
 	public function prepare_from_fields( $fields, $post_id = null ) {
 
-		// Init data for fields.
+		// Init data for Fields.
 		$activity_data = [];
 
-		// Bail if we have no field data to save.
+		// Bail if we have no Field data to save.
 		if ( empty( $fields ) ) {
 			return $activity_data;
 		}
 
-		// Loop through the field data.
+		// Loop through the Field data.
 		foreach ( $fields as $field => $value ) {
 
-			// Get the field settings.
+			// Get the Field settings.
 			$settings = get_field_object( $field, $post_id );
 
 			// Get the CiviCRM Custom Field and Activity Field.
@@ -1108,19 +1116,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 					// The Activity Field code is the setting.
 					$code = $activity_field_name;
 
-					// Unless it's the "target" field.
+					// Unless it's the "target" Field.
 					if ( $code == 'target_contact_id' ) {
 						$code = 'target_id';
 					}
 
-					// Or it's the "assignee" field *FFS*
+					// Or it's the "assignee" Field *FFS*
 					if ( $code == 'assignee_contact_id' ) {
 						$code = 'assignee_id';
 					}
 
 				}
 
-				// Parse value by field type.
+				// Parse value by Field Type.
 				$value = $this->acf_loader->acf->field->value_get_for_civicrm( $value, $settings['type'], $settings );
 
 				// Some Activity Fields cannot be empty.
@@ -1131,7 +1139,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 					'modified_date',
 				];
 
-				// Add it to the field data.
+				// Add it to the Field data.
 				if ( in_array( $code, $cannot_be_empty ) && empty( $value ) ) {
 					// Skip.
 				} else {
@@ -1219,7 +1227,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		 */
 		$choices = apply_filters( 'cwps/acf/civicrm/activity/civicrm_field/choices', $choices );
 
-		// Define field.
+		// Define Field.
 		$field = [
 			'key' => $this->civicrm->acf_field_key_get(),
 			'label' => __( 'CiviCRM Field', 'civicrm-wp-profile-sync' ),
@@ -1249,7 +1257,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $field The existing field data array.
+	 * @param array $field The existing Field data array.
 	 * @return string|bool $activity_field_name The name of the Activity Field, or false if none.
 	 */
 	public function activity_field_name_get( $field ) {
@@ -1312,7 +1320,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		$activity_fields = $this->civicrm->activity_field->get_for_acf_field( $field );
 
 		// Get the Custom Fields for CiviCRM Activities.
-		$custom_fields = $this->civicrm->custom_field->get_for_entity_type( 'Activity', '' );
+		$custom_fields = $this->plugin->civicrm->custom_field->get_for_entity_type( 'Activity', '' );
 
 		/**
 		 * Filter the Custom Fields.
@@ -1383,11 +1391,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 			return $setting_field;
 		}
 
-		// Get the public fields on the Entity for this Field Type.
+		// Get the public Fields on the Entity for this Field Type.
 		$fields_for_entity = $this->civicrm->activity_field->data_get( $field['type'], 'public' );
 
 		// Get the Custom Fields for this Entity.
-		$custom_fields = $this->civicrm->custom_field->get_for_entity_type( 'Activity', '' );
+		$custom_fields = $this->plugin->civicrm->custom_field->get_for_entity_type( 'Activity', '' );
 
 		/**
 		 * Filter the Custom Fields.
@@ -1433,7 +1441,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 			return $choices;
 		}
 
-		// Get the public fields on the Entity for this Field Type.
+		// Get the public Fields on the Entity for this Field Type.
 		$fields_for_entity = $this->civicrm->activity_field->data_get( $field['type'], 'public' );
 
 		// Prepend the ones that are needed in ACFE Forms (i.e. Subject and Details).
@@ -1444,7 +1452,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		}
 
 		// Get the Custom Fields for this Entity.
-		$custom_fields = $this->civicrm->custom_field->get_for_entity_type( 'Activity', '' );
+		$custom_fields = $this->plugin->civicrm->custom_field->get_for_entity_type( 'Activity', '' );
 
 		/**
 		 * Filter the Custom Fields.
@@ -1581,7 +1589,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		}
 
 		// Get the Custom Fields for CiviCRM Activities.
-		$entity_custom_fields = $this->civicrm->custom_field->get_for_entity_type( 'Activity', '' );
+		$entity_custom_fields = $this->plugin->civicrm->custom_field->get_for_entity_type( 'Activity', '' );
 
 		// Maybe merge with passed in array.
 		if ( ! empty( $entity_custom_fields ) ) {

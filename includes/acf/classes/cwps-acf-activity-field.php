@@ -23,6 +23,15 @@ defined( 'ABSPATH' ) || exit;
 class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 	/**
+	 * Plugin object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
+	/**
 	 * ACF Loader object.
 	 *
 	 * @since 0.4
@@ -89,10 +98,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 	 */
 	public function __construct( $parent ) {
 
-		// Store reference to ACF Loader object.
+		// Store references to objects.
+		$this->plugin = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-
-		// Store reference to parent.
 		$this->civicrm = $parent;
 
 		// Init when the CiviCRM object is loaded.
@@ -172,7 +180,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 			return $valid;
 		}
 
-		// Validate depending on the field name.
+		// Validate depending on the Field name.
 		switch ( $activity_field_name ) {
 
 			case 'duration' :
@@ -275,7 +283,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 	 * @param array $name The Activity Field name.
 	 * @param string $selector The ACF Field selector.
 	 * @param integer|string $post_id The ACF "Post ID".
-	 * @return mixed $value The formatted field value.
+	 * @return mixed $value The formatted Field value.
 	 */
 	public function value_get_for_acf( $value, $name, $selector, $post_id ) {
 
@@ -310,7 +318,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 			case 'date_picker' :
 			case 'date_time_picker' :
 
-				// Get field setting.
+				// Get Field setting.
 				$acf_setting = get_field_object( $selector, $post_id );
 
 				// Date Picker test.
@@ -366,7 +374,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 	 * @since 0.4
 	 *
 	 * @param string $name The name of the Activity Field.
-	 * @return array $options The array of field options.
+	 * @return array $options The array of Field options.
 	 */
 	public function options_get( $name ) {
 
@@ -377,7 +385,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 		// Status ID.
 		if ( $name == 'status_id' ) {
-			$option_group = $this->civicrm->option_group_get( 'activity_status' );
+			$option_group = $this->plugin->civicrm->option_group_get( 'activity_status' );
 			if ( ! empty( $option_group ) ) {
 				$options = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
 			}
@@ -385,7 +393,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 		// Priority ID.
 		if ( $name == 'priority_id' ) {
-			$option_group = $this->civicrm->option_group_get( 'priority' );
+			$option_group = $this->plugin->civicrm->option_group_get( 'priority' );
 			if ( ! empty( $option_group ) ) {
 				$options = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
 			}
@@ -393,7 +401,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 		// Engagement Level.
 		if ( $name == 'engagement_level' ) {
-			$option_group = $this->civicrm->option_group_get( 'engagement_index' );
+			$option_group = $this->plugin->civicrm->option_group_get( 'engagement_index' );
 			if ( ! empty( $option_group ) ) {
 				$options = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
 			}
@@ -423,10 +431,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 		// Init return.
 		$activity_fields = [];
 
-		// Get field group for this field's parent.
+		// Get Field Group for this Field's parent.
 		$field_group = $this->acf_loader->acf->field_group->get_for_field( $field );
 
-		// Bail if there's no field group.
+		// Bail if there's no Field Group.
 		if ( empty( $field_group ) ) {
 			return $activity_fields;
 		}
@@ -442,7 +450,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 		// Loop through the Post Types.
 		foreach ( $is_activity_field_group as $post_type_name ) {
 
-			// Get public fields of this type.
+			// Get public Fields of this type.
 			$activity_fields_for_type = $this->data_get( $field['type'], 'public' );
 
 			// Merge with return array.
@@ -466,8 +474,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $name The name of the field.
-	 * @return array $field The array of field data.
+	 * @param string $name The name of the Field.
+	 * @return array $field The array of Field data.
 	 */
 	public function get_by_name( $name ) {
 
@@ -515,8 +523,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 	 * @since 0.4
 	 *
 	 * @param string $field_type The type of ACF Field.
-	 * @param string $filter The token by which to filter the array of fields.
-	 * @return array $fields The array of field names.
+	 * @param string $filter The token by which to filter the array of Fields.
+	 * @return array $fields The array of Field names.
 	 */
 	public function data_get( $field_type = '', $filter = 'none' ) {
 
@@ -546,11 +554,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 		$result = civicrm_api( 'Activity', 'getfields', $params );
 
 		// Override return if we get some.
-		if (
-			$result['is_error'] == 0 AND
-			isset( $result['values'] ) AND
-			count( $result['values'] ) > 0
-		) {
+		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
 
 			// Check for no filter.
 			if ( $filter == 'none' ) {
@@ -597,8 +601,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $filter The token by which to filter the array of fields.
-	 * @return array $fields The array of field names.
+	 * @param string $filter The token by which to filter the array of Fields.
+	 * @return array $fields The array of Field names.
 	 */
 	public function data_get_filtered( $filter = 'none' ) {
 
@@ -628,11 +632,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 		$result = civicrm_api( 'Activity', 'getfields', $params );
 
 		// Override return if we get some.
-		if (
-			$result['is_error'] == 0 AND
-			isset( $result['values'] ) AND
-			count( $result['values'] ) > 0
-		) {
+		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
 
 			// Check for no filter.
 			if ( $filter == 'none' ) {
@@ -694,7 +694,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 	 * @since 0.4
 	 *
 	 * @param string $type The type of ACF Field.
-	 * @return array $fields The array of field names.
+	 * @return array $fields The array of Field names.
 	 */
 	public function get_by_acf_type( $type = '' ) {
 
@@ -721,7 +721,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 	 * @since 0.4
 	 *
 	 * @param string $name The name of the Activity Field.
-	 * @return array $fields The array of field names.
+	 * @return array $fields The array of Field names.
 	 */
 	public function get_acf_type( $name = '' ) {
 
@@ -761,7 +761,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 		}
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
-		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		$key = $this->civicrm->acf_field_key_get();
 		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
@@ -802,13 +802,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 		}
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
-		$key = $this->acf_loader->civicrm->acf_field_key_get();
+		$key = $this->civicrm->acf_field_key_get();
 		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
 			return $field;
 		}
 
 		// Get the mapped Activity Field name if present.
-		$activity_field_name = $this->acf_loader->civicrm->activity->activity_field_name_get( $field );
+		$activity_field_name = $this->civicrm->activity->activity_field_name_get( $field );
 		if ( $activity_field_name === false ) {
 			return $field;
 		}
@@ -845,7 +845,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 		// We only have a few to account for.
 		$date_fields = [ 'created_date', 'modified_date', 'activity_date_time' ];
 
-		// If it's one of our fields.
+		// If it's one of our Fields.
 		if ( in_array( $name, $date_fields ) ) {
 
 			// Get the "Activity Date Time" preference.
@@ -897,7 +897,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 		}
 
 		// Get the full Activity data.
-		$activity = $this->acf_loader->civicrm->activity->get_by_id( $args['activity_id'] );
+		$activity = $this->civicrm->activity->get_by_id( $args['activity_id'] );
 
 		// Check permissions.
 		if ( ! current_user_can( 'edit_post', $args['post']->ID ) ) {
