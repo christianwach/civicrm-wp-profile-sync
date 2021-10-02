@@ -552,7 +552,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		// Pass through to BuddyPress.
 		$result = xprofile_set_field_data( $field_id, $user_id, $value );
 
-		///*
+		/*
 		$e = new \Exception();
 		$trace = $e->getTraceAsString();
 		error_log( print_r( [
@@ -563,7 +563,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 			'result' => $result,
 			//'backtrace' => $trace,
 		], true ) );
-		//*/
+		*/
 
 		// Reinstate our filter.
 		add_filter( 'bp_xprofile_set_field_data_pre_validate', [ $this, 'pre_validate' ], 10, 3 );
