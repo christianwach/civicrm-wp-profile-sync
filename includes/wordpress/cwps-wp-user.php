@@ -347,6 +347,12 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 			return;
 		}
 
+		// Check if our setting allows Nickname sync.
+		$nickname_sync = $this->plugin->admin->setting_get( 'user_profile_nickname_sync', 1 );
+		if ( $nickname_sync !== 1 ) {
+			return;
+		}
+
 		// Update "Nickname".
 		update_user_meta( $user_id, 'nickname', $contact->nick_name );
 

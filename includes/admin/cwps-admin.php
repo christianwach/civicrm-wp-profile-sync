@@ -438,22 +438,23 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 		// "User Profile Website Type" setting may not exist.
 		if ( ! $this->setting_exists( 'user_profile_website_type' ) ) {
-
-			// Add it from defaults.
 			$settings = $this->settings_get_defaults();
 			$this->setting_set( 'user_profile_website_type', $settings['user_profile_website_type'] );
 			$save = true;
-
 		}
 
 		// "User Email Sync" setting may not exist.
 		if ( ! $this->setting_exists( 'user_profile_email_sync' ) ) {
-
-			// Add it from defaults.
 			$settings = $this->settings_get_defaults();
 			$this->setting_set( 'user_profile_email_sync', $settings['user_profile_email_sync'] );
 			$save = true;
+		}
 
+		// "User Nickname Sync" setting may not exist.
+		if ( ! $this->setting_exists( 'user_profile_nickname_sync' ) ) {
+			$settings = $this->settings_get_defaults();
+			$this->setting_set( 'user_profile_nickname_sync', $settings['user_profile_nickname_sync'] );
+			$save = true;
 		}
 
 		// Things to always check on upgrade.
@@ -887,15 +888,19 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		// Get Website Types Options.
 		$options = $this->plugin->civicrm->website->types_options_get();
 
-		// Get selected option.
+		// Get selected Website Type.
 		$website_type_selected = $this->setting_get( 'user_profile_website_type', 0 );
 
-		// Get setting.
+		// Get Email Sync setting.
 		$email_sync = (int) $this->setting_get( 'user_profile_email_sync', 2 );
+
+		// Get Nickname Sync setting.
+		$nickname_sync = (int) $this->setting_get( 'user_profile_nickname_sync', 1 );
 
 		// Init template vars.
 		$email_sync_yes = $email_sync === 1 ? ' selected ="selected"' : '';
 		$email_sync_no =  $email_sync === 0 ? ' selected ="selected"' : '';
+		$nickname_checked =  $nickname_sync === 1 ? ' checked ="checked"' : '';
 
 		// Include template file.
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/metaboxes/metabox-admin-settings-profile.php';
@@ -925,6 +930,9 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 		// Set impossible default "User Email Sync" value.
 		$settings['user_profile_email_sync'] = 2;
+
+		// Default "User Nickname Sync" to "on" since that's previous behaviour.
+		$settings['user_profile_nickname_sync'] = 1;
 
 		/**
 		 * Filter default settings.
@@ -1008,6 +1016,12 @@ class CiviCRM_WP_Profile_Sync_Admin {
 			$this->plugin->civicrm->email->sync_setting_force( $civicrm_email_sync );
 
 		}
+
+		// Get User Profile Nickname setting.
+		$nickname_sync = ! empty( $_POST['cwps_nickname_checkbox'] ) ? 1 : 0;
+
+		// Always set User Profile Nickname sync setting.
+		$this->setting_set( 'user_profile_nickname_sync', $nickname_sync );
 
 		/**
 		 * Allow plugins to hook into the settings update process.

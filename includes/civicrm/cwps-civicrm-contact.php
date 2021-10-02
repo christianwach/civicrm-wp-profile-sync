@@ -635,6 +635,12 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		// Assume a Contact's "Nickname" should be synced.
 		$should_be_synced = true;
 
+		// Check if our setting allows Nickname sync.
+		$nickname_sync = $this->plugin->admin->setting_get( 'user_profile_nickname_sync', 1 );
+		if ( $nickname_sync !== 1 ) {
+			$should_be_synced = false;
+		}
+
 		/**
 		 * Let other plugins override whether a CiviCRM Contact's "Nickname" should be synced.
 		 *

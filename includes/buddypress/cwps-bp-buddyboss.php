@@ -120,9 +120,36 @@ class CiviCRM_Profile_Sync_BP_BuddyBoss {
 		], true ) );
 		*/
 
+		// Check if our setting allows Nickname sync.
+		$nickname_sync = $this->plugin->admin->setting_get( 'user_profile_nickname_sync', 1 );
+
+		// Prevent sync if not.
+		if ( $nickname_sync !== 1 ) {
+			add_filter( 'bp_xprofile_nickname_field_id', [ $this, 'nickname_sync_prevent' ] );
+		}
+
 		// Trigger the sync process.
 		bp_xprofile_sync_bp_profile( $args['user_id'] );
 
+		// Reinstate normal operation.
+		if ( $nickname_sync !== 1 ) {
+			remove_filter( 'bp_xprofile_nickname_field_id', [ $this, 'nickname_sync_prevent' ] );
+		}
+
+	}
+
+
+
+	/**
+	 * Prevents Nickname sync to BuddyBoss.
+	 *
+	 * @since 0.5
+	 *
+	 * @param integer $field_id The numeric ID of the BuddyBoss Nickname Field.
+	 * @param integer Set to "0" to prevent Nickname sync.
+	 */
+	public function nickname_sync_prevent( $field_id ) {
+		return 0;
 	}
 
 
