@@ -530,6 +530,52 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 
 	/**
+	 * Update the value of a BuddyPress xProfile Field.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $field_id The numeric ID of the BuddyPress Field.
+	 * @param integer $user_id The numeric ID of the WordPress User.
+	 * @param mixed $value The value to save in the database.
+	 * @return bool $result True if update is successful, false otherwise.
+	 */
+	public function value_update( $field_id, $user_id, $value ) {
+
+		// Protect against (string) 'null' which CiviCRM uses for some reason.
+		if ( $value === 'null' || $value === 'NULL' ) {
+			$value = '';
+		}
+
+		// Do not trigger our filter.
+		remove_filter( 'bp_xprofile_set_field_data_pre_validate', [ $this, 'pre_validate' ], 10 );
+
+		// Pass through to BuddyPress.
+		$result = xprofile_set_field_data( $field_id, $user_id, $value );
+
+		///*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'field_id' => $field_id,
+			'user_id' => $user_id,
+			'value' => $value,
+			'result' => $result,
+			//'backtrace' => $trace,
+		], true ) );
+		//*/
+
+		// Reinstate our filter.
+		add_filter( 'bp_xprofile_set_field_data_pre_validate', [ $this, 'pre_validate' ], 10, 3 );
+
+		// --<
+		return $result;
+
+	}
+
+
+
+	/**
 	 * Get the value of a BuddyPress Field formatted for CiviCRM.
 	 *
 	 * @since 0.5

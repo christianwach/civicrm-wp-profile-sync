@@ -679,7 +679,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		*/
 
 		// Okay, go ahead and save the value to the xProfile Field.
-		$result = xprofile_set_field_data( $params['field_id'], $args['user_id'], $value );
+		$result = $this->xprofile->value_update( $params['field_id'], $args['user_id'], $value );
 
 		/*
 		$e = new \Exception();

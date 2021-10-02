@@ -515,7 +515,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 			*/
 
 			// Okay, go ahead and save the value to the xProfile Field.
-			$result = xprofile_set_field_data( $bp_field['field_id'], $user_id, $value );
+			$result = $this->xprofile->value_update( $bp_field['field_id'], $user_id, $value );
 
 		}
 

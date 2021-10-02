@@ -336,7 +336,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 			$value = $this->value_get_for_bp( $phone->$civicrm_field, $civicrm_field, $bp_field );
 
 			// Okay, go ahead and save the value to the xProfile Field.
-			$result = xprofile_set_field_data( $bp_field['field_id'], $user_id, $value );
+			$result = $this->xprofile->value_update( $bp_field['field_id'], $user_id, $value );
 
 			/*
 			$e = new \Exception();
