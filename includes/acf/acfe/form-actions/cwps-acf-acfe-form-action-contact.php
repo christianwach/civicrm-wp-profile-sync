@@ -2935,6 +2935,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			// Get the related Contact Action Name.
 			$action_name = $field['action_ref'];
 
+			// We need an Action Name.
+			if ( empty( $action_name ) ) {
+				continue;
+			}
+
 			// Get the Contact data for that Action.
 			$related_contact = acfe_form_get_action( $action_name, 'contact' );
 			if ( empty( $related_contact['id'] ) ) {
@@ -3214,6 +3219,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 			// Get the related Contact Action Name.
 			$action_name = $field['action_ref'];
+
+			// We need an Action Name.
+			if ( empty( $action_name ) ) {
+				continue;
+			}
 
 			// Get the Contact data for that Action.
 			$related_contact = acfe_form_get_action( $action_name, 'contact' );

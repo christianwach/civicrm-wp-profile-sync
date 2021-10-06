@@ -1017,6 +1017,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 		// Init return.
 		$contact_id = false;
 
+		// We need an Action Name.
+		if ( empty( $action_name ) ) {
+			return $contact_id;
+		}
+
 		// Get the Contact data for that Action.
 		$related_contact = acfe_form_get_action( $action_name, 'contact' );
 		if ( empty( $related_contact['id'] ) ) {
