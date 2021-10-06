@@ -184,7 +184,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 			return $participant_role;
 		}
 
-		// Define params to get queried Participant.
+		// Define params to get queried Participant Role.
 		$params = [
 			'version' => 3,
 			'sequential' => 1,
@@ -240,7 +240,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 			return $participant_role;
 		}
 
-		// Define params to get queried Participant.
+		// Define params to get queried Participant Role.
 		$params = [
 			'version' => 3,
 			'sequential' => 1,
