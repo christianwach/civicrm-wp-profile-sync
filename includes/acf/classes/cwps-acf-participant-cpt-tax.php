@@ -119,7 +119,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		// Store references to objects.
 		$this->plugin = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->civicrm = $parent;
+		$this->civicrm = $parent->civicrm;
 		$this->participant = $parent->participant;
 		$this->cpt = $parent;
 
