@@ -671,7 +671,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				'width' => '',
 				'class' => '',
 				'id' => '',
-				'data-instruction-placement' => 'field'
+				'data-instruction-placement' => 'field',
 			],
 			'acfe_permissions' => '',
 			'message' => '',
@@ -697,7 +697,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				'width' => '',
 				'class' => '',
 				'id' => '',
-				'data-instruction-placement' => 'field'
+				'data-instruction-placement' => 'field',
 			],
 			'acfe_permissions' => '',
 			'default_value' => '',
@@ -725,7 +725,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				'width' => '',
 				'class' => '',
 				'id' => '',
-				'data-instruction-placement' => 'field'
+				'data-instruction-placement' => 'field',
 			],
 			'acfe_permissions' => '',
 			'default_value' => '',
@@ -753,7 +753,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				'width' => '',
 				'class' => '',
 				'id' => '',
-				'data-instruction-placement' => 'field'
+				'data-instruction-placement' => 'field',
 			],
 			'acfe_permissions' => '',
 			'default_value' => '',
@@ -779,7 +779,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				'width' => '',
 				'class' => '',
 				'id' => '',
-				'data-instruction-placement' => 'field'
+				'data-instruction-placement' => 'field',
 			],
 			'acfe_permissions' => '',
 			'allow_custom' => 0,
@@ -850,7 +850,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				'width' => '',
 				'class' => '',
 				'id' => '',
-				'data-instruction-placement' => 'field'
+				'data-instruction-placement' => 'field',
 			],
 			'acfe_permissions' => '',
 			'message' => '',
@@ -932,7 +932,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// Init return.
 		$fields = [];
 
-		// "Contact" Accordion wrapper open.
+		// "Contact Fields" Accordion wrapper open.
 		$fields[] = [
 			'key' => $this->field_key . 'mapping_accordion_contact_open',
 			'label' => __( 'Contact Fields', 'civicrm-wp-profile-sync' ),
@@ -979,7 +979,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			}
 		}
 
-		// "Contact" Accordion wrapper close.
+		// "Contact Fields" Accordion wrapper close.
 		$fields[] = [
 			'key' => $this->field_key . 'mapping_accordion_contact_close',
 			'label' => __( 'Contact Fields', 'civicrm-wp-profile-sync' ),
@@ -1127,7 +1127,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		}
 
-		// "Custom" Accordion wrapper close.
+		// "Custom Fields" Accordion wrapper close.
 		$fields[] = [
 			'key' => $this->field_key . 'mapping_accordion_custom_close',
 			'label' => __( 'Custom Fields', 'civicrm-wp-profile-sync' ),
@@ -1535,7 +1535,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				'width' => '',
 				'class' => '',
 				'id' => '',
-				'data-instruction-placement' => 'field'
+				'data-instruction-placement' => 'field',
 			],
 			'acfe_permissions' => '',
 			'message' => '',
@@ -2027,7 +2027,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				'width' => '',
 				'class' => '',
 				'id' => '',
-				'data-instruction-placement' => 'field'
+				'data-instruction-placement' => 'field',
 			],
 			'acfe_permissions' => '',
 			'message' => '',
@@ -2090,7 +2090,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// Init return.
 		$fields = [];
 
-		// "Group" Accordion wrapper open.
+		// "Free Membership" Accordion wrapper open.
 		$fields[] = [
 			'key' => $this->field_key . 'mapping_accordion_membership_open',
 			'label' => __( 'Free Membership', 'civicrm-wp-profile-sync' ),
@@ -2200,7 +2200,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 					'width' => '',
 					'class' => '',
 					'id' => '',
-					'data-instruction-placement' => 'field'
+					'data-instruction-placement' => 'field',
 				],
 				'acfe_permissions' => '',
 				'default_value' => '',
@@ -2225,7 +2225,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// Add Repeater to Fields.
 		$fields[] = $membership_repeater;
 
-		// "Membership" Accordion wrapper close.
+		// "Free Membership" Accordion wrapper close.
 		$fields[] = [
 			'key' => $this->field_key . 'mapping_accordion_membership_close',
 			'label' => __( 'Free Membership', 'civicrm-wp-profile-sync' ),
@@ -2461,7 +2461,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				'width' => '',
 				'class' => '',
 				'id' => '',
-				'data-instruction-placement' => 'field'
+				'data-instruction-placement' => 'field',
 			],
 			'acfe_permissions' => '',
 			'allow_custom' => 0,
@@ -2621,7 +2621,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				'width' => '',
 				'class' => '',
 				'id' => '',
-				'data-instruction-placement' => 'field'
+				'data-instruction-placement' => 'field',
 			],
 			'acfe_permissions' => '',
 			'default_value' => '',
@@ -2665,7 +2665,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				'width' => '',
 				'class' => '',
 				'id' => '',
-				'data-instruction-placement' => 'field'
+				'data-instruction-placement' => 'field',
 			],
 			'acfe_permissions' => '',
 			'default_value' => '',

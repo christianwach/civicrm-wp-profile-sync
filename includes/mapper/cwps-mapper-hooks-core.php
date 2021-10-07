@@ -729,16 +729,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 */
 	public function bp_field_edited( $data ) {
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'data' => $data,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Remove other callbacks to prevent recursion.
 		$this->hooks_civicrm_remove();
 		$this->hooks_wordpress_remove();

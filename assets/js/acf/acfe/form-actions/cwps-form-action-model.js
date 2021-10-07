@@ -395,4 +395,167 @@
 
 	});
 
+	/**
+	 * ACFE Form Participant Action Reference Field.
+	 *
+	 * @since 0.5
+	 */
+	var cwps_form_participant_action_ref = new acf.Model({
+
+		/**
+		 * Declare Actions.
+		 *
+		 * @since 0.5
+		 */
+		actions: cwps_form_action_settings.get_setting('participant_actions_reference'),
+
+		/**
+		 * Removes options from Reference Fields when a Participant Action is removed.
+		 *
+		 * @since 0.5
+		 */
+		removeParticipantActionAlias: function(field) {
+
+			var val = field.val(),
+				target,
+				participant_refs;
+
+			// Bail if there are no Participant Reference Fields.
+			participant_refs = acf.getFields({type:'cwps_acfe_participant_action_ref'});
+			if (!participant_refs.length) {
+				return;
+			}
+
+			// Remove any options that have the value of this Field.
+			for (item of participant_refs) {
+				target = item.$el.find('option[value="' + val + '"]');
+				if (target.length) {
+					target.remove();
+				}
+			}
+
+		},
+
+		/**
+		 * Updates Reference Fields when a Participant Action Name is altered.
+		 *
+		 * @since 0.5
+		 */
+		newParticipantActionAlias: function(field) {
+
+			// Bridges the focus and blur values.
+			var previous = '';
+
+			/**
+			 * Checks the current Participant Action Name.
+			 *
+			 * @since 0.5
+			 */
+			field.$input().on('focus', function() {
+
+				var val = $(this).val();
+
+				// Store the current value.
+				if (val) {
+					previous = val;
+				} else {
+					previous = '';
+				}
+
+			});
+
+			/**
+			 * Update Reference Fields if a Participant Action Name changes.
+			 *
+			 * @since 0.5
+			 */
+			field.$input().on('blur', function() {
+
+				var val = $(this).val(),
+					target,
+					participant_refs;
+
+				// Bail if there are no changes.
+				if (previous === val) {
+					return;
+				}
+
+				// Bail if there are no Participant Reference Fields.
+				participant_refs = acf.getFields({type:'cwps_acfe_participant_action_ref'});
+				if (!participant_refs.length) {
+					previous = val;
+					return;
+				}
+
+				// Is this a new value?
+				if (previous === '' && val !== '') {
+
+					// Add option to all Reference Fields.
+					for (item of participant_refs) {
+						option = $('<option></option>');
+						option.html( val );
+						option.attr('value', val);
+						item.$el.find('select').append(option);
+					}
+
+				} else {
+
+					// If previous and current values exist, value has changed.
+					if (previous !== '' && val !== '') {
+
+						// Update any options that have the previous value.
+						for (item of participant_refs) {
+							target = item.$el.find('option[value="' + previous + '"]');
+							if (target.length) {
+								target.html( val );
+								target.attr('value', val);
+							}
+						}
+
+					} else {
+
+						// Restore Field to previous value.
+						$(this).val(previous);
+						return;
+
+					}
+
+				}
+
+				// Update bridging var.
+				previous = val;
+
+			});
+
+		},
+
+		/**
+		 * Populates new Participant Reference Fields with options for Participant Action Names.
+		 *
+		 * @since 0.5
+		 */
+		newParticipantActionRefField: function(field) {
+
+			var participant_actions, option;
+
+			// Bail if there are no Participant Actions.
+			participant_actions = acf.getFields({key:'field_cwps_participant_action_custom_alias'});
+			if (!participant_actions.length) {
+				return;
+			}
+
+			// Add their Action Names to this Field's select.
+			for (item of participant_actions) {
+				if ( field.val() != item.val() ) {
+					option = $('<option></option>');
+					option.html( item.val() );
+					option.attr('value', item.val());
+					field.$el.find('select').append(option);
+				}
+			}
+
+		}
+
+	});
+
 })(jQuery);

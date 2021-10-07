@@ -494,17 +494,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 			'last_name' => $user->last_name,
 		];
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'args' => $args,
-			'params' => $params,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Call the CiviCRM API.
 		$result = civicrm_api( 'Contact', 'create', $params );
 

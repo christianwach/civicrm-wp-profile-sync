@@ -332,7 +332,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Group extends acf_field {
 
 
 	/**
-	 * Gets the "Existing Contact / New Contact" Field.
+	 * Gets the "CiviCRM Event ID / Event Type" Field.
 	 *
 	 * @since 0.5
 	 *

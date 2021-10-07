@@ -75,7 +75,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 	/**
 	 * Case Fields to add for the Bypass Location Rule.
 	 *
-	 * These are not mapped for Past Type Sync, but need to be added for the
+	 * These are not mapped for Post Type Sync, but need to be added for the
 	 * Bypass Location Rule.
 	 *
 	 * @since 0.5

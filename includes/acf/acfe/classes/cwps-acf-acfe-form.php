@@ -235,10 +235,12 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-base.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-contact.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-activity.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-participant.php';
 
 		// Init Form Actions.
 		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact( $this );
 		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity( $this );
+		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant( $this );
 
 		// Init Case Action if the CiviCase component is active.
 		$case_active = $this->civicrm->is_component_enabled( 'CiviCase' );
@@ -289,7 +291,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 		 *
 		 * @param array $contact_action_refs The ACF Model actions array to be populated.
 		 */
-		$contact_actions_reference = apply_filters( 'cwps/acf/acfe/form_actions/reference_fields/contact', $contact_action_refs );
+		$contact_actions = apply_filters( 'cwps/acf/acfe/form_actions/reference_fields/contact', $contact_action_refs );
 
 		// Init the Case Reference Field actions array.
 		$case_action_refs = [
@@ -305,14 +307,31 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 		 *
 		 * @param array $case_action_refs The ACF Model actions array to be populated.
 		 */
-		$case_actions_reference = apply_filters( 'cwps/acf/acfe/form_actions/reference_fields/case', $case_action_refs );
+		$case_actions = apply_filters( 'cwps/acf/acfe/form_actions/reference_fields/case', $case_action_refs );
+
+		// Init the Participant Reference Field actions array.
+		$participant_action_refs = [
+			// Participant Actions must always be present.
+			'new_field/key=field_cwps_participant_action_custom_alias' => 'newParticipantActionAlias',
+			'remove_field/key=field_cwps_participant_action_custom_alias' => 'removeParticipantActionAlias',
+		];
+
+		/**
+		 * Query Form Action classes to build the Participant Reference Fields ACF Model actions array.
+		 *
+		 * @since 0.5
+		 *
+		 * @param array $participant_action_refs The ACF Model actions array to be populated.
+		 */
+		$participant_actions = apply_filters( 'cwps/acf/acfe/form_actions/reference_fields/participant', $participant_action_refs );
 
 		// Build data array.
 		$vars = [
 			'localisation' => [],
 			'settings' => [
-				'contact_actions_reference' => $contact_actions_reference,
-				'case_actions_reference' => $case_actions_reference,
+				'contact_actions_reference' => $contact_actions,
+				'case_actions_reference' => $case_actions,
+				'participant_actions_reference' => $participant_actions,
 			],
 		];
 

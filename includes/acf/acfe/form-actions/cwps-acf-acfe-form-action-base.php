@@ -326,7 +326,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 				'width' => '',
 				'class' => '',
 				'id' => '',
-				'data-instruction-placement' => 'field'
+				'data-instruction-placement' => 'field',
 			],
 			'acfe_permissions' => '',
 			'default_value' => '',
@@ -595,6 +595,25 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
         // Add to Javascript ACF Model.
         add_filter( 'cwps/acf/acfe/form_actions/reference_fields/case', function( $actions ) use ( $field_name ) {
         	$actions['new_field/name=' . $field_name] = 'newCaseActionRefField';
+        	return $actions;
+        } );
+
+	}
+
+
+
+	/**
+	 * Adds "Participant Reference Field" actions to the Javascript ACF Model.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $field_name The name the Field.
+	 */
+	public function js_model_participant_reference_field_add( $field_name ) {
+
+        // Add to Javascript ACF Model.
+        add_filter( 'cwps/acf/acfe/form_actions/reference_fields/participant', function( $actions ) use ( $field_name ) {
+        	$actions['new_field/name=' . $field_name] = 'newParticipantActionRefField';
         	return $actions;
         } );
 

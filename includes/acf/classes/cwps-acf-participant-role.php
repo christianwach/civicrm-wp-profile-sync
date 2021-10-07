@@ -364,6 +364,41 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 
 
 	/**
+	 * Gets the CiviCRM Participant Roles as choices for an ACF "Select" Field.
+	 *
+	 * @since 0.5
+	 *
+	 * @return array $choices The choices array.
+	 */
+	public function choices_get() {
+
+		// Return early if already calculated.
+		static $choices;
+		if ( isset( $choices ) ) {
+			return $choices;
+		}
+
+		// Get the Participant Roles.
+		$participant_roles = $this->get_all();
+
+		// Build return array.
+		$choices = [];
+		foreach ( $participant_roles as $key => $value ) {
+			$choices[ $value['value'] ] = $value['label'];
+		}
+
+		// --<
+		return $choices;
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
 	 * Get all Participant Roles.
 	 *
 	 * @since 0.5

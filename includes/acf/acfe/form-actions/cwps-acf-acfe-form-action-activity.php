@@ -97,7 +97,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 	/**
 	 * Public Activity Fields to add.
 	 *
-	 * These are not mapped for Past Type Sync, so need to be added.
+	 * These are not mapped for Post Type Sync, so need to be added.
 	 *
 	 * @since 0.5
 	 * @access public
@@ -111,7 +111,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 	/**
 	 * Public Activity Fields to ignore.
 	 *
-	 * These are mapped for Past Type Sync, but need special handling.
+	 * These are mapped for Post Type Sync, but need special handling.
 	 *
 	 * @since 0.5
 	 * @access public
@@ -131,7 +131,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var array $fields_to_ignore The Public Activity Fields to ignore.
+	 * @var array $contact_fields The Activity Contact Fields.
 	 */
 	public $contact_fields = [
 		'source_contact_id' => 'civicrm_contact',
@@ -314,7 +314,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		$form_name = acf_maybe_get( $form, 'name' );
 		$form_id = acf_maybe_get( $form, 'ID' );
 
-		// Populate Activity, Email, Relationship and Custom Field data arrays.
+		// Populate Activity and Custom Field data arrays.
 		$activity = $this->form_activity_data( $form, $current_post_id, $action );
 		$custom_fields = $this->form_custom_data( $form, $current_post_id, $action );
 
@@ -354,7 +354,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 				'width' => '',
 				'class' => '',
 				'id' => '',
-				'data-instruction-placement' => 'field'
+				'data-instruction-placement' => 'field',
 			],
 			'acfe_permissions' => '',
 			'default_value' => '',
@@ -379,7 +379,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 				'width' => '',
 				'class' => '',
 				'id' => '',
-				'data-instruction-placement' => 'field'
+				'data-instruction-placement' => 'field',
 			],
 			'acfe_permissions' => '',
 			'default_value' => '',
@@ -413,7 +413,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 					'width' => '',
 					'class' => '',
 					'id' => '',
-					'data-instruction-placement' => 'field'
+					'data-instruction-placement' => 'field',
 				],
 				'acfe_permissions' => '',
 				'default_value' => '',
@@ -442,7 +442,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 					'width' => '',
 					'class' => '',
 					'id' => '',
-					'data-instruction-placement' => 'field'
+					'data-instruction-placement' => 'field',
 				],
 				'acfe_permissions' => '',
 				'default_value' => '',
@@ -524,7 +524,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		// Init return.
 		$fields = [];
 
-		// "Activity" Accordion wrapper open.
+		// "Contact References" Accordion wrapper open.
 		$fields[] = [
 			'key' => $this->field_key . 'mapping_accordion_contacts_open',
 			'label' => __( 'Contact References', 'civicrm-wp-profile-sync' ),
@@ -661,10 +661,10 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 
 		}
 
-		// "Activity" Accordion wrapper close.
+		// "Activity Contacts" Accordion wrapper close.
 		$fields[] = [
 			'key' => $this->field_key . 'mapping_accordion_contacts_close',
-			'label' => __( 'Activity Contacts', 'civicrm-wp-profile-sync' ),
+			'label' => __( 'Contact References', 'civicrm-wp-profile-sync' ),
 			'name' => '',
 			'type' => 'accordion',
 			'instructions' => '',
@@ -700,7 +700,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		// Init return.
 		$fields = [];
 
-		// "Activity" Accordion wrapper open.
+		// "Activity Fields" Accordion wrapper open.
 		$fields[] = [
 			'key' => $this->field_key . 'mapping_accordion_activity_open',
 			'label' => __( 'Activity Fields', 'civicrm-wp-profile-sync' ),
@@ -727,7 +727,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 			}
 		}
 
-		// "Activity" Accordion wrapper close.
+		// "Activity Fields" Accordion wrapper close.
 		$fields[] = [
 			'key' => $this->field_key . 'mapping_accordion_activity_close',
 			'label' => __( 'Activity Fields', 'civicrm-wp-profile-sync' ),
@@ -785,9 +785,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 			'multi_expand' => 1,
 			'endpoint' => 0,
 		];
-
-		// Get top-level Activity Types.
-		$activity_types = $this->civicrm->activity_type->choices_get();
 
 		// Add "Mapping" Fields.
 		foreach ( $this->custom_fields as $key => $custom_group ) {
@@ -853,7 +850,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 
 		}
 
-		// "Custom" Accordion wrapper close.
+		// "Custom Fields" Accordion wrapper close.
 		$fields[] = [
 			'key' => $this->field_key . 'mapping_accordion_custom_close',
 			'label' => __( 'Custom Fields', 'civicrm-wp-profile-sync' ),
@@ -1020,7 +1017,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		// Get the full Activity data.
 		$activity = $this->civicrm->activity->get_by_id( $result['id'] );
 
-		// Maybe notify Assigneee.
+		// Maybe notify Assignee.
 		$this->form_activity_notify( $activity );
 
 		// --<

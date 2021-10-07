@@ -89,7 +89,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	/**
 	 * Address Fields to remove for the Bypass Location Rule.
 	 *
-	 * These are mapped for Past Type Sync, but need to be removed for the
+	 * These are mapped for Post Type Sync, but need to be removed for the
 	 * Bypass Location Rule because they are handled by custom ACF Field Types.
 	 *
 	 * @since 0.5

@@ -164,16 +164,6 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 		// Add User object to args.
 		$args['user'] = $user;
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'args' => $args,
-			'backtrace' => $trace,
-		], true ) );
-		*/
-
 		/**
 		 * Allow plugins to know that the sync process is starting.
 		 *

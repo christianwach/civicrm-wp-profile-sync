@@ -97,7 +97,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 	/**
 	 * Public Case Fields to add.
 	 *
-	 * These are not mapped for Past Type Sync, so need to be added.
+	 * These are not mapped for Post Type Sync, so need to be added.
 	 *
 	 * @since 0.5
 	 * @access public
@@ -111,7 +111,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 	/**
 	 * Public Case Fields to ignore.
 	 *
-	 * These are mapped for Past Type Sync, but need special handling.
+	 * These are mapped for Post Type Sync, but need special handling.
 	 *
 	 * @since 0.5
 	 * @access public
@@ -130,7 +130,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var array $fields_to_ignore The Public Case Fields to ignore.
+	 * @var array $contact_fields The Case Contact Fields.
 	 */
 	public $contact_fields = [
 		'contact_id' => 'civicrm_contact',
@@ -334,7 +334,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 				'width' => '',
 				'class' => '',
 				'id' => '',
-				'data-instruction-placement' => 'field'
+				'data-instruction-placement' => 'field',
 			],
 			'acfe_permissions' => '',
 			'default_value' => '',
@@ -359,7 +359,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 				'width' => '',
 				'class' => '',
 				'id' => '',
-				'data-instruction-placement' => 'field'
+				'data-instruction-placement' => 'field',
 			],
 			'acfe_permissions' => '',
 			'default_value' => $this->civicrm->option_value_default_get( 'case_status' ),
@@ -384,7 +384,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 				'width' => '',
 				'class' => '',
 				'id' => '',
-				'data-instruction-placement' => 'field'
+				'data-instruction-placement' => 'field',
 			],
 			'acfe_permissions' => '',
 			'default_value' => $this->civicrm->option_value_default_get( 'encounter_medium' ),
@@ -409,7 +409,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 				'width' => '',
 				'class' => '',
 				'id' => '',
-				'data-instruction-placement' => 'field'
+				'data-instruction-placement' => 'field',
 			],
 			'acfe_permissions' => '',
 			'message' => '',
@@ -486,7 +486,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 		// Init return.
 		$fields = [];
 
-		// "Case" Accordion wrapper open.
+		// "Contact References" Accordion wrapper open.
 		$fields[] = [
 			'key' => $this->field_key . 'mapping_accordion_contacts_open',
 			'label' => __( 'Contact References', 'civicrm-wp-profile-sync' ),
@@ -623,10 +623,10 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 
 		}
 
-		// "Case" Accordion wrapper close.
+		// "Contact References" Accordion wrapper close.
 		$fields[] = [
 			'key' => $this->field_key . 'mapping_accordion_contacts_close',
-			'label' => __( 'Case Contacts', 'civicrm-wp-profile-sync' ),
+			'label' => __( 'Contact References', 'civicrm-wp-profile-sync' ),
 			'name' => '',
 			'type' => 'accordion',
 			'instructions' => '',
@@ -662,7 +662,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 		// Init return.
 		$fields = [];
 
-		// "Case" Accordion wrapper open.
+		// "Case Fields" Accordion wrapper open.
 		$fields[] = [
 			'key' => $this->field_key . 'mapping_accordion_case_open',
 			'label' => __( 'Case Fields', 'civicrm-wp-profile-sync' ),
@@ -689,7 +689,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 			}
 		}
 
-		// "Case" Accordion wrapper close.
+		// "Case Fields" Accordion wrapper close.
 		$fields[] = [
 			'key' => $this->field_key . 'mapping_accordion_case_close',
 			'label' => __( 'Case Fields', 'civicrm-wp-profile-sync' ),
@@ -815,7 +815,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 
 		}
 
-		// "Custom" Accordion wrapper close.
+		// "Custom Fields" Accordion wrapper close.
 		$fields[] = [
 			'key' => $this->field_key . 'mapping_accordion_custom_close',
 			'label' => __( 'Custom Fields', 'civicrm-wp-profile-sync' ),
