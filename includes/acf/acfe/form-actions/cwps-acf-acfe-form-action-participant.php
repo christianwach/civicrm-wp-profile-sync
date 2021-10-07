@@ -1577,6 +1577,40 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 
 
 
+	/**
+	 * Finds the linked Participant ID when it has been mapped.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $action_name The name of the referenced Form Action.
+	 * @return integer|bool $participant_id The numeric ID of the Participant, or false if not found.
+	 */
+	public function form_participant_id_get_mapped( $action_name ) {
+
+		// Init return.
+		$participant_id = false;
+
+		// We need an Action Name.
+		if ( empty( $action_name ) ) {
+			return $participant_id;
+		}
+
+		// Get the Participant data for that Action.
+		$related_participant_id = acfe_form_get_action( $action_name, 'id' );
+		if ( empty( $related_participant_id ) ) {
+			return $participant_id;
+		}
+
+		// Assign return.
+		$participant_id = (int) $related_participant_id;
+
+		// --<
+		return $participant_id;
+
+	}
+
+
+
 	// -------------------------------------------------------------------------
 
 
