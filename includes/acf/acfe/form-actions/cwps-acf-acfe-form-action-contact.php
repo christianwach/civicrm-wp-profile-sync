@@ -276,6 +276,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// Add Contact Action Reference Field to ACF Model.
 		$this->js_model_contact_reference_field_add( $this->field_name . 'relationship_action_ref' );
 
+		// Contact Conditional Field.
+		$this->mapping_field_filters_add( 'contact_conditional' );
+
 	}
 
 
@@ -636,6 +639,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				$args['memberships'] = $this->form_membership_save( $args['contact'], $memberships );
 			}
 
+		} else {
+
+			// Save an array for the Contact in case of access.
+			$args['contact'] = [ 'id' => '' ];
+
 		}
 
 		// Save the results of this Action for later use.
@@ -812,6 +820,15 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$dedupe_rule_field,
 			$contact_entities_field,
 		];
+
+		// Add Conditional Field.
+		$code = 'contact_conditional';
+		$label = __( 'Conditional On', 'civicrm-wp-profile-sync' );
+		$conditional = $this->mapping_field_get( $code, $label );
+		$conditional['placeholder'] = __( 'Always add', 'civicrm-wp-profile-sync' );
+		$conditional['wrapper']['data-instruction-placement'] = 'field';
+		$conditional['instructions'] = __( 'To add the Contact only when a Form Field is populated (e.g. "First Name") link this to the Form Field. To add the Contact only when more complex conditions are met, link this to a Hidden Field with value "1" where the conditional logic of that Field shows it when the conditions are met.', 'civicrm-wp-profile-sync' );
+		$fields[] = $conditional;
 
 		// --<
 		return $fields;
@@ -2749,6 +2766,16 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$data['contact_sub_type'] = $contact_sub_type['name'];
 		}
 
+		// Get Contact Conditional Reference.
+		$data['contact_conditional_ref'] = get_sub_field( $this->field_key . 'map_contact_conditional' );
+		$conditionals = [ $data['contact_conditional_ref'] ];
+
+		// Populate array with mapped Conditional Field values.
+		$conditionals = acfe_form_map_vs_fields( $conditionals, $conditionals, $current_post_id, $form );
+
+		// Save Contact Conditional.
+		$data['contact_conditional'] = array_pop( $conditionals );
+
 		// --<
 		return $data;
 
@@ -2771,6 +2798,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// Init return.
 		$contact = false;
+
+		// Skip if the Contact Conditional Reference Field has a value.
+		if ( ! empty( $contact_data['contact_conditional_ref'] ) ) {
+			// And the Contact Conditional Field has no value.
+			if ( empty( $contact_data['contact_conditional'] ) ) {
+				return $contact;
+			}
+		}
 
 		// Get the Contact ID with the data from the Form.
 		$contact_id = $this->form_contact_id_get( $contact_data, $email_data, $relationship_data );
