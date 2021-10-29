@@ -1705,10 +1705,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 	 */
 	public function is_activity_field_group( $field_group ) {
 
+		// Bail if there's no Field Group ID.
+		if ( empty( $field_group['ID'] ) ) {
+			return false;
+		}
+
 		// Only do this once per Field Group.
 		static $pseudocache;
-		if ( isset( $pseudocache[$field_group['ID']] ) ) {
-			return $pseudocache[$field_group['ID']];
+		if ( isset( $pseudocache[ $field_group['ID'] ] ) ) {
+			return $pseudocache[ $field_group['ID'] ];
 		}
 
 		// Assume not an Activity Field Group.
@@ -1746,8 +1751,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		}
 
 		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$field_group['ID']] ) ) {
-			$pseudocache[$field_group['ID']] = $is_activity_field_group;
+		if ( ! isset( $pseudocache[ $field_group['ID'] ] ) ) {
+			$pseudocache[ $field_group['ID'] ] = $is_activity_field_group;
 		}
 
 		// --<
