@@ -642,7 +642,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		} else {
 
 			// Save an array for the Contact in case of access.
-			$args['contact'] = [ 'id' => '' ];
+			$args['contact'] = [ 'id' => false ];
 
 		}
 
