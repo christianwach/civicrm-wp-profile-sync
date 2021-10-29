@@ -251,6 +251,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 			}
 		}
 
+		// Case Conditional Field.
+		$this->mapping_field_filters_add( 'case_conditional' );
+
 	}
 
 
@@ -426,6 +429,15 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 			$case_activity_medium_field,
 			$dismiss_if_exists_field,
 		];
+
+		// Add Conditional Field.
+		$code = 'case_conditional';
+		$label = __( 'Conditional On', 'civicrm-wp-profile-sync' );
+		$conditional = $this->mapping_field_get( $code, $label );
+		$conditional['placeholder'] = __( 'Always add', 'civicrm-wp-profile-sync' );
+		$conditional['wrapper']['data-instruction-placement'] = 'field';
+		$conditional['instructions'] = __( 'To add the Case only when a Form Field is populated (e.g. "Subject") link this to the Form Field. To add the Case only when more complex conditions are met, link this to a Hidden Field with value "1" where the conditional logic of that Field shows it when the conditions are met.', 'civicrm-wp-profile-sync' );
+		$fields[] = $conditional;
 
 		// --<
 		return $fields;
@@ -921,6 +933,16 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 
 		}
 
+		// Get Case Conditional Reference.
+		$data['case_conditional_ref'] = get_sub_field( $this->field_key . 'map_case_conditional' );
+		$conditionals = [ $data['case_conditional_ref'] ];
+
+		// Populate array with mapped Conditional Field values.
+		$conditionals = acfe_form_map_vs_fields( $conditionals, $conditionals, $current_post_id, $form );
+
+		// Save Case Conditional.
+		$data['case_conditional'] = array_pop( $conditionals );
+
 		// --<
 		return $data;
 
@@ -941,6 +963,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 
 		// Init return.
 		$case = false;
+
+		// Skip if the Case Conditional Reference Field has a value.
+		if ( ! empty( $case_data['case_conditional_ref'] ) ) {
+			// And the Case Conditional Field has no value.
+			if ( empty( $case_data['case_conditional'] ) ) {
+				return $case;
+			}
+		}
 
 		// When skipping, get the existing Case and return early if it exists.
 		if ( ! empty( $case_data['dismiss_if_exists'] ) ) {
