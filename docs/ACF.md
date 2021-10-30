@@ -17,12 +17,13 @@ In addition, given that this plugin is still at an early stage of development, i
 
 At present the CiviCRM Profile Sync plugin allows you to specify links between:
 
-* CiviCRM Contacts and WordPress Users
-* CiviCRM Contact Types and WordPress Custom Post Types
-* CiviCRM Events and Event Organiser Events
-* CiviCRM Activity Types and WordPress Custom Post Types
-* All CiviCRM Participants and a WordPress Custom Post Type
-* CiviCRM Participant Roles and WordPress Custom Post Types
+* [CiviCRM Contacts and WordPress Users](#civicrm-contacts-and-wordpress-users)
+* [CiviCRM Contact Types and WordPress Custom Post Types](#civicrm-contact-types-and-wordpress-custom-post-types)
+* [CiviCRM Events and Event Organiser Events](#civicrm-events-and-event-organiser-events)
+* [CiviCRM Activity Types and WordPress Custom Post Types](#civicrm-activity-types-and-wordpress-custom-post-types)
+* [All CiviCRM Participants and a WordPress Custom Post Type](#all-civicrm-participants-and-a-wordpress-custom-post-type)
+* [CiviCRM Participant Roles and WordPress Custom Post Types](#civicrm-participant-roles-and-wordpress-custom-post-types)
+* [CiviCRM Groups and WordPress Custom Taxonomy](#civicrm-groups-and-wordpress-custom-taxonomy)
 * More entity links to follow...
 
 ### CiviCRM Contacts and WordPress Users
@@ -66,6 +67,12 @@ To link these together, in CiviCRM go to *Administer* &rarr; *CiviEvent* &rarr; 
 From now on, each time you create a Participant of the Participant Role that you have linked, a new WordPress Post will be created. The "Display Name" of the Participant will become the WordPress Post Title. And - in the reverse direction - each time you create a WordPress Post which is of the Post Type you have linked to a Participant Role, a new Participant will be created with their "Display Name" set to the Title of the new Post.
 
 *Note:* Unlike the "All CiviCRM Participants and a WordPress Custom Post Type" functionality, you will have to configure the WordPress Custom Post Type, WordPress Taxonomies, ACF Field Groups and ACF Fields yourself.
+
+### CiviCRM Groups and WordPress Custom Taxonomy
+
+CiviCRM Groups can be mapped to WordPress custom taxonomy terms.
+
+When adding/editing a custom taxonomy in the WordPress UI you'll see a dropdown for selecting a CiviCRM Group: `CiviCRM Group for ACF Integration`.
 
 ## Links between Fields
 
