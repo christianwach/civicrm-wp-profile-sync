@@ -1931,7 +1931,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		// Define Field.
 		$field = [
 			'key' => 'field_' . $this->acf_slug . '_status_id',
-			'label' => __ ( 'Status', 'civicrm-wp-profile-sync' ),
+			'label' => __( 'Status', 'civicrm-wp-profile-sync' ),
 			'name' => 'status_id',
 			'type' => 'select',
 			'instructions' => '',
@@ -1964,7 +1964,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		// Define Field.
 		$field = [
 			'key' => 'field_' . $this->acf_slug . '_source',
-			'label' => __ ( 'Source', 'civicrm-wp-profile-sync' ),
+			'label' => __( 'Source', 'civicrm-wp-profile-sync' ),
 			'name' => 'source',
 			'type' => 'text',
 			'instructions' => __( 'The source of this event registration.', 'civicrm-wp-profile-sync' ),

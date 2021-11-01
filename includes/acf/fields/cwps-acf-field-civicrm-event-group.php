@@ -343,7 +343,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Group extends acf_field {
 		// Bundle the above Fields into a container group.
 		$field = [
 			'key' => 'field_' . $this->acf_slug . '_event_group',
-			'label' => __ ( 'CiviCRM Event', 'civicrm-wp-profile-sync' ),
+			'label' => __( 'CiviCRM Event', 'civicrm-wp-profile-sync' ),
 			'name' => $this->name,
 			'type' => 'group',
 			'instructions' => '',
@@ -375,7 +375,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Group extends acf_field {
 		// Define "Event ID" Field.
 		$event_id = [
 			'key' => 'field_' . $this->acf_slug . '_event_id',
-			'label' => __ ( 'Event ID', 'civicrm-wp-profile-sync' ),
+			'label' => __( 'Event ID', 'civicrm-wp-profile-sync' ),
 			'name' => 'event_id',
 			'type' => 'civicrm_event',
 			'instructions' => __( 'Select an Event in CiviCRM.', 'civicrm-wp-profile-sync' ),
@@ -385,7 +385,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Group extends acf_field {
 		// Define "Event Type" Field.
 		$event_type = [
 			'key' => 'field_' . $this->acf_slug . '_event_type',
-			'label' => __ ( 'Event Type', 'civicrm-wp-profile-sync' ),
+			'label' => __( 'Event Type', 'civicrm-wp-profile-sync' ),
 			'name' => 'event_type',
 			'type' => 'select',
 			'instructions' => '',
