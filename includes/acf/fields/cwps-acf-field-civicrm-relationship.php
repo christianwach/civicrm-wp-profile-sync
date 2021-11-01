@@ -300,10 +300,13 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Relationship extends acf_field {
 	 */
 	public function get_ajax_query( $options = [] ) {
 
+		// Get the autocomplete limit.
+		$autocomplete_count = $this->plugin->civicrm->get_setting( 'search_autocomplete_count' );
+
 		// Init response.
 		$response = [
 			'results' => [],
-			'limit' => 25,
+			'limit' => $autocomplete_count,
 		];
 
 		// Init defaults.
@@ -385,22 +388,36 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Relationship extends acf_field {
 		$args = apply_filters( 'acf/fields/' . $this->name . "/query/name={$field['_name']}", $args, $field, $post_id );
 		$args = apply_filters( 'acf/fields/' . $this->name . "/query/key={$field['key']}", $args, $field, $post_id );
 
+		// Handle paging.
+		$offset = 0;
+		if ( ! empty( $options['paged'] ) ) {
+			$zero_adjusted = (int) $options['paged'] - 1;
+			$offset = $zero_adjusted * (int) $autocomplete_count;
+		}
+
+		// Build extra params.
+		$params = [
+			'contact_type' => $args['contact_type'],
+			'contact_sub_type' => $args['contact_sub_type'],
+			'return' => $this->plugin->civicrm->get_autocomplete_options( 'contact_autocomplete_options' ),
+			'rowCount' => $autocomplete_count,
+			'offset' => $offset,
+		];
+
 		// Get Contacts.
-		$contacts = $this->civicrm->contact->get_by_search_string(
-			$args['search'],
-			$args['contact_type'],
-			$args['contact_sub_type']
-		);
+		$contacts = $this->civicrm->contact->get_by_search_string( $args['search'], $params );
 
 		// Maybe append results.
 		$results = [];
 		if ( ! empty( $contacts ) ) {
 			foreach ( $contacts as $contact ) {
 
-				// Add email address if present.
+				// Add extra items if present.
 				$name = $contact['label'];
 				if ( ! empty( $contact['description'] ) ) {
-					$name .= ' :: ' . array_pop( $contact['description'] );
+					foreach ( $contact['description'] as $extra ) {
+						$name .= ' :: ' . $extra;
+					}
 				}
 
 				// TODO: Permission to view Contact?

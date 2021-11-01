@@ -305,10 +305,13 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 	 */
 	public function get_ajax_query( $options = [] ) {
 
+		// Get the autocomplete limit.
+		$autocomplete_count = $this->plugin->civicrm->get_setting( 'search_autocomplete_count' );
+
 		// Init response.
 		$response = [
 			'results' => [],
-			'limit' => 25,
+			'limit' => $autocomplete_count,
 		];
 
 		// Init defaults.
@@ -366,18 +369,62 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 		$args = apply_filters( 'acf/fields/' . $this->name . "/query/name={$field['_name']}", $args, $field, $post_id );
 		$args = apply_filters( 'acf/fields/' . $this->name . "/query/key={$field['key']}", $args, $field, $post_id );
 
+		// Handle paging.
+		$offset = 0;
+		if ( ! empty( $options['paged'] ) ) {
+			$zero_adjusted = (int) $options['paged'] - 1;
+			$offset = $zero_adjusted * (int) $autocomplete_count;
+		}
+
+		// Get the Contact Reference Field's Groups.
+		$groups = [];
+		if ( ! empty( $field[$acf_field_key] ) ) {
+
+			// Find the Custom Field ID.
+			$reference = $field[ $acf_field_key ];
+			if ( false !== strpos( $reference, $this->civicrm->custom_field_prefix() ) ) {
+				$custom_field_id = (int) str_replace( $this->civicrm->custom_field_prefix(), '', $reference );
+
+				// Get the Custom Field data.
+				$custom_field = $this->plugin->civicrm->custom_field->get_by_id( $custom_field_id );
+				if ( $custom_field !== false && ! empty( $custom_field['filter'] ) ) {
+
+					// Extract the Groups array.
+					$filter_params = [];
+					parse_str( $custom_field['filter'], $filter_params );
+					if ( ! empty( $filter_params['group'] ) ) {
+						$groups = explode( ',', $filter_params['group'] );
+					}
+
+				}
+
+			}
+
+		}
+
+		// Build extra params.
+		$params = [
+			'contact_type' => $args['contact_type'],
+			'return' => $this->plugin->civicrm->get_autocomplete_options( 'contact_reference_options' ),
+			'rowCount' => $autocomplete_count,
+			'offset' => $offset,
+			'groups' => $groups,
+		];
+
 		// Get Contacts.
-		$contacts = $this->civicrm->contact->get_by_search_string( $args['search'], $args['contact_type'] );
+		$contacts = $this->civicrm->contact->get_by_search_string( $args['search'], $params );
 
 		// Maybe append results.
 		$results = [];
 		if ( ! empty( $contacts ) ) {
 			foreach ( $contacts as $contact ) {
 
-				// Add email address if present.
+				// Add extra items if present.
 				$name = $contact['label'];
 				if ( ! empty( $contact['description'] ) ) {
-					$name .= ' :: ' . array_pop( $contact['description'] );
+					foreach ( $contact['description'] as $extra ) {
+						$name .= ' :: ' . $extra;
+					}
 				}
 
 				// TODO: Permission to view Contact?

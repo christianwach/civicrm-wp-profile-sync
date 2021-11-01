@@ -481,11 +481,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 * @since 0.4
 	 *
 	 * @param string $search The search string to query.
-	 * @param string $contact_type The CiviCRM Contact Type.
-	 * @param string $contact_subtype The CiviCRM Contact Sub-type.
+	 * @param array $args The array of search params to query.
 	 * @return array|bool $contact_data An array of Contact data, or false on failure.
 	 */
-	public function get_by_search_string( $search, $contact_type = '', $contact_subtype = '' ) {
+	public function get_by_search_string( $search, $args = [] ) {
 
 		// Init return.
 		$contact_data = false;
@@ -500,30 +499,52 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 			return $contact_data;
 		}
 
-		// Define params to get queried Contact.
+		// Set some defaults.
+		if ( empty( $args['action'] ) ) {
+			$args['action'] = 'lookup';
+		}
+		if ( empty( $args['rowCount'] ) ) {
+			$args['rowCount'] = 10;
+		}
+
+		// Define params to get queried Contacts.
 		$params = [
 			'version' => 3,
 			'sequential' => 1,
-			'input' => $search,
-			'search_field' => 'display_name',
-			'label_field' => 'display_name',
-			'options' => [
-				'limit' => 25, // No limit.
-			],
+			'sort_name' => $search,
+			'sort' => 'sort_name',
+			'action' => $args['action'],
+			'rowCount' => $args['rowCount'],
 		];
 
+		// Define the returned values.
+		$params['return'] = [ 'sort_name' ];
+		if ( ! empty( $args['return'] ) ) {
+			$params['return'] = array_merge( $params['return'], $args['return'] );
+		}
+
 		// Maybe narrow the search to a Contact Type.
-		if ( ! empty( $contact_type ) ) {
-			$params['params'] = [ 'contact_type' => $contact_type ];
+		if ( ! empty( $args['contact_type'] ) ) {
+			$params['contact_type'] = $args['contact_type'];
 		}
 
 		// Maybe narrow the search to a Contact Sub-type.
-		if ( ! empty( $contact_type ) && ! empty( $contact_subtype ) ) {
-			$params['params']['contact_sub_type'] = $contact_subtype;
+		if ( ! empty( $args['contact_type'] ) && ! empty( $args['contact_subtype'] ) ) {
+			$params['contact_sub_type'] = $args['contact_sub_type'];
+		}
+
+		// Maybe narrow the search to Group Membership.
+		if ( ! empty( $args['groups'] ) && is_array( $args['groups'] ) ) {
+			$params['group'] = $args['groups'];
+		}
+
+		// Maybe define an offset.
+		if ( ! empty( $args['offset'] ) ) {
+			$params['options']['offset'] = $args['offset'];
 		}
 
 		// Call the API.
-		$result = civicrm_api( 'Contact', 'getlist', $params );
+		$result = civicrm_api( 'Contact', 'get', $params );
 
 		// Bail if there's an error.
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
@@ -535,8 +556,22 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 			return $contact_data;
 		}
 
+		// Format the return as per "getlist".
+		foreach( $result['values'] as $value ) {
+			$data = [
+				'id' => $value['id'],
+				'label' => $value['sort_name'],
+			];
+			foreach( $args['return'] as $return ) {
+				if ( $return !== 'sort_name' && ! empty( $value[ $return ] ) ) {
+					$data['description'][] = $value[ $return ];
+				}
+			}
+			$contact_data[] = $data;
+		}
+
 		// --<
-		return $result['values'];
+		return $contact_data;
 
 	}
 

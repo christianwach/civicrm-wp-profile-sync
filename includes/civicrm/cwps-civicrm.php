@@ -342,8 +342,47 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 		// Call the CiviCRM API.
 		$setting = civicrm_api( 'Setting', 'getvalue', $params );
 
+		// Convert if the value has the special CiviCRM array-like format.
+		if ( false !== strpos( $setting, CRM_Core_DAO::VALUE_SEPARATOR ) ) {
+			$setting = CRM_Utils_Array::explodePadded( $setting );
+		}
+
 		// --<
 		return $setting;
+
+	}
+
+
+
+	/**
+	 * Gets the active CiviCRM Autocomplete Options.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $type The type of Autocomplete Options to return.
+	 * @return array $autocomplete_options The active CiviCRM Autocomplete Options.
+	 */
+	public function get_autocomplete_options( $type = 'contact_reference_options' ) {
+
+		// Init return.
+		$autocomplete_options = [];
+
+		// Init CiviCRM or bail.
+		if ( ! $this->is_initialised() ) {
+			return $autocomplete_options;
+		}
+
+		// Get the list of autocomplete options.
+		$autocomplete_values = CRM_Core_BAO_Setting::valueOptions(
+			CRM_Core_BAO_Setting::SYSTEM_PREFERENCES_NAME,
+			$type
+		);
+
+		// Filter out the inactive ones.
+		$autocomplete_options = array_keys( $autocomplete_values, '1' );
+
+		// --<
+		return $autocomplete_options;
 
 	}
 
