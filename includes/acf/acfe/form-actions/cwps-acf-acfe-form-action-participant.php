@@ -1516,11 +1516,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 		}
 
 		// Unset Participant Conditionals.
-		if ( isset( $data['participant_conditional'] ) ) {
-			unset( $data['participant_conditional'] );
+		if ( isset( $participant_data['participant_conditional'] ) ) {
+			unset( $participant_data['participant_conditional'] );
 		}
-		if ( isset( $data['participant_conditional_ref'] ) ) {
-			unset( $data['participant_conditional_ref'] );
+		if ( isset( $participant_data['participant_conditional_ref'] ) ) {
+			unset( $participant_data['participant_conditional_ref'] );
 		}
 
 		// Strip out empty Fields.

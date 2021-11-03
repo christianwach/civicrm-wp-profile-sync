@@ -1003,6 +1003,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 			$activity_data += $custom_data;
 		}
 
+		// Unset Activity Conditionals.
+		if ( isset( $activity_data['activity_conditional'] ) ) {
+			unset( $activity_data['activity_conditional'] );
+		}
+		if ( isset( $activity_data['activity_conditional_ref'] ) ) {
+			unset( $activity_data['activity_conditional_ref'] );
+		}
+
 		// Strip out empty Fields.
 		$activity_data = $this->form_data_prepare( $activity_data );
 

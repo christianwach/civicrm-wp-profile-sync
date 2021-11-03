@@ -985,6 +985,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 			$case_data += $custom_data;
 		}
 
+		// Unset Case Conditionals.
+		if ( isset( $case_data['case_conditional'] ) ) {
+			unset( $case_data['case_conditional'] );
+		}
+		if ( isset( $case_data['case_conditional_ref'] ) ) {
+			unset( $case_data['case_conditional_ref'] );
+		}
+
 		// Strip out empty Fields.
 		$case_data = $this->form_data_prepare( $case_data );
 

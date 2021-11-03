@@ -2815,6 +2815,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$contact_data += $custom_data;
 		}
 
+		// Unset Contact Conditionals.
+		if ( isset( $contact_data['contact_conditional'] ) ) {
+			unset( $contact_data['contact_conditional'] );
+		}
+		if ( isset( $contact_data['contact_conditional_ref'] ) ) {
+			unset( $contact_data['contact_conditional_ref'] );
+		}
+
 		// Strip out empty Fields.
 		$contact_data = $this->form_data_prepare( $contact_data );
 
