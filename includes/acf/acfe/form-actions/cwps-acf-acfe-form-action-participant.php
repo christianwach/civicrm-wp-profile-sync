@@ -1442,6 +1442,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 			$event_group_field = get_sub_field( $this->field_key . 'event_group' );
 
 			// Check Event ID Field.
+			$event_id = false;
 			if ( ! empty( $event_group_field[ $this->field_name . 'event_id_' . $field['name'] ] ) ) {
 				$event_id = $event_group_field[ $this->field_name . 'event_id_' . $field['name'] ];
 			}
