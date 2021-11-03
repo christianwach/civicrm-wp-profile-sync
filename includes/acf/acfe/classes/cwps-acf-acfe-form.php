@@ -497,7 +497,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 		$entity_array = $this->entity_mapping_extract( $field_group['location'] );
 
 		/**
-		 * Request aa array of Setting Field choices from Entity classes.
+		 * Request an array of Setting Field choices from Entity classes.
 		 *
 		 * @since 0.5
 		 *
