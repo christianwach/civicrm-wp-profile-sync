@@ -2004,7 +2004,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		$groups_all = $this->civicrm->group->groups_get_all();
 		$choices = [];
 		foreach ( $groups_all as $group ) {
-			$choices[$group['id']] = $group['name'];
+			$choices[$group['id']] = $group['title'];
 		}
 
 		// Add Group choices and modify Field.
