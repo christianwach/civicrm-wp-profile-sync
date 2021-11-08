@@ -461,6 +461,39 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 
 
 	/**
+	 * Gets all Participant Roles that count towards the total for the Event.
+	 *
+	 * @since 0.5
+	 *
+	 * @return array $not_counted The array of counted Participant Roles.
+	 */
+	public function get_counted() {
+
+		// Return early if already calculated.
+		static $not_counted;
+		if ( isset( $not_counted ) ) {
+			return $not_counted;
+		}
+
+		// Get the Participant Roles.
+		$participant_roles = $this->get_all();
+
+		// Build return array.
+		$not_counted = [];
+		foreach ( $participant_roles as $key => $value ) {
+			if ( isset( $value['filter'] ) && $value['filter'] == '1' ) {
+				$not_counted[ $value['value'] ] = $value['label'];
+			}
+		}
+
+		// --<
+		return $not_counted;
+
+	}
+
+
+
+	/**
 	 * Get all Participant Roles that are mapped to Post Types.
 	 *
 	 * @since 0.5

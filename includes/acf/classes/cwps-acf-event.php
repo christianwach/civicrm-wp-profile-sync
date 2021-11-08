@@ -200,6 +200,72 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 
 
 	/**
+	 * Gets the "is_full" status of a CiviCRM Event.
+	 *
+	 * @since 0.5
+	 *
+	 * @param integer $event_id The numeric ID of the CiviCRM Event to query.
+	 * @return int|bool $is_full Numeric 1 if the Event is full, 0 if not. False on failure.
+	 */
+	public function is_full( $event_id ) {
+
+		// Init return.
+		$is_full = false;
+
+		// Bail if we have no Event ID.
+		if ( empty( $event_id ) ) {
+			return $is_full;
+		}
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $is_full;
+		}
+
+		// Define params to get queried Event.
+		$params = [
+			'version' => 3,
+			'sequential' => 1,
+			'id' => $event_id,
+			'return' => [
+				'is_full',
+			],
+			'options' => [
+				'limit' => 1,
+			],
+		];
+
+		// Call the API.
+		$result = civicrm_api( 'Event', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+			return $is_full;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $is_full;
+		}
+
+		// The result set should contain only one item.
+		$event_data = array_pop( $result['values'] );
+
+		// Assign return.
+		if ( $event_data['is_full'] ) {
+			$is_full = 1;
+		} else {
+			$is_full = 0;
+		}
+
+		// --<
+		return $is_full;
+
+	}
+
+
+
+	/**
 	 * Get the CiviCRM Event data for a given search string.
 	 *
 	 * @since 0.5

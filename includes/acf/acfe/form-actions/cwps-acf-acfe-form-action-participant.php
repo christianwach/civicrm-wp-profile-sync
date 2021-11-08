@@ -420,6 +420,45 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 			'choices' => $this->civicrm->participant_role->choices_get(),
 		];
 
+		// Get the Participant Roles that count towards the total for the Event.
+		$counted = $this->civicrm->participant_role->get_counted();
+		$conditional_logic = [];
+		if ( ! empty( $counted ) ) {
+			foreach( $counted as $role_id => $role_name ) {
+				// Add an OR condition for each entry.
+				$conditional_logic[] = [
+					[
+						'field' => $this->field_key . 'participant_roles',
+						'operator' => '==',
+						'value' => $role_id,
+					],
+				];
+			}
+		}
+
+		// Define "Add anyway" Field.
+		$participant_add_anyway = [
+			'key' => $this->field_key . 'add_anyway',
+			'label' => __( 'Add when full?', 'civicrm-wp-profile-sync' ),
+			'name' => $this->field_name . 'add_anyway',
+			'type' => 'true_false',
+			'instructions' => __( 'The selected Participant Role is included in the "Max Number of Participants" total. Choose whether the Participant should be added even when the "Max Number" has been reached.', 'civicrm-wp-profile-sync' ),
+			'required' => 0,
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+				'data-instruction-placement' => 'field',
+			],
+			'conditional_logic' => $conditional_logic,
+			'acfe_permissions' => '',
+			'message' => '',
+			'default_value' => 0,
+			'ui' => 1,
+			'ui_on_text' => '',
+			'ui_off_text' => '',
+		];
+
 		// Define Status Field.
 		$participant_status_field = [
 			'key' => $this->field_key . 'participant_status_id',
@@ -448,6 +487,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 		// Init Fields.
 		$fields = [
 			$participant_roles_field,
+			$participant_add_anyway,
 			$participant_status_field,
 		];
 
@@ -1355,6 +1395,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 
 		// Get the Participant Role & Status.
 		$data['participant_role_id'] = get_sub_field( $this->field_key . 'participant_roles' );
+		$data['add_anyway'] = get_sub_field( $this->field_key . 'add_anyway' );
 		$data['status_id'] = get_sub_field( $this->field_key . 'participant_status_id' );
 
 		// Get the Participant Contacts.
@@ -1525,6 +1566,43 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 
 		// Strip out empty Fields.
 		$participant_data = $this->form_data_prepare( $participant_data );
+
+		// Get the Participant Roles that count towards the total for the Event.
+		$counted = $this->civicrm->participant_role->get_counted();
+
+		// Make sure the keys are integers.
+		$counted_role_ids = array_map( 'intval', array_keys( $counted ) );
+
+		// If the Role is counted, perform the "Add anyway" check.
+		if ( in_array( (int) $participant_data['participant_role_id'], $counted_role_ids ) ) {
+
+			// If "Add anyway" is on, we can skip this check.
+			if ( empty( $participant_data['add_anyway'] ) ) {
+
+				// Check the status of the Event.
+				$is_full = $this->civicrm->event->is_full( $participant_data['event_id'] );
+
+				// Bail if there's an error.
+				if ( $is_full === false ) {
+					return $participant;
+				}
+
+				// Bail if the Event is full.
+				if ( $is_full === 1 ) {
+					return $participant;
+				}
+
+				// Housekeeping.
+				unset( $participant_data['add_anyway'] );
+
+			}
+
+		}
+
+		// Unset Participant Conditionals.
+		if ( isset( $participant_data['add_anyway'] ) ) {
+			unset( $participant_data['add_anyway'] );
+		}
 
 		// Create the Participant.
 		$result = $this->civicrm->participant->create( $participant_data );
