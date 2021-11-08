@@ -1592,14 +1592,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 					return $participant;
 				}
 
-				// Housekeeping.
-				unset( $participant_data['add_anyway'] );
-
 			}
 
 		}
 
-		// Unset Participant Conditionals.
+		// Unset "Add anyway" param.
 		if ( isset( $participant_data['add_anyway'] ) ) {
 			unset( $participant_data['add_anyway'] );
 		}
