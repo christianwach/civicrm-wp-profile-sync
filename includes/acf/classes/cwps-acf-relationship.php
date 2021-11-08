@@ -1558,7 +1558,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	 *
 	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param integer $type_id The numeric ID of the Relationship Type.
-	 * @param integer $direction The direction of the Relationship. May be: 'ab', 'ba' or 'equal'.
+	 * @param string $direction The direction of the Relationship. May be: 'ab', 'ba' or 'equal'.
 	 * @return array|bool $relationships The array of Relationship data.
 	 */
 	public function get_directional( $contact_id, $type_id = 0, $direction = 'ab' ) {
