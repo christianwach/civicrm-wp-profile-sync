@@ -610,6 +610,158 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 
 	/**
+	 * Sends an Email when the Email API Extension is present.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $email_params The array of Email params.
+	 * @return array|bool $email The array of Email data, or false on failure.
+	 */
+	public function email_send( $email_params ) {
+
+		// Init return.
+		$email = false;
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $email;
+		}
+
+		// Bail if the "Email API" Extension is not enabled.
+		$email_active = $this->plugin->civicrm->is_extension_enabled( 'org.civicoop.emailapi' );
+		if ( ! $email_active ) {
+			return $email;
+		}
+
+		// Construct API query.
+		$params = [
+			'version' => 3,
+		] + $email_params;
+
+		// Get Email details via API.
+		$result = civicrm_api( 'Email', 'send', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+			return $email;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $email;
+		}
+
+ 		// The result set should contain only one item.
+		$email = array_pop( $result['values'] );
+
+		// --<
+		return $email;
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Gets the set of Email Templates.
+	 *
+	 * @since 0.5
+	 *
+	 * @return array $templates The array of Email Templates.
+	 */
+	public function templates_get() {
+
+		// Init return.
+		$templates = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $templates;
+		}
+
+		// Construct API query.
+		$params = [
+			'version' => 3,
+			'sequential' => 1,
+			'is_active' => 1,
+			'return' => [
+				'id',
+				'msg_title',
+				'msg_subject',
+			],
+			'workflow_id' => [
+				'IS NULL' => 1,
+			 ],
+			'options' => [
+				'limit' => 0,
+			],
+		];
+
+		// Get Email Tempates via API.
+		$result = civicrm_api( 'MessageTemplate', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+			return $templates;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $templates;
+		}
+
+ 		// The result set is what we want.
+		$templates = $result['values'];
+
+		// --<
+		return $templates;
+
+	}
+
+
+
+	/**
+	 * Gets the options for displaying Email Templates in an ACF select.
+	 *
+	 * @since 0.5
+	 *
+	 * @return array $options The array of Email Template options, or false on failure.
+	 */
+	public function template_options_get() {
+
+		// Return early if already calculated.
+		static $options;
+		if ( isset( $options ) ) {
+			return $options;
+		}
+
+		// Get the Email Templates array.
+		$templates = $this->templates_get();
+		if ( empty( $templates ) ) {
+			return $templates;
+		}
+
+		// Build return array.
+		$options = [];
+		foreach ( $templates as $key => $value ) {
+			$options[ $value['id'] ] = $value['msg_title'];
+		}
+
+		// --<
+		return $options;
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
 	 * Intercept when a Post is been synced from a Contact.
 	 *
 	 * Sync any associated ACF Fields mapped to Custom Fields.

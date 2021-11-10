@@ -315,6 +315,137 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 
 
 	/**
+	 * Finds out if a CiviCRM Component is active.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $component The name of the CiviCRM Component, e.g. 'CiviContribute'.
+	 * @return bool $active True if the Component is active, false otherwise.
+	 */
+	public function is_component_enabled( $component = '' ) {
+
+		// Init return.
+		$active = false;
+
+		// Bail if we can't initialise CiviCRM.
+		if ( ! $this->is_initialised() ) {
+			return $active;
+		}
+
+		// Get the Component array. CiviCRM handles caching.
+		$components = CRM_Core_Component::getEnabledComponents();
+
+		// Override if Component is active.
+		if ( array_key_exists( $component, $components ) ) {
+			$active = true;
+		}
+
+		// --<
+		return $active;
+
+	}
+
+
+
+	/**
+	 * Finds out if an Extension is installed and enabled.
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $extension The "name" of the CiviCRM Extension, e.g. 'org.civicoop.emailapi'.
+	 * @return bool $active True if the Extension is active, false otherwise.
+	 */
+	public function is_extension_enabled( $extension = '' ) {
+
+		// Init return.
+		$active = false;
+
+		// Get the Extensions array.
+		$extensions = $this->extensions_get_enabled();
+
+		// Override if Extension is active.
+		if ( in_array( $extension, $extensions ) ) {
+			$active = true;
+		}
+
+		// --<
+		return $active;
+
+	}
+
+
+
+	/**
+	 * Gets the Extensions that are enabled in CiviCRM.
+	 *
+	 * The return array contains the unique 'key' of each enabled Extension.
+	 *
+	 * @since 0.5
+	 *
+	 * @return array $enabled_extensions The array of enabled Extensions.
+	 */
+	public function extensions_get_enabled() {
+
+		// Only do this once per page load.
+		static $pseudocache;
+		if ( isset( $pseudocache ) ) {
+			return $pseudocache;
+		}
+
+		// Init return.
+		$enabled_extensions = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->is_initialised() ) {
+			return $enabled_extensions;
+		}
+
+		// Define params to query for enabled Extensions.
+		$params = [
+			'version' => 3,
+			'sequential' => 1,
+			'status' => 'installed',
+			'statusLabel' => 'Enabled',
+			'options' => [
+				'limit' => 0,
+			],
+		];
+
+		// Call the API.
+		$result = civicrm_api( 'Extension', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+			return $enabled_extensions;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $enabled_extensions;
+		}
+
+		// Build return array.
+		foreach ( $result['values'] as $key => $extension ) {
+			$enabled_extensions[] = $extension['key'];
+		}
+
+		// Maybe populate to pseudo-cache.
+		if ( ! isset( $pseudocache ) ) {
+			$pseudocache = $enabled_extensions;
+		}
+
+		// --<
+		return $enabled_extensions;
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
 	 * Get a CiviCRM Setting.
 	 *
 	 * @since 0.5
@@ -385,6 +516,10 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 		return $autocomplete_options;
 
 	}
+
+
+
+	// -------------------------------------------------------------------------
 
 
 

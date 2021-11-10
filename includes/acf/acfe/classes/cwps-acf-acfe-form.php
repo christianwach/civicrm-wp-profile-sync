@@ -243,10 +243,18 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant( $this );
 
 		// Init Case Action if the CiviCase component is active.
-		$case_active = $this->civicrm->is_component_enabled( 'CiviCase' );
+		$case_active = $this->plugin->civicrm->is_component_enabled( 'CiviCase' );
 		if ( $case_active ) {
 			include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-case.php';
 			new CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case( $this );
+		}
+
+		// Init Email Action if the "Email API" Extension is active.
+		$email_active = $this->plugin->civicrm->is_extension_enabled( 'org.civicoop.emailapi' );
+		if ( $email_active ) {
+
+			include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-email.php';
+			new CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email( $this );
 		}
 
 	}
