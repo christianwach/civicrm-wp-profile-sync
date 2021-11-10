@@ -70,6 +70,8 @@ The ACF Extended Form that you have created can now make use of the CiviCRM Acti
 * CiviCRM Contact Action
 * CiviCRM Activity Action
 * CiviCRM Case Action (if the CiviCase Component is active in CiviCRM)
+* CiviCRM Participant Action (if the CiviEvent Component is active in CiviCRM)
+* CiviCRM Email Action (if the Email API Extension is active in CiviCRM)
 
 For the Parent + Child + Feedback example above, you will need to add two CiviCRM Contact Actions and a CiviCRM Activity Action and name them appropriately in their "Action name" Fields.
 
@@ -97,10 +99,9 @@ Should you want to open a CiviCRM Case in the Form, you'll need to have added th
 
 When compared to Caldera Forms CiviCRM, the following features are not available yet:
 
-* Select Email Template for notification (requires Email API Extension)
 * CiviDiscount integration for Participant Registration and special field (requires CiviDiscount Extension)
 * Add Non-free Memberships (CiviMember Component must be active)
-* Add Participants (CiviEvent Component must be active)
+* Add Non-free Participants (CiviEvent Component must be active)
 * Add Contributions with Line Items (for live transactions)
 
 As you can see, most of these are related to payment transactions. The plan is for this plugin to work with [ACF Extended Pro](https://www.acf-extended.com/pro) for payments via Stripe. For more comprehensive payment integration, please look at the [Integrate CiviCRM with WooCommerce](https://github.com/WPCV/wpcv-woo-civi-integration) plugin.
