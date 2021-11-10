@@ -288,7 +288,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 	 */
 	public function make( $form, $current_post_id, $action ) {
 
-		// Bail a filter has overridden the action.
+		// Bail if a filter has overridden the action.
 		if ( false === $this->make_skip( $form, $current_post_id, $action ) ) {
 			return;
 		}
