@@ -72,7 +72,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var bool $is_upgrade An upgrade flag.
+	 * @var bool $has_warning A warning flag.
 	 */
 	public $has_warning = false;
 
