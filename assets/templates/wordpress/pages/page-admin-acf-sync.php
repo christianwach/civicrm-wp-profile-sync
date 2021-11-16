@@ -39,8 +39,8 @@
 	<form method="post" id="cwps_acf_sync_form" action="<?php echo $this->admin_form_url_get(); ?>">
 
 		<?php wp_nonce_field( 'cwps_acf_sync_action', 'cwps_acf_sync_nonce' ); ?>
-		<?php wp_nonce_field('meta-box-order', 'meta-box-order-nonce', FALSE); ?>
-		<?php wp_nonce_field('closedpostboxes', 'closedpostboxesnonce', FALSE); ?>
+		<?php wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false ); ?>
+		<?php wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false ); ?>
 
 		<div id="welcome-panel" class="welcome-panel hidden">
 		</div>
