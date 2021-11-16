@@ -404,7 +404,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	public function page_add_tab( $urls, $active_tab ) {
 
 		// Define title.
-		$title = __( 'ACF Integration', 'civicrm-admin-utilities' );
+		$title = __( 'ACF Integration', 'civicrm-wp-profile-sync' );
 
 		// Default to inactive.
 		$active = '';

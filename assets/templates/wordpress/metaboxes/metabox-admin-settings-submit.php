@@ -3,7 +3,7 @@
 	<div id="minor-publishing">
 		<div id="misc-publishing-actions">
 			<div class="misc-pub-section">
-				<span><?php _e( 'Save your settings here.', 'civicrm-admin-utilities' ); ?></span>
+				<span><?php _e( 'Save your settings here.', 'civicrm-wp-profile-sync' ); ?></span>
 			</div>
 		</div>
 		<div class="clear"></div>

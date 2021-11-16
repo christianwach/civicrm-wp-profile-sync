@@ -2,7 +2,7 @@
 <table class="form-table">
 	<tr>
 		<th scope="row">
-			<label for="cwps_website_type_select"><?php _e( 'Website Type', 'civicrm-admin-utilities' ); ?></label>
+			<label for="cwps_website_type_select"><?php _e( 'Website Type', 'civicrm-wp-profile-sync' ); ?></label>
 		</th>
 		<td>
 			<?php if ( ! empty( $options ) ) : ?>
@@ -23,7 +23,7 @@
 	</tr>
 	<tr>
 		<th scope="row">
-			<label for="cwps_email_sync_select"><?php esc_html_e( 'Primary Email', 'civicrm-admin-utilities' ); ?></label>
+			<label for="cwps_email_sync_select"><?php esc_html_e( 'Primary Email', 'civicrm-wp-profile-sync' ); ?></label>
 		</th>
 		<td>
 			<p>
@@ -40,11 +40,11 @@
 	</tr>
 	<tr>
 		<th scope="row">
-			<?php _e( 'Nickname', 'civicrm-admin-utilities' ); ?>
+			<?php _e( 'Nickname', 'civicrm-wp-profile-sync' ); ?>
 		</th>
 		<td>
 			<p>
-				<input type="checkbox" id="cwps_nickname_checkbox" name="cwps_nickname_checkbox" value="1"<?php echo $nickname_checked; ?>> <label for="cwps_nickname_checkbox"><?php _e( 'Sync Nickname', 'civicrm-admin-utilities' ); ?></label>
+				<input type="checkbox" id="cwps_nickname_checkbox" name="cwps_nickname_checkbox" value="1"<?php echo $nickname_checked; ?>> <label for="cwps_nickname_checkbox"><?php _e( 'Sync Nickname', 'civicrm-wp-profile-sync' ); ?></label>
 			</p>
 			<p class="description"><?php _e( 'Check this if you want the WordPress User "Nickname" Field to sync with the CiviCRM Contact "Nickname" Field.', 'civicrm-wp-profile-sync' ); ?></p>
 		</td>
