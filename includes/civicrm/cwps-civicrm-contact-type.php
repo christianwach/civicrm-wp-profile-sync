@@ -263,7 +263,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Type {
 		$types = false;
 
 		// Get data for the queried Contact Type.
-		$contact_type_data = $this->plugin->civicrm->contact_type->get_data( $contact_type, $mode );
+		$contact_type_data = $this->get_data( $contact_type, $mode );
 
 		// Bail if we didn't get any.
 		if ( $contact_type_data === false ) {
