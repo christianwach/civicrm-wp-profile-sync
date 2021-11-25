@@ -2834,15 +2834,44 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			// Use the Contact ID to update.
 			$contact_data['id'] = $contact_id;
 
-			// We need to ensure any existing Contact Sub-types are retained.
+			/*
+			 * We need to ensure any existing Contact Sub-types are retained.
+			 *
+			 * However, the Contact Sub-type could be:
+			 *
+			 * * Empty.
+			 * * The "name" of a Sub-type. (Check this.)
+			 * * An array of Sub-type "names".
+			 *
+			 * The following handles all possibilities.
+			 */
 			if ( ! empty( $contact_data['contact_sub_type'] ) ) {
 				$existing_contact = $this->plugin->civicrm->contact->get_by_id( $contact_id );
+
+				// When there is already more than one Sub-type.
 				if ( is_array( $existing_contact['contact_sub_type'] ) ) {
+
+					// Add incoming when it doesn't exist, otherwise retain existing.
 					if ( ! in_array( $contact_data['contact_sub_type'], $existing_contact['contact_sub_type'] ) ) {
 						$existing_contact['contact_sub_type'][] = $contact_data['contact_sub_type'];
 						$contact_data['contact_sub_type'] = $existing_contact['contact_sub_type'];
+					} else {
+						$contact_data['contact_sub_type'] = $existing_contact['contact_sub_type'];
 					}
+
+				} else {
+
+					// Make an array of both when the existing is different.
+					if ( ! empty( $existing_contact['contact_sub_type'] ) ) {
+						if ( $contact_data['contact_sub_type'] !== $existing_contact['contact_sub_type'] ) {
+							$new_contact_sub_types = [ $existing_contact['contact_sub_type'] ];
+							$new_contact_sub_types[] = $contact_data['contact_sub_type'];
+							$contact_data['contact_sub_type'] = $new_contact_sub_types;
+						}
+					}
+
 				}
+
 			}
 
 			// Okay, we're good to update now.
