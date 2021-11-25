@@ -74,7 +74,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 	 * @access public
 	 * @var string $action_name The unique name of the Form Action.
 	 */
-	public $action_name = 'cwps_civicrm_email';
+	public $action_name = 'cwps_email';
 
 	/**
 	 * Field Key Prefix.
