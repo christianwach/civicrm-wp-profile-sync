@@ -158,7 +158,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @param array $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string $action The customised name of the Form Action.
 	 * @return bool $prepare The net result of the set of filters.
 	 */
 	public function make_skip( $form, $current_post_id, $action ) {
@@ -170,7 +170,18 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 		// Assume we're good to go.
 		$prepare = true;
 
-		// Allow others to prevent form action.
+		/**
+		 * Allow others to prevent Form Action.
+		 *
+		 * Returning false for any of these filters will skip the Action.
+		 *
+		 * @since 0.5
+		 *
+		 * @param bool $prepare True by default so that the Form Action goes ahead.
+		 * @param array $form The array of Form data.
+		 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
+		 * @param string $action The customised name of the Form Action.
+		 */
 		$filter = 'acfe/form/prepare/' . $this->action_name;
 		$prepare = apply_filters( $filter, $prepare, $form, $current_post_id, $action );
 		$prepare = apply_filters( $filter . '/form=' . $form_name, $prepare, $form, $current_post_id, $action );
