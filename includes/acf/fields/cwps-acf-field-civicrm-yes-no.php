@@ -164,7 +164,11 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Yes_No extends acf_field {
 		$this->label = __( 'CiviCRM Yes / No', 'civicrm-wp-profile-sync' );
 
 		// Define category.
-		$this->category = __( 'CiviCRM Post Type Sync', 'civicrm-wp-profile-sync' );
+		if ( function_exists( 'acfe' ) ) {
+			$this->category = __( 'CiviCRM Post Type Sync and ACFE Forms', 'civicrm-wp-profile-sync' );
+		} else {
+			$this->category = __( 'CiviCRM Post Type Sync', 'civicrm-wp-profile-sync' );
+		}
 
 		// Define translations.
 		$this->l10n = [

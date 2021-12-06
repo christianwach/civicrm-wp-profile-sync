@@ -164,10 +164,10 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Case_Action_Ref extends acf_field {
 		$this->acfe = $parent;
 
 		// Define label.
-		$this->label = __( 'CiviCRM Form Action Reference', 'civicrm-wp-profile-sync' );
+		$this->label = __( 'CiviCRM Form Action Reference: Case', 'civicrm-wp-profile-sync' );
 
 		// Define category.
-		$this->category = __( 'CiviCRM ACFE Forms', 'civicrm-wp-profile-sync' );
+		$this->category = __( 'CiviCRM ACFE Forms only', 'civicrm-wp-profile-sync' );
 
 		// Define translations.
 		$this->l10n = [

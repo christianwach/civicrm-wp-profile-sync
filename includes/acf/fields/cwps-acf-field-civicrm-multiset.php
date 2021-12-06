@@ -159,7 +159,11 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set extends acf_field 
 		$this->label = __( 'CiviCRM Multiple Record Set', 'civicrm-wp-profile-sync' );
 
 		// Define category.
-		$this->category = __( 'CiviCRM Post Type Sync', 'civicrm-wp-profile-sync' );
+		if ( function_exists( 'acfe' ) ) {
+			$this->category = __( 'CiviCRM Post Type Sync only', 'civicrm-wp-profile-sync' );
+		} else {
+			$this->category = __( 'CiviCRM Post Type Sync', 'civicrm-wp-profile-sync' );
+		}
 
 		// Define translations.
 		$this->l10n = [];

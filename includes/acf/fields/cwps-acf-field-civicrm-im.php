@@ -156,10 +156,14 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Instant_Messenger extends acf_field {
 		$this->civicrm = $this->acf_loader->civicrm;
 
 		// Define label.
-		$this->label = __( 'CiviCRM Instant Messenger', 'civicrm-wp-profile-sync' );
+		$this->label = __( 'CiviCRM Instant Messenger: Complete', 'civicrm-wp-profile-sync' );
 
 		// Define category.
-		$this->category = __( 'CiviCRM Post Type Sync', 'civicrm-wp-profile-sync' );
+		if ( function_exists( 'acfe' ) ) {
+			$this->category = __( 'CiviCRM Post Type Sync only', 'civicrm-wp-profile-sync' );
+		} else {
+			$this->category = __( 'CiviCRM Post Type Sync', 'civicrm-wp-profile-sync' );
+		}
 
 		// Define translations.
 		$this->l10n = [];

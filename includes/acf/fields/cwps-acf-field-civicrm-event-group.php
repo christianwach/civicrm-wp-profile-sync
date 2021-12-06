@@ -154,10 +154,14 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Group extends acf_field {
 		$this->acf_type = $parent;
 
 		// Define label.
-		$this->label = __( 'CiviCRM Event with Type', 'civicrm-wp-profile-sync' );
+		$this->label = __( 'CiviCRM Participant: Event with Type', 'civicrm-wp-profile-sync' );
 
 		// Define category.
-		$this->category = __( 'CiviCRM Post Type Sync', 'civicrm-wp-profile-sync' );
+		if ( function_exists( 'acfe' ) ) {
+			$this->category = __( 'CiviCRM Post Type Sync only', 'civicrm-wp-profile-sync' );
+		} else {
+			$this->category = __( 'CiviCRM Post Type Sync', 'civicrm-wp-profile-sync' );
+		}
 
 		// Define translations.
 		$this->l10n = [

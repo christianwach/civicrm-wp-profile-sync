@@ -166,10 +166,10 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_County extends acf_field {
 		$this->civicrm = $this->acf_loader->civicrm;
 
 		// Define label.
-		$this->label = __( 'CiviCRM County', 'civicrm-wp-profile-sync' );
+		$this->label = __( 'CiviCRM Address: County', 'civicrm-wp-profile-sync' );
 
 		// Define category.
-		$this->category = __( 'CiviCRM ACFE Forms', 'civicrm-wp-profile-sync' );
+		$this->category = __( 'CiviCRM ACFE Forms only', 'civicrm-wp-profile-sync' );
 
 		// Define translations.
 		$this->l10n = [];
