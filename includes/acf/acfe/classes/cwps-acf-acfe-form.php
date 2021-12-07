@@ -146,8 +146,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 		// Listen for queries from the ACF Field class.
 		add_filter( 'cwps/acf/query_settings_field', [ $this, 'query_settings_field' ], 200, 3 );
 
-		// Register ACFE Form Actions.
-		add_filter( 'acfe/include_form_actions', [ $this, 'register_form_actions' ] );
+		// Register ACFE Form Actions after ACFE does.
+		add_filter( 'acfe/include_form_actions', [ $this, 'register_form_actions' ], 20 );
 
 		// Add Form Actions Javascript.
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_form_action_scripts' ] );

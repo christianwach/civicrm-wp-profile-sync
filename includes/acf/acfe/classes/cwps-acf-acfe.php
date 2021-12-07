@@ -113,16 +113,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 		// Include class files.
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/classes/cwps-acf-acfe-form.php';
 
-		// Include Reference Field Types.
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/fields/cwps-acf-acfe-field-action-reference-contact.php';
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/fields/cwps-acf-acfe-field-action-reference-case.php';
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/fields/cwps-acf-acfe-field-action-reference-participant.php';
-
-		// Include Field Types.
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/fields/cwps-acf-acfe-field-address-county.php';
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/fields/cwps-acf-acfe-field-address-state.php';
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/fields/cwps-acf-acfe-field-address-country.php';
-
 	}
 
 
@@ -148,8 +138,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 	 */
 	public function register_hooks() {
 
-		// Include any Field Types that we have defined.
-		add_action( 'acf/include_field_types', [ $this, 'register_field_types' ] );
+		// Include any Field Types that we have defined after ACFE does.
+		add_action( 'acf/include_field_types', [ $this, 'register_field_types' ], 100 );
 
 	}
 
@@ -164,15 +154,52 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 	 */
 	public function register_field_types( $version ) {
 
+		// Include Reference Field Types.
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/fields/cwps-acf-acfe-field-action-reference-contact.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/fields/cwps-acf-acfe-field-action-reference-case.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/fields/cwps-acf-acfe-field-action-reference-participant.php';
+
 		// Init Reference Field Types.
 		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Contact_Action_Ref( $this );
 		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Case_Action_Ref( $this );
 		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Participant_Action_Ref( $this );
 
+		// Include Field Types.
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/fields/cwps-acf-acfe-field-address-county.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/fields/cwps-acf-acfe-field-address-state.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/fields/cwps-acf-acfe-field-address-country.php';
+
 		// Init Field Types.
 		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_County( $this );
 		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State( $this );
 		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_Country( $this );
+
+	}
+
+
+
+	/**
+	 * Check if ACF Extended Pro is present and active.
+	 *
+	 * The "ACFE_PRO" constant is only set after the "acf/include_field_types"
+	 * action at priority 10 - since this is when the "ACFE_Pro" class is included.
+	 *
+	 * We might be able to find out earlier based on the enclosing directory of
+	 * the ACF Extended plugin, because it should be "acf-extended-pro" but this
+	 * is not reliable.
+	 *
+	 * We might also be able to look for the "pro" directory in the root of the
+	 * plugin directory. This can be found by looking the "ACFE_PATH" constant.
+	 * This, too, may not be reliable.
+	 *
+	 * @since 0.5
+	 *
+	 * @return bool True if ACF Extended Pro is active, false otherwise.
+	 */
+	public function is_pro() {
+
+		// Return boolean based the ACFE Pro constant.
+		return ( defined( 'ACFE_PRO' ) && ACFE_PRO ) ? true : false;
 
 	}
 
