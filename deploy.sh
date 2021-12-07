@@ -67,6 +67,7 @@ README.md
 .git
 .editorconfig
 docs
+phpcs.xml
 .gitignore" "$SVNPATH/trunk/"
 
 echo "Changing directory to SVN and committing to trunk"
