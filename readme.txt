@@ -86,6 +86,11 @@ I'll say it again: test early, test often and - above all - test on a developmen
 
 == Changelog ==
 
+= 0.5.0 =
+
+* Enables building forms with ACF Extended.
+* Introduces Participant Post Type sync via Advanced Custom Fields.
+
 = 0.4.1 =
 
 * Skips sync when CiviCRM creates a User.
