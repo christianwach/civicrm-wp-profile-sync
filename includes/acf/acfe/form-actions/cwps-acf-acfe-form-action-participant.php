@@ -315,7 +315,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 	 * @since 0.5
 	 *
 	 * @param array $field The existing array of Field data.
-	 * @param array $field The modified array of Field data.
+	 * @return array $field The modified array of Field data.
 	 */
 	public function prepare_choices( $field ) {
 
@@ -424,7 +424,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 		$counted = $this->civicrm->participant_role->get_counted();
 		$conditional_logic = [];
 		if ( ! empty( $counted ) ) {
-			foreach( $counted as $role_id => $role_name ) {
+			foreach ( $counted as $role_id => $role_name ) {
 				// Add an OR condition for each entry.
 				$conditional_logic[] = [
 					[
@@ -626,6 +626,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 				'label' => $field['title'],
 				'name' => $this->field_name . 'contact_group_' . $field['name'],
 				'type' => 'group',
+				/* translators: %s: The Field title */
 				'instructions' => sprintf( __( 'Use one Field to identify the %s.', 'civicrm-wp-profile-sync' ), $field['title'] ),
 				'wrapper' => [
 					'width' => '',
@@ -710,7 +711,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 			$contact_group_field['sub_fields'][] = $cid_field;
 
 			// Define Custom Contact Reference Field.
-			$title = sprintf( __( 'Custom Contact Reference', 'civicrm-wp-profile-sync' ), $field['title'] );
+			$title = __( 'Custom Contact Reference', 'civicrm-wp-profile-sync' );
 			$mapping_field = $this->mapping_field_get( $field['name'], $title );
 			$mapping_field['instructions'] = __( 'Define a custom Contact Reference.', 'civicrm-wp-profile-sync' );
 			$mapping_field['conditional_logic'] = [
@@ -802,6 +803,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 				'label' => $field['title'],
 				'name' => $this->field_name . 'participant_group_' . $field['name'],
 				'type' => 'group',
+				/* translators: %s: The Field title */
 				'instructions' => sprintf( __( 'If the Participant is not the Submitter, use one Field to identify the %s.', 'civicrm-wp-profile-sync' ), $field['title'] ),
 				'wrapper' => [
 					'width' => '',
@@ -886,7 +888,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 			//$participant_group_field['sub_fields'][] = $pid_field;
 
 			// Define Custom Participant Reference Field.
-			$title = sprintf( __( 'Custom Participant Reference', 'civicrm-wp-profile-sync' ), $field['title'] );
+			$title = __( 'Custom Participant Reference', 'civicrm-wp-profile-sync' );
 			$mapping_field = $this->mapping_field_get( $field['name'], $title );
 			$mapping_field['instructions'] = __( 'Define a custom Participant Reference.', 'civicrm-wp-profile-sync' );
 			$mapping_field['conditional_logic'] = [
@@ -981,6 +983,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 				'label' => $field['title'],
 				'name' => $this->field_name . 'event_group',
 				'type' => 'group',
+				/* translators: %s: The Field title */
 				'instructions' => sprintf( __( 'Use one Field to identify the %s.', 'civicrm-wp-profile-sync' ), $field['title'] ),
 				'wrapper' => [
 					'width' => '',
@@ -1026,7 +1029,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 			$event_group_field['sub_fields'][] = $event_id_field;
 
 			// Define Custom Event Reference Field.
-			$title = sprintf( __( 'Custom Event Reference', 'civicrm-wp-profile-sync' ), $field['title'] );
+			$title = __( 'Custom Event Reference', 'civicrm-wp-profile-sync' );
 			$mapping_field = $this->mapping_field_get( $field['name'], $title );
 			$mapping_field['instructions'] = __( 'Define a custom Event Reference.', 'civicrm-wp-profile-sync' );
 			$mapping_field['conditional_logic'] = [
@@ -1552,7 +1555,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 		}
 
 		// Add Custom Field data if present.
-		if ( ! empty ( $custom_data ) ) {
+		if ( ! empty( $custom_data ) ) {
 			$participant_data += $custom_data;
 		}
 

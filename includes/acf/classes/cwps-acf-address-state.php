@@ -437,7 +437,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 			$state_id = false;
 
 			// Process Address if not deleting it.
-			if( $args['op'] !== 'delete' ) {
+			if ( $args['op'] !== 'delete' ) {
 
 				// Does this Field sync with the Primary Address?
 				if ( $address_field === 'primary' ) {
@@ -496,9 +496,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 		// Add if it has a reference to a State Field.
 		if ( ! empty( $field['type'] ) && $field['type'] == 'civicrm_address_state' ) {
 			if ( $field['state_is_primary'] === 1 ) {
-				$acf_fields['state'][$field['name']] = 'primary';
+				$acf_fields['state'][ $field['name'] ] = 'primary';
 			} else {
-				$acf_fields['state'][$field['name']] = $field['state_location_type_id'];
+				$acf_fields['state'][ $field['name'] ] = $field['state_location_type_id'];
 			}
 		}
 

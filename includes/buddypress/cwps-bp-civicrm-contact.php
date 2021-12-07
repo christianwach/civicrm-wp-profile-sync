@@ -268,7 +268,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact {
 				$value = $this->xprofile->value_get_for_civicrm( $data['value'], $data['field_type'], $args );
 
 				// Add it to the Field data.
-				$contact_data[$code] = $value;
+				$contact_data[ $code ] = $value;
 
 			}
 

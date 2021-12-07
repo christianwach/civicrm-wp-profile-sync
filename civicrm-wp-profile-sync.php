@@ -1,16 +1,15 @@
-<?php /*
---------------------------------------------------------------------------------
-Plugin Name: CiviCRM Profile Sync
-Plugin URI: https://github.com/christianwach/civicrm-wp-profile-sync
-Description: Keeps a WordPress User profile in sync with a CiviCRM Contact and integrates WordPress and CiviCRM Entities with data synced via Advanced Custom Fields.
-Author: Christian Wach
-Version: 0.5
-Author URI: https://haystack.co.uk
-Text Domain: civicrm-wp-profile-sync
-Domain Path: /languages
-Depends: CiviCRM
---------------------------------------------------------------------------------
-*/
+<?php
+/**
+ * Plugin Name: CiviCRM Profile Sync
+ * Plugin URI: https://github.com/christianwach/civicrm-wp-profile-sync
+ * Description: Keeps a WordPress User profile in sync with a CiviCRM Contact and integrates WordPress and CiviCRM Entities with data synced via Advanced Custom Fields.
+ * Author: Christian Wach
+ * Version: 0.5
+ * Author URI: https://haystack.co.uk
+ * Text Domain: civicrm-wp-profile-sync
+ * Domain Path: /languages
+ * Depends: CiviCRM
+ */
 
 
 
@@ -401,7 +400,7 @@ class CiviCRM_WP_Profile_Sync {
 		// Get path from 'plugins' directory to CiviCRM's directory.
 		$civicrm = plugin_basename( CIVICRM_PLUGIN_FILE );
 
-		// Test if network active
+		// Test if network active.
 		$civicrm_network_active = is_plugin_active_for_network( $civicrm );
 
 		// --<
@@ -540,9 +539,7 @@ function civicrm_wp_profile_sync_deactivated() {
 // Deactivation.
 register_deactivation_hook( __FILE__, 'civicrm_wp_profile_sync_deactivated' );
 
-// Uninstall uses the 'uninstall.php' method.
-// See: http://codex.wordpress.org/Function_Reference/register_uninstall_hook
-
-
-
-
+/*
+ * Uninstall uses the 'uninstall.php' method.
+ * @see https://developer.wordpress.org/reference/functions/register_uninstall_hook/
+ */

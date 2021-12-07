@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
  * CiviCRM Profile Sync "Base" ACFE Form Action Class.
  *
  * A class that is extended by CiviCRM Profile Sync ACFE Form Action classes.
- * *
+ *
  * @since 0.5
  */
 class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
@@ -77,7 +77,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	public function __construct() {
 
 		// Callback for the "acfe/form/load/..." hook.
-        add_filter( 'acfe/form/load/' . $this->action_name, [ $this, 'load' ], 10, 3 );
+		add_filter( 'acfe/form/load/' . $this->action_name, [ $this, 'load' ], 10, 3 );
 
 		// Callback for the "acfe/form/make/..." hook.
 		add_action( 'acfe/form/make/' . $this->action_name, [ $this, 'make' ], 10, 3 );
@@ -126,9 +126,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 		// Get the existing array of Action results.
 		$actions = get_query_var( 'acfe_form_actions', [] );
 
-		$actions[$this->action_name] = $data;
+		$actions[ $this->action_name ] = $data;
 		if ( ! empty( $action ) ) {
-			$actions[$action] = $data;
+			$actions[ $action ] = $data;
 		}
 
 		// Update array of Action results.
@@ -209,9 +209,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 		// Get the existing array of Action results.
 		$actions = get_query_var( 'acfe_form_actions', [] );
 
-		$actions[$this->action_name] = $data;
+		$actions[ $this->action_name ] = $data;
 		if ( ! empty( $action ) ) {
-			$actions[$action] = $data;
+			$actions[ $action ] = $data;
 		}
 
 		// Update array of Action results.
@@ -273,7 +273,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 		$layout['sub_fields'] = apply_filters( 'cwps/acfe/form/actions/sub_fields', $sub_fields );
 
 		// Add our completed layout to the layouts array.
-		$layouts['layout_' . $this->action_name] = $layout;
+		$layouts[ 'layout_' . $this->action_name ] = $layout;
 
 		// --<
 		return $layouts;
@@ -401,24 +401,26 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	public function tab_mapping_header() {
 
 		// "Mapping" Tab wrapper.
-		$mapping_tab = [ [
-			'key' => $this->field_key . 'tab_load',
-			'label' => __( 'Mapping', 'civicrm-wp-profile-sync' ),
-			'name' => '',
-			'type' => 'tab',
-			'instructions' => '',
-			'required' => 0,
-			'conditional_logic' => 0,
-			'wrapper' => [
-				'width' => '',
-				'class' => '',
-				'id' => '',
-				'data-no-preference' => true,
+		$mapping_tab = [
+			[
+				'key' => $this->field_key . 'tab_load',
+				'label' => __( 'Mapping', 'civicrm-wp-profile-sync' ),
+				'name' => '',
+				'type' => 'tab',
+				'instructions' => '',
+				'required' => 0,
+				'conditional_logic' => 0,
+				'wrapper' => [
+					'width' => '',
+					'class' => '',
+					'id' => '',
+					'data-no-preference' => true,
+				],
+				'acfe_permissions' => '',
+				'placement' => 'top',
+				'endpoint' => 0,
 			],
-			'acfe_permissions' => '',
-			'placement' => 'top',
-			'endpoint' => 0,
-		] ];
+		];
 
 		// Combine Fields.
 		$fields = array_merge(
@@ -456,32 +458,34 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	public function tab_relationship_header() {
 
 		// "Relationship" Tab wrapper.
-		$relationship_tab = [ [
-			'key' => $this->field_key . 'tab_relationship',
-			'label' => __( 'Relationships', 'civicrm-wp-profile-sync' ),
-			'name' => '',
-			'type' => 'tab',
-			'instructions' => '',
-			'required' => 0,
-			'conditional_logic' => [
-				[
+		$relationship_tab = [
+			[
+				'key' => $this->field_key . 'tab_relationship',
+				'label' => __( 'Relationships', 'civicrm-wp-profile-sync' ),
+				'name' => '',
+				'type' => 'tab',
+				'instructions' => '',
+				'required' => 0,
+				'conditional_logic' => [
 					[
-						'field' => $this->field_key . 'submitting_contact',
-						'operator' => '==',
-						'value' => '0',
+						[
+							'field' => $this->field_key . 'submitting_contact',
+							'operator' => '==',
+							'value' => '0',
+						],
 					],
 				],
+				'wrapper' => [
+					'width' => '',
+					'class' => '',
+					'id' => '',
+					'data-no-preference' => true,
+				],
+				'acfe_permissions' => '',
+				'placement' => 'top',
+				'endpoint' => 0,
 			],
-			'wrapper' => [
-				'width' => '',
-				'class' => '',
-				'id' => '',
-				'data-no-preference' => true,
-			],
-			'acfe_permissions' => '',
-			'placement' => 'top',
-			'endpoint' => 0,
-		] ];
+		];
 
 		// Combine Fields.
 		$fields = array_merge(
@@ -565,7 +569,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 		$helpers = acf_get_instance( 'acfe_dynamic_forms_helpers' );
 
 		// Populate mapping Fields.
-        add_filter( 'acf/prepare_field/name=' . $this->field_name . 'map_' . $code, [ $helpers, 'map_fields_deep_no_custom' ] );
+		add_filter( 'acf/prepare_field/name=' . $this->field_name . 'map_' . $code, [ $helpers, 'map_fields_deep_no_custom' ] );
 
 	}
 
@@ -584,11 +588,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	 */
 	public function js_model_contact_reference_field_add( $field_name ) {
 
-        // Add to Javascript ACF Model.
-        add_filter( 'cwps/acf/acfe/form_actions/reference_fields/contact', function( $actions ) use ( $field_name ) {
-        	$actions['new_field/name=' . $field_name] = 'newContactActionRefField';
-        	return $actions;
-        } );
+		// Add to Javascript ACF Model.
+		add_filter( 'cwps/acf/acfe/form_actions/reference_fields/contact', function( $actions ) use ( $field_name ) {
+			$actions[ 'new_field/name=' . $field_name ] = 'newContactActionRefField';
+			return $actions;
+		} );
 
 	}
 
@@ -603,11 +607,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	 */
 	public function js_model_case_reference_field_add( $field_name ) {
 
-        // Add to Javascript ACF Model.
-        add_filter( 'cwps/acf/acfe/form_actions/reference_fields/case', function( $actions ) use ( $field_name ) {
-        	$actions['new_field/name=' . $field_name] = 'newCaseActionRefField';
-        	return $actions;
-        } );
+		// Add to Javascript ACF Model.
+		add_filter( 'cwps/acf/acfe/form_actions/reference_fields/case', function( $actions ) use ( $field_name ) {
+			$actions[ 'new_field/name=' . $field_name ] = 'newCaseActionRefField';
+			return $actions;
+		} );
 
 	}
 
@@ -622,11 +626,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	 */
 	public function js_model_participant_reference_field_add( $field_name ) {
 
-        // Add to Javascript ACF Model.
-        add_filter( 'cwps/acf/acfe/form_actions/reference_fields/participant', function( $actions ) use ( $field_name ) {
-        	$actions['new_field/name=' . $field_name] = 'newParticipantActionRefField';
-        	return $actions;
-        } );
+		// Add to Javascript ACF Model.
+		add_filter( 'cwps/acf/acfe/form_actions/reference_fields/participant', function( $actions ) use ( $field_name ) {
+			$actions[ 'new_field/name=' . $field_name ] = 'newParticipantActionRefField';
+			return $actions;
+		} );
 
 	}
 
@@ -658,7 +662,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 		foreach ( $form_data as $param => $value ) {
 			// Allow (string) "0" as valid data.
 			if ( ! empty( $value ) || $value === '0' ) {
-				$filtered_data[$param] = $value;
+				$filtered_data[ $param ] = $value;
 			}
 		}
 

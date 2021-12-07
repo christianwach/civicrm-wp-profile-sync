@@ -497,9 +497,9 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		// Call the CiviCRM API.
 		$result = civicrm_api( 'Contact', 'create', $params );
 
-        // Log something on failure.
+		// Log something on failure.
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			$e = new \Exception;
+			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
 				'method' => __METHOD__,
@@ -594,9 +594,9 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		// Call the CiviCRM API.
 		$result = civicrm_api( 'Contact', 'create', $params );
 
-        // Log something on failure.
+		// Log something on failure.
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			$e = new \Exception;
+			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
 				'method' => __METHOD__,
@@ -712,14 +712,14 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 		// Log and bail if there's an error.
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			$e = new Exception;
+			$e = new Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( array(
+			error_log( print_r( [
 				'method' => __METHOD__,
 				'params' => $params,
 				'result' => $result,
 				//'backtrace' => $trace,
-			), true ) );
+			], true ) );
 			return $contact_data;
 		}
 
@@ -1073,7 +1073,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		// Get current user.
 		$user = wp_get_current_user();
 
-	    // Sanity check.
+		// Sanity check.
 		if ( ! ( $user instanceof WP_User ) ) {
 			return;
 		}
@@ -1101,7 +1101,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 			'title'  => __( 'CiviCRM Profile', 'civicrm-wp-profile-sync' ),
 			'href'   => $link,
 		] );
-
 
 	}
 

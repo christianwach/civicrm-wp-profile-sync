@@ -130,7 +130,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 			return $country;
 		}
 
- 		// The result set should contain only one item.
+		// The result set should contain only one item.
 		$country = array_pop( $result['values'] );
 
 		// --<
@@ -179,7 +179,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 			return $country;
 		}
 
- 		// The result set should contain only one item.
+		// The result set should contain only one item.
 		$country = array_pop( $result['values'] );
 
 		// --<
@@ -311,7 +311,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 			return $state_province;
 		}
 
- 		// The result set should contain only one item.
+		// The result set should contain only one item.
 		$state_province = array_pop( $result['values'] );
 
 		// --<
@@ -360,7 +360,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 			return $state_province;
 		}
 
- 		// The result set should contain only one item.
+		// The result set should contain only one item.
 		$state_province = array_pop( $result['values'] );
 
 		// --<
@@ -400,7 +400,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 		// Build the array.
 		while ( $dao->fetch() ) {
-			$counties[$dao->id] = [
+			$counties[ $dao->id ] = [
 				'name' => $dao->name,
 				'state_province_id' => $dao->state_province_id,
 				'abbreviation' => $dao->abbreviation,
@@ -446,7 +446,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 		// Build the array.
 		while ( $dao->fetch() ) {
-			$counties[$dao->state_province_id][] = [
+			$counties[ $dao->state_province_id ][] = [
 				'id' => $dao->id,
 				'text' => $dao->name,
 			];
@@ -472,8 +472,8 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 		// Only do this once per Field Type and filter.
 		static $pseudocache;
-		if ( isset( $pseudocache[$county_id] ) ) {
-			return $pseudocache[$county_id];
+		if ( isset( $pseudocache[ $county_id ] ) ) {
+			return $pseudocache[ $county_id ];
 		}
 
 		// Init return.
@@ -494,8 +494,8 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		}
 
 		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$county_id] ) ) {
-			$pseudocache[$county_id] = (int) $state_id;
+		if ( ! isset( $pseudocache[ $county_id ] ) ) {
+			$pseudocache[ $county_id ] = (int) $state_id;
 		}
 
 		// --<
@@ -516,7 +516,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 	 * @since 0.5 Moved to this class.
 	 *
 	 * @param integer $address_id The numeric ID of the Address.
-	 * @param array $shared The array of Shared Address data.
+	 * @return array $shared The array of Shared Address data.
 	 */
 	public function addresses_shared_get_by_id( $address_id ) {
 
@@ -551,8 +551,8 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 			return $shared;
 		}
 
- 		// Return the result set as an array of objects.
- 		foreach ( $result['values'] as $item ) {
+		// Return the result set as an array of objects.
+		foreach ( $result['values'] as $item ) {
 			$shared[] = (object) $item;
 		}
 
@@ -570,7 +570,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 	 * @since 0.5 Moved to this class.
 	 *
 	 * @param integer $address_id The numeric ID of the Address.
-	 * @param object|bool $address The Address data object, or false if none.
+	 * @return object|bool $address The Address data object, or false if none.
 	 */
 	public function address_get_by_id( $address_id ) {
 
@@ -601,7 +601,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 			return $address;
 		}
 
- 		// The result set should contain only one item.
+		// The result set should contain only one item.
 		$address = (object) array_pop( $result['values'] );
 
 		// --<
@@ -619,7 +619,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 	 *
 	 * @param integer $contact_id The numeric ID of the CiviCRM Contact.
 	 * @param integer $location_type_id The numeric ID of the Address Location Type.
-	 * @param object $address The array of Address data, or empty if none.
+	 * @return object $address The array of Address data, or empty if none.
 	 */
 	public function address_get_by_location( $contact_id, $location_type_id ) {
 
@@ -651,7 +651,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 			return $address;
 		}
 
- 		// The result set should contain only one item.
+		// The result set should contain only one item.
 		$address = (object) array_pop( $result['values'] );
 
 		// --<
@@ -668,7 +668,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 	 * @since 0.5 Moved to this class.
 	 *
 	 * @param integer $contact_id The numeric ID of the Contact.
-	 * @param array $addresses The array of data for the Addresses, or empty if none.
+	 * @return array $addresses The array of data for the Addresses, or empty if none.
 	 */
 	public function addresses_get_by_contact_id( $contact_id ) {
 
@@ -699,8 +699,8 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 			return $addresses;
 		}
 
- 		// Return the result set as an array of objects.
- 		foreach ( $result['values'] as $item ) {
+		// Return the result set as an array of objects.
+		foreach ( $result['values'] as $item ) {
 			$addresses[] = (object) $item;
 		}
 
@@ -718,7 +718,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 	 * @since 0.5 Moved to this class.
 	 *
 	 * @param integer $contact_id The numeric ID of the Contact.
-	 * @param array $address The Address data object, or false if none.
+	 * @return array $address The Address data object, or false if none.
 	 */
 	public function address_get_primary_by_contact_id( $contact_id ) {
 
@@ -750,7 +750,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 			return $address;
 		}
 
- 		// The result set should contain only one item.
+		// The result set should contain only one item.
 		$address = (object) array_pop( $result['values'] );
 
 		// --<
@@ -803,7 +803,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 			return $location_type;
 		}
 
- 		// The result set should contain only one item.
+		// The result set should contain only one item.
 		$location_type = array_pop( $result['values'] );
 
 		// --<

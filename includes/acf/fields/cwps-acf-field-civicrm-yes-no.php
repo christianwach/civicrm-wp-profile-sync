@@ -173,7 +173,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Yes_No extends acf_field {
 		// Define translations.
 		$this->l10n = [
 			// Example message.
-			'error'	=> __( 'Error! Please enter a higher value.', 'civicrm-wp-profile-sync' ),
+			'error' => __( 'Error! Please enter a higher value.', 'civicrm-wp-profile-sync' ),
 		];
 
 		// Define choices.
@@ -215,7 +215,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Yes_No extends acf_field {
 			foreach ( $custom_group as $custom_field ) {
 				if ( ! empty( $custom_field['data_type'] ) && $custom_field['data_type'] == 'Boolean' ) {
 					if ( ! empty( $custom_field['html_type'] ) && $custom_field['html_type'] == 'Radio' ) {
-						$filtered_fields[$custom_group_name][] = $custom_field;
+						$filtered_fields[ $custom_group_name ][] = $custom_field;
 					}
 				}
 			}
@@ -255,7 +255,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Yes_No extends acf_field {
 
 		// Set checked item flag, override if already saved.
 		$checked = $this->defaults['default_value'];
-		if ( isset( $field['choices'][$value] ) ) {
+		if ( isset( $field['choices'][ $value ] ) ) {
 			$checked = $value;
 		}
 
@@ -344,7 +344,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Yes_No extends acf_field {
 
 
 	/**
- 	 * This method is called once on the 'input' page between the head and footer.
+	 * This method is called once on the 'input' page between the head and footer.
 	 *
 	 * There are 2 situations where ACF did not load during the
 	 * 'acf/input_admin_enqueue_scripts' and 'acf/input_admin_head' actions

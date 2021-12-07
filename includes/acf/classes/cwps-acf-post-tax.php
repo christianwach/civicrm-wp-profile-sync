@@ -609,13 +609,13 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 		// Query terms for those with the ID of the Group in meta data.
 		$args = [
-		    'taxonomy' => $this->taxonomies,
+			'taxonomy' => $this->taxonomies,
 			'hide_empty' => false,
 			'meta_query' => [
 				[
 					'key' => $this->term_meta_key,
 					'value' => $group_id,
-					'compare' => '='
+					'compare' => '=',
 				],
 			],
 		];
@@ -1023,7 +1023,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 			if ( $group_id === false ) {
 				continue;
 			}
-			$group_ids_removed[$term_id] = $group_id;
+			$group_ids_removed[ $term_id ] = $group_id;
 		}
 
 		// Loop through terms added and collect Group IDs.
@@ -1033,7 +1033,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 			if ( $group_id === false ) {
 				continue;
 			}
-			$group_ids_added[$term_id] = $group_id;
+			$group_ids_added[ $term_id ] = $group_id;
 		}
 
 		// If there are Group IDs to add Contact to.
@@ -1174,7 +1174,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 					foreach ( $term_ids_for_post as $term_id_for_post ) {
 						foreach ( $terms_for_group as $term_for_group ) {
 							if ( $term_for_group->term_id == $term_id_for_post ) {
-								$terms_for_post[$term_for_group->term_id] = $term_for_group;
+								$terms_for_post[ $term_for_group->term_id ] = $term_for_group;
 							}
 						}
 					}
@@ -1189,7 +1189,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 						// If the Post does not have the term(s), add them.
 						foreach ( $term_ids_for_post as $term_id_for_post ) {
 							if ( ! in_array( $term_id_for_post, $term_ids_in_post ) ) {
-								$terms_in_post[] = $terms_for_post[$term_id_for_post];
+								$terms_in_post[] = $terms_for_post[ $term_id_for_post ];
 							}
 						}
 

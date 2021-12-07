@@ -468,8 +468,8 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 		// TODO: Only do this once per User?
 		static $pseudocache;
-		if ( isset( $pseudocache[$user_id] ) ) {
-			//return $pseudocache[$user_id];
+		if ( isset( $pseudocache[ $user_id ] ) ) {
+			//return $pseudocache[ $user_id ];
 		}
 
 		// Init return.
@@ -514,8 +514,8 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		}
 
 		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$user_id] ) ) {
-			//$pseudocache[$user_id] = $fields;
+		if ( ! isset( $pseudocache[ $user_id ] ) ) {
+			//$pseudocache[ $user_id ] = $fields;
 		}
 
 		// --<
@@ -603,20 +603,20 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		$value = wp_unslash( $value );
 
 		// Set appropriate value per Field type.
-		switch( $field_type ) {
+		switch ( $field_type ) {
 
-	 		// Parse the value of a "Date" Field.
-			case 'datebox' :
+			// Parse the value of a "Date" Field.
+			case 'datebox':
 				$value = $this->date_value_get_for_civicrm( $value, $args );
 				break;
 
-	 		// Parse the value of a "Textarea" Field.
-			case 'textarea' :
+			// Parse the value of a "Textarea" Field.
+			case 'textarea':
 				$value = $this->textarea_value_get_for_civicrm( $value, $args );
 				break;
 
-	 		// Parse the value of a "Checkbox" Field.
-			case 'checkbox' :
+			// Parse the value of a "Checkbox" Field.
+			case 'checkbox':
 				$value = $this->checkbox_value_get_for_civicrm( $value, $args );
 				break;
 
@@ -1035,7 +1035,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 			$value_for_civicrm = [];
 			foreach ( $value as $item ) {
 				if ( array_key_exists( $item, $options ) ) {
-					$value_for_bp[] = $options[$item];
+					$value_for_bp[] = $options[ $item ];
 					$value_for_civicrm[] = $item;
 				}
 			}
@@ -1043,7 +1043,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 			$value_for_bp = 0;
 			$value_for_civicrm = 0;
 			if ( array_key_exists( $value, $options ) ) {
-				$value_for_bp = $options[$value];
+				$value_for_bp = $options[ $value ];
 				$value_for_civicrm = $value;
 			}
 		}
@@ -1183,8 +1183,8 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 		// Extract the Entity Type from our metabox.
 		$entity_type = '';
-		if ( isset( $_POST[$this->entity_type] ) && $_POST[$this->entity_type] ) {
-			$entity_type = wp_unslash( $_POST[$this->entity_type] );
+		if ( isset( $_POST[ $this->entity_type ] ) && $_POST[ $this->entity_type ] ) {
+			$entity_type = wp_unslash( $_POST[ $this->entity_type ] );
 		}
 
 		// Bail if we don't have an Entity Type.
@@ -1197,8 +1197,8 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 			// Extract the Location Type ID from our metabox.
 			$location_type_id = '';
-			if ( isset( $_POST[$this->location_type_id] ) && $_POST[$this->location_type_id] ) {
-				$location_type_id = wp_unslash( $_POST[$this->location_type_id] );
+			if ( isset( $_POST[ $this->location_type_id ] ) && $_POST[ $this->location_type_id ] ) {
+				$location_type_id = wp_unslash( $_POST[ $this->location_type_id ] );
 			}
 
 			// Build Entity data.
@@ -1213,14 +1213,14 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 			// Extract the Contact Type ID from our metabox.
 			$contact_type_id = '';
-			if ( isset( $_POST[$this->contact_type_id] ) && $_POST[$this->contact_type_id] ) {
-				$contact_type_id = wp_unslash( $_POST[$this->contact_type_id] );
+			if ( isset( $_POST[ $this->contact_type_id ] ) && $_POST[ $this->contact_type_id ] ) {
+				$contact_type_id = wp_unslash( $_POST[ $this->contact_type_id ] );
 			}
 
 			// Extract the Contact Subtype ID from our metabox.
 			$contact_subtype_id = '';
-			if ( isset( $_POST[$this->contact_subtype_id] ) && $_POST[$this->contact_subtype_id] ) {
-				$contact_subtype_id = wp_unslash( $_POST[$this->contact_subtype_id] );
+			if ( isset( $_POST[ $this->contact_subtype_id ] ) && $_POST[ $this->contact_subtype_id ] ) {
+				$contact_subtype_id = wp_unslash( $_POST[ $this->contact_subtype_id ] );
 			}
 
 			// Build Entity data.
@@ -1233,8 +1233,8 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 		// Extract the value from our metabox.
 		$value = '';
-		if ( isset( $_POST[$this->name] ) && $_POST[$this->name] ) {
-			$value = wp_unslash( $_POST[$this->name] );
+		if ( isset( $_POST[ $this->name ] ) && $_POST[ $this->name ] ) {
+			$value = wp_unslash( $_POST[ $this->name ] );
 		}
 
 		/*
@@ -1315,8 +1315,8 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 		// Extract the Entity Type from our metabox.
 		$entity_type = '';
-		if ( isset( $_POST[$this->entity_type] ) && $_POST[$this->entity_type] ) {
-			$entity_type = wp_unslash( $_POST[$this->entity_type] );
+		if ( isset( $_POST[ $this->entity_type ] ) && $_POST[ $this->entity_type ] ) {
+			$entity_type = wp_unslash( $_POST[ $this->entity_type ] );
 		}
 
 		// Bail if we don't have an Entity Type.
@@ -1332,14 +1332,14 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 			// Extract the Contact Type ID from our metabox.
 			$contact_type_id = '';
-			if ( isset( $_POST[$this->contact_type_id] ) && $_POST[$this->contact_type_id] ) {
-				$contact_type_id = wp_unslash( $_POST[$this->contact_type_id] );
+			if ( isset( $_POST[ $this->contact_type_id ] ) && $_POST[ $this->contact_type_id ] ) {
+				$contact_type_id = wp_unslash( $_POST[ $this->contact_type_id ] );
 			}
 
 			// Extract the Contact Subtype ID from our metabox.
 			$contact_subtype_id = '';
-			if ( isset( $_POST[$this->contact_subtype_id] ) && $_POST[$this->contact_subtype_id] ) {
-				$contact_subtype_id = wp_unslash( $_POST[$this->contact_subtype_id] );
+			if ( isset( $_POST[ $this->contact_subtype_id ] ) && $_POST[ $this->contact_subtype_id ] ) {
+				$contact_subtype_id = wp_unslash( $_POST[ $this->contact_subtype_id ] );
 			}
 
 			// Build Entity data.
@@ -1355,8 +1355,8 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 			// Extract the Location Type ID from our metabox.
 			$location_type_id = '';
-			if ( isset( $_POST[$this->location_type_id] ) && $_POST[$this->location_type_id] ) {
-				$location_type_id = wp_unslash( $_POST[$this->location_type_id] );
+			if ( isset( $_POST[ $this->location_type_id ] ) && $_POST[ $this->location_type_id ] ) {
+				$location_type_id = wp_unslash( $_POST[ $this->location_type_id ] );
 			}
 
 			// Build Entity data.
@@ -1369,12 +1369,12 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 				// Extract the Phone Type ID from our metabox.
 				$phone_type_id = '';
-				if ( isset( $_POST[$this->phone_type_id] ) && $_POST[$this->phone_type_id] ) {
-					$phone_type_id = wp_unslash( $_POST[$this->phone_type_id] );
+				if ( isset( $_POST[ $this->phone_type_id ] ) && $_POST[ $this->phone_type_id ] ) {
+					$phone_type_id = wp_unslash( $_POST[ $this->phone_type_id ] );
 				}
 
 				// Add to Entity data.
-				$entity_data['phone_type_id'] =  $phone_type_id;
+				$entity_data['phone_type_id'] = $phone_type_id;
 
 			}
 
@@ -1382,8 +1382,8 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 		// Extract the value from our metabox.
 		$value = '';
-		if ( isset( $_POST[$this->name] ) && $_POST[$this->name] ) {
-			$value = wp_unslash( $_POST[$this->name] );
+		if ( isset( $_POST[ $this->name ] ) && $_POST[ $this->name ] ) {
+			$value = wp_unslash( $_POST[ $this->name ] );
 		}
 
 		/*
@@ -1476,11 +1476,9 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		$location_types = $this->plugin->civicrm->address->location_types_get();
 		if ( ! empty( $location_types ) ) {
 			foreach ( $location_types as $location ) {
-				$locations[$location['id']] = trim( $location['display_name'] );
+				$locations[ $location['id'] ] = trim( $location['display_name'] );
 			}
 		}
-
-
 
 		// Get data for the "Phone" Entity Type.
 		$phone_type_id = '';
@@ -1495,11 +1493,9 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		$phone_types = $this->plugin->civicrm->phone->phone_types_get();
 		if ( ! empty( $phone_types ) ) {
 			foreach ( $phone_types as $id => $label ) {
-				$phones[$id] = trim( $label );
+				$phones[ $id ] = trim( $label );
 			}
 		}
-
-
 
 		// Get data for the "Contact" Entity.
 		$top_level_type = '';
@@ -1519,7 +1515,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 			// Add entries for top level Contact Types.
 			foreach ( $contact_types as $contact_type ) {
-				$top_level_types[$contact_type['id']] = $contact_type['label'];
+				$top_level_types[ $contact_type['id'] ] = $contact_type['label'];
 			}
 
 			// Add entries for CiviCRM Contact Sub-types.
@@ -1528,13 +1524,11 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 					continue;
 				}
 				foreach ( $contact_type['children'] as $contact_subtype ) {
-					$sub_types[$contact_type['name']][$contact_subtype['id']] = $contact_subtype['label'];
+					$sub_types[ $contact_type['name'] ][ $contact_subtype['id'] ] = $contact_subtype['label'];
 				}
 			}
 
 		}
-
-
 
 		// Init Entity Type array.
 		$entity_type_data = [];
@@ -1761,7 +1755,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 					}
 
 					// Add data to options.
-					$options[$field_type][$contact_type['id']] = $data;
+					$options[ $field_type ][ $contact_type['id'] ] = $data;
 
 				}
 
@@ -1814,7 +1808,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 					}
 
 					// Add data to options.
-					$options[$field_type][$entity_type] = $data;
+					$options[ $field_type ][ $entity_type ] = $data;
 
 				}
 
@@ -1873,7 +1867,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 * @since 0.5
 	 *
 	 * @param object|integer $field The xProfile Field object or Field ID.
-	 * @param array $data The array of our Field metadata.
+	 * @return array $data The array of our Field metadata.
 	 */
 	public function get_metadata_all( $field ) {
 
@@ -1889,8 +1883,8 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 		// Only do this once per Field ID.
 		static $pseudocache;
-		if ( isset( $pseudocache[$field_id] ) ) {
-			//return $pseudocache[$field_id];
+		if ( isset( $pseudocache[ $field_id ] ) ) {
+			//return $pseudocache[ $field_id ];
 		}
 
 		// Grab the metadata.
@@ -1903,8 +1897,8 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		$data = $meta;
 
 		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$field_id] ) ) {
-			//$pseudocache[$field_id] = $data;
+		if ( ! isset( $pseudocache[ $field_id ] ) ) {
+			//$pseudocache[ $field_id ] = $data;
 		}
 
 		// --<

@@ -11,10 +11,10 @@
 ?><!-- assets/templates/wordpress/pages/page-admin-acf-migrate.php -->
 <div class="wrap">
 
-	<h1><?php _e( 'CiviCRM Profile Sync', 'civicrm-wp-profile-sync' ); ?></h1>
+	<h1><?php esc_html_e( 'CiviCRM Profile Sync', 'civicrm-wp-profile-sync' ); ?></h1>
 
 	<h2 class="nav-tab-wrapper">
-		<a href="<?php echo $urls['settings']; ?>" class="nav-tab"><?php _e( 'Settings', 'civicrm-wp-profile-sync' ); ?></a>
+		<a href="<?php echo $urls['settings']; ?>" class="nav-tab"><?php esc_html_e( 'Settings', 'civicrm-wp-profile-sync' ); ?></a>
 		<?php
 
 		/**
@@ -38,7 +38,7 @@
 
 		<div id="poststuff">
 
-			<div id="post-body" class="metabox-holder columns-<?php echo $columns;?>">
+			<div id="post-body" class="metabox-holder columns-<?php echo $columns; ?>">
 
 				<!--<div id="post-body-content">
 				</div>--><!-- #post-body-content -->
@@ -48,7 +48,7 @@
 				</div>
 
 				<div id="postbox-container-2" class="postbox-container">
-					<?php do_meta_boxes( $screen->id, 'normal', null );  ?>
+					<?php do_meta_boxes( $screen->id, 'normal', null ); ?>
 					<?php do_meta_boxes( $screen->id, 'advanced', null ); ?>
 				</div>
 

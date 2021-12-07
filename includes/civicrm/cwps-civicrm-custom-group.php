@@ -170,7 +170,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 			return $custom_groups;
 		}
 
- 		// The result set is what we want.
+		// The result set is what we want.
 		$custom_groups = $result['values'];
 
 		// --<
@@ -219,7 +219,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 			return $custom_group;
 		}
 
- 		// The result set should contain only one item.
+		// The result set should contain only one item.
 		$custom_group = array_pop( $result['values'] );
 
 		// --<
@@ -292,7 +292,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 			return $custom_groups;
 		}
 
- 		// The result set is what we want.
+		// The result set is what we want.
 		$custom_groups = $result['values'];
 
 		// --<
@@ -342,7 +342,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 				'is_active' => 1,
 				'options' => [
 					'limit' => 0,
-				]
+				],
 			],
 			'extends' => [
 				'IN' => $this->plugin->civicrm->contact_type->types_get_top_level(),
@@ -396,7 +396,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 				'is_active' => 1,
 				'options' => [
 					'limit' => 0,
-				]
+				],
 			],
 			'extends' => 'Activity',
 		];
@@ -414,7 +414,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 			return $custom_groups;
 		}
 
- 		// The result set is what we want.
+		// The result set is what we want.
 		$custom_groups = $result['values'];
 
 		// --<
@@ -454,7 +454,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 				'is_active' => 1,
 				'options' => [
 					'limit' => 0,
-				]
+				],
 			],
 			'extends' => 'Case',
 		];
@@ -472,7 +472,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 			return $custom_groups;
 		}
 
- 		// The result set is what we want.
+		// The result set is what we want.
 		$custom_groups = $result['values'];
 
 		// --<
@@ -512,7 +512,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 				'is_active' => 1,
 				'options' => [
 					'limit' => 0,
-				]
+				],
 			],
 			'extends' => 'Participant',
 		];
@@ -530,7 +530,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 			return $custom_groups;
 		}
 
- 		// The result set is what we want.
+		// The result set is what we want.
 		$custom_groups = $result['values'];
 
 		// --<
@@ -567,8 +567,8 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 
 		// Only do this once per Entity Type.
 		static $pseudocache;
-		if ( isset( $pseudocache[$type][$key][$subkey] ) ) {
-			return $pseudocache[$type][$key][$subkey];
+		if ( isset( $pseudocache[ $type ][ $key ][ $subkey ] ) ) {
+			return $pseudocache[ $type ][ $key ][ $subkey ];
 		}
 
 		// Init return.
@@ -626,8 +626,8 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 		}
 
 		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$type][$key][$subkey] ) ) {
-			$pseudocache[$type][$key][$subkey] = $custom_groups;
+		if ( ! isset( $pseudocache[ $type ][ $key ][ $subkey ] ) ) {
+			$pseudocache[ $type ][ $key ][ $subkey ] = $custom_groups;
 		}
 
 		// --<

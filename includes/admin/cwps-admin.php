@@ -330,7 +330,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 		// Overwrite flag if the setting doesn't exist or has no value.
 		if (
-			! $this->setting_exists( 'user_profile_website_type' ) OR
+			! $this->setting_exists( 'user_profile_website_type' ) ||
 			$this->setting_get( 'user_profile_website_type', 0 ) === 0
 		) {
 			$website_type_undefined = true;
@@ -341,7 +341,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 		// Overwrite flag if the setting doesn't exist or has no value.
 		if (
-			! $this->setting_exists( 'user_profile_email_sync' ) OR
+			! $this->setting_exists( 'user_profile_email_sync' ) ||
 			$this->setting_get( 'user_profile_email_sync', 2 ) === 2
 		) {
 			$email_sync_undefined = true;
@@ -408,6 +408,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 				// Show general "Call to Action".
 				$message = sprintf(
+					/* translators: 1: The Opening anchor tag, 2: The Closing anchor tag */
 					__( 'CiviCRM Profile Sync needs your attention. Please visit the %1$sSettings Page%2$s for details.', 'civicrm-wp-profile-sync' ),
 					'<a href="' . $url . '">',
 					'</a>'
@@ -554,7 +555,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 		// Define subpages.
 		$subpages = [
-		 	$this->settings_page_slug,
+			$this->settings_page_slug,
 		];
 
 		/**
@@ -898,9 +899,9 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		$nickname_sync = (int) $this->setting_get( 'user_profile_nickname_sync', 1 );
 
 		// Init template vars.
-		$email_sync_yes = $email_sync === 1 ? ' selected ="selected"' : '';
-		$email_sync_no =  $email_sync === 0 ? ' selected ="selected"' : '';
-		$nickname_checked =  $nickname_sync === 1 ? ' checked ="checked"' : '';
+		$email_sync_yes = $email_sync === 1 ? ' selected="selected"' : '';
+		$email_sync_no = $email_sync === 0 ? ' selected="selected"' : '';
+		$nickname_checked = $nickname_sync === 1 ? ' checked="checked"' : '';
 
 		// Include template file.
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/metaboxes/metabox-admin-settings-profile.php';
@@ -1093,7 +1094,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	public function setting_get( $setting_name = '', $default = false ) {
 
 		// Get setting.
-		return ( array_key_exists( $setting_name, $this->settings ) ) ? $this->settings[$setting_name] : $default;
+		return ( array_key_exists( $setting_name, $this->settings ) ) ? $this->settings[ $setting_name ] : $default;
 
 	}
 
@@ -1110,7 +1111,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	public function setting_set( $setting_name = '', $value = '' ) {
 
 		// Set setting.
-		$this->settings[$setting_name] = $value;
+		$this->settings[ $setting_name ] = $value;
 
 	}
 
@@ -1126,7 +1127,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	public function setting_delete( $setting_name = '' ) {
 
 		// Unset setting.
-		unset( $this->settings[$setting_name] );
+		unset( $this->settings[ $setting_name ] );
 
 	}
 

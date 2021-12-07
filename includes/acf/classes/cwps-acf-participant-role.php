@@ -348,8 +348,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 		$mappings = array_flip( $mappings );
 
 		// Overwrite the Participant Role ID if there is a value.
-		if ( isset( $mappings[$post_type_name] ) ) {
-			$participant_role_id = $mappings[$post_type_name];
+		if ( isset( $mappings[ $post_type_name ] ) ) {
+			$participant_role_id = $mappings[ $post_type_name ];
 		}
 
 		// --<
@@ -588,8 +588,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 		$mapped_post_types = $this->acf_loader->mapping->mappings_for_participant_roles_get();
 
 		// Check presence in mappings.
-		if ( isset( $mapped_post_types[$participant_role_id] ) ) {
-			$is_mapped = $mapped_post_types[$participant_role_id];
+		if ( isset( $mapped_post_types[ $participant_role_id ] ) ) {
+			$is_mapped = $mapped_post_types[ $participant_role_id ];
 		}
 
 		// --<

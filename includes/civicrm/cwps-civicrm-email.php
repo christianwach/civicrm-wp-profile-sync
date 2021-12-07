@@ -259,7 +259,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 	public function sync_setting_override( $dao ) {
 
 		// Bail if not a setting.
-		if ( ! ( $dao instanceOf CRM_Core_DAO_Setting ) ) {
+		if ( ! ( $dao instanceof CRM_Core_DAO_Setting ) ) {
 			return;
 		}
 
@@ -301,7 +301,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 
 		// Let people know.
 		echo '<div class="notice notice-warning inline" style="background-color: #f7f7f7;">
-			<p>' . esc_html__( 'CiviCRM Profile Sync is managing Contact Email &rarr; User Email sync.' ) . '</p>
+			<p>' . esc_html__( 'CiviCRM Profile Sync is managing Contact Email &rarr; User Email sync.', 'civicrm-wp-profile-sync' ) . '</p>
 		</div>';
 
 	}
@@ -439,7 +439,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		}
 
 		// Bail if it isn't the Primary Email.
-		if ( empty( $primary_email->is_primary ) OR $primary_email->is_primary != 1 ) {
+		if ( empty( $primary_email->is_primary ) || $primary_email->is_primary != 1 ) {
 			return;
 		}
 
@@ -512,7 +512,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 
 				// Log something on failure.
 				if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-					$e = new \Exception;
+					$e = new \Exception();
 					$trace = $e->getTraceAsString();
 					error_log( print_r( [
 						'method' => __METHOD__,

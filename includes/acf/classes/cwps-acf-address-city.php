@@ -428,7 +428,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_City extends CiviCRM_Profile_Sync
 			$value = '';
 
 			// Process Address if not deleting it.
-			if( $args['op'] !== 'delete' ) {
+			if ( $args['op'] !== 'delete' ) {
 
 				// Does this Field sync with the Primary Address?
 				if ( $address_field === 'primary' ) {
@@ -478,9 +478,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_City extends CiviCRM_Profile_Sync
 		// Add if it has a reference to a City Field.
 		if ( ! empty( $field['type'] ) && $field['type'] == 'civicrm_address_city' ) {
 			if ( $field['city_is_primary'] === 1 ) {
-				$acf_fields['city'][$field['name']] = 'primary';
+				$acf_fields['city'][ $field['name'] ] = 'primary';
 			} else {
-				$acf_fields['city'][$field['name']] = $field['city_location_type_id'];
+				$acf_fields['city'][ $field['name'] ] = $field['city_location_type_id'];
 			}
 		}
 

@@ -245,7 +245,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 			foreach ( $item as $key => $value ) {
 				if ( substr( $key, 0, 7 ) == 'custom_' ) {
 					$index = str_replace( 'custom_', '', $key );
-					$contact_data[$index] = $value;
+					$contact_data[ $index ] = $value;
 				}
 			}
 		}
@@ -411,7 +411,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 				'is_active' => 1,
 				'options' => [
 					'limit' => 0,
-				]
+				],
 			],
 			'extends' => [
 				'IN' => $this->plugin->civicrm->contact_type->types_get_top_level(),
@@ -466,8 +466,8 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 
 		// Only do this once per Type.
 		static $pseudocache;
-		if ( isset( $pseudocache[$type][$index] ) ) {
-			return $pseudocache[$type][$index];
+		if ( isset( $pseudocache[ $type ][ $index ] ) ) {
+			return $pseudocache[ $type ][ $index ];
 		}
 
 		// Init array to build.
@@ -524,8 +524,8 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 		}
 
 		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$type][$index] ) ) {
-			$pseudocache[$type][$index] = $custom_fields;
+		if ( ! isset( $pseudocache[ $type ][ $index ] ) ) {
+			$pseudocache[ $type ][ $index ] = $custom_fields;
 		}
 
 		// --<
@@ -568,8 +568,8 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 
 		// Only do this once per Entity Type.
 		static $pseudocache = [];
-		if ( isset( $pseudocache[$type][$index] ) ) {
-			return $pseudocache[$type][$index];
+		if ( isset( $pseudocache[ $type ][ $index ] ) ) {
+			return $pseudocache[ $type ][ $index ];
 		}
 
 		// Init array to build.
@@ -628,8 +628,8 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 		}
 
 		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$type][$index] ) ) {
-			$pseudocache[$type][$index] = $custom_fields;
+		if ( ! isset( $pseudocache[ $type ][ $index ] ) ) {
+			$pseudocache[ $type ][ $index ] = $custom_fields;
 		}
 
 		// --<

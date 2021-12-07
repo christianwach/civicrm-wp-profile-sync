@@ -586,8 +586,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 
 		// Only do this once.
 		static $pseudocache;
-		if ( isset( $pseudocache[$option_group_id] ) ) {
-			return $pseudocache[$option_group_id];
+		if ( isset( $pseudocache[ $option_group_id ] ) ) {
+			return $pseudocache[ $option_group_id ];
 		}
 
 		// Init return.
@@ -626,8 +626,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		$values = $result['values'];
 
 		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$option_group_id] ) ) {
-			$pseudocache[$option_group_id] = $values;
+		if ( ! isset( $pseudocache[ $option_group_id ] ) ) {
+			$pseudocache[ $option_group_id ] = $values;
 		}
 
 		// --<

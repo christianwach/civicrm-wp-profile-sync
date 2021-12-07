@@ -466,8 +466,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		if ( ! empty( $result['values'] ) ) {
 			foreach ( $result['values'] as &$item ) {
 				foreach ( $this->copy_params as $copy ) {
-					if ( isset( $item['participant_' . $copy] ) ) {
-						$item[$copy] = $item['participant_' . $copy];
+					if ( isset( $item[ 'participant_' . $copy ] ) ) {
+						$item[ $copy ] = $item[ 'participant_' . $copy ];
 					}
 				}
 			}
@@ -532,8 +532,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		if ( ! empty( $result['values'] ) ) {
 			foreach ( $result['values'] as &$item ) {
 				foreach ( $this->copy_params as $copy ) {
-					if ( isset( $item['participant_' . $copy] ) ) {
-						$item[$copy] = $item['participant_' . $copy];
+					if ( isset( $item[ 'participant_' . $copy ] ) ) {
+						$item[ $copy ] = $item[ 'participant_' . $copy ];
 					}
 				}
 			}
@@ -769,8 +769,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 		// Copy various "participant_*" params to "*" params. Grr.
 		foreach ( $this->copy_params as $copy ) {
-			if ( isset( $participant_data['participant_' . $copy] ) ) {
-				$participant_data[$copy] = $participant_data['participant_' . $copy];
+			if ( isset( $participant_data[ 'participant_' . $copy ] ) ) {
+				$participant_data[ $copy ] = $participant_data[ 'participant_' . $copy ];
 			}
 		}
 
@@ -1023,7 +1023,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 				if ( in_array( $code, $cannot_be_empty ) && empty( $value ) ) {
 					// Skip.
 				} else {
-					$participant_data[$code] = $value;
+					$participant_data[ $code ] = $value;
 				}
 
 			}
@@ -1163,7 +1163,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		// Build Participant Field choices array for dropdown.
 		$participant_fields_label = esc_attr__( 'Participant Fields', 'civicrm-wp-profile-sync' );
 		foreach ( $participant_fields as $participant_field ) {
-			$choices[$participant_fields_label][$this->participant_field_prefix . $participant_field['name']] = $participant_field['title'];
+			$choices[ $participant_fields_label ][ $this->participant_field_prefix . $participant_field['name'] ] = $participant_field['title'];
 		}
 
 		// Build Custom Field choices array for dropdown.
@@ -1171,7 +1171,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			$custom_fields_label = esc_attr( $custom_group_name );
 			foreach ( $custom_group as $custom_field ) {
-				$choices[$custom_fields_label][$custom_field_prefix . $custom_field['id']] = $custom_field['label'];
+				$choices[ $custom_fields_label ][ $custom_field_prefix . $custom_field['id'] ] = $custom_field['label'];
 			}
 		}
 
@@ -1226,9 +1226,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		$acf_field_key = $this->civicrm->acf_field_key_get();
 
 		// Set the mapped Participant Field name if present.
-		if ( isset( $field[$acf_field_key] ) ) {
-			if ( false !== strpos( $field[$acf_field_key], $this->participant_field_prefix ) ) {
-				$participant_field_name = (string) str_replace( $this->participant_field_prefix, '', $field[$acf_field_key] );
+		if ( isset( $field[ $acf_field_key ] ) ) {
+			if ( false !== strpos( $field[ $acf_field_key ], $this->participant_field_prefix ) ) {
+				$participant_field_name = (string) str_replace( $this->participant_field_prefix, '', $field[ $acf_field_key ] );
 			}
 		}
 
@@ -1299,7 +1299,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		if ( ! empty( $participant_fields ) ) {
 			$participant_fields_label = esc_attr__( 'Participant Fields', 'civicrm-wp-profile-sync' );
 			foreach ( $participant_fields as $participant_field ) {
-				$choices[$participant_fields_label][$this->participant_field_prefix . $participant_field['name']] = $participant_field['title'];
+				$choices[ $participant_fields_label ][ $this->participant_field_prefix . $participant_field['name'] ] = $participant_field['title'];
 			}
 		}
 
@@ -1309,7 +1309,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 			foreach ( $filtered_fields as $custom_group_name => $custom_group ) {
 				$custom_fields_label = esc_attr( $custom_group_name );
 				foreach ( $custom_group as $custom_field ) {
-					$choices[$custom_fields_label][$custom_field_prefix . $custom_field['id']] = $custom_field['label'];
+					$choices[ $custom_fields_label ][ $custom_field_prefix . $custom_field['id'] ] = $custom_field['label'];
 				}
 			}
 		}
@@ -1424,7 +1424,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		if ( ! empty( $fields_for_entity ) ) {
 			$participant_fields_label = esc_attr__( 'Participant Fields', 'civicrm-wp-profile-sync' );
 			foreach ( $fields_for_entity as $participant_field ) {
-				$choices[$participant_fields_label][$this->participant_field_prefix . $participant_field['name']] = $participant_field['title'];
+				$choices[ $participant_fields_label ][ $this->participant_field_prefix . $participant_field['name'] ] = $participant_field['title'];
 			}
 		}
 
@@ -1434,7 +1434,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 			foreach ( $filtered_fields as $custom_group_name => $custom_group ) {
 				$custom_fields_label = esc_attr( $custom_group_name );
 				foreach ( $custom_group as $custom_field ) {
-					$choices[$custom_fields_label][$custom_field_prefix . $custom_field['id']] = $custom_field['label'];
+					$choices[ $custom_fields_label ][ $custom_field_prefix . $custom_field['id'] ] = $custom_field['label'];
 				}
 			}
 		}
@@ -1477,9 +1477,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 		// Add Option Group and add entries for each Participant Role.
 		$participant_roles_title = esc_attr( __( 'Participant Roles', 'civicrm-wp-profile-sync' ) );
-		$entities[$participant_roles_title] = [];
+		$entities[ $participant_roles_title ] = [];
 		foreach ( $participant_roles as $participant_role ) {
-			$entities[$participant_roles_title][$this->identifier . '-' . $participant_role['value']] = $participant_role['label'];
+			$entities[ $participant_roles_title ][ $this->identifier . '-' . $participant_role['value'] ] = $participant_role['label'];
 		}
 
 		// --<
@@ -1499,7 +1499,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 	 *
 	 * @param bool $mapped The existing mapping flag.
 	 * @param array $field_group The array of ACF Field Group data.
-	 * @param bool $mapped True if the Field Group is mapped, or pass through if not mapped.
+	 * @return bool $mapped True if the Field Group is mapped, or pass through if not mapped.
 	 */
 	public function query_field_group_mapped( $mapped, $field_group ) {
 
@@ -1528,7 +1528,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 	 *
 	 * @param array $custom_fields The existing Custom Fields.
 	 * @param array $field_group The array of ACF Field Group data.
-	 * @param array $custom_fields The populated array of CiviCRM Custom Fields params.
+	 * @return array $custom_fields The populated array of CiviCRM Custom Fields params.
 	 */
 	public function query_custom_fields( $custom_fields, $field_group ) {
 
@@ -1823,7 +1823,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 				return;
 			}
 		}
-
 
 		// Bail if there's no Post.
 		if ( empty( $post ) ) {

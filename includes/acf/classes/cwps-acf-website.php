@@ -261,12 +261,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		$website_key = $this->acf_field_key_get();
 
 		// Skip if we don't have a synced Website.
-		if ( empty( $settings[$website_key] ) ) {
+		if ( empty( $settings[ $website_key ] ) ) {
 			return true;
 		}
 
 		// Skip if it maps to a Custom Field.
-		if ( false !== strpos( $settings[$website_key], $this->civicrm->custom_field_prefix() ) ) {
+		if ( false !== strpos( $settings[ $website_key ], $this->civicrm->custom_field_prefix() ) ) {
 			return true;
 		}
 
@@ -274,7 +274,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		$value = $this->acf_loader->acf->field->value_get_for_civicrm( $value, $settings['type'], $settings );
 
 		// The ID of the Website Type is the setting.
-		$website_type_id = $settings[$website_key];
+		$website_type_id = $settings[ $website_key ];
 
 		// Update the Website.
 		$this->website_update( $website_type_id, $contact_id, $value );
@@ -293,7 +293,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	 * @since 0.4
 	 *
 	 * @param integer $website_id The numeric ID of the Website.
-	 * @param array $website The array of Website data, or empty if none.
+	 * @return array $website The array of Website data, or empty if none.
 	 */
 	public function website_get_by_id( $website_id ) {
 
@@ -324,7 +324,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 			return $website;
 		}
 
- 		// The result set should contain only one item.
+		// The result set should contain only one item.
 		$website = (object) array_pop( $result['values'] );
 
 		// --<
@@ -341,7 +341,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	 *
 	 * @param integer $contact_id The numeric ID of the CiviCRM Contact.
 	 * @param integer $website_type_id The numeric ID of the Website Type.
-	 * @param object $website The array of Website data, or empty if none.
+	 * @return object $website The array of Website data, or empty if none.
 	 */
 	public function website_get_by_type( $contact_id, $website_type_id ) {
 
@@ -373,7 +373,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 			return $website;
 		}
 
- 		// The result set should contain only one item.
+		// The result set should contain only one item.
 		$website = (object) array_pop( $result['values'] );
 
 		// --<
@@ -562,7 +562,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 			$existing_data = array_pop( $existing_website['values'] );
 
 			// Bail if it hasn't changed.
-			if ( !empty( $existing_data['url'] ) && $existing_data['url'] == $value ) {
+			if ( ! empty( $existing_data['url'] ) && $existing_data['url'] == $value ) {
 				return $existing_data;
 			}
 
@@ -764,8 +764,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 
 		// Only do this once per Field Type and filter.
 		static $pseudocache;
-		if ( isset( $pseudocache[$filter] ) ) {
-			return $pseudocache[$filter];
+		if ( isset( $pseudocache[ $filter ] ) ) {
+			return $pseudocache[ $filter ];
 		}
 
 		// Init return.
@@ -811,8 +811,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		}
 
 		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$filter] ) ) {
-			$pseudocache[$filter] = $fields;
+		if ( ! isset( $pseudocache[ $filter ] ) ) {
+			$pseudocache[ $filter ] = $fields;
 		}
 
 		// --<
@@ -845,9 +845,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		$website_key = $this->acf_field_key_get();
 
 		// Return it if the Field has a reference to a Website Custom Field.
-		if ( ! empty( $field[$website_key] ) ) {
-			if ( false !== strpos( $field[$website_key], $this->civicrm->custom_field_prefix() ) ) {
-				$custom_field_id = absint( str_replace( $this->civicrm->custom_field_prefix(), '', $field[$website_key] ) );
+		if ( ! empty( $field[ $website_key ] ) ) {
+			if ( false !== strpos( $field[ $website_key ], $this->civicrm->custom_field_prefix() ) ) {
+				$custom_field_id = absint( str_replace( $this->civicrm->custom_field_prefix(), '', $field[ $website_key ] ) );
 			}
 		}
 
@@ -930,7 +930,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		if ( ! empty( $website_types ) ) {
 			$website_types_label = esc_attr__( 'Contact Website Type', 'civicrm-wp-profile-sync' );
 			foreach ( $website_types as $website_type_id => $website_type_name ) {
-				$choices[$website_types_label][$website_type_id] = esc_attr( $website_type_name );
+				$choices[ $website_types_label ][ $website_type_id ] = esc_attr( $website_type_name );
 			}
 		}
 
@@ -938,7 +938,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			$custom_fields_label = esc_attr( $custom_group_name );
 			foreach ( $custom_group as $custom_field ) {
-				$choices[$custom_fields_label][$this->civicrm->custom_field_prefix() . $custom_field['id']] = $custom_field['label'];
+				$choices[ $custom_fields_label ][ $this->civicrm->custom_field_prefix() . $custom_field['id'] ] = $custom_field['label'];
 			}
 		}
 
@@ -999,8 +999,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		$website_key = $this->acf_field_key_get();
 
 		// Add if it has a reference to a Website Field.
-		if ( ! empty( $field[$website_key] ) ) {
-			$acf_fields['website'][$field['name']] = $field[$website_key];
+		if ( ! empty( $field[ $website_key ] ) ) {
+			$acf_fields['website'][ $field['name'] ] = $field[ $website_key ];
 		}
 
 		// --<
@@ -1046,8 +1046,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 			// Maybe exclude the synced "WordPress User Profile" Website Type.
 			if ( ! empty( $is_user_field_group ) ) {
 				$website_type_id = (int) $this->plugin->admin->setting_get( 'user_profile_website_type', 0 );
-				if ( $website_type_id > 0 && isset( $website_fields[$website_type_id] ) ) {
-					unset( $website_fields[$website_type_id] );
+				if ( $website_type_id > 0 && isset( $website_fields[ $website_type_id ] ) ) {
+					unset( $website_fields[ $website_type_id ] );
 				}
 			}
 
@@ -1118,7 +1118,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		$public_fields = $this->civicrm_fields_get( 'public' );
 		$fields_for_entity = [];
 		foreach ( $public_fields as $key => $value ) {
-			if ( $field['type'] == $this->website_fields[$value['name']] ) {
+			if ( $field['type'] == $this->website_fields[ $value['name'] ] ) {
 				$fields_for_entity[] = $value;
 			}
 		}
@@ -1131,7 +1131,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		// Build Website Field choices array for dropdown.
 		$website_fields_label = esc_attr__( 'Website Fields', 'civicrm-wp-profile-sync' );
 		foreach ( $fields_for_entity as $website_field ) {
-			$choices[$website_fields_label][$this->website_field_prefix . $website_field['name']] = $website_field['title'];
+			$choices[ $website_fields_label ][ $this->website_field_prefix . $website_field['name'] ] = $website_field['title'];
 		}
 
 		/**

@@ -694,7 +694,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 				if ( in_array( $code, $cannot_be_empty ) && empty( $value ) ) {
 					// Skip.
 				} else {
-					$participant_data[$code] = $value;
+					$participant_data[ $code ] = $value;
 				}
 
 			}
@@ -1030,7 +1030,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 *
 	 * @param bool $mapped The existing mapping flag.
 	 * @param array $field_group The array of ACF Field Group data.
-	 * @param bool $mapped True if the Field Group is mapped, or pass through if not mapped.
+	 * @return bool $mapped True if the Field Group is mapped, or pass through if not mapped.
 	 */
 	public function query_field_group_mapped( $mapped, $field_group ) {
 
@@ -1059,7 +1059,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 *
 	 * @param array $custom_fields The existing Custom Fields.
 	 * @param array $field_group The array of ACF Field Group data.
-	 * @param array $custom_fields The populated array of CiviCRM Custom Fields params.
+	 * @return array $custom_fields The populated array of CiviCRM Custom Fields params.
 	 */
 	public function query_custom_fields( $custom_fields, $field_group ) {
 
@@ -1187,7 +1187,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		// Maybe add this Post Type.
 		$post_types = $this->is_participant_field_group( $field_group );
 		if ( $post_types !== false ) {
-			if ( empty ( $is_participant_field_group ) ) {
+			if ( empty( $is_participant_field_group ) ) {
 				$is_participant_field_group = $post_types;
 			} else {
 				$is_participant_field_group = array_merge( $is_participant_field_group, $post_types );
@@ -1313,6 +1313,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 		// Add link to actions.
 		$actions['civicrm'] = sprintf(
+			/* translators: 1: The Link URL, 2: The Link text */
 			'<a href="%1$s">%2$s</a>',
 			esc_url( $view_url ),
 			esc_html__( 'CiviCRM', 'civicrm-wp-profile-sync' )
@@ -1351,7 +1352,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 				return;
 			}
 		}
-
 
 		// Bail if there's no Post.
 		if ( empty( $post ) ) {
@@ -1480,7 +1480,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 			// Rewrite.
 			'rewrite' => [
 				'slug' => 'participants',
-				'with_front' => false
+				'with_front' => false,
 			],
 
 			// Supports.
@@ -1531,13 +1531,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		global $post, $post_ID;
 
 		// Define custom messages for our Custom Post Type.
-		$messages[$this->post_type_name] = [
+		$messages[ $this->post_type_name ] = [
 
 			// Unused - messages start at index 1.
 			0 => '',
 
 			// Item updated.
 			1 => sprintf(
+				/* translators: %s: The Link URL */
 				__( 'Participant updated. <a href="%s">View Participant</a>', 'civicrm-wp-profile-sync' ),
 				esc_url( get_permalink( $post_ID ) )
 			),
@@ -1552,7 +1553,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 					// Revision text.
 					sprintf(
-						// Translators: %s: date and time of the revision.
+						/* translators: %s: Date and time of the revision */
 						__( 'Participant restored to revision from %s', 'civicrm-wp-profile-sync' ),
 						wp_post_revision_title( (int) $_GET['revision'], false )
 					) :
@@ -1562,6 +1563,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 			// Item published.
 			6 => sprintf(
+				/* translators: %s: The Link URL */
 				__( 'Participant published. <a href="%s">View Participant</a>', 'civicrm-wp-profile-sync' ),
 				esc_url( get_permalink( $post_ID ) )
 			),
@@ -1571,24 +1573,27 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 			// Item submitted.
 			8 => sprintf(
+				/* translators: %s: The Link URL */
 				__( 'Participant submitted. <a target="_blank" href="%s">Preview Participant</a>', 'civicrm-wp-profile-sync' ),
 				esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) )
 			),
 
 			// Item scheduled.
 			9 => sprintf(
+				/* translators: 1: The Date string, 2: The Link URL */
 				__( 'Participant scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Participant</a>', 'civicrm-wp-profile-sync' ),
-				// Translators: Publish box date format, see http://php.net/date
-				date_i18n( __( 'M j, Y @ G:i' ),
+				/* translators: Publish box date format, see http://php.net/date */
+				date_i18n( __( 'M j, Y @ G:i', 'civicrm-wp-profile-sync' ),
 				strtotime( $post->post_date ) ),
 				esc_url( get_permalink( $post_ID ) )
 			),
 
 			// Draft updated.
 			10 => sprintf(
+				/* translators: %s: The Link URL */
 				__( 'Participant draft updated. <a target="_blank" href="%s">Preview Participant</a>', 'civicrm-wp-profile-sync' ),
 				esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) )
-			)
+			),
 
 		];
 
@@ -1675,7 +1680,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 				// Rewrite rules.
 				'rewrite' => [
-					'slug' => 'participant-roles'
+					'slug' => 'participant-roles',
 				],
 
 				// Show column in wp-admin.
@@ -1719,7 +1724,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 				// Rewrite rules.
 				'rewrite' => [
-					'slug' => 'participant-tags'
+					'slug' => 'participant-tags',
 				],
 
 				// Show column in wp-admin.
@@ -1805,11 +1810,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 		// Show a dropdown.
 		wp_dropdown_categories( [
+			/* translators: %s: The Taxonomy name */
 			'show_option_all' => sprintf( __( 'Show All %s', 'civicrm-wp-profile-sync' ), $taxonomy->label ),
 			'taxonomy' => $this->taxonomy_name,
 			'name' => $this->taxonomy_name,
 			'orderby' => 'name',
-			'selected' => isset( $_GET[$this->taxonomy_name] ) ? $_GET[$this->taxonomy_name] : '',
+			'selected' => isset( $_GET[ $this->taxonomy_name ] ) ? $_GET[ $this->taxonomy_name ] : '',
 			'show_count' => true,
 			'hide_empty' => true,
 			'value_field' => 'slug',
@@ -2094,7 +2100,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	public function admin_sync_router_add_cpt( $post_types ) {
 
 		// Add this Post Type.
-		$post_types[$this->post_type_name] = get_post_type_object( $this->post_type_name );
+		$post_types[ $this->post_type_name ] = get_post_type_object( $this->post_type_name );
 
 		// --<
 		return $post_types;
@@ -2141,7 +2147,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		$post_type = get_post_type_object( $this->post_type_name );
 
 		// Add this Post Type.
-		$post_types[$this->post_type_name] = $post_type->label;
+		$post_types[ $this->post_type_name ] = $post_type->label;
 
 		// --<
 		return $post_types;

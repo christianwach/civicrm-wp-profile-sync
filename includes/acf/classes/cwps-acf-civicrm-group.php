@@ -213,7 +213,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $groups The array of mapped CiviCRM Groups.
+	 * @return array $groups The array of mapped CiviCRM Groups.
 	 */
 	public function groups_get_mapped() {
 
@@ -280,7 +280,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $groups The array of CiviCRM Groups.
+	 * @return array $groups The array of CiviCRM Groups.
 	 */
 	public function groups_get_all() {
 

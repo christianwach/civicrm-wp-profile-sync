@@ -1062,7 +1062,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		// Maybe save extra data.
 		foreach ( $extra_data as $property ) {
 			if ( isset( $objectRef->$property ) ) {
-				$contact[$property] = $objectRef->$property;
+				$contact[ $property ] = $objectRef->$property;
 			}
 		}
 

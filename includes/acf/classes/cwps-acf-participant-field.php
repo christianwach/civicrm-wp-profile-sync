@@ -311,11 +311,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 		}
 
 		// Convert CiviCRM value to ACF value by Participant Field.
-		switch( $type ) {
+		switch ( $type ) {
 
 			// Used by "Status ID".
-			case 'select' :
-			case 'checkbox' :
+			case 'select':
+			case 'checkbox':
 
 				// Convert if the value has the special CiviCRM array-like format.
 				if ( false !== strpos( $value, CRM_Core_DAO::VALUE_SEPARATOR ) ) {
@@ -325,8 +325,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 				break;
 
 			// Used by "Register Date".
-			case 'date_picker' :
-			case 'date_time_picker' :
+			case 'date_picker':
+			case 'date_time_picker':
 
 				// Get Field setting.
 				$acf_setting = get_field_object( $selector, $post_id );
@@ -364,7 +364,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 				break;
 
 			// Used by "Contact Existing/New".
-			case 'civicrm_contact_existing_new' :
+			case 'civicrm_contact_existing_new':
 
 				// Convert the value to the Field's array format.
 				$value = $this->acf_loader->acf->field_type->contact_group->prepare_input( $value );
@@ -372,7 +372,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 				break;
 
 			// Used by "Event Group".
-			case 'civicrm_event_group' :
+			case 'civicrm_event_group':
 
 				// Convert the value to the Field's array format.
 				$value = $this->acf_loader->acf->field_type->event_group->prepare_input( $value );
@@ -415,7 +415,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 			if ( ! empty( $statuses ) ) {
 				$options = [];
 				foreach ( $statuses as $status ) {
-					$options[$status['id']] = $status['label'];
+					$options[ $status['id'] ] = $status['label'];
 				}
 			}
 		}
@@ -655,8 +655,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 
 		// Only do this once per Field Type and filter.
 		static $pseudocache;
-		if ( isset( $pseudocache[$filter][$field_type] ) ) {
-			return $pseudocache[$filter][$field_type];
+		if ( isset( $pseudocache[ $filter ][ $field_type ] ) ) {
+			return $pseudocache[ $filter ][ $field_type ];
 		}
 
 		// Init return.
@@ -700,12 +700,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 
 				// Skip all but those mapped to the type of ACF Field.
 				foreach ( $public_fields as $key => $value ) {
-					if ( is_array( $this->participant_fields[$value['name']] ) ) {
-						if ( in_array( $field_type, $this->participant_fields[$value['name']] ) ) {
+					if ( is_array( $this->participant_fields[ $value['name'] ] ) ) {
+						if ( in_array( $field_type, $this->participant_fields[ $value['name'] ] ) ) {
 							$fields[] = $value;
 						}
 					} else {
-						if ( $field_type == $this->participant_fields[$value['name']] ) {
+						if ( $field_type == $this->participant_fields[ $value['name'] ] ) {
 							$fields[] = $value;
 						}
 					}
@@ -716,8 +716,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 		}
 
 		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$filter][$field_type] ) ) {
-			$pseudocache[$filter][$field_type] = $fields;
+		if ( ! isset( $pseudocache[ $filter ][ $field_type ] ) ) {
+			$pseudocache[ $filter ][ $field_type ] = $fields;
 		}
 
 		// --<
@@ -739,8 +739,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 
 		// Only do this once per filter.
 		static $pseudocache;
-		if ( isset( $pseudocache[$filter] ) ) {
-			return $pseudocache[$filter];
+		if ( isset( $pseudocache[ $filter ] ) ) {
+			return $pseudocache[ $filter ];
 		}
 
 		// Init return.
@@ -786,8 +786,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 		}
 
 		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$filter] ) ) {
-			$pseudocache[$filter] = $fields;
+		if ( ! isset( $pseudocache[ $filter ] ) ) {
+			$pseudocache[ $filter ] = $fields;
 		}
 
 		// --<
@@ -837,7 +837,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 		// Skip all but those mapped to the type of ACF Field.
 		foreach ( $this->participant_fields as $key => $value ) {
 			if ( $type == $value ) {
-				$participant_fields[$key] = $value;
+				$participant_fields[ $key ] = $value;
 			}
 		}
 
@@ -863,7 +863,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 
 		// If the key exists, return the value - which is the ACF Type.
 		if ( array_key_exists( $name, $this->participant_fields ) ) {
-			$type = $this->participant_fields[$name];
+			$type = $this->participant_fields[ $name ];
 		}
 
 		// --<
@@ -895,7 +895,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
+		if ( ! array_key_exists( $key, $field ) || empty( $field[ $key ] ) ) {
 			return $field;
 		}
 
@@ -933,7 +933,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
+		if ( ! array_key_exists( $key, $field ) || empty( $field[ $key ] ) ) {
 			return $field;
 		}
 

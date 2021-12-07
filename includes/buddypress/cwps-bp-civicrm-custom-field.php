@@ -176,8 +176,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 
 		return;
 
-
-
 		// Intercept Post synced from Contact events.
 		add_action( 'cwps/bp/post/contact_sync_to_post', [ $this, 'contact_sync_to_post' ], 10 );
 
@@ -205,7 +203,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	public function query_setting_choices( $choices, $field_type, $entity_type, $entity_type_data ) {
 
 		// Bail if there's something amiss.
-		if ( empty( $entity_type ) ||  empty( $field_type ) ) {
+		if ( empty( $entity_type ) || empty( $field_type ) ) {
 			return $choices;
 		}
 
@@ -253,7 +251,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		if ( ! empty( $filtered_fields ) ) {
 			foreach ( $filtered_fields as $custom_field_label => $custom_fields ) {
 				foreach ( $custom_fields as $custom_field ) {
-					$choices[$custom_field_label][$this->custom_field_prefix . $custom_field['id']] = $custom_field['label'];
+					$choices[ $custom_field_label ][ $this->custom_field_prefix . $custom_field['id'] ] = $custom_field['label'];
 				}
 			}
 		}
@@ -475,7 +473,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		// Build a reference array for Custom Fields.
 		$custom_fields = [];
 		foreach ( $args['custom_fields'] as $key => $field ) {
-			$custom_fields[$key] = $field['custom_field_id'];
+			$custom_fields[ $key ] = $field['custom_field_id'];
 		}
 
 		// Let's look at each BuddyPress Field in turn.
@@ -488,7 +486,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 
 			// Get the corresponding Custom Field.
 			$args_key = array_search( $bp_field['custom_field_id'], $custom_fields );
-			$field = $args['custom_fields'][$args_key];
+			$field = $args['custom_fields'][ $args_key ];
 
 			/*
 			$e = new \Exception();
@@ -553,12 +551,12 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		}
 
 		// Convert CiviCRM value to BuddyPress value by Field Type.
-		switch( $field['type'] ) {
+		switch ( $field['type'] ) {
 
 			// Used by "CheckBox" and others.
-			case 'String' :
-			case 'Country' :
-			case 'StateProvince' :
+			case 'String':
+			case 'Country':
+			case 'StateProvince':
 
 				// Convert if the value has the special CiviCRM array-like format.
 				if ( is_string( $value ) ) {
@@ -570,7 +568,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 				break;
 
 			// Contact Reference Fields may return the Contact's "sort_name".
-			case 'ContactReference' :
+			case 'ContactReference':
 
 				// Test for a numeric value.
 				if ( ! is_numeric( $value ) ) {
@@ -602,7 +600,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 				break;
 
 			// Used by "Date Select" and  "Date Time Select".
-			case 'Timestamp' :
+			case 'Timestamp':
 
 				// Custom Fields use a YmdHis format, so try that.
 				$datetime = DateTime::createFromFormat( 'YmdHis', $value );
@@ -615,7 +613,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 				break;
 
 			// Used by "Note" and maybe others.
-			case 'Memo' :
+			case 'Memo':
 
 				// At minimum needs an unautop.
 				$value = $this->unautop( $value );
@@ -841,7 +839,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 			foreach ( $custom_group as $custom_field ) {
 				if ( ! empty( $custom_field['data_type'] ) && $custom_field['data_type'] == 'String' ) {
 					if ( ! empty( $custom_field['html_type'] ) && $custom_field['html_type'] == 'CheckBox' ) {
-						$filtered_fields[$custom_group_name][] = $custom_field;
+						$filtered_fields[ $custom_group_name ][] = $custom_field;
 					}
 				}
 			}
@@ -976,7 +974,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 			foreach ( $custom_group as $custom_field ) {
 				if ( ! empty( $custom_field['data_type'] ) && in_array( $custom_field['data_type'], $this->data_types ) ) {
 					if ( ! empty( $custom_field['html_type'] ) && in_array( $custom_field['html_type'], $select_types ) ) {
-						$filtered_fields[$custom_group_name][] = $custom_field;
+						$filtered_fields[ $custom_group_name ][] = $custom_field;
 					}
 				}
 			}
@@ -1046,7 +1044,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 			foreach ( $custom_group as $custom_field ) {
 				if ( ! empty( $custom_field['data_type'] ) && in_array( $custom_field['data_type'], $this->data_types ) ) {
 					if ( ! empty( $custom_field['html_type'] ) && in_array( $custom_field['html_type'], $select_types ) ) {
-						$filtered_fields[$custom_group_name][] = $custom_field;
+						$filtered_fields[ $custom_group_name ][] = $custom_field;
 					}
 				}
 			}
@@ -1156,7 +1154,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 			foreach ( $custom_group as $custom_field ) {
 				if ( ! empty( $custom_field['data_type'] ) && in_array( $custom_field['data_type'], $this->data_types ) ) {
 					if ( ! empty( $custom_field['html_type'] ) && $custom_field['html_type'] == 'Radio' ) {
-						$filtered_fields[$custom_group_name][] = $custom_field;
+						$filtered_fields[ $custom_group_name ][] = $custom_field;
 					}
 				}
 			}
@@ -1191,8 +1189,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 			foreach ( $custom_group as $custom_field ) {
 				if ( ! empty( $custom_field['data_type'] ) && $custom_field['data_type'] == 'Date' ) {
 					if ( ! empty( $custom_field['html_type'] ) && $custom_field['html_type'] == 'Select Date' ) {
-						if ( ! isset( $custom_field['time_format'] ) OR $custom_field['time_format'] == '0' ) {
-							$filtered_fields[$custom_group_name][] = $custom_field;
+						if ( ! isset( $custom_field['time_format'] ) or $custom_field['time_format'] == '0' ) {
+							$filtered_fields[ $custom_group_name ][] = $custom_field;
 						}
 					}
 				}
@@ -1259,7 +1257,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 			foreach ( $custom_group as $custom_field ) {
 				if ( ! empty( $custom_field['data_type'] ) && in_array( $custom_field['data_type'], $this->data_types ) ) {
 					if ( ! empty( $custom_field['html_type'] ) && $custom_field['html_type'] == 'Text' ) {
-						$filtered_fields[$custom_group_name][] = $custom_field;
+						$filtered_fields[ $custom_group_name ][] = $custom_field;
 					}
 				}
 			}
@@ -1296,7 +1294,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 			foreach ( $custom_group as $custom_field ) {
 				if ( ! empty( $custom_field['data_type'] ) && $custom_field['data_type'] == 'Memo' ) {
 					if ( ! empty( $custom_field['html_type'] ) && $custom_field['html_type'] == 'RichTextEditor' ) {
-						$filtered_fields[$custom_group_name][] = $custom_field;
+						$filtered_fields[ $custom_group_name ][] = $custom_field;
 					}
 				}
 			}
@@ -1331,7 +1329,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 			foreach ( $custom_group as $custom_field ) {
 				if ( ! empty( $custom_field['data_type'] ) && $custom_field['data_type'] == 'Link' ) {
 					if ( ! empty( $custom_field['html_type'] ) && $custom_field['html_type'] == 'Link' ) {
-						$filtered_fields[$custom_group_name][] = $custom_field;
+						$filtered_fields[ $custom_group_name ][] = $custom_field;
 					}
 				}
 			}

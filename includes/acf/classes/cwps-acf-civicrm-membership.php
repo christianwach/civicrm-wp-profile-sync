@@ -94,7 +94,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Membership {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $membership_types The array of free CiviCRM Membership Types.
+	 * @return array $membership_types The array of free CiviCRM Membership Types.
 	 */
 	public function types_get_free() {
 
@@ -368,7 +368,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Membership {
 			return $membership;
 		}
 
- 		// The result set should contain only one item.
+		// The result set should contain only one item.
 		$membership = array_pop( $result['values'] );
 
 		// --<
@@ -394,8 +394,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Membership {
 
 		// Only do this once per Field Type and filter.
 		static $pseudocache;
-		if ( isset( $pseudocache[$filter] ) ) {
-			return $pseudocache[$filter];
+		if ( isset( $pseudocache[ $filter ] ) ) {
+			return $pseudocache[ $filter ];
 		}
 
 		// Init return.
@@ -442,8 +442,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Membership {
 		}
 
 		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$filter] ) ) {
-			$pseudocache[$filter] = $fields;
+		if ( ! isset( $pseudocache[ $filter ] ) ) {
+			$pseudocache[ $filter ] = $fields;
 		}
 
 		// --<

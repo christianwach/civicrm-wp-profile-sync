@@ -261,7 +261,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 	 * @since 0.5
 	 *
 	 * @param array $field The existing array of Field data.
-	 * @param array $field The modified array of Field data.
+	 * @return array $field The modified array of Field data.
 	 */
 	public function prepare_choices( $field ) {
 
@@ -999,7 +999,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		}
 
 		// Add Custom Field data if present.
-		if ( ! empty ( $custom_data ) ) {
+		if ( ! empty( $custom_data ) ) {
 			$activity_data += $custom_data;
 		}
 
@@ -1067,7 +1067,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		// Build an associative array of unique Email Addresses.
 		$mail_to_contacts = [];
 		foreach ( $activity['assignee_contact_id'] as $contact_id ) {
-			$mail_to_contacts[ $assignee_contacts[$contact_id]['email'] ] = $assignee_contacts[$contact_id];
+			$mail_to_contacts[ $assignee_contacts[ $contact_id ]['email'] ] = $assignee_contacts[ $contact_id ];
 		}
 
 		// Fire off the email.

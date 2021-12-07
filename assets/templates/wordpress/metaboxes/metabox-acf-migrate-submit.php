@@ -3,7 +3,7 @@
 	<div id="minor-publishing">
 		<div id="misc-publishing-actions">
 			<div class="misc-pub-section">
-				<span><?php _e( 'When you are ready to deactivate the CiviCRM ACF Integration plugin, click the "Migrate" button below.', 'civicrm-wp-profile-sync' ); ?></span>
+				<span><?php esc_html_e( 'When you are ready to deactivate the CiviCRM ACF Integration plugin, click the "Migrate" button below.', 'civicrm-wp-profile-sync' ); ?></span>
 			</div>
 		</div>
 		<div class="clear"></div>

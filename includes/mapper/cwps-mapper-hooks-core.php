@@ -978,7 +978,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		// Maybe save extra data.
 		foreach ( $extra_data as $property ) {
 			if ( isset( $objectRef->$property ) ) {
-				$contact[$property] = $objectRef->$property;
+				$contact[ $property ] = $objectRef->$property;
 			}
 		}
 

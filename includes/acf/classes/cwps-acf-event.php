@@ -354,7 +354,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 			],
 		];
 
-		// Get them (descriptions will be present if not null),
+		// Get them - descriptions will be present if not null.
 		$result = civicrm_api( 'OptionValue', 'get', $params );
 
 		// Bail if we get an error.
@@ -404,7 +404,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		// Build array.
 		$options = [ '' => __( 'None', 'civicrm-wp-profile-sync' ) ];
 		foreach ( $event_types as $event_type ) {
-			$options[$event_type['value']] = $event_type['label'];
+			$options[ $event_type['value'] ] = $event_type['label'];
 		}
 
 		// --<

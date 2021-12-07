@@ -136,7 +136,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_ACF {
 		// Register ACF hooks.
 		$this->hooks_acf_add();
 
-
 	}
 
 

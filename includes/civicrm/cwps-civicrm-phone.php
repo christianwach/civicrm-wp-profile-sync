@@ -98,7 +98,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 	 * @since 0.5 Moved to this class.
 	 *
 	 * @param integer $phone_id The numeric ID of the Phone Record.
-	 * @param array $phone The array of Phone Record data, or empty if none.
+	 * @return array $phone The array of Phone Record data, or empty if none.
 	 */
 	public function phone_get_by_id( $phone_id ) {
 
@@ -129,7 +129,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 			return $phone;
 		}
 
- 		// The result set should contain only one item.
+		// The result set should contain only one item.
 		$phone = array_pop( $result['values'] );
 
 		// --<
@@ -147,7 +147,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 	 * @param integer $contact_id The numeric ID of the CiviCRM Contact.
 	 * @param integer $location_type_id The numeric ID of the Phone Location Type.
 	 * @param integer $phone_type_id The numeric ID of the Phone Type.
-	 * @param array $phones The array of Phone Record data, or empty if none.
+	 * @return array $phones The array of Phone Record data, or empty if none.
 	 */
 	public function phones_get_by_type( $contact_id, $location_type_id, $phone_type_id ) {
 
@@ -180,8 +180,8 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 			return $phones;
 		}
 
- 		// We want the result set.
- 		foreach ( $result['values'] as $value ) {
+		// We want the result set.
+		foreach ( $result['values'] as $value ) {
 			$phones[] = (object) $value;
 		}
 

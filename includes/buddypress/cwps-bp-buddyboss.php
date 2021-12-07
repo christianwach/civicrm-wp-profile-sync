@@ -146,7 +146,7 @@ class CiviCRM_Profile_Sync_BP_BuddyBoss {
 	 * @since 0.5
 	 *
 	 * @param integer $field_id The numeric ID of the BuddyBoss Nickname Field.
-	 * @param integer Set to "0" to prevent Nickname sync.
+	 * @return integer Set to "0" to prevent Nickname sync.
 	 */
 	public function nickname_sync_prevent( $field_id ) {
 		return 0;

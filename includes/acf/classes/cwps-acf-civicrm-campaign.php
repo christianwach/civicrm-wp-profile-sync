@@ -179,7 +179,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Campaign {
 	 * @since 0.5
 	 *
 	 * @param integer $campaign_id The numeric ID of the Campaign.
-	 * @param array $campaign The array of Campaign data, or empty if none.
+	 * @return array $campaign The array of Campaign data, or empty if none.
 	 */
 	public function get_by_id( $campaign_id ) {
 
@@ -210,7 +210,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Campaign {
 			return $campaign;
 		}
 
- 		// The result set should contain only one item.
+		// The result set should contain only one item.
 		$campaign = (object) array_pop( $result['values'] );
 
 		// --<

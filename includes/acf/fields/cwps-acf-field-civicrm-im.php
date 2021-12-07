@@ -612,7 +612,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Instant_Messenger extends acf_field {
 		// Build Location Types choices array for dropdown.
 		$locations = [];
 		foreach ( $location_types as $location_type ) {
-			$locations[$location_type['id']] = esc_attr( $location_type['display_name'] );
+			$locations[ $location_type['id'] ] = esc_attr( $location_type['display_name'] );
 		}
 
 		// Define Location Field.

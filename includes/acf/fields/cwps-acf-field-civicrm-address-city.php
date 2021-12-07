@@ -194,7 +194,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_City_Field extends acf_field {
 
 		// Build Location Types choices array for dropdown.
 		foreach ( $location_types as $location_type ) {
-			$choices[$location_type['id']] = esc_attr( $location_type['display_name'] );
+			$choices[ $location_type['id'] ] = esc_attr( $location_type['display_name'] );
 		}
 
 		// Define Primary setting Field.

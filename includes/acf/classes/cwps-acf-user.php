@@ -1683,7 +1683,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 *
 	 * @param bool $mapped The existing mapping flag.
 	 * @param array $field_group The array of ACF Field Group data.
-	 * @param bool $mapped True if the Field Group is mapped, or pass through if not mapped.
+	 * @return bool $mapped True if the Field Group is mapped, or pass through if not mapped.
 	 */
 	public function query_field_group_mapped( $mapped, $field_group ) {
 
@@ -1797,7 +1797,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		if ( ! empty( $contact_fields ) ) {
 			$contact_fields_label = esc_attr__( 'Contact Fields', 'civicrm-wp-profile-sync' );
 			foreach ( $contact_fields as $contact_field ) {
-				$choices[$contact_fields_label][$this->civicrm->contact_field_prefix() . $contact_field['name']] = $contact_field['title'];
+				$choices[ $contact_fields_label ][ $this->civicrm->contact_field_prefix() . $contact_field['name'] ] = $contact_field['title'];
 			}
 		}
 
@@ -1807,7 +1807,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 			foreach ( $filtered_fields as $custom_group_name => $custom_group ) {
 				$custom_fields_label = esc_attr( $custom_group_name );
 				foreach ( $custom_group as $custom_field ) {
-					$choices[$custom_fields_label][$custom_field_prefix . $custom_field['id']] = $custom_field['label'];
+					$choices[ $custom_fields_label ][ $custom_field_prefix . $custom_field['id'] ] = $custom_field['label'];
 				}
 			}
 		}
@@ -1968,7 +1968,8 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 			// Add to subtype optgroup if possible.
 			if ( ! empty( $relationship_type['contact_sub_type_a'] ) ) {
-				$relationships[$relationship_type['contact_sub_type_a']][$key] = sprintf(
+				$relationships[ $relationship_type['contact_sub_type_a'] ][ $key ] = sprintf(
+					/* translators: %s: The Relationship label */
 					__( '%s (A-B)', 'civicrm-wp-profile-sync' ),
 					$relationship_type['label_a_b']
 				);
@@ -1976,11 +1977,12 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 			// Add to type optgroup if not already added - and no subtype.
 			if ( empty( $relationship_type['contact_sub_type_a'] ) ) {
-				if ( ! isset( $relationships[$relationship_type['contact_type_a']][$key] ) ) {
-					$relationships[$relationship_type['contact_type_a']][$key] = sprintf(
-					__( '%s (A-B)', 'civicrm-wp-profile-sync' ),
-					$relationship_type['label_a_b']
-				);
+				if ( ! isset( $relationships[ $relationship_type['contact_type_a'] ][ $key ] ) ) {
+					$relationships[ $relationship_type['contact_type_a'] ][ $key ] = sprintf(
+						/* translators: %s: The Relationship label */
+						__( '%s (A-B)', 'civicrm-wp-profile-sync' ),
+						$relationship_type['label_a_b']
+					);
 				}
 			}
 
@@ -1989,7 +1991,8 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 			// Add to subtype optgroup if possible.
 			if ( ! empty( $relationship_type['contact_sub_type_b'] ) ) {
-				$relationships[$relationship_type['contact_sub_type_b']][$key] = sprintf(
+				$relationships[ $relationship_type['contact_sub_type_b'] ][ $key ] = sprintf(
+					/* translators: %s: The Relationship label */
 					__( '%s (B-A)', 'civicrm-wp-profile-sync' ),
 					$relationship_type['label_b_a']
 				);
@@ -1997,11 +2000,12 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 			// Add to type optgroup if not already added - and no subtype.
 			if ( empty( $relationship_type['contact_sub_type_b'] ) ) {
-				if ( ! isset( $relationships[$relationship_type['contact_type_b']][$key] ) ) {
-					$relationships[$relationship_type['contact_type_b']][$key] = sprintf(
-					__( '%s (B-A)', 'civicrm-wp-profile-sync' ),
-					$relationship_type['label_b_a']
-				);
+				if ( ! isset( $relationships[ $relationship_type['contact_type_b'] ][ $key ] ) ) {
+					$relationships[ $relationship_type['contact_type_b'] ][ $key ] = sprintf(
+						/* translators: %s: The Relationship label */
+						__( '%s (B-A)', 'civicrm-wp-profile-sync' ),
+						$relationship_type['label_b_a']
+					);
 				}
 			}
 
@@ -2134,12 +2138,11 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 		// Loop through our rule names to see if the query contains one.
 		foreach ( $this->rule_names as $rule_name ) {
-			 if ( ! empty( $params[$rule_name] ) ) {
+			if ( ! empty( $params[ $rule_name ] ) ) {
 				$supported = true;
 				break;
 			}
 		}
-
 
 		// --<
 		return $supported;

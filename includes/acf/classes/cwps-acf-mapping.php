@@ -271,7 +271,9 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	public function form_contact_type_build( $formName, &$form ) {
 
 		// Is this the Contact Type edit form?
-		if ( $formName != 'CRM_Admin_Form_ContactType' ) return;
+		if ( $formName != 'CRM_Admin_Form_ContactType' ) {
+			return;
+		}
 
 		// Get CiviCRM Contact Type.
 		$contact_type = $form->getVar( '_values' );
@@ -311,13 +313,17 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 				 *
 				 * ACF does not support these.
 				 */
-				if ( $post_type->_builtin && ! $post_type->public ) continue;
+				if ( $post_type->_builtin && ! $post_type->public ) {
+					continue;
+				}
 
 				// ACF does not support the built-in WordPress Media Post Type.
-				if ( $post_type->name == 'attachment' ) continue;
+				if ( $post_type->name == 'attachment' ) {
+					continue;
+				}
 
 				// Add anything else.
-				$options[esc_attr( $post_type->name )] = esc_html( $post_type->labels->singular_name );
+				$options[ esc_attr( $post_type->name ) ] = esc_html( $post_type->labels->singular_name );
 
 			}
 		}
@@ -328,7 +334,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 			'cwps_acf_cpt',
 			__( 'Synced Post Type', 'civicrm-wp-profile-sync' ),
 			$options,
-			FALSE,
+			false,
 			[]
 		);
 
@@ -358,8 +364,8 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		}
 
 		// Insert template block into the page.
-		CRM_Core_Region::instance('page-body')->add([
-			'template' => 'cwps-acf-contact-type-cpt.tpl'
+		CRM_Core_Region::instance( 'page-body' )->add([
+			'template' => 'cwps-acf-contact-type-cpt.tpl',
 		]);
 
 	}
@@ -550,13 +556,17 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 				 *
 				 * ACF does not support these.
 				 */
-				if ( $post_type->_builtin && ! $post_type->public ) continue;
+				if ( $post_type->_builtin && ! $post_type->public ) {
+					continue;
+				}
 
 				// ACF does not support the built-in WordPress Media Post Type.
-				if ( $post_type->name == 'attachment' ) continue;
+				if ( $post_type->name == 'attachment' ) {
+					continue;
+				}
 
 				// Add anything else.
-				$options[esc_attr( $post_type->name )] = esc_html( $post_type->labels->singular_name );
+				$options[ esc_attr( $post_type->name ) ] = esc_html( $post_type->labels->singular_name );
 
 			}
 		}
@@ -567,7 +577,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 			'cwps_acf_cpt',
 			__( 'Synced Post Type', 'civicrm-wp-profile-sync' ),
 			$options,
-			FALSE,
+			false,
 			[]
 		);
 
@@ -597,8 +607,8 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		}
 
 		// Insert template block into the page.
-		CRM_Core_Region::instance('page-body')->add([
-			'template' => 'cwps-acf-activity-type-cpt.tpl'
+		CRM_Core_Region::instance( 'page-body' )->add([
+			'template' => 'cwps-acf-activity-type-cpt.tpl',
 		]);
 
 	}
@@ -811,13 +821,17 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 				 *
 				 * ACF does not support these.
 				 */
-				if ( $post_type->_builtin && ! $post_type->public ) continue;
+				if ( $post_type->_builtin && ! $post_type->public ) {
+					continue;
+				}
 
 				// ACF does not support the built-in WordPress Media Post Type.
-				if ( $post_type->name == 'attachment' ) continue;
+				if ( $post_type->name == 'attachment' ) {
+					continue;
+				}
 
 				// Add anything else.
-				$options[esc_attr( $post_type->name )] = esc_html( $post_type->labels->singular_name );
+				$options[ esc_attr( $post_type->name ) ] = esc_html( $post_type->labels->singular_name );
 
 			}
 		}
@@ -828,7 +842,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 			'cwps_acf_cpt',
 			__( 'Synced Post Type', 'civicrm-wp-profile-sync' ),
 			$options,
-			FALSE,
+			false,
 			[]
 		);
 
@@ -858,8 +872,8 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		}
 
 		// Insert template block into the page.
-		CRM_Core_Region::instance('page-body')->add([
-			'template' => 'cwps-acf-participant-role-cpt.tpl'
+		CRM_Core_Region::instance( 'page-body' )->add([
+			'template' => 'cwps-acf-participant-role-cpt.tpl',
 		]);
 
 	}
@@ -1025,10 +1039,10 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 		// Grab "URL Path" from form.
 		$form_url_path = $form->getVar( 'urlPath' );
-        $url_path = [ 'civicrm', 'admin', 'setting',  'preferences', 'event' ];
-        if ( $form_url_path !== $url_path ) {
-        	return;
-        }
+		$url_path = [ 'civicrm', 'admin', 'setting', 'preferences', 'event' ];
+		if ( $form_url_path !== $url_path ) {
+			return;
+		}
 
 		// Add "Enable CPT" checkbox.
 		$checkbox = $form->add(
@@ -1054,8 +1068,8 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		}
 
 		// Insert template block into the page.
-		CRM_Core_Region::instance('page-body')->add([
-			'template' => 'cwps-acf-participant-cpt.tpl'
+		CRM_Core_Region::instance( 'page-body' )->add([
+			'template' => 'cwps-acf-participant-cpt.tpl',
 		]);
 
 	}
@@ -1079,10 +1093,10 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 		// Grab "URL Path" from form.
 		$form_url_path = $form->getVar( 'urlPath' );
-        $url_path = [ 'civicrm', 'admin', 'setting',  'preferences', 'event' ];
-        if ( $form_url_path !== $url_path ) {
-        	return;
-        }
+		$url_path = [ 'civicrm', 'admin', 'setting', 'preferences', 'event' ];
+		if ( $form_url_path !== $url_path ) {
+			return;
+		}
 
 		// Grab submitted values.
 		$values = $form->getSubmitValues();
@@ -1203,8 +1217,8 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		$cpt_name = false;
 
 		// Overwrite if a mapping exists.
-		if ( isset( $this->mappings['contact-post'][$contact_type_id] ) ) {
-			$cpt_name = $this->mappings['contact-post'][$contact_type_id];
+		if ( isset( $this->mappings['contact-post'][ $contact_type_id ] ) ) {
+			$cpt_name = $this->mappings['contact-post'][ $contact_type_id ];
 		}
 
 		// --<
@@ -1221,12 +1235,11 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @param integer $contact_type_id The numeric ID of the Contact Type.
 	 * @param string $cpt_name The name of the WordPress Post Type.
-	 * @return bool $success Whether or not the operation was successful.
 	 */
 	public function mapping_for_contact_type_update( $contact_type_id, $cpt_name ) {
 
 		// Overwrite (or create) mapping.
-		$this->mappings['contact-post'][$contact_type_id] = $cpt_name;
+		$this->mappings['contact-post'][ $contact_type_id ] = $cpt_name;
 
 		// Update option.
 		$this->option_set( $this->mappings_key, $this->mappings );
@@ -1241,18 +1254,17 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 * @since 0.4
 	 *
 	 * @param integer $contact_type_id The numeric ID of the Contact Type.
-	 * @return bool $success Whether or not the operation was successful.
 	 */
 	public function mapping_for_contact_type_remove( $contact_type_id ) {
 
 		// If a mapping exists.
-		if ( isset( $this->mappings['contact-post'][$contact_type_id] ) ) {
+		if ( isset( $this->mappings['contact-post'][ $contact_type_id ] ) ) {
 
 			// We also need to remove the setting.
-			$this->setting_remove( $this->mappings['contact-post'][$contact_type_id] );
+			$this->setting_remove( $this->mappings['contact-post'][ $contact_type_id ] );
 
 			// Finally, remove mapping.
-			unset( $this->mappings['contact-post'][$contact_type_id] );
+			unset( $this->mappings['contact-post'][ $contact_type_id ] );
 
 		}
 
@@ -1297,8 +1309,8 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		$cpt_name = false;
 
 		// Overwrite if a mapping exists.
-		if ( isset( $this->mappings['activity-post'][$activity_type_id] ) ) {
-			$cpt_name = $this->mappings['activity-post'][$activity_type_id];
+		if ( isset( $this->mappings['activity-post'][ $activity_type_id ] ) ) {
+			$cpt_name = $this->mappings['activity-post'][ $activity_type_id ];
 		}
 
 		// --<
@@ -1315,12 +1327,11 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @param integer $activity_type_id The numeric ID of the Activity Type.
 	 * @param string $cpt_name The name of the WordPress Post Type.
-	 * @return bool $success Whether or not the operation was successful.
 	 */
 	public function mapping_for_activity_type_update( $activity_type_id, $cpt_name ) {
 
 		// Overwrite (or create) mapping.
-		$this->mappings['activity-post'][$activity_type_id] = $cpt_name;
+		$this->mappings['activity-post'][ $activity_type_id ] = $cpt_name;
 
 		// Update option.
 		$this->option_set( $this->mappings_key, $this->mappings );
@@ -1335,18 +1346,17 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 * @since 0.4
 	 *
 	 * @param integer $activity_type_id The numeric ID of the Activity Type.
-	 * @return bool $success Whether or not the operation was successful.
 	 */
 	public function mapping_for_activity_type_remove( $activity_type_id ) {
 
 		// If a mapping exists.
-		if ( isset( $this->mappings['activity-post'][$activity_type_id] ) ) {
+		if ( isset( $this->mappings['activity-post'][ $activity_type_id ] ) ) {
 
 			// We also need to remove the setting.
-			$this->setting_remove( $this->mappings['activity-post'][$activity_type_id] );
+			$this->setting_remove( $this->mappings['activity-post'][ $activity_type_id ] );
 
 			// Finally, remove mapping.
-			unset( $this->mappings['activity-post'][$activity_type_id] );
+			unset( $this->mappings['activity-post'][ $activity_type_id ] );
 
 		}
 
@@ -1391,8 +1401,8 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		$cpt_name = false;
 
 		// Overwrite if a mapping exists.
-		if ( isset( $this->mappings['participant-role-post'][$participant_role_id] ) ) {
-			$cpt_name = $this->mappings['participant-role-post'][$participant_role_id];
+		if ( isset( $this->mappings['participant-role-post'][ $participant_role_id ] ) ) {
+			$cpt_name = $this->mappings['participant-role-post'][ $participant_role_id ];
 		}
 
 		// --<
@@ -1409,12 +1419,11 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @param integer $participant_role_id The numeric ID of the Participant Role.
 	 * @param string $cpt_name The name of the WordPress Post Type.
-	 * @return bool $success Whether or not the operation was successful.
 	 */
 	public function mapping_for_participant_role_update( $participant_role_id, $cpt_name ) {
 
 		// Overwrite (or create) mapping.
-		$this->mappings['participant-role-post'][$participant_role_id] = $cpt_name;
+		$this->mappings['participant-role-post'][ $participant_role_id ] = $cpt_name;
 
 		// Update option.
 		$this->option_set( $this->mappings_key, $this->mappings );
@@ -1429,18 +1438,17 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 * @since 0.5
 	 *
 	 * @param integer $participant_role_id The numeric ID of the Participant Role.
-	 * @return bool $success Whether or not the operation was successful.
 	 */
 	public function mapping_for_participant_role_remove( $participant_role_id ) {
 
 		// If a mapping exists.
-		if ( isset( $this->mappings['participant-role-post'][$participant_role_id] ) ) {
+		if ( isset( $this->mappings['participant-role-post'][ $participant_role_id ] ) ) {
 
 			// We also need to remove the setting.
-			$this->setting_remove( $this->mappings['participant-role-post'][$participant_role_id] );
+			$this->setting_remove( $this->mappings['participant-role-post'][ $participant_role_id ] );
 
 			// Finally, remove mapping.
-			unset( $this->mappings['participant-role-post'][$participant_role_id] );
+			unset( $this->mappings['participant-role-post'][ $participant_role_id ] );
 
 		}
 
@@ -1499,8 +1507,8 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		$setting = false;
 
 		// Overwrite if a setting exists.
-		if ( isset( $this->settings[$post_type] ) ) {
-			$setting = $this->settings[$post_type];
+		if ( isset( $this->settings[ $post_type ] ) ) {
+			$setting = $this->settings[ $post_type ];
 		}
 
 		// --<
@@ -1517,12 +1525,11 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @param string $post_type The name of the Post Type.
 	 * @param array $data The settings data for the Post Type.
-	 * @return bool $success Whether or not the operation was successful.
 	 */
 	public function setting_update( $post_type, $data ) {
 
 		// Overwrite (or create) setting.
-		$this->settings[$post_type] = $data;
+		$this->settings[ $post_type ] = $data;
 
 		// Update option.
 		$this->option_set( $this->settings_key, $this->settings );
@@ -1537,13 +1544,12 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 * @since 0.4
 	 *
 	 * @param string $post_type The name of the Post Type.
-	 * @return bool $success Whether or not the operation was successful.
 	 */
 	public function setting_remove( $post_type ) {
 
 		// If a setting exists, delete it.
-		if ( isset( $this->settings[$post_type] ) ) {
-			unset( $this->settings[$post_type] );
+		if ( isset( $this->settings[ $post_type ] ) ) {
+			unset( $this->settings[ $post_type ] );
 		}
 
 		// Update option.

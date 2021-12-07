@@ -323,7 +323,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 	 * @since 0.4
 	 *
 	 * @param integer $im_id The numeric ID of the Instant Messenger Record.
-	 * @param array $im The array of Instant Messenger Record data, or empty if none.
+	 * @return array $im The array of Instant Messenger Record data, or empty if none.
 	 */
 	public function im_get_by_id( $im_id ) {
 
@@ -354,7 +354,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 			return $im;
 		}
 
- 		// The result set should contain only one item.
+		// The result set should contain only one item.
 		$im = array_pop( $result['values'] );
 
 		// --<
@@ -372,7 +372,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 	 * @param integer $contact_id The numeric ID of the CiviCRM Contact.
 	 * @param integer $location_type_id The numeric ID of the Instant Messenger Location Type.
 	 * @param integer $provider_id The numeric ID of the Instant Messenger Type.
-	 * @param array $ims The array of Instant Messenger Record data, or empty if none.
+	 * @return array $ims The array of Instant Messenger Record data, or empty if none.
 	 */
 	public function ims_get_by_type( $contact_id, $location_type_id, $provider_id ) {
 
@@ -405,9 +405,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 			return $ims;
 		}
 
- 		// We want the result set.
- 		foreach ( $result['values'] as $value ) {
-			$ims[] =  (object) $value;
+		// We want the result set.
+		foreach ( $result['values'] as $value ) {
+			$ims[] = (object) $value;
 		}
 
 		// --<
@@ -613,13 +613,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 			// New Records have no Instant Messenger ID.
 			if ( empty( $value['field_im_id'] ) ) {
-				$actions['create'][$key] = $value;
+				$actions['create'][ $key ] = $value;
 				continue;
 			}
 
 			// Records to update have an Instant Messenger ID.
 			if ( ! empty( $value['field_im_id'] ) ) {
-				$actions['update'][$key] = $value;
+				$actions['update'][ $key ] = $value;
 				continue;
 			}
 
@@ -1119,14 +1119,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 			}
 
 			// Process array record.
-			switch( $args['op'] ) {
+			switch ( $args['op'] ) {
 
-				case 'create' :
+				case 'create':
 
 					// Make sure no other Instant Messenger is Primary if this one is.
 					if ( $acf_im['field_im_primary'] == '1' && ! empty( $existing ) ) {
 						foreach ( $existing as $key => $record ) {
-							$existing[$key]['field_im_primary'] = '0';
+							$existing[ $key ]['field_im_primary'] = '0';
 						}
 					}
 
@@ -1135,31 +1135,31 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 					break;
 
-				case 'edit' :
+				case 'edit':
 
 					// Make sure no other Instant Messenger is Primary if this one is.
 					if ( $acf_im['field_im_primary'] == '1' ) {
 						foreach ( $existing as $key => $record ) {
-							$existing[$key]['field_im_primary'] = '0';
+							$existing[ $key ]['field_im_primary'] = '0';
 						}
 					}
 
 					// Overwrite array record.
 					foreach ( $existing as $key => $record ) {
 						if ( $im->id == $record['field_im_id'] ) {
-							$existing[$key] = $acf_im;
+							$existing[ $key ] = $acf_im;
 							break;
 						}
 					}
 
 					break;
 
-				case 'delete' :
+				case 'delete':
 
 					// Remove array record.
 					foreach ( $existing as $key => $record ) {
 						if ( $im->id == $record['field_im_id'] ) {
-							unset( $existing[$key] );
+							unset( $existing[ $key ] );
 							break;
 						}
 					}
@@ -1325,7 +1325,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 		// Add if it has a reference to an Instant Messenger Field.
 		if ( ! empty( $field['type'] ) && $field['type'] == 'civicrm_im' ) {
-			$acf_fields['im'][$field['name']] = $field['type'];
+			$acf_fields['im'][ $field['name'] ] = $field['type'];
 		}
 
 		// --<
@@ -1375,9 +1375,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		$existing = get_field( $params['selector'], $args['post_id'] );
 
 		// Add Instant Messenger ID and overwrite array element.
-		if ( ! empty( $existing[$params['key']] ) ) {
+		if ( ! empty( $existing[ $params['key'] ] ) ) {
 			$params['value']['field_im_id'] = $params['im']->id;
-			$existing[$params['key']] = $params['value'];
+			$existing[ $params['key'] ] = $params['value'];
 		}
 
 		// Now update Field.
@@ -1403,8 +1403,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 		// Only do this once per Field Type and filter.
 		static $pseudocache;
-		if ( isset( $pseudocache[$filter] ) ) {
-			return $pseudocache[$filter];
+		if ( isset( $pseudocache[ $filter ] ) ) {
+			return $pseudocache[ $filter ];
 		}
 
 		// Init return.
@@ -1450,8 +1450,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		}
 
 		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$filter] ) ) {
-			$pseudocache[$filter] = $fields;
+		if ( ! isset( $pseudocache[ $filter ] ) ) {
+			$pseudocache[ $filter ] = $fields;
 		}
 
 		// --<
@@ -1526,9 +1526,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		$acf_field_key = $this->civicrm->acf_field_key_get();
 
 		// Set the mapped Instant Messenger Field name if present.
-		if ( isset( $field[$acf_field_key] ) ) {
-			if ( false !== strpos( $field[$acf_field_key], $this->im_field_prefix ) ) {
-				$im_field_name = (string) str_replace( $this->im_field_prefix, '', $field[$acf_field_key] );
+		if ( isset( $field[ $acf_field_key ] ) ) {
+			if ( false !== strpos( $field[ $acf_field_key ], $this->im_field_prefix ) ) {
+				$im_field_name = (string) str_replace( $this->im_field_prefix, '', $field[ $acf_field_key ] );
 			}
 		}
 
@@ -1575,7 +1575,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		$public_fields = $this->civicrm_fields_get( 'public' );
 		$fields_for_entity = [];
 		foreach ( $public_fields as $key => $value ) {
-			if ( $field['type'] == $this->im_fields[$value['name']] ) {
+			if ( $field['type'] == $this->im_fields[ $value['name'] ] ) {
 				$fields_for_entity[] = $value;
 			}
 		}
@@ -1588,7 +1588,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		// Build Instant Messenger Field choices array for dropdown.
 		$im_fields_label = esc_attr__( 'Instant Messenger Fields', 'civicrm-wp-profile-sync' );
 		foreach ( $fields_for_entity as $im_field ) {
-			$choices[$im_fields_label][$this->im_field_prefix . $im_field['name']] = $im_field['title'];
+			$choices[ $im_fields_label ][ $this->im_field_prefix . $im_field['name'] ] = $im_field['title'];
 		}
 
 		/**
@@ -1625,7 +1625,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
+		if ( ! array_key_exists( $key, $field ) || empty( $field[ $key ] ) ) {
 			return $field;
 		}
 
@@ -1693,7 +1693,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
+		if ( ! array_key_exists( $key, $field ) || empty( $field[ $key ] ) ) {
 			return $field;
 		}
 

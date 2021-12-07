@@ -260,7 +260,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		$email_key = $this->acf_field_key_get();
 
 		// Skip if we don't have a synced Email.
-		if ( empty( $settings[$email_key] ) ) {
+		if ( empty( $settings[ $email_key ] ) ) {
 			return true;
 		}
 
@@ -268,7 +268,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		$value = $this->acf_loader->acf->field->value_get_for_civicrm( $value, $settings['type'], $settings );
 
 		// Is this mapped to the Primary Email?
-		if ( $settings[$email_key] == 'primary' ) {
+		if ( $settings[ $email_key ] == 'primary' ) {
 
 			// Update and return early.
 			$this->primary_email_update( $contact_id, $value );
@@ -277,7 +277,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		}
 
 		// The ID of the Location Type is the setting.
-		$location_type_id = absint( $settings[$email_key] );
+		$location_type_id = absint( $settings[ $email_key ] );
 
 		// Update the Email.
 		$this->email_update( $location_type_id, $contact_id, $value );
@@ -296,7 +296,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 * @since 0.5
 	 *
 	 * @param integer $email_id The numeric ID of the Email.
-	 * @param object $email The array of Email data, or empty if none.
+	 * @return object $email The array of Email data, or empty if none.
 	 */
 	public function email_get_by_id( $email_id ) {
 
@@ -327,7 +327,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 			return $email;
 		}
 
- 		// The result set should contain only one item.
+		// The result set should contain only one item.
 		$email = (object) array_pop( $result['values'] );
 
 		// --<
@@ -344,7 +344,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 *
 	 * @param integer $contact_id The numeric ID of the CiviCRM Contact.
 	 * @param integer $location_type_id The numeric ID of the Email Location Type.
-	 * @param object $email The array of Email data, or empty if none.
+	 * @return object $email The array of Email data, or empty if none.
 	 */
 	public function email_get_by_location( $contact_id, $location_type_id ) {
 
@@ -376,7 +376,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 			return $email;
 		}
 
- 		// The result set should contain only one item.
+		// The result set should contain only one item.
 		$email = (object) array_pop( $result['values'] );
 
 		// --<
@@ -651,7 +651,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 			return $email;
 		}
 
- 		// The result set should contain only one item.
+		// The result set should contain only one item.
 		$email = array_pop( $result['values'] );
 
 		// --<
@@ -694,7 +694,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 			],
 			'workflow_id' => [
 				'IS NULL' => 1,
-			 ],
+			],
 			'options' => [
 				'limit' => 0,
 			],
@@ -713,7 +713,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 			return $templates;
 		}
 
- 		// The result set is what we want.
+		// The result set is what we want.
 		$templates = $result['values'];
 
 		// --<
@@ -988,7 +988,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 				'version' => 3,
 				'id' => $existing_data['id'],
 				'contact_id' => $contact_id,
-			]+ $data;
+			] + $data;
 
 			// Call the API.
 			$result = civicrm_api( 'Email', 'create', $params );
@@ -1136,8 +1136,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 		// Only do this once per Field Type and filter.
 		static $pseudocache;
-		if ( isset( $pseudocache[$filter] ) ) {
-			return $pseudocache[$filter];
+		if ( isset( $pseudocache[ $filter ] ) ) {
+			return $pseudocache[ $filter ];
 		}
 
 		// Init return.
@@ -1183,8 +1183,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		}
 
 		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$filter] ) ) {
-			$pseudocache[$filter] = $fields;
+		if ( ! isset( $pseudocache[ $filter ] ) ) {
+			$pseudocache[ $filter ] = $fields;
 		}
 
 		// --<
@@ -1294,13 +1294,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		// Maybe prepend "Primary Email" choice for dropdown.
 		if ( $skip_specific === false ) {
 			$specific_email_label = esc_attr__( 'Specific Emails', 'civicrm-wp-profile-sync' );
-			$choices[$specific_email_label]['primary'] = esc_attr__( 'Primary Email', 'civicrm-wp-profile-sync' );
+			$choices[ $specific_email_label ]['primary'] = esc_attr__( 'Primary Email', 'civicrm-wp-profile-sync' );
 		}
 
 		// Build Location Types choices array for dropdown.
 		$location_types_label = esc_attr__( 'Location Types', 'civicrm-wp-profile-sync' );
 		foreach ( $location_types as $location_type ) {
-			$choices[$location_types_label][$location_type['id']] = esc_attr( $location_type['display_name'] );
+			$choices[ $location_types_label ][ $location_type['id'] ] = esc_attr( $location_type['display_name'] );
 		}
 
 		// Define Field.
@@ -1360,8 +1360,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		$email_key = $this->acf_field_key_get();
 
 		// Add if it has a reference to an Email Field.
-		if ( ! empty( $field[$email_key] ) ) {
-			$acf_fields['email'][$field['name']] = $field[$email_key];
+		if ( ! empty( $field[ $email_key ] ) ) {
+			$acf_fields['email'][ $field['name'] ] = $field[ $email_key ];
 		}
 
 		// --<
@@ -1466,7 +1466,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		$public_fields = $this->civicrm_fields_get( 'public' );
 		$fields_for_entity = [];
 		foreach ( $public_fields as $key => $value ) {
-			if ( $field['type'] == $this->email_fields[$value['name']] ) {
+			if ( $field['type'] == $this->email_fields[ $value['name'] ] ) {
 				$fields_for_entity[] = $value;
 			}
 		}
@@ -1479,7 +1479,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		// Build Email Field choices array for dropdown.
 		$email_fields_label = esc_attr__( 'Email Fields', 'civicrm-wp-profile-sync' );
 		foreach ( $fields_for_entity as $email_field ) {
-			$choices[$email_fields_label][$this->email_field_prefix . $email_field['name']] = $email_field['title'];
+			$choices[ $email_fields_label ][ $this->email_field_prefix . $email_field['name'] ] = $email_field['title'];
 		}
 
 		/**

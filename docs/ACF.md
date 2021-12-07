@@ -221,10 +221,10 @@ Populates with the name of the Country in the synced CiviCRM Address. You can sp
 ```php
 <p><strong><?php echo __( 'Primary Phone Number:', 'your-slug' ); ?></strong> <?php echo cwps_get_primary_phone_number( 'phone_numbers' ); ?></p>
 
-<p><strong><?php _e( 'All Numbers as list:', 'your-slug' ). ' '; ?></strong></p>
+<p><strong><?php esc_html_e( 'All Numbers as list:', 'your-slug' ). ' '; ?></strong></p>
 <?php echo cwps_get_phone_numbers( 'phone_numbers' ); ?>
 
-<p><strong><?php _e( 'All Home Phone Numbers as list:', 'your-slug' ). ' '; ?></strong></p>
+<p><strong><?php esc_html_e( 'All Home Phone Numbers as list:', 'your-slug' ). ' '; ?></strong></p>
 <?php echo cwps_get_phone_numbers_by_type_ids( 'phone_numbers', 1 ); ?>
 
 <p><strong><?php echo __( 'All Home Phone Numbers as string:', 'your-slug' ); ?></strong><br />
@@ -262,10 +262,10 @@ Some examples might be:
 ```php
 <p><strong><?php echo __( 'Primary IM:', 'your-slug' ); ?></strong> <?php echo cwps_get_primary_im( 'instant_messenger' ); ?></p>
 
-<p><strong><?php _e( 'All IMs as list:', 'your-slug' ). ' '; ?></strong></p>
+<p><strong><?php esc_html_e( 'All IMs as list:', 'your-slug' ). ' '; ?></strong></p>
 <?php echo cwps_get_ims( 'instant_messenger' ); ?>
 
-<p><strong><?php _e( 'All Skype IMs as list:', 'your-slug' ). ' '; ?></strong></p>
+<p><strong><?php esc_html_e( 'All Skype IMs as list:', 'your-slug' ). ' '; ?></strong></p>
 <?php echo cwps_get_ims_by_type_ids( 'instant_messenger', null, 6, 'list' ); ?>
 ```
 

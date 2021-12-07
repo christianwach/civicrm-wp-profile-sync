@@ -598,7 +598,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Field extends acf_field {
 		// Build Location Types choices array for dropdown.
 		$locations = [];
 		foreach ( $location_types as $location_type ) {
-			$locations[$location_type['id']] = esc_attr( $location_type['display_name'] );
+			$locations[ $location_type['id'] ] = esc_attr( $location_type['display_name'] );
 		}
 
 		// Define Location Field.
@@ -962,14 +962,20 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Field extends acf_field {
 
 		// Add Subfields.
 		$field['sub_fields'] = [
-			$location, $primary, $billing,
+			$location,
+			$primary,
+			$billing,
 			$street_address,
 			$supplemental_address_1,
 			$supplemental_address_2,
 			$supplemental_address_3,
-			$city, $post_code,
-			$country_id, $state_province_id,
-			$geo_code_1, $geo_code_2, $manual_geo_code,
+			$city,
+			$post_code,
+			$country_id,
+			$state_province_id,
+			$geo_code_1,
+			$geo_code_2,
+			$manual_geo_code,
 			$address_id,
 		];
 

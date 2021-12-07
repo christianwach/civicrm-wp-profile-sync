@@ -247,7 +247,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 
 			// Log something on failure.
 			if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-				$e = new \Exception;
+				$e = new \Exception();
 				$trace = $e->getTraceAsString();
 				error_log( print_r( [
 					'method' => __METHOD__,
@@ -281,7 +281,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 
 				// Log something on failure.
 				if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-					$e = new \Exception;
+					$e = new \Exception();
 					$trace = $e->getTraceAsString();
 					error_log( print_r( [
 						'method' => __METHOD__,
@@ -304,7 +304,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 
 				// Log something on failure.
 				if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-					$e = new \Exception;
+					$e = new \Exception();
 					$trace = $e->getTraceAsString();
 					error_log( print_r( [
 						'method' => __METHOD__,
@@ -381,7 +381,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 			$existing_data = array_pop( $existing_website['values'] );
 
 			// Bail if it hasn't changed.
-			if ( !empty( $existing_data['url'] ) && $existing_data['url'] == $value ) {
+			if ( ! empty( $existing_data['url'] ) && $existing_data['url'] == $value ) {
 				return $existing_data;
 			}
 
@@ -440,7 +440,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 	 * @param object $contact The CiviCRM Contact data object.
 	 * @param integer $website_type The numeric ID of the CiviCRM Website Type.
 	 * @param integer $website_id The numeric ID of the CiviCRM Website.
-	 * @return object|bool $website The CiviCRM Website data, or false on failure.
 	 */
 	public function website_create( $contact, $website_type, $website_id = null ) {
 
@@ -456,7 +455,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 	 * @param object $contact The CiviCRM Contact data object.
 	 * @param integer $website_type The numeric ID of the CiviCRM Website Type.
 	 * @param integer $website_id The numeric ID of the CiviCRM Website.
-	 * @return object|bool $website The CiviCRM Website data, or false on failure.
 	 */
 	public function website_edit( $contact, $website_type, $website_id ) {
 
@@ -470,7 +468,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 	 * @since 0.4
 	 *
 	 * @param integer $website_id The numeric ID of the CiviCRM Website.
-	 * @return object|bool $website The CiviCRM Website data, or false on failure.
 	 */
 	public function website_delete( $website_id ) {
 
@@ -583,7 +580,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 
 		// Add to return array keyed by ID.
 		foreach ( $website_types as $website_type_id => $website_type_name ) {
-			$options[$website_type_id] = esc_attr( $website_type_name );
+			$options[ $website_type_id ] = esc_attr( $website_type_name );
 		}
 
 		// --<

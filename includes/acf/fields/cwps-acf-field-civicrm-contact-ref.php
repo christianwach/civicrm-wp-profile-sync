@@ -166,7 +166,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Ref extends acf_field {
 		// Define translations.
 		$this->l10n = [
 			// Example message.
-			'error'	=> __( 'Error! Please enter a higher value.', 'civicrm-wp-profile-sync' ),
+			'error' => __( 'Error! Please enter a higher value.', 'civicrm-wp-profile-sync' ),
 		];
 
 		// Call parent.
@@ -250,7 +250,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Ref extends acf_field {
 					// TODO: Permission to view Contact?
 
 					// Append Contact to choices.
-					$field['choices'][$contact['contact_id']] = $name;
+					$field['choices'][ $contact['contact_id'] ] = $name;
 
 				}
 			}
@@ -313,15 +313,15 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Ref extends acf_field {
 			'paged' => 1,
 		];
 
-   		// Parse the incoming POST array.
-   		$options = acf_parse_args( $options, $defaults );
+		// Parse the incoming POST array.
+		$options = acf_parse_args( $options, $defaults );
 
 		// Bail if there's no search string.
 		if ( empty( $options['s'] ) ) {
 			return $response;
 		}
 
- 		// Load Field.
+		// Load Field.
 		$field = acf_get_field( $options['field_key'] );
 		if ( ! $field ) {
 			return $response;

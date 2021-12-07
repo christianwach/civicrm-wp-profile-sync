@@ -221,8 +221,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 		return;
 
-
-
 		// Some Contact "Text" Fields need their own validation.
 		//add_filter( 'bp/validate_value/type=text', [ $this, 'value_validate' ], 10, 4 );
 
@@ -254,7 +252,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 	public function query_setting_choices( $choices, $field_type, $entity_type, $entity_type_data ) {
 
 		// Bail if there's something amiss.
-		if ( empty( $entity_type ) ||  empty( $field_type ) || empty( $entity_type_data ) ) {
+		if ( empty( $entity_type ) || empty( $field_type ) || empty( $entity_type_data ) ) {
 			return $choices;
 		}
 
@@ -270,7 +268,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		if ( ! empty( $contact_fields ) ) {
 			$contact_fields_label = esc_attr__( 'Contact Fields', 'civicrm-wp-profile-sync' );
 			foreach ( $contact_fields as $contact_field ) {
-				$choices[$contact_fields_label][$this->contact_field_prefix . $contact_field['name']] = $contact_field['title'];
+				$choices[ $contact_fields_label ][ $this->contact_field_prefix . $contact_field['name'] ] = $contact_field['title'];
 			}
 		}
 
@@ -441,7 +439,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		$birth_fields = [ 'birth_date', 'deceased_date' ];
 
 		// "Birth Date" and "Deceased Date" use the same preference.
-		if ( in_array ( $name, $birth_fields ) ) {
+		if ( in_array( $name, $birth_fields ) ) {
 			$format = CRM_Utils_Date::getDateFormat( 'birth' );
 		}
 
@@ -488,7 +486,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 		// if the key exists, return the value - which is the BuddyPress Type.
 		if ( array_key_exists( $name, $contact_fields ) ) {
-			$type = $contact_fields[$name];
+			$type = $contact_fields[ $name ];
 		}
 
 		// --<
@@ -516,8 +514,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 		// Only do this once per Contact Type, Field Type and filter.
 		static $pseudocache;
-		if ( isset( $pseudocache[$filter][$contact_type][$field_type] ) ) {
-			return $pseudocache[$filter][$contact_type][$field_type];
+		if ( isset( $pseudocache[ $filter ][ $contact_type ][ $field_type ] ) ) {
+			return $pseudocache[ $filter ][ $contact_type ][ $field_type ];
 		}
 
 		// Init return.
@@ -578,7 +576,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 				// Skip all but those mapped to the type of BuddyPress Field.
 				foreach ( $public_fields as $key => $value ) {
-					if ( $field_type == $contact_fields[$value['name']] ) {
+					if ( $field_type == $contact_fields[ $value['name'] ] ) {
 						$fields[] = $value;
 					}
 				}
@@ -588,8 +586,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		}
 
 		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$filter][$contact_type][$field_type] ) ) {
-			$pseudocache[$filter][$contact_type][$field_type] = $fields;
+		if ( ! isset( $pseudocache[ $filter ][ $contact_type ][ $field_type ] ) ) {
+			$pseudocache[ $filter ][ $contact_type ][ $field_type ] = $fields;
 		}
 
 		// --<
@@ -739,10 +737,10 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		*/
 
 		// Convert CiviCRM value to BuddyPress value by Field Type.
-		switch( $type ) {
+		switch ( $type ) {
 
 			// Used by "Do not Sms" etc.
-			case 'true_false' :
+			case 'true_false':
 
 				// Clear the value when empty.
 				if ( empty( $value ) ) {
@@ -754,7 +752,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 				break;
 
 			// May not be used.
-			case 'checkbox' :
+			case 'checkbox':
 
 				// Convert if the value has the special CiviCRM array-like format.
 				if ( is_string( $value ) ) {
@@ -766,7 +764,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 				break;
 
 			// Used by "Birth Date" and "Deceased Date".
-			case 'datebox' :
+			case 'datebox':
 
 				// Contact edit passes a Y-m-d format, so test for that.
 				$datetime = DateTime::createFromFormat( 'Y-m-d', $value );
@@ -938,13 +936,11 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		// TODO: This can't be done here directly.
 		return $options;
 
-
-
 		// Get Contact Field data.
 		$format = $this->date_format_get( $contact_field_name );
 
 		// Get the BuddyPress format.
-		$bp_format = $this->bp_loader->mapper->date_mappings[$format];
+		$bp_format = $this->bp_loader->mapper->date_mappings[ $format ];
 
 		// Set the date "format" attributes.
 		$field['display_format'] = $bp_format;
@@ -977,8 +973,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 		// TODO: This can't be done here directly.
 		return $options;
-
-
 
 		// Get Contact Field data.
 		$field_data = $this->plugin->civicrm->contact_field->get_by_name( $contact_field_name );

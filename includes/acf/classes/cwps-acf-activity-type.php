@@ -351,8 +351,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 		$mappings = array_flip( $mappings );
 
 		// Overwrite the Activity Type ID if there is a value.
-		if ( isset( $mappings[$post_type_name] ) ) {
-			$activity_type_id = $mappings[$post_type_name];
+		if ( isset( $mappings[ $post_type_name ] ) ) {
+			$activity_type_id = $mappings[ $post_type_name ];
 		}
 
 		// --<
@@ -414,7 +414,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 
 		// The formatted result set is what we're after.
 		foreach ( $result['values'] as $choice ) {
-			$choices[$choice['key']] = $choice['value'];
+			$choices[ $choice['key'] ] = $choice['value'];
 		}
 
 		// Maybe add to pseudo-cache.
@@ -590,8 +590,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 		$mapped_post_types = $this->acf_loader->mapping->mappings_for_activity_types_get();
 
 		// Check presence in mappings.
-		if ( isset( $mapped_post_types[$activity_type_id] ) ) {
-			$is_mapped = $mapped_post_types[$activity_type_id];
+		if ( isset( $mapped_post_types[ $activity_type_id ] ) ) {
+			$is_mapped = $mapped_post_types[ $activity_type_id ];
 		}
 
 		// --<

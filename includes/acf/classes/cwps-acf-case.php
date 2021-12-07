@@ -1056,8 +1056,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 	/**
 	 * Create a CiviCRM Case Manager for a given set of data.
 	 *
-	 *
-	 *
 	 * @since 0.5
 	 *
 	 * @param array $case_data The CiviCRM Case data from the Form.
@@ -1347,7 +1345,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 						$code = 'target_id';
 					}
 
-					// Or it's the "assignee" Field *FFS*
+					// Or it's the "assignee" Field, FFS.
 					if ( $code == 'assignee_contact_id' ) {
 						$code = 'assignee_id';
 					}
@@ -1369,7 +1367,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 				if ( in_array( $code, $cannot_be_empty ) && empty( $value ) ) {
 					// Skip.
 				} else {
-					$case_data[$code] = $value;
+					$case_data[ $code ] = $value;
 				}
 
 			}
@@ -1432,7 +1430,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		// Build Case Field choices array for dropdown.
 		$case_fields_label = esc_attr__( 'Case Fields', 'civicrm-wp-profile-sync' );
 		foreach ( $case_fields as $case_field ) {
-			$choices[$case_fields_label][$this->case_field_prefix . $case_field['name']] = $case_field['title'];
+			$choices[ $case_fields_label ][ $this->case_field_prefix . $case_field['name'] ] = $case_field['title'];
 		}
 
 		// Build Custom Field choices array for dropdown.
@@ -1440,7 +1438,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			$custom_fields_label = esc_attr( $custom_group_name );
 			foreach ( $custom_group as $custom_field ) {
-				$choices[$custom_fields_label][$custom_field_prefix . $custom_field['id']] = $custom_field['label'];
+				$choices[ $custom_fields_label ][ $custom_field_prefix . $custom_field['id'] ] = $custom_field['label'];
 			}
 		}
 
@@ -1495,9 +1493,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$acf_field_key = $this->civicrm->acf_field_key_get();
 
 		// Set the mapped Case Field name if present.
-		if ( isset( $field[$acf_field_key] ) ) {
-			if ( false !== strpos( $field[$acf_field_key], $this->case_field_prefix ) ) {
-				$case_field_name = (string) str_replace( $this->case_field_prefix, '', $field[$acf_field_key] );
+		if ( isset( $field[ $acf_field_key ] ) ) {
+			if ( false !== strpos( $field[ $acf_field_key ], $this->case_field_prefix ) ) {
+				$case_field_name = (string) str_replace( $this->case_field_prefix, '', $field[ $acf_field_key ] );
 			}
 		}
 
@@ -1568,7 +1566,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		if ( ! empty( $case_fields ) ) {
 			$case_fields_label = esc_attr__( 'Case Fields', 'civicrm-wp-profile-sync' );
 			foreach ( $case_fields as $case_field ) {
-				$choices[$case_fields_label][$this->case_field_prefix . $case_field['name']] = $case_field['title'];
+				$choices[ $case_fields_label ][ $this->case_field_prefix . $case_field['name'] ] = $case_field['title'];
 			}
 		}
 
@@ -1578,7 +1576,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 			foreach ( $filtered_fields as $custom_group_name => $custom_group ) {
 				$custom_fields_label = esc_attr( $custom_group_name );
 				foreach ( $custom_group as $custom_field ) {
-					$choices[$custom_fields_label][$custom_field_prefix . $custom_field['id']] = $custom_field['label'];
+					$choices[ $custom_fields_label ][ $custom_field_prefix . $custom_field['id'] ] = $custom_field['label'];
 				}
 			}
 		}
@@ -1700,7 +1698,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		if ( ! empty( $fields_for_entity ) ) {
 			$case_fields_label = esc_attr__( 'Case Fields', 'civicrm-wp-profile-sync' );
 			foreach ( $fields_for_entity as $case_field ) {
-				$choices[$case_fields_label][$this->case_field_prefix . $case_field['name']] = $case_field['title'];
+				$choices[ $case_fields_label ][ $this->case_field_prefix . $case_field['name'] ] = $case_field['title'];
 			}
 		}
 
@@ -1710,7 +1708,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 			foreach ( $filtered_fields as $custom_group_name => $custom_group ) {
 				$custom_fields_label = esc_attr( $custom_group_name );
 				foreach ( $custom_group as $custom_field ) {
-					$choices[$custom_fields_label][$custom_field_prefix . $custom_field['id']] = $custom_field['label'];
+					$choices[ $custom_fields_label ][ $custom_field_prefix . $custom_field['id'] ] = $custom_field['label'];
 				}
 			}
 		}
@@ -1753,9 +1751,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 		// Add Option Group and add entries for each Case Type.
 		$case_types_title = esc_attr( __( 'Case Types', 'civicrm-wp-profile-sync' ) );
-		$entities[$case_types_title] = [];
+		$entities[ $case_types_title ] = [];
 		foreach ( $case_types as $id => $label ) {
-			$entities[$case_types_title][$this->identifier . '-' . $id] = $label;
+			$entities[ $case_types_title ][ $this->identifier . '-' . $id ] = $label;
 		}
 
 		// --<
@@ -1775,7 +1773,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 	 *
 	 * @param bool $mapped The existing mapping flag.
 	 * @param array $field_group The array of ACF Field Group data.
-	 * @param bool $mapped True if the Field Group is mapped, or pass through if not mapped.
+	 * @return bool $mapped True if the Field Group is mapped, or pass through if not mapped.
 	 */
 	public function query_field_group_mapped( $mapped, $field_group ) {
 
@@ -1804,7 +1802,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 	 *
 	 * @param array $custom_fields The existing Custom Fields.
 	 * @param array $field_group The array of ACF Field Group data.
-	 * @param array $custom_fields The populated array of CiviCRM Custom Fields params.
+	 * @return array $custom_fields The populated array of CiviCRM Custom Fields params.
 	 */
 	public function query_custom_fields( $custom_fields, $field_group ) {
 

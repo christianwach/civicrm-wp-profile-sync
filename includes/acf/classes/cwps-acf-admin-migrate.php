@@ -173,6 +173,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 
 		// Show general "Call to Action".
 		$message = sprintf(
+			/* translators: 1: Opening anchor tag, 2: Closing anchor tag */
 			__( 'CiviCRM ACF Integration has become part of CiviCRM Profile Sync. Please visit the %1$sMigration Page%2$s to switch over.', 'civicrm-wp-profile-sync' ),
 			'<a href="' . menu_page_url( 'cwps_acf_sync', false ) . '">',
 			'</a>'
@@ -529,7 +530,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	 * @param mixed $unused Unused param.
 	 * @param array $metabox Array containing id, title, callback, and args elements.
 	 */
-	public function meta_box_submit_render( $unused = NULL, $metabox ) {
+	public function meta_box_submit_render( $unused = null, $metabox ) {
 
 		// Include template file.
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/metaboxes/metabox-acf-migrate-submit.php';
@@ -546,7 +547,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	 * @param mixed $unused Unused param.
 	 * @param array $metabox Array containing id, title, callback, and args elements.
 	 */
-	public function meta_box_migrate_render( $unused = NULL, $metabox ) {
+	public function meta_box_migrate_render( $unused = null, $metabox ) {
 
 		// Include template file.
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/metaboxes/metabox-acf-migrate-info.php';

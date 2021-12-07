@@ -1143,7 +1143,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 				if ( in_array( $code, $cannot_be_empty ) && empty( $value ) ) {
 					// Skip.
 				} else {
-					$activity_data[$code] = $value;
+					$activity_data[ $code ] = $value;
 				}
 
 			}
@@ -1206,7 +1206,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		// Build Activity Field choices array for dropdown.
 		$activity_fields_label = esc_attr__( 'Activity Fields', 'civicrm-wp-profile-sync' );
 		foreach ( $activity_fields as $activity_field ) {
-			$choices[$activity_fields_label][$this->activity_field_prefix . $activity_field['name']] = $activity_field['title'];
+			$choices[ $activity_fields_label ][ $this->activity_field_prefix . $activity_field['name'] ] = $activity_field['title'];
 		}
 
 		// Build Custom Field choices array for dropdown.
@@ -1214,7 +1214,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			$custom_fields_label = esc_attr( $custom_group_name );
 			foreach ( $custom_group as $custom_field ) {
-				$choices[$custom_fields_label][$custom_field_prefix . $custom_field['id']] = $custom_field['label'];
+				$choices[ $custom_fields_label ][ $custom_field_prefix . $custom_field['id'] ] = $custom_field['label'];
 			}
 		}
 
@@ -1269,9 +1269,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		$acf_field_key = $this->civicrm->acf_field_key_get();
 
 		// Set the mapped Activity Field name if present.
-		if ( isset( $field[$acf_field_key] ) ) {
-			if ( false !== strpos( $field[$acf_field_key], $this->activity_field_prefix ) ) {
-				$activity_field_name = (string) str_replace( $this->activity_field_prefix, '', $field[$acf_field_key] );
+		if ( isset( $field[ $acf_field_key ] ) ) {
+			if ( false !== strpos( $field[ $acf_field_key ], $this->activity_field_prefix ) ) {
+				$activity_field_name = (string) str_replace( $this->activity_field_prefix, '', $field[ $acf_field_key ] );
 			}
 		}
 
@@ -1342,7 +1342,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		if ( ! empty( $activity_fields ) ) {
 			$activity_fields_label = esc_attr__( 'Activity Fields', 'civicrm-wp-profile-sync' );
 			foreach ( $activity_fields as $activity_field ) {
-				$choices[$activity_fields_label][$this->activity_field_prefix . $activity_field['name']] = $activity_field['title'];
+				$choices[ $activity_fields_label ][ $this->activity_field_prefix . $activity_field['name'] ] = $activity_field['title'];
 			}
 		}
 
@@ -1352,7 +1352,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 			foreach ( $filtered_fields as $custom_group_name => $custom_group ) {
 				$custom_fields_label = esc_attr( $custom_group_name );
 				foreach ( $custom_group as $custom_field ) {
-					$choices[$custom_fields_label][$custom_field_prefix . $custom_field['id']] = $custom_field['label'];
+					$choices[ $custom_fields_label ][ $custom_field_prefix . $custom_field['id'] ] = $custom_field['label'];
 				}
 			}
 		}
@@ -1474,7 +1474,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		if ( ! empty( $fields_for_entity ) ) {
 			$activity_fields_label = esc_attr__( 'Activity Fields', 'civicrm-wp-profile-sync' );
 			foreach ( $fields_for_entity as $activity_field ) {
-				$choices[$activity_fields_label][$this->activity_field_prefix . $activity_field['name']] = $activity_field['title'];
+				$choices[ $activity_fields_label ][ $this->activity_field_prefix . $activity_field['name'] ] = $activity_field['title'];
 			}
 		}
 
@@ -1484,7 +1484,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 			foreach ( $filtered_fields as $custom_group_name => $custom_group ) {
 				$custom_fields_label = esc_attr( $custom_group_name );
 				foreach ( $custom_group as $custom_field ) {
-					$choices[$custom_fields_label][$custom_field_prefix . $custom_field['id']] = $custom_field['label'];
+					$choices[ $custom_fields_label ][ $custom_field_prefix . $custom_field['id'] ] = $custom_field['label'];
 				}
 			}
 		}
@@ -1527,9 +1527,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 		// Add Option Group and add entries for each Activity Type.
 		$activity_types_title = esc_attr( __( 'Activity Types', 'civicrm-wp-profile-sync' ) );
-		$entities[$activity_types_title] = [];
+		$entities[ $activity_types_title ] = [];
 		foreach ( $activity_types as $activity_type ) {
-			$entities[$activity_types_title][$this->identifier . '-' . $activity_type['value']] = $activity_type['label'];
+			$entities[ $activity_types_title ][ $this->identifier . '-' . $activity_type['value'] ] = $activity_type['label'];
 		}
 
 		// --<
@@ -1549,7 +1549,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 	 *
 	 * @param bool $mapped The existing mapping flag.
 	 * @param array $field_group The array of ACF Field Group data.
-	 * @param bool $mapped True if the Field Group is mapped, or pass through if not mapped.
+	 * @return bool $mapped True if the Field Group is mapped, or pass through if not mapped.
 	 */
 	public function query_field_group_mapped( $mapped, $field_group ) {
 
@@ -1578,7 +1578,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 	 *
 	 * @param array $custom_fields The existing Custom Fields.
 	 * @param array $field_group The array of ACF Field Group data.
-	 * @param array $custom_fields The populated array of CiviCRM Custom Fields params.
+	 * @return array $custom_fields The populated array of CiviCRM Custom Fields params.
 	 */
 	public function query_custom_fields( $custom_fields, $field_group ) {
 

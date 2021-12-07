@@ -140,6 +140,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Base {
 	 */
 	public function fields_handled_update( $args ) {
 
+		// --<
+		return true;
+
 	}
 
 

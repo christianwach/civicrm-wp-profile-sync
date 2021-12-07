@@ -426,10 +426,10 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 		*/
 
 		// Convert CiviCRM value to BuddyPress value by Field Type.
-		switch( $type ) {
+		switch ( $type ) {
 
 			// Used by "Primary" etc.
-			case 'true_false' :
+			case 'true_false':
 
 				// Clear the value when empty.
 				if ( empty( $value ) ) {
@@ -441,7 +441,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 				break;
 
 			// Used by "Country", "State/Province" and "County".
-			case 'selectbox' :
+			case 'selectbox':
 
 				// Convert if the value has the special CiviCRM array-like format.
 				if ( is_string( $value ) ) {
@@ -510,7 +510,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 				continue;
 			}
 			$location_type_id = $field['meta']['entity_data']['location_type_id'];
-			$address_groups[$location_type_id][] = $field;
+			$address_groups[ $location_type_id ][] = $field;
 		}
 
 		// Bail if there are no Address Groups.
@@ -647,7 +647,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 				$value = $this->xprofile->value_get_for_civicrm( $data['value'], $data['field_type'], $args );
 
 				// Add it to the Field data.
-				$address_data[$code] = $value;
+				$address_data[ $code ] = $value;
 
 			}
 
@@ -688,7 +688,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 	public function query_setting_choices( $choices, $field_type, $entity_type, $entity_type_data ) {
 
 		// Bail if there's something amiss.
-		if ( empty( $entity_type ) ||  empty( $field_type ) ) {
+		if ( empty( $entity_type ) || empty( $field_type ) ) {
 			return $choices;
 		}
 
@@ -704,7 +704,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 		if ( ! empty( $address_fields ) ) {
 			$address_fields_label = esc_attr__( 'Address Fields', 'civicrm-wp-profile-sync' );
 			foreach ( $address_fields as $address_field ) {
-				$choices[$address_fields_label][$this->address_field_prefix . $address_field['name']] = $address_field['title'];
+				$choices[ $address_fields_label ][ $this->address_field_prefix . $address_field['name'] ] = $address_field['title'];
 			}
 		}
 
@@ -795,8 +795,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 		// Only do this once per Field Type and filter.
 		static $pseudocache;
-		if ( isset( $pseudocache[$filter][$field_type] ) ) {
-			return $pseudocache[$filter][$field_type];
+		if ( isset( $pseudocache[ $filter ][ $field_type ] ) ) {
+			return $pseudocache[ $filter ][ $field_type ];
 		}
 
 		// Init return.
@@ -840,7 +840,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 				// Skip all but those mapped to the type of ACF Field.
 				foreach ( $public_fields as $key => $value ) {
-					if ( $field_type == $this->address_fields[$value['name']] ) {
+					if ( $field_type == $this->address_fields[ $value['name'] ] ) {
 						$fields[] = $value;
 					}
 				}
@@ -850,8 +850,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 		}
 
 		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$filter][$field_type] ) ) {
-			$pseudocache[$filter][$field_type] = $fields;
+		if ( ! isset( $pseudocache[ $filter ][ $field_type ] ) ) {
+			$pseudocache[ $filter ][ $field_type ] = $fields;
 		}
 
 		// --<
@@ -880,7 +880,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 		// if the key exists, return the value - which is the BuddyPress Type.
 		if ( array_key_exists( $name, $this->address_fields ) ) {
-			$type = $this->address_fields[$name];
+			$type = $this->address_fields[ $name ];
 		}
 
 		// --<

@@ -184,7 +184,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML {
 		<tr>
 			<th scope="row" valign="top"><label for="description"><?php _ex( 'Description', 'Taxonomy Description', 'civicrm-wp-profile-sync' ); ?></label></th>
 			<td><?php wp_editor( htmlspecialchars_decode( $term->description ), 'html-description', $settings ); ?>
-			<span class="description"><?php _e( 'The description is not prominent by default, however some themes may show it.', 'civicrm-wp-profile-sync' ); ?></span></td>
+			<span class="description"><?php esc_html_e( 'The description is not prominent by default, however some themes may show it.', 'civicrm-wp-profile-sync' ); ?></span></td>
 			<script type="text/javascript">
 				// Remove the non-HTML Field.
 				jQuery( 'textarea#description' ).closest( '.form-field' ).remove();
@@ -216,7 +216,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML {
 		<div class="form-field term-description-wrap">
 			<label for="tag-description"><?php _ex( 'Description', 'Taxonomy Description', 'civicrm-wp-profile-sync' ); ?></label>
 			<?php wp_editor( '', 'html-tag-description', $settings ); ?>
-			<p class="description"><?php _e( 'The description is not prominent by default, however some themes may show it.', 'civicrm-wp-profile-sync' ); ?></p>
+			<p class="description"><?php esc_html_e( 'The description is not prominent by default, however some themes may show it.', 'civicrm-wp-profile-sync' ); ?></p>
 			<script type="text/javascript">
 				// Remove the non-HTML Field.
 				jQuery( 'textarea#tag-description' ).closest( '.form-field' ).remove();
@@ -224,13 +224,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML {
 				jQuery( function() {
 					// This fires when submitted via keyboard.
 					jQuery( '#addtag' ).on( 'keydown', '#submit', function() {
-				   		tinyMCE.triggerSave();
-				    });
+						tinyMCE.triggerSave();
+					});
 					// This does not fire when submitted via keyboard.
 					jQuery( '#addtag' ).on( 'mousedown', '#submit', function() {
-				   		tinyMCE.triggerSave();
-				    });
-			    });
+						tinyMCE.triggerSave();
+					});
+				});
 			</script>
 		</div>
 		<?php

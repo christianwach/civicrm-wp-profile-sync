@@ -234,8 +234,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Type {
 		$mappings = array_flip( $mappings );
 
 		// Overwrite the Case Type ID if there is a value.
-		if ( isset( $mappings[$post_type_name] ) ) {
-			$case_type_id = $mappings[$post_type_name];
+		if ( isset( $mappings[ $post_type_name ] ) ) {
+			$case_type_id = $mappings[ $post_type_name ];
 		}
 
 		// --<
@@ -261,8 +261,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Type {
 
 		// Only do this once.
 		static $pseudocache;
-		if ( isset( $pseudocache[$field] ) ) {
-			return $pseudocache[$field];
+		if ( isset( $pseudocache[ $field ] ) ) {
+			return $pseudocache[ $field ];
 		}
 
 		// Init return.
@@ -300,12 +300,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Type {
 
 		// The formatted result set is what we're after.
 		foreach ( $result['values'] as $choice ) {
-			$choices[$choice['key']] = $choice['value'];
+			$choices[ $choice['key'] ] = $choice['value'];
 		}
 
 		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$field] ) ) {
-			$pseudocache[$field] = $choices;
+		if ( ! isset( $pseudocache[ $field ] ) ) {
+			$pseudocache[ $field ] = $choices;
 		}
 
 		// --<
@@ -366,7 +366,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Type {
 
 		// The formatted result set is what we're after.
 		foreach ( $result['values'] as $choice ) {
-			$case_types[$choice['id']] = $choice['title'];
+			$case_types[ $choice['id'] ] = $choice['title'];
 		}
 
 		// Maybe add to pseudo-cache.
@@ -475,8 +475,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Type {
 		$mapped_post_types = $this->acf_loader->mapping->mappings_for_case_types_get();
 
 		// Check presence in mappings.
-		if ( isset( $mapped_post_types[$case_type_id] ) ) {
-			$is_mapped = $mapped_post_types[$case_type_id];
+		if ( isset( $mapped_post_types[ $case_type_id ] ) ) {
+			$is_mapped = $mapped_post_types[ $case_type_id ];
 		}
 
 		// --<

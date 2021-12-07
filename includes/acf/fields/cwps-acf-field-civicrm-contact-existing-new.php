@@ -166,11 +166,11 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 		// Define translations.
 		$this->l10n = [
 			// Example message.
-			'error'	=> __( 'Error! Please enter a higher value.', 'civicrm-wp-profile-sync' ),
+			'error' => __( 'Error! Please enter a higher value.', 'civicrm-wp-profile-sync' ),
 		];
 
 		// Call parent.
-    	parent::__construct();
+		parent::__construct();
 
 		// Register this Field as a Local Field.
 		add_action( 'acf/init', [ $this, 'register_field' ] );
@@ -195,13 +195,13 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 	public function remove_field_type( $groups ) {
 
 		// Bail if the "CiviCRM" group is missing.
-		if ( empty( $groups[$this->category] ) ) {
+		if ( empty( $groups[ $this->category ] ) ) {
 			return $groups;
 		}
 
 		// Remove this Field Type.
-		if ( isset( $groups[$this->category][$this->name] ) ) {
-			unset( $groups[$this->category][$this->name] );
+		if ( isset( $groups[ $this->category ][ $this->name ] ) ) {
+			unset( $groups[ $this->category ][ $this->name ] );
 		}
 
 		// --<
@@ -561,25 +561,25 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 		$prefix = 'field_' . $this->acf_slug;
 
 		// Return early if there is an existing Contact ID.
-		$contact_id = $value[$prefix . '_contact_id'];
+		$contact_id = $value[ $prefix . '_contact_id' ];
 		if ( ! empty( $contact_id ) && is_numeric( $contact_id ) ) {
 			return (int) $contact_id;
 		}
 
 		// Get "New Contact" Group.
-		$new_contact = $value[$prefix . '_contact_new'];
+		$new_contact = $value[ $prefix . '_contact_new' ];
 		if ( empty( $new_contact ) ) {
 			return false;
 		}
 
 		// Get Contact Type.
-		$contact_type = $new_contact[$prefix . '_contact_type'];
+		$contact_type = $new_contact[ $prefix . '_contact_type' ];
 		if ( empty( $contact_type ) ) {
 			return false;
 		}
 
 		// Get Email.
-		$email = $new_contact[$prefix . '_contact_email'];
+		$email = $new_contact[ $prefix . '_contact_email' ];
 		if ( empty( $email ) ) {
 			return false;
 		}
@@ -593,22 +593,22 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 		// Construct Contact Name.
 		switch ( $contact_type ) {
 
-			case 'Household' :
-				$household_name = $new_contact[$prefix . '_contact_household_name'];
+			case 'Household':
+				$household_name = $new_contact[ $prefix . '_contact_household_name' ];
 				$contact_data['household_name'] = $household_name;
 				$contact_data['display_name'] = $household_name;
 				break;
 
-			case 'Organization' :
-				$organisation_name = $new_contact[$prefix . '_contact_organization_name'];
+			case 'Organization':
+				$organisation_name = $new_contact[ $prefix . '_contact_organization_name' ];
 				$contact_data['organization_name'] = $organisation_name;
 				$contact_data['display_name'] = $organisation_name;
 				break;
 
-			case 'Individual' :
-				$first_name = $new_contact[$prefix . '_contact_first_name'];
+			case 'Individual':
+				$first_name = $new_contact[ $prefix . '_contact_first_name' ];
 				$contact_data['first_name'] = $first_name;
-				$last_name = $new_contact[$prefix . '_contact_last_name'];
+				$last_name = $new_contact[ $prefix . '_contact_last_name' ];
 				$contact_data['last_name'] = $last_name;
 				break;
 
@@ -676,26 +676,26 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 		}
 
 		// Return early if there is an existing Contact ID.
-		$contact_id = $value['field_' . $this->acf_slug . '_contact_id'];
+		$contact_id = $value[ 'field_' . $this->acf_slug . '_contact_id' ];
 		if ( ! empty( $contact_id ) && is_numeric( $contact_id ) ) {
 			return $valid;
 		}
 
 		// Get "New Contact" Group.
-		$new_contact = $value['field_' . $this->acf_slug . '_contact_new'];
+		$new_contact = $value[ 'field_' . $this->acf_slug . '_contact_new' ];
 		if ( empty( $new_contact ) ) {
 			return false;
 		}
 
 		// Check that we have a Contact Type.
-		$contact_type = $new_contact['field_' . $this->acf_slug . '_contact_type'];
+		$contact_type = $new_contact[ 'field_' . $this->acf_slug . '_contact_type' ];
 		if ( empty( $contact_type ) ) {
 			$valid = __( 'Please select a Contact Type for the New Contact', 'civicrm-wp-profile-sync' );
 			return $valid;
 		}
 
 		// Check that we have an Email.
-		$email = $new_contact['field_' . $this->acf_slug . '_contact_email'];
+		$email = $new_contact[ 'field_' . $this->acf_slug . '_contact_email' ];
 		if ( empty( $email ) ) {
 			$valid = __( 'Please enter an Email Address for the New Contact', 'civicrm-wp-profile-sync' );
 			return $valid;
@@ -710,8 +710,8 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 		// Construct Contact Name.
 		switch ( $contact_type ) {
 
-			case 'Household' :
-				$household_name = $new_contact['field_' . $this->acf_slug . '_contact_household_name'];
+			case 'Household':
+				$household_name = $new_contact[ 'field_' . $this->acf_slug . '_contact_household_name' ];
 				$contact_data['household_name'] = $household_name;
 				if ( empty( $household_name ) ) {
 					$valid = __( 'Please enter a name for the New Household.', 'civicrm-wp-profile-sync' );
@@ -719,8 +719,8 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 				}
 				break;
 
-			case 'Organization' :
-				$organisation_name = $new_contact['field_' . $this->acf_slug . '_contact_organization_name'];
+			case 'Organization':
+				$organisation_name = $new_contact[ 'field_' . $this->acf_slug . '_contact_organization_name' ];
 				$contact_data['organization_name'] = $organisation_name;
 				if ( empty( $household_name ) ) {
 					$valid = __( 'Please enter a name for the New Organization.', 'civicrm-wp-profile-sync' );
@@ -728,10 +728,10 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 				}
 				break;
 
-			case 'Individual' :
-				$first_name = $new_contact['field_' . $this->acf_slug . '_contact_first_name'];
+			case 'Individual':
+				$first_name = $new_contact[ 'field_' . $this->acf_slug . '_contact_first_name' ];
 				$contact_data['first_name'] = $first_name;
-				$last_name = $new_contact['field_' . $this->acf_slug . '_contact_last_name'];
+				$last_name = $new_contact[ 'field_' . $this->acf_slug . '_contact_last_name' ];
 				$contact_data['last_name'] = $last_name;
 				if ( empty( $first_name ) && empty( $last_name ) ) {
 					$valid = __( 'Please enter a First Name and a Last Name for the New Contact.', 'civicrm-wp-profile-sync' );
@@ -758,10 +758,10 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 			$contact = $this->plugin->civicrm->contact->get_by_id( $contact_id );
 			$url = $this->plugin->civicrm->get_link( 'civicrm/contact/view', 'reset=1&cid=' . $contact_id );
 			$valid = sprintf(
+				/* translators: 1: The Link to the Contact, 2: The Email Address of the Contact */
 				__( 'It looks like this Contact already exists: %1$s %2$s', 'civicrm-wp-profile-sync' ),
 				'<a href="' . $url . '" target="_blank">' . esc_html( $contact['display_name'] ) . '</a>',
-				$contact['email'],
-				'<br>'
+				$contact['email']
 			);
 			return $valid;
 		}

@@ -337,7 +337,7 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Phone {
 
 		// Build Location Types choices array for dropdown.
 		foreach ( $location_types as $location_type ) {
-			$options[$location_type['id']] = esc_attr( $location_type['display_name'] );
+			$options[ $location_type['id'] ] = esc_attr( $location_type['display_name'] );
 		}
 
 		// --<

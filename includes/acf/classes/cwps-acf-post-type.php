@@ -588,7 +588,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 		}
 
 		// Test for this Location Rule.
-		if ( $rule['param'] == $this->rule_name && ! empty( $params[$this->rule_name] ) ) {
+		if ( $rule['param'] == $this->rule_name && ! empty( $params[ $this->rule_name ] ) ) {
 			$supported = true;
 		}
 

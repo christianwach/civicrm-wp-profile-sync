@@ -599,8 +599,8 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 
 		// Only do this once per named Option Group.
 		static $pseudocache;
-		if ( isset( $pseudocache[$name] ) ) {
-			return $pseudocache[$name];
+		if ( isset( $pseudocache[ $name ] ) ) {
+			return $pseudocache[ $name ];
 		}
 
 		// Init return.
@@ -634,8 +634,8 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 		$options = array_pop( $result['values'] );
 
 		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$name] ) ) {
-			$pseudocache[$name] = $options;
+		if ( ! isset( $pseudocache[ $name ] ) ) {
+			$pseudocache[ $name ] = $options;
 		}
 
 		// --<

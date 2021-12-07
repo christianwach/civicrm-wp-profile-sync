@@ -329,7 +329,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				$field = get_sub_field( $this->field_key . 'map_' . $field_for_type['name'] );
 				$field = acfe_form_map_field_value_load( $field, $current_post_id, $form );
 				if ( acf_is_field_key( $field ) && ! empty( $contact[ $field_for_type['name'] ] ) ) {
-					$form['map'][$field]['value'] = $contact[ $field_for_type['name'] ];
+					$form['map'][ $field ]['value'] = $contact[ $field_for_type['name'] ];
 				}
 			}
 		}
@@ -356,7 +356,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 					if ( empty( $contact[ $code ] ) && $contact[ $code ] !== '0' ) {
 						continue;
 					}
-					$form['map'][$field]['value'] = $contact[$code];
+					$form['map'][ $field ]['value'] = $contact[ $code ];
 				}
 			}
 
@@ -371,7 +371,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			foreach ( $email_actions as $email_action ) {
 
 				// Try and get the Email Record.
-				$location_type_id = $email_action[$this->field_name . 'map_email_location_type_id'];
+				$location_type_id = $email_action[ $this->field_name . 'map_email_location_type_id' ];
 				$email = (array) $this->civicrm->email->email_get_by_location( $contact['id'], $location_type_id );
 				if ( empty( $email ) ) {
 					continue;
@@ -385,7 +385,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 					$field = $email_action[ $this->field_name . 'map_email_' . $email_field['name'] ];
 					$field = acfe_form_map_field_value_load( $field, $current_post_id, $form );
 					if ( acf_is_field_key( $field ) && ! empty( $email[ $email_field['name'] ] ) ) {
-						$form['map'][$field]['value'] = $email[ $email_field['name'] ];
+						$form['map'][ $field ]['value'] = $email[ $email_field['name'] ];
 					}
 				}
 
@@ -401,7 +401,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			foreach ( $website_actions as $website_action ) {
 
 				// Try and get the Website Record.
-				$website_type_id = $website_action[$this->field_name . 'map_website_type_id'];
+				$website_type_id = $website_action[ $this->field_name . 'map_website_type_id' ];
 				$website = $this->civicrm->website->website_get_by_type( $contact['id'], $website_type_id );
 				if ( empty( $website ) ) {
 					continue;
@@ -416,7 +416,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 					$field = $website_action[ $this->field_name . 'map_website_' . $website_field['name'] ];
 					$field = acfe_form_map_field_value_load( $field, $current_post_id, $form );
 					if ( acf_is_field_key( $field ) && ! empty( $website_record[ $website_field['name'] ] ) ) {
-						$form['map'][$field]['value'] = $website_record[ $website_field['name'] ];
+						$form['map'][ $field ]['value'] = $website_record[ $website_field['name'] ];
 					}
 				}
 
@@ -432,7 +432,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			foreach ( $address_actions as $address_action ) {
 
 				// Try and get the Address Record.
-				$location_type_id = $address_action[$this->field_name . 'map_address_location_type_id'];
+				$location_type_id = $address_action[ $this->field_name . 'map_address_location_type_id' ];
 				$address = (array) $this->plugin->civicrm->address->address_get_by_location( $contact['id'], $location_type_id );
 				if ( empty( $address ) ) {
 					continue;
@@ -446,7 +446,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 					$field = $address_action[ $this->field_name . 'map_address_' . $address_field['name'] ];
 					$field = acfe_form_map_field_value_load( $field, $current_post_id, $form );
 					if ( acf_is_field_key( $field ) && ! empty( $address[ $address_field['name'] ] ) ) {
-						$form['map'][$field]['value'] = $address[ $address_field['name'] ];
+						$form['map'][ $field ]['value'] = $address[ $address_field['name'] ];
 					}
 				}
 
@@ -462,8 +462,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			foreach ( $phone_actions as $phone_action ) {
 
 				// Try and get the Phone Record.
-				$location_type_id = $phone_action[$this->field_name . 'map_phone_location_type_id'];
-				$phone_type_id = $phone_action[$this->field_name . 'map_phone_type_id'];
+				$location_type_id = $phone_action[ $this->field_name . 'map_phone_location_type_id' ];
+				$phone_type_id = $phone_action[ $this->field_name . 'map_phone_type_id' ];
 				$phone_records = $this->plugin->civicrm->phone->phones_get_by_type( $contact['id'], $location_type_id, $phone_type_id );
 
 				// We can only handle exactly one, though CiviCRM allows many.
@@ -480,7 +480,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 					$field = $phone_action[ $this->field_name . 'map_phone_' . $phone_field['name'] ];
 					$field = acfe_form_map_field_value_load( $field, $current_post_id, $form );
 					if ( acf_is_field_key( $field ) && ! empty( $phone_record[ $phone_field['name'] ] ) ) {
-						$form['map'][$field]['value'] = $phone_record[ $phone_field['name'] ];
+						$form['map'][ $field ]['value'] = $phone_record[ $phone_field['name'] ];
 					}
 				}
 
@@ -496,8 +496,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			foreach ( $im_actions as $im_action ) {
 
 				// Try and get the Instant Messenger Record.
-				$location_type_id = $im_action[$this->field_name . 'map_im_location_type_id'];
-				$provider_id = $im_action[$this->field_name . 'map_provider_id'];
+				$location_type_id = $im_action[ $this->field_name . 'map_im_location_type_id' ];
+				$provider_id = $im_action[ $this->field_name . 'map_provider_id' ];
 				$im_records = $this->civicrm->im->ims_get_by_type( $contact['id'], $location_type_id, $provider_id );
 
 				// We can only handle exactly one, though CiviCRM allows many.
@@ -514,7 +514,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 					$field = $im_action[ $this->field_name . 'map_im_' . $im_field['name'] ];
 					$field = acfe_form_map_field_value_load( $field, $current_post_id, $form );
 					if ( acf_is_field_key( $field ) && ! empty( $im_record[ $im_field['name'] ] ) ) {
-						$form['map'][$field]['value'] = $im_record[ $im_field['name'] ];
+						$form['map'][ $field ]['value'] = $im_record[ $im_field['name'] ];
 					}
 				}
 
@@ -854,28 +854,30 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		$mapping_tab_header = $this->tab_mapping_header();
 
 		// "Auto-fill Enabled" Field.
-		$autoload_enabled = [ [
-			'key' => $this->field_key . 'autoload_enabled',
-			'label' => __( 'Auto-fill with data from CiviCRM', 'civicrm-wp-profile-sync' ),
-			'name' => $this->field_name . 'autoload_enabled',
-			'type' => 'true_false',
-			//'instructions' => __( 'Auto-fill with data from CiviCRM.', 'civicrm-wp-profile-sync' ),
-			'instructions' => '',
-			'required' => 0,
-			'conditional_logic' => 0,
-			'wrapper' => [
-				'width' => '',
-				'class' => '',
-				'id' => '',
-				'data-instruction-placement' => 'field',
+		$autoload_enabled = [
+			[
+				'key' => $this->field_key . 'autoload_enabled',
+				'label' => __( 'Auto-fill with data from CiviCRM', 'civicrm-wp-profile-sync' ),
+				'name' => $this->field_name . 'autoload_enabled',
+				'type' => 'true_false',
+				//'instructions' => __( 'Auto-fill with data from CiviCRM.', 'civicrm-wp-profile-sync' ),
+				'instructions' => '',
+				'required' => 0,
+				'conditional_logic' => 0,
+				'wrapper' => [
+					'width' => '',
+					'class' => '',
+					'id' => '',
+					'data-instruction-placement' => 'field',
+				],
+				'acfe_permissions' => '',
+				'message' => '',
+				'default_value' => 0,
+				'ui' => 1,
+				'ui_on_text' => '',
+				'ui_off_text' => '',
 			],
-			'acfe_permissions' => '',
-			'message' => '',
-			'default_value' => 0,
-			'ui' => 1,
-			'ui_on_text' => '',
-			'ui_off_text' => '',
-		] ];
+		];
 
 		// Build Contact Details Accordion.
 		$mapping_contact_accordion = $this->tab_mapping_accordion_contact_add();
@@ -1076,7 +1078,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$contact_sub_type_ids = [];
 			if ( ! empty( $custom_group['extends_entity_column_value'] ) ) {
 				foreach ( $custom_group['extends_entity_column_value'] as $sub_type ) {
-					$contact_sub_type_ids[] = array_search( $sub_type, $contact_sub_types[$custom_group['extends']] );
+					$contact_sub_type_ids[] = array_search( $sub_type, $contact_sub_types[ $custom_group['extends'] ] );
 				}
 			}
 
@@ -1250,7 +1252,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// Build Location Types choices array for dropdown.
 		$choices = [];
 		foreach ( $this->location_types as $location_type ) {
-			$choices[$location_type['id']] = esc_attr( $location_type['display_name'] );
+			$choices[ $location_type['id'] ] = esc_attr( $location_type['display_name'] );
 		}
 
 		// Add choices and modify Field.
@@ -1524,7 +1526,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// Build Location Types choices array for dropdown.
 		$choices = [];
 		foreach ( $this->location_types as $location_type ) {
-			$choices[$location_type['id']] = esc_attr( $location_type['display_name'] );
+			$choices[ $location_type['id'] ] = esc_attr( $location_type['display_name'] );
 		}
 
 		// Add choices and modify Field.
@@ -1705,7 +1707,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// Build Location Types choices array for dropdown.
 		$choices = [];
 		foreach ( $this->location_types as $location_type ) {
-			$choices[$location_type['id']] = esc_attr( $location_type['display_name'] );
+			$choices[ $location_type['id'] ] = esc_attr( $location_type['display_name'] );
 		}
 
 		// Add choices and modify Field.
@@ -1863,7 +1865,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// Build Location Types choices array for dropdown.
 		$choices = [];
 		foreach ( $this->location_types as $location_type ) {
-			$choices[$location_type['id']] = esc_attr( $location_type['display_name'] );
+			$choices[ $location_type['id'] ] = esc_attr( $location_type['display_name'] );
 		}
 
 		// Add choices and modify Field.
@@ -2004,7 +2006,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		$groups_all = $this->civicrm->group->groups_get_all();
 		$choices = [];
 		foreach ( $groups_all as $group ) {
-			$choices[$group['id']] = $group['title'];
+			$choices[ $group['id'] ] = $group['title'];
 		}
 
 		// Add Group choices and modify Field.
@@ -2174,7 +2176,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// Get all Free Membership Types from CiviCRM.
 		$choices = [];
 		foreach ( $this->membership_types as $membership_type ) {
-			$choices[$membership_type['id']] = $membership_type['name'];
+			$choices[ $membership_type['id'] ] = $membership_type['name'];
 		}
 
 		// Add Membership choices and modify Field.
@@ -2462,7 +2464,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		$choices = [];
 		foreach ( $tags as $tag ) {
-			$choices[$tag['id']] = esc_html( $tag['name'] );
+			$choices[ $tag['id'] ] = esc_html( $tag['name'] );
 		}
 
 		// Add Tags Field.
@@ -2655,10 +2657,10 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		$relationship_types = $this->civicrm->relationship->types_get_all();
 		foreach ( $relationship_types as $relationship ) {
 			if ( $relationship['label_a_b'] !== $relationship['label_b_a'] ) {
-				$choices[$relationship['contact_type_a']][$relationship['id'] . '_ab'] = esc_html( $relationship['label_a_b'] );
-				$choices[$relationship['contact_type_b']][$relationship['id'] . '_ba'] = esc_html( $relationship['label_b_a'] );
+				$choices[ $relationship['contact_type_a'] ][ $relationship['id'] . '_ab' ] = esc_html( $relationship['label_a_b'] );
+				$choices[ $relationship['contact_type_b'] ][ $relationship['id'] . '_ba' ] = esc_html( $relationship['label_b_a'] );
 			} else {
-				$choices[$relationship['contact_type_a']][$relationship['id'] . '_equal'] = esc_html( $relationship['label_a_b'] );
+				$choices[ $relationship['contact_type_a'] ][ $relationship['id'] . '_equal' ] = esc_html( $relationship['label_a_b'] );
 			}
 		}
 
@@ -2811,7 +2813,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		$contact_id = $this->form_contact_id_get( $contact_data, $email_data, $relationship_data );
 
 		// Add Custom Field data if present.
-		if ( ! empty ( $custom_data ) ) {
+		if ( ! empty( $custom_data ) ) {
 			$contact_data += $custom_data;
 		}
 
@@ -3370,24 +3372,24 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			}
 
 			// Grab the Relationship with the offset.
-			$relationship = $relationships[$offset];
+			$relationship = $relationships[ $offset ];
 
 			// Parse against the incoming data.
 			$relationship_update = [];
 
 			// Overwrite when there is an incoming value.
 			foreach ( $relationship as $key => $value ) {
-				if ( ! empty( $field[$key] ) ) {
-					$relationship_update[$key] = $field[$key];
+				if ( ! empty( $field[ $key ] ) ) {
+					$relationship_update[ $key ] = $field[ $key ];
 				} else {
-					$relationship_update[$key] = $value;
+					$relationship_update[ $key ] = $value;
 				}
 			}
 
 			// Add in any entries that don't exist.
 			foreach ( $field as $key => $value ) {
 				if ( ! array_key_exists( $key, $relationship ) ) {
-					$relationship_update[$key] = $field[$key];
+					$relationship_update[ $key ] = $field[ $key ];
 				}
 			}
 
@@ -3753,7 +3755,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			if ( ! empty( $address['is_override'] ) ) {
 				foreach ( $this->address_fields as $address_field ) {
 					if ( ! array_key_exists( $address_field['name'], $address ) ) {
-						$address[$address_field['name']] = '';
+						$address[ $address_field['name'] ] = '';
 					}
 				}
 			}

@@ -412,10 +412,10 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 		*/
 
 		// Convert CiviCRM value to BuddyPress value by Field Type.
-		switch( $type ) {
+		switch ( $type ) {
 
 			// Used by "Primary" etc.
-			case 'true_false' :
+			case 'true_false':
 
 				// Clear the value when empty.
 				if ( empty( $value ) ) {
@@ -488,7 +488,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 			}
 			$location_type_id = $field['meta']['entity_data']['location_type_id'];
 			$phone_type_id = $field['meta']['entity_data']['phone_type_id'];
-			$phone_groups[$location_type_id][$phone_type_id][] = $field;
+			$phone_groups[ $location_type_id ][ $phone_type_id ][] = $field;
 		}
 
 		// Bail if there are no Phone Groups.
@@ -636,7 +636,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 				$value = $this->xprofile->value_get_for_civicrm( $data['value'], $data['field_type'], $args );
 
 				// Add it to the Field data.
-				$phone_data[$code] = $value;
+				$phone_data[ $code ] = $value;
 
 			}
 
@@ -677,7 +677,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 	public function query_setting_choices( $choices, $field_type, $entity_type, $entity_type_data ) {
 
 		// Bail if there's something amiss.
-		if ( empty( $entity_type ) ||  empty( $field_type ) ) {
+		if ( empty( $entity_type ) || empty( $field_type ) ) {
 			return $choices;
 		}
 
@@ -693,7 +693,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 		if ( ! empty( $phone_fields ) ) {
 			$phone_fields_label = esc_attr__( 'Phone Fields', 'civicrm-wp-profile-sync' );
 			foreach ( $phone_fields as $phone_field ) {
-				$choices[$phone_fields_label][$this->phone_field_prefix . $phone_field['name']] = $phone_field['title'];
+				$choices[ $phone_fields_label ][ $this->phone_field_prefix . $phone_field['name'] ] = $phone_field['title'];
 			}
 		}
 
@@ -784,8 +784,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 		// Only do this once per Field Type and filter.
 		static $pseudocache;
-		if ( isset( $pseudocache[$filter][$field_type] ) ) {
-			return $pseudocache[$filter][$field_type];
+		if ( isset( $pseudocache[ $filter ][ $field_type ] ) ) {
+			return $pseudocache[ $filter ][ $field_type ];
 		}
 
 		// Init return.
@@ -829,7 +829,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 				// Skip all but those mapped to the type of ACF Field.
 				foreach ( $public_fields as $key => $value ) {
-					if ( $field_type == $this->phone_fields[$value['name']] ) {
+					if ( $field_type == $this->phone_fields[ $value['name'] ] ) {
 						$fields[] = $value;
 					}
 				}
@@ -839,8 +839,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 		}
 
 		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$filter][$field_type] ) ) {
-			$pseudocache[$filter][$field_type] = $fields;
+		if ( ! isset( $pseudocache[ $filter ][ $field_type ] ) ) {
+			$pseudocache[ $filter ][ $field_type ] = $fields;
 		}
 
 		// --<
@@ -869,7 +869,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 		// if the key exists, return the value - which is the BuddyPress Type.
 		if ( array_key_exists( $name, $this->phone_fields ) ) {
-			$type = $this->phone_fields[$name];
+			$type = $this->phone_fields[ $name ];
 		}
 
 		// --<

@@ -156,11 +156,11 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Field extends acf_field {
 		// Define translations.
 		$this->l10n = [
 			// Example message.
-			'error'	=> __( 'Error! Please enter a higher value.', 'civicrm-wp-profile-sync' ),
+			'error' => __( 'Error! Please enter a higher value.', 'civicrm-wp-profile-sync' ),
 		];
 
 		// Call parent.
-    	parent::__construct();
+		parent::__construct();
 
 		// Define AJAX callbacks.
 		add_action( 'wp_ajax_acf/fields/' . $this->name . '/query', [ $this, 'ajax_query' ] );
@@ -183,13 +183,13 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Field extends acf_field {
 	public function remove_field_type( $groups ) {
 
 		// Bail if the "CiviCRM" group is missing.
-		if ( empty( $groups[$this->category] ) ) {
+		if ( empty( $groups[ $this->category ] ) ) {
 			return $groups;
 		}
 
 		// Remove this Field Type.
-		if ( isset( $groups[$this->category][$this->name] ) ) {
-			unset( $groups[$this->category][$this->name] );
+		if ( isset( $groups[ $this->category ][ $this->name ] ) ) {
+			unset( $groups[ $this->category ][ $this->name ] );
 		}
 
 		// --<
@@ -268,7 +268,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Field extends acf_field {
 					// TODO: Permission to view Event?
 
 					// Append Event to choices.
-					$field['choices'][$event['id']] = $title;
+					$field['choices'][ $event['id'] ] = $title;
 
 				}
 			}
@@ -328,15 +328,15 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Field extends acf_field {
 			'paged' => 1,
 		];
 
-   		// Parse the incoming POST array.
-   		$options = acf_parse_args( $options, $defaults );
+		// Parse the incoming POST array.
+		$options = acf_parse_args( $options, $defaults );
 
 		// Bail if there's no search string.
 		if ( empty( $options['s'] ) ) {
 			return $response;
 		}
 
- 		// Load Field.
+		// Load Field.
 		$field = acf_get_field( $options['field_key'] );
 
 		// Bail if Field did not load.

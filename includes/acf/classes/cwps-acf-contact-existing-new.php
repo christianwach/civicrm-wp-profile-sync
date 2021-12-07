@@ -290,7 +290,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Existing_New extends CiviCRM_Prof
 
 		// Add if it is a Contact ID Field.
 		if ( ! empty( $field['type'] ) && $field['type'] == 'civicrm_contact_id' ) {
-			$acf_fields['contact_id'][$field['name']] = 1;
+			$acf_fields['contact_id'][ $field['name'] ] = 1;
 		}
 
 		// --<

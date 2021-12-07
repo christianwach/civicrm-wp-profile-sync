@@ -369,7 +369,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 	 *
 	 * @param bool $mapped The existing mapping flag.
 	 * @param array $field_group The array of ACF Field Group data.
-	 * @param bool $mapped True if the Field Group should bypass ACF, or pass through if not.
+	 * @return bool $mapped True if the Field Group should bypass ACF, or pass through if not.
 	 */
 	public function query_field_group_mapped( $mapped, $field_group ) {
 
@@ -459,7 +459,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 		}
 
 		// Test for this Location Rule.
-		if ( $rule['param'] == $this->rule_name && ! empty( $params[$this->rule_name] ) ) {
+		if ( $rule['param'] == $this->rule_name && ! empty( $params[ $this->rule_name ] ) ) {
 			$supported = true;
 		}
 

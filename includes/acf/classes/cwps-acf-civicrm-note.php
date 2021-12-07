@@ -193,7 +193,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Note {
 	 * @since 0.5
 	 *
 	 * @param integer $note_id The numeric ID of the Note.
-	 * @param array $note The array of Note data, or empty if none.
+	 * @return array $note The array of Note data, or empty if none.
 	 */
 	public function get_by_id( $note_id ) {
 
@@ -224,7 +224,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Note {
 			return $note;
 		}
 
- 		// The result set should contain only one item.
+		// The result set should contain only one item.
 		$note = (object) array_pop( $result['values'] );
 
 		// --<
@@ -306,8 +306,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Note {
 
 		// Only do this once per Field Type and filter.
 		static $pseudocache;
-		if ( isset( $pseudocache[$filter] ) ) {
-			return $pseudocache[$filter];
+		if ( isset( $pseudocache[ $filter ] ) ) {
+			return $pseudocache[ $filter ];
 		}
 
 		// Init return.
@@ -353,8 +353,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Note {
 		}
 
 		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$filter] ) ) {
-			$pseudocache[$filter] = $fields;
+		if ( ! isset( $pseudocache[ $filter ] ) ) {
+			$pseudocache[ $filter ] = $fields;
 		}
 
 		// --<

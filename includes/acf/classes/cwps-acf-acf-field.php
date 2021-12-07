@@ -254,8 +254,8 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 		// Only do this once per Post.
 		static $pseudocache;
-		if ( isset( $pseudocache[$post_id] ) ) {
-			return $pseudocache[$post_id];
+		if ( isset( $pseudocache[ $post_id ] ) ) {
+			return $pseudocache[ $post_id ];
 		}
 
 		// Init return.
@@ -297,25 +297,25 @@ class CiviCRM_Profile_Sync_ACF_Field {
 				// Get the CiviCRM Custom Field and add if it has a reference to a CiviCRM Field.
 				$custom_field_id = $this->acf_loader->civicrm->custom_field->custom_field_id_get( $field_in_group );
 				if ( ! empty( $custom_field_id ) ) {
-					$acf_fields['custom'][$field_in_group['name']] = $custom_field_id;
+					$acf_fields['custom'][ $field_in_group['name'] ] = $custom_field_id;
 				}
 
 				// Get the CiviCRM Contact Field and add if it has a reference to a CiviCRM Field.
 				$contact_field_name = $this->acf_loader->civicrm->contact->contact_field_name_get( $field_in_group );
 				if ( ! empty( $contact_field_name ) ) {
-					$acf_fields['contact'][$field_in_group['name']] = $contact_field_name;
+					$acf_fields['contact'][ $field_in_group['name'] ] = $contact_field_name;
 				}
 
 				// Get the CiviCRM Activity Field and add if it has a reference to a CiviCRM Field.
 				$activity_field_name = $this->acf_loader->civicrm->activity->activity_field_name_get( $field_in_group );
 				if ( ! empty( $activity_field_name ) ) {
-					$acf_fields['activity'][$field_in_group['name']] = $activity_field_name;
+					$acf_fields['activity'][ $field_in_group['name'] ] = $activity_field_name;
 				}
 
 				// Get the CiviCRM Participant Field and add if it has a reference to a CiviCRM Field.
 				$participant_field_name = $this->acf_loader->civicrm->participant->participant_field_name_get( $field_in_group );
 				if ( ! empty( $participant_field_name ) ) {
-					$acf_fields['participant'][$field_in_group['name']] = $participant_field_name;
+					$acf_fields['participant'][ $field_in_group['name'] ] = $participant_field_name;
 				}
 
 				/**
@@ -344,8 +344,8 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		}
 
 		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$post_id] ) ) {
-			$pseudocache[$post_id] = $acf_fields;
+		if ( ! isset( $pseudocache[ $post_id ] ) ) {
+			$pseudocache[ $post_id ] = $acf_fields;
 		}
 
 		// --<
@@ -424,7 +424,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		// Validate depending on the "data_type".
 		switch ( $field_data['data_type'] ) {
 
-			case 'String' :
+			case 'String':
 
 				// If it's a Multi-select.
 				if ( $field_data['html_type'] == 'Multi-Select' && is_array( $value ) ) {
@@ -433,6 +433,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 					foreach ( $value as $item ) {
 						if ( ! empty( $field_data['text_length'] ) ) {
 							if ( strlen( $item ) > $field_data['text_length'] ) {
+								/* translators: %s: The number of characters */
 								$valid = sprintf( __( 'Must be maximum %s characters.', 'civicrm-wp-profile-sync' ), $field_data['text_length'] );
 							}
 						} else {
@@ -447,6 +448,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 					// CiviCRM string Fields are varchar(255) or varchar(260).
 					if ( ! empty( $field_data['text_length'] ) ) {
 						if ( strlen( $value ) > $field_data['text_length'] ) {
+							/* translators: %s: The number of characters */
 							$valid = sprintf( __( 'Must be maximum %s characters.', 'civicrm-wp-profile-sync' ), $field_data['text_length'] );
 						}
 					} else {
@@ -459,7 +461,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 				break;
 
-			case 'Int' :
+			case 'Int':
 
 				// If it's a Multi-select.
 				if ( $field_data['html_type'] == 'Multi-Select' && is_array( $value ) ) {
@@ -494,7 +496,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 				break;
 
-			case 'Float' :
+			case 'Float':
 
 				// If it's a Multi-select.
 				if ( $field_data['html_type'] == 'Multi-Select' && is_array( $value ) ) {
@@ -516,7 +518,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 				}
 				break;
 
-			case 'Money' :
+			case 'Money':
 
 				// If it's a Multi-select.
 				if ( $field_data['html_type'] == 'Multi-Select' && is_array( $value ) ) {
@@ -585,25 +587,25 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	public function value_get_for_civicrm( $value = 0, $type, $settings, $args = [] ) {
 
 		// Set appropriate value per Field Type.
-		switch( $type ) {
+		switch ( $type ) {
 
-	 		// Parse the value of a "True/False" Field.
-			case 'true_false' :
+			// Parse the value of a "True/False" Field.
+			case 'true_false':
 				$value = $this->true_false_value_get( $value );
 				break;
 
-	 		// Parse the value of an "Image" Field.
-			case 'image' :
+			// Parse the value of an "Image" Field.
+			case 'image':
 				$value = $this->image_value_get( $value );
 				break;
 
-	 		// Parse the value of a "Date Picker" Field.
-			case 'date_picker' :
+			// Parse the value of a "Date Picker" Field.
+			case 'date_picker':
 				$value = $this->date_picker_value_get( $value, $settings );
 				break;
 
-	 		// Parse the value of a "Date Time Picker" Field.
-			case 'date_time_picker' :
+			// Parse the value of a "Date Time Picker" Field.
+			case 'date_time_picker':
 				$value = $this->date_time_picker_value_get( $value, $settings );
 				break;
 

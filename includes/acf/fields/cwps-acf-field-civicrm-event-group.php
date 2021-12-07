@@ -166,11 +166,11 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Group extends acf_field {
 		// Define translations.
 		$this->l10n = [
 			// Example message.
-			'error'	=> __( 'Error! Please enter a higher value.', 'civicrm-wp-profile-sync' ),
+			'error' => __( 'Error! Please enter a higher value.', 'civicrm-wp-profile-sync' ),
 		];
 
 		// Call parent.
-    	parent::__construct();
+		parent::__construct();
 
 		// Register this Field as a Local Field.
 		add_action( 'acf/init', [ $this, 'register_field' ] );
@@ -195,13 +195,13 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Group extends acf_field {
 	public function remove_field_type( $groups ) {
 
 		// Bail if the "CiviCRM" group is missing.
-		if ( empty( $groups[$this->category] ) ) {
+		if ( empty( $groups[ $this->category ] ) ) {
 			return $groups;
 		}
 
 		// Remove this Field Type.
-		if ( isset( $groups[$this->category][$this->name] ) ) {
-			unset( $groups[$this->category][$this->name] );
+		if ( isset( $groups[ $this->category ][ $this->name ] ) ) {
+			unset( $groups[ $this->category ][ $this->name ] );
 		}
 
 		// --<
@@ -443,7 +443,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Group extends acf_field {
 		$prefix = 'field_' . $this->acf_slug;
 
 		// Grab the Event ID.
-		$event_id = $value[$prefix . '_event_id'];
+		$event_id = $value[ $prefix . '_event_id' ];
 		if ( ! empty( $event_id ) && is_numeric( $event_id ) ) {
 			return (int) $event_id;
 		}
@@ -509,7 +509,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Group extends acf_field {
 		}
 
 		// Return early if there is an Event ID.
-		$event_id = $value['field_' . $this->acf_slug . '_event_id'];
+		$event_id = $value[ 'field_' . $this->acf_slug . '_event_id' ];
 		if ( empty( $event_id ) ) {
 			$valid = __( 'Please select an Event', 'civicrm-wp-profile-sync' );
 			return $valid;

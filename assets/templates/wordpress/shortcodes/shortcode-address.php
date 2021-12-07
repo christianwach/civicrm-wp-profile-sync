@@ -31,10 +31,10 @@
 	<?php echo $city; ?>
 <?php endif; ?>
 <?php if ( ! empty( $state_short ) ) : ?>
-	 <?php echo $state_short; ?>
+	<?php echo $state_short; ?>
 <?php endif; ?>
 <?php if ( ! empty( $postal_code ) ) : ?>
-	 <?php echo $postal_code; ?>
+	<?php echo $postal_code; ?>
 <?php endif; ?>
 <?php if ( ! empty( $city ) || ! empty( $postal_code ) ) : ?>
 	<br>

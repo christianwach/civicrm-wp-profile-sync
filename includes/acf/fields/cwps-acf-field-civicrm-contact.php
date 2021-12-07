@@ -168,7 +168,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 		// Define translations.
 		$this->l10n = [
 			// Example message.
-			'error'	=> __( 'Error! Please enter a higher value.', 'civicrm-wp-profile-sync' ),
+			'error' => __( 'Error! Please enter a higher value.', 'civicrm-wp-profile-sync' ),
 		];
 
 		// Call parent.
@@ -207,7 +207,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 			foreach ( $custom_group as $custom_field ) {
 				if ( ! empty( $custom_field['data_type'] ) && $custom_field['data_type'] == 'ContactReference' ) {
 					if ( ! empty( $custom_field['html_type'] ) && $custom_field['html_type'] == 'Autocomplete-Select' ) {
-						$filtered_fields[$custom_group_name][] = $custom_field;
+						$filtered_fields[ $custom_group_name ][] = $custom_field;
 					}
 				}
 			}
@@ -263,7 +263,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 					// TODO: Permission to view Contact?
 
 					// Append Contact to choices.
-					$field['choices'][$contact['contact_id']] = $name;
+					$field['choices'][ $contact['contact_id'] ] = $name;
 
 				}
 			}
@@ -326,15 +326,15 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 			'paged' => 1,
 		];
 
-   		// Parse the incoming POST array.
-   		$options = acf_parse_args( $options, $defaults );
+		// Parse the incoming POST array.
+		$options = acf_parse_args( $options, $defaults );
 
 		// Bail if there's no search string.
 		if ( empty( $options['s'] ) ) {
 			return $response;
 		}
 
- 		// Load Field.
+		// Load Field.
 		$field = acf_get_field( $options['field_key'] );
 		if ( ! $field ) {
 			return $response;
@@ -356,7 +356,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 		$args['contact_type'] = '';
 
 		// Restrict to target Contact Type if this Field is linked to Employer ID.
-		if ( ! empty( $field[$acf_field_key] ) && $field[$acf_field_key] == $this->civicrm->contact_field_prefix() . 'employer_id' ) {
+		if ( ! empty( $field[ $acf_field_key ] ) && $field[ $acf_field_key ] == $this->civicrm->contact_field_prefix() . 'employer_id' ) {
 			$args['contact_type'] = 'Organization';
 		}
 
@@ -382,7 +382,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 
 		// Get the Contact Reference Field's Groups.
 		$groups = [];
-		if ( ! empty( $field[$acf_field_key] ) ) {
+		if ( ! empty( $field[ $acf_field_key ] ) ) {
 
 			// Find the Custom Field ID.
 			$reference = $field[ $acf_field_key ];

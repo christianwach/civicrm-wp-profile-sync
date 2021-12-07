@@ -190,7 +190,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 	 * @since 0.5
 	 *
 	 * @param array $field The existing array of Field data.
-	 * @param array $field The modified array of Field data.
+	 * @return array $field The modified array of Field data.
 	 */
 	public function prepare_choices( $field ) {
 
@@ -300,7 +300,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 			'label' => __( 'Disable Smarty', 'civicrm-wp-profile-sync' ),
 			'name' => $this->field_name . 'disable_smarty',
 			'type' => 'true_false',
-			'instructions' => __( 'Disable Smarty. Normal CiviMail tokens are still supported. By default Smarty is enabled if configured by CIVICRM_MAIL_SMARTY.', 'civicrm-acfe-event-block' ),
+			'instructions' => __( 'Disable Smarty. Normal CiviMail tokens are still supported. By default Smarty is enabled if configured by CIVICRM_MAIL_SMARTY.', 'civicrm-wp-profile-sync' ),
 			'required' => 0,
 			'conditional_logic' => 0,
 			'wrapper' => [
@@ -323,7 +323,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 			'label' => __( 'Create Activity', 'civicrm-wp-profile-sync' ),
 			'name' => $this->field_name . 'create_activity',
 			'type' => 'true_false',
-			'instructions' => __( 'Usually an Email Activity is created when an Email is sent.', 'civicrm-acfe-event-block' ),
+			'instructions' => __( 'Usually an Email Activity is created when an Email is sent.', 'civicrm-wp-profile-sync' ),
 			'required' => 0,
 			'conditional_logic' => 0,
 			'wrapper' => [
@@ -822,7 +822,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 		}
 
 		// Add Custom Field data if present.
-		if ( ! empty ( $custom_data ) ) {
+		if ( ! empty( $custom_data ) ) {
 			$email_data += $custom_data;
 		}
 

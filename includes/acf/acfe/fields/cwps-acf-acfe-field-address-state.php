@@ -230,8 +230,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 			'allow_null' => 1,
 			'ui' => 1,
 			'ajax' => 1,
-            'ajax_action' => 'cwps_get_country_field',
-            'placeholder' => __( 'Select the Country Field', 'civicrm-wp-profile-sync' ),
+			'ajax_action' => 'cwps_get_country_field',
+			'placeholder' => __( 'Select the Country Field', 'civicrm-wp-profile-sync' ),
 			'default_value' => 0,
 			'required' => 0,
 			'conditional_logic' => [ [ [
@@ -244,7 +244,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 		// Add existing choice if present.
 		if ( ! empty( $field['state_country'] ) ) {
 			$country_field = acf_get_field( $field['state_country'] );
-			if( ! empty( $country_field ) ) {
+			if ( ! empty( $country_field ) ) {
 				$label = acf_maybe_get( $country_field, 'label', $country_field['name'] );
 				$country_ref['choices'] = [ $field['state_country'] => "{$label} ({$country_field['key']})" ];
 			}
@@ -262,7 +262,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 			'allow_null' => 1,
 			'ui' => 1,
 			'ajax' => 0,
-            'placeholder' => __( 'Select the Country', 'civicrm-wp-profile-sync' ),
+			'placeholder' => __( 'Select the Country', 'civicrm-wp-profile-sync' ),
 			'default_value' => 0,
 			'required' => 0,
 			'choices' => CRM_Core_PseudoConstant::country(),
@@ -326,8 +326,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 			'paged' => 1,
 		];
 
-   		// Parse the incoming POST array.
-   		$options = acf_parse_args( $options, $defaults );
+		// Parse the incoming POST array.
+		$options = acf_parse_args( $options, $defaults );
 
 		// Bail if there's no search string.
 		if ( empty( $options['s'] ) ) {
@@ -357,22 +357,28 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 				if ( ! empty( $search ) ) {
 					if (
 						stripos( strtolower( $label ), $search ) !== false
-						OR
+						||
 						stripos( strtolower( $title ), $search ) !== false
 					) {
-						$data[] = [ 'id' => $key, 'text' => $label ];
+						$data[] = [
+							'id' => $key,
+							'text' => $label,
+						];
 					}
 				}
 			}
 			if ( ! empty( $data ) ) {
-				$formatted[] = [ 'text' => $title, 'children' => $data ];
+				$formatted[] = [
+					'text' => $title,
+					'children' => $data,
+				];
 			}
 		}
 
 		// Add to the response.
 		$response['results'] = $formatted;
 
-  		// --<
+		// --<
 		return $response;
 
 	}
@@ -416,6 +422,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 			if ( empty( $title ) ) {
 				$title = __( 'Top Level', 'civicrm-wp-profile-sync' );
 			} else {
+				/* translators: %s: The Field title */
 				$title = sprintf( __( 'Inside: %s', 'civicrm-wp-profile-sync' ), $title );
 			}
 			$choices[ $title ][ $field['key'] ] = "{$label} ({$field['key']})";
@@ -449,7 +456,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 
 			// Add existing choice if present.
 			$state = CRM_Core_PseudoConstant::stateProvince( $field['value'] );
-			if( ! empty( $state ) ) {
+			if ( ! empty( $state ) ) {
 
 				// Try and get the Country ID.
 				$country_id = CRM_Core_PseudoConstant::countryIDForStateID( $field['value'] );

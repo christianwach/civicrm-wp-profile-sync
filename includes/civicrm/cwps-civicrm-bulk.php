@@ -186,7 +186,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Bulk {
 
 		// Add our item to the tasks array.
 		$tasks[] = [
-			'title' => __( 'Create WordPress Users from Contacts',  'civicrm-wp-profile-sync' ),
+			'title' => __( 'Create WordPress Users from Contacts', 'civicrm-wp-profile-sync' ),
 			'class' => 'CRM_Contact_Form_Task_CreateWordPressUsers',
 		];
 

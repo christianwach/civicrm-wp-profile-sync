@@ -172,7 +172,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Participant_Action_Ref extends acf_fiel
 		// Define translations.
 		$this->l10n = [
 			// Example message.
-			'error'	=> __( 'Error! Please enter a higher value.', 'civicrm-wp-profile-sync' ),
+			'error' => __( 'Error! Please enter a higher value.', 'civicrm-wp-profile-sync' ),
 		];
 
 		// Call parent.
@@ -195,13 +195,13 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Participant_Action_Ref extends acf_fiel
 	public function remove_field_type( $groups ) {
 
 		// Bail if the "CiviCRM" group is missing.
-		if ( empty( $groups[$this->category] ) ) {
+		if ( empty( $groups[ $this->category ] ) ) {
 			return $groups;
 		}
 
 		// Remove this Field Type.
-		if ( isset( $groups[$this->category][$this->name] ) ) {
-			unset( $groups[$this->category][$this->name] );
+		if ( isset( $groups[ $this->category ][ $this->name ] ) ) {
+			unset( $groups[ $this->category ][ $this->name ] );
 		}
 
 		// --<

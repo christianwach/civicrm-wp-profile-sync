@@ -1685,7 +1685,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 	 *
 	 * @param bool $mapped The existing mapping flag.
 	 * @param array $field_group The array of ACF Field Group data.
-	 * @param bool $mapped True if the Field Group is mapped, or pass through if not mapped.
+	 * @return bool $mapped True if the Field Group is mapped, or pass through if not mapped.
 	 */
 	public function query_field_group_mapped( $mapped, $field_group ) {
 
@@ -1847,7 +1847,8 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 			// Add to subtype optgroup if possible.
 			if ( ! empty( $relationship_type['contact_sub_type_a'] ) ) {
-				$relationships[$relationship_type['contact_sub_type_a']][$key] = sprintf(
+				$relationships[ $relationship_type['contact_sub_type_a'] ][ $key ] = sprintf(
+					/* translators: %s: The Relationship label */
 					__( '%s (A-B)', 'civicrm-wp-profile-sync' ),
 					$relationship_type['label_a_b']
 				);
@@ -1855,11 +1856,12 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 			// Add to type optgroup if not already added - and no subtype.
 			if ( empty( $relationship_type['contact_sub_type_a'] ) ) {
-				if ( ! isset( $relationships[$relationship_type['contact_type_a']][$key] ) ) {
-					$relationships[$relationship_type['contact_type_a']][$key] = sprintf(
-					__( '%s (A-B)', 'civicrm-wp-profile-sync' ),
-					$relationship_type['label_a_b']
-				);
+				if ( ! isset( $relationships[ $relationship_type['contact_type_a'] ][ $key ] ) ) {
+					$relationships[ $relationship_type['contact_type_a'] ][ $key ] = sprintf(
+						/* translators: %s: The Relationship label */
+						__( '%s (A-B)', 'civicrm-wp-profile-sync' ),
+						$relationship_type['label_a_b']
+					);
 				}
 			}
 
@@ -1868,7 +1870,8 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 			// Add to subtype optgroup if possible.
 			if ( ! empty( $relationship_type['contact_sub_type_b'] ) ) {
-				$relationships[$relationship_type['contact_sub_type_b']][$key] = sprintf(
+				$relationships[ $relationship_type['contact_sub_type_b'] ][ $key ] = sprintf(
+					/* translators: %s: The Relationship label */
 					__( '%s (B-A)', 'civicrm-wp-profile-sync' ),
 					$relationship_type['label_b_a']
 				);
@@ -1876,11 +1879,12 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 			// Add to type optgroup if not already added - and no subtype.
 			if ( empty( $relationship_type['contact_sub_type_b'] ) ) {
-				if ( ! isset( $relationships[$relationship_type['contact_type_b']][$key] ) ) {
-					$relationships[$relationship_type['contact_type_b']][$key] = sprintf(
-					__( '%s (B-A)', 'civicrm-wp-profile-sync' ),
-					$relationship_type['label_b_a']
-				);
+				if ( ! isset( $relationships[ $relationship_type['contact_type_b'] ][ $key ] ) ) {
+					$relationships[ $relationship_type['contact_type_b'] ][ $key ] = sprintf(
+						/* translators: %s: The Relationship label */
+						__( '%s (B-A)', 'civicrm-wp-profile-sync' ),
+						$relationship_type['label_b_a']
+					);
 				}
 			}
 

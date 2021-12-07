@@ -240,8 +240,8 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 
 		// Only do this once per Field.
 		static $pseudocache;
-		if ( isset( $pseudocache[$field['ID']] ) ) {
-			return $pseudocache[$field['ID']];
+		if ( isset( $pseudocache[ $field['ID'] ] ) ) {
+			return $pseudocache[ $field['ID'] ];
 		}
 
 		// Get Field parent safely.
@@ -274,8 +274,8 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 		}
 
 		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$field['ID']] ) ) {
-			$pseudocache[$field['ID']] = $field_group;
+		if ( ! isset( $pseudocache[ $field['ID'] ] ) ) {
+			$pseudocache[ $field['ID'] ] = $field_group;
 		}
 
 		// --<
@@ -324,7 +324,7 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 	 * @since 0.5
 	 *
 	 * @param string $field_group The Field Group identifier.
-	 * @param integer $custom_group_id The numeric ID of the CiviCRM Custom Group.
+	 * @return integer $custom_group_id The numeric ID of the CiviCRM Custom Group.
 	 */
 	public function get_fields( $field_group ) {
 
@@ -423,7 +423,7 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 				// Do we have a supported rule?
 				if ( $supported ) {
 
-					// Regardless of match, a rules references the
+					// Regardless of match, a rule references the Entity.
 					$queried_entity_present = true;
 
 					// Test the "post type" rule.

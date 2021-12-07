@@ -328,7 +328,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 
 		// Log and bail on failure.
 		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
-			$e = new \Exception;
+			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
 				'method' => __METHOD__,
@@ -377,7 +377,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 
 		// Log and bail on failure.
 		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
-			$e = new \Exception;
+			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
 				'method' => __METHOD__,
@@ -448,7 +448,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 
 		// Log and bail on failure.
 		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
-			$e = new \Exception;
+			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
 				'method' => __METHOD__,
@@ -534,7 +534,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 
 		// Log and bail on failure.
 		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
-			$e = new \Exception;
+			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
 				'method' => __METHOD__,
@@ -620,7 +620,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 
 		// Log and bail on failure.
 		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
-			$e = new \Exception;
+			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
 				'method' => __METHOD__,

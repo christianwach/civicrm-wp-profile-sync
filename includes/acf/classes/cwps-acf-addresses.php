@@ -497,13 +497,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 
 			// New Records have no Address ID.
 			if ( empty( $value['field_address_id'] ) ) {
-				$actions['create'][$key] = $value;
+				$actions['create'][ $key ] = $value;
 				continue;
 			}
 
 			// Records to update have an Address ID.
 			if ( ! empty( $value['field_address_id'] ) ) {
-				$actions['update'][$key] = $value;
+				$actions['update'][ $key ] = $value;
 				continue;
 			}
 
@@ -652,10 +652,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		$address_data['supplemental_address_3'] = trim( $value['field_address_supplemental_address_3'] );
 		$address_data['city'] = trim( $value['field_address_city'] );
 		$address_data['postal_code'] = trim( $value['field_address_postal_code'] );
-		$address_data['country_id'] = empty( $value['field_address_country_id'] ) ? '' :
-									  (int) $value['field_address_country_id'];
-		$address_data['state_province_id'] = empty( $value['field_address_state_province_id'] ) ? '' :
-											 (int) $value['field_address_state_province_id'];
+		$address_data['country_id'] = empty( $value['field_address_country_id'] ) ? '' : (int) $value['field_address_country_id'];
+		$address_data['state_province_id'] = empty( $value['field_address_state_province_id'] ) ? '' : (int) $value['field_address_state_province_id'];
 		$address_data['geo_code_1'] = (float) trim( $value['field_address_geo_code_1'] );
 		$address_data['geo_code_2'] = (float) trim( $value['field_address_geo_code_2'] );
 		$address_data['manual_geo_code'] = empty( $value['field_address_manual_geo_code'] ) ? '0' : '1';
@@ -930,14 +928,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 			}
 
 			// Process array record.
-			switch( $args['op'] ) {
+			switch ( $args['op'] ) {
 
-				case 'create' :
+				case 'create':
 
 					// Make sure no other Address is Primary if this one is.
 					if ( $acf_address['field_address_primary'] == '1' && ! empty( $existing ) ) {
 						foreach ( $existing as $key => $record ) {
-							$existing[$key]['field_address_primary'] = '0';
+							$existing[ $key ]['field_address_primary'] = '0';
 						}
 					}
 
@@ -946,31 +944,31 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 
 					break;
 
-				case 'edit' :
+				case 'edit':
 
 					// Make sure no other Address is Primary if this one is.
 					if ( $acf_address['field_address_primary'] == '1' ) {
 						foreach ( $existing as $key => $record ) {
-							$existing[$key]['field_address_primary'] = '0';
+							$existing[ $key ]['field_address_primary'] = '0';
 						}
 					}
 
 					// Overwrite array record.
 					foreach ( $existing as $key => $record ) {
 						if ( $address->id == $record['field_address_id'] ) {
-							$existing[$key] = $acf_address;
+							$existing[ $key ] = $acf_address;
 							break;
 						}
 					}
 
 					break;
 
-				case 'delete' :
+				case 'delete':
 
 					// Remove array record.
 					foreach ( $existing as $key => $record ) {
 						if ( $address->id == $record['field_address_id'] ) {
-							unset( $existing[$key] );
+							unset( $existing[ $key ] );
 							break;
 						}
 					}
@@ -1076,7 +1074,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 
 		// Add if it has a reference to an Addresses Field.
 		if ( ! empty( $field['type'] ) && $field['type'] == 'civicrm_address' ) {
-			$acf_fields['addresses'][$field['name']] = $field['type'];
+			$acf_fields['addresses'][ $field['name'] ] = $field['type'];
 		}
 
 		// --<
@@ -1130,7 +1128,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		$existing = get_field( $params['selector'], $args['post_id'] );
 
 		// Add Address ID and overwrite array element.
-		if ( ! empty( $existing[$params['key']] ) ) {
+		if ( ! empty( $existing[ $params['key'] ] ) ) {
 
 			// Assign Address ID.
 			$params['value']['field_address_id'] = $params['address']->id;
@@ -1146,7 +1144,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 			}
 
 			// Apply changes.
-			$existing[$params['key']] = $params['value'];
+			$existing[ $params['key'] ] = $params['value'];
 
 		}
 

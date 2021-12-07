@@ -320,11 +320,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		$type = $this->get_acf_type( $name );
 
 		// Convert CiviCRM value to ACF value by Contact Field.
-		switch( $type ) {
+		switch ( $type ) {
 
 			// Unused at present.
-			case 'select' :
-			case 'checkbox' :
+			case 'select':
+			case 'checkbox':
 
 				// Convert if the value has the special CiviCRM array-like format.
 				if ( false !== strpos( $value, CRM_Core_DAO::VALUE_SEPARATOR ) ) {
@@ -334,8 +334,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 				break;
 
 			// Used by "Birth Date" and "Deceased Date".
-			case 'date_picker' :
-			case 'date_time_picker' :
+			case 'date_picker':
+			case 'date_time_picker':
 
 				// Get Field setting.
 				$acf_setting = get_field_object( $selector, $post_id );
@@ -363,7 +363,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 				break;
 
 			// Used by "Contact Image".
-			case 'image' :
+			case 'image':
 
 				// Delegate to method, expect an Attachment ID.
 				$value = $this->image_value_get_for_acf( $value, $name, $selector, $post_id );
@@ -421,7 +421,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		$birth_fields = [ 'birth_date', 'deceased_date' ];
 
 		// "Birth Date" and "Deceased Date" use the same preference.
-		if ( in_array ( $name, $birth_fields ) ) {
+		if ( in_array( $name, $birth_fields ) ) {
 			$format = CRM_Utils_Date::getDateFormat( 'birth' );
 		}
 
@@ -615,8 +615,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Only do this once per Contact Type, Field Type and filter.
 		static $pseudocache;
-		if ( isset( $pseudocache[$filter][$contact_type][$field_type] ) ) {
-			return $pseudocache[$filter][$contact_type][$field_type];
+		if ( isset( $pseudocache[ $filter ][ $contact_type ][ $field_type ] ) ) {
+			return $pseudocache[ $filter ][ $contact_type ][ $field_type ];
 		}
 
 		// Init return.
@@ -677,7 +677,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 				// Skip all but those mapped to the type of ACF Field.
 				foreach ( $public_fields as $key => $value ) {
-					if ( $field_type == $contact_fields[$value['name']] ) {
+					if ( $field_type == $contact_fields[ $value['name'] ] ) {
 						$fields[] = $value;
 					}
 				}
@@ -687,8 +687,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		}
 
 		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$filter][$contact_type][$field_type] ) ) {
-			$pseudocache[$filter][$contact_type][$field_type] = $fields;
+		if ( ! isset( $pseudocache[ $filter ][ $contact_type ][ $field_type ] ) ) {
+			$pseudocache[ $filter ][ $contact_type ][ $field_type ] = $fields;
 		}
 
 		// --<
@@ -710,8 +710,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Only do this once per Contact Type, Field Type and filter.
 		static $pseudocache;
-		if ( isset( $pseudocache[$filter] ) ) {
-			return $pseudocache[$filter];
+		if ( isset( $pseudocache[ $filter ] ) ) {
+			return $pseudocache[ $filter ];
 		}
 
 		// Init return.
@@ -752,20 +752,20 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 				$contact_types = $this->plugin->civicrm->contact_type->types_get_all();
 				foreach ( $contact_types as $contact_type ) {
 					if ( empty( $contact_type['parent_id'] ) ) {
-						$top_level[$contact_type['name']] = $contact_type['id'];
+						$top_level[ $contact_type['name'] ] = $contact_type['id'];
 					}
 				}
 
 				// Skip all but those defined in our Contact Fields arrays.
 				foreach ( $result['values'] as $key => $value ) {
 					if ( array_key_exists( $value['name'], $this->contact_fields_individual ) ) {
-						$fields[$top_level['Individual']][] = $value;
+						$fields[ $top_level['Individual'] ][] = $value;
 					}
 					if ( array_key_exists( $value['name'], $this->contact_fields_organization ) ) {
-						$fields[$top_level['Organization']][] = $value;
+						$fields[ $top_level['Organization'] ][] = $value;
 					}
 					if ( array_key_exists( $value['name'], $this->contact_fields_household ) ) {
-						$fields[$top_level['Household']][] = $value;
+						$fields[ $top_level['Household'] ][] = $value;
 					}
 					if ( array_key_exists( $value['name'], $this->contact_fields_common ) ) {
 						$fields['common'][] = $value;
@@ -777,8 +777,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		}
 
 		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$filter] ) ) {
-			$pseudocache[$filter] = $fields;
+		if ( ! isset( $pseudocache[ $filter ] ) ) {
+			$pseudocache[ $filter ] = $fields;
 		}
 
 		// --<
@@ -864,7 +864,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		// Skip all but those mapped to the type of ACF Field.
 		foreach ( $public_fields as $key => $value ) {
 			if ( $type == $value ) {
-				$contact_fields[$key] = $value;
+				$contact_fields[ $key ] = $value;
 			}
 		}
 
@@ -890,13 +890,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Combine different arrays.
 		$contact_fields = $this->contact_fields_individual +
-						  $this->contact_fields_organization +
-						  $this->contact_fields_household +
-						  $this->contact_fields_common;
+			$this->contact_fields_organization +
+			$this->contact_fields_household +
+			$this->contact_fields_common;
 
 		// if the key exists, return the value - which is the ACF Type.
 		if ( array_key_exists( $name, $contact_fields ) ) {
-			$type = $contact_fields[$name];
+			$type = $contact_fields[ $name ];
 		}
 
 		// --<
@@ -928,7 +928,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
+		if ( ! array_key_exists( $key, $field ) || empty( $field[ $key ] ) ) {
 			return $field;
 		}
 
@@ -974,7 +974,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
+		if ( ! array_key_exists( $key, $field ) || empty( $field[ $key ] ) ) {
 			return $field;
 		}
 
@@ -1015,7 +1015,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
+		if ( ! array_key_exists( $key, $field ) || empty( $field[ $key ] ) ) {
 			return $field;
 		}
 
@@ -1056,7 +1056,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
+		if ( ! array_key_exists( $key, $field ) || empty( $field[ $key ] ) ) {
 			return $field;
 		}
 
@@ -1070,7 +1070,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		$format = $this->date_format_get( $contact_field_name );
 
 		// Get the ACF format.
-		$acf_format = $this->acf_loader->mapper->date_mappings[$format];
+		$acf_format = $this->acf_loader->mapper->date_mappings[ $format ];
 
 		// Set the date "format" attributes.
 		$field['display_format'] = $acf_format;
@@ -1101,7 +1101,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
+		if ( ! array_key_exists( $key, $field ) || empty( $field[ $key ] ) ) {
 			return $field;
 		}
 
@@ -1149,7 +1149,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
+		if ( ! array_key_exists( $key, $field ) || empty( $field[ $key ] ) ) {
 			return $field;
 		}
 
@@ -1447,12 +1447,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		global $wpdb;
 
- 		// Bail if a Post ID was found.
- 		if ( $post_id ) {
- 			return $post_id;
- 		}
+		// Bail if a Post ID was found.
+		if ( $post_id ) {
+			return $post_id;
+		}
 
- 		// Start by setting up a few vars the same way attachment_url_to_postid() does.
+		// Start by setting up a few vars the same way attachment_url_to_postid() does.
 		$dir = wp_get_upload_dir();
 		$path = $url;
 

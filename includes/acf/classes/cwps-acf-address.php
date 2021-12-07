@@ -175,8 +175,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 
 		// Only do this once per Field Type and filter.
 		static $pseudocache;
-		if ( isset( $pseudocache[$filter] ) ) {
-			return $pseudocache[$filter];
+		if ( isset( $pseudocache[ $filter ] ) ) {
+			return $pseudocache[ $filter ];
 		}
 
 		// Init return.
@@ -222,8 +222,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		}
 
 		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$filter] ) ) {
-			$pseudocache[$filter] = $fields;
+		if ( ! isset( $pseudocache[ $filter ] ) ) {
+			$pseudocache[ $filter ] = $fields;
 		}
 
 		// --<
@@ -250,9 +250,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		$acf_field_key = $this->civicrm->acf_field_key_get();
 
 		// Set the mapped Address Field name if present.
-		if ( isset( $field[$acf_field_key] ) ) {
-			if ( false !== strpos( $field[$acf_field_key], $this->address_field_prefix ) ) {
-				$address_field_name = (string) str_replace( $this->address_field_prefix, '', $field[$acf_field_key] );
+		if ( isset( $field[ $acf_field_key ] ) ) {
+			if ( false !== strpos( $field[ $acf_field_key ], $this->address_field_prefix ) ) {
+				$address_field_name = (string) str_replace( $this->address_field_prefix, '', $field[ $acf_field_key ] );
 			}
 		}
 
@@ -296,7 +296,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		$public_fields = $this->civicrm_fields_get( 'public' );
 		$fields_for_entity = [];
 		foreach ( $public_fields as $key => $value ) {
-			if ( $field['type'] == $this->address_fields[$value['name']] ) {
+			if ( $field['type'] == $this->address_fields[ $value['name'] ] ) {
 				// Skip the ones that are not needed in ACFE Forms.
 				if ( ! array_key_exists( $value['name'], $this->bypass_fields_to_remove ) ) {
 					$fields_for_entity[] = $value;
@@ -327,7 +327,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		if ( ! empty( $fields_for_entity ) ) {
 			$address_fields_label = esc_attr__( 'Address Fields', 'civicrm-wp-profile-sync' );
 			foreach ( $fields_for_entity as $address_field ) {
-				$choices[$address_fields_label][$this->address_field_prefix . $address_field['name']] = $address_field['title'];
+				$choices[ $address_fields_label ][ $this->address_field_prefix . $address_field['name'] ] = $address_field['title'];
 			}
 		}
 
@@ -337,7 +337,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 			foreach ( $filtered_fields as $custom_group_name => $custom_group ) {
 				$custom_fields_label = esc_attr( $custom_group_name );
 				foreach ( $custom_group as $custom_field ) {
-					$choices[$custom_fields_label][$custom_field_prefix . $custom_field['id']] = $custom_field['label'];
+					$choices[ $custom_fields_label ][ $custom_field_prefix . $custom_field['id'] ] = $custom_field['label'];
 				}
 			}
 		}
@@ -376,7 +376,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
+		if ( ! array_key_exists( $key, $field ) || empty( $field[ $key ] ) ) {
 			return $field;
 		}
 
@@ -430,7 +430,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		// Validate depending on the Field name.
 		switch ( $address_field_name ) {
 
-			case 'duration' :
+			case 'duration':
 				// Must be an integer.
 				if ( ! ctype_digit( $value ) ) {
 					$valid = __( 'Must be an integer.', 'civicrm-wp-profile-sync' );
@@ -458,7 +458,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	 * @since 0.4
 	 *
 	 * @param integer $address_id The numeric ID of the Address.
-	 * @param object|bool $address The Address data object, or false if none.
+	 * @return object|bool $address The Address data object, or false if none.
 	 */
 	public function address_get_by_id( $address_id ) {
 		return $this->plugin->civicrm->address->address_get_by_id( $address_id );
@@ -472,7 +472,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	 * @since 0.4
 	 *
 	 * @param integer $contact_id The numeric ID of the Contact.
-	 * @param array $addresses The array of data for the Addresses, or empty if none.
+	 * @return array $addresses The array of data for the Addresses, or empty if none.
 	 */
 	public function addresses_get_by_contact_id( $contact_id ) {
 		return $this->plugin->civicrm->address->addresses_get_by_contact_id( $contact_id );

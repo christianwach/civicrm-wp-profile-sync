@@ -408,7 +408,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 *
 	 * @since 0.5
 	 *
-	 * @param integer|bool $contact_id The numeric ID of the Contact, or false on failure.
+	 * @return integer|bool $contact_id The numeric ID of the Contact, or false on failure.
 	 */
 	public function get_id_by_checksum() {
 
@@ -454,7 +454,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 *
 	 * @since 0.5
 	 *
-	 * @param integer|bool $contact_id The numeric ID of the Contact, or false on failure.
+	 * @return integer|bool $contact_id The numeric ID of the Contact, or false on failure.
 	 */
 	public function get_for_current_user() {
 
@@ -557,12 +557,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		}
 
 		// Format the return as per "getlist".
-		foreach( $result['values'] as $value ) {
+		foreach ( $result['values'] as $value ) {
 			$data = [
 				'id' => $value['id'],
 				'label' => $value['sort_name'],
 			];
-			foreach( $args['return'] as $return ) {
+			foreach ( $args['return'] as $return ) {
 				if ( $return !== 'sort_name' && ! empty( $value[ $return ] ) ) {
 					$data['description'][] = $value[ $return ];
 				}
@@ -745,9 +745,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		$types = [ 'Organization', 'Household', 'Individual' ];
 		foreach ( $types as $type ) {
 			if ( empty( $contact_type ) ) {
-				$dedupe_rules[$type] = CRM_Dedupe_BAO_RuleGroup::getByType( $type );
+				$dedupe_rules[ $type ] = CRM_Dedupe_BAO_RuleGroup::getByType( $type );
 			} elseif ( $contact_type == $type ) {
-				$dedupe_rules[$type] = CRM_Dedupe_BAO_RuleGroup::getByType( $type );
+				$dedupe_rules[ $type ] = CRM_Dedupe_BAO_RuleGroup::getByType( $type );
 			}
 		}
 
@@ -1282,7 +1282,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 				$value = $this->acf_loader->acf->field->value_get_for_civicrm( $value, $settings['type'], $settings, $args );
 
 				// Add it to the Field data.
-				$contact_data[$code] = $value;
+				$contact_data[ $code ] = $value;
 
 			}
 
@@ -1344,7 +1344,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		// Build Contact Field choices array for dropdown.
 		$contact_fields_label = esc_attr__( 'Contact Fields', 'civicrm-wp-profile-sync' );
 		foreach ( $contact_fields as $contact_field ) {
-			$choices[$contact_fields_label][$this->contact_field_prefix . $contact_field['name']] = $contact_field['title'];
+			$choices[ $contact_fields_label ][ $this->contact_field_prefix . $contact_field['name'] ] = $contact_field['title'];
 		}
 
 		// Build Custom Field choices array for dropdown.
@@ -1352,7 +1352,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			$custom_fields_label = esc_attr( $custom_group_name );
 			foreach ( $custom_group as $custom_field ) {
-				$choices[$custom_fields_label][$custom_field_prefix . $custom_field['id']] = $custom_field['label'];
+				$choices[ $custom_fields_label ][ $custom_field_prefix . $custom_field['id'] ] = $custom_field['label'];
 			}
 		}
 
@@ -1407,9 +1407,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		$acf_field_key = $this->civicrm->acf_field_key_get();
 
 		// Set the mapped Contact Field name if present.
-		if ( isset( $field[$acf_field_key] ) ) {
-			if ( false !== strpos( $field[$acf_field_key], $this->contact_field_prefix ) ) {
-				$contact_field_name = (string) str_replace( $this->contact_field_prefix, '', $field[$acf_field_key] );
+		if ( isset( $field[ $acf_field_key ] ) ) {
+			if ( false !== strpos( $field[ $acf_field_key ], $this->contact_field_prefix ) ) {
+				$contact_field_name = (string) str_replace( $this->contact_field_prefix, '', $field[ $acf_field_key ] );
 			}
 		}
 
@@ -1550,7 +1550,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		if ( ! empty( $contact_fields ) ) {
 			$contact_fields_label = esc_attr__( 'Contact Fields', 'civicrm-wp-profile-sync' );
 			foreach ( $contact_fields as $contact_field ) {
-				$choices[$contact_fields_label][$this->contact_field_prefix . $contact_field['name']] = $contact_field['title'];
+				$choices[ $contact_fields_label ][ $this->contact_field_prefix . $contact_field['name'] ] = $contact_field['title'];
 			}
 		}
 
@@ -1560,7 +1560,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 			foreach ( $filtered_fields as $custom_group_name => $custom_group ) {
 				$custom_fields_label = esc_attr( $custom_group_name );
 				foreach ( $custom_group as $custom_field ) {
-					$choices[$custom_fields_label][$custom_field_prefix . $custom_field['id']] = $custom_field['label'];
+					$choices[ $custom_fields_label ][ $custom_field_prefix . $custom_field['id'] ] = $custom_field['label'];
 				}
 			}
 		}
@@ -1596,11 +1596,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 		// Pass if not our Entity Type.
 		if ( ! array_key_exists( $this->identifier, $entity_array ) ) {
- 			return $setting_field;
+			return $setting_field;
 		}
 
 		// Handle each Contact Type in turn.
-		foreach ( $entity_array[$this->identifier] as $entity_id ) {
+		foreach ( $entity_array[ $this->identifier ] as $entity_id ) {
 
 			// Get Contact Type hierarchy for this Entity ID.
 			$hierarchy = $this->plugin->civicrm->contact_type->hierarchy_get_by_id( $entity_id );
@@ -1675,7 +1675,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		}
 
 		// Handle each Contact Type in turn.
-		foreach ( $entity_array[$this->identifier] as $entity_id ) {
+		foreach ( $entity_array[ $this->identifier ] as $entity_id ) {
 
 			// Get Contact Type hierarchy for this Entity ID.
 			$hierarchy = $this->plugin->civicrm->contact_type->hierarchy_get_by_id( $entity_id );
@@ -1723,7 +1723,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 			if ( ! empty( $fields_for_entity ) ) {
 				$contact_fields_label = esc_attr__( 'Contact Fields', 'civicrm-wp-profile-sync' );
 				foreach ( $fields_for_entity as $contact_field ) {
-					$choices[$contact_fields_label][$this->contact_field_prefix . $contact_field['name']] = $contact_field['title'];
+					$choices[ $contact_fields_label ][ $this->contact_field_prefix . $contact_field['name'] ] = $contact_field['title'];
 				}
 			}
 
@@ -1733,7 +1733,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 				foreach ( $filtered_fields as $custom_group_name => $custom_group ) {
 					$custom_fields_label = esc_attr( $custom_group_name );
 					foreach ( $custom_group as $custom_field ) {
-						$choices[$custom_fields_label][$custom_field_prefix . $custom_field['id']] = $custom_field['label'];
+						$choices[ $custom_fields_label ][ $custom_field_prefix . $custom_field['id'] ] = $custom_field['label'];
 					}
 				}
 			}
@@ -1778,13 +1778,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 		// Add Option Group.
 		$contact_types_title = esc_attr( __( 'Contact Types', 'civicrm-wp-profile-sync' ) );
-		$entities[$contact_types_title] = [];
+		$entities[ $contact_types_title ] = [];
 
 		// Add entries for each CiviCRM Contact Type.
 		foreach ( $contact_types as $contact_type ) {
 
 			// Top level types first.
-			$entities[$contact_types_title]['contact-' . $contact_type['id']] = $contact_type['label'];
+			$entities[ $contact_types_title ][ 'contact-' . $contact_type['id'] ] = $contact_type['label'];
 
 			// Skip Sub-types if there aren't any.
 			if ( empty( $contact_type['children'] ) ) {
@@ -1793,7 +1793,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 			// Add children.
 			foreach ( $contact_type['children'] as $contact_subtype ) {
-				$entities[$contact_types_title][$this->identifier . '-' . $contact_subtype['id']] = '&mdash; ' . $contact_subtype['label'];
+				$entities[ $contact_types_title ] [ $this->identifier . '-' . $contact_subtype['id'] ] = '&mdash; ' . $contact_subtype['label'];
 			}
 
 		}
@@ -1815,7 +1815,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 *
 	 * @param bool $mapped The existing mapping flag.
 	 * @param array $field_group The array of ACF Field Group data.
-	 * @param bool $mapped True if the Field Group is mapped, or pass through if not mapped.
+	 * @return bool $mapped True if the Field Group is mapped, or pass through if not mapped.
 	 */
 	public function query_field_group_mapped( $mapped, $field_group ) {
 
@@ -1844,7 +1844,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 *
 	 * @param array $custom_fields The existing Custom Fields.
 	 * @param array $field_group The array of ACF Field Group data.
-	 * @param array $custom_fields The populated array of CiviCRM Custom Fields params.
+	 * @return array $custom_fields The populated array of CiviCRM Custom Fields params.
 	 */
 	public function query_custom_fields( $custom_fields, $field_group ) {
 

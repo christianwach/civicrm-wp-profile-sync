@@ -11,10 +11,10 @@
 ?><!-- assets/templates/wordpress/pages/page-admin-acf-sync.php -->
 <div class="wrap">
 
-	<h1><?php _e( 'CiviCRM Profile Sync', 'civicrm-wp-profile-sync' ); ?></h1>
+	<h1><?php esc_html_e( 'CiviCRM Profile Sync', 'civicrm-wp-profile-sync' ); ?></h1>
 
 	<h2 class="nav-tab-wrapper">
-		<a href="<?php echo $urls['settings']; ?>" class="nav-tab"><?php _e( 'Settings', 'civicrm-wp-profile-sync' ); ?></a>
+		<a href="<?php echo $urls['settings']; ?>" class="nav-tab"><?php esc_html_e( 'Settings', 'civicrm-wp-profile-sync' ); ?></a>
 		<?php
 
 		/**
@@ -30,7 +30,7 @@
 		?>
 	</h2>
 
-	<p><?php _e( 'Things can be a little complicated on initial setup because there can be data in WordPress or CiviCRM or both. The utilities below should help you get going.', 'civicrm-wp-profile-sync' ); ?></p>
+	<p><?php esc_html_e( 'Things can be a little complicated on initial setup because there can be data in WordPress or CiviCRM or both. The utilities below should help you get going.', 'civicrm-wp-profile-sync' ); ?></p>
 
 	<?php if ( ! empty( $messages ) ) : ?>
 		<?php echo $messages; ?>
@@ -50,11 +50,11 @@
 			<div id="dashboard-widgets" class="metabox-holder<?php echo $columns_css; ?>">
 
 				<div id="postbox-container-1" class="postbox-container">
-					<?php do_meta_boxes($screen->id, 'normal', '');  ?>
+					<?php do_meta_boxes( $screen->id, 'normal', '' ); ?>
 				</div>
 
 				<div id="postbox-container-2" class="postbox-container">
-					<?php do_meta_boxes($screen->id, 'side', ''); ?>
+					<?php do_meta_boxes( $screen->id, 'side', '' ); ?>
 				</div>
 
 			</div><!-- #post-body -->

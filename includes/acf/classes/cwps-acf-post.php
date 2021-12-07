@@ -313,6 +313,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Construct link.
 		$link = sprintf(
+			/* translators: 1: The Link URL, 2: The Link text */
 			'<a href="%1$s">%2$s</a>',
 			esc_url( $url ),
 			esc_html__( 'View this Contact in CiviCRM', 'civicrm-wp-profile-sync' )
@@ -378,10 +379,14 @@ class CiviCRM_Profile_Sync_ACF_Post {
 			$label = $this->acf_loader->post_type->singular_label_get( $post_type );
 
 			// Build view title.
-			$view_title = sprintf( __( 'View %s in WordPress', 'civicrm-wp-profile-sync' ), $label );
+			$view_title = sprintf(
+				/* translators: %s: The Post Type label */
+				__( 'View %s in WordPress', 'civicrm-wp-profile-sync' ),
+				$label
+			);
 
 			// Build "view" link.
-			$actions['otherActions']['wp-view-' . $post_type] = [
+			$actions['otherActions'][ 'wp-view-' . $post_type ] = [
 				'title' => $view_title,
 				'ref' => 'civicrm-wp-view-' . $post_type,
 				'weight' => $weight,
@@ -399,10 +404,14 @@ class CiviCRM_Profile_Sync_ACF_Post {
 				$weight++;
 
 				// Build edit title.
-				$edit_title = sprintf( __( 'Edit %s in WordPress', 'civicrm-wp-profile-sync' ), $label );
+				$edit_title = sprintf(
+					/* translators: %s: The Post Type label */
+					__( 'Edit %s in WordPress', 'civicrm-wp-profile-sync' ),
+					$label
+				);
 
 				// Build "edit" link.
-				$actions['otherActions']['wp-edit-' . $post_type] = [
+				$actions['otherActions'][ 'wp-edit-' . $post_type ] = [
 					'title' => $edit_title,
 					'ref' => 'civicrm-wp-edit-' . $post_type,
 					'weight' => $weight,
@@ -536,6 +545,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Add link to actions.
 		$actions['civicrm'] = sprintf(
+			/* translators: 1: The Link URL, 2: The Link text */
 			'<a href="%1$s">%2$s</a>',
 			esc_url( $url ),
 			esc_html__( 'CiviCRM', 'civicrm-wp-profile-sync' )

@@ -179,7 +179,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Tag {
 	 * @since 0.5
 	 *
 	 * @param integer $tag_id The numeric ID of the Tag.
-	 * @param array $tag The array of Tag data, or empty if none.
+	 * @return array $tag The array of Tag data, or empty if none.
 	 */
 	public function get_by_id( $tag_id ) {
 
@@ -210,7 +210,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Tag {
 			return $tag;
 		}
 
- 		// The result set should contain only one item.
+		// The result set should contain only one item.
 		$tag = (object) array_pop( $result['values'] );
 
 		// --<

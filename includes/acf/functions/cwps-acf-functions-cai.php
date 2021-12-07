@@ -110,7 +110,7 @@ function cacf_get_phone_numbers( $selector, $post_id = null ) {
 	// Build Location Types array for reference.
 	$locations = [];
 	foreach ( $location_types as $location_type ) {
-		$locations[$location_type['id']] = esc_html( $location_type['display_name'] );
+		$locations[ $location_type['id'] ] = esc_html( $location_type['display_name'] );
 	}
 
 	// Get Phone Types.
@@ -126,15 +126,17 @@ function cacf_get_phone_numbers( $selector, $post_id = null ) {
 
 		// Build string from Location, Phone Types and Phone Number.
 		$phone = sprintf(
+			/* translators: 1: The Phone location, 2: The Phone type, 3: The Phone number */
 			__( '%1$s %2$s: %3$s', 'civicrm-wp-profile-sync' ),
-			(string) $locations[$record['field_phone_location']],
-			(string) $phone_types[$record['field_phone_type']],
+			(string) $locations[ $record['field_phone_location'] ],
+			(string) $phone_types[ $record['field_phone_type'] ],
 			(string) $record['field_phone_number']
 		);
 
 		// Maybe add Extension.
 		if ( ! empty( $record['field_phone_extension'] ) ) {
 			$phone = sprintf(
+				/* translators: 1: The Phone record, 2: The Phone extension */
 				__( '%1$s Ext. %2$s', 'civicrm-wp-profile-sync' ),
 				$phone,
 				(string) $record['field_phone_extension']
@@ -223,6 +225,7 @@ function cacf_get_phone_numbers_by_type_ids( $selector, $location_type_id, $phon
 		// Maybe add Extension.
 		if ( ! empty( $record['field_phone_extension'] ) ) {
 			$phone = sprintf(
+				/* translators: 1: The Phone number, 2: The Phone extension */
 				__( '%1$s Ext. %2$s', 'civicrm-wp-profile-sync' ),
 				$phone,
 				(string) $record['field_phone_extension']
@@ -400,6 +403,7 @@ function cacf_get_primary_phone_number( $selector, $post_id = null ) {
 	// Maybe add Extension.
 	if ( ! empty( $record['field_phone_extension'] ) ) {
 		$phone = sprintf(
+			/* translators: 1: The Phone number, 2: The Phone extension */
 			__( '%1$s Ext. %2$s', 'civicrm-wp-profile-sync' ),
 			$phone,
 			(string) $record['field_phone_extension']
@@ -504,9 +508,9 @@ function cacf_get_phone_records( $selector, $post_id = null ) {
 	}
 
 	 // Bail if it's not a CiviCRM Phone Field.
-	 if ( $acf_settings['type'] != 'civicrm_phone' ) {
+	if ( $acf_settings['type'] != 'civicrm_phone' ) {
 		return $records;
-	 }
+	}
 
 	// Get Field value.
 	$records = get_field( $selector, $post_id );
@@ -567,7 +571,7 @@ function cacf_get_ims( $selector, $post_id = null ) {
 	// Build Location Types array for reference.
 	$locations = [];
 	foreach ( $location_types as $location_type ) {
-		$locations[$location_type['id']] = esc_html( $location_type['display_name'] );
+		$locations[ $location_type['id'] ] = esc_html( $location_type['display_name'] );
 	}
 
 	// Get Instant Messenger Providers.
@@ -583,9 +587,10 @@ function cacf_get_ims( $selector, $post_id = null ) {
 
 		// Build string from Locations, Providers and Instant Messenger.
 		$im = sprintf(
+			/* translators: 1: The IM Provider, 2: The IM location, 3: The IM name */
 			__( '%1$s (%2$s): %3$s', 'civicrm-wp-profile-sync' ),
-			(string) $im_providers[$record['field_im_provider']],
-			(string) $locations[$record['field_im_location']],
+			(string) $im_providers[ $record['field_im_provider'] ],
+			(string) $locations[ $record['field_im_location'] ],
 			(string) $record['field_im_name']
 		);
 
@@ -841,8 +846,9 @@ function cacf_get_primary_im( $selector, $post_id = null ) {
 
 	// Build string from Providers and Instant Messenger.
 	$im = sprintf(
+		/* translators: 1: The IM Provider, 2: The IM name */
 		__( '%1$s: %2$s', 'civicrm-wp-profile-sync' ),
-		(string) $im_providers[$record['field_im_provider']],
+		(string) $im_providers[ $record['field_im_provider'] ],
 		(string) $record['field_im_name']
 	);
 
@@ -944,9 +950,9 @@ function cacf_get_im_records( $selector, $post_id = null ) {
 	}
 
 	 // Bail if it's not a CiviCRM Instant Messenger Field.
-	 if ( $acf_settings['type'] != 'civicrm_im' ) {
+	if ( $acf_settings['type'] != 'civicrm_im' ) {
 		return $records;
-	 }
+	}
 
 	// Get Field value.
 	$records = get_field( $selector, $post_id );
@@ -1007,7 +1013,7 @@ function cacf_get_addresses( $selector, $post_id = null ) {
 	// Build Location Types array for reference.
 	$locations = [];
 	foreach ( $location_types as $location_type ) {
-		$locations[$location_type['id']] = esc_html( $location_type['display_name'] );
+		$locations[ $location_type['id'] ] = esc_html( $location_type['display_name'] );
 	}
 
 	// Format them.
@@ -1015,8 +1021,9 @@ function cacf_get_addresses( $selector, $post_id = null ) {
 
 		// Build "heading" from Location.
 		$heading = sprintf(
+			/* translators: %s: The Address location */
 			__( '%s Address', 'civicrm-wp-profile-sync' ),
-			(string) $locations[$record['field_address_location_type']]
+			(string) $locations[ $record['field_address_location_type'] ]
 		);
 
 		// Convert basic ACF data to template data.
@@ -1405,9 +1412,9 @@ function cacf_get_address_records( $selector, $post_id = null ) {
 	}
 
 	 // Bail if it's not a CiviCRM Address Field.
-	 if ( $acf_settings['type'] != 'civicrm_address' ) {
+	if ( $acf_settings['type'] != 'civicrm_address' ) {
 		return $records;
-	 }
+	}
 
 	// Get Field value.
 	$records = get_field( $selector, $post_id );
@@ -1468,7 +1475,7 @@ function cacf_get_cities( $selector, $post_id = null ) {
 	// Build Location Types array for reference.
 	$locations = [];
 	foreach ( $location_types as $location_type ) {
-		$locations[$location_type['id']] = esc_html( $location_type['display_name'] );
+		$locations[ $location_type['id'] ] = esc_html( $location_type['display_name'] );
 	}
 
 	// Format them.
@@ -1481,8 +1488,9 @@ function cacf_get_cities( $selector, $post_id = null ) {
 
 		// Build string from Location and City.
 		$addresses = sprintf(
+			/* translators: 1: The Address location, 2: The name of the city */
 			__( '%1$s: %2$s', 'civicrm-wp-profile-sync' ),
-			(string) $locations[$record['field_address_location_type']],
+			(string) $locations[ $record['field_address_location_type'] ],
 			(string) $record['field_address_city']
 		);
 
@@ -1681,7 +1689,7 @@ function cacf_get_states( $selector, $post_id = null ) {
 	// Build Location Types array for reference.
 	$locations = [];
 	foreach ( $location_types as $location_type ) {
-		$locations[$location_type['id']] = esc_html( $location_type['display_name'] );
+		$locations[ $location_type['id'] ] = esc_html( $location_type['display_name'] );
 	}
 
 	// Get States/Provinces.
@@ -1697,9 +1705,10 @@ function cacf_get_states( $selector, $post_id = null ) {
 
 		// Build string from Location and State.
 		$addresses = sprintf(
+			/* translators: 1: The Address location, 2: The name of the state */
 			__( '%1$s: %2$s', 'civicrm-wp-profile-sync' ),
-			(string) $locations[$record['field_address_location_type']],
-			(string) $state_provinces[$record['field_address_state_province_id']]
+			(string) $locations[ $record['field_address_location_type'] ],
+			(string) $state_provinces[ $record['field_address_state_province_id'] ]
 		);
 
 		// Add to filtered array.
@@ -1784,7 +1793,7 @@ function cacf_get_state_by_type_id( $selector, $location_type_id, $return = 'lis
 		}
 
 		// Assign State to filter.
-		$filtered[] = (string) $states[$record['field_address_state_province_id']];
+		$filtered[] = (string) $states[ $record['field_address_state_province_id'] ];
 
 	}
 
@@ -1851,7 +1860,7 @@ function cacf_get_primary_state( $selector, $post_id = null ) {
 	$states = $cwps->plugin->civicrm->address->state_provinces_get();
 
 	// Assign State to return.
-	$state = (string) $states[$record['field_address_state_province_id']];
+	$state = (string) $states[ $record['field_address_state_province_id'] ];
 
 	/**
 	 * Allow the State to be filtered.

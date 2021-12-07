@@ -237,8 +237,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 		$mappings = array_flip( $mappings );
 
 		// Overwrite the Contact Type ID if there is a value.
-		if ( isset( $mappings[$post_type_name] ) ) {
-			$contact_type_id = $mappings[$post_type_name];
+		if ( isset( $mappings[ $post_type_name ] ) ) {
+			$contact_type_id = $mappings[ $post_type_name ];
 		}
 
 		// --<
@@ -272,7 +272,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 		foreach ( $contact_types as $contact_type ) {
 
 			// Top level types first.
-			$choices[$contact_type['id']] = $contact_type['label'];
+			$choices[ $contact_type['id'] ] = $contact_type['label'];
 
 			// Skip Sub-types if there aren't any.
 			if ( empty( $contact_type['children'] ) ) {
@@ -281,7 +281,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 
 			// Add children.
 			foreach ( $contact_type['children'] as $contact_subtype ) {
-				$choices[$contact_subtype['id']] = '&mdash; ' . $contact_subtype['label'];
+				$choices[ $contact_subtype['id'] ] = '&mdash; ' . $contact_subtype['label'];
 			}
 
 		}
@@ -317,7 +317,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 		foreach ( $contact_types as $contact_type ) {
 
 			// Top level types only.
-			$choices[$contact_type['id']] = $contact_type['label'];
+			$choices[ $contact_type['id'] ] = $contact_type['label'];
 
 		}
 
@@ -361,7 +361,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 
 			// Add children.
 			foreach ( $contact_type['children'] as $contact_subtype ) {
-				$choices[$contact_type['name']][$contact_subtype['id']] = $contact_subtype['label'];
+				$choices[ $contact_type['name'] ][ $contact_subtype['id'] ] = $contact_subtype['label'];
 			}
 
 		}
@@ -503,8 +503,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 		$mapped_post_types = $this->acf_loader->mapping->mappings_for_contact_types_get();
 
 		// Check presence in mappings.
-		if ( isset( $mapped_post_types[$contact_type_id] ) ) {
-			$is_mapped = $mapped_post_types[$contact_type_id];
+		if ( isset( $mapped_post_types[ $contact_type_id ] ) ) {
+			$is_mapped = $mapped_post_types[ $contact_type_id ];
 		}
 
 		// --<
@@ -531,7 +531,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 		$contact = $this->plugin->civicrm->contact->get_by_id( $args['objectId'] );
 
 		// Add to bridge.
-		$this->bridging_array[$args['objectId']] = $contact;
+		$this->bridging_array[ $args['objectId'] ] = $contact;
 
 	}
 
@@ -551,9 +551,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 
 		// Get the previous Contact data.
 		$contact_pre = [];
-		if ( ! empty( $this->bridging_array[$args['objectId']] ) ) {
-			$contact_pre = $this->bridging_array[$args['objectId']];
-			unset( $this->bridging_array[$args['objectId']] );
+		if ( ! empty( $this->bridging_array[ $args['objectId'] ] ) ) {
+			$contact_pre = $this->bridging_array[ $args['objectId'] ];
+			unset( $this->bridging_array[ $args['objectId'] ] );
 		}
 
 		// Make sure we have arrays.

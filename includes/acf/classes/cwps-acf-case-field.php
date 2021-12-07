@@ -181,7 +181,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 		// Validate depending on the Field name.
 		switch ( $case_field_name ) {
 
-			case 'duration' :
+			case 'duration':
 				// Must be an integer.
 				if ( ! ctype_digit( $value ) ) {
 					$valid = __( 'Must be an integer.', 'civicrm-wp-profile-sync' );
@@ -299,11 +299,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 		$type = $this->get_acf_type( $name );
 
 		// Convert CiviCRM value to ACF value by Case Field.
-		switch( $type ) {
+		switch ( $type ) {
 
 			// Unused at present.
-			case 'select' :
-			case 'checkbox' :
+			case 'select':
+			case 'checkbox':
 
 				// Convert if the value has the special CiviCRM array-like format.
 				if ( false !== strpos( $value, CRM_Core_DAO::VALUE_SEPARATOR ) ) {
@@ -313,8 +313,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 				break;
 
 			// Used by "Birth Date" and "Deceased Date".
-			case 'date_picker' :
-			case 'date_time_picker' :
+			case 'date_picker':
+			case 'date_time_picker':
 
 				// Get Field setting.
 				$acf_setting = get_field_object( $selector, $post_id );
@@ -526,8 +526,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 		// Only do this once per Field Type and filter.
 		static $pseudocache;
-		if ( isset( $pseudocache[$filter][$field_type] ) ) {
-			return $pseudocache[$filter][$field_type];
+		if ( isset( $pseudocache[ $filter ][ $field_type ] ) ) {
+			return $pseudocache[ $filter ][ $field_type ];
 		}
 
 		// Init return.
@@ -572,7 +572,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 				// Skip all but those mapped to the type of ACF Field.
 				foreach ( $public_fields as $key => $value ) {
-					if ( $field_type == $this->case_fields[$value['name']] ) {
+					if ( $field_type == $this->case_fields[ $value['name'] ] ) {
 						$fields[] = $value;
 					}
 				}
@@ -582,8 +582,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 		}
 
 		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$filter][$field_type] ) ) {
-			$pseudocache[$filter][$field_type] = $fields;
+		if ( ! isset( $pseudocache[ $filter ][ $field_type ] ) ) {
+			$pseudocache[ $filter ][ $field_type ] = $fields;
 		}
 
 		// --<
@@ -612,8 +612,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 		// Only do this once per filter.
 		static $pseudocache;
-		if ( isset( $pseudocache[$filter][$index] ) ) {
-			return $pseudocache[$filter][$index];
+		if ( isset( $pseudocache[ $filter ][ $index ] ) ) {
+			return $pseudocache[ $filter ][ $index ];
 		}
 
 		// Init return.
@@ -664,8 +664,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 		}
 
 		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$filter][$index] ) ) {
-			$pseudocache[$filter][$index] = $fields;
+		if ( ! isset( $pseudocache[ $filter ][ $index ] ) ) {
+			$pseudocache[ $filter ][ $index ] = $fields;
 		}
 
 		// --<
@@ -714,7 +714,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 		// Skip all but those mapped to the type of ACF Field.
 		foreach ( $this->case_fields as $key => $value ) {
 			if ( $type == $value ) {
-				$case_fields[$key] = $value;
+				$case_fields[ $key ] = $value;
 			}
 		}
 
@@ -740,7 +740,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 		// If the key exists, return the value - which is the ACF Type.
 		if ( array_key_exists( $name, $this->case_fields ) ) {
-			$type = $this->case_fields[$name];
+			$type = $this->case_fields[ $name ];
 		}
 
 		// --<
@@ -772,7 +772,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
+		if ( ! array_key_exists( $key, $field ) || empty( $field[ $key ] ) ) {
 			return $field;
 		}
 
@@ -826,7 +826,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 		// Skip if the CiviCRM Field key isn't there or isn't populated.
 		$key = $this->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) || empty( $field[$key] ) ) {
+		if ( ! array_key_exists( $key, $field ) || empty( $field[ $key ] ) ) {
 			return $field;
 		}
 

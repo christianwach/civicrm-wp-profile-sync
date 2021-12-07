@@ -294,7 +294,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		$relationship_key = $this->acf_field_key_get();
 
 		// Skip if we don't have a synced Relationship.
-		if ( empty( $settings[$relationship_key] ) ) {
+		if ( empty( $settings[ $relationship_key ] ) ) {
 			return true;
 		}
 
@@ -304,7 +304,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		}
 
 		// The Relationship code is the setting.
-		$code = $settings[$relationship_key];
+		$code = $settings[ $relationship_key ];
 
 		// Parse value by Field Type.
 		$value = $this->acf_loader->acf->field->value_get_for_civicrm( $value, $settings['type'], $settings );
@@ -491,11 +491,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 					! array_key_exists( $current_relationship['id'], $existing['activate'] ) &&
 					! array_key_exists( $current_relationship['id'], $existing['deactivate'] )
 				) {
-					$existing['ignore'][$current_relationship['id']] = $current_relationship;
+					$existing['ignore'][ $current_relationship['id'] ] = $current_relationship;
 				}
 
 				// Remove from unhandled contacts.
-				unset( $unhandled_contact_ids[$active_match] );
+				unset( $unhandled_contact_ids[ $active_match ] );
 
 			} elseif ( $inactive_match !== false ) {
 
@@ -512,11 +512,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 					! array_key_exists( $current_relationship['id'], $existing['activate'] ) &&
 					! array_key_exists( $current_relationship['id'], $existing['deactivate'] )
 				) {
-					$existing['activate'][$current_relationship['id']] = $current_relationship;
+					$existing['activate'][ $current_relationship['id'] ] = $current_relationship;
 				}
 
 				// Remove from unhandled contacts.
-				unset( $unhandled_contact_ids[$inactive_match] );
+				unset( $unhandled_contact_ids[ $inactive_match ] );
 
 			} else {
 
@@ -536,9 +536,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 					// But only if it's currently active.
 					if ( $current_relationship['is_active'] == '1' ) {
-						$existing['deactivate'][$current_relationship['id']] = $current_relationship;
+						$existing['deactivate'][ $current_relationship['id'] ] = $current_relationship;
 					} else {
-						$existing['ignore'][$current_relationship['id']] = $current_relationship;
+						$existing['ignore'][ $current_relationship['id'] ] = $current_relationship;
 					}
 
 				}
@@ -963,7 +963,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	 * @since 0.5
 	 *
 	 * @param integer $relationship_id The numeric ID of the Relationship.
-	 * @param object|bool $relationship The Relationship data object, or false if none.
+	 * @return object|bool $relationship The Relationship data object, or false if none.
 	 */
 	public function get_by_id( $relationship_id ) {
 
@@ -994,7 +994,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 			return $relationship;
 		}
 
- 		// The result set should contain only one item.
+		// The result set should contain only one item.
 		$relationship = (object) array_pop( $result['values'] );
 
 		// --<
@@ -1010,7 +1010,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	 * @since 0.5
 	 *
 	 * @param array $args The arguments to query the Relationship by.
-	 * @param array $relationships The array of Relationship data, or empty if none.
+	 * @return array $relationships The array of Relationship data, or empty if none.
 	 */
 	public function get_by( $args ) {
 
@@ -1040,7 +1040,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 			return $relationships;
 		}
 
- 		// The result set is what we want.
+		// The result set is what we want.
 		$relationships = $result['values'];
 
 		// --<
@@ -1234,8 +1234,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 		// Only do this once per Field Type and filter.
 		static $pseudocache;
-		if ( isset( $pseudocache[$filter] ) ) {
-			return $pseudocache[$filter];
+		if ( isset( $pseudocache[ $filter ] ) ) {
+			return $pseudocache[ $filter ];
 		}
 
 		// Init return.
@@ -1281,8 +1281,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		}
 
 		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[$filter] ) ) {
-			$pseudocache[$filter] = $fields;
+		if ( ! isset( $pseudocache[ $filter ] ) ) {
+			$pseudocache[ $filter ] = $fields;
 		}
 
 		// --<
@@ -1332,7 +1332,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 			return $relationships;
 		}
 
- 		// The result set is what we're after.
+		// The result set is what we're after.
 		$relationships = $result['values'];
 
 		// --<
@@ -1380,7 +1380,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 			return $relationship;
 		}
 
- 		// The result set should contain only one item.
+		// The result set should contain only one item.
 		$relationship = array_pop( $result['values'] );
 
 		// --<
@@ -1451,7 +1451,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 			return $relationship;
 		}
 
- 		// The result set should contain only one item.
+		// The result set should contain only one item.
 		$relationship = array_pop( $result['values'] );
 
 		// --<
@@ -1595,7 +1595,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		}
 
 		// Add Relationship Type ID if present.
-		if ( $type_id !== 0 and is_integer( $type_id ) ) {
+		if ( $type_id !== 0 && is_integer( $type_id ) ) {
 			$params['relationship_type_id'] = $type_id;
 		}
 
@@ -1612,7 +1612,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 			return $relationships;
 		}
 
- 		// The result set is what we want.
+		// The result set is what we want.
 		$relationships = $result['values'];
 
 		// --<
@@ -1658,7 +1658,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		];
 
 		// Add Relationship Type ID if present.
-		if ( $type_id !== 0 and is_integer( $type_id ) ) {
+		if ( $type_id !== 0 && is_integer( $type_id ) ) {
 			$params['relationship_type_id'] = $type_id;
 		}
 
@@ -1675,7 +1675,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 			return $relationships;
 		}
 
- 		// The result set is what we want.
+		// The result set is what we want.
 		$relationships = $result['values'];
 
 		// --<
@@ -1731,7 +1731,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 			return $relationships;
 		}
 
- 		// Extract the result set.
+		// Extract the result set.
 		$relationships = $result['values'];
 
 		// --<
@@ -1817,8 +1817,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		$relationship_key = $this->acf_field_key_get();
 
 		// Add if it has a reference to a Relationship Field.
-		if ( ! empty( $field[$relationship_key] ) ) {
-			$acf_fields['relationship'][$field['name']] = $field[$relationship_key];
+		if ( ! empty( $field[ $relationship_key ] ) ) {
+			$acf_fields['relationship'][ $field['name'] ] = $field[ $relationship_key ];
 		}
 
 		// --<

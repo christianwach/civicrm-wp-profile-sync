@@ -8,7 +8,7 @@
 
 
 // Exit if accessed directly.
-if ( ! defined( 'ABSPATH' ) ) exit;
+defined( 'ABSPATH' ) || exit;
 
 
 
@@ -157,11 +157,11 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Activity_Assignee extends acf_field {
 		// Define translations.
 		$this->l10n = [
 			// Example message.
-			'error'	=> __( 'Error! Please enter a higher value.', 'civicrm-wp-profile-sync' ),
+			'error' => __( 'Error! Please enter a higher value.', 'civicrm-wp-profile-sync' ),
 		];
 
 		// Call parent.
-    	parent::__construct();
+		parent::__construct();
 
 		// Define AJAX callbacks.
 		add_action( 'wp_ajax_acf/fields/' . $this->name . '/query', [ $this, 'ajax_query' ] );
@@ -241,7 +241,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Activity_Assignee extends acf_field {
 					// TODO: Permission to view Contact?
 
 					// Append Contact to choices.
-					$field['choices'][$contact['contact_id']] = $name;
+					$field['choices'][ $contact['contact_id'] ] = $name;
 
 				}
 			}
@@ -304,15 +304,15 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Activity_Assignee extends acf_field {
 			'paged' => 1,
 		];
 
-   		// Parse the incoming POST array.
-   		$options = acf_parse_args( $options, $defaults );
+		// Parse the incoming POST array.
+		$options = acf_parse_args( $options, $defaults );
 
 		// Bail if there's no search string.
 		if ( empty( $options['s'] ) ) {
 			return $response;
 		}
 
- 		// Load Field.
+		// Load Field.
 		$field = acf_get_field( $options['field_key'] );
 
 		// Bail if Field did not load.
@@ -439,7 +439,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Activity_Assignee extends acf_field {
 
 
 	/**
- 	 * This method is called once on the 'input' page between the head and footer.
+	 * This method is called once on the 'input' page between the head and footer.
 	 *
 	 * There are 2 situations where ACF did not load during the
 	 * 'acf/input_admin_enqueue_scripts' and 'acf/input_admin_head' actions

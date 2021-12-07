@@ -256,7 +256,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	public function register_civicrm_hooks() {
 
 		// Add callback for CiviCRM "postInsert" hook.
-		Civi::service('dispatcher')->addListener(
+		Civi::service( 'dispatcher' )->addListener(
 			'civi.dao.postInsert',
 			[ $this, 'participant_role_created' ],
 			-100 // Default priority.
@@ -273,14 +273,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		*/
 
 		// Add callback for CiviCRM "postUpdate" hook.
-		Civi::service('dispatcher')->addListener(
+		Civi::service( 'dispatcher' )->addListener(
 			'civi.dao.postUpdate',
 			[ $this, 'participant_role_updated' ],
 			-100 // Default priority.
 		);
 
 		// Add callback for CiviCRM "preDelete" hook.
-		Civi::service('dispatcher')->addListener(
+		Civi::service( 'dispatcher' )->addListener(
 			'civi.dao.preDelete',
 			[ $this, 'participant_role_pre_delete' ],
 			-100 // Default priority.
@@ -298,7 +298,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	public function unregister_civicrm_hooks() {
 
 		// Remove callback for CiviCRM "postInsert" hook.
-		Civi::service('dispatcher')->removeListener(
+		Civi::service( 'dispatcher' )->removeListener(
 			'civi.dao.postInsert',
 			[ $this, 'participant_role_created' ]
 		);
@@ -312,13 +312,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		*/
 
 		// Remove callback for CiviCRM "postUpdate" hook.
-		Civi::service('dispatcher')->removeListener(
+		Civi::service( 'dispatcher' )->removeListener(
 			'civi.dao.postUpdate',
 			[ $this, 'participant_role_updated' ]
 		);
 
 		// Remove callback for CiviCRM "preDelete" hook.
-		Civi::service('dispatcher')->removeListener(
+		Civi::service( 'dispatcher' )->removeListener(
 			'civi.dao.preDelete',
 			[ $this, 'participant_role_pre_delete' ]
 		);
@@ -425,7 +425,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 			$args = [
 				'taxonomy' => $this->taxonomy_name,
 				'orderby' => 'count',
-				'hide_empty' => 0
+				'hide_empty' => 0,
 			];
 
 			// Get all Terms.
@@ -702,7 +702,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		// Construct args.
 		$args = [
 			'slug' => sanitize_title( $participant_role['name'] ),
-			'description'=> $description,
+			'description' => $description,
 		];
 
 		// Unhook listeners.
@@ -791,7 +791,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		$args = [
 			'name' => $new_role['label'],
 			'slug' => sanitize_title( $new_role['name'] ),
-			'description'=> $description,
+			'description' => $description,
 		];
 
 		// Unhook listeners.
@@ -1001,7 +1001,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 				[
 					'key' => $this->term_meta_key,
 					'value' => $participant_role_id,
-					'compare' => '='
+					'compare' => '=',
 				],
 			],
 		];

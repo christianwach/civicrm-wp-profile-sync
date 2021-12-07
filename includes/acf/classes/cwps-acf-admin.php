@@ -261,7 +261,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		// Loop through them and get the data we want.
 		$contact_post_types = [];
 		foreach ( $mapped_contact_post_types as $contact_post_type ) {
-			$contact_post_types[$contact_post_type->name] = [
+			$contact_post_types[ $contact_post_type->name ] = [
 				'label' => esc_html( $contact_post_type->label ),
 				'count' => $this->acf_loader->post_type->post_count( $contact_post_type->name ),
 			];
@@ -273,7 +273,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		// Loop through them and get the data we want.
 		$contact_types = [];
 		foreach ( $mapped_contact_types as $contact_type ) {
-			$contact_types[$contact_type['id']] = [
+			$contact_types[ $contact_type['id'] ] = [
 				'label' => esc_html( $contact_type['label'] ),
 				'count' => $this->acf_loader->civicrm->contact_type->contact_count( $contact_type['id'] ),
 			];
@@ -285,7 +285,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		// Loop through them and get the data we want.
 		$groups = [];
 		foreach ( $mapped_groups as $group ) {
-			$groups[$group['id']] = [
+			$groups[ $group['id'] ] = [
 				'label' => esc_html( $group['title'] ),
 				'count' => $this->acf_loader->civicrm->group->group_contact_count( $group['id'] ),
 			];
@@ -297,7 +297,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		// Loop through them and get the data we want.
 		$activity_post_types = [];
 		foreach ( $mapped_activity_post_types as $activity_post_type ) {
-			$activity_post_types[$activity_post_type->name] = [
+			$activity_post_types[ $activity_post_type->name ] = [
 				'label' => esc_html( $activity_post_type->label ),
 				'count' => $this->acf_loader->post_type->post_count( $activity_post_type->name ),
 			];
@@ -309,7 +309,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		// Loop through them and get the data we want.
 		$activity_types = [];
 		foreach ( $mapped_activity_types as $activity_type ) {
-			$activity_types[$activity_type['value']] = [
+			$activity_types[ $activity_type['value'] ] = [
 				'label' => esc_html( $activity_type['label'] ),
 				'count' => $this->acf_loader->civicrm->activity_type->activity_count( $activity_type['value'] ),
 			];
@@ -333,7 +333,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		// Loop through them and get the data we want.
 		$participant_post_types = [];
 		foreach ( $mapped_participant_post_types as $participant_post_type ) {
-			$participant_post_types[$participant_post_type->name] = [
+			$participant_post_types[ $participant_post_type->name ] = [
 				'label' => esc_html( $participant_post_type->label ),
 				'count' => $this->acf_loader->post_type->post_count( $participant_post_type->name ),
 			];
@@ -362,7 +362,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			} else {
 				$count = $this->acf_loader->civicrm->participant_role->participant_count( $participant_role['value'] );
 			}
-			$participant_roles[$participant_role['value']] = [
+			$participant_roles[ $participant_role['value'] ] = [
 				'label' => esc_html( $participant_role['label'] ),
 				'count' => $count,
 			];
@@ -793,7 +793,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		// Loop through them and get the data we want.
 		$contact_post_types = [];
 		foreach ( $mapped_contact_post_types as $contact_post_type ) {
-			$contact_post_types[$contact_post_type->name] = $contact_post_type->label;
+			$contact_post_types[ $contact_post_type->name ] = $contact_post_type->label;
 		}
 
 		// Include template file.
@@ -816,7 +816,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		// Loop through them and get the data we want.
 		$contact_types = [];
 		foreach ( $mapped_contact_types as $contact_type ) {
-			$contact_types[$contact_type['id']] = $contact_type['label'];
+			$contact_types[ $contact_type['id'] ] = $contact_type['label'];
 		}
 
 		// Include template file.
@@ -839,7 +839,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		// Loop through them and get the data we want.
 		$activity_post_types = [];
 		foreach ( $mapped_activity_post_types as $activity_post_type ) {
-			$activity_post_types[$activity_post_type->name] = $activity_post_type->label;
+			$activity_post_types[ $activity_post_type->name ] = $activity_post_type->label;
 		}
 
 		// Include template file.
@@ -862,7 +862,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		// Loop through them and get the data we want.
 		$activity_types = [];
 		foreach ( $mapped_activity_types as $activity_type ) {
-			$activity_types[$activity_type['value']] = $activity_type['label'];
+			$activity_types[ $activity_type['value'] ] = $activity_type['label'];
 		}
 
 		// Include template file.
@@ -885,7 +885,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		// Loop through them and get the data we want.
 		$post_types = [];
 		foreach ( $mapped_participant_role_post_types as $participant_role_post_type ) {
-			$post_types[$participant_role_post_type->name] = $participant_role_post_type->label;
+			$post_types[ $participant_role_post_type->name ] = $participant_role_post_type->label;
 		}
 
 		/**
@@ -917,7 +917,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		// Loop through them and get the data we want.
 		$participant_roles = [];
 		foreach ( $mapped_participant_roles as $participant_role ) {
-			$participant_roles[$participant_role['value']] = $participant_role['label'];
+			$participant_roles[ $participant_role['value'] ] = $participant_role['label'];
 		}
 
 		/**
@@ -949,7 +949,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		// Loop through them and get the data we want.
 		$groups = [];
 		foreach ( $mapped_groups as $group ) {
-			$groups[$group['id']] = $group['title'];
+			$groups[ $group['id'] ] = $group['title'];
 		}
 
 		// Include template file.
@@ -976,7 +976,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		// Loop through them and get the data we want.
 		$contact_post_types = [];
 		foreach ( $mapped_contact_post_types as $contact_post_type ) {
-			$contact_post_types[$contact_post_type->name] = 'cwps_acf_post_to_contact_' . $contact_post_type->name . '_stop';
+			$contact_post_types[ $contact_post_type->name ] = 'cwps_acf_post_to_contact_' . $contact_post_type->name . '_stop';
 		}
 
 		// Get all mapped Contact Types.
@@ -985,7 +985,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		// Loop through them and get the data we want.
 		$contact_types = [];
 		foreach ( $mapped_contact_types as $contact_type ) {
-			$contact_types[$contact_type['id']] = 'cwps_acf_contact_to_post_' . $contact_type['id'] . '_stop';
+			$contact_types[ $contact_type['id'] ] = 'cwps_acf_contact_to_post_' . $contact_type['id'] . '_stop';
 		}
 
 		// Get all mapped Groups.
@@ -994,7 +994,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		// Loop through them and get the data we want.
 		$groups = [];
 		foreach ( $mapped_groups as $group ) {
-			$groups[$group['id']] = 'cwps_acf_group_to_term_' . $group['id'] . '_stop';
+			$groups[ $group['id'] ] = 'cwps_acf_group_to_term_' . $group['id'] . '_stop';
 		}
 
 		// Get all Post Types mapped to Activities.
@@ -1003,7 +1003,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		// Loop through them and get the data we want.
 		$activity_post_types = [];
 		foreach ( $mapped_activity_post_types as $activity_post_type ) {
-			$activity_post_types[$activity_post_type->name] = 'cwps_acf_post_to_activity_' . $activity_post_type->name . '_stop';
+			$activity_post_types[ $activity_post_type->name ] = 'cwps_acf_post_to_activity_' . $activity_post_type->name . '_stop';
 		}
 
 		// Get all mapped Activity Types.
@@ -1012,7 +1012,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		// Loop through them and get the data we want.
 		$activity_types = [];
 		foreach ( $mapped_activity_types as $activity_type ) {
-			$activity_types[$activity_type['id']] = 'cwps_acf_activity_to_post_' . $activity_type['id'] . '_stop';
+			$activity_types[ $activity_type['id'] ] = 'cwps_acf_activity_to_post_' . $activity_type['id'] . '_stop';
 		}
 
 		// Get all Post Types mapped to Participant Roles.
@@ -1033,7 +1033,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		// Loop through them and get the data we want.
 		$participant_role_post_types = [];
 		foreach ( $mapped_participant_role_post_types as $participant_role_post_type ) {
-			$participant_role_post_types[$participant_role_post_type->name] = 'cwps_acf_post_to_participant_role_' . $participant_role_post_type->name . '_stop';
+			$participant_role_post_types[ $participant_role_post_type->name ] = 'cwps_acf_post_to_participant_role_' . $participant_role_post_type->name . '_stop';
 		}
 
 		// Get all mapped Participant Roles.
@@ -1054,7 +1054,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		// Loop through them and get the data we want.
 		$participant_roles = [];
 		foreach ( $mapped_participant_roles as $participant_role ) {
-			$participant_roles[$participant_role['value']] = 'cwps_acf_participant_role_to_post_' . $participant_role['value'] . '_stop';
+			$participant_roles[ $participant_role['value'] ] = 'cwps_acf_participant_role_to_post_' . $participant_role['value'] . '_stop';
 		}
 
 		// Init stop, continue and sync flags.
@@ -1070,7 +1070,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			$replacements = [ 'cwps_acf_post_to_contact_', '_stop' ];
 
 			// Was a "Stop Sync" button pressed?
-			if ( isset( $_POST[$stop_code] ) ) {
+			if ( isset( $_POST[ $stop_code ] ) ) {
 				$stop = $stop_code;
 				$sync_type = 'contact_post_type';
 				$entity_id = str_replace( $replacements, '', $stop_code );
@@ -1079,7 +1079,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 			// Was a "Sync Now" or "Continue Sync" button pressed?
 			$button = str_replace( '_stop', '', $stop_code );
-			if ( isset( $_POST[$button] ) ) {
+			if ( isset( $_POST[ $button ] ) ) {
 				$continue = $button;
 				$sync_type = 'contact_post_type';
 				$entity_id = str_replace( $replacements, '', $stop_code );
@@ -1096,7 +1096,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 				$replacements = [ 'cwps_acf_contact_to_post_', '_stop' ];
 
 				// Was a "Stop Sync" button pressed?
-				if ( isset( $_POST[$stop_code] ) ) {
+				if ( isset( $_POST[ $stop_code ] ) ) {
 					$stop = $stop_code;
 					$sync_type = 'contact_type';
 					$entity_id = str_replace( $replacements, '', $stop_code );
@@ -1105,7 +1105,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 				// Was a "Sync Now" or "Continue Sync" button pressed?
 				$button = str_replace( '_stop', '', $stop_code );
-				if ( isset( $_POST[$button] ) ) {
+				if ( isset( $_POST[ $button ] ) ) {
 					$continue = $button;
 					$sync_type = 'contact_type';
 					$entity_id = str_replace( $replacements, '', $stop_code );
@@ -1123,7 +1123,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 				$replacements = [ 'cwps_acf_group_to_term_', '_stop' ];
 
 				// Was a "Stop Sync" button pressed?
-				if ( isset( $_POST[$stop_code] ) ) {
+				if ( isset( $_POST[ $stop_code ] ) ) {
 					$stop = $stop_code;
 					$sync_type = 'group';
 					$entity_id = str_replace( $replacements, '', $stop_code );
@@ -1132,7 +1132,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 				// Was a "Sync Now" or "Continue Sync" button pressed?
 				$button = str_replace( '_stop', '', $stop_code );
-				if ( isset( $_POST[$button] ) ) {
+				if ( isset( $_POST[ $button ] ) ) {
 					$continue = $button;
 					$sync_type = 'group';
 					$entity_id = str_replace( $replacements, '', $stop_code );
@@ -1149,7 +1149,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			$replacements = [ 'cwps_acf_post_to_activity_', '_stop' ];
 
 			// Was a "Stop Sync" button pressed?
-			if ( isset( $_POST[$stop_code] ) ) {
+			if ( isset( $_POST[ $stop_code ] ) ) {
 				$stop = $stop_code;
 				$sync_type = 'activity_post_type';
 				$entity_id = str_replace( $replacements, '', $stop_code );
@@ -1158,7 +1158,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 			// Was a "Sync Now" or "Continue Sync" button pressed?
 			$button = str_replace( '_stop', '', $stop_code );
-			if ( isset( $_POST[$button] ) ) {
+			if ( isset( $_POST[ $button ] ) ) {
 				$continue = $button;
 				$sync_type = 'activity_post_type';
 				$entity_id = str_replace( $replacements, '', $stop_code );
@@ -1175,7 +1175,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 				$replacements = [ 'cwps_acf_activity_to_post_', '_stop' ];
 
 				// Was a "Stop Sync" button pressed?
-				if ( isset( $_POST[$stop_code] ) ) {
+				if ( isset( $_POST[ $stop_code ] ) ) {
 					$stop = $stop_code;
 					$sync_type = 'activity_type';
 					$entity_id = str_replace( $replacements, '', $stop_code );
@@ -1184,7 +1184,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 				// Was a "Sync Now" or "Continue Sync" button pressed?
 				$button = str_replace( '_stop', '', $stop_code );
-				if ( isset( $_POST[$button] ) ) {
+				if ( isset( $_POST[ $button ] ) ) {
 					$continue = $button;
 					$sync_type = 'activity_type';
 					$entity_id = str_replace( $replacements, '', $stop_code );
@@ -1201,7 +1201,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			$replacements = [ 'cwps_acf_post_to_participant_role_', '_stop' ];
 
 			// Was a "Stop Sync" button pressed?
-			if ( isset( $_POST[$stop_code] ) ) {
+			if ( isset( $_POST[ $stop_code ] ) ) {
 				$stop = $stop_code;
 				$sync_type = 'participant_role_post_type';
 				$entity_id = str_replace( $replacements, '', $stop_code );
@@ -1210,7 +1210,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 			// Was a "Sync Now" or "Continue Sync" button pressed?
 			$button = str_replace( '_stop', '', $stop_code );
-			if ( isset( $_POST[$button] ) ) {
+			if ( isset( $_POST[ $button ] ) ) {
 				$continue = $button;
 				$sync_type = 'participant_role_post_type';
 				$entity_id = str_replace( $replacements, '', $stop_code );
@@ -1227,7 +1227,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 				$replacements = [ 'cwps_acf_participant_role_to_post_', '_stop' ];
 
 				// Was a "Stop Sync" button pressed?
-				if ( isset( $_POST[$stop_code] ) ) {
+				if ( isset( $_POST[ $stop_code ] ) ) {
 					$stop = $stop_code;
 					$sync_type = 'participant_role';
 					$entity_id = str_replace( $replacements, '', $stop_code );
@@ -1236,7 +1236,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 				// Was a "Sync Now" or "Continue Sync" button pressed?
 				$button = str_replace( '_stop', '', $stop_code );
-				if ( isset( $_POST[$button] ) ) {
+				if ( isset( $_POST[ $button ] ) ) {
 					$continue = $button;
 					$sync_type = 'participant_role';
 					$entity_id = str_replace( $replacements, '', $stop_code );
@@ -1246,7 +1246,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			}
 		}
 
-	 	// Bail if no button was pressed.
+		// Bail if no button was pressed.
 		if ( empty( $stop ) && empty( $continue ) ) {
 			return;
 		}
@@ -1254,7 +1254,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		// Check that we trust the source of the data.
 		check_admin_referer( 'cwps_acf_sync_action', 'cwps_acf_sync_nonce' );
 
-	 	// Was a "Stop Sync" button pressed?
+		// Was a "Stop Sync" button pressed?
 		if ( ! empty( $stop ) ) {
 
 			// Define slugs.
@@ -1269,7 +1269,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			];
 
 			// Build key.
-			$key = $slugs[$sync_type] . $entity_id;
+			$key = $slugs[ $sync_type ] . $entity_id;
 
 			// Clear offset and bail.
 			$this->stepped_offset_delete( $key );
@@ -2773,7 +2773,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $step_counts The array of step counts.
+	 * @return array $step_counts The array of step counts.
 	 */
 	public function step_counts_get() {
 
@@ -2812,7 +2812,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// Return the value for the given key.
-		return $step_counts[$type];
+		return $step_counts[ $type ];
 
 	}
 
