@@ -834,6 +834,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		// Params to get all Location Types.
 		$params = [
 			'version' => 3,
+			'is_active' => 1,
 			'sequential' => 1,
 			'options' => [
 				'limit' => 0,
