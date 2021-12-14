@@ -782,7 +782,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			'instructions' => '',
 			'required' => 0,
 			'conditional_logic' => 0,
-			'conditional_logic' => 0,
 			'wrapper' => [
 				'width' => '',
 				'class' => '',
