@@ -1011,6 +1011,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 			unset( $activity_data['activity_conditional_ref'] );
 		}
 
+		// Skip if the Case has been skipped.
+		if ( ! empty( $activity_data['dismissed'] ) && 'skipped' === $activity_data['dismissed'] ) {
+			return $activity;
+		}
+
 		// Strip out empty Fields.
 		$activity_data = $this->form_data_prepare( $activity_data );
 
@@ -1117,7 +1122,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 	 * @since 0.5
 	 *
 	 * @param string $action_name The name of the referenced Form Action.
-	 * @return integer|bool $case_id The numeric ID of the Case, or false if not found.
+	 * @return mixed $case_id The numeric ID of the Case, false if not found, string if skipped.
 	 */
 	public function form_case_id_get_mapped( $action_name ) {
 
@@ -1137,6 +1142,12 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 
 		// Assign return.
 		$case_id = (int) $related_case_id;
+
+		// Bail if creating the Case has been skipped.
+		$skipped = acfe_form_get_action( $action_name, 'dismissed' );
+		if ( $skipped ) {
+			return 'skipped';
+		}
 
 		// --<
 		return $case_id;
