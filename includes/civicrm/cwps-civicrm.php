@@ -474,7 +474,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 		$setting = civicrm_api( 'Setting', 'getvalue', $params );
 
 		// Convert if the value has the special CiviCRM array-like format.
-		if ( false !== strpos( $setting, CRM_Core_DAO::VALUE_SEPARATOR ) ) {
+		if ( is_string( $setting ) && false !== strpos( $setting, CRM_Core_DAO::VALUE_SEPARATOR ) ) {
 			$setting = CRM_Utils_Array::explodePadded( $setting );
 		}
 
