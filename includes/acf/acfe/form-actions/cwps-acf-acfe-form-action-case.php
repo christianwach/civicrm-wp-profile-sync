@@ -422,12 +422,44 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 			'ui_off_text' => '',
 		];
 
+		// Define "Dismissed Message" Field.
+		$dismiss_message_field = [
+			'key' => $this->field_key . 'dismiss_message',
+			'label' => __( 'Message', 'civicrm-wp-profile-sync' ),
+			'name' => $this->field_name . 'dismiss_message',
+			'type' => 'textarea',
+			'instructions' => __( 'Message to display on the Success Page if the Case of this Type already exists. See "Cheatsheet" for code to reference this.', 'civicrm-wp-profile-sync' ),
+			'required' => 0,
+			'conditional_logic' => [
+				[
+					[
+						'field' => $this->field_key . 'dismiss_if_exists',
+						//'operator' => '!=empty',
+						'operator' => '==',
+						'value' => '1',
+					],
+				],
+			],
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+				'data-instruction-placement' => 'field',
+			],
+			'acfe_permissions' => '',
+			'placeholder' => '',
+			'maxlength' => '',
+			'rows' => 4,
+			'new_lines' => '',
+		];
+
 		// Init Fields.
 		$fields = [
 			$case_types_field,
 			$case_status_field,
 			$case_activity_medium_field,
 			$dismiss_if_exists_field,
+			$dismiss_message_field,
 		];
 
 		// Add Conditional Field.
@@ -884,6 +916,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 		// Get the "Dismiss if exists" Field.
 		$data['dismiss_if_exists'] = get_sub_field( $this->field_key . 'dismiss_if_exists' );
 
+		// Get the "Dismissed Message" Field.
+		$data['dismiss_message'] = get_sub_field( $this->field_key . 'dismiss_message' );
+
 		// Get the Case Type.
 		$data['case_type_id'] = get_sub_field( $this->field_key . 'case_types' );
 
@@ -976,6 +1011,10 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 		if ( ! empty( $case_data['dismiss_if_exists'] ) ) {
 			$case = $this->civicrm->case->get_by_type_and_contact( $case_data['case_type_id'], $case_data['contact_id'] );
 			if ( $case !== false ) {
+				// Flag that creating the Case has been skipped.
+				$case['dismissed'] = true;
+				// Add "Dismissed Message" in case it's used on Success Page.
+				$case['dismiss_message'] = $case_data['dismiss_message'];
 				return $case;
 			}
 		}
@@ -1031,6 +1070,12 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 
 		// Get the full Case data.
 		$case = $this->civicrm->case->get_by_id( $result['id'] );
+
+		// Flag that creating the Case has not been skipped.
+		$case['dismissed'] = false;
+
+		// Add empty "Dismissed Message" in case it's used on Success Page.
+		$case['dismiss_message'] = '';
 
 		// Assign the Case Manager if defined.
 		$this->civicrm->case->manager_add( $case_data, $case );
