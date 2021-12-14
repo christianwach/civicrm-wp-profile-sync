@@ -152,8 +152,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 		// Add Form Actions Javascript.
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_form_action_scripts' ] );
 
-		// Add Form Actions Javascript.
-		add_action( 'acfe/form/submit', [ $this, 'form_action_query_vars_clear' ] );
+		// Clear Form Action Query Vars.
+		//add_action( 'acfe/form/submit', [ $this, 'form_action_query_vars_clear' ] );
 
 		// Set a better Form Wrapper class.
 		add_filter( 'acfe/form/load', [ $this, 'form_wrapper' ], 10, 2 );
