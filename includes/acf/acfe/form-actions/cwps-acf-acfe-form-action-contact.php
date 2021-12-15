@@ -308,6 +308,13 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// Try finding the Contact ID.
 		$contact_id = $this->form_contact_id_get_submitter();
+
+		// The Contact ID may already exist in the Query Vars.
+		if ( ! $contact_id ) {
+			$contact_id = $this->form_contact_id_get_existing( $form, $current_post_id, $action );
+		}
+
+		// Try finding the Contact ID by Relationship.
 		if ( ! $contact_id ) {
 			$relationships = $this->form_relationship_data( $form, $current_post_id, $action );
 			$contact_id = $this->form_contact_id_get_related( $relationships );
@@ -2971,6 +2978,56 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// --<
 		return $contact_id;
+
+	}
+
+
+
+	/**
+	 * Gets the Contact ID if it exists in the Form Action Query Vars array.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $relationships The array of Relationships data.
+	 * @param integer $type_id The numeric ID of the Relationship Type.
+	 * @param integer $related_contact_id The numeric ID of the Related Contact.
+	 * @param string $direction The direction of the Relationship.
+	 * @return integer $offset The Relationship offset.
+	 */
+	public function form_contact_id_get_existing( $form, $current_post_id, $action ) {
+
+		// Init return.
+		$contact_id = false;
+
+		// On load, the Form Actions array may already be populated.
+		$alias = get_sub_field( $this->field_key . 'custom_alias' );
+
+		// Get the existing Form Actions.
+		$form_actions = acfe_form_get_actions();
+
+		// Bail if there aren't any.
+		if ( empty( $form_actions ) ) {
+			return $contact_id;
+		}
+
+		// Bail if there's no entry for this alias.
+		if ( ! array_key_exists( $alias, $form_actions ) ) {
+			return $contact_id;
+		}
+
+		// Grab the entry.
+		$form_action = $form_actions[ $alias ];
+
+		// Bail if we can't find the Contact ID.
+		if ( empty( $form_action['contact'] ) ) {
+			return $contact_id;
+		}
+		if ( empty( $form_action['contact']['id'] ) ) {
+			return $contact_id;
+		}
+
+		// --<
+		return (int) $form_action['contact']['id'];
 
 	}
 
