@@ -95,6 +95,14 @@ Should you want to open a CiviCRM Case in the Form, you'll need to have added th
 
 *Tip:* If you have used Caldera Forms CiviCRM, then the available options in each of the Actions should be relatively familiar to you. I have tried to keep the functionality in this UI as recognisable as possible.
 
+### CiviCRM Form Actions
+
+The following are some notes about the usage of CiviCRM Form Actions:
+
+#### CiviCRM Case Action
+
+To use the Message Field that is available when creating a Case has been skipped (because the Contact already has a Case of the selected Type) an action reference of the form `{action:your-action-name:dismiss_message}` is needed. Replace `your-action-name` with the value from the Case Action's *Action name* Field.
+
 ## What's Missing?
 
 When compared to Caldera Forms CiviCRM, the following features are not available yet:
