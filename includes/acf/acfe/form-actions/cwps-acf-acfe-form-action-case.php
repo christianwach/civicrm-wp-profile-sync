@@ -428,7 +428,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 			'label' => __( 'Message', 'civicrm-wp-profile-sync' ),
 			'name' => $this->field_name . 'dismiss_message',
 			'type' => 'textarea',
-			'instructions' => __( 'Message to display on the Success Page if the Case of this Type already exists. See "Cheatsheet" for code to reference this.', 'civicrm-wp-profile-sync' ),
+			'instructions' => __( 'Message to display on the Success Page if the Case of this Type already exists. See "Cheatsheet" for how to reference the "dismiss_message" variable in this action.', 'civicrm-wp-profile-sync' ),
 			'required' => 0,
 			'conditional_logic' => [
 				[
