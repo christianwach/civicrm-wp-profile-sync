@@ -399,13 +399,21 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 			'choices' => $this->civicrm->case_field->options_get( 'case_medium_id' ),
 		];
 
+		// Add Conditional Field.
+		$code = 'case_conditional';
+		$label = __( 'Conditional On', 'civicrm-wp-profile-sync' );
+		$conditional = $this->mapping_field_get( $code, $label );
+		$conditional['placeholder'] = __( 'Always add', 'civicrm-wp-profile-sync' );
+		$conditional['wrapper']['data-instruction-placement'] = 'field';
+		$conditional['instructions'] = __( 'To add the Case only when a Form Field is populated (e.g. "Subject") link this to the Form Field. To add the Case only when more complex conditions are met, link this to a Hidden Field with value "1" where the conditional logic of that Field shows it when the conditions are met.', 'civicrm-wp-profile-sync' );
+
 		// Define "Dismiss if exists" Field.
 		$dismiss_if_exists_field = [
 			'key' => $this->field_key . 'dismiss_if_exists',
-			'label' => __( 'Create Case?', 'civicrm-wp-profile-sync' ),
+			'label' => __( 'Skip creating the Case?', 'civicrm-wp-profile-sync' ),
 			'name' => $this->field_name . 'dismiss_if_exists',
 			'type' => 'true_false',
-			'instructions' => __( 'Skip creating a Case if the Contact already has a Case of this Type.', 'civicrm-wp-profile-sync' ),
+			'instructions' => __( 'Skip creating a Case if the Contact already has a Case of this Type. See "Cheatsheet" for how to reference the "created" and "skipped" variables in this action to make other Form Actions conditional on whether the Case is created or skipped.', 'civicrm-wp-profile-sync' ),
 			'required' => 0,
 			'conditional_logic' => 0,
 			'wrapper' => [
@@ -458,18 +466,10 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 			$case_types_field,
 			$case_status_field,
 			$case_activity_medium_field,
+			$conditional,
 			$dismiss_if_exists_field,
 			$dismiss_message_field,
 		];
-
-		// Add Conditional Field.
-		$code = 'case_conditional';
-		$label = __( 'Conditional On', 'civicrm-wp-profile-sync' );
-		$conditional = $this->mapping_field_get( $code, $label );
-		$conditional['placeholder'] = __( 'Always add', 'civicrm-wp-profile-sync' );
-		$conditional['wrapper']['data-instruction-placement'] = 'field';
-		$conditional['instructions'] = __( 'To add the Case only when a Form Field is populated (e.g. "Subject") link this to the Form Field. To add the Case only when more complex conditions are met, link this to a Hidden Field with value "1" where the conditional logic of that Field shows it when the conditions are met.', 'civicrm-wp-profile-sync' );
-		$fields[] = $conditional;
 
 		// --<
 		return $fields;
@@ -559,6 +559,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 				'label' => $field['title'],
 				'name' => $this->field_name . 'contact_group_' . $field['name'],
 				'type' => 'group',
+				/* translators: %s: The name of the Field */
 				'instructions' => sprintf( __( 'Use one Field to identify the %s.', 'civicrm-wp-profile-sync' ), $field['title'] ),
 				'wrapper' => [
 					'width' => '',
@@ -1011,11 +1012,18 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 		if ( ! empty( $case_data['dismiss_if_exists'] ) ) {
 			$case = $this->civicrm->case->get_by_type_and_contact( $case_data['case_type_id'], $case_data['contact_id'] );
 			if ( $case !== false ) {
+
 				// Flag that creating the Case has been skipped.
-				$case['dismissed'] = true;
+				$case['skipped'] = true;
+
+				// Flag that the Case was not created.
+				$case['created'] = false;
+
 				// Add "Dismissed Message" in case it's used on Success Page.
 				$case['dismiss_message'] = $case_data['dismiss_message'];
+
 				return $case;
+
 			}
 		}
 
@@ -1046,33 +1054,33 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 
 			// Add the Case Contact.
 			$result = $this->civicrm->case->contact_create( $params );
-
-			// Bail on failure.
 			if ( $result === false ) {
 				return $case;
 			}
 
-			// Get the Case.
-			$case = $this->civicrm->case->get_by_id( $case_data['id'] );
+			// Start result afresh for query below.
+			$result = [
+				'id' => $case_data['id'],
+			];
 
-			// Bail early regardless.
-			return $case;
+		} else {
 
-		}
+			// Let's create the Case.
+			$result = $this->civicrm->case->create( $case_data );
+			if ( $result === false ) {
+				return $case;
+			}
 
-		// Okay, let's create the Case.
-		$result = $this->civicrm->case->create( $case_data );
-
-		// Bail on failure.
-		if ( $result === false ) {
-			return $case;
 		}
 
 		// Get the full Case data.
 		$case = $this->civicrm->case->get_by_id( $result['id'] );
 
 		// Flag that creating the Case has not been skipped.
-		$case['dismissed'] = false;
+		$case['skipped'] = false;
+
+		// Flag that the Case was created.
+		$case['created'] = true;
 
 		// Add empty "Dismissed Message" in case it's used on Success Page.
 		$case['dismiss_message'] = '';

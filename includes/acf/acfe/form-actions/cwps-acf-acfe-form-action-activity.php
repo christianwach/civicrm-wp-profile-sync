@@ -454,6 +454,36 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 				'choices' => [],
 			];
 
+			// Define "Dismiss if exists" Field.
+			$fields[] = [
+				'key' => $this->field_key . 'activity_case_create',
+				'label' => __( 'Create Case Activity?', 'civicrm-wp-profile-sync' ),
+				'name' => $this->field_name . 'activity_case_create',
+				'type' => 'true_false',
+				'instructions' => __( 'Create a Case Activity even if the Contact already has an existing Case of the selected Type. Useful when you want to add an Activity to a Case.', 'civicrm-wp-profile-sync' ),
+				'required' => 0,
+				'conditional_logic' => [
+					[
+						[
+							'field' => $this->field_key . 'activity_case_id',
+							'operator' => '!=empty',
+						],
+					],
+				],
+				'wrapper' => [
+					'width' => '',
+					'class' => '',
+					'id' => '',
+					'data-instruction-placement' => 'field',
+				],
+				'acfe_permissions' => '',
+				'message' => '',
+				'default_value' => 0,
+				'ui' => 1,
+				'ui_on_text' => '',
+				'ui_off_text' => '',
+			];
+
 		}
 
 		// Add Conditional Field.
@@ -553,6 +583,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 				'label' => $field['title'],
 				'name' => $this->field_name . 'contact_group_' . $field['name'],
 				'type' => 'group',
+				/* translators: %s: The name of the Field */
 				'instructions' => sprintf( __( 'Use one Field to identify the %s.', 'civicrm-wp-profile-sync' ), $field['title'] ),
 				'wrapper' => [
 					'width' => '',
@@ -956,7 +987,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		$case_active = $this->civicrm->is_component_enabled( 'CiviCase' );
 		if ( $case_active ) {
 			$action_name = get_sub_field( $this->field_key . 'activity_case_id' );
-			$data['case_id'] = $this->form_case_id_get_mapped( $action_name );
+			$case_data = $this->form_case_get_mapped( $action_name );
+			$data['case_id'] = $case_data['case_id'];
+			$data['case_skipped'] = $case_data['skipped'];
+			$data['case_created'] = $case_data['created'];
+			$data['case_activity_create'] = get_sub_field( $this->field_key . 'activity_case_create' );
 		}
 
 		// Get Activity Conditional Reference.
@@ -1011,9 +1046,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 			unset( $activity_data['activity_conditional_ref'] );
 		}
 
-		// Skip if the Case has been skipped.
-		if ( ! empty( $activity_data['dismissed'] ) && 'skipped' === $activity_data['dismissed'] ) {
-			return $activity;
+		// Skip if the Case has been skipped and an Activity should not be created.
+		$case_active = $this->civicrm->is_component_enabled( 'CiviCase' );
+		if ( $case_active ) {
+			if ( true === $activity_data['case_skipped'] ) {
+				if ( empty( $activity_data['case_activity_create'] ) ) {
+					return $activity;
+				}
+			}
 		}
 
 		// Strip out empty Fields.
@@ -1117,40 +1157,50 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 
 
 	/**
-	 * Finds the linked Case ID when it has been mapped.
+	 * Finds the linked Case data when it has been mapped.
 	 *
 	 * @since 0.5
 	 *
 	 * @param string $action_name The name of the referenced Form Action.
-	 * @return mixed $case_id The numeric ID of the Case, false if not found, string if skipped.
+	 * @return array $case The array of data about the linked Case.
 	 */
-	public function form_case_id_get_mapped( $action_name ) {
+	public function form_case_get_mapped( $action_name ) {
 
 		// Init return.
-		$case_id = false;
+		$case = [
+			'case_id' => false,
+			'skipped' => false,
+			'created' => false,
+		];
 
 		// We need an Action Name.
 		if ( empty( $action_name ) ) {
-			return $case_id;
+			return $case;
 		}
 
 		// Get the Case ID for that Action.
 		$related_case_id = acfe_form_get_action( $action_name, 'id' );
 		if ( empty( $related_case_id ) ) {
-			return $case_id;
+			return $case;
 		}
 
-		// Assign return.
-		$case_id = (int) $related_case_id;
+		// Assign to return.
+		$case['case_id'] = (int) $related_case_id;
 
-		// Bail if creating the Case has been skipped.
-		$skipped = acfe_form_get_action( $action_name, 'dismissed' );
+		// Assign flag if creating the Case has been skipped.
+		$skipped = acfe_form_get_action( $action_name, 'skipped' );
 		if ( $skipped ) {
-			return 'skipped';
+			$case['skipped'] = true;
+		}
+
+		// Assign flag if the Case has been created.
+		$created = acfe_form_get_action( $action_name, 'created' );
+		if ( $created ) {
+			$case['created'] = true;
 		}
 
 		// --<
-		return $case_id;
+		return $case;
 
 	}
 

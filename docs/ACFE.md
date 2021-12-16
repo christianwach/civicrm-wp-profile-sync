@@ -101,7 +101,13 @@ The following are some notes about the usage of CiviCRM Form Actions:
 
 #### CiviCRM Case Action
 
-To use the Message Field that is available when creating a Case has been skipped (because the Contact already has a Case of the selected Type) an action reference of the form `{action:your-action-name:dismiss_message}` is needed. Replace `your-action-name` with the value from the Case Action's *Action name* Field.
+To use the Message Field that is available when creating a Case has been skipped (because the Contact already has a Case of the selected Type) an action reference of the form `{action:your-case-action-name:dismiss_message}` is needed.
+
+To make other Form Actions conditional on the Case being created, use an action reference of the form `{action:your-case-action-name:created}` in the "Conditional On" Field.
+
+To make other Form Actions conditional on the Case being skipped, use an action reference of the form `{action:your-case-action-name:skipped}` in the "Conditional On" Field.
+
+Replace `your-case-action-name` with the value from the Case Action's *Action name* Field.
 
 ## What's Missing?
 
