@@ -609,6 +609,11 @@ class CiviCRM_Profile_Sync_ACF_Field {
 				$value = $this->date_time_picker_value_get( $value, $settings );
 				break;
 
+			// Parse the value of an "Text Area" Field.
+			case 'textarea':
+				$value = $this->textarea_value_get( $value, $settings );
+				break;
+
 			// Other Field Types may require parsing - add them here.
 
 		}
@@ -740,6 +745,89 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 		// --<
 		return $value;
+
+	}
+
+
+
+	/**
+	 * Get the value of a "Text Area" Field formatted for CiviCRM.
+	 *
+	 * @since 0.4
+	 *
+	 * @param string $value The existing Field value.
+	 * @param array $settings The ACF Field settings.
+	 * @return string $value The modified value for CiviCRM.
+	 */
+	public function textarea_value_get( $value = '', $settings ) {
+
+		// Undo ACF new lines.
+		if ( $settings['new_lines'] === 'wpautop' ) {
+			// TODO: Move method to common file.
+			$value = $this->plugin->wp->unautop( $value );
+		} elseif ( $settings['new_lines'] === 'br' ) {
+			// @see https://stackoverflow.com/a/2494762
+			$value = str_replace( "\r\n", '', $value );
+			$value = preg_replace( '/<br[^>]*>/i', "\n", $value );
+		}
+
+		// --<
+		return $value;
+
+	}
+
+
+
+	/**
+	 * Replaces paragraph elements with double line-breaks.
+	 *
+	 * This is the inverse behavior of the wpautop() function found in WordPress
+	 * which converts double line-breaks to paragraphs. Handy when you want to
+	 * undo whatever it did.
+	 *
+	 * Code via Frankie Jarrett on GitHub.
+	 *
+	 * @link https://gist.github.com/fjarrett/ecddd0ed419bb853e390
+	 *
+	 * @since 0.5
+	 *
+	 * @param string $pee The string to match paragraphs tags in.
+	 * @param bool $br (Optional) Whether to process line breaks.
+	 * @return string
+	 */
+	public function unautop( $pee, $br = true ) {
+
+		// Match plain <p> tags and their contents (ignore <p> tags with attributes).
+		$matches = preg_match_all( '/<(p+)*(?:>(.*)<\/\1>|\s+\/>)/m', $pee, $pees );
+
+		// Bail if no matches.
+		if ( ! $matches ) {
+			return $pee;
+		}
+
+		// Init replacements array.
+		$replace = [
+			"\n" => '',
+			"\r" => '',
+		];
+
+		// Maybe add breaks to replacements array.
+		if ( $br ) {
+			$replace['<br>'] = "\r\n";
+			$replace['<br/>'] = "\r\n";
+			$replace['<br />'] = "\r\n";
+		}
+
+		// Build keyed replacements.
+		foreach ( $pees[2] as $i => $tinkle ) {
+			$replace[ $pees[0][ $i ] ] = $tinkle . "\r\n\r\n";
+		}
+
+		// Do replacements.
+		$replaced = str_replace( array_keys( $replace ), array_values( $replace ), $pee );
+
+		// --<
+		return rtrim( $replaced );
 
 	}
 
