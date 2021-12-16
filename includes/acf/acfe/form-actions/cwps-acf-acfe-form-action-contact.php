@@ -2988,10 +2988,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $relationships The array of Relationships data.
-	 * @param integer $type_id The numeric ID of the Relationship Type.
-	 * @param integer $related_contact_id The numeric ID of the Related Contact.
-	 * @param string $direction The direction of the Relationship.
+	 * @param array $form The array of Form data.
+	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
+	 * @param string $action The customised name of the action.
 	 * @return integer $offset The Relationship offset.
 	 */
 	public function form_contact_id_get_existing( $form, $current_post_id, $action ) {

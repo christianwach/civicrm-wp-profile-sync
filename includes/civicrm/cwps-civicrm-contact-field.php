@@ -149,6 +149,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Field {
 		// Maybe construct string from years.
 		if ( $years ) {
 			$age_string = sprintf(
+				/* translators: %d: The number of years */
 				_n( '%d year', '%d years', $years, 'civicrm-wp-profile-sync' ),
 				$years
 			);
@@ -157,6 +158,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Field {
 		// Maybe construct string from months.
 		if ( $months ) {
 			$age_string = sprintf(
+				/* translators: %d: The number of months */
 				_n( '%d month', '%d months', $months, 'civicrm-wp-profile-sync' ),
 				$months
 			);

@@ -389,7 +389,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 	 *
 	 * @param mixed $value The Address Field value.
 	 * @param array $name The Address Field name.
-	 * @param $params The array of Field params.
+	 * @param array $params The array of Field params.
 	 * @return mixed $value The value formatted for BuddyPress.
 	 */
 	public function value_get_for_bp( $value, $name, $params ) {

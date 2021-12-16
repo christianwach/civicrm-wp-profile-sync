@@ -508,6 +508,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 				'label' => $title,
 				'name' => $this->field_name . 'contact_group_' . $name,
 				'type' => 'group',
+				/* translators: %s: The name of the Field */
 				'instructions' => sprintf( __( 'Use one Field to identify the %s.', 'civicrm-wp-profile-sync' ), $title ),
 				'wrapper' => [
 					'width' => '',

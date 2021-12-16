@@ -630,8 +630,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 	 *
 	 * @since 0.5
 	 *
-	 * @param $params The array of Field params.
-	 * @param $args The array of arguments from the Mapper.
+	 * @param array $params The array of Field params.
+	 * @param array $args The array of arguments from the Mapper.
 	 */
 	public function bp_field_update( $params, $args ) {
 
@@ -700,7 +700,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 	 *
 	 * @param mixed $value The Contact Field value.
 	 * @param array $name The Contact Field name.
-	 * @param $params The array of Field params.
+	 * @param array $params The array of Field params.
 	 * @return mixed $value The value formatted for BuddyPress.
 	 */
 	public function value_get_for_bp( $value, $name, $params ) {

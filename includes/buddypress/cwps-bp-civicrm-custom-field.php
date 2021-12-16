@@ -540,7 +540,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	 *
 	 * @param mixed $value The CiviCRM Custom Field value.
 	 * @param array $field The CiviCRM Custom Field data.
-	 * @param $params The array of BuddyPress Field params.
+	 * @param array $params The array of BuddyPress Field params.
 	 * @return mixed $value The value formatted for BuddyPress.
 	 */
 	public function value_get_for_bp( $value, $field, $params ) {
@@ -696,8 +696,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $pee
-	 * @param bool $br (optional)
+	 * @param string $pee The string to match paragraphs tags in.
+	 * @param bool $br (Optional) Whether to process line breaks.
 	 * @return string
 	 */
 	public function unautop( $pee, $br = true ) {
