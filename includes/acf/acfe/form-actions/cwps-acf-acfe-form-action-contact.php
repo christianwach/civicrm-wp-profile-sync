@@ -335,7 +335,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// Init Contact and Relationships.
 		$contact = [];
-		$relationships = [];
 
 		// Try finding the Contact ID.
 		$contact_id = $this->form_contact_id_get_submitter();
@@ -345,9 +344,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$contact_id = $this->form_contact_id_get_existing( $form, $current_post_id, $action );
 		}
 
+		// Get the Relationships.
+		$relationships = $this->form_relationship_data( $form, $current_post_id, $action );
+
 		// Try finding the Contact ID by Relationship.
 		if ( ! $contact_id ) {
-			$relationships = $this->form_relationship_data( $form, $current_post_id, $action );
 			$contact_id = $this->form_contact_id_get_related( $relationships );
 		}
 
