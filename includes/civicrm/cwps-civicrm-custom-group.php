@@ -541,6 +541,63 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 
 
 	/**
+	 * Get all the Custom Groups for all CiviCRM Relationship Types.
+	 *
+	 * @since 0.5.1
+	 *
+	 * @return array $custom_groups The array of Custom Groups.
+	 */
+	public function get_for_relationships() {
+
+		// Init array to build.
+		$custom_groups = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $custom_groups;
+		}
+
+		// Construct params.
+		$params = [
+			'version' => 3,
+			'sequential' => 1,
+			'is_active' => 1,
+			'options' => [
+				'limit' => 0,
+			],
+			'api.CustomField.get' => [
+				'is_active' => 1,
+				'options' => [
+					'limit' => 0,
+				],
+			],
+			'extends' => 'Relationship',
+		];
+
+		// Call the API.
+		$result = civicrm_api( 'CustomGroup', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+			return $custom_groups;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $custom_groups;
+		}
+
+		// The result set is what we want.
+		$custom_groups = $result['values'];
+
+		// --<
+		return $custom_groups;
+
+	}
+
+
+
+	/**
 	 * Get the Custom Groups for a CiviCRM Entity Type/Sub-type.
 	 *
 	 * @since 0.4
