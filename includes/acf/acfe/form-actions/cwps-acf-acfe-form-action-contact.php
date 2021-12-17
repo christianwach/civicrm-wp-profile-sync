@@ -210,6 +210,18 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$this->mapping_field_filters_add( 'address_' . $address_field['name'] );
 		}
 
+		// Get the Custom Fields for all Addresses.
+		$this->address_custom_fields = $this->plugin->civicrm->custom_group->get_for_addresses();
+
+		// Populate Address mapping Fields.
+		foreach ( $this->address_custom_fields as $key => $custom_group ) {
+			if ( ! empty( $custom_group['api.CustomField.get']['values'] ) ) {
+				foreach ( $custom_group['api.CustomField.get']['values'] as $custom_field ) {
+					$this->mapping_field_filters_add( 'custom_' . $custom_field['id'] );
+				}
+			}
+		}
+
 		// Get Phone Types.
 		$this->phone_types = $this->plugin->civicrm->phone->phone_types_get();
 
@@ -291,15 +303,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// Get the Custom Fields for all Relationship Types.
 		$this->relationship_custom_fields = $this->plugin->civicrm->custom_group->get_for_relationships();
 
-		$this->relationship_custom_field_ids = [];
-
 		// Populate Relationship mapping Fields.
 		foreach ( $this->relationship_custom_fields as $key => $custom_group ) {
 			if ( ! empty( $custom_group['api.CustomField.get']['values'] ) ) {
 				foreach ( $custom_group['api.CustomField.get']['values'] as $custom_field ) {
 					$this->mapping_field_filters_add( 'custom_' . $custom_field['id'] );
-					// Also build Relationship Custom Field IDs.
-					$this->relationship_custom_field_ids[] = (int) $custom_field['id'];
 				}
 			}
 		}
@@ -544,6 +552,25 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 					if ( acf_is_field_key( $field ) && ! empty( $address[ $address_field['name'] ] ) ) {
 						$form['map'][ $field ]['value'] = $address[ $address_field['name'] ];
 					}
+				}
+
+				// Handle population of Address Custom Fields.
+				foreach ( $this->address_custom_fields as $key => $custom_group ) {
+
+					// Populate the Address Custom Fields.
+					foreach ( $custom_group['api.CustomField.get']['values'] as $custom_field ) {
+						$code = 'custom_' . $custom_field['id'];
+						$field = $address_action[ $this->field_name . 'map_' . $code ];
+						$field = acfe_form_map_field_value_load( $field, $current_post_id, $form );
+						if ( acf_is_field_key( $field ) ) {
+							// Allow (string) "0" as valid data.
+							if ( empty( $address[ $code ] ) && $address[ $code ] !== '0' ) {
+								continue;
+							}
+							$form['map'][ $field ]['value'] = $address[ $code ];
+						}
+					}
+
 				}
 
 			}
@@ -1659,9 +1686,65 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			'ui_off_text' => '',
 		];
 
+		// Maybe open Accordion.
+		if ( ! empty( $this->address_custom_fields ) ) {
+
+			// "Address Fields" Accordion wrapper open.
+			$sub_fields[] = [
+				'key' => $this->field_key . 'address_fields_open',
+				'label' => __( 'Address Fields', 'civicrm-wp-profile-sync' ),
+				'name' => '',
+				'type' => 'accordion',
+				'instructions' => '',
+				'required' => 0,
+				'conditional_logic' => 0,
+				'wrapper' => [
+					'width' => '',
+					'class' => '',
+					'id' => '',
+				],
+				'acfe_permissions' => '',
+				'open' => 0,
+				'multi_expand' => 1,
+				'endpoint' => 0,
+			];
+
+		}
+
 		// Add "Mapping" Fields to Repeater's Sub-Fields.
 		foreach ( $this->address_fields as $address_field ) {
 			$sub_fields[] = $this->mapping_field_get( 'address_' . $address_field['name'], $address_field['title'] );
+		}
+
+		// Maybe close Accordion.
+		if ( ! empty( $this->address_custom_fields ) ) {
+
+			// "Address Fields" Accordion wrapper close.
+			$sub_fields[] = [
+				'key' => $this->field_key . 'address_fields_close',
+				'label' => __( 'Address Fields', 'civicrm-wp-profile-sync' ),
+				'name' => '',
+				'type' => 'accordion',
+				'instructions' => '',
+				'required' => 0,
+				'conditional_logic' => 0,
+				'wrapper' => [
+					'width' => '',
+					'class' => '',
+					'id' => '',
+				],
+				'acfe_permissions' => '',
+				'open' => 0,
+				'multi_expand' => 1,
+				'endpoint' => 1,
+			];
+
+		}
+
+		// Maybe add Custom Fields Accordion to Sub-fields.
+		if ( ! empty( $this->address_custom_fields ) ) {
+			$custom_fields = $this->tab_mapping_accordion_address_custom_add();
+			$sub_fields = array_merge( $sub_fields, $custom_fields );
 		}
 
 		// Add to Repeater.
@@ -1687,6 +1770,86 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 					],
 				],
 			],
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			],
+			'acfe_permissions' => '',
+			'open' => 0,
+			'multi_expand' => 1,
+			'endpoint' => 1,
+		];
+
+		// --<
+		return $fields;
+
+	}
+
+
+
+	/**
+	 * Defines the Fields in the "Address Custom Fields" Accordion.
+	 *
+	 * @since 0.5.1
+	 *
+	 * @return array $fields The array of Fields for this section.
+	 */
+	public function tab_mapping_accordion_address_custom_add() {
+
+		// Init return.
+		$fields = [];
+
+		// Skip if there are none.
+		if ( empty( $this->address_custom_fields ) ) {
+			return $fields;
+		}
+
+		// "Custom Fields" Accordion wrapper open.
+		$fields[] = [
+			'key' => $this->field_key . 'address_custom_open',
+			'label' => __( 'Custom Fields', 'civicrm-wp-profile-sync' ),
+			'name' => '',
+			'type' => 'accordion',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			],
+			'acfe_permissions' => '',
+			'open' => 0,
+			'multi_expand' => 1,
+			'endpoint' => 0,
+		];
+
+		// Add "Mapping" Fields.
+		foreach ( $this->address_custom_fields as $key => $custom_group ) {
+
+			// Skip if there are no Custom Fields.
+			if ( empty( $custom_group['api.CustomField.get']['values'] ) ) {
+				continue;
+			}
+
+			// Add "Map" Fields for the Custom Fields.
+			foreach ( $custom_group['api.CustomField.get']['values'] as $custom_field ) {
+				$code = 'custom_' . $custom_field['id'];
+				$fields[] = $this->mapping_field_get( $code, $custom_field['label'] );
+			}
+
+		}
+
+		// "Custom Fields" Accordion wrapper close.
+		$fields[] = [
+			'key' => $this->field_key . 'address_custom_close',
+			'label' => __( 'Custom Fields', 'civicrm-wp-profile-sync' ),
+			'name' => '',
+			'type' => 'accordion',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
 			'wrapper' => [
 				'width' => '',
 				'class' => '',
@@ -2747,25 +2910,30 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			'choices' => [],
 		];
 
-		// "Relationship Fields" Accordion wrapper open.
-		$sub_fields[] = [
-			'key' => $this->field_key . 'relationship_fields_open',
-			'label' => __( 'Relationship Fields', 'civicrm-wp-profile-sync' ),
-			'name' => '',
-			'type' => 'accordion',
-			'instructions' => '',
-			'required' => 0,
-			'conditional_logic' => 0,
-			'wrapper' => [
-				'width' => '',
-				'class' => '',
-				'id' => '',
-			],
-			'acfe_permissions' => '',
-			'open' => 0,
-			'multi_expand' => 1,
-			'endpoint' => 0,
-		];
+		// Maybe open Accordion.
+		if ( ! empty( $this->relationship_custom_fields ) ) {
+
+			// "Relationship Fields" Accordion wrapper open.
+			$sub_fields[] = [
+				'key' => $this->field_key . 'relationship_fields_open',
+				'label' => __( 'Relationship Fields', 'civicrm-wp-profile-sync' ),
+				'name' => '',
+				'type' => 'accordion',
+				'instructions' => '',
+				'required' => 0,
+				'conditional_logic' => 0,
+				'wrapper' => [
+					'width' => '',
+					'class' => '',
+					'id' => '',
+				],
+				'acfe_permissions' => '',
+				'open' => 0,
+				'multi_expand' => 1,
+				'endpoint' => 0,
+			];
+
+		}
 
 		// Define Relationship Types Field.
 		$sub_fields[] = [
@@ -2817,25 +2985,30 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		}
 
-		// "Relationship Fields" Accordion wrapper close.
-		$sub_fields[] = [
-			'key' => $this->field_key . 'relationship_fields_close',
-			'label' => __( 'Relationship Fields', 'civicrm-wp-profile-sync' ),
-			'name' => '',
-			'type' => 'accordion',
-			'instructions' => '',
-			'required' => 0,
-			'conditional_logic' => 0,
-			'wrapper' => [
-				'width' => '',
-				'class' => '',
-				'id' => '',
-			],
-			'acfe_permissions' => '',
-			'open' => 0,
-			'multi_expand' => 1,
-			'endpoint' => 1,
-		];
+		// Maybe close Accordion.
+		if ( ! empty( $this->relationship_custom_fields ) ) {
+
+			// "Relationship Fields" Accordion wrapper close.
+			$sub_fields[] = [
+				'key' => $this->field_key . 'relationship_fields_close',
+				'label' => __( 'Relationship Fields', 'civicrm-wp-profile-sync' ),
+				'name' => '',
+				'type' => 'accordion',
+				'instructions' => '',
+				'required' => 0,
+				'conditional_logic' => 0,
+				'wrapper' => [
+					'width' => '',
+					'class' => '',
+					'id' => '',
+				],
+				'acfe_permissions' => '',
+				'open' => 0,
+				'multi_expand' => 1,
+				'endpoint' => 1,
+			];
+
+		}
 
 		// Maybe add Custom Fields Accordion to Sub-fields.
 		$custom_fields = $this->tab_relationship_accordion_custom_add();
@@ -4079,6 +4252,12 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				$fields[ $address_field['name'] ] = $field[ $this->field_name . 'map_address_' . $address_field['name'] ];
 			}
 
+			// Maybe add Custom Fields.
+			$custom_fields = $this->form_address_custom_data( $field );
+			if ( ! empty( $custom_fields ) ) {
+				$fields += $custom_fields;
+			}
+
 			// Populate data array with values of mapped Fields.
 			$address_data[] = acfe_form_map_vs_fields( $fields, $fields, $current_post_id, $form );
 
@@ -4086,6 +4265,37 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// --<
 		return $address_data;
+
+	}
+
+
+
+	/**
+	 * Builds Address Custom Field data array from mapped Fields.
+	 *
+	 * @since 0.5.1
+	 *
+	 * @param array $field The currently processed Repeater Field.
+	 * @return array $fields The array of Custom Fields data.
+	 */
+	public function form_address_custom_data( $field ) {
+
+		// Init return.
+		$fields = [];
+
+		// Build data array.
+		foreach ( $this->address_custom_fields as $key => $custom_group ) {
+
+			// Get mapped Fields.
+			foreach ( $custom_group['api.CustomField.get']['values'] as $custom_field ) {
+				$code = 'custom_' . $custom_field['id'];
+				$fields[ $code ] = $field[ $this->field_name . 'map_' . $code ];
+			}
+
+		}
+
+		// --<
+		return $fields;
 
 	}
 
