@@ -94,6 +94,19 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 	 */
 	public $field_name = 'cwps_contact_action_';
 
+	/**
+	 * Public Contact Fields to add.
+	 *
+	 * These are not mapped for Post Type Sync, so need to be added.
+	 *
+	 * @since 0.5.1
+	 * @access public
+	 * @var array $fields_to_add The Public Contact Fields to add.
+	 */
+	public $fields_to_add = [
+		'id' => 'number',
+	];
+
 
 
 	/**
@@ -148,6 +161,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// Get the public Contact Fields for all top level Contact Types.
 		$this->public_contact_fields = $this->civicrm->contact_field->get_public_fields();
+
+		// Prepend the ones that are needed in ACFE Forms (i.e. Contact ID).
+		foreach ( $this->fields_to_add as $name => $field_type ) {
+			array_unshift( $this->public_contact_fields['common'], $this->plugin->civicrm->contact_field->get_by_name( $name ) );
+		}
 
 		// Populate public mapping Fields.
 		foreach ( $this->public_contact_fields as $contact_type => $fields_for_type ) {
@@ -3373,6 +3391,12 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			return $submitter;
 		}
 
+		// Try the "Contact ID" Field.
+		$from_field = $this->form_contact_id_get_from_field( $contact_data );
+		if ( $from_field ) {
+			return $from_field;
+		}
+
 		// Try the "Related Contact".
 		$related = $this->form_contact_id_get_related( $relationship_data );
 		if ( $related ) {
@@ -3426,6 +3450,32 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 	}
 
 
+
+	/**
+	 * Finds the Contact ID in the data from the mapped Contact ID Field.
+	 *
+	 * @since 0.5.1
+	 *
+	 * @param array $contact_data The array of Contact data.
+	 * @return integer|bool $contact_id The numeric ID of the Contact, or false if not found.
+	 */
+	public function form_contact_id_get_from_field( $contact_data ) {
+
+		// Init return.
+		$contact_id = false;
+
+		// Bail if there's no Contact ID in the incoming data.
+		if ( empty( $contact_data['id'] ) || ! is_numeric( $contact_data['id'] ) ) {
+			return $contact_id;
+		}
+
+		// Use the incoming data.
+		$contact_id = (int) $contact_data['id'];
+
+		// --<
+		return $contact_id;
+
+	}
 
 	/**
 	 * Gets the Contact ID if it exists in the Form Action Query Vars array.
