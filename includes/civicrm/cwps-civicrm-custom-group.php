@@ -549,6 +549,12 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 	 */
 	public function get_for_relationships() {
 
+		// Only do this once.
+		static $pseudocache;
+		if ( isset( $pseudocache ) ) {
+			return $pseudocache;
+		}
+
 		// Init array to build.
 		$custom_groups = [];
 
@@ -589,6 +595,9 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 
 		// The result set is what we want.
 		$custom_groups = $result['values'];
+
+		// Set "cache".
+		$pseudocache = $custom_groups;
 
 		// --<
 		return $custom_groups;

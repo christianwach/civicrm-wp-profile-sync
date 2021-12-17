@@ -268,7 +268,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// Get the public Relationship Fields.
 		$this->relationship_fields = $this->civicrm->relationship->civicrm_fields_get( 'public' );
 
-		// Populate public mapping Fields.
+		// Populate public mapping Relationship Fields.
 		foreach ( $this->relationship_fields as $relationship_field ) {
 			$this->mapping_field_filters_add( $relationship_field['name'] );
 		}
@@ -290,6 +290,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// Get the Custom Fields for all Relationship Types.
 		$this->relationship_custom_fields = $this->plugin->civicrm->custom_group->get_for_relationships();
+
 		$this->relationship_custom_field_ids = [];
 
 		// Populate Relationship mapping Fields.
@@ -424,6 +425,63 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 					if ( acf_is_field_key( $field ) && ! empty( $email[ $email_field['name'] ] ) ) {
 						$form['map'][ $field ]['value'] = $email[ $email_field['name'] ];
 					}
+				}
+
+			}
+		}
+
+		// Get the raw Relationship Actions.
+		$relationship_actions = get_sub_field( $this->field_key . 'relationship_repeater' );
+		if ( ! empty( $relationship_actions ) ) {
+			foreach ( $relationship_actions as $relationship_action ) {
+
+				// Try and get the Relationship Record.
+				$relationship = [];
+				foreach ( $relationships as $relationship_data ) {
+					$relationship_type = $relationship_action[ $this->field_name . 'relationship_type' ];
+					$relationship_array = explode( '_', $relationship_type );
+					$type_id = (int) $relationship_array[0];
+					$direction = $relationship_array[1];
+					if ( (int) $relationship_data['relationship_type_id'] !== (int) $type_id ) {
+						continue;
+					}
+					$relationship = $relationship_data;
+					break;
+				}
+
+				if ( empty( $relationship ) ) {
+					continue;
+				}
+
+				// Populate the Relationship Fields.
+				foreach ( $this->relationship_fields as $relationship_field ) {
+					$field = $relationship_action[ $this->field_name . 'map_' . $relationship_field['name'] ];
+					$field = acfe_form_map_field_value_load( $field, $current_post_id, $form );
+					if ( acf_is_field_key( $field ) && ! empty( $relationship[ $relationship_field['name'] ] ) ) {
+						$form['map'][ $field ]['value'] = $relationship[ $relationship_field['name'] ];
+					}
+				}
+
+				// Handle population of Relationship Custom Fields.
+				foreach ( $this->relationship_custom_fields as $key => $custom_group ) {
+
+					// Get the Group Field.
+					$custom_group_field = $relationship_action[ $this->field_name . 'relationship_custom_group_' . $custom_group['id'] ];
+
+					// Populate the Relationship Custom Fields.
+					foreach ( $custom_group['api.CustomField.get']['values'] as $custom_field ) {
+						$code = 'custom_' . $custom_field['id'];
+						$field = $custom_group_field[ $this->field_name . 'map_' . $code ];
+						$field = acfe_form_map_field_value_load( $field, $current_post_id, $form );
+						if ( acf_is_field_key( $field ) ) {
+							// Allow (string) "0" as valid data.
+							if ( empty( $relationship[ $code ] ) && $relationship[ $code ] !== '0' ) {
+								continue;
+							}
+							$form['map'][ $field ]['value'] = $relationship[ $code ];
+						}
+					}
+
 				}
 
 			}
@@ -627,12 +685,12 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// Populate Contact, Email, Relationship and Custom Field data arrays.
 		$contact = $this->form_contact_data( $form, $current_post_id, $action );
+		$contact_custom_fields = $this->form_custom_data( $form, $current_post_id, $action );
 		$emails = $this->form_email_data( $form, $current_post_id, $action );
 		$relationships = $this->form_relationship_data( $form, $current_post_id, $action );
-		$custom_fields = $this->form_custom_data( $form, $current_post_id, $action );
 
 		// Save the Contact with the data from the Form.
-		$args['contact'] = $this->form_contact_save( $contact, $emails, $relationships, $custom_fields );
+		$args['contact'] = $this->form_contact_save( $contact, $emails, $relationships, $contact_custom_fields );
 
 		// If we get a Contact.
 		if ( $args['contact'] !== false ) {
@@ -2890,9 +2948,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 			// Bundle the Custom Fields into a container group.
 			$custom_group_field = [
-				'key' => $this->field_key . 'custom_group_' . $custom_group['id'],
+				'key' => $this->field_key . 'relationship_custom_group_' . $custom_group['id'],
 				'label' => $custom_group['title'],
-				'name' => $this->field_name . 'custom_group_' . $custom_group['id'],
+				'name' => $this->field_name . 'relationship_custom_group_' . $custom_group['id'],
 				'type' => 'group',
 				'instructions' => '',
 				'instruction_placement' => 'field',
@@ -3547,6 +3605,12 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				$fields[ $relationship_field['name'] ] = $field[ $this->field_name . 'map_' . $relationship_field['name'] ];
 			}
 
+			// Maybe add Custom Fields.
+			$custom_fields = $this->form_relationship_custom_data( $field );
+			if ( ! empty( $custom_fields ) ) {
+				$fields += $custom_fields;
+			}
+
 			// Populate data array with values of mapped Fields.
 			$relationship_data[] = acfe_form_map_vs_fields( $fields, $fields, $current_post_id, $form );
 
@@ -3673,12 +3737,50 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 
 	/**
+	 * Builds Relationship Custom Field data array from mapped Fields.
+	 *
+	 * @since 0.5.1
+	 *
+	 * @param array $field The currently processed Repeater Field.
+	 * @return array $fields The array of Custom Fields data.
+	 */
+	public function form_relationship_custom_data( $field ) {
+
+		// Init return.
+		$fields = [];
+
+		// Build data array.
+		foreach ( $this->relationship_custom_fields as $key => $custom_group ) {
+
+			// Get Group Field.
+			$custom_group_field = $field[ $this->field_name . 'relationship_custom_group_' . $custom_group['id'] ];
+			foreach ( $custom_group_field as $group_field ) {
+
+				// Get mapped Fields.
+				foreach ( $custom_group['api.CustomField.get']['values'] as $custom_field ) {
+					$code = 'custom_' . $custom_field['id'];
+					$fields[ $code ] = $custom_group_field[ $this->field_name . 'map_' . $code ];
+				}
+
+			}
+
+		}
+
+		// --<
+		return $fields;
+
+	}
+
+
+
+	/**
 	 * Saves the CiviCRM Relationship(s) given data from mapped Fields.
 	 *
 	 * @since 0.5
 	 *
 	 * @param array $contact The array of Contact data.
 	 * @param array $relationship_data The array of Relationship data.
+	 * @param array $custom_data The array of Relationship Custom Field data.
 	 * @return array|bool $relationships The array of Relationships, or false on failure.
 	 */
 	public function form_relationship_save( $contact, $relationship_data ) {
