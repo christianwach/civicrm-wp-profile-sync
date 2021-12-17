@@ -1,5 +1,5 @@
 === CiviCRM Profile Sync ===
-Contributors: needle, cuny-academic-commons
+Contributors: needle, cuny-academic-commons, kcristiano, tadpolecc
 Donate link: https://www.paypal.me/interactivist
 Tags: civicrm, user, buddypress, acf, profile, xprofile, sync
 Requires at least: 4.9
