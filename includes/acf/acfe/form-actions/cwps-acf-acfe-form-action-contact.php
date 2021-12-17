@@ -273,6 +273,36 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$this->mapping_field_filters_add( $relationship_field['name'] );
 		}
 
+		// Build the choices for the Relationship Types.
+		$choices = [];
+		$relationship_types = $this->civicrm->relationship->types_get_all();
+		foreach ( $relationship_types as $relationship ) {
+			if ( $relationship['label_a_b'] !== $relationship['label_b_a'] ) {
+				$choices[ $relationship['contact_type_a'] ][ $relationship['id'] . '_ab' ] = esc_html( $relationship['label_a_b'] );
+				$choices[ $relationship['contact_type_b'] ][ $relationship['id'] . '_ba' ] = esc_html( $relationship['label_b_a'] );
+			} else {
+				$choices[ $relationship['contact_type_a'] ][ $relationship['id'] . '_equal' ] = esc_html( $relationship['label_a_b'] );
+			}
+		}
+
+		// Assign to a property.
+		$this->relationship_choices = $choices;
+
+		// Get the Custom Fields for all Relationship Types.
+		$this->relationship_custom_fields = $this->plugin->civicrm->custom_group->get_for_relationships();
+		$this->relationship_custom_field_ids = [];
+
+		// Populate Relationship mapping Fields.
+		foreach ( $this->relationship_custom_fields as $key => $custom_group ) {
+			if ( ! empty( $custom_group['api.CustomField.get']['values'] ) ) {
+				foreach ( $custom_group['api.CustomField.get']['values'] as $custom_field ) {
+					$this->mapping_field_filters_add( 'custom_' . $custom_field['id'] );
+					// Also build Relationship Custom Field IDs.
+					$this->relationship_custom_field_ids[] = (int) $custom_field['id'];
+				}
+			}
+		}
+
 		// Add Contact Action Reference Field to ACF Model.
 		$this->js_model_contact_reference_field_add( $this->field_name . 'relationship_action_ref' );
 
@@ -2658,17 +2688,25 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			'choices' => [],
 		];
 
-		// Build the choices for the Relationship Types.
-		$choices = [];
-		$relationship_types = $this->civicrm->relationship->types_get_all();
-		foreach ( $relationship_types as $relationship ) {
-			if ( $relationship['label_a_b'] !== $relationship['label_b_a'] ) {
-				$choices[ $relationship['contact_type_a'] ][ $relationship['id'] . '_ab' ] = esc_html( $relationship['label_a_b'] );
-				$choices[ $relationship['contact_type_b'] ][ $relationship['id'] . '_ba' ] = esc_html( $relationship['label_b_a'] );
-			} else {
-				$choices[ $relationship['contact_type_a'] ][ $relationship['id'] . '_equal' ] = esc_html( $relationship['label_a_b'] );
-			}
-		}
+		// "Relationship Fields" Accordion wrapper open.
+		$sub_fields[] = [
+			'key' => $this->field_key . 'relationship_fields_open',
+			'label' => __( 'Relationship Fields', 'civicrm-wp-profile-sync' ),
+			'name' => '',
+			'type' => 'accordion',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			],
+			'acfe_permissions' => '',
+			'open' => 0,
+			'multi_expand' => 1,
+			'endpoint' => 0,
+		];
 
 		// Define Relationship Types Field.
 		$sub_fields[] = [
@@ -2699,7 +2737,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			'multiple' => 0,
 			'ui' => 0,
 			'return_format' => 'value',
-			'choices' => $choices,
+			'choices' => $this->relationship_choices,
 		];
 
 		// Add "Mapping" Fields to Repeater's Sub-Fields.
@@ -2720,11 +2758,185 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		}
 
-		// Add to Repeater.
+		// "Relationship Fields" Accordion wrapper close.
+		$sub_fields[] = [
+			'key' => $this->field_key . 'relationship_fields_close',
+			'label' => __( 'Relationship Fields', 'civicrm-wp-profile-sync' ),
+			'name' => '',
+			'type' => 'accordion',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			],
+			'acfe_permissions' => '',
+			'open' => 0,
+			'multi_expand' => 1,
+			'endpoint' => 1,
+		];
+
+		// Maybe add Custom Fields Accordion to Sub-fields.
+		$custom_fields = $this->tab_relationship_accordion_custom_add();
+		if ( ! empty( $custom_fields ) ) {
+			$sub_fields = array_merge( $sub_fields, $custom_fields );
+		}
+
+		// Add Sub-fields to Repeater.
 		$relationship_repeater['sub_fields'] = $sub_fields;
 
 		// Add Repeater to Fields.
 		$fields[] = $relationship_repeater;
+
+		// --<
+		return $fields;
+
+	}
+
+
+
+	/**
+	 * Defines the Fields in the "Relationship Custom Fields" Accordion.
+	 *
+	 * @since 0.5.1
+	 *
+	 * @return array $fields The array of Fields for this section.
+	 */
+	public function tab_relationship_accordion_custom_add() {
+
+		// Init return.
+		$fields = [];
+
+		// Skip if there are none.
+		if ( empty( $this->relationship_custom_fields ) ) {
+			return $fields;
+		}
+
+		// "Custom Fields" Accordion wrapper open.
+		$fields[] = [
+			'key' => $this->field_key . 'relationship_custom_open',
+			'label' => __( 'Custom Fields', 'civicrm-wp-profile-sync' ),
+			'name' => '',
+			'type' => 'accordion',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			],
+			'acfe_permissions' => '',
+			'open' => 0,
+			'multi_expand' => 1,
+			'endpoint' => 0,
+		];
+
+		// Add "Mapping" Fields.
+		foreach ( $this->relationship_custom_fields as $key => $custom_group ) {
+
+			// Skip if there are no Custom Fields.
+			if ( empty( $custom_group['api.CustomField.get']['values'] ) ) {
+				continue;
+			}
+
+			// Get the Relationship Type IDs.
+			$relationship_type_ids = [];
+			if ( ! empty( $custom_group['extends_entity_column_value'] ) ) {
+				$relationship_type_ids = $custom_group['extends_entity_column_value'];
+			}
+
+			// Init conditional logic.
+			$conditional_logic = [];
+
+			// Add Types as OR conditionals if present.
+			if ( ! empty( $relationship_type_ids ) ) {
+				foreach ( $relationship_type_ids as $relationship_type_id ) {
+
+					$relationship_type_ab = [
+						'field' => $this->field_key . 'relationship_type',
+						'operator' => '==contains',
+						'value' => $relationship_type_id . '_ab',
+					];
+
+					$conditional_logic[] = [
+						$relationship_type_ab,
+					];
+
+					$relationship_type_ba = [
+						'field' => $this->field_key . 'relationship_type',
+						'operator' => '==contains',
+						'value' => $relationship_type_id . '_ba',
+					];
+
+					$conditional_logic[] = [
+						$relationship_type_ba,
+					];
+
+					$relationship_type_equal = [
+						'field' => $this->field_key . 'relationship_type',
+						'operator' => '==contains',
+						'value' => $relationship_type_id . '_equal',
+					];
+
+					$conditional_logic[] = [
+						$relationship_type_equal,
+					];
+
+				}
+			}
+
+			// Bundle the Custom Fields into a container group.
+			$custom_group_field = [
+				'key' => $this->field_key . 'custom_group_' . $custom_group['id'],
+				'label' => $custom_group['title'],
+				'name' => $this->field_name . 'custom_group_' . $custom_group['id'],
+				'type' => 'group',
+				'instructions' => '',
+				'instruction_placement' => 'field',
+				'required' => 0,
+				'layout' => 'block',
+				'conditional_logic' => $conditional_logic,
+			];
+
+			// Init sub Fields array.
+			$sub_fields = [];
+
+			// Add "Map" Fields for the Custom Fields.
+			foreach ( $custom_group['api.CustomField.get']['values'] as $custom_field ) {
+				$code = 'custom_' . $custom_field['id'];
+				$sub_fields[] = $this->mapping_field_get( $code, $custom_field['label'], $conditional_logic );
+			}
+
+			// Add the Sub-fields.
+			$custom_group_field['sub_fields'] = $sub_fields;
+
+			// Add the Sub-fields.
+			$fields[] = $custom_group_field;
+
+		}
+
+		// "Custom Fields" Accordion wrapper close.
+		$fields[] = [
+			'key' => $this->field_key . 'relationship_custom_close',
+			'label' => __( 'Custom Fields', 'civicrm-wp-profile-sync' ),
+			'name' => '',
+			'type' => 'accordion',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			],
+			'acfe_permissions' => '',
+			'open' => 0,
+			'multi_expand' => 1,
+			'endpoint' => 1,
+		];
 
 		// --<
 		return $fields;
