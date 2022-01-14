@@ -163,6 +163,9 @@ var CWPS_BP_Field = CWPS_BP_Field || {};
 		 */
 		this.get_options_for = function( entity ) {
 			var options = me.get_setting('options');
+			if (me.field_type == 'telephone') {
+				me.field_type = 'textbox';
+			}
 			if ( options[me.field_type] ) {
 				if ( options[me.field_type][entity] ) {
 					return options[me.field_type][entity];
