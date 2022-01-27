@@ -1124,6 +1124,11 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 			return $permitted;
 		}
 
+		// Bail if user cannot access CiviCRM.
+		if ( ! current_user_can( 'access_civicrm' ) ) {
+			return $permitted;
+		}
+
 		// Check with CiviCRM that this Contact can be viewed.
 		if ( CRM_Contact_BAO_Contact_Permission::allow( $contact_id, CRM_Core_Permission::VIEW ) ) {
 			$permitted = true;
