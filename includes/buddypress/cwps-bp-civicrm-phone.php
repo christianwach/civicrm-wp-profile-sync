@@ -81,7 +81,10 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 	public $phone_fields = [
 		'is_primary' => 'true_false',
 		'is_billing' => 'true_false',
-		'phone' => 'textbox',
+		'phone' => [
+			'textbox',
+			'telephone',
+		],
 		'phone_ext' => 'textbox',
 	];
 
@@ -400,6 +403,11 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 		// Get the BuddyPress Field Type for this Phone Field.
 		$type = $this->get_bp_type( $name );
+
+		// Bail if it's the "phone" array since it doesn't need formatting.
+		if ( is_array( $type ) ) {
+			return $value;
+		}
 
 		/*
 		$e = new \Exception();
@@ -776,7 +784,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $field_type The type of ACF Field.
+	 * @param string $field_type The type of xProfile Field.
 	 * @param string $filter The token by which to filter the array of Fields.
 	 * @return array $fields The array of Field names.
 	 */
@@ -827,10 +835,16 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 					}
 				}
 
-				// Skip all but those mapped to the type of ACF Field.
+				// Skip all but those mapped to the type of xProfile Field.
 				foreach ( $public_fields as $key => $value ) {
-					if ( $field_type == $this->phone_fields[ $value['name'] ] ) {
-						$fields[] = $value;
+					if ( is_array( $this->phone_fields[ $value['name'] ] ) ) {
+						if ( in_array( $field_type, $this->phone_fields[ $value['name'] ] ) ) {
+							$fields[] = $value;
+						}
+					} else {
+						if ( $field_type == $this->phone_fields[ $value['name'] ] ) {
+							$fields[] = $value;
+						}
 					}
 				}
 
@@ -860,7 +874,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 	 * @since 0.5
 	 *
 	 * @param string $name The name of the Phone Field.
-	 * @return string $type The type of BuddyPress Field.
+	 * @return string|array $type The type of BuddyPress Field (or array of types).
 	 */
 	public function get_bp_type( $name = '' ) {
 

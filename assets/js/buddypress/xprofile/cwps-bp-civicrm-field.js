@@ -271,8 +271,8 @@ var CWPS_BP_Field = CWPS_BP_Field || {};
 				// Store Field Type.
 				CWPS_BP_Field.settings.set_field_type( forWhat );
 
-				// Reset.
-				me.reset();
+				// Reset to empty options.
+				$('#cwps_civicrm_entity_type').val( '' ).trigger( 'change' );
 
 				// Show by default.
 				$('#cwps-bp-civicrm-field').show();
