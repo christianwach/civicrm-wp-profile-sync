@@ -31,7 +31,7 @@ ACF integration is at an early stage of development and (although it is limited 
 
 So if, for example, you want to display (or create) a Contact Type on your WordPress site with ACF Fields that contain synced CiviCRM data, this feature could work for you.
 
-Please refer to the [ACF Integration Documentation](https://github.com/christianwach/civicrm-wp-profile-sync/docs/ACF.md) for details.
+Please refer to the [ACF Integration Documentation](https://github.com/christianwach/civicrm-wp-profile-sync/blob/master/docs/ACF.md) for details.
 
 ### Form-building with ACF Extended
 
@@ -39,7 +39,7 @@ CiviCRM Profile Sync enables Forms to be built for the front-end of your website
 
 Form building with ACF Extended is at an early stage of development and is currently limited to submitting data for Contacts, Participants, Activities and Cases. This does, however, provide enough functionality to build some fairly powerful and useful Forms.
 
-Please refer to the [ACFE Form-building Documentation](https://github.com/christianwach/civicrm-wp-profile-sync/docs/ACFE.md) for details.
+Please refer to the [ACFE Form-building Documentation](https://github.com/christianwach/civicrm-wp-profile-sync/blob/master/docs/ACFE.md) for details.
 
 ### Requirements
 
