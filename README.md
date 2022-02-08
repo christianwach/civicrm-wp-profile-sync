@@ -1,7 +1,7 @@
 CiviCRM Profile Sync
 ====================
 
-**Contributors:** [needle](https://profiles.wordpress.org/needle/), [cuny-academic-commons](https://profiles.wordpress.org/cuny-academic-commons/)<br/>
+**Contributors:** [needle](https://profiles.wordpress.org/needle/), [cuny-academic-commons](https://profiles.wordpress.org/cuny-academic-commons/), [kcristiano](https://profiles.wordpress.org/kcristiano/), [tadpolecc](https://profiles.wordpress.org/tadpolecc/)<br/>
 **Donate link:** https://www.paypal.me/interactivist<br/>
 **Tags:** civicrm, user, buddypress, acf, profile, xprofile, sync<br/>
 **Requires at least:** 4.9<br/>
