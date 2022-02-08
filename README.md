@@ -30,7 +30,7 @@ The plugin also supports syncing the "First Name" and "Last Name" fields of the 
 
 CiviCRM Profile Sync enables integration between CiviCRM Entities and WordPress Entities with data synced via Advanced Custom Fields.
 
-ACF integration is at an early stage of development and (although it is limited in its coverage of the entities that can be linked) it is fairly comprehensive in its mapping of the built-in CiviCRM Custom Field Types with their corresponding ACF Field Types.
+Whilst ACF integration is not complete in its coverage of the CiviCRM Entities that can be linked, it is fairly comprehensive in its mapping of the built-in CiviCRM Custom Field Types with their corresponding ACF Field Types.
 
 So if, for example, you want to display (or create) a Contact Type on your WordPress site with ACF Fields that contain synced CiviCRM data, this feature could work for you.
 
