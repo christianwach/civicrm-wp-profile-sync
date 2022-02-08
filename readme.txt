@@ -86,6 +86,11 @@ I'll say it again: test early, test often and - above all - test on a developmen
 
 == Changelog ==
 
+= 0.5.1 =
+
+* Improves building forms with ACF Extended.
+* Misc bug fixes.
+
 = 0.5.0 =
 
 * Enables building forms with ACF Extended.
