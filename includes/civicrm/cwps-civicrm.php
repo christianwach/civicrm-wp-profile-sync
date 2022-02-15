@@ -659,7 +659,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 		$option_group = false;
 
 		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
+		if ( ! $this->is_initialised() ) {
 			return $option_group;
 		}
 
