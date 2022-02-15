@@ -162,8 +162,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 
 		// Get the WordPress User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $args['objectRef']->contact_id );
-
-		// Kick out if we didn't get one.
 		if ( empty( $user_id ) ) {
 			return;
 		}
@@ -216,127 +214,35 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 	 */
 	public function website_update( $args ) {
 
+		// Which Website Type should we sync?
+		$website_type_id = $this->plugin->admin->setting_get( 'user_profile_website_type', 0 );
+		if ( empty( $website_type_id ) ) {
+			return;
+		}
+
 		// Grab User and Contact.
 		$user = $args['user'];
 		$contact = $args['ufmatch'];
 
-		// Which Website Type should we sync?
-		$website_type_id = $this->plugin->admin->setting_get( 'user_profile_website_type', 0 );
-
-		// Bail if we didn't get one.
-		if ( empty( $website_type_id ) || $website_type_id === 0 ) {
-			return;
-		}
-
-		// Get the current Website.
-		$existing = $this->website_get_by_type( $contact, $website_type_id );
-
-		// Create a new Website if there isn't one.
-		if ( empty( $existing ) ) {
-
-			// Define params to create new Website.
-			$params = [
-				'version' => 3,
-				'website_type_id' => $website_type_id,
-				'contact_id' => $contact->contact_id,
-				'url' => $user->user_url,
-			];
-
-			// Call the API.
-			$result = civicrm_api( 'Website', 'create', $params );
-
-			// Log something on failure.
-			if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-				$e = new \Exception();
-				$trace = $e->getTraceAsString();
-				error_log( print_r( [
-					'method' => __METHOD__,
-					'message' => __( 'Could not create the Website for the CiviCRM Contact.', 'civicrm-wp-profile-sync' ),
-					'result' => $result,
-					'backtrace' => $trace,
-				], true ) );
-			}
-
-		} else {
-
-			// Bail if it hasn't changed.
-			if ( ! empty( $existing->url ) && $existing->url == $user->user_url ) {
-				return;
-			}
-
-			// If there is an incoming value, update.
-			if ( ! empty( $user->user_url ) ) {
-
-				// Define params to update this Website.
-				$params = [
-					'version' => 3,
-					'id' => $existing->id,
-					'contact_id' => $contact->contact_id,
-					'website_type_id' => $website_type_id,
-					'url' => $user->user_url,
-				];
-
-				// Call the API.
-				$result = civicrm_api( 'Website', 'create', $params );
-
-				// Log something on failure.
-				if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-					$e = new \Exception();
-					$trace = $e->getTraceAsString();
-					error_log( print_r( [
-						'method' => __METHOD__,
-						'message' => __( 'Could not update the Website for the CiviCRM Contact.', 'civicrm-wp-profile-sync' ),
-						'result' => $result,
-						'backtrace' => $trace,
-					], true ) );
-				}
-
-			} else {
-
-				// Define params to delete this Website.
-				$params = [
-					'version' => 3,
-					'id' => $existing->id,
-				];
-
-				// Call the API.
-				$result = civicrm_api( 'Website', 'delete', $params );
-
-				// Log something on failure.
-				if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-					$e = new \Exception();
-					$trace = $e->getTraceAsString();
-					error_log( print_r( [
-						'method' => __METHOD__,
-						'message' => __( 'Could not delete the Website for the CiviCRM Contact.', 'civicrm-wp-profile-sync' ),
-						'result' => $result,
-						'website' => $website,
-						'backtrace' => $trace,
-					], true ) );
-				}
-
-				// Bail early.
-				return;
-
-			}
-
-		}
+		// Update the Website.
+		$website = $this->update_for_contact( $website_type_id, $contact->contact_id, $user->user_url );
 
 	}
 
 
 
 	/**
-	 * Update a CiviCRM Contact's Website.
+	 * Updates a CiviCRM Contact's Website.
 	 *
 	 * @since 0.4
+	 * @since 0.5.2 Renamed.
 	 *
 	 * @param integer $website_type_id The numeric ID of the Website Type.
 	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param string $value The Website URL to update the Contact with.
 	 * @return array|bool $website The array of Website data, or false on failure.
 	 */
-	public function website_update_acf( $website_type_id, $contact_id, $value ) {
+	public function update_for_contact( $website_type_id, $contact_id, $value ) {
 
 		// Init return.
 		$website = false;
@@ -346,130 +252,225 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 			return $website;
 		}
 
-		// Get the current Website for this Website Type.
-		$params = [
-			'version' => 3,
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
 			'website_type_id' => $website_type_id,
 			'contact_id' => $contact_id,
-		];
+			'url' => $value,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
 
-		// Call the CiviCRM API.
-		$existing_website = civicrm_api( 'Website', 'get', $params );
+		// Get the current Website.
+		$existing = $this->get_by_type( $contact_id, $website_type_id );
 
-		// Bail if there's an error.
-		if ( ! empty( $existing_website['is_error'] ) && $existing_website['is_error'] == 1 ) {
-			return $website;
-		}
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'existing' => $existing,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
 
 		// Create a new Website if there are no results.
-		if ( empty( $existing_website['values'] ) ) {
+		if ( empty( $existing ) ) {
 
 			// Define params to create new Website.
 			$params = [
-				'version' => 3,
 				'website_type_id' => $website_type_id,
 				'contact_id' => $contact_id,
 				'url' => $value,
 			];
 
-			// Call the API.
-			$result = civicrm_api( 'Website', 'create', $params );
-
-		} else {
-
-			// There should be only one item.
-			$existing_data = array_pop( $existing_website['values'] );
-
-			// Bail if it hasn't changed.
-			if ( ! empty( $existing_data['url'] ) && $existing_data['url'] == $value ) {
-				return $existing_data;
-			}
-
-			// If there is an incoming value, update.
-			if ( ! empty( $value ) ) {
-
-				// Define params to update this Website.
-				$params = [
-					'version' => 3,
-					'id' => $existing_website['id'],
-					'contact_id' => $contact_id,
-					'url' => $value,
-				];
-
-				// Call the API.
-				$result = civicrm_api( 'Website', 'create', $params );
-
-			} else {
-
-				// Define params to delete this Website.
-				$params = [
-					'version' => 3,
-					'id' => $existing_website['id'],
-				];
-
-				// Call the API.
-				$result = civicrm_api( 'Website', 'delete', $params );
-
-				// Bail early.
-				return $website;
-
-			}
+			// Create it.
+			return $this->create( $params );
 
 		}
 
-		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		// Bail if it hasn't changed.
+		if ( ! empty( $existing['url'] ) && $existing['url'] == $value ) {
+			return $existing;
+		}
+
+		// If there is an incoming value, update.
+		if ( ! empty( $value ) ) {
+
+			// Define params to update this Website.
+			$params = [
+				'id' => $existing['id'],
+				'website_type_id' => $website_type_id,
+				'contact_id' => $contact_id,
+				'url' => $value,
+			];
+
+			// Update it.
+			return $this->update( $params );
+
+		}
+
+		// Delete it.
+		$success = $this->delete( $existing['id'] );
+
+		// Always return false.
+		return false;
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Creates a CiviCRM Website record.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param array $website The array of CiviCRM Website data.
+	 * @return array|bool $website_data The array of Website data, or false on failure.
+	 */
+	public function create( $website ) {
+
+		// Init return.
+		$website_data = false;
+
+		// Try and initialise CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $website_data;
+		}
+
+		// Build params to create Website.
+		$params = [
+			'version' => 3,
+		] + $website;
+
+		// Call the CiviCRM API.
+		$result = civicrm_api( 'Website', 'create', $params );
+
+		// Log and bail if there's an error.
+		if ( ! empty( $result['is_error'] ) ) {
+			$e = new Exception();
+			$trace = $e->getTraceAsString();
+			error_log( print_r( [
+				'method' => __METHOD__,
+				'params' => $params,
+				'result' => $result,
+				'backtrace' => $trace,
+			], true ) );
 			return $website;
 		}
 
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $website_data;
+		}
+
 		// The result set should contain only one item.
-		$website = array_pop( $result['values'] );
+		$website_data = array_pop( $result['values'] );
 
 		// --<
-		return $website;
+		return $website_data;
 
 	}
 
 
 
 	/**
-	 * Create a Website for a CiviCRM Contact.
+	 * Updates a CiviCRM Website record.
 	 *
-	 * @since 0.4
+	 * This is an alias of `self::website_create()` except that we expect an ID
+	 * to have been set in the Website data.
 	 *
-	 * @param object $contact The CiviCRM Contact data object.
-	 * @param integer $website_type The numeric ID of the CiviCRM Website Type.
-	 * @param integer $website_id The numeric ID of the CiviCRM Website.
+	 * @since 0.5.2
+	 *
+	 * @param array $website The array of CiviCRM ACL data.
+	 * @return array|bool The array of Website data from the CiviCRM API, or false on failure.
 	 */
-	public function website_create( $contact, $website_type, $website_id = null ) {
+	public function update( $website ) {
+
+		// Log and bail if there's no ID.
+		if ( empty( $website['id'] ) ) {
+			$e = new \Exception();
+			$trace = $e->getTraceAsString();
+			error_log( print_r( [
+				'method' => __METHOD__,
+				'message' => __( 'An ID must be present to edit a Website.', 'civicrm-wp-profile-sync' ),
+				'website' => $website,
+				'backtrace' => $trace,
+			], true ) );
+			return false;
+		}
+
+		// Pass through.
+		return $this->create( $website );
 
 	}
 
 
 
 	/**
-	 * Edit a Website for a CiviCRM Contact.
+	 * Deletes a CiviCRM Website record.
 	 *
-	 * @since 0.4
-	 *
-	 * @param object $contact The CiviCRM Contact data object.
-	 * @param integer $website_type The numeric ID of the CiviCRM Website Type.
-	 * @param integer $website_id The numeric ID of the CiviCRM Website.
-	 */
-	public function website_edit( $contact, $website_type, $website_id ) {
-
-	}
-
-
-
-	/**
-	 * Delete a Website for a CiviCRM Contact.
-	 *
-	 * @since 0.4
+	 * @since 0.5.2
 	 *
 	 * @param integer $website_id The numeric ID of the CiviCRM Website.
+	 * @return bool $success True if the operation was successful, false on failure.
 	 */
-	public function website_delete( $website_id ) {
+	public function delete( $website_id ) {
+
+		// Init as failure.
+		$success = false;
+
+		// Try and initialise CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $success;
+		}
+
+		// Log and bail if there's no Website ID.
+		if ( empty( $website_id ) ) {
+			$e = new \Exception();
+			$trace = $e->getTraceAsString();
+			error_log( print_r( [
+				'method' => __METHOD__,
+				'message' => __( 'An ID must be present to delete a Website.', 'civicrm-wp-profile-sync' ),
+				'backtrace' => $trace,
+			], true ) );
+			return false;
+		}
+
+		// Build params to delete Website.
+		$params = [
+			'version' => 3,
+			'id' => $website_id,
+		];
+
+		// Call the CiviCRM API.
+		$result = civicrm_api( 'Website', 'delete', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) ) {
+			$e = new Exception();
+			$trace = $e->getTraceAsString();
+			error_log( print_r( [
+				'method' => __METHOD__,
+				'params' => $params,
+				'result' => $result,
+				'backtrace' => $trace,
+			], true ) );
+			return $success;
+		}
+
+		// Success.
+		$success = true;
+
+		// --<
+		return $success;
 
 	}
 
@@ -480,27 +481,54 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 	 *
 	 * @since 0.4
 	 *
-	 * @param object $contact The CiviCRM Contact data object.
-	 * @param integer $website_type The numeric ID of the CiviCRM Website Type.
+	 * @param object|array|integer $contact The CiviCRM Contact reference.
+	 * @param integer $website_type_id The numeric ID of the Website Type.
 	 * @return object|bool $website The CiviCRM Website data, or false on failure.
 	 */
-	public function website_get_by_type( $contact, $website_type ) {
+	public function get_by_type( $contact, $website_type_id ) {
 
 		// Init return.
 		$website = false;
 
+		// Grab ID from incoming Contact data.
+		$contact_id = false;
+		if ( is_object( $contact ) ) {
+			$contact_id = $contact->contact_id;
+		} elseif ( is_array( $contact ) ) {
+			$contact_id = $contact['contact_id'];
+		} elseif ( is_numeric( $contact ) ) {
+			$contact_id = (int) $contact;
+		}
+
+		// Bail if there's no Contact ID.
+		if ( empty( $contact_id ) ) {
+			return $website;
+		}
+
 		// Get the current Website.
 		$params = [
 			'version' => 3,
-			'contact_id' => $contact->contact_id,
-			'website_type_id' => $website_type,
+			'contact_id' => $contact_id,
+			'website_type_id' => $website_type_id,
 		];
 
 		// Call the CiviCRM API.
 		$result = civicrm_api( 'Website', 'get', $params );
 
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'params' => $params,
+			'result' => $result,
+			'action' => current_action(),
+			'backtrace' => $trace,
+		], true ) );
+		*/
+
 		// Bail on failure.
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) ) {
 			return $website;
 		}
 
@@ -510,7 +538,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		}
 
 		// The result set should contain only one item.
-		$website = (object) array_pop( $result['values'] );
+		$website = array_pop( $result['values'] );
 
 		// --<
 		return $website;

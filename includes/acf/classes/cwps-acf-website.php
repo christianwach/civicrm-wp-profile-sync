@@ -277,7 +277,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		$website_type_id = $settings[ $website_key ];
 
 		// Update the Website.
-		$this->website_update( $website_type_id, $contact_id, $value );
+		$this->plugin->civicrm->website->update_for_contact( $website_type_id, $contact_id, $value );
 
 	}
 
@@ -309,55 +309,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		$params = [
 			'version' => 3,
 			'id' => $website_id,
-		];
-
-		// Get Website details via API.
-		$result = civicrm_api( 'Website', 'get', $params );
-
-		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			return $website;
-		}
-
-		// Bail if there are no results.
-		if ( empty( $result['values'] ) ) {
-			return $website;
-		}
-
-		// The result set should contain only one item.
-		$website = (object) array_pop( $result['values'] );
-
-		// --<
-		return $website;
-
-	}
-
-
-
-	/**
-	 * Get the data for a Website.
-	 *
-	 * @since 0.5
-	 *
-	 * @param integer $contact_id The numeric ID of the CiviCRM Contact.
-	 * @param integer $website_type_id The numeric ID of the Website Type.
-	 * @return object $website The array of Website data, or empty if none.
-	 */
-	public function website_get_by_type( $contact_id, $website_type_id ) {
-
-		// Init return.
-		$website = false;
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $website;
-		}
-
-		// Construct API query.
-		$params = [
-			'version' => 3,
-			'website_type_id' => $website_type_id,
-			'contact_id' => $contact_id,
 		];
 
 		// Get Website details via API.
@@ -502,112 +453,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 			}
 
 		}
-
-	}
-
-
-
-	/**
-	 * Update a CiviCRM Contact's Website.
-	 *
-	 * @since 0.4
-	 *
-	 * @param integer $website_type_id The numeric ID of the Website Type.
-	 * @param integer $contact_id The numeric ID of the Contact.
-	 * @param string $value The Website URL to update the Contact with.
-	 * @return array|bool $website The array of Website data, or false on failure.
-	 */
-	public function website_update( $website_type_id, $contact_id, $value ) {
-
-		// Init return.
-		$website = false;
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $website;
-		}
-
-		// Get the current Website for this Website Type.
-		$params = [
-			'version' => 3,
-			'website_type_id' => $website_type_id,
-			'contact_id' => $contact_id,
-		];
-
-		// Call the CiviCRM API.
-		$existing_website = civicrm_api( 'Website', 'get', $params );
-
-		// Bail if there's an error.
-		if ( ! empty( $existing_website['is_error'] ) && $existing_website['is_error'] == 1 ) {
-			return $website;
-		}
-
-		// Create a new Website if there are no results.
-		if ( empty( $existing_website['values'] ) ) {
-
-			// Define params to create new Website.
-			$params = [
-				'version' => 3,
-				'website_type_id' => $website_type_id,
-				'contact_id' => $contact_id,
-				'url' => $value,
-			];
-
-			// Call the API.
-			$result = civicrm_api( 'Website', 'create', $params );
-
-		} else {
-
-			// There should be only one item.
-			$existing_data = array_pop( $existing_website['values'] );
-
-			// Bail if it hasn't changed.
-			if ( ! empty( $existing_data['url'] ) && $existing_data['url'] == $value ) {
-				return $existing_data;
-			}
-
-			// If there is an incoming value, update.
-			if ( ! empty( $value ) ) {
-
-				// Define params to update this Website.
-				$params = [
-					'version' => 3,
-					'id' => $existing_website['id'],
-					'contact_id' => $contact_id,
-					'url' => $value,
-				];
-
-				// Call the API.
-				$result = civicrm_api( 'Website', 'create', $params );
-
-			} else {
-
-				// Define params to delete this Website.
-				$params = [
-					'version' => 3,
-					'id' => $existing_website['id'],
-				];
-
-				// Call the API.
-				$result = civicrm_api( 'Website', 'delete', $params );
-
-				// Bail early.
-				return $website;
-
-			}
-
-		}
-
-		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			return $website;
-		}
-
-		// The result set should contain only one item.
-		$website = array_pop( $result['values'] );
-
-		// --<
-		return $website;
 
 	}
 

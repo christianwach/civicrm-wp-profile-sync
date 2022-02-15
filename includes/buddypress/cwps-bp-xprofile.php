@@ -95,6 +95,15 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	public $phone;
 
 	/**
+	 * CiviCRM Website object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var object $website The CiviCRM Website object.
+	 */
+	public $website;
+
+	/**
 	 * Settings Field meta key.
 	 *
 	 * @since 0.5
@@ -141,9 +150,18 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var string $location_type_id The Phone Type Settings Field name.
+	 * @var string $phone_type_id The Phone Type Settings Field name.
 	 */
 	public $phone_type_id = 'cwps_civicrm_phone_type';
+
+	/**
+	 * Website Type Settings Field name.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var string $location_type_id The Website Type Settings Field name.
+	 */
+	public $website_type_id = 'cwps_civicrm_website_type';
 
 	/**
 	 * Top Level Contact Type Settings Field name.
@@ -193,6 +211,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 			'Contact' => __( 'Contact', 'civicrm-wp-profile-sync' ),
 			'Address' => __( 'Address', 'civicrm-wp-profile-sync' ),
 			'Phone' => __( 'Phone', 'civicrm-wp-profile-sync' ),
+			'Website' => __( 'Website', 'civicrm-wp-profile-sync' ),
 		];
 
 		// Init when the CiviCRM object is loaded.
@@ -242,6 +261,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/buddypress/cwps-bp-civicrm-custom-field.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/buddypress/cwps-bp-civicrm-address.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/buddypress/cwps-bp-civicrm-phone.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/buddypress/cwps-bp-civicrm-website.php';
 
 	}
 
@@ -260,6 +280,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		$this->custom_field = new CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field( $this );
 		$this->address = new CiviCRM_Profile_Sync_BP_CiviCRM_Address( $this );
 		$this->phone = new CiviCRM_Profile_Sync_BP_CiviCRM_Phone( $this );
+		$this->website = new CiviCRM_Profile_Sync_BP_CiviCRM_Website( $this );
 
 	}
 
@@ -1192,6 +1213,22 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 			return $post_option;
 		}
 
+		// Get data for the "Website" Entity Type.
+		if ( $entity_type === 'Website' ) {
+
+			// Extract the Website Type ID from our metabox.
+			$website_type_id = '';
+			if ( isset( $_POST[ $this->website_type_id ] ) && $_POST[ $this->website_type_id ] ) {
+				$website_type_id = wp_unslash( $_POST[ $this->website_type_id ] );
+			}
+
+			// Build Entity data.
+			$entity_data = [
+				'website_type_id' => $website_type_id,
+			];
+
+		}
+
 		// Get data for the "Address" and "Phone" Entity Types.
 		if ( $entity_type === 'Address' || $entity_type === 'Phone' ) {
 
@@ -1364,7 +1401,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 				'location_type_id' => $location_type_id,
 			];
 
-			// Get data for the "Phone" Entity Types
+			// Get data for the "Phone" Entity Type.
 			if ( $entity_type === 'Phone' ) {
 
 				// Extract the Phone Type ID from our metabox.
@@ -1377,6 +1414,20 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 				$entity_data['phone_type_id'] = $phone_type_id;
 
 			}
+
+		}
+
+		// Get data for the "Website" Entity Type.
+		if ( $entity_type === 'Website' ) {
+
+			// Extract the Website Type ID from our metabox.
+			$website_type_id = '';
+			if ( isset( $_POST[ $this->website_type_id ] ) && $_POST[ $this->website_type_id ] ) {
+				$website_type_id = wp_unslash( $_POST[ $this->website_type_id ] );
+			}
+
+			// Add to Entity data.
+			$entity_data['website_type_id'] = $website_type_id;
 
 		}
 
@@ -1439,6 +1490,10 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	/**
 	 * Output a metabox below the xProfile Field Type metabox in the main column.
 	 *
+	 * TODO: Responsibility for populating the configuration for this metabox
+	 * should be relocated to the various classes with an interest in populating
+	 * it using a filter similar to "cwps/bp/field/query_setting_choices" below.
+	 *
 	 * @since 0.5
 	 *
 	 * @param BP_XProfile_Field $field The current XProfile Field.
@@ -1469,10 +1524,8 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 			$location_type_id = isset( $entity_data['location_type_id'] ) ? $entity_data['location_type_id'] : '';
 		}
 
-		// Init "Location" array.
-		$locations = [];
-
 		// Add entries for Location Types.
+		$locations = [];
 		$location_types = $this->plugin->civicrm->address->location_types_get();
 		if ( ! empty( $location_types ) ) {
 			foreach ( $location_types as $location ) {
@@ -1486,14 +1539,39 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 			$phone_type_id = isset( $entity_data['phone_type_id'] ) ? $entity_data['phone_type_id'] : '';
 		}
 
-		// Init "Phone Type" array.
-		$phones = [];
-
 		// Add entries for Phone Types.
+		$phones = [];
 		$phone_types = $this->plugin->civicrm->phone->phone_types_get();
 		if ( ! empty( $phone_types ) ) {
 			foreach ( $phone_types as $id => $label ) {
 				$phones[ $id ] = trim( $label );
+			}
+		}
+
+		// Get data for the "Website" Entity Type.
+		$website_type_id = '';
+		if ( $entity_type === 'Website' ) {
+			$website_type_id = isset( $entity_data['website_type_id'] ) ? $entity_data['website_type_id'] : '';
+		}
+
+		/*
+		 * Get the Website Type that is synced with the WordPress User.
+		 *
+		 * We need this because we have to exclude this Website Type from being
+		 * synced with a BuddyPress "URL" Field. There's a built-in BuddyPress
+		 * xProfile Field that does this already that can be defined using the
+		 * "WordPress Fields" -> "Text Field" Field Type.
+		 */
+		$user_website_type_id = $this->plugin->admin->setting_get( 'user_profile_website_type', 0 );
+
+		// Add entries for Website Types.
+		$websites = [];
+		$website_types = $this->plugin->civicrm->website->types_get();
+		if ( ! empty( $website_types ) ) {
+			foreach ( $website_types as $id => $label ) {
+				if ( (int) $user_website_type_id !== (int) $id ) {
+					$websites[ $id ] = trim( $label );
+				}
 			}
 		}
 
@@ -1581,30 +1659,20 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 		}
 
-		// Get data for the "Address" and "Phone" Entity Types.
+		// Assign Location Type data for the "Address" and "Phone" Entity Types.
 		if ( $entity_type === 'Address' || $entity_type === 'Phone' ) {
-
-			// If we got some Location Types.
 			if ( ! empty( $location_types ) ) {
-
-				// Assign Location Type data.
 				foreach ( $location_types as $location ) {
 					if ( $location['id'] == $location_type_id ) {
 						$entity_type_data['location_type'] = $location;
 					}
 				}
-
 			}
-
 		}
 
-		// Get data for the "Phone" Entity Type.
+		// Assign Phone Type data if we got some.
 		if ( $entity_type === 'Phone' ) {
-
-			// If we got some Phone Types.
 			if ( ! empty( $phone_types ) ) {
-
-				// Assign Phone Type data.
 				foreach ( $phone_types as $id => $label ) {
 					if ( $id == $phone_type_id ) {
 						$entity_type_data['phone_type'] = [
@@ -1613,9 +1681,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 						];
 					}
 				}
-
 			}
-
 		}
 
 		/*
@@ -1625,6 +1691,30 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 			'method' => __METHOD__,
 			'location_type_id' => $location_type_id,
 			'phone_type_id' => $phone_type_id,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Assign Website Type data if we got some.
+		if ( $entity_type === 'Website' ) {
+			if ( ! empty( $website_types ) ) {
+				foreach ( $website_types as $id => $label ) {
+					if ( $id == $website_type_id ) {
+						$entity_type_data['website_type'] = [
+							'id' => $id,
+							'label' => $label,
+						];
+					}
+				}
+			}
+		}
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'website_type_id' => $website_type_id,
 			//'backtrace' => $trace,
 		], true ) );
 		*/
@@ -1759,8 +1849,8 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 				}
 
-				// Get the Field mappings for Entity Types that share "Location Type".
-				$shared_entities = [ 'Address', 'Phone' ];
+				// Get the Field mappings for other supported Entity Types.
+				$shared_entities = [ 'Address', 'Phone', 'Website' ];
 				foreach ( $shared_entities as $entity_type ) {
 
 					/**

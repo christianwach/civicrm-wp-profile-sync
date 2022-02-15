@@ -524,7 +524,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 				// Try and get the Website Record.
 				$website_type_id = $website_action[ $this->field_name . 'map_website_type_id' ];
-				$website = $this->civicrm->website->website_get_by_type( $contact['id'], $website_type_id );
+				$website = $this->plugin->civicrm->website->get_by_type( $contact['id'], $website_type_id );
 				if ( empty( $website ) ) {
 					continue;
 				}
@@ -1000,7 +1000,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				'label' => __( 'Auto-fill with data from CiviCRM', 'civicrm-wp-profile-sync' ),
 				'name' => $this->field_name . 'autoload_enabled',
 				'type' => 'true_false',
-				//'instructions' => __( 'Auto-fill with data from CiviCRM.', 'civicrm-wp-profile-sync' ),
 				'instructions' => '',
 				'required' => 0,
 				'conditional_logic' => 0,
@@ -4004,7 +4003,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 	 *
 	 * @param array $contact The array of Contact data.
 	 * @param array $relationship_data The array of Relationship data.
-	 * @param array $custom_data The array of Relationship Custom Field data.
 	 * @return array|bool $relationships The array of Relationships, or false on failure.
 	 */
 	public function form_relationship_save( $contact, $relationship_data ) {
@@ -4239,9 +4237,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			}
 
 			// Update the Website.
-			$result = $this->civicrm->website->website_update( $website['website_type_id'], $contact['id'], $website['url'] );
-
-			// Skip on failure.
+			$result = $this->plugin->civicrm->website->update_for_contact( $website['website_type_id'], $contact['id'], $website['url'] );
 			if ( $result === false ) {
 				continue;
 			}

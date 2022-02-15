@@ -246,6 +246,11 @@ var CWPS_BP_Field = CWPS_BP_Field || {};
 				$('.cwps-phone-type').show();
 			}
 
+			// Maybe show the Website selectors.
+			if ( entity_type === 'Website' ) {
+				$('.cwps-website-type').show();
+			}
+
 			// Add listeners.
 			me.listeners();
 
@@ -315,6 +320,7 @@ var CWPS_BP_Field = CWPS_BP_Field || {};
 				$('.cwps-contact-subtype').hide();
 				$('.cwps-location-type').hide();
 				$('.cwps-phone-type').hide();
+				$('.cwps-website-type').hide();
 
 				// Disable CiviCRM Field select.
 				me.civicrm_field_reset();
@@ -375,6 +381,39 @@ var CWPS_BP_Field = CWPS_BP_Field || {};
 
 					return;
 
+				}
+
+				// Maybe show the Website selectors.
+				if ( entity_type === 'Website' ) {
+
+					// Show the Website selectors.
+					$('.cwps-website-type').show();
+
+					// Get Options for the Entity.
+					data = CWPS_BP_Field.settings.get_options_for( entity_type );
+					if ( ! data.length ) {
+						me.civicrm_field_add_placeholder();
+						return;
+					}
+
+					// Repopulate the options.
+					placeholder = CWPS_BP_Field.settings.get_localisation( 'placeholder' );
+					new_options.push( new Option( placeholder, '', false, false ) );
+					for ( group of data ) {
+						optgroup = document.createElement( 'optgroup' );
+						optgroup.label = group.label;
+						options = group.options;
+						for ( option of options ) {
+							optgroup.appendChild( new Option( option.label, option.value, false, false ) );
+						}
+						new_options.push( optgroup );
+					}
+					$('#cwps_civicrm_field').append( new_options );
+
+					// Enable CiviCRM Field select.
+					$('#cwps_civicrm_field').prop( 'disabled', false );
+
+					return;
 				}
 
 			});
@@ -459,6 +498,7 @@ var CWPS_BP_Field = CWPS_BP_Field || {};
 			// Clear all selects.
 			$('#cwps_civicrm_location_type').val( '' );
 			$('#cwps_civicrm_phone_type').val( '' );
+			$('#cwps_civicrm_website_type').val( '' );
 			$('#cwps_civicrm_contact_type').val( '' );
 			$('#cwps_civicrm_contact_subtype').val( '' );
 
