@@ -621,6 +621,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	/**
 	 * Callback for the CiviCRM Add/Edit Option Value postSave hook.
 	 *
+	 * Note: not implemented yet.
+	 *
 	 * The idea here is to listen for Option Value changes in Option Groups that
 	 * are mapped to ACF Fields and update the ACF Field settings accordingly.
 	 *
