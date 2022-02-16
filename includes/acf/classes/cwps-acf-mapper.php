@@ -546,9 +546,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Intercept Address updates in CiviCRM.
 		add_action( 'civicrm_pre', [ $this, 'address_pre_edit' ], 10, 4 );
+		add_action( 'civicrm_pre', [ $this, 'address_pre_delete' ], 10, 4 );
 		add_action( 'civicrm_post', [ $this, 'address_created' ], 10, 4 );
 		add_action( 'civicrm_post', [ $this, 'address_edited' ], 10, 4 );
-		add_action( 'civicrm_pre', [ $this, 'address_pre_delete' ], 10, 4 );
 		add_action( 'civicrm_post', [ $this, 'address_deleted' ], 10, 4 );
 
 	}
@@ -577,7 +577,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function hooks_civicrm_group_add() {
 
 		// Intercept Group updates in CiviCRM.
-		add_action( 'civicrm_pre', [ $this, 'group_deleted_pre' ], 10, 4 );
+		add_action( 'civicrm_pre', [ $this, 'group_pre_delete' ], 10, 4 );
 
 	}
 
@@ -745,9 +745,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function hooks_civicrm_phone_remove() {
 
 		// Remove Phone update hooks.
+		remove_action( 'civicrm_pre', [ $this, 'phone_pre_delete' ], 10 );
 		remove_action( 'civicrm_post', [ $this, 'phone_created' ], 10 );
 		remove_action( 'civicrm_post', [ $this, 'phone_edited' ], 10 );
-		remove_action( 'civicrm_pre', [ $this, 'phone_pre_delete' ], 10 );
 		remove_action( 'civicrm_post', [ $this, 'phone_deleted' ], 10 );
 
 	}
@@ -762,9 +762,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function hooks_civicrm_im_remove() {
 
 		// Remove Instant Messenger update hooks.
+		remove_action( 'civicrm_pre', [ $this, 'im_pre_delete' ], 10 );
 		remove_action( 'civicrm_post', [ $this, 'im_created' ], 10 );
 		remove_action( 'civicrm_post', [ $this, 'im_edited' ], 10 );
-		remove_action( 'civicrm_pre', [ $this, 'im_pre_delete' ], 10 );
 		remove_action( 'civicrm_post', [ $this, 'im_deleted' ], 10 );
 
 	}
@@ -797,9 +797,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Remove Address update hooks.
 		remove_action( 'civicrm_pre', [ $this, 'address_pre_edit' ], 10 );
+		remove_action( 'civicrm_pre', [ $this, 'address_pre_delete' ], 10 );
 		remove_action( 'civicrm_post', [ $this, 'address_created' ], 10 );
 		remove_action( 'civicrm_post', [ $this, 'address_edited' ], 10 );
-		remove_action( 'civicrm_pre', [ $this, 'address_pre_delete' ], 10 );
 		remove_action( 'civicrm_post', [ $this, 'address_deleted' ], 10 );
 
 	}
@@ -828,7 +828,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function hooks_civicrm_group_remove() {
 
 		// Remove Group update hooks.
-		remove_action( 'civicrm_pre', [ $this, 'group_deleted_pre' ], 10 );
+		remove_action( 'civicrm_pre', [ $this, 'group_pre_delete' ], 10 );
 
 	}
 
@@ -1417,6 +1417,51 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 
 	/**
+	 * Intercept when a CiviCRM Phone is about to be deleted.
+	 *
+	 * @since 0.4
+	 *
+	 * @param string $op The type of database operation.
+	 * @param string $objectName The type of object.
+	 * @param integer $objectId The ID of the object.
+	 * @param object $objectRef The object.
+	 */
+	public function phone_pre_delete( $op, $objectName, $objectId, $objectRef ) {
+
+		// Bail if not the context we want.
+		if ( $op != 'delete' ) {
+			return;
+		}
+
+		// Bail if this is not a Phone.
+		if ( $objectName != 'Phone' ) {
+			return;
+		}
+
+		// Let's make an array of the params.
+		$args = [
+			'op' => $op,
+			'objectName' => $objectName,
+			'objectId' => $objectId,
+		];
+
+		// Maybe cast objectRef as object.
+		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+
+		/**
+		 * Broadcast that a CiviCRM Phone is about to be deleted.
+		 *
+		 * @since 0.4
+		 *
+		 * @param array $args The array of CiviCRM params.
+		 */
+		do_action( 'cwps/acf/mapper/phone/delete/pre', $args );
+
+	}
+
+
+
+	/**
 	 * Intercept when a CiviCRM Phone is created.
 	 *
 	 * @since 0.4
@@ -1507,51 +1552,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 
 	/**
-	 * Intercept when a CiviCRM Phone is about to be deleted.
-	 *
-	 * @since 0.4
-	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
-	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
-	 */
-	public function phone_pre_delete( $op, $objectName, $objectId, $objectRef ) {
-
-		// Bail if not the context we want.
-		if ( $op != 'delete' ) {
-			return;
-		}
-
-		// Bail if this is not a Phone.
-		if ( $objectName != 'Phone' ) {
-			return;
-		}
-
-		// Let's make an array of the params.
-		$args = [
-			'op' => $op,
-			'objectName' => $objectName,
-			'objectId' => $objectId,
-		];
-
-		// Maybe cast objectRef as object.
-		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
-
-		/**
-		 * Broadcast that a CiviCRM Phone is about to be deleted.
-		 *
-		 * @since 0.4
-		 *
-		 * @param array $args The array of CiviCRM params.
-		 */
-		do_action( 'cwps/acf/mapper/phone/delete/pre', $args );
-
-	}
-
-
-
-	/**
 	 * Intercept when a CiviCRM Phone has been deleted.
 	 *
 	 * @since 0.4
@@ -1597,6 +1597,51 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 
 	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Intercept when a CiviCRM Instant Messenger is about to be deleted.
+	 *
+	 * @since 0.4
+	 *
+	 * @param string $op The type of database operation.
+	 * @param string $objectName The type of object.
+	 * @param integer $objectId The ID of the object.
+	 * @param object $objectRef The object.
+	 */
+	public function im_pre_delete( $op, $objectName, $objectId, $objectRef ) {
+
+		// Bail if not the context we want.
+		if ( $op != 'delete' ) {
+			return;
+		}
+
+		// Bail if this is not an Instant Messenger.
+		if ( $objectName != 'IM' ) {
+			return;
+		}
+
+		// Let's make an array of the params.
+		$args = [
+			'op' => $op,
+			'objectName' => $objectName,
+			'objectId' => $objectId,
+		];
+
+		// Maybe cast objectRef as object.
+		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+
+		/**
+		 * Broadcast that a CiviCRM Instant Messenger is about to be deleted.
+		 *
+		 * @since 0.4
+		 *
+		 * @param array $args The array of CiviCRM params.
+		 */
+		do_action( 'cwps/acf/mapper/im/delete/pre', $args );
+
+	}
 
 
 
@@ -1685,51 +1730,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		 * @param array $args The array of CiviCRM params.
 		 */
 		do_action( 'cwps/acf/mapper/im/edited', $args );
-
-	}
-
-
-
-	/**
-	 * Intercept when a CiviCRM Instant Messenger is about to be deleted.
-	 *
-	 * @since 0.4
-	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
-	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
-	 */
-	public function im_pre_delete( $op, $objectName, $objectId, $objectRef ) {
-
-		// Bail if not the context we want.
-		if ( $op != 'delete' ) {
-			return;
-		}
-
-		// Bail if this is not an Instant Messenger.
-		if ( $objectName != 'IM' ) {
-			return;
-		}
-
-		// Let's make an array of the params.
-		$args = [
-			'op' => $op,
-			'objectName' => $objectName,
-			'objectId' => $objectId,
-		];
-
-		// Maybe cast objectRef as object.
-		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
-
-		/**
-		 * Broadcast that a CiviCRM Instant Messenger is about to be deleted.
-		 *
-		 * @since 0.4
-		 *
-		 * @param array $args The array of CiviCRM params.
-		 */
-		do_action( 'cwps/acf/mapper/im/delete/pre', $args );
 
 	}
 
@@ -2014,6 +2014,51 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 
 	/**
+	 * Intercept when a CiviCRM Address is about to be deleted.
+	 *
+	 * @since 0.4
+	 *
+	 * @param string $op The type of database operation.
+	 * @param string $objectName The type of object.
+	 * @param integer $objectId The ID of the object.
+	 * @param object $objectRef The object.
+	 */
+	public function address_pre_delete( $op, $objectName, $objectId, $objectRef ) {
+
+		// Bail if not the context we want.
+		if ( $op != 'delete' ) {
+			return;
+		}
+
+		// Bail if this is not an Address.
+		if ( $objectName != 'Address' ) {
+			return;
+		}
+
+		// Let's make an array of the params.
+		$args = [
+			'op' => $op,
+			'objectName' => $objectName,
+			'objectId' => $objectId,
+		];
+
+		// Maybe cast objectRef as object.
+		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+
+		/**
+		 * Broadcast that a CiviCRM Address is about to be deleted.
+		 *
+		 * @since 0.4
+		 *
+		 * @param array $args The array of CiviCRM params.
+		 */
+		do_action( 'cwps/acf/mapper/address/delete/pre', $args );
+
+	}
+
+
+
+	/**
 	 * Intercept when a CiviCRM Contact's Address has been created.
 	 *
 	 * @since 0.4
@@ -2098,51 +2143,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		 * @param array $args The array of CiviCRM params.
 		 */
 		do_action( 'cwps/acf/mapper/address/edited', $args );
-
-	}
-
-
-
-	/**
-	 * Intercept when a CiviCRM Address is about to be deleted.
-	 *
-	 * @since 0.4
-	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
-	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
-	 */
-	public function address_pre_delete( $op, $objectName, $objectId, $objectRef ) {
-
-		// Bail if not the context we want.
-		if ( $op != 'delete' ) {
-			return;
-		}
-
-		// Bail if this is not an Address.
-		if ( $objectName != 'Address' ) {
-			return;
-		}
-
-		// Let's make an array of the params.
-		$args = [
-			'op' => $op,
-			'objectName' => $objectName,
-			'objectId' => $objectId,
-		];
-
-		// Maybe cast objectRef as object.
-		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
-
-		/**
-		 * Broadcast that a CiviCRM Address is about to be deleted.
-		 *
-		 * @since 0.4
-		 *
-		 * @param array $args The array of CiviCRM params.
-		 */
-		do_action( 'cwps/acf/mapper/address/delete/pre', $args );
 
 	}
 
@@ -2253,7 +2253,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 * @param integer $objectId The ID of the CiviCRM Group.
 	 * @param array $objectRef The array of CiviCRM Group data.
 	 */
-	public function group_deleted_pre( $op, $objectName, $objectId, &$objectRef ) {
+	public function group_pre_delete( $op, $objectName, $objectId, &$objectRef ) {
 
 		// Target our operation.
 		if ( $op != 'delete' ) {
@@ -3069,6 +3069,74 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 
 	/**
+	 * Hook into updates to a term before the term is updated.
+	 *
+	 * @since 0.4
+	 *
+	 * @param integer $term_id The numeric ID of the new term.
+	 * @param string $taxonomy The taxonomy containing the term.
+	 */
+	public function term_pre_edit( $term_id, $taxonomy = null ) {
+
+		// Bail if there was a Multisite switch.
+		if ( is_multisite() && ms_is_switched() ) {
+			return;
+		}
+
+		// Let's make an array of the params.
+		$args = [
+			'term_id' => $term_id,
+			'taxonomy' => $taxonomy,
+		];
+
+		/**
+		 * Broadcast that a WordPress Term is about to be edited.
+		 *
+		 * @since 0.4
+		 *
+		 * @param array $args The array of WordPress params.
+		 */
+		do_action( 'cwps/acf/mapper/term/edit/pre', $args );
+
+	}
+
+
+
+	/**
+	 * Hook in before a Term is deleted.
+	 *
+	 * @since 0.5
+	 *
+	 * @param integer $term_id The numeric ID of the Term.
+	 * @param string $taxonomy The Taxonomy containing the Term.
+	 */
+	public function term_pre_delete( $term_id, $taxonomy = null ) {
+
+		// Bail if there was a Multisite switch.
+		if ( is_multisite() && ms_is_switched() ) {
+			return;
+		}
+
+		// Let's make an array of the params.
+		$args = [
+			'term_id' => $term_id,
+			'taxonomy' => $taxonomy,
+		];
+
+		/**
+		 * Broadcast that a WordPress Term is about to be deleted.
+		 *
+		 * @since 0.5
+		 *
+		 * @param array $args The array of WordPress params.
+		 */
+		do_action( 'cwps/acf/mapper/term/delete/pre', $args );
+
+	}
+
+
+
+	/**
 	 * Hook into the creation of a term.
 	 *
 	 * @since 0.4
@@ -3105,40 +3173,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 
 	/**
-	 * Hook into updates to a term before the term is updated.
-	 *
-	 * @since 0.4
-	 *
-	 * @param integer $term_id The numeric ID of the new term.
-	 * @param string $taxonomy The taxonomy containing the term.
-	 */
-	public function term_pre_edit( $term_id, $taxonomy = null ) {
-
-		// Bail if there was a Multisite switch.
-		if ( is_multisite() && ms_is_switched() ) {
-			return;
-		}
-
-		// Let's make an array of the params.
-		$args = [
-			'term_id' => $term_id,
-			'taxonomy' => $taxonomy,
-		];
-
-		/**
-		 * Broadcast that a WordPress Term is about to be edited.
-		 *
-		 * @since 0.4
-		 *
-		 * @param array $args The array of WordPress params.
-		 */
-		do_action( 'cwps/acf/mapper/term/edit/pre', $args );
-
-	}
-
-
-
-	/**
 	 * Hook into updates to a term.
 	 *
 	 * @since 0.4
@@ -3169,40 +3203,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		 * @param array $args The array of WordPress params.
 		 */
 		do_action( 'cwps/acf/mapper/term/edited', $args );
-
-	}
-
-
-
-	/**
-	 * Hook in before a Term is deleted.
-	 *
-	 * @since 0.5
-	 *
-	 * @param integer $term_id The numeric ID of the Term.
-	 * @param string $taxonomy The Taxonomy containing the Term.
-	 */
-	public function term_pre_delete( $term_id, $taxonomy = null ) {
-
-		// Bail if there was a Multisite switch.
-		if ( is_multisite() && ms_is_switched() ) {
-			return;
-		}
-
-		// Let's make an array of the params.
-		$args = [
-			'term_id' => $term_id,
-			'taxonomy' => $taxonomy,
-		];
-
-		/**
-		 * Broadcast that a WordPress Term is about to be deleted.
-		 *
-		 * @since 0.5
-		 *
-		 * @param array $args The array of WordPress params.
-		 */
-		do_action( 'cwps/acf/mapper/term/delete/pre', $args );
 
 	}
 
