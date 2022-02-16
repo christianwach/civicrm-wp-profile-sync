@@ -145,6 +145,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks {
 		// Maybe initialise legacy CAI object.
 		if ( $this->plugin->cai->is_loaded() ) {
 			$this->acf = new CiviCRM_WP_Profile_Sync_Mapper_Hooks_ACF( $this );
+			$this->acf_loaded === true;
 		}
 
 	}
