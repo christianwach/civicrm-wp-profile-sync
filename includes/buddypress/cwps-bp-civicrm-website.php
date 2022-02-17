@@ -5,7 +5,7 @@
  * Handles BuddyPress CiviCRM Website functionality.
  *
  * @package CiviCRM_WP_Profile_Sync
- * @since 0.5
+ * @since 0.5.2
  */
 
 // Exit if accessed directly.
@@ -18,14 +18,14 @@ defined( 'ABSPATH' ) || exit;
  *
  * A class that encapsulates BuddyPress CiviCRM Website functionality.
  *
- * @since 0.5
+ * @since 0.5.2
  */
 class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 
 	/**
 	 * Plugin object.
 	 *
-	 * @since 0.5
+	 * @since 0.5.2
 	 * @access public
 	 * @var object $plugin The plugin object.
 	 */
@@ -34,7 +34,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	/**
 	 * BuddyPress Loader object.
 	 *
-	 * @since 0.5
+	 * @since 0.5.2
 	 * @access public
 	 * @var object $bp_loader The BuddyPress Loader object.
 	 */
@@ -43,7 +43,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	/**
 	 * Parent (calling) object.
 	 *
-	 * @since 0.5
+	 * @since 0.5.2
 	 * @access public
 	 * @var object $civicrm The parent object.
 	 */
@@ -52,7 +52,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	/**
 	 * BuddyPress xProfile object.
 	 *
-	 * @since 0.5
+	 * @since 0.5.2
 	 * @access public
 	 * @var object $xprofile The BuddyPress xProfile object.
 	 */
@@ -72,7 +72,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	 *
 	 * This distinguishes Website Fields from Custom Fields.
 	 *
-	 * @since 0.5
+	 * @since 0.5.2
 	 * @access public
 	 * @var string $website_field_prefix The prefix of the "CiviCRM Field" value.
 	 */
@@ -83,7 +83,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	 *
 	 * Mapped to their corresponding BuddyPress Field Types.
 	 *
-	 * @since 0.5
+	 * @since 0.5.2
 	 * @access public
 	 * @var array $website_fields The array of public Website Fields.
 	 */
@@ -98,7 +98,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	/**
 	 * Constructor.
 	 *
-	 * @since 0.5
+	 * @since 0.5.2
 	 *
 	 * @param object $xprofile The BuddyPress xProfile object.
 	 */
@@ -120,7 +120,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	/**
 	 * Initialise this object.
 	 *
-	 * @since 0.5
+	 * @since 0.5.2
 	 */
 	public function initialise() {
 
@@ -138,7 +138,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	/**
 	 * Register hooks.
 	 *
-	 * @since 0.5
+	 * @since 0.5.2
 	 */
 	public function register_hooks() {
 
@@ -158,7 +158,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	/**
 	 * Register callbacks for Mapper events.
 	 *
-	 * @since 0.5
+	 * @since 0.5.2
 	 */
 	public function register_mapper_hooks() {
 
@@ -184,7 +184,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	/**
 	 * Unregister callbacks for Mapper events.
 	 *
-	 * @since 0.5
+	 * @since 0.5.2
 	 */
 	public function unregister_mapper_hooks() {
 
@@ -300,7 +300,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	/**
 	 * Intercept when a CiviCRM Website Record has been updated.
 	 *
-	 * @since 0.5
+	 * @since 0.5.2
 	 *
 	 * @param array $args The array of CiviCRM params.
 	 */
@@ -494,7 +494,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	/**
 	 * Process a CiviCRM Website Record.
 	 *
-	 * @since 0.5
+	 * @since 0.5.2
 	 *
 	 * @param object $website The CiviCRM Website Record object.
 	 * @param array $args The array of CiviCRM params.
@@ -570,7 +570,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 		/**
 		 * Broadcast that a set of BuddyPress Website Fields may have been edited.
 		 *
-		 * @since 0.5
+		 * @since 0.5.2
 		 *
 		 * @param object $website The CiviCRM Website Record object.
 		 * @param array $args The array of CiviCRM params.
@@ -584,7 +584,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	/**
 	 * Get the value of a Website Field, formatted for BuddyPress.
 	 *
-	 * @since 0.5
+	 * @since 0.5.2
 	 *
 	 * @param mixed $value The Website Field value.
 	 * @param array $name The Website Field name.
@@ -629,7 +629,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	/**
 	 * Save Website(s) when BuddyPress Profile Fields have been saved.
 	 *
-	 * @since 0.5
+	 * @since 0.5.2
 	 *
 	 * @param array $args The array of BuddyPress and CiviCRM params.
 	 */
@@ -684,7 +684,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	 * ( 'Website', 'create' ) in the correct format. This is of the form:
 	 * 'custom_N' where N is the ID of the Custom Field.
 	 *
-	 * @since 0.5
+	 * @since 0.5.2
 	 *
 	 * @param array $field_data The array of BuddyPress Field data.
 	 * @return array $website_data The CiviCRM Website data.
@@ -752,7 +752,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	/**
 	 * Returns the Website Field choices for a Setting Field from when found.
 	 *
-	 * @since 0.5
+	 * @since 0.5.2
 	 *
 	 * @param array $choices The existing array of choices for the Setting Field.
 	 * @param string $field_type The BuddyPress Field Type.
@@ -787,7 +787,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 		/**
 		 * Filter the choices to display in the "CiviCRM Field" select.
 		 *
-		 * @since 0.5
+		 * @since 0.5.2
 		 *
 		 * @param array $choices The array of choices for the Setting Field.
 		 */
@@ -803,7 +803,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	/**
 	 * Get the CiviCRM Website Fields for a BuddyPress Field Type.
 	 *
-	 * @since 0.5
+	 * @since 0.5.2
 	 *
 	 * @param string $field_type The BuddyPress Field Type.
 	 * @return array $website_fields The array of Website Fields.
@@ -819,7 +819,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 		/**
 		 * Filter the Website Fields.
 		 *
-		 * @since 0.5
+		 * @since 0.5.2
 		 *
 		 * @param array $website_fields The existing array of Website Fields.
 		 * @param string $field_type The BuddyPress Field Type.
@@ -929,7 +929,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	/**
 	 * Get the BuddyPress Field Type for a Website Field.
 	 *
-	 * @since 0.5
+	 * @since 0.5.2
 	 *
 	 * @param string $name The name of the Website Field.
 	 * @return string|array $type The type of BuddyPress Field (or array of types).
@@ -954,7 +954,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	/**
 	 * Gets the mapped Website Field name.
 	 *
-	 * @since 0.5
+	 * @since 0.5.2
 	 *
 	 * @param string $value The value of the BuddyPress Field setting.
 	 * @return string $name The mapped Contact Field name.
