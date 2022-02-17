@@ -129,29 +129,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact {
 	 */
 	public function bp_fields_edited( $args ) {
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'args' => $args,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Prepare the CiviCRM Contact data.
 		$contact_data = $this->prepare_from_fields( $args['field_data'] );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			//'args' => $args,
-			'contact_data' => $contact_data,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Add the Contact ID.
 		$contact_data['id'] = $args['contact_id'];
@@ -168,8 +147,9 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact {
 		 *
 		 * Used internally by:
 		 *
-		 * - BuddyPress CiviCRM Address
-		 * - BuddyPress CiviCRM Phone
+		 * * CiviCRM_Profile_Sync_BP_CiviCRM_Address::bp_fields_edited()
+		 * * CiviCRM_Profile_Sync_BP_CiviCRM_Phone::bp_fields_edited()
+		 * * CiviCRM_Profile_Sync_BP_CiviCRM_Website::bp_fields_edited()
 		 *
 		 * @since 0.5
 		 *
@@ -197,16 +177,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact {
 	 * @return array $contact_data The CiviCRM Contact data.
 	 */
 	public function prepare_from_fields( $field_data ) {
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'field_data' => $field_data,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Init data for Fields.
 		$contact_data = [];
@@ -252,18 +222,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact {
 					'contact_field_name' => $contact_field_name,
 				];
 
-				/*
-				$e = new \Exception();
-				$trace = $e->getTraceAsString();
-				error_log( print_r( [
-					'method' => __METHOD__,
-					//'data' => $data,
-					'field_type' => $data['field_type'],
-					'value' => $data['value'],
-					//'backtrace' => $trace,
-				], true ) );
-				*/
-
 				// Parse value by Field Type.
 				$value = $this->xprofile->value_get_for_civicrm( $data['value'], $data['field_type'], $args );
 
@@ -273,16 +231,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact {
 			}
 
 		}
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'contact_data' => $contact_data,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// --<
 		return $contact_data;
@@ -303,16 +251,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact {
 	 * @param array $args The array of CiviCRM params.
 	 */
 	public function contact_synced( $args ) {
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'args' => $args,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Bail if BuddyPress is not set to sync to WordPress.
 		if ( bp_disable_profile_sync() ) {
@@ -336,18 +274,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact {
 			bp_the_profile_group();
 
 			global $profile_template;
-
-			/*
-			$e = new \Exception();
-			$trace = $e->getTraceAsString();
-			error_log( print_r( [
-				'method' => __METHOD__,
-				//'profile_template' => $profile_template,
-				//'group' => $group,
-				//'has_fields' => bp_profile_group_has_fields() ? 'y' : 'n',
-				//'backtrace' => $trace,
-			], true ) );
-			*/
 
 			// Do the Profile Fields Loop.
 			while ( bp_profile_fields() ) {
@@ -375,22 +301,12 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact {
 					'field_meta' => $field_meta,
 				];
 
-				/*
-				$e = new \Exception();
-				$trace = $e->getTraceAsString();
-				error_log( print_r( [
-					'method' => __METHOD__,
-					'params' => $params,
-					//'backtrace' => $trace,
-				], true ) );
-				*/
-
 				/**
 				 * Broadcast that a mapped Contact Field needs to be synced to BuddyPress.
 				 *
 				 * Used internally by:
 				 *
-				 * - BuddyPress CiviCRM Contact Field
+				 * * BuddyPress CiviCRM Contact Field
 				 *
 				 * @since 0.5
 				 *

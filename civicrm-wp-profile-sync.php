@@ -237,8 +237,12 @@ class CiviCRM_WP_Profile_Sync {
 	 */
 	public function hooks_bp_add() {
 
-		// Pass requests to BuddyPress object.
-		$this->bp->register_mapper_hooks();
+		/**
+		 * Broadcast that BuddyPress hooks should be added.
+		 *
+		 * @since 0.5.2
+		 */
+		do_action( 'cwps/plugin/hooks/bp/add' );
 
 	}
 
@@ -251,8 +255,12 @@ class CiviCRM_WP_Profile_Sync {
 	 */
 	public function hooks_bp_remove() {
 
-		// Pass requests to BuddyPress object.
-		$this->bp->unregister_mapper_hooks();
+		/**
+		 * Broadcast that BuddyPress hooks should be removed.
+		 *
+		 * @since 0.5.2
+		 */
+		do_action( 'cwps/plugin/hooks/bp/remove' );
 
 	}
 
@@ -268,8 +276,12 @@ class CiviCRM_WP_Profile_Sync {
 	 */
 	public function hooks_wp_add() {
 
-		// Pass requests to WordPress object.
-		$this->wp->register_mapper_hooks();
+		/**
+		 * Broadcast that WordPress hooks should be added.
+		 *
+		 * @since 0.5.2
+		 */
+		do_action( 'cwps/plugin/hooks/wp/add' );
 
 	}
 
@@ -282,8 +294,12 @@ class CiviCRM_WP_Profile_Sync {
 	 */
 	public function hooks_wp_remove() {
 
-		// Pass requests to WordPress object.
-		$this->wp->unregister_mapper_hooks();
+		/**
+		 * Broadcast that WordPress hooks should be removed.
+		 *
+		 * @since 0.5.2
+		 */
+		do_action( 'cwps/plugin/hooks/wp/remove' );
 
 	}
 
@@ -298,8 +314,12 @@ class CiviCRM_WP_Profile_Sync {
 	 */
 	public function hooks_civicrm_add() {
 
-		// Pass requests to CiviCRM object.
-		$this->civicrm->register_mapper_hooks();
+		/**
+		 * Broadcast that CiviCRM hooks should be added.
+		 *
+		 * @since 0.5.2
+		 */
+		do_action( 'cwps/plugin/hooks/civicrm/add' );
 
 	}
 
@@ -312,8 +332,12 @@ class CiviCRM_WP_Profile_Sync {
 	 */
 	public function hooks_civicrm_remove() {
 
-		// Pass requests to CiviCRM object.
-		$this->civicrm->unregister_mapper_hooks();
+		/**
+		 * Broadcast that CiviCRM hooks should be removed.
+		 *
+		 * @since 0.5.2
+		 */
+		do_action( 'cwps/plugin/hooks/civicrm/remove' );
 
 	}
 

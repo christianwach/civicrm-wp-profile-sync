@@ -74,7 +74,7 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 		$this->acf_loader = $parent->acf_loader;
 		$this->acf = $parent;
 
-		// Init when this plugin is loaded.
+		// Init when the parent class is loaded.
 		add_action( 'cwps/acf/acf/loaded', [ $this, 'register_hooks' ] );
 
 	}

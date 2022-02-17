@@ -59,6 +59,15 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 	public $xprofile;
 
 	/**
+	 * Mapper hooks registered flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var object $bulk The Mapper hooks registered flag.
+	 */
+	public $mapper_hooks = false;
+
+	/**
 	 * "CiviCRM Field" Field value prefix in the BuddyPress Field data.
 	 *
 	 * This distinguishes Phone Fields from Custom Fields.
@@ -119,6 +128,10 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 	 */
 	public function initialise() {
 
+		// Always register plugin hooks.
+		add_action( 'cwps/plugin/hooks/bp/add', [ $this, 'register_mapper_hooks' ] );
+		add_action( 'cwps/plugin/hooks/bp/remove', [ $this, 'unregister_mapper_hooks' ] );
+
 		// Register hooks.
 		$this->register_hooks();
 
@@ -162,11 +175,19 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 	 */
 	public function register_mapper_hooks() {
 
+		// Bail if already registered.
+		if ( $this->mapper_hooks === true ) {
+			return;
+		}
+
 		// Listen for events from our Mapper that require Phone updates.
 		add_action( 'cwps/mapper/phone/created', [ $this, 'phone_edited' ], 10 );
 		add_action( 'cwps/mapper/phone/edited', [ $this, 'phone_edited' ], 10 );
 		//add_action( 'cwps/mapper/phone/delete/pre', [ $this, 'phone_pre_delete' ], 10 );
 		//add_action( 'cwps/mapper/phone/deleted', [ $this, 'phone_deleted' ], 10 );
+
+		// Declare registered.
+		$this->mapper_hooks = true;
 
 	}
 
@@ -179,11 +200,19 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 	 */
 	public function unregister_mapper_hooks() {
 
+		// Bail if already unregistered.
+		if ( $this->mapper_hooks === false ) {
+			return;
+		}
+
 		// Remove all Mapper listeners.
 		remove_action( 'cwps/mapper/phone/created', [ $this, 'phone_edited' ], 10 );
 		remove_action( 'cwps/mapper/phone/edited', [ $this, 'phone_edited' ], 10 );
 		//remove_action( 'cwps/mapper/phone/delete/pre', [ $this, 'phone_pre_delete' ], 10 );
 		//remove_action( 'cwps/mapper/phone/deleted', [ $this, 'phone_deleted' ], 10 );
+
+		// Declare unregistered.
+		$this->mapper_hooks = false;
 
 	}
 
@@ -206,17 +235,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 		if ( bp_disable_profile_sync() ) {
 			return;
 		}
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'args' => $args,
-			//'user_id' => $user_id,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Grab the Phone Record data.
 		$phone = $args['objectRef'];
@@ -249,29 +267,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 			return $user_id;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'args' => $args,
-			'user_id' => $user_id,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Get the BuddyPress Fields for this User.
 		$bp_fields = $this->xprofile->fields_get_for_user( $user_id );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'bp_fields' => $bp_fields,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Filter out Fields not mapped to a CiviCRM Phone Field.
 		$bp_fields_mapped = [];
@@ -309,16 +306,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'bp_fields_mapped' => $bp_fields_mapped,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Bail if we don't have any left.
 		if ( empty( $bp_fields_mapped ) ) {
 			return;
@@ -340,17 +327,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 			// Okay, go ahead and save the value to the xProfile Field.
 			$result = $this->xprofile->value_update( $bp_field['field_id'], $user_id, $value );
-
-			/*
-			$e = new \Exception();
-			$trace = $e->getTraceAsString();
-			error_log( print_r( [
-				'method' => __METHOD__,
-				'value' => $value,
-				'result' => $result,
-				//'backtrace' => $trace,
-			], true ) );
-			*/
 
 		}
 
@@ -383,19 +359,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 	 */
 	public function value_get_for_bp( $value, $name, $params ) {
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'value' => $value,
-			'name' => $name,
-			'params' => $params,
-			//'args' => $args,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Bail if value is (string) 'null' which CiviCRM uses for some reason.
 		if ( $value == 'null' || $value == 'NULL' ) {
 			return '';
@@ -408,16 +371,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 		if ( is_array( $type ) ) {
 			return $value;
 		}
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'type' => $type,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Convert CiviCRM value to BuddyPress value by Field Type.
 		switch ( $type ) {
@@ -455,16 +408,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 	 * @param array $args The array of BuddyPress and CiviCRM params.
 	 */
 	public function bp_fields_edited( $args ) {
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'args' => $args,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Bail if there is no Field data.
 		if ( empty( $args['field_data'] ) ) {
@@ -504,16 +447,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 			return;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'phone_groups' => $phone_groups,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Save each Phone.
 		foreach ( $phone_groups as $location_type_id => $phone_type ) {
 			foreach ( $phone_type as $phone_type_id => $group ) {
@@ -541,16 +474,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 				$phone_data['location_type_id'] = $location_type_id;
 				$phone_data['phone_type_id'] = $phone_type_id;
 
-				/*
-				$e = new \Exception();
-				$trace = $e->getTraceAsString();
-				error_log( print_r( [
-					'method' => __METHOD__,
-					'phone_data' => $phone_data,
-					//'backtrace' => $trace,
-				], true ) );
-				*/
-
 				// Okay, write the data to CiviCRM.
 				$phone = $this->plugin->civicrm->phone->update( $args['contact_id'], $phone_data );
 
@@ -577,16 +500,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 	 * @return array $contact_data The CiviCRM Contact data.
 	 */
 	public function prepare_from_fields( $field_data ) {
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'field_data' => $field_data,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Init data for Fields.
 		$phone_data = [];
@@ -627,19 +540,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 					'phone_field_name' => $phone_field_name,
 				];
 
-				/*
-				$e = new \Exception();
-				$trace = $e->getTraceAsString();
-				error_log( print_r( [
-					'method' => __METHOD__,
-					//'phone_fields' => $phone_fields,
-					//'field_type' => $field_type,
-					'data' => $data,
-					'args' => $args,
-					//'backtrace' => $trace,
-				], true ) );
-				*/
-
 				// Parse value by Field Type.
 				$value = $this->xprofile->value_get_for_civicrm( $data['value'], $data['field_type'], $args );
 
@@ -649,16 +549,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 			}
 
 		}
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'phone_data' => $phone_data,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// --<
 		return $phone_data;
@@ -734,29 +624,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 		// Init return.
 		$phone_fields = [];
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'field_type' => $field_type,
-			'location_type' => $location_type,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Get public Fields of this type.
 		$phone_fields = $this->data_get( $field_type, 'public' );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'phone_fields' => $phone_fields,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		/**
 		 * Filter the Phone Fields.
@@ -945,65 +814,20 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 			return $options;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'options' => $options,
-			'field_type' => $field_type,
-			'args' => $args,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Get the mapped Contact Field name.
 		$field_name = $this->name_get( $args['value'] );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			//'value' => $value,
-			'field_name' => $field_name,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		if ( empty( $field_name ) ) {
 			return $options;
 		}
 
 		// Bail if not a "True/False" Field Type.
 		$civicrm_field_type = $this->get_bp_type( $field_name );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'civicrm_field_type' => $civicrm_field_type,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		if ( $civicrm_field_type !== 'true_false' ) {
 			return $options;
 		}
 
 		// Get the full details for the CiviCRM Field.
 		$civicrm_field = $this->plugin->civicrm->phone->get_by_name( $field_name );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'civicrm_field' => $civicrm_field,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Use title for checkbox label.
 		$options = [ 1 => $civicrm_field['title'] ];
@@ -1034,46 +858,14 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 			return $phone_fields;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'phone_fields' => $phone_fields,
-			'field_type' => $field_type,
-			'name' => $name,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Get public Fields of this type.
 		$true_false_fields = $this->data_get( 'true_false', 'public' );
 		if ( empty( $true_false_fields ) ) {
 			return $phone_fields;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'true_false_fields' => $true_false_fields,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Merge with Phone Fields.
 		$phone_fields = array_merge( $phone_fields, $true_false_fields );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'phone_fields-FINAL' => $phone_fields,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// --<
 		return $phone_fields;
@@ -1108,17 +900,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 		if ( $civicrm_field_type === 'true_false' ) {
 			$is_true_false = true;
 		}
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'is_true_false' => $is_true_false,
-			'args' => $args,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// --<
 		return $is_true_false;

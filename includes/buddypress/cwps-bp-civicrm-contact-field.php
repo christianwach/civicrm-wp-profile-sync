@@ -219,14 +219,12 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		// Listen for when a Contact Field need syncing to an xProfile Field.
 		add_action( 'cwps/buddypress/contact/field/sync', [ $this, 'bp_field_update' ], 10, 2 );
 
-		return;
-
 		// Some Contact "Text" Fields need their own validation.
 		//add_filter( 'bp/validate_value/type=text', [ $this, 'value_validate' ], 10, 4 );
 
 		// Intercept Contact Image delete.
-		add_action( 'civicrm_postSave_civicrm_contact', [ $this, 'image_deleted' ], 10 );
-		add_action( 'delete_attachment', [ $this, 'image_attachment_deleted' ], 10 );
+		//add_action( 'civicrm_postSave_civicrm_contact', [ $this, 'image_deleted' ], 10 );
+		//add_action( 'delete_attachment', [ $this, 'image_attachment_deleted' ], 10 );
 
 	}
 
@@ -302,17 +300,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		// Init return.
 		$contact_fields = [];
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'field_type' => $field_type,
-			'contact_type' => $contact_type,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Get the "name" of the Contact Type.
 		$name = $contact_type['name'];
 
@@ -324,16 +311,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 		// Get public Fields of this type.
 		$contact_fields = $this->data_get( $name, $field_type, 'public' );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'contact_fields' => $contact_fields,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		/**
 		 * Filter the Contact Fields.
@@ -646,18 +623,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 			return;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'contact_field' => $contact_field,
-			'params' => $params,
-			//'args' => $args,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Does the mapped Contact Field exist?
 		if ( ! isset( $args['objectRef']->$contact_field ) ) {
 			return;
@@ -666,28 +631,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		// Modify value for BuddyPress prior to update.
 		$value = $this->value_get_for_bp( $args['objectRef']->$contact_field, $contact_field, $params );
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'value' => $value,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Okay, go ahead and save the value to the xProfile Field.
 		$result = $this->xprofile->value_update( $params['field_id'], $args['user_id'], $value );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'result' => $result,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 	}
 
@@ -705,19 +650,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 	 */
 	public function value_get_for_bp( $value, $name, $params ) {
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'value' => $value,
-			'name' => $name,
-			'params' => $params,
-			//'args' => $args,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Bail if value is (string) 'null' which CiviCRM uses for some reason.
 		if ( $value == 'null' || $value == 'NULL' ) {
 			return '';
@@ -725,16 +657,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 		// Get the BuddyPress Field Type for this Contact Field.
 		$type = $this->get_bp_type( $name );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'type' => $type,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Convert CiviCRM value to BuddyPress value by Field Type.
 		switch ( $type ) {
@@ -1010,31 +932,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 			return $options;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'options' => $options,
-			'field_type' => $field_type,
-			'args' => $args,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Get the mapped Contact Field name.
 		$contact_field_name = $this->name_get( $args['value'] );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			//'value' => $value,
-			'contact_field_name' => $contact_field_name,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		if ( empty( $contact_field_name ) ) {
 			return $options;
@@ -1042,33 +941,12 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 		// Bail if not a "True/False" Field Type.
 		$civicrm_field_type = $this->get_bp_type( $contact_field_name );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'civicrm_field_type' => $civicrm_field_type,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		if ( $civicrm_field_type !== 'true_false' ) {
 			return $options;
 		}
 
 		// Get the full details for the CiviCRM Field.
 		$civicrm_field = $this->plugin->civicrm->contact_field->get_by_name( $contact_field_name );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'civicrm_field' => $civicrm_field,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Use title for checkbox label.
 		$options = [ 1 => $civicrm_field['title'] ];
@@ -1100,46 +978,14 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 			return $contact_fields;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'contact_fields' => $contact_fields,
-			'field_type' => $field_type,
-			'name' => $name,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Get public Fields of this type.
 		$true_false_fields = $this->data_get( $name, 'true_false', 'public' );
 		if ( empty( $true_false_fields ) ) {
 			return $contact_fields;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'true_false_fields' => $true_false_fields,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Merge with Contact Fields.
 		$contact_fields = array_merge( $contact_fields, $true_false_fields );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'contact_fields-FINAL' => $contact_fields,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// --<
 		return $contact_fields;
@@ -1174,17 +1020,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		if ( $civicrm_field_type === 'true_false' ) {
 			$is_true_false = true;
 		}
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'is_true_false' => $is_true_false,
-			'args' => $args,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// --<
 		return $is_true_false;

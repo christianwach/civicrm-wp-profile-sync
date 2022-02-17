@@ -118,7 +118,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		$this->acf_loader = $parent->acf_loader;
 		$this->civicrm = $parent;
 
-		// Init when the CiviCRM object is loaded.
+		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
 
 	}
@@ -263,7 +263,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		 *
 		 * @param integer $address_field_name The existing Address Field name.
 		 * @param array $field The array of ACF Field data.
-		 * @return integer $address_field_name The modified Address Field name.
 		 */
 		$address_field_name = apply_filters( 'cwps/acf/civicrm/address/address_field/name', $address_field_name, $field );
 

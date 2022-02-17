@@ -40,6 +40,15 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 	 */
 	public $civicrm;
 
+	/**
+	 * Mapper hooks registered flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var object $bulk The Mapper hooks registered flag.
+	 */
+	public $mapper_hooks = false;
+
 
 
 	/**
@@ -83,6 +92,10 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 	 */
 	public function register_hooks() {
 
+		// Always register plugin hooks.
+		add_action( 'cwps/plugin/hooks/civicrm/add', [ $this, 'register_mapper_hooks' ] );
+		add_action( 'cwps/plugin/hooks/civicrm/remove', [ $this, 'unregister_mapper_hooks' ] );
+
 		// Always register Mapper callbacks.
 		$this->register_mapper_hooks();
 
@@ -111,6 +124,14 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 	 */
 	public function register_mapper_hooks() {
 
+		// Bail if already registered.
+		if ( $this->mapper_hooks === true ) {
+			return;
+		}
+
+		// Declare registered.
+		$this->mapper_hooks = true;
+
 	}
 
 
@@ -121,6 +142,14 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 	 * @since 0.5
 	 */
 	public function unregister_mapper_hooks() {
+
+		// Bail if already unregistered.
+		if ( $this->mapper_hooks === false ) {
+			return;
+		}
+
+		// Declare unregistered.
+		$this->mapper_hooks = false;
 
 	}
 

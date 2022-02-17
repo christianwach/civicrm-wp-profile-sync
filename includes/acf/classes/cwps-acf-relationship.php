@@ -56,6 +56,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	public $civicrm;
 
 	/**
+	 * Mapper hooks registered flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var object $bulk The Mapper hooks registered flag.
+	 */
+	public $mapper_hooks = false;
+
+	/**
 	 * "CiviCRM Relationship" Field key in the ACF Field data.
 	 *
 	 * @since 0.4
@@ -110,7 +119,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		$this->acf_loader = $parent->acf_loader;
 		$this->civicrm = $parent;
 
-		// Init when the CiviCRM object is loaded.
+		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
 
 		// Init parent.
@@ -166,10 +175,18 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	 */
 	public function register_mapper_hooks() {
 
+		// Bail if already registered.
+		if ( $this->mapper_hooks === true ) {
+			return;
+		}
+
 		// Listen for events from our Mapper that require Relationship updates.
 		add_action( 'cwps/acf/mapper/relationship/created', [ $this, 'relationship_edited' ], 10 );
 		add_action( 'cwps/acf/mapper/relationship/edited', [ $this, 'relationship_edited' ], 10 );
 		add_action( 'cwps/acf/mapper/relationship/deleted', [ $this, 'relationship_edited' ], 10 );
+
+		// Declare registered.
+		$this->mapper_hooks = true;
 
 	}
 
@@ -182,10 +199,18 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	 */
 	public function unregister_mapper_hooks() {
 
+		// Bail if already unregistered.
+		if ( $this->mapper_hooks === false ) {
+			return;
+		}
+
 		// Remove all Mapper listeners.
 		remove_action( 'cwps/acf/mapper/relationship/created', [ $this, 'relationship_edited' ], 10 );
 		remove_action( 'cwps/acf/mapper/relationship/edited', [ $this, 'relationship_edited' ], 10 );
 		remove_action( 'cwps/acf/mapper/relationship/deleted', [ $this, 'relationship_edited' ], 10 );
+
+		// Declare unregistered.
+		$this->mapper_hooks = false;
 
 	}
 
@@ -479,8 +504,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 				 * just leave it alone. What we may do in future is apply any
 				 * settings that the Relationship has - e.g.
 				 *
-				 * - Permissions,
-				 * - Description, etc
+				 * * Permissions,
+				 * * Description, etc
 				 *
 				 * This will require ACF Sub-Fields.
 				 */
@@ -1520,7 +1545,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 				 * @param array $relationships The retrieved array of Relationship Types.
 				 * @param array $contact_types The array of Contact Types.
 				 * @param array $field The ACF Field data array.
-				 * @return array $relationships The modified array of Relationship Types.
 				 */
 				$relationships_for_type = apply_filters(
 					'cwps/acf/civicrm/relationships/get_for_acf_field_for_type',
@@ -1542,7 +1566,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		 * @param array $relationships The existing array of Relationship Types.
 		 * @param array $field_group The ACF Field Group data array.
 		 * @param array $field The ACF Field data array.
-		 * @return array $relationships The modified array of Relationship Types.
 		 */
 		$relationships = apply_filters(
 			'cwps/acf/civicrm/relationships/get_for_acf_field',

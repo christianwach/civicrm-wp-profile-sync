@@ -68,6 +68,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 	public $cpt;
 
 	/**
+	 * Mapper hooks registered flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var object $bulk The Mapper hooks registered flag.
+	 */
+	public $mapper_hooks = false;
+
+	/**
 	 * Entity identifier.
 	 *
 	 * This identifier is unique to this "top level" Entity.
@@ -122,7 +131,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		$this->civicrm = $parent;
 		$this->acf = $this->acf_loader->acf;
 
-		// Init when the CiviCRM object is loaded.
+		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
 
 	}
@@ -234,9 +243,17 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 	 */
 	public function register_mapper_hooks() {
 
+		// Bail if already registered.
+		if ( $this->mapper_hooks === true ) {
+			return;
+		}
+
 		// Listen for events from our Mapper that require Participant updates.
 		add_action( 'cwps/acf/mapper/post/saved', [ $this, 'post_saved' ], 10 );
 		add_action( 'cwps/acf/mapper/acf_fields/saved', [ $this, 'acf_fields_saved' ], 10 );
+
+		// Declare registered.
+		$this->mapper_hooks = true;
 
 	}
 
@@ -249,9 +266,17 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 	 */
 	public function unregister_mapper_hooks() {
 
+		// Bail if already unregistered.
+		if ( $this->mapper_hooks === false ) {
+			return;
+		}
+
 		// Remove all Mapper listeners.
 		remove_action( 'cwps/acf/mapper/post/saved', [ $this, 'post_saved' ], 10 );
 		remove_action( 'cwps/acf/mapper/acf_fields/saved', [ $this, 'acf_fields_saved' ], 10 );
+
+		// Declare unregistered.
+		$this->mapper_hooks = false;
 
 	}
 
@@ -405,8 +430,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		 *
 		 * Used internally by:
 		 *
-		 * - Participant Fields to maintain sync with:
-		 *   - The ACF "Registered Date" Field
+		 * Participant Fields to maintain sync with:
+		 *
+		 * * The ACF "Registered Date" Field
 		 *
 		 * @since 0.5
 		 *
@@ -1239,7 +1265,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		 *
 		 * @param integer $participant_field_name The existing Participant Field name.
 		 * @param array $field The array of ACF Field data.
-		 * @return integer $participant_field_name The modified Participant Field name.
 		 */
 		$participant_field_name = apply_filters( 'cwps/acf/civicrm/participant/participant_field/name', $participant_field_name, $field );
 

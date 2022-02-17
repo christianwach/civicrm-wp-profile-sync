@@ -40,6 +40,15 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 	 */
 	public $civicrm;
 
+	/**
+	 * Mapper hooks registered flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var object $bulk The Mapper hooks registered flag.
+	 */
+	public $mapper_hooks = false;
+
 
 
 	/**
@@ -68,6 +77,10 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 	 * @since 0.4
 	 */
 	public function initialise() {
+
+		// Always register plugin hooks.
+		add_action( 'cwps/plugin/hooks/civicrm/add', [ $this, 'register_mapper_hooks' ] );
+		add_action( 'cwps/plugin/hooks/civicrm/remove', [ $this, 'unregister_mapper_hooks' ] );
 
 		// Register hooks.
 		$this->register_hooks();
@@ -126,9 +139,17 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 	 */
 	public function register_mapper_hooks() {
 
+		// Bail if already registered.
+		if ( $this->mapper_hooks === true ) {
+			return;
+		}
+
 		// Intercept Contact updates in CiviCRM.
-		//add_action( 'cwps/mapper/contact_pre_edit', [ $this, 'contact_pre' ], 10, 4 );
-		add_action( 'cwps/mapper/contact_edited', [ $this, 'contact_edited' ], 10 );
+		//add_action( 'cwps/mapper/contact/edit/pre', [ $this, 'contact_pre' ], 10, 4 );
+		add_action( 'cwps/mapper/contact/edited', [ $this, 'contact_edited' ], 10 );
+
+		// Declare registered.
+		$this->mapper_hooks = true;
 
 	}
 
@@ -141,9 +162,17 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 	 */
 	public function unregister_mapper_hooks() {
 
+		// Bail if already unregistered.
+		if ( $this->mapper_hooks === false ) {
+			return;
+		}
+
 		// Remove all CiviCRM callbacks.
-		//remove_action( 'cwps/mapper/contact_pre_edit', [ $this, 'contact_pre' ], 10 );
-		remove_action( 'cwps/mapper/contact_edited', [ $this, 'contact_edited' ], 10 );
+		//remove_action( 'cwps/mapper/contact/edit/pre', [ $this, 'contact_pre' ], 10 );
+		remove_action( 'cwps/mapper/contact/edited', [ $this, 'contact_edited' ], 10 );
+
+		// Declare unregistered.
+		$this->mapper_hooks = false;
 
 	}
 
@@ -438,7 +467,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		 * @param bool $should_be_synced True if the Contact should be synced, false otherwise.
 		 * @param object $contact The CiviCRM Contact object.
 		 * @param integer $user_id The numeric ID of the WordPress User.
-		 * @return bool $should_be_synced The modified value of the sync flag.
 		 */
 		$should_be_synced = apply_filters( 'civicrm_wp_profile_sync_contact_should_be_synced', $should_be_synced, $contact, $user_id );
 
@@ -450,7 +478,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		 * @param bool $should_be_synced True if the Contact should be synced, false otherwise.
 		 * @param object $contact The CiviCRM Contact object.
 		 * @param integer $user_id The numeric ID of the WordPress User.
-		 * @return bool $should_be_synced The modified value of the sync flag.
 		 */
 		return apply_filters( 'cwps/contact/should_be_synced', $should_be_synced, $contact, $user_id );
 
@@ -549,7 +576,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		 * @param bool $should_be_synced True if the Contact's name should be synced, false otherwise.
 		 * @param object $user The WordPress User object.
 		 * @param object $contact The CiviCRM Contact object.
-		 * @return bool $should_be_synced The modified value of the sync flag.
 		 */
 		return apply_filters( 'cwps/contact/name/should_be_synced', $should_be_synced, $user, $contact );
 
@@ -638,7 +664,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		 * @param bool $should_be_synced True if the Contact's "Nickname" should be synced, false otherwise.
 		 * @param object $user The WordPress User object.
 		 * @param object $contact The CiviCRM Contact object.
-		 * @return bool $should_be_synced The modified value of the sync flag.
 		 */
 		return apply_filters( 'cwps/contact/nickname/should_be_synced', $should_be_synced, $user, $contact );
 
@@ -1141,7 +1166,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		 *
 		 * @param bool $permitted True if allowed, false otherwise.
 		 * @param integer $contact_id The CiviCRM Contact ID.
-		 * @return bool $permitted True if allowed, false otherwise.
 		 */
 		return apply_filters( 'cwps/contact/user_can_view', $permitted, $contact_id );
 

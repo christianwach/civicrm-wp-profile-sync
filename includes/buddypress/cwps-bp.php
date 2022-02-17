@@ -75,6 +75,15 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 	 */
 	public $xprofile;
 
+	/**
+	 * Mapper hooks registered flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var object $bulk The Mapper hooks registered flag.
+	 */
+	public $mapper_hooks = false;
+
 
 
 	/**
@@ -126,6 +135,10 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 
 		// Set up objects and references.
 		$this->setup_objects();
+
+		// Always register plugin hooks.
+		add_action( 'cwps/plugin/hooks/bp/add', [ $this, 'register_mapper_hooks' ] );
+		add_action( 'cwps/plugin/hooks/bp/remove', [ $this, 'unregister_mapper_hooks' ] );
 
 		// Register hooks.
 		$this->register_hooks();
@@ -230,10 +243,18 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 	 */
 	public function register_mapper_hooks() {
 
+		// Bail if already registered.
+		if ( $this->mapper_hooks === true ) {
+			return;
+		}
+
 		// Callbacks for new and edited BuddyPress User actions.
-		add_action( 'cwps/mapper/bp_xprofile_edited', [ $this, 'user_edited' ], 20 );
+		add_action( 'cwps/mapper/bp_xprofile/edited', [ $this, 'user_edited' ], 20 );
 		add_action( 'cwps/mapper/bp_signup_user', [ $this, 'user_edited' ], 20 );
 		add_action( 'cwps/mapper/bp_activated_user', [ $this, 'user_edited' ], 20 );
+
+		// Declare registered.
+		$this->mapper_hooks = true;
 
 	}
 
@@ -246,10 +267,18 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 	 */
 	public function unregister_mapper_hooks() {
 
+		// Bail if already unregistered.
+		if ( $this->mapper_hooks === false ) {
+			return;
+		}
+
 		// Remove callbacks for new and edited BuddyPress User actions.
-		remove_action( 'cwps/mapper/bp_xprofile_edited', [ $this, 'user_edited' ], 20 );
+		remove_action( 'cwps/mapper/bp_xprofile/edited', [ $this, 'user_edited' ], 20 );
 		remove_action( 'cwps/mapper/bp_signup_user', [ $this, 'user_edited' ], 20 );
 		remove_action( 'cwps/mapper/bp_activated_user', [ $this, 'user_edited' ], 20 );
+
+		// Declare unregistered.
+		$this->mapper_hooks = false;
 
 	}
 

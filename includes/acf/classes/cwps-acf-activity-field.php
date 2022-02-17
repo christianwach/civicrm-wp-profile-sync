@@ -103,7 +103,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 		$this->acf_loader = $parent->acf_loader;
 		$this->civicrm = $parent;
 
-		// Init when the CiviCRM object is loaded.
+		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
 
 	}
@@ -880,9 +880,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 	 *
 	 * Activity Fields to maintain sync with:
 	 *
-	 * - The ACF "Activity Date Time" Field
-	 * - The ACF "Created Date" Field
-	 * - The ACF "Modified Date" Field
+	 * * The ACF "Activity Date Time" Field
+	 * * The ACF "Created Date" Field
+	 * * The ACF "Modified Date" Field
 	 *
 	 * @since 0.4
 	 *

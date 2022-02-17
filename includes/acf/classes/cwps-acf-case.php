@@ -50,6 +50,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 	public $civicrm;
 
 	/**
+	 * Mapper hooks registered flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var object $bulk The Mapper hooks registered flag.
+	 */
+	public $mapper_hooks = false;
+
+	/**
 	 * Entity identifier.
 	 *
 	 * This identifier is unique to this "top level" Entity.
@@ -87,7 +96,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$this->acf_loader = $parent->acf_loader;
 		$this->civicrm = $parent;
 
-		// Init when the CiviCRM object is loaded.
+		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
 
 	}
@@ -152,9 +161,17 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 	 */
 	public function register_mapper_hooks() {
 
+		// Bail if already registered.
+		if ( $this->mapper_hooks === true ) {
+			return;
+		}
+
 		// Listen for events from our Mapper that require Case updates.
 		add_action( 'cwps/acf/mapper/post/saved', [ $this, 'post_saved' ], 10 );
 		add_action( 'cwps/acf/mapper/acf_fields/saved', [ $this, 'acf_fields_saved' ], 10 );
+
+		// Declare registered.
+		$this->mapper_hooks = true;
 
 	}
 
@@ -167,9 +184,17 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 	 */
 	public function unregister_mapper_hooks() {
 
+		// Bail if already unregistered.
+		if ( $this->mapper_hooks === false ) {
+			return;
+		}
+
 		// Remove all Mapper listeners.
 		remove_action( 'cwps/acf/mapper/post/saved', [ $this, 'post_saved' ], 10 );
 		remove_action( 'cwps/acf/mapper/acf_fields/saved', [ $this, 'acf_fields_saved' ], 10 );
+
+		// Declare unregistered.
+		$this->mapper_hooks = false;
 
 	}
 
@@ -256,8 +281,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		 *
 		 * May be used internally by:
 		 *
-		 * - Groups
-		 * - Post Taxonomies
+		 * * Groups
+		 * * Post Taxonomies
 		 *
 		 * @since 0.5
 		 *
@@ -356,10 +381,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		 *
 		 * Used internally by:
 		 *
-		 * - Case Fields to maintain sync with:
-		 *   - The ACF "Case Date Time" Field
-		 *   - The ACF "Created Date" Field
-		 *   - The ACF "Modified Date" Field
+		 * Case Fields to maintain sync with:
+		 *
+		 * * The ACF "Case Date Time" Field
+		 * * The ACF "Created Date" Field
+		 * * The ACF "Modified Date" Field
 		 *
 		 * @since 0.5
 		 *
@@ -1219,7 +1245,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		 *
 		 * @param array $case_data The existing CiviCRM Case data.
 		 * @param WP_Post $post The WordPress Post.
-		 * @return array $case_data The modified CiviCRM Case data.
 		 */
 		$case_data = apply_filters( 'cwps/acf/civicrm/case/post/data', $case_data, $post );
 
@@ -1260,8 +1285,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 	 *
 	 * When we update the Case, we always sync:
 	 *
-	 * - The WordPress Post's "title" with the CiviCRM Case's "subject".
-	 * - The WordPress Post's "content" with the CiviCRM Case's "details".
+	 * * The WordPress Post's "title" with the CiviCRM Case's "subject".
+	 * * The WordPress Post's "content" with the CiviCRM Case's "details".
 	 *
 	 * @since 0.5
 	 *
@@ -1506,7 +1531,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		 *
 		 * @param integer $case_field_name The existing Case Field name.
 		 * @param array $field The array of ACF Field data.
-		 * @return integer $case_field_name The modified Case Field name.
 		 */
 		$case_field_name = apply_filters( 'cwps/acf/civicrm/case/case_field/name', $case_field_name, $field );
 

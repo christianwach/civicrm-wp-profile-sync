@@ -104,6 +104,15 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	public $website;
 
 	/**
+	 * Mapper hooks registered flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var object $bulk The Mapper hooks registered flag.
+	 */
+	public $mapper_hooks = false;
+
+	/**
 	 * Settings Field meta key.
 	 *
 	 * @since 0.5
@@ -214,7 +223,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 			'Website' => __( 'Website', 'civicrm-wp-profile-sync' ),
 		];
 
-		// Init when the CiviCRM object is loaded.
+		// Init when the BuddyPress object is loaded.
 		add_action( 'cwps/buddypress/loaded', [ $this, 'initialise' ] );
 
 	}
@@ -233,6 +242,10 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 		// Set up objects and references.
 		$this->setup_objects();
+
+		// Always register plugin hooks.
+		add_action( 'cwps/plugin/hooks/bp/add', [ $this, 'register_mapper_hooks' ] );
+		add_action( 'cwps/plugin/hooks/bp/remove', [ $this, 'unregister_mapper_hooks' ] );
 
 		// Register hooks.
 		$this->register_hooks();
@@ -338,9 +351,17 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 */
 	public function register_mapper_hooks() {
 
+		// Bail if already registered.
+		if ( $this->mapper_hooks === true ) {
+			return;
+		}
+
 		// Listen for events from our Mapper that require Contact updates.
-		add_action( 'cwps/mapper/bp_xprofile_edited', [ $this, 'fields_edited' ], 50 );
-		//add_action( 'cwps/mapper/bp_field_edited', [ $this, 'field_edited' ], 50 );
+		add_action( 'cwps/mapper/bp_xprofile/edited', [ $this, 'fields_edited' ], 50 );
+		//add_action( 'cwps/mapper/bp_field/edited', [ $this, 'field_edited' ], 50 );
+
+		// Declare registered.
+		$this->mapper_hooks = true;
 
 	}
 
@@ -353,9 +374,17 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 */
 	public function unregister_mapper_hooks() {
 
+		// Bail if already unregistered.
+		if ( $this->mapper_hooks === false ) {
+			return;
+		}
+
 		// Remove all Mapper listeners.
-		remove_action( 'cwps/mapper/bp_xprofile_edited', [ $this, 'fields_edited' ], 50 );
-		//remove_action( 'cwps/mapper/bp_field_edited', [ $this, 'field_edited' ], 50 );
+		remove_action( 'cwps/mapper/bp_xprofile/edited', [ $this, 'fields_edited' ], 50 );
+		//remove_action( 'cwps/mapper/bp_field/edited', [ $this, 'field_edited' ], 50 );
+
+		// Declare unregistered.
+		$this->mapper_hooks = false;
 
 	}
 
@@ -382,17 +411,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 */
 	public function fields_edited( $args ) {
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'args' => $args,
-			'civicrm_ref' => $this->civicrm_ref,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Bail if there are no CiviCRM References.
 		if ( empty( $this->civicrm_ref ) ) {
 			return;
@@ -414,7 +432,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		 *
 		 * Used internally by:
 		 *
-		 * - BuddyPress CiviCRM Contact
+		 * * BuddyPress CiviCRM Contact
 		 *
 		 * @since 0.5
 		 *
@@ -573,19 +591,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		// Pass through to BuddyPress.
 		$result = xprofile_set_field_data( $field_id, $user_id, $value );
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'field_id' => $field_id,
-			'user_id' => $user_id,
-			'value' => $value,
-			'result' => $result,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Reinstate our filter.
 		add_filter( 'bp_xprofile_set_field_data_pre_validate', [ $this, 'pre_validate' ], 10, 3 );
 
@@ -607,18 +612,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 * @return mixed $value The value formatted for CiviCRM.
 	 */
 	public function value_get_for_civicrm( $value = 0, $field_type, $args = [] ) {
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'value' => $value,
-			'field_type' => $field_type,
-			'args' => $args,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Always unslash.
 		$value = wp_unslash( $value );
@@ -678,18 +671,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		if ( ! empty( $args['custom_field_id'] ) ) {
 			$format = $this->custom_field->date_format_get_from_civicrm( $args['custom_field_id'] );
 		}
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'value' => $value,
-			'args' => $args,
-			'format' => $format,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Convert to CiviCRM format.
 		$value = $datetime->format( $format );
@@ -759,17 +740,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 			$value = 1;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'value' => $value,
-			'args' => $args,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// --<
 		return $value;
 
@@ -798,20 +768,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		if ( empty( $value->civicrm_value ) ) {
 			return $new_html;
 		}
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'new_html' => $new_html,
-			'value' => $value,
-			'id' => $id,
-			'selected' => $selected,
-			'k' => $k,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// $new_html, $options[$k], $this->field_obj->id, $selected, $k
 		$new_html = sprintf( '<label for="%3$s" class="option-label"><input %1$s type="checkbox" name="%2$s" id="%3$s" value="%4$s">%5$s</label>',
@@ -847,20 +803,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 			return $new_html;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'new_html' => $new_html,
-			'value' => $value,
-			'id' => $id,
-			'selected' => $selected,
-			'k' => $k,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// $new_html, $options[$k], $this->field_obj->id, $selected, $k
 		$new_html = '<option' . $selected . ' value="' . esc_attr( stripslashes( $value->civicrm_value ) ) . '">' . esc_html( stripslashes( $value->name ) ) . '</option>';
 
@@ -889,20 +831,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 			return $new_html;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'new_html' => $new_html,
-			'value' => $value,
-			'id' => $id,
-			'selected' => $selected,
-			'k' => $k,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// $new_html, $options[$k], $this->field_obj->id, $selected, $k
 		$new_html = '<option' . $selected . ' value="' . esc_attr( stripslashes( $value->civicrm_value ) ) . '">' . esc_html( stripslashes( $value->name ) ) . '</option>';
 
@@ -930,20 +858,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		if ( empty( $value->civicrm_value ) ) {
 			return $new_html;
 		}
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'new_html' => $new_html,
-			'value' => $value,
-			'id' => $id,
-			'selected' => $selected,
-			'k' => $k,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// $new_html, $options[$k], $this->field_obj->id, $selected, $k
 		$new_html = sprintf( '<label for="%3$s" class="option-label"><input %1$s type="radio" name="%2$s" id="%3$s" value="%4$s">%5$s</label>',
@@ -980,30 +894,8 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 */
 	public function pre_validate( $value, $field, $field_type_obj ) {
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'value' => $value,
-			'field' => $field,
-			'field_type_obj' => $field_type_obj,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Get metadata for this xProfile Field.
 		$args = $this->get_metadata_all( $field );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'args' => $args,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Bail if there is none.
 		if ( empty( $args ) ) {
@@ -1025,17 +917,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		 * @param array $args The array of CiviCRM mapping data.
 		 */
 		$options = apply_filters( 'cwps/bp/field/query_options', [], $field->type, $args );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'options' => $options,
-			'value' => $value,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Bail if there are no Options.
 		if ( empty( $options ) ) {
@@ -1082,19 +963,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		if ( ! empty( $value_for_bp ) ) {
 			$value = $value_for_bp;
 		}
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'value' => $value,
-			'field' => $field,
-			'civicrm_value' => $field->civicrm_value,
-			'civicrm_ref' => $this->civicrm_ref,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// --<
 		return $value;
@@ -1161,19 +1029,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 			}
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'children' => $children,
-			//'for_editing' => $for_editing,
-			//'field' => $field,
-			'options' => $options,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// --<
 		return $children;
 
@@ -1190,17 +1045,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 * @param string $field_type The type of xProfile Field.
 	 */
 	public function options_before_save( $post_option, $field_type ) {
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'post_option' => $post_option,
-			'field_type' => $field_type,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Extract the Entity Type from our metabox.
 		$entity_type = '';
@@ -1274,18 +1118,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 			$value = wp_unslash( $_POST[ $this->name ] );
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'entity_type' => $entity_type,
-			'entity_data' => $entity_data,
-			'value' => $value,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Bail if we don't have a value.
 		if ( empty( $value ) ) {
 			return $post_option;
@@ -1298,16 +1130,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 			'value' => $value,
 		];
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'args' => $args,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		/**
 		 * Requests the mapped xProfile Field Options.
 		 *
@@ -1318,16 +1140,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		 * @param array $args The array of CiviCRM mapping data.
 		 */
 		$options = apply_filters( 'cwps/bp/field/query_options', [], $field_type, $args );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'options' => $options,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Maybe overwrite.
 		if ( ! empty( $options ) ) {
@@ -1437,34 +1249,12 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 			$value = wp_unslash( $_POST[ $this->name ] );
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'entity_type' => $entity_type,
-			'entity_data' => $entity_data,
-			'value' => $value,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Bundle our data into an array.
 		$args = [
 			'entity_type' => $entity_type,
 			'entity_data' => $entity_data,
 			'value' => $value,
 		];
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'args' => $args,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Save setting(s).
 		$this->set_metadata_all( $field, $args );
@@ -1505,18 +1295,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		$entity_type = isset( $meta['entity_type'] ) ? $meta['entity_type'] : '';
 		$entity_data = isset( $meta['entity_data'] ) ? $meta['entity_data'] : '';
 		$civicrm_field = isset( $meta['value'] ) ? $meta['value'] : '';
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'entity_type' => $entity_type,
-			'entity_data' => $entity_data,
-			'civicrm_field' => $civicrm_field,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Get data for the "Address" and "Phone" Entity Types.
 		$location_type_id = '';
@@ -1623,16 +1401,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 				}
 			}
 
-			/*
-			$e = new \Exception();
-			$trace = $e->getTraceAsString();
-			error_log( print_r( [
-				'method' => __METHOD__,
-				'contact_type_id' => $contact_type_id,
-				//'backtrace' => $trace,
-			], true ) );
-			*/
-
 			// If we got some Contact Types.
 			if ( ! empty( $contact_types ) ) {
 
@@ -1684,17 +1452,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 			}
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'location_type_id' => $location_type_id,
-			'phone_type_id' => $phone_type_id,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Assign Website Type data if we got some.
 		if ( $entity_type === 'Website' ) {
 			if ( ! empty( $website_types ) ) {
@@ -1709,27 +1466,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 			}
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'website_type_id' => $website_type_id,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'field->type' => $field->type,
-			'entity_type_data' => $entity_type_data,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		/**
 		 * Request the choices for a Setting Field from Entity classes.
 		 *
@@ -1741,16 +1477,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		 * @param array $entity_type_data The array of Entity Type data.
 		 */
 		$choices = apply_filters( 'cwps/bp/field/query_setting_choices', [], $field->type, $entity_type, $entity_type_data );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'choices' => $choices,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Include the Setting Field template file.
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/buddypress/metaboxes/metabox-bp-field-content.php';
@@ -1789,18 +1515,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 				// Get the Field mappings for all Contact Types.
 				foreach ( $contact_types as $contact_type ) {
 
-					/*
-					$e = new \Exception();
-					$trace = $e->getTraceAsString();
-					error_log( print_r( [
-						'method' => __METHOD__,
-						'field_type' => $field_type,
-						'contact_type' => $contact_type,
-						//'field_type_class' => $field_type_class,
-						//'backtrace' => $trace,
-					], true ) );
-					*/
-
 					/**
 					 * Request the choices for a Setting Field from Entity classes.
 					 *
@@ -1817,16 +1531,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 					if ( empty( $choices ) ) {
 						continue;
 					}
-
-					/*
-					$e = new \Exception();
-					$trace = $e->getTraceAsString();
-					error_log( print_r( [
-						'method' => __METHOD__,
-						'choices' => $choices,
-						//'backtrace' => $trace,
-					], true ) );
-					*/
 
 					// Build data for options.
 					$data = [];
@@ -1870,17 +1574,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 						continue;
 					}
 
-					/*
-					$e = new \Exception();
-					$trace = $e->getTraceAsString();
-					error_log( print_r( [
-						'method' => __METHOD__,
-						'entity_type' => $entity_type,
-						'choices' => $choices,
-						//'backtrace' => $trace,
-					], true ) );
-					*/
-
 					// Build data for options.
 					$data = [];
 					foreach ( $choices as $optgroup => $choice ) {
@@ -1920,19 +1613,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 					'fullname_field' => $is_fullname_field,
 				],
 			];
-
-			/*
-			$e = new \Exception();
-			$trace = $e->getTraceAsString();
-			error_log( print_r( [
-				'method' => __METHOD__,
-				//'fullname_field' => $is_fullname_field ? 'y' : 'n',
-				'options' => $options,
-				//'options[textbox]' => $options['textbox'],
-				//'options[datebox]' => $options['datebox'],
-				//'backtrace' => $trace,
-			], true ) );
-			*/
 
 			// Localise our script.
 			wp_localize_script(

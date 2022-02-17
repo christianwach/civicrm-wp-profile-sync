@@ -159,7 +159,6 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
        * @param array $row The default row of Contact data.
        * @param null The Contact data retrieved from the database. Deprecated.
        * @param array $contact The Contact data retrieved from the database.
-       * @return array $row The modified row of Contact data.
        */
       $rows[] = apply_filters( 'civicrm_wp_profile_sync_contact_row', $row, null, $contact );
 
@@ -389,7 +388,6 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
        *
        * @param string $username The current username.
        * @param array $row The User data from which the username has been constructed.
-       * @return string $username The modified username.
        */
       $username = apply_filters( 'civicrm_wp_profile_sync_override_username', $username, $row );
 

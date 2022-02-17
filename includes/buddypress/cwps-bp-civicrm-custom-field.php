@@ -59,6 +59,15 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	public $xprofile;
 
 	/**
+	 * Mapper hooks registered flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var object $bulk The Mapper hooks registered flag.
+	 */
+	public $mapper_hooks = false;
+
+	/**
 	 * CiviCRM Custom Field data types that can have "Select", "Radio" and
 	 * "CheckBox" HTML subtypes.
 	 *
@@ -134,6 +143,10 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	 */
 	public function initialise() {
 
+		// Always register plugin hooks.
+		add_action( 'cwps/plugin/hooks/bp/add', [ $this, 'register_mapper_hooks' ] );
+		add_action( 'cwps/plugin/hooks/bp/remove', [ $this, 'unregister_mapper_hooks' ] );
+
 		// Register hooks.
 		$this->register_hooks();
 
@@ -147,6 +160,9 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	 * @since 0.5
 	 */
 	public function register_hooks() {
+
+		// Always register Mapper callbacks.
+		$this->register_mapper_hooks();
 
 		// Listen for queries from the ACF Field class.
 		add_filter( 'cwps/bp/field/query_setting_choices', [ $this, 'query_setting_choices' ], 100, 4 );
@@ -171,13 +187,52 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		//add_filter( 'cwps/bp/field/query_options', [ $this, 'date_settings_get' ], 10, 3 );
 		//add_filter( 'cwps/bp/field/query_options', [ $this, 'text_settings_get' ], 10, 3 );
 
-		// Intercept when the content of a set of CiviCRM Custom Fields has been updated.
-		add_action( 'cwps/mapper/custom_edited', [ $this, 'custom_edited' ], 10 );
-
-		return;
-
 		// Intercept Post synced from Contact events.
-		add_action( 'cwps/bp/post/contact_sync_to_post', [ $this, 'contact_sync_to_post' ], 10 );
+		//add_action( 'cwps/bp/post/contact_sync_to_post', [ $this, 'contact_sync_to_post' ], 10 );
+
+	}
+
+
+
+	/**
+	 * Register Mapper hooks.
+	 *
+	 * @since 0.5.2
+	 */
+	public function register_mapper_hooks() {
+
+		// Bail if already registered.
+		if ( $this->mapper_hooks === true ) {
+			return;
+		}
+
+		// Intercept when the content of a set of CiviCRM Custom Fields has been updated.
+		add_action( 'cwps/mapper/custom/edited', [ $this, 'custom_edited' ], 10 );
+
+		// Declare registered.
+		$this->mapper_hooks = true;
+
+	}
+
+
+
+	/**
+	 * Unregister Mapper hooks.
+	 *
+	 * @since 0.5.2
+	 */
+	public function unregister_mapper_hooks() {
+
+		// Bail if already unregistered.
+		if ( $this->mapper_hooks === false ) {
+			return;
+		}
+
+		// Remove Mapper callbacks.
+		remove_action( 'cwps/mapper/custom/edited', [ $this, 'custom_edited' ], 10 );
+
+		// Declare unregistered.
+		$this->mapper_hooks = false;
 
 	}
 
@@ -256,20 +311,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 			}
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			//'choices' => $choices,
-			'field_type' => $field_type,
-			'contact_type' => $contact_type,
-			//'custom_fields' => $custom_fields,
-			'filtered_fields' => $filtered_fields,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		/**
 		 * Filter the choices to display in the "CiviCRM Field" select.
 		 *
@@ -278,15 +319,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		 * @param array $choices The array of choices for the Setting Field.
 		 */
 		$choices = apply_filters( 'cwps/bp/custom_field/choices', $choices );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'choices' => $choices,
-		], true ) );
-		*/
 
 		// Return populated array.
 		return $choices;
@@ -376,16 +408,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	 */
 	public function custom_edited( $args ) {
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'args' => $args,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Init User IDs.
 		$user_id = false;
 
@@ -398,8 +420,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		 *
 		 * Internally, this is used by:
 		 *
-		 * - BuddyPress CiviCRM Contact
-		 * - BuddyPress CiviCRM Address
+		 * * BuddyPress CiviCRM Contact
+		 * * BuddyPress CiviCRM Address
 		 *
 		 * More classes to follow as sync for those Entities is built.
 		 *
@@ -409,16 +431,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		 * @param array $args The array of CiviCRM Custom Fields params.
 		 */
 		$user_id = apply_filters( 'cwps/bp/query_user_id', $user_id, $args );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'user_id' => $user_id,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Bail if we can't find a User ID.
 		if ( $user_id === false ) {
@@ -433,16 +445,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 			return;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'bp_fields' => $bp_fields,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Filter out Fields not mapped to a CiviCRM Custom Field.
 		$bp_fields_mapped = [];
 		foreach ( $bp_fields as $bp_field ) {
@@ -454,16 +456,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 			$bp_field['custom_field_id'] = $custom_field_id;
 			$bp_fields_mapped[] = $bp_field;
 		}
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'bp_fields_mapped' => $bp_fields_mapped,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Bail if we don't have any left.
 		if ( empty( $bp_fields_mapped ) ) {
@@ -488,29 +480,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 			$args_key = array_search( $bp_field['custom_field_id'], $custom_fields );
 			$field = $args['custom_fields'][ $args_key ];
 
-			/*
-			$e = new \Exception();
-			$trace = $e->getTraceAsString();
-			error_log( print_r( [
-				'method' => __METHOD__,
-				'field' => $field,
-				//'backtrace' => $trace,
-			], true ) );
-			*/
-
 			// Modify values for BuddyPress prior to update.
 			$value = $this->value_get_for_bp( $field['value'], $field, $bp_field );
-
-			/*
-			$e = new \Exception();
-			$trace = $e->getTraceAsString();
-			error_log( print_r( [
-				'method' => __METHOD__,
-				'value' => $value,
-				//'args' => $args,
-				//'backtrace' => $trace,
-			], true ) );
-			*/
 
 			// Okay, go ahead and save the value to the xProfile Field.
 			$result = $this->xprofile->value_update( $bp_field['field_id'], $user_id, $value );

@@ -40,6 +40,15 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 	 */
 	public $civicrm;
 
+	/**
+	 * Mapper hooks registered flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var object $bulk The Mapper hooks registered flag.
+	 */
+	public $mapper_hooks = false;
+
 
 
 	/**
@@ -70,6 +79,10 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 	 * @since 0.4
 	 */
 	public function initialise() {
+
+		// Always register plugin hooks.
+		add_action( 'cwps/plugin/hooks/civicrm/add', [ $this, 'register_mapper_hooks' ] );
+		add_action( 'cwps/plugin/hooks/civicrm/remove', [ $this, 'unregister_mapper_hooks' ] );
 
 		// Register hooks.
 		$this->register_hooks();
@@ -119,9 +132,20 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 	 */
 	public function register_mapper_hooks() {
 
+		// Bail if already registered.
+		if ( $this->mapper_hooks === true ) {
+			return;
+		}
+
 		// Intercept Website updates in CiviCRM.
-		add_action( 'cwps/mapper/website_pre_edit', [ $this, 'website_pre' ], 10 );
-		add_action( 'cwps/mapper/website_edited', [ $this, 'website_edited' ], 10 );
+		add_action( 'cwps/mapper/website/edit/pre', [ $this, 'website_pre_edit' ], 10 );
+		add_action( 'cwps/mapper/website/delete/pre', [ $this, 'website_pre_delete' ], 10 );
+		add_action( 'cwps/mapper/website/created', [ $this, 'website_edited' ], 10 );
+		add_action( 'cwps/mapper/website/edited', [ $this, 'website_edited' ], 10 );
+		//add_action( 'cwps/mapper/website/deleted', [ $this, 'website_edited' ], 10 );
+
+		// Declare registered.
+		$this->mapper_hooks = true;
 
 	}
 
@@ -134,9 +158,19 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 	 */
 	public function unregister_mapper_hooks() {
 
+		// Bail if already unregistered.
+		if ( $this->mapper_hooks === false ) {
+			return;
+		}
+
 		// Remove all CiviCRM callbacks.
-		remove_action( 'cwps/mapper/website_pre_edit', [ $this, 'website_pre' ], 10 );
-		remove_action( 'cwps/mapper/website_edited', [ $this, 'website_edited' ], 10 );
+		remove_action( 'cwps/mapper/website/delete/pre', [ $this, 'website_pre_delete' ], 10 );
+		remove_action( 'cwps/mapper/website/created', [ $this, 'website_edited' ], 10 );
+		remove_action( 'cwps/mapper/website/edited', [ $this, 'website_edited' ], 10 );
+		//remove_action( 'cwps/mapper/website/deleted', [ $this, 'website_edited' ], 10 );
+
+		// Declare unregistered.
+		$this->mapper_hooks = false;
 
 	}
 
@@ -147,21 +181,205 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 
 
 	/**
-	 * Update a WordPress User when a CiviCRM Contact's Website is edited.
+	 * Fires when a CiviCRM Contact's Website is about to be edited.
 	 *
-	 * @since 0.1
+	 * We need to check if an existing Website's Website Type is being changed,
+	 * so we store the previous Website record here for comparison later.
+	 *
+	 * @since 0.5.2
 	 *
 	 * @param array $args The array of CiviCRM params.
 	 */
-	public function website_pre( $args ) {
+	public function website_pre_edit( $args ) {
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'args' => $args,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Always clear properties if set previously.
+		if ( isset( $this->website_pre ) ) {
+			unset( $this->website_pre );
+		}
+
+		// Grab Website object.
+		$website = $args['objectRef'];
+
+		// We need a Contact ID in the edited Website.
+		if ( empty( $website->contact_id ) ) {
+			return;
+		}
+
+		// Grab the previous Website data from the database.
+		$this->website_pre = (object) $this->get_by_id( $website->id );
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'website_pre' => $this->website_pre,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+	}
+
+
+
+	/**
+	 * Fires when a CiviCRM Contact's Website is about to be deleted.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param array $args The array of CiviCRM params.
+	 */
+	public function website_pre_delete( $args ) {
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'args' => $args,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Get the full existing Website data.
+		$website = (object) $this->get_by_id( $args['objectId'] );
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'website' => $website,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Bail if we have no Contact ID.
+		if ( empty( $website->contact_id ) ) {
+			return;
+		}
+
+		// Which Website Type is the synced Website Type?
+		$website_type_id = $this->plugin->admin->setting_get( 'user_profile_website_type', 0 );
+
+		// Bail if this is not the synced Website Type ID.
+		if ( (int) $website->website_type_id !== (int) $website_type_id ) {
+			return;
+		}
+
+		// Get the WordPress User ID.
+		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $website->contact_id );
+		if ( empty( $user_id ) ) {
+			return;
+		}
+
+		// Clear the URL.
+		$website->url = '';
+
+		// Build new args.
+		$changed_args = [
+			'op' => $args['op'],
+			'objectName' => $args['objectName'],
+			'objectId' => $args['objectId'],
+			'objectRef' => $website,
+			'user_id' => $user_id,
+		];
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'changed_args' => $changed_args,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Update the WordPress User's Website.
+		$this->plugin->wp->user->website_update( $changed_args );
+
+	}
+
+
+
+	/**
+	 * Updates a WordPress User when a CiviCRM Contact's Website is edited.
+	 *
+	 * @since 0.4
+	 *
+	 * @param array $args The array of CiviCRM params.
+	 */
+	public function website_edited( $args ) {
 
 		// Bail if we have no Contact ID.
 		if ( ! isset( $args['objectRef']->contact_id ) ) {
 			return;
 		}
 
+		// Bail if we have no Website Type ID.
+		if ( ! isset( $args['objectRef']->website_type_id ) ) {
+			return;
+		}
+
+		// Which Website Type is the synced Website Type?
+		$website_type_id = $this->plugin->admin->setting_get( 'user_profile_website_type', 0 );
+		if ( empty( $website_type_id ) ) {
+			return;
+		}
+
+		// Grab edited CiviCRM Website object.
+		if ( ! is_object( $args['objectRef'] ) ) {
+			$website = (object) $args['objectRef'];
+		} else {
+			$website = $args['objectRef'];
+		}
+
+		// Assume unchanged.
+		$unchanged = true;
+		$no_longer_user_type = false;
+		$is_now_user_type = false;
+
+		// Check previous Website Type if there is one.
+		if ( ! empty( $this->website_pre ) && (int) $this->website_pre->id === (int) $website->id ) {
+
+			// If it used to be the synced Website Type.
+			if ( (int) $website_type_id === (int) $this->website_pre->website_type_id ) {
+
+				// Check if it no longer is.
+				if ( (int) $website_type_id !== (int) $website->website_type_id ) {
+					$no_longer_user_type = true;
+					$unchanged = false;
+				}
+
+			} else {
+
+				// Check if it now is.
+				if ( (int) $website_type_id === (int) $website->website_type_id ) {
+					$is_now_user_type = true;
+					$unchanged = false;
+				}
+
+			}
+
+		}
+
+		// Bail if this is not the synced Website Type ID.
+		if ( $unchanged && (int) $website->website_type_id !== (int) $website_type_id ) {
+			return;
+		}
+
 		// Get the WordPress User ID.
-		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $args['objectRef']->contact_id );
+		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $website->contact_id );
 		if ( empty( $user_id ) ) {
 			return;
 		}
@@ -169,8 +387,74 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		// Add User ID to args.
 		$args['user_id'] = $user_id;
 
-		// Update the WordPress User's Website.
-		$this->plugin->wp->user->website_update( $args );
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'args' => $args,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		/*
+		 * When there is a change in edited Website's Website Type:
+		 *
+		 * If it is now the synced Website Type, edit as normal. Changes *away*
+		 * from other Website Types are handled elsewhere.
+		 *
+		 * If it is no longer the synced Website Type, clear the URL.
+		 */
+		if ( $unchanged === false && $no_longer_user_type === true ) {
+
+			// Only apply "used to be" if an "is now" has not happened.
+			if ( empty( $this->skip_updates ) ) {
+
+				// Let's make a new object so we don't overwrite the Website object.
+				$changed = new stdClass();
+				$changed->id = $website->id;
+				$changed->contact_id = $website->contact_id;
+				$changed->website_type_id = $website->website_type_id;
+				$changed->url = '';
+
+				// Build new args.
+				$changed_args = [
+					'op' => $args['op'],
+					'objectName' => $args['objectName'],
+					'objectId' => $args['objectId'],
+					'objectRef' => $changed,
+					'user_id' => $user_id,
+				];
+
+				/*
+				$e = new \Exception();
+				$trace = $e->getTraceAsString();
+				error_log( print_r( [
+					'method' => __METHOD__,
+					'changed_args' => $changed_args,
+					//'backtrace' => $trace,
+				], true ) );
+				*/
+
+				// Now update the WordPress User's Website.
+				$this->plugin->wp->user->website_update( $changed_args );
+
+			}
+
+		} else {
+
+			// Update the WordPress User's Website.
+			$this->plugin->wp->user->website_update( $args );
+
+			/*
+			 * If this is an "is now" change, save it because we never want to
+			 * override with an empty "used to be" value.
+			 */
+			if ( $is_now_user_type === true ) {
+				$this->skip_updates = true;
+			}
+
+		}
 
 		/**
 		 * Broadcast that a CiviCRM Contact's Website has been synced.
@@ -179,22 +463,9 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		 *
 		 * @param integer $user_id The ID of the WordPress User.
 		 * @param integer $objectId The ID of the CiviCRM Website.
-		 * @param object $objectRef The CiviCRM Website object.
+		 * @param object $website The CiviCRM Website object.
 		 */
-		do_action( 'civicrm_wp_profile_sync_website_synced', $user_id, $args['objectId'], $args['objectRef'] );
-
-	}
-
-
-
-	/**
-	 * Update a WordPress User when a CiviCRM Contact's Website is edited.
-	 *
-	 * @since 0.4
-	 *
-	 * @param array $args The array of CiviCRM params.
-	 */
-	public function website_edited( $args ) {
+		do_action( 'civicrm_wp_profile_sync_website_synced', $user_id, $args['objectId'], $website );
 
 	}
 
@@ -205,7 +476,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 
 
 	/**
-	 * Update a CiviCRM Contact's Website address.
+	 * Updates a CiviCRM Contact's Website with the WordPress User's Website.
 	 *
 	 * @since 0.1
 	 * @since 0.4 Params reduced to single array.
@@ -220,9 +491,17 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 			return;
 		}
 
-		// Grab User and Contact.
+		// Sanity check WordPress User.
 		$user = $args['user'];
+		if ( ! ( $user instanceof WP_User ) ) {
+			return;
+		}
+
+		// Sanity check CiviCRM Contact.
 		$contact = $args['ufmatch'];
+		if ( empty( $contact->contact_id ) ) {
+			return;
+		}
 
 		// Update the Website.
 		$website = $this->update_for_contact( $website_type_id, $contact->contact_id, $user->user_url );
@@ -476,6 +755,57 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 
 
 
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Get the data for a Website.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param integer $website_id The numeric ID of the Website.
+	 * @return array $website The array of Website data, or empty if none.
+	 */
+	public function get_by_id( $website_id ) {
+
+		// Init return.
+		$website = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $website;
+		}
+
+		// Construct API query.
+		$params = [
+			'version' => 3,
+			'id' => $website_id,
+		];
+
+		// Get Website details via API.
+		$result = civicrm_api( 'Website', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+			return $website;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $website;
+		}
+
+		// The result set should contain only one item.
+		$website = array_pop( $result['values'] );
+
+		// --<
+		return $website;
+
+	}
+
+
+
 	/**
 	 * Get CiviCRM Contact's Website by Website Type.
 	 *
@@ -613,6 +943,35 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 
 		// --<
 		return $options;
+
+	}
+
+
+
+	/**
+	 * Gets the URL of the CiviCRM "Website Types Options" admin page.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @return string $url The URL of the CiviCRM "Website Type Options" page.
+	 */
+	public function types_options_get_link() {
+
+		// Init safe return value.
+		$url = '#';
+
+		// Get the CiviCRM Option Group.
+		$option_group = $this->plugin->civicrm->option_group_get( 'website_type' );
+		if ( empty( $option_group ) ) {
+			return $url;
+		}
+
+		// Build CiviCRM "query" and get URL.
+		$query = 'gid=' . $option_group['id'] . 'reset=1';
+		$url = $this->plugin->civicrm->get_link( 'civicrm/admin/options', $query );
+
+		// --<
+		return $url;
 
 	}
 

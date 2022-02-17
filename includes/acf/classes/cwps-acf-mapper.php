@@ -83,11 +83,11 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * This could be one of the "top level" Entities, e.g.
 	 *
-	 * - WordPress User
-	 * - WordPress Post
-	 * - CiviCRM Contact
-	 * - CiviCRM Activity
-	 * - CiviCRM Participant
+	 * * WordPress User
+	 * * WordPress Post
+	 * * CiviCRM Contact
+	 * * CiviCRM Activity
+	 * * CiviCRM Participant
 	 *
 	 * Knowing this helps us determine the messaging flow.
 	 *
@@ -1077,7 +1077,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		 *
 		 * Used internally to:
 		 *
-		 * - Update a WordPress Post
+		 * * Update a WordPress Post
 		 *
 		 * @since 0.4
 		 *
@@ -2227,7 +2227,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		 *
 		 * Used internally to:
 		 *
-		 * - Update a WordPress Post
+		 * * Update a WordPress Post
 		 *
 		 * @since 0.4
 		 *
@@ -2633,7 +2633,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		 *
 		 * Used internally to:
 		 *
-		 * - Update a WordPress Post
+		 * * Update a WordPress Post
 		 *
 		 * @since 0.4
 		 *
@@ -2925,7 +2925,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		 *
 		 * Used internally to:
 		 *
-		 * - Update a WordPress Post
+		 * * Update a WordPress Post
 		 *
 		 * @since 0.5
 		 *

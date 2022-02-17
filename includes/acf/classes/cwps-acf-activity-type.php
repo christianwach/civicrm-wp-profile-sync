@@ -65,7 +65,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 		$this->acf_loader = $parent->acf_loader;
 		$this->civicrm = $parent;
 
-		// Init when the CiviCRM object is loaded.
+		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
 
 	}

@@ -94,7 +94,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 		$this->acf = $this->acf_loader->acf;
 		$this->acfe = $parent;
 
-		// Init when this plugin is loaded.
+		// Init when the ACFE class is loaded.
 		add_action( 'cwps/acf/acfe/loaded', [ $this, 'initialise' ] );
 
 	}

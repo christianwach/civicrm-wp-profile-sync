@@ -308,7 +308,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		 * @since 0.4
 		 *
 		 * @param string The default capability for access to Settings Page.
-		 * @return string The modified capability for access to Settings Page.
 		 */
 		$capability = apply_filters( 'cwps/admin/page/settings/cap', 'manage_options' );
 
@@ -396,7 +395,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 			 * @param bool $show_notice False by default. True if not on Settings Screen.
 			 * @param bool $is_settings_screen True if on our Settings Page, or false otherwise.
 			 * @param string $screen_id The ID of the current screen.
-			 * @return bool $show_notice True if the Admin Notice should be shown, false otherwise.
 			 */
 			$show_notice = apply_filters( 'cwps/admin/notice/show', $show_notice, $is_settings_screen, $screen->id );
 
@@ -564,7 +562,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		 * @since 0.4
 		 *
 		 * @param array $subpages The existing list of subpages.
-		 * @return array $subpages The modified list of subpages.
 		 */
 		$subpages = apply_filters( 'cwps/admin/settings/subpages', $subpages );
 
@@ -624,7 +621,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		 * @since 0.4
 		 *
 		 * @param array $urls The existing list of URLs.
-		 * @return array $urls The modified list of URLs.
 		 */
 		$this->urls = apply_filters( 'cwps/admin/settings/tab_urls', $this->urls );
 
@@ -656,7 +652,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		 * @since 0.4
 		 *
 		 * @param bool False by default - do not show tabs.
-		 * @return bool Modified flag for whether or not to show tabs.
 		 */
 		$show_tabs = apply_filters( 'cwps/admin/settings/show_tabs', false );
 
@@ -708,7 +703,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		 * @since 0.4
 		 *
 		 * @param array $settings_screens The default array of Settings Page screens.
-		 * @return array $settings_screens The modified array of Settings Page screens.
 		 */
 		return apply_filters( 'cwps/admin/page/settings/screens', $settings_screens );
 
@@ -734,7 +728,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		 * @since 0.4
 		 *
 		 * @param array $url The default Settings Page URL.
-		 * @return array $url The modified Settings Page URL.
 		 */
 		$url = apply_filters( 'cwps/admin/page/settings/url', $url );
 
@@ -765,7 +758,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		 * @since 0.4
 		 *
 		 * @param array $submit_url The Settings Page submit URL.
-		 * @return array $submit_url The modified Settings Page submit URL.
 		 */
 		$submit_url = apply_filters( 'cwps/admin/page/settings/submit_url', $submit_url );
 
@@ -794,7 +786,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		 * @since 0.4
 		 *
 		 * @param array $notice_url The default Settings Page URL in Admin Notices.
-		 * @return array $notice_url The modified Settings Page URL in Admin Notices.
 		 */
 		$notice_url = apply_filters( 'cwps/admin/notice/url', $notice_url );
 
@@ -832,7 +823,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		 * @since 0.4
 		 *
 		 * @param string The default capability for access to Settings Page.
-		 * @return string The modified capability for access to Settings Page.
 		 */
 		$capability = apply_filters( 'cwps/admin/page/settings/cap', 'manage_options' );
 
@@ -886,14 +876,20 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 */
 	public function meta_box_user_profile_render() {
 
+		// Get Email Sync setting.
+		$email_sync = (int) $this->setting_get( 'user_profile_email_sync', 2 );
+
+		// Get link to Location Types.
+		$location_types_link = $this->plugin->civicrm->get_link( 'civicrm/admin/locationType', 'reset=1' );
+
 		// Get Website Types Options.
-		$options = $this->plugin->civicrm->website->types_options_get();
+		$website_types = $this->plugin->civicrm->website->types_options_get();
 
 		// Get selected Website Type.
 		$website_type_selected = $this->setting_get( 'user_profile_website_type', 0 );
 
-		// Get Email Sync setting.
-		$email_sync = (int) $this->setting_get( 'user_profile_email_sync', 2 );
+		// Get link to Website Types Options.
+		$website_types_link = $this->plugin->civicrm->website->types_options_get_link();
 
 		// Get Nickname Sync setting.
 		$nickname_sync = (int) $this->setting_get( 'user_profile_nickname_sync', 1 );
@@ -941,7 +937,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		 * @since 0.4
 		 *
 		 * @param array $settings The array of default settings.
-		 * @return array $settings The modified array of default settings.
 		 */
 		$settings = apply_filters( 'cwps/settings/defaults', $settings );
 

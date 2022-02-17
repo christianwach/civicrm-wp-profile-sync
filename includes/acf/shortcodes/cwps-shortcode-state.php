@@ -93,7 +93,7 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_State {
 		$this->civicrm = $parent->civicrm;
 		$this->addresses = $parent;
 
-		// Init when the CiviCRM State object is loaded.
+		// Init when the CiviCRM Address object is loaded.
 		add_action( 'cwps/acf/civicrm/addresses/loaded', [ $this, 'initialise' ] );
 
 	}

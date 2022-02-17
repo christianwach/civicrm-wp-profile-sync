@@ -90,7 +90,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		$this->acf_loader = $parent->acf_loader;
 		$this->acf = $parent;
 
-		// Init when this plugin is loaded.
+		// Init when the parent class is loaded.
 		add_action( 'cwps/acf/acf/loaded', [ $this, 'register_hooks' ] );
 
 	}
@@ -217,7 +217,6 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		 * @param bool $contact_id False, since we're asking for a Contact ID.
 		 * @param integer|string $post_id The ACF "Post ID".
 		 * @param string $entity The kind of WordPress Entity.
-		 * @return integer|bool $contact_id The mapped Contact ID, or false if not mapped.
 		 */
 		$contact_id = apply_filters( 'cwps/acf/query_contact_id', $contact_id, $post_id, $entity );
 
@@ -323,19 +322,18 @@ class CiviCRM_Profile_Sync_ACF_Field {
 				 *
 				 * Used internally by:
 				 *
-				 * - Relationship
-				 * - Address
-				 * - Google Map
-				 * - Email
-				 * - Website
-				 * - Phone
+				 * * Relationship
+				 * * Address
+				 * * Google Map
+				 * * Email
+				 * * Website
+				 * * Phone
 				 *
 				 * @since 0.4
 				 *
 				 * @param array $acf_fields The existing ACF Fields array.
 				 * @param array $field_in_group The ACF Field.
 				 * @param integer|string $post_id The ACF "Post ID".
-				 * @return array $acf_fields The modified ACF Fields array.
 				 */
 				$acf_fields = apply_filters( 'cwps/acf/fields_get_for_post', $acf_fields, $field_in_group, $post_id );
 

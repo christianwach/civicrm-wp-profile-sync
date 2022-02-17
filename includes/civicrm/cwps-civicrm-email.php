@@ -40,6 +40,15 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 	 */
 	public $civicrm;
 
+	/**
+	 * Mapper hooks registered flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var object $bulk The Mapper hooks registered flag.
+	 */
+	public $mapper_hooks = false;
+
 
 
 	/**
@@ -70,6 +79,10 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 	 * @since 0.4
 	 */
 	public function initialise() {
+
+		// Always register plugin hooks.
+		add_action( 'cwps/plugin/hooks/civicrm/add', [ $this, 'register_mapper_hooks' ] );
+		add_action( 'cwps/plugin/hooks/civicrm/remove', [ $this, 'unregister_mapper_hooks' ] );
 
 		// Register hooks.
 		$this->register_hooks();
@@ -128,9 +141,17 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 	 */
 	public function register_mapper_hooks() {
 
+		// Bail if already registered.
+		if ( $this->mapper_hooks === true ) {
+			return;
+		}
+
 		// Intercept Email updates in CiviCRM.
-		add_action( 'cwps/mapper/email_pre_edit', [ $this, 'primary_pre' ], 10 );
-		add_action( 'cwps/mapper/email_edited', [ $this, 'primary_edited' ], 10 );
+		add_action( 'cwps/mapper/email/edit/pre', [ $this, 'primary_pre' ], 10 );
+		add_action( 'cwps/mapper/email/edited', [ $this, 'primary_edited' ], 10 );
+
+		// Declare registered.
+		$this->mapper_hooks = true;
 
 	}
 
@@ -143,9 +164,17 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 	 */
 	public function unregister_mapper_hooks() {
 
+		// Bail if already unregistered.
+		if ( $this->mapper_hooks === false ) {
+			return;
+		}
+
 		// Remove all CiviCRM callbacks.
-		remove_action( 'cwps/mapper/email_pre_edit', [ $this, 'primary_pre' ], 10 );
-		remove_action( 'cwps/mapper/email_edited', [ $this, 'primary_edited' ], 10 );
+		remove_action( 'cwps/mapper/email/edit/pre', [ $this, 'primary_pre' ], 10 );
+		remove_action( 'cwps/mapper/email/edited', [ $this, 'primary_edited' ], 10 );
+
+		// Declare unregistered.
+		$this->mapper_hooks = false;
 
 	}
 

@@ -562,7 +562,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		 *
 		 * @param bool $permitted True if allowed, false otherwise.
 		 * @param string $permission The CiviCRM permission string.
-		 * @return bool $permitted True if allowed, false otherwise.
 		 */
 		return apply_filters( 'cwps/acf/civicrm/permitted', $permitted, $permission );
 

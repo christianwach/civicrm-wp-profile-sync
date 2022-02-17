@@ -50,6 +50,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	public $civicrm;
 
 	/**
+	 * Mapper hooks registered flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var object $bulk The Mapper hooks registered flag.
+	 */
+	public $mapper_hooks = false;
+
+	/**
 	 * "CiviCRM Google Map" Field key in the ACF Field data.
 	 *
 	 * Sorry that this key name is slightly misleading - it is a leftover from
@@ -97,7 +106,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		$this->acf_loader = $parent->acf_loader;
 		$this->civicrm = $parent;
 
-		// Init when the CiviCRM object is loaded.
+		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
 
 		// Init parent.
@@ -163,11 +172,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 */
 	public function register_mapper_hooks() {
 
+		// Bail if already registered.
+		if ( $this->mapper_hooks === true ) {
+			return;
+		}
+
 		// Listen for events from our Mapper that require Google Map updates.
 		add_action( 'cwps/acf/mapper/address/edit/pre', [ $this, 'address_pre_edit' ], 10 );
 		add_action( 'cwps/acf/mapper/address/created', [ $this, 'address_created' ], 10 );
 		add_action( 'cwps/acf/mapper/address/edited', [ $this, 'address_edited' ], 10 );
 		add_action( 'cwps/acf/mapper/address/deleted', [ $this, 'address_deleted' ], 10 );
+
+		// Declare registered.
+		$this->mapper_hooks = true;
 
 	}
 
@@ -180,11 +197,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 */
 	public function unregister_mapper_hooks() {
 
+		// Bail if already unregistered.
+		if ( $this->mapper_hooks === false ) {
+			return;
+		}
+
 		// Remove all Mapper listeners.
 		remove_action( 'cwps/acf/mapper/address/edit/pre', [ $this, 'address_pre_edit' ], 10 );
 		remove_action( 'cwps/acf/mapper/address/created', [ $this, 'address_created' ], 10 );
 		remove_action( 'cwps/acf/mapper/address/edited', [ $this, 'address_edited' ], 10 );
 		remove_action( 'cwps/acf/mapper/address/deleted', [ $this, 'address_deleted' ], 10 );
+
+		// Declare unregistered.
+		$this->mapper_hooks = false;
 
 	}
 
@@ -1254,7 +1279,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		 *
 		 * @param array $types The retrieved array of Location Types.
 		 * @param array $field The ACF Field data array.
-		 * @return array $types The modified array of Location Types.
 		 */
 		$location_types = apply_filters(
 			'cwps/acf/google_map/location_types/get_for_acf_field',
@@ -1378,7 +1402,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		 * @since 0.4
 		 *
 		 * @param array $field The existing Field.
-		 * @return array $field The modified Field.
 		 */
 		$field = apply_filters( 'cwps/acf/google_map/acf_field/edit_get', $field );
 

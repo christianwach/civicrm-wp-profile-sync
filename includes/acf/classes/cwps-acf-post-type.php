@@ -130,7 +130,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 		 * This filter can be used, for example, to exclude certain Post Types.
 		 *
 		 * @param array $post_types The existing Post Types.
-		 * @param return $post_types The modified Post Types.
 		 */
 		$post_types = apply_filters( 'cwps/acf/post_types/get_all', $post_types );
 

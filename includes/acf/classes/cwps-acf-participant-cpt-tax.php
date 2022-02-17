@@ -70,6 +70,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	public $cpt;
 
 	/**
+	 * Mapper hooks registered flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var object $bulk The Mapper hooks registered flag.
+	 */
+	public $mapper_hooks = false;
+
+	/**
 	 * Taxonomy name.
 	 *
 	 * @since 0.5
@@ -200,6 +209,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 */
 	public function register_mapper_hooks() {
 
+		// Bail if already registered.
+		if ( $this->mapper_hooks === true ) {
+			return;
+		}
+
 		// Listen for new Term creation.
 		add_action( 'cwps/acf/mapper/term/created', [ $this, 'term_created' ], 20 );
 
@@ -210,6 +224,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		// Intercept Term deletion.
 		add_action( 'cwps/acf/mapper/term/delete/pre', [ $this, 'term_pre_delete' ], 20 );
 		add_action( 'cwps/acf/mapper/term/deleted', [ $this, 'term_deleted' ], 20 );
+
+		// Declare registered.
+		$this->mapper_hooks = true;
 
 	}
 
@@ -222,11 +239,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 */
 	public function unregister_mapper_hooks() {
 
+		// Bail if already unregistered.
+		if ( $this->mapper_hooks === false ) {
+			return;
+		}
+
 		// Remove all previously added callbacks.
 		remove_action( 'cwps/acf/mapper/term/created', [ $this, 'term_created' ], 20 );
 		remove_action( 'cwps/acf/mapper/term/edit/pre', [ $this, 'term_pre_edit' ], 20 );
 		remove_action( 'cwps/acf/mapper/term/edited', [ $this, 'term_edited' ], 20 );
 		remove_action( 'cwps/acf/mapper/term/deleted', [ $this, 'term_deleted' ], 20 );
+
+		// Declare unregistered.
+		$this->mapper_hooks = false;
 
 	}
 

@@ -78,6 +78,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	public $term_html;
 
 	/**
+	 * Mapper hooks registered flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var object $bulk The Mapper hooks registered flag.
+	 */
+	public $mapper_hooks = false;
+
+	/**
 	 * Custom Post Type name.
 	 *
 	 * @since 0.5
@@ -265,6 +274,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 */
 	public function register_mapper_hooks() {
 
+		// Bail if already registered.
+		if ( $this->mapper_hooks === true ) {
+			return;
+		}
+
 		// Listen for events from our Mapper that require Participant updates.
 		add_action( 'cwps/acf/mapper/post/saved', [ $this, 'post_saved' ] );
 		add_action( 'cwps/acf/mapper/acf_fields/saved', [ $this, 'acf_fields_saved' ] );
@@ -273,6 +287,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		add_action( 'cwps/acf/mapper/participant/created', [ $this, 'participant_created' ] );
 		add_action( 'cwps/acf/mapper/participant/edited', [ $this, 'participant_edited' ] );
 		add_action( 'cwps/acf/mapper/participant/deleted', [ $this, 'participant_deleted' ] );
+
+		// Declare registered.
+		$this->mapper_hooks = true;
 
 	}
 
@@ -285,12 +302,20 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 */
 	public function unregister_mapper_hooks() {
 
+		// Bail if already unregistered.
+		if ( $this->mapper_hooks === false ) {
+			return;
+		}
+
 		// Remove all Mapper listeners.
 		remove_action( 'cwps/acf/mapper/post/saved', [ $this, 'post_saved' ] );
 		remove_action( 'cwps/acf/mapper/acf_fields/saved', [ $this, 'acf_fields_saved' ] );
 		remove_action( 'cwps/acf/mapper/participant/created', [ $this, 'participant_created' ] );
 		remove_action( 'cwps/acf/mapper/participant/edited', [ $this, 'participant_edited' ] );
 		remove_action( 'cwps/acf/mapper/participant/deleted', [ $this, 'participant_deleted' ] );
+
+		// Declare unregistered.
+		$this->mapper_hooks = false;
 
 	}
 
@@ -568,7 +593,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		 *
 		 * Used internally by:
 		 *
-		 * - The WordPress Post class to overwrite the Post Title.
+		 * * The WordPress Post class to overwrite the Post Title.
 		 *
 		 * @since 0.5
 		 *
@@ -806,8 +831,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		 *
 		 * Used internally to:
 		 *
-		 * - Update the ACF Fields for the WordPress Post.
-		 * - Update the Terms for the WordPress Post.
+		 * * Update the ACF Fields for the WordPress Post.
+		 * * Update the Terms for the WordPress Post.
 		 *
 		 * @since 0.5
 		 *
@@ -883,7 +908,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		 *
 		 * Used internally to:
 		 *
-		 * - Update the ACF Fields for the WordPress Post
+		 * * Update the ACF Fields for the WordPress Post
 		 *
 		 * @since 0.5
 		 *
@@ -949,7 +974,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		 *
 		 * Used internally to:
 		 *
-		 * - Update the ACF Fields for the WordPress Post
+		 * * Update the ACF Fields for the WordPress Post
 		 *
 		 * @since 0.5
 		 *

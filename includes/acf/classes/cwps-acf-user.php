@@ -295,7 +295,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		remove_action( 'cwps/acf/mapper/email/edited', [ $this, 'email_edited' ], 10 );
 		remove_action( 'cwps/acf/mapper/email/deleted', [ $this, 'email_edited' ], 10 );
 
-		remove_action( 'cwps/acf/mapper/website/edit/pre', [ $this, 'website_edited' ], 10 );
+		remove_action( 'cwps/acf/mapper/website/edit/pre', [ $this, 'website_pre_edit' ], 10 );
 		remove_action( 'cwps/acf/mapper/website/created', [ $this, 'website_edited' ], 10 );
 		remove_action( 'cwps/acf/mapper/website/edited', [ $this, 'website_edited' ], 10 );
 		remove_action( 'cwps/acf/mapper/website/deleted', [ $this, 'website_edited' ], 10 );
@@ -424,12 +424,12 @@ class CiviCRM_Profile_Sync_ACF_User {
 		 *
 		 * Used to inform e.g.:
 		 *
-		 * - Contact Fields
-		 * - Relationships
-		 * - Addresses
-		 * - Websites
-		 * - Instant Messengers
-		 * - Phones
+		 * * Contact Fields
+		 * * Relationships
+		 * * Addresses
+		 * * Websites
+		 * * Instant Messengers
+		 * * Phones
 		 *
 		 * @since 0.4
 		 *
@@ -558,7 +558,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 		// Grab the Website data.
 		$website = $args['objectRef'];
-
 		if ( empty( $website->contact_id ) ) {
 			return;
 		}

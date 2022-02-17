@@ -40,6 +40,15 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 	 */
 	public $wp;
 
+	/**
+	 * Mapper hooks registered flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var object $bulk The Mapper hooks registered flag.
+	 */
+	public $mapper_hooks = false;
+
 
 
 	/**
@@ -71,6 +80,10 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 	 */
 	public function initialise() {
 
+		// Always register plugin hooks.
+		add_action( 'cwps/plugin/hooks/wp/add', [ $this, 'register_mapper_hooks' ] );
+		add_action( 'cwps/plugin/hooks/wp/remove', [ $this, 'unregister_mapper_hooks' ] );
+
 		// Register hooks.
 		$this->register_hooks();
 
@@ -85,7 +98,7 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 	 */
 	public function register_hooks() {
 
-		// Do not sync when CiviCRM creates a User.
+		// Never sync when CiviCRM creates a User.
 		add_action( 'civicrm_pre_create_user', [ $this, 'unregister_mapper_hooks' ] );
 		add_action( 'civicrm_post_create_user', [ $this, 'register_mapper_hooks' ] );
 
@@ -117,9 +130,17 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 	 */
 	public function register_mapper_hooks() {
 
+		// Bail if already registered.
+		if ( $this->mapper_hooks === true ) {
+			return;
+		}
+
 		// Callbacks for new and edited WordPress User actions.
 		add_action( 'cwps/mapper/user_registered', [ $this, 'user_edited' ], 10 );
 		add_action( 'cwps/mapper/user_edited', [ $this, 'user_edited' ], 10 );
+
+		// Declare registered.
+		$this->mapper_hooks = true;
 
 	}
 
@@ -132,9 +153,17 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 	 */
 	public function unregister_mapper_hooks() {
 
+		// Bail if already unregistered.
+		if ( $this->mapper_hooks === false ) {
+			return;
+		}
+
 		// Remove callbacks for new and edited WordPress User actions.
 		remove_action( 'cwps/mapper/user_registered', [ $this, 'user_edited' ], 10 );
 		remove_action( 'cwps/mapper/user_edited', [ $this, 'user_edited' ], 10 );
+
+		// Declare unregistered.
+		$this->mapper_hooks = false;
 
 	}
 
@@ -189,10 +218,10 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 		 *
 		 * Used internally by:
 		 *
-		 * - CiviCRM_WP_Profile_Sync_CiviCRM_Contact::name_update()
-		 * - CiviCRM_WP_Profile_Sync_CiviCRM_Contact::nickname_update()
-		 * - CiviCRM_WP_Profile_Sync_CiviCRM_Email::primary_update()
-		 * - CiviCRM_WP_Profile_Sync_CiviCRM_Website::website_update()
+		 * * CiviCRM_WP_Profile_Sync_CiviCRM_Contact::name_update()
+		 * * CiviCRM_WP_Profile_Sync_CiviCRM_Contact::nickname_update()
+		 * * CiviCRM_WP_Profile_Sync_CiviCRM_Email::primary_update()
+		 * * CiviCRM_WP_Profile_Sync_CiviCRM_Website::website_update()
 		 *
 		 * @since 0.4
 		 *
@@ -261,7 +290,6 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 		 * @param bool $should_be_synced True if the User should be synced, false otherwise.
 		 * @param object $user The WordPress User object.
 		 * @param object $contact The CiviCRM Contact object.
-		 * @return bool $should_be_synced The modified value of the sync flag.
 		 */
 		$should_be_synced = apply_filters( 'civicrm_wp_profile_sync_user_should_be_synced', $should_be_synced, $user, $contact );
 
@@ -273,7 +301,6 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 		 * @param bool $should_be_synced True if the User should be synced, false otherwise.
 		 * @param object $user The WordPress User object.
 		 * @param object $contact The CiviCRM Contact object.
-		 * @return bool $should_be_synced The modified value of the sync flag.
 		 */
 		return apply_filters( 'cwps/user/should_be_synced', $should_be_synced, $user, $contact );
 
@@ -398,14 +425,33 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 	 */
 	public function website_update( $args ) {
 
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'args' => $args,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
 		// Grab User ID and Email.
 		$user_id = $args['user_id'];
 		$website = $args['objectRef'];
 
 		// Sometimes CiviCRM uses the string 'null' when the URL is empty.
-		if ( $website->url === 'null' ) {
-			$website->url = '';
-		}
+		$website->url = $this->plugin->civicrm->denullify( $website->url );
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'website' => $website,
+			'user_id' => $user_id,
+			//'backtrace' => $trace,
+		], true ) );
+		*/
 
 		// Remove WordPress and BuddyPress callbacks to prevent recursion.
 		$this->plugin->hooks_wp_remove();

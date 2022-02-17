@@ -19,7 +19,9 @@ defined( 'ABSPATH' ) || exit;
  * A class that encapsulates Mapping functionality and implements UI elements
  * and data storage for linking:
  *
- * - CiviCRM Contact Types with WordPress Post Types.
+ * * CiviCRM Contact Types with WordPress Post Types.
+ * * CiviCRM Activity Types with WordPress Post Types.
+ * * CiviCRM Participant Roles with WordPress Post Types.
  *
  * More linkages to follow.
  *
@@ -306,10 +308,10 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 				/*
 				 * Exclude built-in WordPress private Post Types.
 				 *
-				 * - nav_menu_item
-				 * - revision
-				 * - customize_changeset
-				 * - etc, etc
+				 * * nav_menu_item
+				 * * revision
+				 * * customize_changeset
+				 * * etc, etc
 				 *
 				 * ACF does not support these.
 				 */
@@ -549,10 +551,10 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 				/*
 				 * Exclude built-in WordPress private Post Types.
 				 *
-				 * - nav_menu_item
-				 * - revision
-				 * - customize_changeset
-				 * - etc, etc
+				 * * nav_menu_item
+				 * * revision
+				 * * customize_changeset
+				 * * etc, etc
 				 *
 				 * ACF does not support these.
 				 */
@@ -814,10 +816,10 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 				/*
 				 * Exclude built-in WordPress private Post Types.
 				 *
-				 * - nav_menu_item
-				 * - revision
-				 * - customize_changeset
-				 * - etc, etc
+				 * * nav_menu_item
+				 * * revision
+				 * * customize_changeset
+				 * * etc, etc
 				 *
 				 * ACF does not support these.
 				 */

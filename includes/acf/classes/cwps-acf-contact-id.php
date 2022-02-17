@@ -50,6 +50,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_ID extends CiviCRM_Profile_Sync_A
 	public $civicrm;
 
 	/**
+	 * Mapper hooks registered flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var object $bulk The Mapper hooks registered flag.
+	 */
+	public $mapper_hooks = false;
+
+	/**
 	 * Fields which must be handled separately.
 	 *
 	 * @since 0.4
@@ -76,7 +85,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_ID extends CiviCRM_Profile_Sync_A
 		$this->acf_loader = $parent->acf_loader;
 		$this->civicrm = $parent;
 
-		// Init when the CiviCRM object is loaded.
+		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
 
 		// Init parent.
@@ -127,9 +136,17 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_ID extends CiviCRM_Profile_Sync_A
 	 */
 	public function register_mapper_hooks() {
 
+		// Bail if already registered.
+		if ( $this->mapper_hooks === true ) {
+			return;
+		}
+
 		// Listen for events from our Mapper that require Contact ID updates.
 		add_action( 'cwps/acf/mapper/contact/created', [ $this, 'contact_edited' ], 10 );
 		add_action( 'cwps/acf/mapper/contact/edited', [ $this, 'contact_edited' ], 10 );
+
+		// Declare registered.
+		$this->mapper_hooks = true;
 
 	}
 
@@ -142,9 +159,17 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_ID extends CiviCRM_Profile_Sync_A
 	 */
 	public function unregister_mapper_hooks() {
 
+		// Bail if already unregistered.
+		if ( $this->mapper_hooks === false ) {
+			return;
+		}
+
 		// Remove all Mapper listeners.
 		remove_action( 'cwps/acf/mapper/contact/created', [ $this, 'contact_edited' ], 10 );
 		remove_action( 'cwps/acf/mapper/contact/edited', [ $this, 'contact_edited' ], 10 );
+
+		// Declare unregistered.
+		$this->mapper_hooks = false;
 
 	}
 

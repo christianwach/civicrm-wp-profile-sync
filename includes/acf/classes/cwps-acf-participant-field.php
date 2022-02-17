@@ -88,7 +88,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 		$this->acf_loader = $parent->acf_loader;
 		$this->civicrm = $parent;
 
-		// Init when the CiviCRM object is loaded.
+		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
 
 	}
@@ -1009,7 +1009,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 	 * Maybe sync the Participant "Date" Fields to the ACF Fields on a WordPress Post.
 	 *
 	 * Participant Fields to maintain sync with:
-	 * - The ACF "Registered Date" Field
+	 *
+	 * * The ACF "Registered Date" Field
 	 *
 	 * @since 0.5
 	 *

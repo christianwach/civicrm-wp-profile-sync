@@ -50,6 +50,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 	public $civicrm;
 
 	/**
+	 * Mapper hooks registered flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var object $bulk The Mapper hooks registered flag.
+	 */
+	public $mapper_hooks = false;
+
+	/**
 	 * Entity identifier.
 	 *
 	 * This identifier is unique to this "top level" Entity.
@@ -87,7 +96,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		$this->acf_loader = $parent->acf_loader;
 		$this->civicrm = $parent;
 
-		// Init when the CiviCRM object is loaded.
+		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
 
 	}
@@ -152,9 +161,17 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 	 */
 	public function register_mapper_hooks() {
 
+		// Bail if already registered.
+		if ( $this->mapper_hooks === true ) {
+			return;
+		}
+
 		// Listen for events from our Mapper that require Activity updates.
 		add_action( 'cwps/acf/mapper/post/saved', [ $this, 'post_saved' ], 10 );
 		add_action( 'cwps/acf/mapper/acf_fields/saved', [ $this, 'acf_fields_saved' ], 10 );
+
+		// Declare registered.
+		$this->mapper_hooks = true;
 
 	}
 
@@ -167,9 +184,17 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 	 */
 	public function unregister_mapper_hooks() {
 
+		// Bail if already unregistered.
+		if ( $this->mapper_hooks === false ) {
+			return;
+		}
+
 		// Remove all Mapper listeners.
 		remove_action( 'cwps/acf/mapper/post/saved', [ $this, 'post_saved' ], 10 );
 		remove_action( 'cwps/acf/mapper/acf_fields/saved', [ $this, 'acf_fields_saved' ], 10 );
+
+		// Declare unregistered.
+		$this->mapper_hooks = false;
 
 	}
 
@@ -256,8 +281,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		 *
 		 * May be used internally by:
 		 *
-		 * - Groups
-		 * - Post Taxonomies
+		 * * Groups
+		 * * Post Taxonomies
 		 *
 		 * @since 0.4
 		 *
@@ -356,10 +381,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		 *
 		 * Used internally by:
 		 *
-		 * - Activity Fields to maintain sync with:
-		 *   - The ACF "Activity Date Time" Field
-		 *   - The ACF "Created Date" Field
-		 *   - The ACF "Modified Date" Field
+		 * Activity Fields to maintain sync with:
+		 *
+		 * * The ACF "Activity Date Time" Field
+		 * * The ACF "Created Date" Field
+		 * * The ACF "Modified Date" Field
 		 *
 		 * @since 0.4
 		 *
@@ -995,7 +1021,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		 *
 		 * @param array $activity_data The existing CiviCRM Activity data.
 		 * @param WP_Post $post The WordPress Post.
-		 * @return array $activity_data The modified CiviCRM Activity data.
 		 */
 		$activity_data = apply_filters( 'cwps/acf/civicrm/activity/post/data', $activity_data, $post );
 
@@ -1036,8 +1061,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 	 *
 	 * When we update the Activity, we always sync:
 	 *
-	 * - The WordPress Post's "title" with the CiviCRM Activity's "subject".
-	 * - The WordPress Post's "content" with the CiviCRM Activity's "details".
+	 * * The WordPress Post's "title" with the CiviCRM Activity's "subject".
+	 * * The WordPress Post's "content" with the CiviCRM Activity's "details".
 	 *
 	 * @since 0.4
 	 *
@@ -1282,7 +1307,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		 *
 		 * @param integer $activity_field_name The existing Activity Field name.
 		 * @param array $field The array of ACF Field data.
-		 * @return integer $activity_field_name The modified Activity Field name.
 		 */
 		$activity_field_name = apply_filters( 'cwps/acf/civicrm/activity/activity_field/name', $activity_field_name, $field );
 

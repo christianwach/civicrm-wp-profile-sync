@@ -241,7 +241,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 		add_filter( 'cwps/admin/settings/show_tabs', [ $this, 'page_show_tabs' ] );
 
 		// Add tab to setting templates.
-		add_filter( 'cwps/admin/settings/nav_tabs', [ $this, 'page_add_tab' ], 10, 2 );
+		add_action( 'cwps/admin/settings/nav_tabs', [ $this, 'page_add_tab' ], 10, 2 );
 
 	}
 

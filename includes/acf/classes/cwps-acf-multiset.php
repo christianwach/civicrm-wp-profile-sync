@@ -76,7 +76,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		$this->acf_loader = $parent->acf_loader;
 		$this->civicrm = $parent;
 
-		// Init when the CiviCRM object is loaded.
+		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
 
 		// Init parent.
@@ -1053,7 +1053,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		 * @since 0.4
 		 *
 		 * @param array $choices The existing select options array.
-		 * @return array $choices The modified select options array.
 		 */
 		$choices = apply_filters( 'cwps/acf/civicrm/multiset/choices', $choices );
 

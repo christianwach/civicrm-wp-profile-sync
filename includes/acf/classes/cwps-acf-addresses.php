@@ -50,6 +50,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 	public $civicrm;
 
 	/**
+	 * Mapper hooks registered flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var object $bulk The Mapper hooks registered flag.
+	 */
+	public $mapper_hooks = false;
+
+	/**
 	 * "CiviCRM Addresses" Field key in the ACF Field data.
 	 *
 	 * @since 0.4
@@ -112,7 +121,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		$this->acf_loader = $parent->acf_loader;
 		$this->civicrm = $parent;
 
-		// Init when the CiviCRM object is loaded.
+		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
 
 		// Init parent.
@@ -211,11 +220,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 	 */
 	public function register_mapper_hooks() {
 
+		// Bail if already registered.
+		if ( $this->mapper_hooks === true ) {
+			return;
+		}
+
 		// Listen for events from our Mapper that require Address updates.
 		add_action( 'cwps/acf/mapper/address/created', [ $this, 'address_edited' ], 10 );
 		add_action( 'cwps/acf/mapper/address/edited', [ $this, 'address_edited' ], 10 );
 		add_action( 'cwps/acf/mapper/address/delete/pre', [ $this, 'address_pre_delete' ], 10 );
 		add_action( 'cwps/acf/mapper/address/deleted', [ $this, 'address_deleted' ], 10 );
+
+		// Declare registered.
+		$this->mapper_hooks = true;
 
 	}
 
@@ -228,11 +245,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 	 */
 	public function unregister_mapper_hooks() {
 
+		// Bail if already unregistered.
+		if ( $this->mapper_hooks === false ) {
+			return;
+		}
+
 		// Remove all Mapper listeners.
 		remove_action( 'cwps/acf/mapper/address/created', [ $this, 'address_edited' ], 10 );
 		remove_action( 'cwps/acf/mapper/address/edited', [ $this, 'address_edited' ], 10 );
 		remove_action( 'cwps/acf/mapper/address/delete/pre', [ $this, 'address_pre_delete' ], 10 );
 		remove_action( 'cwps/acf/mapper/address/deleted', [ $this, 'address_deleted' ], 10 );
+
+		// Declare unregistered.
+		$this->mapper_hooks = false;
 
 	}
 
@@ -1026,7 +1051,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		 *
 		 * @param array $types The retrieved array of Location Types.
 		 * @param array $field The ACF Field data array.
-		 * @return array $types The modified array of Location Types.
 		 */
 		$location_types = apply_filters(
 			'cwps/acf/addresses/location_types/get_for_acf_field',

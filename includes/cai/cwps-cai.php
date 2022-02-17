@@ -219,10 +219,10 @@ class CiviCRM_WP_Profile_Sync_CAI {
 	public function register_mapper_civicrm_hooks() {
 
 		// Listen for events from our Mapper that require WordPress updates.
-		add_action( 'cwps/mapper/contact_edited', [ $this, 'contact_edited' ], 10 );
+		add_action( 'cwps/mapper/contact/edited', [ $this, 'contact_edited' ], 10 );
 
 		// Listen for events from our Mapper that CiviCRM Custom Fields have been edited.
-		add_action( 'cwps/mapper/custom_edited', [ $this, 'custom_edited' ], 10 );
+		add_action( 'cwps/mapper/custom/edited', [ $this, 'custom_edited' ], 10 );
 
 		// Act on CiviCRM Entities being edited.
 		add_action( 'civicrm_acf_integration_mapper_email_created', [ $this, 'email_edited' ], 10 );
@@ -283,10 +283,10 @@ class CiviCRM_WP_Profile_Sync_CAI {
 	public function unregister_mapper_civicrm_hooks() {
 
 		// Stop listening for events from our Mapper that require WordPress updates.
-		remove_action( 'cwps/mapper/contact_edited', [ $this, 'contact_edited' ], 10 );
+		remove_action( 'cwps/mapper/contact/edited', [ $this, 'contact_edited' ], 10 );
 
 		// Stop listening for events from our Mapper that CiviCRM Custom Fields have been edited.
-		remove_action( 'cwps/mapper/custom_edited', [ $this, 'custom_edited' ], 10 );
+		remove_action( 'cwps/mapper/custom/edited', [ $this, 'custom_edited' ], 10 );
 
 		// Remove callbacks for CiviCRM Entities.
 		remove_action( 'civicrm_acf_integration_mapper_email_created', [ $this, 'email_edited' ], 10 );
@@ -426,12 +426,12 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		 *
 		 * Used to inform e.g.:
 		 *
-		 * - Contact Fields
-		 * - Relationships
-		 * - Addresses
-		 * - Websites
-		 * - Instant Messengers
-		 * - Phones
+		 * * Contact Fields
+		 * * Relationships
+		 * * Addresses
+		 * * Websites
+		 * * Instant Messengers
+		 * * Phones
 		 *
 		 * @since 0.4
 		 *

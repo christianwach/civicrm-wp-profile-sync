@@ -25,9 +25,9 @@ defined( 'ABSPATH' ) || exit;
  *
  * Examples include:
  *
- * - Email
- * - Relationship
- * - Address
+ * * Email
+ * * Relationship
+ * * Address
  *
  * @see CiviCRM_Profile_Sync_ACF_CiviCRM_Contact::prepare_from_fields()
  *

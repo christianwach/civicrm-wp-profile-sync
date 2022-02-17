@@ -73,6 +73,28 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Field {
 
 
 
+	/**
+	 * Register hooks.
+	 *
+	 * @since 0.5.2
+	 */
+	public function register_hooks() {
+
+	}
+
+
+
+	/**
+	 * Unregister hooks.
+	 *
+	 * @since 0.5.2
+	 */
+	public function unregister_hooks() {
+
+	}
+
+
+
 	// -------------------------------------------------------------------------
 
 

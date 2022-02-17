@@ -40,6 +40,15 @@ class CiviCRM_WP_Profile_Sync_WordPress {
 	 */
 	public $user;
 
+	/**
+	 * Mapper hooks registered flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var object $bulk The Mapper hooks registered flag.
+	 */
+	public $mapper_hooks = false;
+
 
 
 	/**
@@ -73,6 +82,10 @@ class CiviCRM_WP_Profile_Sync_WordPress {
 
 		// Set up objects and references.
 		$this->setup_objects();
+
+		// Always register plugin hooks.
+		add_action( 'cwps/plugin/hooks/wp/add', [ $this, 'register_mapper_hooks' ] );
+		add_action( 'cwps/plugin/hooks/wp/remove', [ $this, 'unregister_mapper_hooks' ] );
 
 		/**
 		 * Broadcast that this class is now loaded.
@@ -148,8 +161,13 @@ class CiviCRM_WP_Profile_Sync_WordPress {
 	 */
 	public function register_mapper_hooks() {
 
-		// Add all Mapper callbacks.
-		$this->user->register_mapper_hooks();
+		// Bail if already registered.
+		if ( $this->mapper_hooks === true ) {
+			return;
+		}
+
+		// Declare registered.
+		$this->mapper_hooks = true;
 
 	}
 
@@ -162,8 +180,13 @@ class CiviCRM_WP_Profile_Sync_WordPress {
 	 */
 	public function unregister_mapper_hooks() {
 
-		// Remove all Mapper callbacks.
-		$this->user->unregister_mapper_hooks();
+		// Bail if already unregistered.
+		if ( $this->mapper_hooks === false ) {
+			return;
+		}
+
+		// Declare unregistered.
+		$this->mapper_hooks = false;
 
 	}
 

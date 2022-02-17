@@ -93,7 +93,7 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Instant_Messenger {
 		$this->civicrm = $parent->civicrm;
 		$this->im = $parent;
 
-		// Init when the CiviCRM Instant Messenger object is loaded.
+		// Init when the ACF CiviCRM Instant Messenger object is loaded.
 		add_action( 'cwps/acf/civicrm/im/loaded', [ $this, 'initialise' ] );
 
 	}

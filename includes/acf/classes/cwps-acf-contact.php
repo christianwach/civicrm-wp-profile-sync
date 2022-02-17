@@ -50,6 +50,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	public $civicrm;
 
 	/**
+	 * Mapper hooks registered flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var object $bulk The Mapper hooks registered flag.
+	 */
+	public $mapper_hooks = false;
+
+	/**
 	 * Entity identifier.
 	 *
 	 * This identifier is unique to this "top level" Entity.
@@ -87,7 +96,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		$this->acf_loader = $parent->acf_loader;
 		$this->civicrm = $parent;
 
-		// Init when the CiviCRM object is loaded.
+		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
 
 	}
@@ -152,9 +161,17 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 */
 	public function register_mapper_hooks() {
 
+		// Bail if already registered.
+		if ( $this->mapper_hooks === true ) {
+			return;
+		}
+
 		// Listen for events from our Mapper that require Contact updates.
 		add_action( 'cwps/acf/mapper/post/saved', [ $this, 'post_saved' ], 10 );
 		add_action( 'cwps/acf/mapper/acf_fields/saved', [ $this, 'acf_fields_saved' ], 10 );
+
+		// Declare registered.
+		$this->mapper_hooks = true;
 
 	}
 
@@ -167,9 +184,17 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 */
 	public function unregister_mapper_hooks() {
 
+		// Bail if already unregistered.
+		if ( $this->mapper_hooks === false ) {
+			return;
+		}
+
 		// Remove all Mapper listeners.
 		remove_action( 'cwps/acf/mapper/post/saved', [ $this, 'post_saved' ], 10 );
 		remove_action( 'cwps/acf/mapper/acf_fields/saved', [ $this, 'acf_fields_saved' ], 10 );
+
+		// Declare unregistered.
+		$this->mapper_hooks = false;
 
 	}
 
@@ -248,8 +273,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		 *
 		 * Used internally by:
 		 *
-		 * - Groups
-		 * - Post Taxonomies
+		 * * Groups
+		 * * Post Taxonomies
 		 *
 		 * @since 0.4
 		 *
@@ -351,11 +376,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		 *
 		 * Used internally by:
 		 *
-		 * - Contact Fields
-		 * - Relationships
-		 * - Addresses
-		 * - Websites
-		 * - WordPress Posts - to maintain sync with the Contact "Display Name"
+		 * * Contact Fields
+		 * * Relationships
+		 * * Addresses
+		 * * Websites
+		 * * WordPress Posts - to maintain sync with the Contact "Display Name"
 		 *
 		 * @since 0.4
 		 *
@@ -388,7 +413,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		 * @since 0.4
 		 *
 		 * @param array $fields_handled The existing array of Fields which must be handled separately.
-		 * @return array $fields_handled The modified array of Fields which must be handled separately.
 		 */
 		$fields_handled = apply_filters( 'cwps/acf/civicrm/fields_handled', [] );
 
@@ -1103,11 +1127,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		 *
 		 * Let's take the example of a dog called "Rover":
 		 *
-		 * - The WordPress "post_title" would be "Rover".
-		 * - The Contact "display_name" should be "Rover".
-		 * - The CiviCRM API requires the "first_name" and "last_name" Fields.
-		 * - The CiviCRM API does not update the "display_name" directly.
-		 * - There are no "first_name" and "last_name" ACF Fields.
+		 * * The WordPress "post_title" would be "Rover".
+		 * * The Contact "display_name" should be "Rover".
+		 * * The CiviCRM API requires the "first_name" and "last_name" Fields.
+		 * * The CiviCRM API does not update the "display_name" directly.
+		 * * There are no "first_name" and "last_name" ACF Fields.
 		 *
 		 * In this situation, there is no obvious way of configuring this in either
 		 * the WordPress or CiviCRM UIs. WordPress has no UI for Post Types (except
@@ -1119,14 +1143,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		 * between these Fields, so perhaps a plugin Settings Page might be needed
 		 * with a checkbox per Post Type selecting between:
 		 *
-		 * - Sync where the Contact has just one name
-		 * - Sync where the Contact has the common "first_name" and "last_name"
+		 * * Sync where the Contact has just one name
+		 * * Sync where the Contact has the common "first_name" and "last_name"
 		 *
 		 * @since 0.4
 		 *
 		 * @param array $contact_data The existing CiviCRM Contact data.
 		 * @param WP_Post $post The WordPress Post.
-		 * @return array $contact_data The modified CiviCRM Contact data.
 		 */
 		$contact_data = apply_filters( 'cwps/acf/civicrm/contact/post/data', $contact_data, $post );
 
@@ -1420,7 +1443,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		 *
 		 * @param integer $contact_field_name The existing Contact Field name.
 		 * @param array $field The array of ACF Field data.
-		 * @return integer $contact_field_name The modified Contact Field name.
 		 */
 		$contact_field_name = apply_filters( 'cwps/acf/civicrm/contact/contact_field/name', $contact_field_name, $field );
 
@@ -1465,7 +1487,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		 *
 		 * @param bool $permitted True if allowed, false otherwise.
 		 * @param integer $contact_id The CiviCRM Contact ID.
-		 * @return bool $permitted True if allowed, false otherwise.
 		 */
 		return apply_filters( 'cwps/acf/civicrm/contact/user_can_view', $permitted, $contact_id );
 

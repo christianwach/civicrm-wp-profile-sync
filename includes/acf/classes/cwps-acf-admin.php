@@ -195,7 +195,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		add_filter( 'cwps/admin/settings/show_tabs', [ $this, 'page_show_tabs' ] );
 
 		// Add tab to setting templates.
-		add_filter( 'cwps/admin/settings/nav_tabs', [ $this, 'page_add_tab' ], 10, 2 );
+		add_action( 'cwps/admin/settings/nav_tabs', [ $this, 'page_add_tab' ], 10, 2 );
 
 		// Try and update options.
 		add_action( 'load-' . $this->sync_page, [ $this, 'settings_update_router' ], 50 );
@@ -1440,9 +1440,9 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 				 *
 				 * Used internally to:
 				 *
-				 * - Update a CiviCRM Contact
-				 * - Update the CiviCRM Custom Fields
-				 * - Update the CiviCRM Group memberships
+				 * * Update a CiviCRM Contact
+				 * * Update the CiviCRM Custom Fields
+				 * * Update the CiviCRM Group memberships
 				 *
 				 * @since 0.4
 				 *
@@ -1460,7 +1460,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 				 *
 				 * Used internally to:
 				 *
-				 * - Update the CiviCRM Custom Fields
+				 * * Update the CiviCRM Custom Fields
 				 *
 				 * @since 0.4
 				 *
@@ -1610,8 +1610,8 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 				 *
 				 * Used internally to:
 				 *
-				 * - Update a WordPress Post
-				 * - Update the WordPress Terms
+				 * * Update a WordPress Post
+				 * * Update the WordPress Terms
 				 *
 				 * @since 0.4
 				 *
@@ -1749,8 +1749,8 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 				 *
 				 * Used internally to:
 				 *
-				 * - Update a CiviCRM Activity
-				 * - Update the CiviCRM Custom Fields
+				 * * Update a CiviCRM Activity
+				 * * Update the CiviCRM Custom Fields
 				 *
 				 * @since 0.4
 				 *
@@ -1768,7 +1768,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 				 *
 				 * Used internally to:
 				 *
-				 * - Update the CiviCRM Custom Fields
+				 * * Update the CiviCRM Custom Fields
 				 *
 				 * @since 0.4
 				 *
@@ -1918,7 +1918,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 				 *
 				 * Used internally to:
 				 *
-				 * - Update a WordPress Post
+				 * * Update a WordPress Post
 				 *
 				 * @since 0.4
 				 *
@@ -2061,8 +2061,8 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 				 *
 				 * Used internally to:
 				 *
-				 * - Update a CiviCRM Participant
-				 * - Update the CiviCRM Custom Fields
+				 * * Update a CiviCRM Participant
+				 * * Update the CiviCRM Custom Fields
 				 *
 				 * @since 0.5
 				 *
@@ -2080,7 +2080,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 				 *
 				 * Used internally to:
 				 *
-				 * - Update the CiviCRM Custom Fields
+				 * * Update the CiviCRM Custom Fields
 				 *
 				 * @since 0.5
 				 *
@@ -2235,7 +2235,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 				 *
 				 * Used internally to:
 				 *
-				 * - Update a WordPress Post
+				 * * Update a WordPress Post
 				 *
 				 * @since 0.5
 				 *
@@ -2354,8 +2354,8 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 				 *
 				 * Used internally to:
 				 *
-				 * - Update a CiviCRM Participant
-				 * - Update the CiviCRM Custom Fields
+				 * * Update a CiviCRM Participant
+				 * * Update the CiviCRM Custom Fields
 				 *
 				 * @since 0.5
 				 *
@@ -2373,7 +2373,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 				 *
 				 * Used internally to:
 				 *
-				 * - Update the CiviCRM Custom Fields
+				 * * Update the CiviCRM Custom Fields
 				 *
 				 * @since 0.5
 				 *
@@ -2527,7 +2527,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 				 *
 				 * Used internally to:
 				 *
-				 * - Update a WordPress Post
+				 * * Update a WordPress Post
 				 *
 				 * @since 0.5
 				 *
@@ -2667,7 +2667,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			 *
 			 * Used internally to:
 			 *
-			 * - Update the WordPress Terms
+			 * * Update the WordPress Terms
 			 *
 			 * @since 0.4
 			 *
@@ -2783,7 +2783,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		 * @since 0.4
 		 *
 		 * @param array $step_counts The default step counts.
-		 * @return array $step_counts The filtered step counts.
 		 */
 		return apply_filters( 'cwps/acf/step_counts/get', $this->step_counts );
 

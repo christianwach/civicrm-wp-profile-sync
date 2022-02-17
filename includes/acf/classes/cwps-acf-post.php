@@ -50,6 +50,15 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	public $tax;
 
 	/**
+	 * Mapper hooks registered flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var object $bulk The Mapper hooks registered flag.
+	 */
+	public $mapper_hooks = false;
+
+	/**
 	 * Post meta Contact ID key.
 	 *
 	 * @since 0.4
@@ -206,6 +215,11 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	 */
 	public function register_mapper_hooks() {
 
+		// Bail if already registered.
+		if ( $this->mapper_hooks === true ) {
+			return;
+		}
+
 		// Listen for events from our Mapper that require Post updates.
 		add_action( 'cwps/acf/mapper/contact/created', [ $this, 'contact_created' ], 10 );
 		add_action( 'cwps/acf/mapper/contact/edited', [ $this, 'contact_edited' ], 10 );
@@ -215,6 +229,9 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		add_action( 'cwps/acf/mapper/participant/edited', [ $this, 'participant_edited' ], 10 );
 		add_action( 'cwps/acf/mapper/participant/delete/pre', [ $this, 'participant_pre_delete' ], 10 );
 		add_action( 'cwps/acf/mapper/participant/deleted', [ $this, 'participant_deleted' ], 10 );
+
+		// Declare registered.
+		$this->mapper_hooks = true;
 
 	}
 
@@ -227,6 +244,11 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	 */
 	public function unregister_mapper_hooks() {
 
+		// Bail if already unregistered.
+		if ( $this->mapper_hooks === false ) {
+			return;
+		}
+
 		// Remove all Mapper listeners.
 		remove_action( 'cwps/acf/mapper/contact/created', [ $this, 'contact_created' ], 10 );
 		remove_action( 'cwps/acf/mapper/contact/edited', [ $this, 'contact_edited' ], 10 );
@@ -235,6 +257,9 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		remove_action( 'cwps/acf/mapper/participant/created', [ $this, 'participant_created' ], 10 );
 		remove_action( 'cwps/acf/mapper/participant/edited', [ $this, 'participant_edited' ], 10 );
 		remove_action( 'cwps/acf/mapper/participant/deleted', [ $this, 'participant_deleted' ], 10 );
+
+		// Declare unregistered.
+		$this->mapper_hooks = false;
 
 	}
 
@@ -681,9 +706,9 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		 * linkage between the CiviCRM Entity and the Post throughout its
 		 * life cycle, e.g.
 		 *
-		 * - Published: The default status for our purposes.
-		 * - Trash: Because we want to avoid a duplicate Post being created.
-		 * - Draft: When Posts are moved out of the Trash, this is their status.
+		 * * Published: The default status for our purposes.
+		 * * Trash: Because we want to avoid a duplicate Post being created.
+		 * * Draft: When Posts are moved out of the Trash, this is their status.
 		 *
 		 * This may need to be revisited.
 		 */
@@ -804,8 +829,8 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		 *
 		 * Used internally to:
 		 *
-		 * - Update the ACF Fields for the WordPress Post.
-		 * - Update the Terms for the WordPress Post.
+		 * * Update the ACF Fields for the WordPress Post.
+		 * * Update the Terms for the WordPress Post.
 		 *
 		 * @since 0.4
 		 *
@@ -878,7 +903,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 				 *
 				 * Used internally to:
 				 *
-				 * - Update the ACF Fields for the WordPress Post
+				 * * Update the ACF Fields for the WordPress Post
 				 *
 				 * @since 0.4
 				 *
@@ -948,7 +973,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 				 *
 				 * Used internally to:
 				 *
-				 * - Update the ACF Fields for the WordPress Post
+				 * * Update the ACF Fields for the WordPress Post
 				 *
 				 * @since 0.4
 				 *
@@ -1361,8 +1386,8 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		 *
 		 * Used internally to:
 		 *
-		 * - Update the ACF Fields for the WordPress Post.
-		 * - Update the Terms for the WordPress Post.
+		 * * Update the ACF Fields for the WordPress Post.
+		 * * Update the Terms for the WordPress Post.
 		 *
 		 * @since 0.4
 		 *
@@ -1440,7 +1465,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		 *
 		 * Used internally to:
 		 *
-		 * - Update the ACF Fields for the WordPress Post
+		 * * Update the ACF Fields for the WordPress Post
 		 *
 		 * @since 0.4
 		 *
@@ -1508,7 +1533,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		 *
 		 * Used internally to:
 		 *
-		 * - Update the ACF Fields for the WordPress Post
+		 * * Update the ACF Fields for the WordPress Post
 		 *
 		 * @since 0.4
 		 *
@@ -1857,8 +1882,8 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		 *
 		 * Used internally to:
 		 *
-		 * - Update the ACF Fields for the WordPress Post.
-		 * - Update the Terms for the WordPress Post.
+		 * * Update the ACF Fields for the WordPress Post.
+		 * * Update the Terms for the WordPress Post.
 		 *
 		 * @since 0.5
 		 *
@@ -1939,7 +1964,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 			 *
 			 * Used internally to:
 			 *
-			 * - Update the ACF Fields for the WordPress Post
+			 * * Update the ACF Fields for the WordPress Post
 			 *
 			 * @since 0.5
 			 *
@@ -2012,7 +2037,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 			 *
 			 * Used internally to:
 			 *
-			 * - Update the ACF Fields for the WordPress Post
+			 * * Update the ACF Fields for the WordPress Post
 			 *
 			 * @since 0.5
 			 *
@@ -2206,7 +2231,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		 *
 		 * @param array $args The arguments used to create a Post.
 		 * @param array $participant The CiviCRM Participant data.
-		 * @return array $args The modified arguments used to create a Post.
 		 */
 		$args = apply_filters( 'cwps/acf/post/participant/create/args', $args, $participant );
 
@@ -2296,7 +2320,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		 *
 		 * @param array $args The arguments used to update a Post.
 		 * @param array $participant The CiviCRM Participant data.
-		 * @return array $args The modified arguments used to update a Post.
 		 */
 		$args = apply_filters( 'cwps/acf/post/participant/update/args', $args, $participant );
 

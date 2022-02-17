@@ -111,7 +111,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		$this->acf_loader = $parent->acf_loader;
 		$this->civicrm = $parent;
 
-		// Init when the CiviCRM object is loaded.
+		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
 
 	}
@@ -698,7 +698,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		 *
 		 * @param bool $post_ids False, since we're asking for Post IDs.
 		 * @param array $args The array of CiviCRM Custom Fields params.
-		 * @return array|bool $post_ids The array of mapped Post IDs, or false if not mapped.
 		 */
 		$post_ids = apply_filters( 'cwps/acf/query_post_id', $post_ids, $args );
 
@@ -948,7 +947,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		 *
 		 * @param integer $custom_field_id The existing Custom Field ID.
 		 * @param array $field The array of ACF Field data.
-		 * @return integer $custom_field_id The modified Custom Field ID.
 		 */
 		$custom_field_id = apply_filters( 'cwps/acf/contact/custom_field/id_get', $custom_field_id, $field );
 

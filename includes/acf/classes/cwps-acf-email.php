@@ -50,6 +50,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	public $civicrm;
 
 	/**
+	 * Mapper hooks registered flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var object $bulk The Mapper hooks registered flag.
+	 */
+	public $mapper_hooks = false;
+
+	/**
 	 * "CiviCRM Email" Field key in the ACF Field data.
 	 *
 	 * @since 0.4
@@ -113,7 +122,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		$this->acf_loader = $parent->acf_loader;
 		$this->civicrm = $parent;
 
-		// Init when the CiviCRM object is loaded.
+		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
 
 		// Init parent.
@@ -170,10 +179,18 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 */
 	public function register_mapper_hooks() {
 
+		// Bail if already registered.
+		if ( $this->mapper_hooks === true ) {
+			return;
+		}
+
 		// Listen for events from our Mapper that require Email updates.
 		add_action( 'cwps/acf/mapper/email/created', [ $this, 'email_edited' ], 10 );
 		add_action( 'cwps/acf/mapper/email/edited', [ $this, 'email_edited' ], 10 );
 		add_action( 'cwps/acf/mapper/email/deleted', [ $this, 'email_edited' ], 10 );
+
+		// Declare registered.
+		$this->mapper_hooks = true;
 
 	}
 
@@ -186,10 +203,18 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 */
 	public function unregister_mapper_hooks() {
 
+		// Bail if already unregistered.
+		if ( $this->mapper_hooks === false ) {
+			return;
+		}
+
 		// Remove all Mapper listeners.
 		remove_action( 'cwps/acf/mapper/email/created', [ $this, 'email_edited' ], 10 );
 		remove_action( 'cwps/acf/mapper/email/edited', [ $this, 'email_edited' ], 10 );
 		remove_action( 'cwps/acf/mapper/email/deleted', [ $this, 'email_edited' ], 10 );
+
+		// Declare unregistered.
+		$this->mapper_hooks = false;
 
 	}
 
@@ -1253,7 +1278,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		 *
 		 * @param array $location_types The retrieved array of Location Types.
 		 * @param array $field The ACF Field data array.
-		 * @return array $location_types The modified array of Location Types.
 		 */
 		$location_types = apply_filters(
 			'cwps/acf/email/location_types/get_for_acf_field',

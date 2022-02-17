@@ -147,7 +147,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		$this->acf_loader = $parent->acf_loader;
 		$this->civicrm = $parent;
 
-		// Init when the CiviCRM object is loaded.
+		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
 
 	}
@@ -583,7 +583,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		 * @param array $contact_fields The existing array of Contact Fields.
 		 * @param array $field_group The ACF Field Group data array.
 		 * @param array $field The ACF Field data array.
-		 * @return array $contact_fields The modified array of Contact Fields.
 		 */
 		$contact_fields = apply_filters(
 			'cwps/acf/civicrm/contact_field/get_for_acf_field',

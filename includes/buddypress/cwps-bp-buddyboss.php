@@ -110,16 +110,6 @@ class CiviCRM_Profile_Sync_BP_BuddyBoss {
 	 */
 	public function contact_synced( $args ) {
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'args' => $args,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Check if our setting allows Nickname sync.
 		$nickname_sync = $this->plugin->admin->setting_get( 'user_profile_nickname_sync', 1 );
 

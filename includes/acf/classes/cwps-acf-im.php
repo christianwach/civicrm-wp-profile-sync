@@ -50,6 +50,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 	public $civicrm;
 
 	/**
+	 * Mapper hooks registered flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var object $bulk The Mapper hooks registered flag.
+	 */
+	public $mapper_hooks = false;
+
+	/**
 	 * ACF Fields which must be handled separately.
 	 *
 	 * @since 0.4
@@ -112,7 +121,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		$this->acf_loader = $parent->acf_loader;
 		$this->civicrm = $parent;
 
-		// Init when the CiviCRM object is loaded.
+		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
 
 		// Init parent.
@@ -214,11 +223,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 	 */
 	public function register_mapper_hooks() {
 
+		// Bail if already registered.
+		if ( $this->mapper_hooks === true ) {
+			return;
+		}
+
 		// Listen for events from our Mapper that require Instant Messenger updates.
 		add_action( 'cwps/acf/mapper/im/created', [ $this, 'im_edited' ], 10 );
 		add_action( 'cwps/acf/mapper/im/edited', [ $this, 'im_edited' ], 10 );
 		add_action( 'cwps/acf/mapper/im/delete/pre', [ $this, 'im_pre_delete' ], 10 );
 		add_action( 'cwps/acf/mapper/im/deleted', [ $this, 'im_deleted' ], 10 );
+
+		// Declare registered.
+		$this->mapper_hooks = true;
 
 	}
 
@@ -231,11 +248,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 	 */
 	public function unregister_mapper_hooks() {
 
+		// Bail if already unregistered.
+		if ( $this->mapper_hooks === false ) {
+			return;
+		}
+
 		// Remove all Mapper listeners.
 		remove_action( 'cwps/acf/mapper/im/created', [ $this, 'im_edited' ], 10 );
 		remove_action( 'cwps/acf/mapper/im/edited', [ $this, 'im_edited' ], 10 );
 		remove_action( 'cwps/acf/mapper/im/delete/pre', [ $this, 'im_pre_delete' ], 10 );
 		remove_action( 'cwps/acf/mapper/im/deleted', [ $this, 'im_deleted' ], 10 );
+
+		// Declare unregistered.
+		$this->mapper_hooks = false;
 
 	}
 
@@ -1212,7 +1237,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		 *
 		 * @param array $location_types The retrieved array of Location Types.
 		 * @param array $field The ACF Field data array.
-		 * @return array $location_types The modified array of Location Types.
 		 */
 		$location_types = apply_filters(
 			'cwps/acf/im/location_types/get_for_acf_field',
@@ -1539,7 +1563,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		 *
 		 * @param integer $im_field_name The existing Instant Messenger Field name.
 		 * @param array $field The array of ACF Field data.
-		 * @return integer $im_field_name The modified Instant Messenger Field name.
 		 */
 		$im_field_name = apply_filters( 'cwps/acf/civicrm/im/im_field/name', $im_field_name, $field );
 

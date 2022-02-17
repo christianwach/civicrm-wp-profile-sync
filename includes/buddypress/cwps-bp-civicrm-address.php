@@ -59,6 +59,15 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 	public $xprofile;
 
 	/**
+	 * Mapper hooks registered flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var object $bulk The Mapper hooks registered flag.
+	 */
+	public $mapper_hooks = false;
+
+	/**
 	 * "CiviCRM Field" Field value prefix in the BuddyPress Field data.
 	 *
 	 * This distinguishes Address Fields from Custom Fields.
@@ -126,6 +135,10 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 	 */
 	public function initialise() {
 
+		// Always register plugin hooks.
+		add_action( 'cwps/plugin/hooks/bp/add', [ $this, 'register_mapper_hooks' ] );
+		add_action( 'cwps/plugin/hooks/bp/remove', [ $this, 'unregister_mapper_hooks' ] );
+
 		// Register hooks.
 		$this->register_hooks();
 
@@ -174,11 +187,19 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 	 */
 	public function register_mapper_hooks() {
 
+		// Bail if already registered.
+		if ( $this->mapper_hooks === true ) {
+			return;
+		}
+
 		// Listen for events from our Mapper that require Address updates.
 		add_action( 'cwps/mapper/address/created', [ $this, 'address_edited' ], 10 );
 		add_action( 'cwps/mapper/address/edited', [ $this, 'address_edited' ], 10 );
 		//add_action( 'cwps/mapper/address/delete/pre', [ $this, 'address_pre_delete' ], 10 );
 		//add_action( 'cwps/mapper/address/deleted', [ $this, 'address_deleted' ], 10 );
+
+		// Declare registered.
+		$this->mapper_hooks = true;
 
 	}
 
@@ -191,11 +212,19 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 	 */
 	public function unregister_mapper_hooks() {
 
+		// Bail if already unregistered.
+		if ( $this->mapper_hooks === false ) {
+			return;
+		}
+
 		// Remove all Mapper listeners.
 		remove_action( 'cwps/mapper/address/created', [ $this, 'address_edited' ], 10 );
 		remove_action( 'cwps/mapper/address/edited', [ $this, 'address_edited' ], 10 );
 		//remove_action( 'cwps/mapper/address/delete/pre', [ $this, 'address_pre_delete' ], 10 );
 		//remove_action( 'cwps/mapper/address/deleted', [ $this, 'address_deleted' ], 10 );
+
+		// Declare unregistered.
+		$this->mapper_hooks = false;
 
 	}
 
@@ -266,29 +295,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 			return $user_id;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'args' => $args,
-			'user_id' => $user_id,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Get the BuddyPress Fields for this User.
 		$bp_fields = $this->xprofile->fields_get_for_user( $user_id );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'bp_fields' => $bp_fields,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Filter out Fields not mapped to a CiviCRM Address Field.
 		$bp_fields_mapped = [];
@@ -320,16 +328,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'bp_fields_mapped' => $bp_fields_mapped,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Bail if we don't have any left.
 		if ( empty( $bp_fields_mapped ) ) {
 			return;
@@ -351,17 +349,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 			// Okay, go ahead and save the value to the xProfile Field.
 			$result = $this->xprofile->value_update( $bp_field['field_id'], $user_id, $value );
-
-			/*
-			$e = new \Exception();
-			$trace = $e->getTraceAsString();
-			error_log( print_r( [
-				'method' => __METHOD__,
-				'value' => $value,
-				'result' => $result,
-				//'backtrace' => $trace,
-			], true ) );
-			*/
 
 		}
 
@@ -394,19 +381,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 	 */
 	public function value_get_for_bp( $value, $name, $params ) {
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'value' => $value,
-			'name' => $name,
-			'params' => $params,
-			//'args' => $args,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Bail if value is (string) 'null' which CiviCRM uses for some reason.
 		if ( $value == 'null' || $value == 'NULL' ) {
 			return '';
@@ -414,16 +388,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 		// Get the BuddyPress Field Type for this Address Field.
 		$type = $this->get_bp_type( $name );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'type' => $type,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Convert CiviCRM value to BuddyPress value by Field Type.
 		switch ( $type ) {
@@ -474,16 +438,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 	 */
 	public function bp_fields_edited( $args ) {
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'args' => $args,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Bail if there is no Field data.
 		if ( empty( $args['field_data'] ) ) {
 			return;
@@ -518,16 +472,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 			return;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'address_groups' => $address_groups,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Save each Address.
 		foreach ( $address_groups as $location_type_id => $group ) {
 
@@ -544,16 +488,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 			// Add the Location Type.
 			$address_data['location_type_id'] = $location_type_id;
-
-			/*
-			$e = new \Exception();
-			$trace = $e->getTraceAsString();
-			error_log( print_r( [
-				'method' => __METHOD__,
-				'address_data' => $address_data,
-				//'backtrace' => $trace,
-			], true ) );
-			*/
 
 			// Okay, write the data to CiviCRM.
 			$address = $this->plugin->civicrm->address->update( $args['contact_id'], $address_data );
@@ -580,16 +514,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 	 * @return array $contact_data The CiviCRM Contact data.
 	 */
 	public function prepare_from_fields( $field_data ) {
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'field_data' => $field_data,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Init data for Fields.
 		$address_data = [];
@@ -630,19 +554,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 					'address_field_name' => $address_field_name,
 				];
 
-				/*
-				$e = new \Exception();
-				$trace = $e->getTraceAsString();
-				error_log( print_r( [
-					'method' => __METHOD__,
-					//'address_fields' => $address_fields,
-					//'field_type' => $field_type,
-					'data' => $data,
-					'args' => $args,
-					//'backtrace' => $trace,
-				], true ) );
-				*/
-
 				// Parse value by Field Type.
 				$value = $this->xprofile->value_get_for_civicrm( $data['value'], $data['field_type'], $args );
 
@@ -652,16 +563,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 			}
 
 		}
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'address_data' => $address_data,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// --<
 		return $address_data;
@@ -737,29 +638,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 		// Init return.
 		$address_fields = [];
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'field_type' => $field_type,
-			'location_type' => $location_type,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Get public Fields of this type.
 		$address_fields = $this->data_get( $field_type, 'public' );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'address_fields' => $address_fields,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		/**
 		 * Filter the Address Fields.
@@ -1130,32 +1010,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 			return $options;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'options' => $options,
-			'field_type' => $field_type,
-			'args' => $args,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Get the mapped Contact Field name.
 		$field_name = $this->name_get( $args['value'] );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			//'value' => $value,
-			'field_name' => $field_name,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		if ( empty( $field_name ) ) {
 			return $options;
 		}
@@ -1163,32 +1019,12 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 		// Bail if not a "True/False" Field Type.
 		$civicrm_field_type = $this->get_bp_type( $field_name );
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'civicrm_field_type' => $civicrm_field_type,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		if ( $civicrm_field_type !== 'true_false' ) {
 			return $options;
 		}
 
 		// Get the full details for the CiviCRM Field.
 		$civicrm_field = $this->plugin->civicrm->address->get_by_name( $field_name );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'civicrm_field' => $civicrm_field,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Use title for checkbox label.
 		$options = [ 1 => $civicrm_field['title'] ];
@@ -1219,46 +1055,14 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 			return $address_fields;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'address_fields' => $address_fields,
-			'field_type' => $field_type,
-			'name' => $name,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Get public Fields of this type.
 		$true_false_fields = $this->data_get( 'true_false', 'public' );
 		if ( empty( $true_false_fields ) ) {
 			return $address_fields;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'true_false_fields' => $true_false_fields,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Merge with Address Fields.
 		$address_fields = array_merge( $address_fields, $true_false_fields );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'address_fields-FINAL' => $address_fields,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// --<
 		return $address_fields;
@@ -1293,17 +1097,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 		if ( $civicrm_field_type === 'true_false' ) {
 			$is_true_false = true;
 		}
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'is_true_false' => $is_true_false,
-			'args' => $args,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// --<
 		return $is_true_false;
