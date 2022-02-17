@@ -386,43 +386,50 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 		// Handle changes that are to do with the synced Website Type.
 		if ( $now_user_type || $was_user_type ) {
 
+			// Make a new object so we don't overwrite the Website Pre object.
+			$previous = clone $this->website_pre;
+			$previous->url = '';
+
+			// Make a new object so we don't overwrite the Website object.
+			$current = new stdClass();
+			$current->id = $website->id;
+			$current->contact_id = $website->contact_id;
+			$current->url = $website->url;
+			$current->website_type_id = $website->website_type_id;
+
 			// If we're updating "is now", skip if "used to be" has been updated.
 			if ( $now_user_type === true ) {
 				if ( ! empty( $this->bp_now_user_type ) ) {
-					if ( (int) $this->website_pre->website_type_id === (int) $this->bp_now_user_type->website_type_id ) {
+					if ( (int) $previous->website_type_id === (int) $this->bp_now_user_type->website_type_id ) {
 						return;
 					}
 				}
 			}
 
 			// Restore if this Website Type has already been changed.
-			if ( ! empty( $this->previous_changes[ $this->website_pre->website_type_id ] ) ) {
-				$this->website_process( $this->previous_changes[ $this->website_pre->website_type_id ], $args );
+			if ( ! empty( $this->previous_changes[ $previous->website_type_id ] ) ) {
+				$this->website_process( $this->previous_changes[ $previous->website_type_id ], $args );
 				return;
 			}
 
-			// Let's make a new object so we don't overwrite the Website object.
-			$changed = new stdClass();
-			$changed->id = $website->id;
-			$changed->contact_id = $website->contact_id;
-
 			// For "is now", clear the *previous* xProfile Field's URL.
 			if ( $now_user_type === true ) {
-				$changed->url = '';
-				$changed->website_type_id = $this->website_pre->website_type_id;
+				$previous->url = '';
 			}
 
 			// For "used to be", just rebuild.
 			if ( $was_user_type === true ) {
-				// When only the Website Type has changed, URL may be empty.
-				$changed->url = $this->website_pre->url;
-				$changed->website_type_id = $website->website_type_id;
+				// When only the Website Type has changed, current URL may be empty.
+				if ( empty( $current->url ) && ! empty( $this->website_pre->url ) ) {
+					// Try and use the previous URL.
+					$current->url = $this->website_pre->url;
+				}
 			}
 
-			// Process the changed Website.
-			$this->website_process( $changed, $args );
+			// Process the current changed Website.
+			$this->website_process( $current, $args );
 
-			// Maybe keep a log of the changed Website.
+			// Maybe keep a log of the current Website.
 			if ( ! empty( $this->bp_now_user_type ) ) {
 				$this->previous_changes[ $this->bp_now_user_type->website_type_id ] = $this->bp_now_user_type;
 			}
