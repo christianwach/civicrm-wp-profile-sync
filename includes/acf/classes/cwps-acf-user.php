@@ -232,9 +232,10 @@ class CiviCRM_Profile_Sync_ACF_User {
 		add_action( 'cwps/acf/mapper/email/deleted', [ $this, 'email_edited' ], 10 );
 
 		add_action( 'cwps/acf/mapper/website/edit/pre', [ $this, 'website_pre_edit' ], 10 );
+		add_action( 'cwps/acf/mapper/website/delete/pre', [ $this, 'website_pre_delete' ], 10 );
 		add_action( 'cwps/acf/mapper/website/created', [ $this, 'website_edited' ], 10 );
 		add_action( 'cwps/acf/mapper/website/edited', [ $this, 'website_edited' ], 10 );
-		add_action( 'cwps/acf/mapper/website/deleted', [ $this, 'website_edited' ], 10 );
+		//add_action( 'cwps/acf/mapper/website/deleted', [ $this, 'website_deleted' ], 10 );
 
 		add_action( 'cwps/acf/mapper/phone/created', [ $this, 'phone_edited' ], 10 );
 		add_action( 'cwps/acf/mapper/phone/edited', [ $this, 'phone_edited' ], 10 );
@@ -296,9 +297,10 @@ class CiviCRM_Profile_Sync_ACF_User {
 		remove_action( 'cwps/acf/mapper/email/deleted', [ $this, 'email_edited' ], 10 );
 
 		remove_action( 'cwps/acf/mapper/website/edit/pre', [ $this, 'website_pre_edit' ], 10 );
+		remove_action( 'cwps/acf/mapper/website/delete/pre', [ $this, 'website_pre_delete' ], 10 );
 		remove_action( 'cwps/acf/mapper/website/created', [ $this, 'website_edited' ], 10 );
 		remove_action( 'cwps/acf/mapper/website/edited', [ $this, 'website_edited' ], 10 );
-		remove_action( 'cwps/acf/mapper/website/deleted', [ $this, 'website_edited' ], 10 );
+		//remove_action( 'cwps/acf/mapper/website/deleted', [ $this, 'website_deleted' ], 10 );
 
 		remove_action( 'cwps/acf/mapper/phone/created', [ $this, 'phone_edited' ], 10 );
 		remove_action( 'cwps/acf/mapper/phone/edited', [ $this, 'phone_edited' ], 10 );
@@ -568,8 +570,13 @@ class CiviCRM_Profile_Sync_ACF_User {
 			return;
 		}
 
-		// Run the pre-edit routine.
-		$this->civicrm->website->website_pre_edit( $args );
+		// Always clear properties if set previously.
+		if ( isset( $this->website_pre ) ) {
+			unset( $this->website_pre );
+		}
+
+		// Grab the previous Website data from the database.
+		$this->website_pre = $this->civicrm->website->website_get_by_id( $website->id );
 
 	}
 
@@ -586,7 +593,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 		// Grab the Website data.
 		$website = $args['objectRef'];
-
 		if ( empty( $website->contact_id ) ) {
 			return;
 		}
@@ -596,6 +602,76 @@ class CiviCRM_Profile_Sync_ACF_User {
 		if ( $user_id === false ) {
 			return;
 		}
+
+		// Format the ACF "Post ID".
+		$post_id = 'user_' . $user_id;
+
+		// Check previous to see if its Website Type has changed.
+		$website_type_changed = false;
+		if ( ! empty( $this->website_pre ) ) {
+			if ( (int) $this->website_pre->website_type_id !== (int) $website->website_type_id ) {
+				$website_type_changed = true;
+				// Make a clone so we don't overwrite the Website Pre object.
+				$previous = clone $this->website_pre;
+				$previous->url = '';
+			}
+		}
+
+		// Unregister WordPress hooks.
+		$this->unregister_mapper_wp_hooks();
+
+		// Maybe clear the previous Field.
+		if ( $website_type_changed ) {
+			// Skip previous if it has already been changed.
+			if ( empty( $this->previously_edited[ $previous->website_type_id ] ) ) {
+				$this->civicrm->website->fields_update( $post_id, $previous );
+			}
+		}
+
+		// Run the routine, but with a User reference.
+		$this->civicrm->website->fields_update( $post_id, $website );
+
+		// Keep a clone of the Website object for future reference.
+		$this->previously_edited[ $website->website_type_id ] = clone $website;
+
+		// Re-register WordPress hooks.
+		$this->register_mapper_wp_hooks();
+
+	}
+
+
+
+	/**
+	 * Intercept when a CiviCRM Website is about to be deleted.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param array $args The array of CiviCRM params.
+	 */
+	public function website_pre_delete( $args ) {
+
+		// Get the full existing Website data.
+		$website = (object) $this->plugin->civicrm->website->get_by_id( $args['objectId'] );
+		if ( empty( $website->contact_id ) ) {
+			return;
+		}
+
+		// Bail if this Contact doesn't have a User ID.
+		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $website->contact_id );
+		if ( $user_id === false ) {
+			return;
+		}
+
+		// Skip deleting if it has already been written to.
+		if ( ! empty( $this->previously_edited[ $website->website_type_id ] ) ) {
+			return;
+		}
+
+		// Save a copy of the URL just in case.
+		$website->deleted_url = $website->url;
+
+		// Clear URL to clear the ACF Field.
+		$website->url = '';
 
 		// Format the ACF "Post ID".
 		$post_id = 'user_' . $user_id;

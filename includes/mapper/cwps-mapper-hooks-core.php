@@ -535,16 +535,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 			'old_user_data' => $old_user_data,
 		];
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'args' => $args,
-			'backtrace' => $trace,
-		], true ) );
-		*/
-
 		/**
 		 * Broadcast that a WordPress User has been edited.
 		 *

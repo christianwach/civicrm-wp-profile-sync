@@ -185,9 +185,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 
 		// Listen for events from our Mapper that require Website updates.
 		add_action( 'cwps/acf/mapper/website/edit/pre', [ $this, 'website_pre_edit' ], 10 );
+		add_action( 'cwps/acf/mapper/website/delete/pre', [ $this, 'website_pre_delete' ], 10 );
 		add_action( 'cwps/acf/mapper/website/created', [ $this, 'website_edited' ], 10 );
 		add_action( 'cwps/acf/mapper/website/edited', [ $this, 'website_edited' ], 10 );
-		add_action( 'cwps/acf/mapper/website/deleted', [ $this, 'website_edited' ], 10 );
+		//add_action( 'cwps/acf/mapper/website/deleted', [ $this, 'website_deleted' ], 10 );
 
 		// Declare registered.
 		$this->mapper_hooks = true;
@@ -210,9 +211,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 
 		// Remove all Mapper listeners.
 		remove_action( 'cwps/acf/mapper/website/edit/pre', [ $this, 'website_pre_edit' ], 10 );
+		remove_action( 'cwps/acf/mapper/website/delete/pre', [ $this, 'website_pre_delete' ], 10 );
 		remove_action( 'cwps/acf/mapper/website/created', [ $this, 'website_edited' ], 10 );
 		remove_action( 'cwps/acf/mapper/website/edited', [ $this, 'website_edited' ], 10 );
-		remove_action( 'cwps/acf/mapper/website/deleted', [ $this, 'website_edited' ], 10 );
+		//remove_action( 'cwps/acf/mapper/website/deleted', [ $this, 'website_deleted' ], 10 );
 
 		// Declare unregistered.
 		$this->mapper_hooks = false;
@@ -507,10 +509,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 			unset( $this->website_pre );
 		}
 
-		// Grab Website object.
-		$website = $args['objectRef'];
-
 		// We need a Contact ID in the edited Website.
+		$website = $args['objectRef'];
 		if ( empty( $website->contact_id ) ) {
 			return;
 		}
@@ -531,13 +531,98 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	 */
 	public function website_edited( $args ) {
 
-		// Grab the Website data.
-		$website = $args['objectRef'];
-
 		// Bail if this is not a Contact's Website.
+		$website = $args['objectRef'];
 		if ( empty( $website->contact_id ) ) {
 			return;
 		}
+
+		// Check previous to see if its Website Type has changed.
+		$website_type_changed = false;
+		if ( ! empty( $this->website_pre ) ) {
+			if ( (int) $this->website_pre->website_type_id !== (int) $website->website_type_id ) {
+				$website_type_changed = true;
+				// Make a clone so we don't overwrite the Website Pre object.
+				$previous = clone $this->website_pre;
+				$previous->url = '';
+			}
+		}
+
+		// Get the Contact data.
+		$contact = $this->plugin->civicrm->contact->get_by_id( $website->contact_id );
+
+		// Test if any of this Contact's Contact Types is mapped.
+		$post_types = $this->civicrm->contact->is_mapped( $contact, 'create' );
+		if ( $post_types !== false ) {
+
+			// Handle each Post Type in turn.
+			foreach ( $post_types as $post_type ) {
+
+				// Get the Post ID for this Contact.
+				$post_id = $this->civicrm->contact->is_mapped_to_post( $contact, $post_type );
+
+				// Skip if not mapped or Post doesn't yet exist.
+				if ( $post_id === false ) {
+					continue;
+				}
+
+				// Maybe clear the previous Field.
+				if ( $website_type_changed ) {
+					// Skip previous if it has already been changed.
+					if ( empty( $this->previously_edited[ $previous->website_type_id ] ) ) {
+						$this->fields_update( $post_id, $previous );
+					}
+				}
+
+				// Update the ACF Fields for this Post.
+				$this->fields_update( $post_id, $website );
+
+				// Keep a clone of the Website object for future reference.
+				$this->previously_edited[ $website->website_type_id ] = clone $website;
+
+			}
+
+		}
+
+		/**
+		 * Broadcast that a Website ACF Field may have been edited.
+		 *
+		 * @since 0.4
+		 *
+		 * @param array $contact The array of CiviCRM Contact data.
+		 * @param object $website The CiviCRM Website object.
+		 */
+		do_action( 'cwps/acf/website/updated', $contact, $website );
+
+	}
+
+
+
+	/**
+	 * Intercept when a CiviCRM Website is about to be deleted.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param array $args The array of CiviCRM params.
+	 */
+	public function website_pre_delete( $args ) {
+
+		// Get the full existing Website data.
+		$website = (object) $this->plugin->civicrm->website->get_by_id( $args['objectId'] );
+		if ( empty( $website->contact_id ) ) {
+			return;
+		}
+
+		// Skip deleting if it has already been written to.
+		if ( ! empty( $this->previously_edited[ $website->website_type_id ] ) ) {
+			return;
+		}
+
+		// Save a copy of the URL just in case.
+		$website->deleted_url = $website->url;
+
+		// Clear URL to clear the ACF Field.
+		$website->url = '';
 
 		// Get the Contact data.
 		$contact = $this->plugin->civicrm->contact->get_by_id( $website->contact_id );
@@ -565,14 +650,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		}
 
 		/**
-		 * Broadcast that a Website ACF Field may have been edited.
+		 * Broadcast that a Website ACF Field may have been deleted.
 		 *
-		 * @since 0.4
+		 * @since 0.5.2
 		 *
 		 * @param array $contact The array of CiviCRM Contact data.
 		 * @param object $website The CiviCRM Website object.
 		 */
-		do_action( 'cwps/acf/website/updated', $contact, $website );
+		do_action( 'cwps/acf/website/deleted', $contact, $website );
 
 	}
 
