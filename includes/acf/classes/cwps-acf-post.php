@@ -719,6 +719,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 			'meta_key' => $this->contact_id_key,
 			'meta_value' => (string) $contact_id,
 			'posts_per_page' => -1,
+			'order' => 'ASC',
 		];
 
 		// Do query.
