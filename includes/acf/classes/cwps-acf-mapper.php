@@ -478,9 +478,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Intercept Website updates in CiviCRM.
 		add_action( 'civicrm_pre', [ $this, 'website_pre_edit' ], 10, 4 );
+		add_action( 'civicrm_pre', [ $this, 'website_pre_delete' ], 10, 4 );
 		add_action( 'civicrm_post', [ $this, 'website_created' ], 10, 4 );
 		add_action( 'civicrm_post', [ $this, 'website_edited' ], 10, 4 );
-		add_action( 'civicrm_post', [ $this, 'website_edited' ], 10, 4 );
+		add_action( 'civicrm_post', [ $this, 'website_deleted' ], 10, 4 );
 
 	}
 
@@ -729,6 +730,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Remove Website update hooks.
 		remove_action( 'civicrm_pre', [ $this, 'website_pre_edit' ], 10 );
+		remove_action( 'civicrm_pre', [ $this, 'website_pre_delete' ], 10 );
 		remove_action( 'civicrm_post', [ $this, 'website_created' ], 10 );
 		remove_action( 'civicrm_post', [ $this, 'website_edited' ], 10 );
 		remove_action( 'civicrm_post', [ $this, 'website_deleted' ], 10 );
@@ -1272,6 +1274,51 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		 * @param array $args The array of CiviCRM params.
 		 */
 		do_action( 'cwps/acf/mapper/website/edit/pre', $args );
+
+	}
+
+
+
+	/**
+	 * Intercept when a CiviCRM Website is about to be deleted.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param string $op The type of database operation.
+	 * @param string $objectName The type of object.
+	 * @param integer $objectId The ID of the object.
+	 * @param object $objectRef The object.
+	 */
+	public function website_pre_delete( $op, $objectName, $objectId, $objectRef ) {
+
+		// Target our operation.
+		if ( $op != 'delete' ) {
+			return;
+		}
+
+		// Bail if this is not a Website.
+		if ( $objectName != 'Website' ) {
+			return;
+		}
+
+		// Let's make an array of the params.
+		$args = [
+			'op' => $op,
+			'objectName' => $objectName,
+			'objectId' => $objectId,
+		];
+
+		// Maybe cast objectRef as object.
+		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+
+		/**
+		 * Broadcast that a CiviCRM Website is about to be deleted.
+		 *
+		 * @since 0.5.2
+		 *
+		 * @param array $args The array of CiviCRM params.
+		 */
+		do_action( 'cwps/acf/mapper/website/delete/pre', $args );
 
 	}
 
