@@ -589,6 +589,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 			$args['objectRef']->contact_sub_type = [];
 		}
 
+		// Make sure we have arrays of unique values.
+		$contact_pre['contact_sub_type'] = array_unique( $contact_pre['contact_sub_type'] );
+		$args['objectRef']->contact_sub_type = array_unique( $args['objectRef']->contact_sub_type );
+
 		// Find the Contact Types that are missing.
 		$types_removed = array_diff( $contact_pre['contact_sub_type'], $args['objectRef']->contact_sub_type );
 

@@ -411,7 +411,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Type {
 		// Build types.
 		$types = [
 			'type' => $contact_type,
-			'subtype' => $contact_sub_type,
+			'subtype' => array_unique( $contact_sub_type ),
 		];
 
 		// --<
