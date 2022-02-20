@@ -126,7 +126,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	 *
 	 * @since 0.5.2
 	 * @access public
-	 * @var object $bulk The Mapper hooks registered flag.
+	 * @var bool $mapper_hooks The Mapper hooks registered flag.
 	 */
 	public $mapper_hooks = false;
 
