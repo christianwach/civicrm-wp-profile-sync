@@ -247,6 +247,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 			// Get the Field settings.
 			$settings = get_field_object( $field, $args['post_id'] );
+			if ( empty( $settings ) ) {
+				continue;
+			}
 
 			// Maybe update a Contact Field.
 			$this->field_handled_update( $field, $value, $args['contact']['id'], $settings );

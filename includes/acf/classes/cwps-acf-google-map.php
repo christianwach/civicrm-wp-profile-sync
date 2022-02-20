@@ -242,6 +242,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 			// Get the Field settings.
 			$settings = get_field_object( $field, $args['post_id'] );
+			if ( empty( $settings ) ) {
+				continue;
+			}
 
 			// Maybe update an Address Record.
 			$success = $this->field_handled_update( $field, $value, $args['contact']['id'], $settings, $args );
