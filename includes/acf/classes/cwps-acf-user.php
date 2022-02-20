@@ -50,6 +50,24 @@ class CiviCRM_Profile_Sync_ACF_User {
 	public $civicrm;
 
 	/**
+	 * WordPress Mapper hooks registered flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var bool $mapper_wp_hooks The WordPress Mapper hooks registered flag.
+	 */
+	public $mapper_wp_hooks = false;
+
+	/**
+	 * CiviCRM Mapper hooks registered flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var bool $mapper_civicrm_hooks The CiviCRM Mapper hooks registered flag.
+	 */
+	public $mapper_civicrm_hooks = false;
+
+	/**
 	 * Supported Location Rule names.
 	 *
 	 * @since 0.5
@@ -192,8 +210,16 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 */
 	public function register_mapper_wp_hooks() {
 
+		// Bail if already registered.
+		if ( $this->mapper_wp_hooks === true ) {
+			return;
+		}
+
 		// Listen for events from our Mapper that require CiviCRM updates.
 		add_action( 'cwps/acf/mapper/acf_fields/saved', [ $this, 'acf_fields_saved' ], 10 );
+
+		// Declare registered.
+		$this->mapper_wp_hooks = true;
 
 	}
 
@@ -206,8 +232,16 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 */
 	public function unregister_mapper_wp_hooks() {
 
+		// Bail if already unregistered.
+		if ( $this->mapper_wp_hooks === false ) {
+			return;
+		}
+
 		// Listen for events from our Mapper that require CiviCRM updates.
 		remove_action( 'cwps/acf/mapper/acf_fields/saved', [ $this, 'acf_fields_saved' ], 10 );
+
+		// Declare unregistered.
+		$this->mapper_wp_hooks = false;
 
 	}
 
@@ -219,6 +253,11 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 * @since 0.4
 	 */
 	public function register_mapper_civicrm_hooks() {
+
+		// Bail if already registered.
+		if ( $this->mapper_civicrm_hooks === true ) {
+			return;
+		}
 
 		// Listen for events from our Mapper that require WordPress updates.
 		add_action( 'cwps/acf/mapper/contact/edited', [ $this, 'contact_edited' ], 10 );
@@ -274,6 +313,9 @@ class CiviCRM_Profile_Sync_ACF_User {
 		add_action( 'cwps/acf/mapper/contact/created', [ $this, 'contact_id_edited' ], 10 );
 		add_action( 'cwps/acf/mapper/contact/edited', [ $this, 'contact_id_edited' ], 10 );
 
+		// Declare registered.
+		$this->mapper_civicrm_hooks = true;
+
 	}
 
 
@@ -284,6 +326,11 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 * @since 0.4
 	 */
 	public function unregister_mapper_civicrm_hooks() {
+
+		// Bail if already unregistered.
+		if ( $this->mapper_civicrm_hooks === false ) {
+			return;
+		}
 
 		// Stop listening for events from our Mapper that require WordPress updates.
 		remove_action( 'cwps/acf/mapper/contact/edited', [ $this, 'contact_edited' ], 10 );
@@ -338,6 +385,9 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 		remove_action( 'cwps/acf/mapper/contact/created', [ $this, 'contact_id_edited' ], 10 );
 		remove_action( 'cwps/acf/mapper/contact/edited', [ $this, 'contact_id_edited' ], 10 );
+
+		// Declare unregistered.
+		$this->mapper_civicrm_hooks = false;
 
 	}
 
