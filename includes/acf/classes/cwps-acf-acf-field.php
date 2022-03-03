@@ -890,6 +890,20 @@ class CiviCRM_Profile_Sync_ACF_Field {
 			// Now add it.
 			acf_render_field_setting( $field, $setting );
 
+			/**
+			 * Broadcast that a returned Setting Field has been added.
+			 *
+			 * This action allows extra Setting Fields to be added.
+			 *
+			 * @since 0.5.2
+			 *
+			 * @param array The empty default Setting Field choices array.
+			 * @param array $field The ACF Field data array.
+			 * @param array $setting The ACF Field setting array.
+			 * @param array $field_group The ACF Field Group data array.
+			 */
+			do_action( 'cwps/acf/field/entity_field_setting/added', $field, $setting, $field_group );
+
 			// We're done.
 			return;
 
@@ -931,6 +945,20 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 		// Now add it.
 		acf_render_field_setting( $field, $setting_field );
+
+		/**
+		 * Broadcast that a Setting Field has been added.
+		 *
+		 * This action allows extra Setting Fields to be added.
+		 *
+		 * @since 0.5.2
+		 *
+		 * @param array The empty default Setting Field choices array.
+		 * @param array $field The ACF Field data array.
+		 * @param array $setting_field The ACF Field setting array.
+		 * @param array $field_group The ACF Field Group data array.
+		 */
+		do_action( 'cwps/acf/field/generic_field_setting/added', $field, $setting_field, $field_group );
 
 	}
 
