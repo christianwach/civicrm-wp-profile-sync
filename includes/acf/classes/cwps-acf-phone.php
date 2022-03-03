@@ -578,7 +578,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		foreach ( $actions['delete'] as $phone_id ) {
 
 			// Okay, let's do it.
-			$phone = $this->delete( $phone_id );
+			$phone = $this->plugin->civicrm->phone->delete( $phone_id );
 
 			// Make an array of our params.
 			$params = [
