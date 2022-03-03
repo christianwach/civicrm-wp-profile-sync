@@ -248,6 +248,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		remove_action( 'cwps/acf/mapper/term/created', [ $this, 'term_created' ], 20 );
 		remove_action( 'cwps/acf/mapper/term/edit/pre', [ $this, 'term_pre_edit' ], 20 );
 		remove_action( 'cwps/acf/mapper/term/edited', [ $this, 'term_edited' ], 20 );
+		remove_action( 'cwps/acf/mapper/term/delete/pre', [ $this, 'term_pre_delete' ], 20 );
 		remove_action( 'cwps/acf/mapper/term/deleted', [ $this, 'term_deleted' ], 20 );
 
 		// Declare unregistered.
