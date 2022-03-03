@@ -50,6 +50,15 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	public $acf;
 
 	/**
+	 * CiviCRM Utilities object.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var object $civicrm The CiviCRM Utilities object.
+	 */
+	public $civicrm;
+
+	/**
 	 * Supported ACF Field Types.
 	 *
 	 * @since 0.5
@@ -89,6 +98,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		$this->plugin = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
 		$this->acf = $parent;
+		$this->civicrm = $this->acf_loader->civicrm;
 
 		// Init when the parent class is loaded.
 		add_action( 'cwps/acf/acf/loaded', [ $this, 'register_hooks' ] );
@@ -294,25 +304,25 @@ class CiviCRM_Profile_Sync_ACF_Field {
 			foreach ( $fields_in_group as $field_in_group ) {
 
 				// Get the CiviCRM Custom Field and add if it has a reference to a CiviCRM Field.
-				$custom_field_id = $this->acf_loader->civicrm->custom_field->custom_field_id_get( $field_in_group );
+				$custom_field_id = $this->civicrm->custom_field->custom_field_id_get( $field_in_group );
 				if ( ! empty( $custom_field_id ) ) {
 					$acf_fields['custom'][ $field_in_group['name'] ] = $custom_field_id;
 				}
 
 				// Get the CiviCRM Contact Field and add if it has a reference to a CiviCRM Field.
-				$contact_field_name = $this->acf_loader->civicrm->contact->contact_field_name_get( $field_in_group );
+				$contact_field_name = $this->civicrm->contact->contact_field_name_get( $field_in_group );
 				if ( ! empty( $contact_field_name ) ) {
 					$acf_fields['contact'][ $field_in_group['name'] ] = $contact_field_name;
 				}
 
 				// Get the CiviCRM Activity Field and add if it has a reference to a CiviCRM Field.
-				$activity_field_name = $this->acf_loader->civicrm->activity->activity_field_name_get( $field_in_group );
+				$activity_field_name = $this->civicrm->activity->activity_field_name_get( $field_in_group );
 				if ( ! empty( $activity_field_name ) ) {
 					$acf_fields['activity'][ $field_in_group['name'] ] = $activity_field_name;
 				}
 
 				// Get the CiviCRM Participant Field and add if it has a reference to a CiviCRM Field.
-				$participant_field_name = $this->acf_loader->civicrm->participant->participant_field_name_get( $field_in_group );
+				$participant_field_name = $this->civicrm->participant->participant_field_name_get( $field_in_group );
 				if ( ! empty( $participant_field_name ) ) {
 					$acf_fields['participant'][ $field_in_group['name'] ] = $participant_field_name;
 				}
@@ -408,7 +418,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		}
 
 		// Get the mapped Custom Field ID if present.
-		$custom_field_id = $this->acf_loader->civicrm->custom_field->custom_field_id_get( $field );
+		$custom_field_id = $this->civicrm->custom_field->custom_field_id_get( $field );
 		if ( $custom_field_id === false ) {
 			return $valid;
 		}
@@ -680,7 +690,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 				$value = $value['url'];
 			}
 
-		// When it's numeric, get full image URL from attachment.
+		// When it's numeric, get full image URL from Attachment.
 		} elseif ( is_numeric( $value ) ) {
 
 			// Grab the the full size Image URL.
@@ -903,9 +913,9 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 		// Define Setting Field.
 		$setting_field = [
-			'key' => $this->acf_loader->civicrm->acf_field_key_get(),
+			'key' => $this->civicrm->acf_field_key_get(),
 			'label' => __( 'CiviCRM Field', 'civicrm-wp-profile-sync' ),
-			'name' => $this->acf_loader->civicrm->acf_field_key_get(),
+			'name' => $this->civicrm->acf_field_key_get(),
 			'type' => 'select',
 			'instructions' => __( 'Choose the CiviCRM Field that this ACF Field should sync with. (Optional)', 'civicrm-wp-profile-sync' ),
 			'default_value' => '',
