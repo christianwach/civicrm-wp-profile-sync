@@ -244,7 +244,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function hooks_wordpress_acf_add() {
 
 		// Intercept ACF Fields prior to save.
-		//add_action( 'acf/save_post', [ $this, 'acf_fields_saved' ], 5, 1 );
+		add_action( 'acf/save_post', [ $this, 'acf_fields_saved_pre' ], 5, 1 );
 
 		// Intercept ACF Fields after save.
 		add_action( 'acf/save_post', [ $this, 'acf_fields_saved' ], 20, 1 );
@@ -3069,9 +3069,41 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		 *
 		 * @since 0.4
 		 *
-		 * @param array $args The array of CiviCRM params.
+		 * @param array $args The array of WordPress params.
 		 */
 		do_action( 'cwps/acf/mapper/post/saved', $args );
+
+	}
+
+
+
+	/**
+	 * Fires just before the ACF Fields saved operation.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param integer $post_id The ID of the Post or revision.
+	 */
+	public function acf_fields_saved_pre( $post_id ) {
+
+		// Bail if there was a Multisite switch.
+		if ( is_multisite() && ms_is_switched() ) {
+			return;
+		}
+
+		// Let's make an array of the params.
+		$args = [
+			'post_id' => $post_id,
+		];
+
+		/**
+		 * Broadcast that ACF Fields are about to be saved for a Post.
+		 *
+		 * @since 0.5.2
+		 *
+		 * @param array $args The array of WordPress params.
+		 */
+		do_action( 'cwps/acf/mapper/acf_fields/saved/pre', $args );
 
 	}
 
@@ -3103,7 +3135,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		 *
 		 * @since 0.4
 		 *
-		 * @param array $args The array of CiviCRM params.
+		 * @param array $args The array of WordPress params.
 		 */
 		do_action( 'cwps/acf/mapper/acf_fields/saved', $args );
 
