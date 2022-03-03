@@ -214,8 +214,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		remove_action( 'bp_core_activated_user', [ $this, 'bp_activated_user' ], 20 );
 
 		// Remove callback for edits to BuddyPress xProfile Fields.
-		remove_action( 'xprofile_updated_profile', [ $this, 'bp_fields_edited' ], 20 );
-		//remove_action( 'xprofile_data_after_save', [ $this, 'bp_field_edited' ], 20 );
+		remove_action( 'xprofile_data_after_save', [ $this, 'bp_field_edited' ], 20 );
 
 	}
 
@@ -1762,11 +1761,11 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 * @since 0.4
 	 *
 	 * @param string $op The kind of operation.
-	 * @param integer $groupID The numeric ID of the Custom Group.
-	 * @param integer $entityID The numeric ID of the Contact.
+	 * @param integer $group_id The numeric ID of the Custom Group.
+	 * @param integer $entity_id The numeric ID of the Contact.
 	 * @param array $custom_fields The array of Custom Fields.
 	 */
-	public function custom_edited( $op, $groupID, $entityID, &$custom_fields ) {
+	public function custom_edited( $op, $group_id, $entity_id, &$custom_fields ) {
 
 		// Bail if there's nothing to see here.
 		if ( empty( $custom_fields ) ) {
@@ -1776,8 +1775,8 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		// Let's make an array of the CiviCRM params.
 		$args = [
 			'op' => $op,
-			'groupID' => $groupID,
-			'entityID' => $entityID,
+			'group_id' => $group_id,
+			'entity_id' => $entity_id,
 			'custom_fields' => $custom_fields,
 		];
 

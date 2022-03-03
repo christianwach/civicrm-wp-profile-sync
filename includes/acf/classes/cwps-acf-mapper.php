@@ -320,10 +320,8 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 */
 	public function hooks_wordpress_acf_remove() {
 
-		// Remove ACF Fields update hook.
-		//remove_action( 'acf/save_post', [ $this, 'acf_fields_saved' ], 5 );
-
-		// Remove ACF Fields update hook.
+		// Remove ACF Fields callbacks.
+		remove_action( 'acf/save_post', [ $this, 'acf_fields_saved' ], 5 );
 		remove_action( 'acf/save_post', [ $this, 'acf_fields_saved' ], 20 );
 
 	}
@@ -564,6 +562,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function hooks_civicrm_custom_add() {
 
 		// Intercept CiviCRM Custom Table updates.
+		add_action( 'civicrm_customPre', [ $this, 'custom_pre_edit' ], 10, 4 );
 		add_action( 'civicrm_custom', [ $this, 'custom_edited' ], 10, 4 );
 
 	}
@@ -816,6 +815,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function hooks_civicrm_custom_remove() {
 
 		// Remove CiviCRM Custom Table hooks.
+		remove_action( 'civicrm_customPre', [ $this, 'custom_pre_edit' ], 10 );
 		remove_action( 'civicrm_custom', [ $this, 'custom_edited' ], 10 );
 
 	}
@@ -2245,16 +2245,16 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 
 	/**
-	 * Intercept Custom Field updates.
+	 * Intercept when a set of Custom Fields is about to be updated.
 	 *
-	 * @since 0.4
+	 * @since 0.5.2
 	 *
 	 * @param string $op The kind of operation.
-	 * @param integer $groupID The numeric ID of the Custom Group.
-	 * @param integer $entityID The numeric ID of the Contact.
+	 * @param integer $group_id The numeric ID of the Custom Group.
+	 * @param integer $entity_id The numeric ID of the CiviCRM Entity.
 	 * @param array $custom_fields The array of Custom Fields.
 	 */
-	public function custom_edited( $op, $groupID, $entityID, &$custom_fields ) {
+	public function custom_pre_edit( $op, $group_id, $entity_id, &$custom_fields ) {
 
 		// Bail if there's nothing to see here.
 		if ( empty( $custom_fields ) ) {
@@ -2264,17 +2264,56 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		// Let's make an array of the CiviCRM params.
 		$args = [
 			'op' => $op,
-			'groupID' => $groupID,
-			'entityID' => $entityID,
+			'group_id' => $group_id,
+			'entity_id' => $entity_id,
+			'custom_fields' => $custom_fields,
+		];
+
+		/**
+		 * Broadcast that a set of CiviCRM Custom Fields is about to be updated.
+		 *
+		 * @since 0.5.2
+		 *
+		 * @param array $args The array of CiviCRM params.
+		 */
+		do_action( 'cwps/acf/mapper/civicrm/custom/edit/pre', $args );
+
+	}
+
+
+
+	/**
+	 * Intercept Custom Field updates.
+	 *
+	 * @since 0.4
+	 *
+	 * @param string $op The kind of operation.
+	 * @param integer $group_id The numeric ID of the Custom Group.
+	 * @param integer $entity_id The numeric ID of the CiviCRM Entity.
+	 * @param array $custom_fields The array of Custom Fields.
+	 */
+	public function custom_edited( $op, $group_id, $entity_id, &$custom_fields ) {
+
+		// Bail if there's nothing to see here.
+		if ( empty( $custom_fields ) ) {
+			return;
+		}
+
+		// Let's make an array of the CiviCRM params.
+		$args = [
+			'op' => $op,
+			'group_id' => $group_id,
+			'entity_id' => $entity_id,
 			'custom_fields' => $custom_fields,
 		];
 
 		/**
 		 * Broadcast that a set of CiviCRM Custom Fields has been updated.
 		 *
-		 * Used internally to:
+		 * Internally, this is used by:
 		 *
-		 * * Update a WordPress Post
+		 * @see CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field::custom_edited()
+		 * @see CiviCRM_Profile_Sync_ACF_User::custom_edited()
 		 *
 		 * @since 0.4
 		 *
