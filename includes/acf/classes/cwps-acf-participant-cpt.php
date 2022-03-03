@@ -623,12 +623,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 *
 	 * @since 0.5
 	 *
+	 * @param integer $participant_id The numeric ID of the Participant.
 	 * @param array $fields The ACF Field data.
 	 * @param WP_Post $post The WordPress Post object.
 	 * @param integer $post_id The numeric ID of the WordPress Post.
 	 * @return array|bool $participant_data The CiviCRM Participant data.
 	 */
-	public function prepare_from_fields( $fields, $post, $post_id = null ) {
+	public function prepare_from_fields( $participant_id, $fields, $post, $post_id = null ) {
 
 		// Init data for Fields.
 		$participant_data = [];
@@ -706,8 +707,18 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 				}
 
+				// Build args for value conversion.
+				$args = [
+					'identifier' => $this->participant->identifier,
+					'entity_id' => $participant_id,
+					'custom_field_id' => $custom_field_id,
+					'field_name' => $participant_field_name,
+					'selector' => $selector,
+					'post_id' => $post_id,
+				];
+
 				// Parse value by Field Type.
-				$value = $this->acf_loader->acf->field->value_get_for_civicrm( $value, $settings['type'], $settings );
+				$value = $this->acf_loader->acf->field->value_get_for_civicrm( $value, $settings['type'], $settings, $args );
 
 				// Some Participant Fields cannot be empty.
 				$cannot_be_empty = [
@@ -746,7 +757,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	public function create_from_fields( $fields, $post, $post_id = null ) {
 
 		// Build required data.
-		$participant_data = $this->prepare_from_fields( $fields, $post, $post_id );
+		$participant_data = $this->prepare_from_fields( null, $fields, $post, $post_id );
 
 		// Update the Participant.
 		$participant = $this->participant->create( $participant_data );
@@ -772,7 +783,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	public function update_from_fields( $participant_id, $fields, $post, $post_id = null ) {
 
 		// Build required data.
-		$participant_data = $this->prepare_from_fields( $fields, $post, $post_id );
+		$participant_data = $this->prepare_from_fields( $participant_id, $fields, $post, $post_id );
 
 		// Add the Participant ID.
 		$participant_data['id'] = $participant_id;

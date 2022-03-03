@@ -1327,11 +1327,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 	 *
 	 * @since 0.5
 	 *
+	 * @param integer $case_id The numeric ID of the Case.
 	 * @param array $fields The ACF Field data.
 	 * @param integer $post_id The numeric ID of the WordPress Post.
 	 * @return array|bool $case_data The CiviCRM Case data.
 	 */
-	public function prepare_from_fields( $fields, $post_id = null ) {
+	public function prepare_from_fields( $case_id, $fields, $post_id = null ) {
 
 		// Init data for Fields.
 		$case_data = [];
@@ -1342,10 +1343,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		}
 
 		// Loop through the Field data.
-		foreach ( $fields as $field => $value ) {
+		foreach ( $fields as $selector => $value ) {
 
 			// Get the Field settings.
-			$settings = get_field_object( $field, $post_id );
+			$settings = get_field_object( $selector, $post_id );
 
 			// Get the CiviCRM Custom Field and Case Field.
 			$custom_field_id = $this->civicrm->custom_field->custom_field_id_get( $settings );
@@ -1377,8 +1378,18 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 				}
 
+				// Build args for value conversion.
+				$args = [
+					'identifier' => $this->identifier,
+					'entity_id' => $case_id,
+					'custom_field_id' => $custom_field_id,
+					'field_name' => $case_field_name,
+					'selector' => $selector,
+					'post_id' => $post_id,
+				];
+
 				// Parse value by Field type.
-				$value = $this->acf_loader->acf->field->value_get_for_civicrm( $value, $settings['type'], $settings );
+				$value = $this->acf_loader->acf->field->value_get_for_civicrm( $value, $settings['type'], $settings, $args );
 
 				// Some Case Fields cannot be empty.
 				$cannot_be_empty = [
@@ -1419,7 +1430,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 	public function update_from_fields( $case_id, $fields, $post_id = null ) {
 
 		// Build required data.
-		$case_data = $this->prepare_from_fields( $fields, $post_id );
+		$case_data = $this->prepare_from_fields( $case_id, $fields, $post_id );
 
 		// Add the Case ID.
 		$case_data['id'] = $case_id;

@@ -1103,11 +1103,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 	 *
 	 * @since 0.4
 	 *
+	 * @param integer $activity_id The numeric ID of the Activity.
 	 * @param array $fields The ACF Field data.
 	 * @param integer $post_id The numeric ID of the WordPress Post.
 	 * @return array|bool $activity_data The CiviCRM Activity data.
 	 */
-	public function prepare_from_fields( $fields, $post_id = null ) {
+	public function prepare_from_fields( $activity_id, $fields, $post_id = null ) {
 
 		// Init data for Fields.
 		$activity_data = [];
@@ -1118,10 +1119,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		}
 
 		// Loop through the Field data.
-		foreach ( $fields as $field => $value ) {
+		foreach ( $fields as $selector => $value ) {
 
 			// Get the Field settings.
-			$settings = get_field_object( $field, $post_id );
+			$settings = get_field_object( $selector, $post_id );
 
 			// Get the CiviCRM Custom Field and Activity Field.
 			$custom_field_id = $this->civicrm->custom_field->custom_field_id_get( $settings );
@@ -1153,8 +1154,18 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 				}
 
+				// Build args for value conversion.
+				$args = [
+					'identifier' => $this->identifier,
+					'entity_id' => $activity_id,
+					'custom_field_id' => $custom_field_id,
+					'field_name' => $activity_field_name,
+					'selector' => $selector,
+					'post_id' => $post_id,
+				];
+
 				// Parse value by Field Type.
-				$value = $this->acf_loader->acf->field->value_get_for_civicrm( $value, $settings['type'], $settings );
+				$value = $this->acf_loader->acf->field->value_get_for_civicrm( $value, $settings['type'], $settings, $args );
 
 				// Some Activity Fields cannot be empty.
 				$cannot_be_empty = [
@@ -1195,7 +1206,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 	public function update_from_fields( $activity_id, $fields, $post_id = null ) {
 
 		// Build required data.
-		$activity_data = $this->prepare_from_fields( $fields, $post_id );
+		$activity_data = $this->prepare_from_fields( $activity_id, $fields, $post_id );
 
 		// Add the Activity ID.
 		$activity_data['id'] = $activity_id;

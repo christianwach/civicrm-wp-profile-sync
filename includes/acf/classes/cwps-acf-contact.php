@@ -1247,11 +1247,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 *
 	 * @since 0.4
 	 *
+	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param array $fields The ACF Field data.
 	 * @param integer|string $post_id The ACF "Post ID".
 	 * @return array $contact_data The CiviCRM Contact data.
 	 */
-	public function prepare_from_fields( $fields, $post_id = null ) {
+	public function prepare_from_fields( $contact_id, $fields, $post_id = null ) {
 
 		// Init data for Fields.
 		$contact_data = [];
@@ -1297,8 +1298,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 				// Build args for value conversion.
 				$args = [
+					'identifier' => $this->identifier,
+					'entity_id' => $contact_id,
 					'custom_field_id' => $custom_field_id,
-					'contact_field_name' => $contact_field_name,
+					'field_name' => $contact_field_name,
+					'selector' => $selector,
+					'post_id' => $post_id,
 				];
 
 				// Parse value by Field Type.
@@ -1331,7 +1336,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	public function update_from_fields( $contact_id, $fields, $post_id = null ) {
 
 		// Build required data.
-		$contact_data = $this->prepare_from_fields( $fields, $post_id );
+		$contact_data = $this->prepare_from_fields( $contact_id, $fields, $post_id );
 
 		// Add the Contact ID.
 		$contact_data['id'] = $contact_id;
