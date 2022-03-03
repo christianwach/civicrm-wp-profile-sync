@@ -50,6 +50,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 	public $civicrm;
 
 	/**
+	 * Mapper hooks registered flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var bool $mapper_hooks The Mapper hooks registered flag.
+	 */
+	public $mapper_hooks = false;
+
+	/**
 	 * ACF Fields which must be handled separately.
 	 *
 	 * @since 0.4
@@ -108,13 +117,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 	public function register_hooks() {
 
 		/*
-		// Intercept when a CiviCRM Multiple Record Set has been updated.
-		add_action( 'cwps/acf/mapper/multiset/created', [ $this, 'multiset_edited' ], 10, 1 );
-		add_action( 'cwps/acf/mapper/multiset/edited', [ $this, 'multiset_edited' ], 10, 1 );
-
-		// Intercept when a CiviCRM Multiple Record Set is being deleted.
-		add_action( 'cwps/acf/mapper/multiset/delete/pre', [ $this, 'multiset_pre_delete' ], 10, 1 );
-		add_action( 'cwps/acf/mapper/multiset/deleted', [ $this, 'multiset_deleted' ], 10, 1 );
+		// Always register Mapper hooks.
+		$this->register_mapper_hooks();
 
 		// Add any Multiple Record Set Fields attached to a Post.
 		add_filter( 'cwps/acf/fields_get_for_post', [ $this, 'acf_fields_get_for_post' ], 10, 3 );
@@ -125,6 +129,58 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		// Maybe sync the Multiple Record Set "Multiple Record Set ID" to the ACF Subfields.
 		add_action( 'cwps/acf/multiset/created', [ $this, 'maybe_sync_multiset_id' ], 10, 2 );
 		*/
+
+	}
+
+
+
+	/**
+	 * Register callbacks for Mapper events.
+	 *
+	 * @since 0.5.2
+	 */
+	public function register_mapper_hooks() {
+
+		// Bail if already registered.
+		if ( $this->mapper_hooks === true ) {
+			return;
+		}
+
+		// Intercept when a CiviCRM Multiple Record Set has been updated.
+		add_action( 'cwps/acf/mapper/multiset/created', [ $this, 'multiset_edited' ], 10 );
+		add_action( 'cwps/acf/mapper/multiset/edited', [ $this, 'multiset_edited' ], 10 );
+
+		// Intercept when a CiviCRM Multiple Record Set is being deleted.
+		add_action( 'cwps/acf/mapper/multiset/delete/pre', [ $this, 'multiset_pre_delete' ], 10 );
+		add_action( 'cwps/acf/mapper/multiset/deleted', [ $this, 'multiset_deleted' ], 10 );
+
+		// Declare registered.
+		$this->mapper_hooks = true;
+
+	}
+
+
+
+	/**
+	 * Unregister callbacks for Mapper events.
+	 *
+	 * @since 0.5.2
+	 */
+	public function unregister_mapper_hooks() {
+
+		// Bail if already unregistered.
+		if ( $this->mapper_hooks === false ) {
+			return;
+		}
+
+		// Remove all Mapper listeners.
+		remove_action( 'cwps/acf/mapper/multiset/created', [ $this, 'multiset_edited' ], 10 );
+		remove_action( 'cwps/acf/mapper/multiset/edited', [ $this, 'multiset_edited' ], 10 );
+		remove_action( 'cwps/acf/mapper/multiset/delete/pre', [ $this, 'multiset_pre_delete' ], 10 );
+		remove_action( 'cwps/acf/mapper/multiset/deleted', [ $this, 'multiset_deleted' ], 10 );
+
+		// Declare unregistered.
+		$this->mapper_hooks = false;
 
 	}
 

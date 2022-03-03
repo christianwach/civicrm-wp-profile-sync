@@ -57,6 +57,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 	 */
 	public $civicrm;
 
+	/**
+	 * Mapper hooks registered flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var bool $mapper_hooks The Mapper hooks registered flag.
+	 */
+	public $mapper_hooks = false;
+
 
 
 	/**
@@ -87,6 +96,31 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 	 */
 	public function register_hooks() {
 
+		// Always register Mapper hooks.
+		$this->register_mapper_hooks();
+
+		// Intercept Post created from Contact events.
+		add_action( 'cwps/acf/post/contact_sync_to_post', [ $this, 'contact_sync_to_post' ], 10 );
+
+		// Intercept calls to sync the Group.
+		add_action( 'cwps/acf/admin/group-to-term/sync', [ $this, 'group_sync' ], 10 );
+
+	}
+
+
+
+	/**
+	 * Register callbacks for Mapper events.
+	 *
+	 * @since 0.5.2
+	 */
+	public function register_mapper_hooks() {
+
+		// Bail if already registered.
+		if ( $this->mapper_hooks === true ) {
+			return;
+		}
+
 		// Intercept prior to a CiviCRM Group being deleted.
 		add_action( 'cwps/acf/mapper/group/delete/pre', [ $this, 'group_deleted_pre' ], 10 );
 
@@ -99,11 +133,33 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 		// Intercept CiviCRM's rejoin Contacts to Group.
 		add_action( 'cwps/acf/mapper/group/contacts/rejoined', [ $this, 'group_contacts_rejoined' ], 10 );
 
-		// Intercept Post created from Contact events.
-		add_action( 'cwps/acf/post/contact_sync_to_post', [ $this, 'contact_sync_to_post' ], 10 );
+		// Declare registered.
+		$this->mapper_hooks = true;
 
-		// Intercept calls to sync the Group.
-		add_action( 'cwps/acf/admin/group-to-term/sync', [ $this, 'group_sync' ], 10 );
+	}
+
+
+
+	/**
+	 * Unregister callbacks for Mapper events.
+	 *
+	 * @since 0.5.2
+	 */
+	public function unregister_mapper_hooks() {
+
+		// Bail if already unregistered.
+		if ( $this->mapper_hooks === false ) {
+			return;
+		}
+
+		// Remove all Mapper listeners.
+		remove_action( 'cwps/acf/mapper/group/delete/pre', [ $this, 'group_deleted_pre' ], 10 );
+		remove_action( 'cwps/acf/mapper/group/contacts/created', [ $this, 'group_contacts_created' ], 10 );
+		remove_action( 'cwps/acf/mapper/group/contacts/deleted', [ $this, 'group_contacts_deleted' ], 10 );
+		remove_action( 'cwps/acf/mapper/group/contacts/rejoined', [ $this, 'group_contacts_rejoined' ], 10 );
+
+		// Declare unregistered.
+		$this->mapper_hooks = false;
 
 	}
 

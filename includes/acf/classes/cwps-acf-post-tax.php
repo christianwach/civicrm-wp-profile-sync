@@ -50,6 +50,15 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	public $post;
 
 	/**
+	 * Mapper hooks registered flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var bool $mapper_hooks The Mapper hooks registered flag.
+	 */
+	public $mapper_hooks = false;
+
+	/**
 	 * Term Meta key.
 	 *
 	 * @since 0.4
@@ -88,6 +97,9 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	 */
 	public function register_hooks() {
 
+		// Always register Mapper hooks.
+		$this->register_mapper_hooks();
+
 		// Build array of Taxonomies to use.
 		add_action( 'init', [ $this, 'taxonomies_build' ], 1000 );
 
@@ -97,8 +109,24 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		// Listen for when a Post is about to be updated.
 		add_action( 'pre_post_update', [ $this, 'post_saved_pre' ], 10, 2 );
 
-		// Listen for events from our Mapper that require Taxonomy updates.
+		// Listen for events that require Taxonomy updates.
 		add_action( 'cwps/acf/contact/post/saved', [ $this, 'post_saved' ], 10 );
+
+	}
+
+
+
+	/**
+	 * Register callbacks for Mapper events.
+	 *
+	 * @since 0.5.2
+	 */
+	public function register_mapper_hooks() {
+
+		// Bail if already registered.
+		if ( $this->mapper_hooks === true ) {
+			return;
+		}
 
 		// Listen for new term creation.
 		add_action( 'cwps/acf/mapper/term/created', [ $this, 'term_created' ], 20 );
@@ -109,6 +137,34 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 		// Intercept term deletion.
 		add_action( 'cwps/acf/mapper/term/deleted', [ $this, 'term_deleted' ], 20 );
+
+		// Declare registered.
+		$this->mapper_hooks = true;
+
+	}
+
+
+
+	/**
+	 * Unregister callbacks for Mapper events.
+	 *
+	 * @since 0.5.2
+	 */
+	public function unregister_mapper_hooks() {
+
+		// Bail if already unregistered.
+		if ( $this->mapper_hooks === false ) {
+			return;
+		}
+
+		// Remove all Mapper listeners.
+		remove_action( 'cwps/acf/mapper/term/created', [ $this, 'term_created' ], 20 );
+		remove_action( 'cwps/acf/mapper/term/edit/pre', [ $this, 'term_pre_edit' ], 20 );
+		remove_action( 'cwps/acf/mapper/term/edited', [ $this, 'term_edited' ], 20 );
+		remove_action( 'cwps/acf/mapper/term/deleted', [ $this, 'term_deleted' ], 20 );
+
+		// Declare unregistered.
+		$this->mapper_hooks = false;
 
 	}
 
