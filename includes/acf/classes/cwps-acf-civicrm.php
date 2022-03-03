@@ -284,6 +284,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	public $campaign;
 
 	/**
+	 * CiviCRM Attachment object.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var object $attachment The CiviCRM Attachment object.
+	 */
+	public $attachment;
+
+	/**
 	 * "CiviCRM Field" Field key in the ACF Field data.
 	 *
 	 * This "top level" Field key is common to all CiviCRM Entities. The value
@@ -381,6 +390,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-civicrm-group.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-civicrm-membership.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-civicrm-note.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-civicrm-attachment.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-civicrm-tag.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-civicrm-campaign.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-address.php';
@@ -435,6 +445,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		$this->group = new CiviCRM_Profile_Sync_ACF_CiviCRM_Group( $this );
 		$this->membership = new CiviCRM_Profile_Sync_ACF_CiviCRM_Membership( $this );
 		$this->note = new CiviCRM_Profile_Sync_ACF_CiviCRM_Note( $this );
+		$this->attachment = new CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment( $this );
 		$this->tag = new CiviCRM_Profile_Sync_ACF_CiviCRM_Tag( $this );
 		$this->campaign = new CiviCRM_Profile_Sync_ACF_CiviCRM_Campaign( $this );
 		$this->address = new CiviCRM_Profile_Sync_ACF_CiviCRM_Address( $this );

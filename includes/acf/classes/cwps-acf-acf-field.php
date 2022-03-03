@@ -78,6 +78,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		'url',
 		'email',
 		'image',
+		'file',
 		'google_map',
 		'civicrm_contact',
 		'civicrm_yes_no',
@@ -605,6 +606,11 @@ class CiviCRM_Profile_Sync_ACF_Field {
 			// Parse the value of an "Image" Field.
 			case 'image':
 				$value = $this->image_value_get( $value );
+				break;
+
+			// Parse the value of a "File" Field.
+			case 'file':
+				$value = $this->civicrm->attachment->value_get_for_civicrm( $value, $settings, $args );
 				break;
 
 			// Parse the value of a "Date Picker" Field.
