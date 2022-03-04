@@ -1237,6 +1237,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 					$sync = true;
 				}
 
+			} else {
+
+				// Sync if both file paths are empty.
+				if ( empty( $meta['wordpress_file'] ) ) {
+					$sync = true;
+				}
+
 			}
 
 		}
@@ -1347,6 +1354,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 		// Transfer the CiviCRM File to WordPress and grab ID.
 		$attachment_id = media_handle_sideload( $files, $target_post_id );
+
+		// TODO: Handle sideload errors.
 
 		/*
 		$e = new \Exception();
