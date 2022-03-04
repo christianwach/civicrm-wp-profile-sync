@@ -202,21 +202,27 @@ class CiviCRM_WP_Profile_Sync_WordPress {
 	 * Code via Frankie Jarrett on GitHub.
 	 *
 	 * @link https://gist.github.com/fjarrett/ecddd0ed419bb853e390
+	 * @link https://core.trac.wordpress.org/ticket/25615
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $pee The string to match paragraphs tags in.
+	 * @param string $text The string to match paragraphs tags in.
 	 * @param bool $br (Optional) Whether to process line breaks.
 	 * @return string
 	 */
-	public function unautop( $pee, $br = true ) {
+	public function unautop( $text, $br = true ) {
+
+		// Bail if there's nothing to parse.
+		if ( trim( $text ) === '' ) {
+			return '';
+		}
 
 		// Match plain <p> tags and their contents (ignore <p> tags with attributes).
-		$matches = preg_match_all( '/<(p+)*(?:>(.*)<\/\1>|\s+\/>)/m', $pee, $pees );
+		$matches = preg_match_all( '/<(p+)*(?:>(.*)<\/\1>|\s+\/>)/m', $text, $text_parts );
 
 		// Bail if no matches.
 		if ( ! $matches ) {
-			return $pee;
+			return $text;
 		}
 
 		// Init replacements array.
@@ -233,12 +239,12 @@ class CiviCRM_WP_Profile_Sync_WordPress {
 		}
 
 		// Build keyed replacements.
-		foreach ( $pees[2] as $i => $tinkle ) {
-			$replace[ $pees[0][ $i ] ] = $tinkle . "\r\n\r\n";
+		foreach ( $text_parts[2] as $i => $text_part ) {
+			$replace[ $text_parts[0][ $i ] ] = $text_part . "\r\n\r\n";
 		}
 
 		// Do replacements.
-		$replaced = str_replace( array_keys( $replace ), array_values( $replace ), $pee );
+		$replaced = str_replace( array_keys( $replace ), array_values( $replace ), $text );
 
 		// --<
 		return rtrim( $replaced );
