@@ -777,7 +777,6 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 		// Undo ACF new lines.
 		if ( $settings['new_lines'] === 'wpautop' ) {
-			// TODO: Move method to common file.
 			$value = $this->plugin->wp->unautop( $value );
 		} elseif ( $settings['new_lines'] === 'br' ) {
 			// @see https://stackoverflow.com/a/2494762
