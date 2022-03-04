@@ -1693,12 +1693,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 * @since 0.5.2
 	 *
 	 * @param integer $attachment_id The numeric ID of the WordPress Attachment.
-	 * @return array $metadata The CiviCRM Attachment data, empty if none exists.
+	 * @return array $metadata The CiviCRM Attachment data, empty values if none exists.
 	 */
 	public function metadata_get( $attachment_id ) {
 
 		// Init return.
-		$metadata = [];
+		$metadata = [
+			'wordpress_file' => '',
+			'civicrm_file' => '',
+		];
 
 		// Get the WordPress File.
 		$existing_wp = get_post_meta( $attachment_id, $this->attachment_wp_key, true );
