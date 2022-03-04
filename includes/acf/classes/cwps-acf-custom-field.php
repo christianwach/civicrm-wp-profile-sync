@@ -209,7 +209,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 			return;
 		}
 
-		// Intercept when the content of a set of CiviCRM Custom Fields has been updated.
+		// Intercept when the content of a set of CiviCRM Custom Fields is updated.
+		//add_action( 'cwps/acf/mapper/civicrm/custom/edit/pre', [ $this, 'custom_pre_edit' ], 10 );
 		add_action( 'cwps/acf/mapper/civicrm/custom/edited', [ $this, 'custom_edited' ], 10 );
 
 		// Declare registered.
@@ -232,6 +233,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		}
 
 		// Remove all Mapper listeners.
+		//remove_action( 'cwps/acf/mapper/civicrm/custom/edit/pre', [ $this, 'custom_pre_edit' ], 10 );
 		remove_action( 'cwps/acf/mapper/civicrm/custom/edited', [ $this, 'custom_edited' ], 10 );
 
 		// Declare unregistered.
@@ -727,6 +729,30 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 
 	/**
+	 * Called when a set of CiviCRM Custom Fields is about to be updated.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param array $args The array of CiviCRM params.
+	 */
+	public function custom_pre_edit( $args ) {
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( array(
+			'method' => __METHOD__,
+			'args' => $args,
+			//'query' => $query,
+			//'backtrace' => $trace,
+		), true ) );
+		*/
+
+	}
+
+
+
+	/**
 	 * Update ACF Fields when a set of CiviCRM Custom Fields has been updated.
 	 *
 	 * @since 0.4
@@ -749,10 +775,22 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		 * created because the "civicrm_custom" hook fires before "civicrm_post"
 		 * fires and so the Post ID will always be false.
 		 *
+		 * NOTE: This filter relies on the structure of the data returned by the
+		 * "civicrm_custom" hook, which contains the "entity_table" entry for
+		 * each Custom Field. This does not help us to discover the set of ACF
+		 * "Post IDs" for an ACF Field.
+		 *
 		 * Internally, this is used by:
 		 *
 		 * @see CiviCRM_Profile_Sync_ACF_CiviCRM_Contact::query_post_id()
 		 * @see CiviCRM_Profile_Sync_ACF_CiviCRM_Activity::query_post_id()
+		 * @see CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT::query_post_id()
+		 * @see CiviCRM_Profile_Sync_ACF_CiviCRM_Participant::query_post_id()
+		 * @see CiviCRM_Profile_Sync_ACF_User::query_post_id()
+		 *
+		 * Also used by CiviCRM Event Organiser:
+		 *
+		 * @see CiviCRM_WP_Event_Organiser_CWPS::query_post_id()
 		 *
 		 * @since 0.4
 		 *
@@ -895,7 +933,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 				break;
 
-			// Used by "Date Select" and  "Date Time Select".
+			// Used by "Date Select" and "Date Time Select".
 			case 'Timestamp':
 
 				// Get Field setting.
@@ -909,6 +947,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 					$value = $datetime->format( 'Y-m-d H:i:s' );
 				}
 
+				break;
+
+			// Handle CiviCRM "File" Custom Fields.
+			case 'File':
+
+				// Delegate to method, expect an Attachment ID.
+				$value = $this->civicrm->attachment->value_get_for_acf( $value, $field, $selector, $post_id );
 				break;
 
 		}
@@ -957,6 +1002,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		 * @see CiviCRM_Profile_Sync_ACF_CiviCRM_Contact::query_custom_fields()
 		 * @see CiviCRM_Profile_Sync_ACF_CiviCRM_Activity::query_custom_fields()
 		 * @see CiviCRM_Profile_Sync_ACF_CiviCRM_Participant::query_custom_fields()
+		 * @see CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT::query_custom_fields()
+		 * @see CiviCRM_Profile_Sync_ACF_User::query_custom_fields()
+		 *
+		 * Also used by CiviCRM Event Organiser:
+		 *
+		 * @see CiviCRM_WP_Event_Organiser_CWPS::query_custom_fields()
 		 *
 		 * @since 0.4
 		 *
@@ -2109,7 +2160,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 		// Try and find the CiviCRM File data.
 		$filename = pathinfo( $meta['civicrm_file'], PATHINFO_BASENAME );
-		$civicrm_file = $this->civicrm->attachment->get_by_name( $filename );
+		$civicrm_file = $this->civicrm->attachment->file_get_by_name( $filename );
 		if ( empty( $civicrm_file ) ) {
 			return $value;
 		}
