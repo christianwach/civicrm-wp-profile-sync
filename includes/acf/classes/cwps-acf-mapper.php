@@ -2272,6 +2272,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		/**
 		 * Broadcast that a set of CiviCRM Custom Fields is about to be updated.
 		 *
+		 * Internally, this is used by:
+		 *
+		 * @see CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment::acf_fields_pre_save()
+		 *
 		 * @since 0.5.2
 		 *
 		 * @param array $args The array of CiviCRM params.
