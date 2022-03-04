@@ -249,6 +249,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		add_filter( 'cwps/acf/query_custom_fields', [ $this, 'query_custom_fields' ], 10, 2 );
 		add_filter( 'cwps/acf/query_post_id', [ $this, 'query_post_id' ], 10, 2 );
 
+		// Listen for queries from the Attachment class.
+		add_filter( 'cwps/acf/query_entity_table', [ $this, 'query_entity_table' ], 10, 2 );
+
 		add_filter( 'cwps/acf/admin/router/participant_role/post_types', [ $this, 'admin_sync_router_add_cpt' ] );
 		add_filter( 'cwps/acf/admin/router/participant_role/roles', [ $this, 'admin_sync_router_add_role' ] );
 		add_filter( 'cwps/acf/admin/participant_role/post_types', [ $this, 'admin_sync_add_cpt' ] );
@@ -1200,6 +1203,38 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 		// --<
 		return $post_ids;
+
+	}
+
+
+
+	/**
+	 * Listen for queries from the Attachment class.
+	 *
+	 * This method responds with an "Entity Table" if it detects that the ACF
+	 * Field Group maps to a Participant.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param array $entity_tables The existing "Entity Tables".
+	 * @param array $field_group The array of ACF Field Group params.
+	 * @return array $entity_tables The mapped "Entity Tables".
+	 */
+	public function query_entity_table( $entity_tables, $field_group ) {
+
+		// Bail if this is not a Participant Field Group.
+		$is_visible = $this->is_participant_field_group( $field_group );
+		if ( $is_visible === false ) {
+			return $entity_tables;
+		}
+
+		// Append our "Entity Table" if not already present.
+		if ( ! in_array( 'civicrm_participant', $entity_tables ) ) {
+			$entity_tables[] = 'civicrm_participant';
+		}
+
+		// --<
+		return $entity_tables;
 
 	}
 

@@ -174,6 +174,9 @@ class CiviCRM_Profile_Sync_ACF_User {
 		add_filter( 'cwps/acf/query_post_id', [ $this, 'query_post_id' ], 10, 2 );
 		add_filter( 'cwps/acf/query_contact_id', [ $this, 'query_contact_id' ], 10, 3 );
 
+		// Listen for queries from the Attachment class.
+		add_filter( 'cwps/acf/query_entity_table', [ $this, 'query_entity_table' ], 10, 2 );
+
 		// Listen for queries from the ACF Field class.
 		add_filter( 'cwps/acf/field/query_setting_choices', [ $this, 'query_setting_choices' ], 50, 3 );
 
@@ -197,6 +200,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		remove_filter( 'cwps/acf/civicrm/contact_field/get_for_acf_field', [ $this, 'query_contact_fields' ], 10 );
 		remove_filter( 'cwps/acf/civicrm/relationships/get_for_acf_field', [ $this, 'query_relationship_fields' ], 10 );
 		remove_filter( 'cwps/acf/query_post_id', [ $this, 'query_post_id' ], 10 );
+		remove_filter( 'cwps/acf/query_entity_table', [ $this, 'query_entity_table' ], 10 );
 		remove_filter( 'cwps/acf/query_contact_id', [ $this, 'query_contact_id' ], 10 );
 
 	}
@@ -506,7 +510,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 	/**
 	 * Update a WordPress User when a CiviCRM Contact has been edited.
 	 *
-	 * This callback receives data via the CiviCRM ACF Integration mapper.
+	 * This callback receives data via the ACF Mapper.
 	 *
 	 * @since 0.4
 	 *
@@ -2201,6 +2205,38 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 		// --<
 		return $post_ids;
+
+	}
+
+
+
+	/**
+	 * Listen for queries from the Attachment class.
+	 *
+	 * This method responds with an "Entity Table" if it detects that the ACF
+	 * Field Group maps to a User.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param array $entity_tables The existing "Entity Tables".
+	 * @param array $field_group The array of ACF Field Group params.
+	 * @return array $entity_tables The mapped "Entity Tables".
+	 */
+	public function query_entity_table( $entity_tables, $field_group ) {
+
+		// Bail if this is not a User Field Group.
+		$is_visible = $this->is_user_field_group( $field_group );
+		if ( $is_visible === false ) {
+			return $entity_tables;
+		}
+
+		// Append our "Entity Table" if not already present.
+		if ( ! in_array( 'civicrm_contact', $entity_tables ) ) {
+			$entity_tables[] = 'civicrm_contact';
+		}
+
+		// --<
+		return $entity_tables;
 
 	}
 
