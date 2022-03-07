@@ -1273,8 +1273,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 				require_once ABSPATH . 'wp-admin/includes/file.php';
 				require_once ABSPATH . 'wp-admin/includes/image.php';
 
+				// Apply appropriate permissions to read image.
+				$this->permissions_escalate();
+
 				// Transfer the CiviCRM Contact Image to WordPress and grab ID.
 				$id = media_sideload_image( $url, $target_post_id, $title, 'id' );
+
+				// Revoke permissions filter.
+				$this->permissions_escalate_stop();
 
 				// If there's an error.
 				if ( is_wp_error( $id ) ) {
@@ -1323,8 +1329,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 					// Build URL to Image file.
 					$url = $basepage_url . 'contact/imagefile/?photo=' . $filename;
 
+					// Apply appropriate permissions to read image.
+					$this->permissions_escalate();
+
 					// Transfer the CiviCRM Contact Image to WordPress and grab ID.
 					$id = media_sideload_image( $url, $target_post_id, $title, 'id' );
+
+					// Revoke permissions filter.
+					$this->permissions_escalate_stop();
 
 					// If there's still an error.
 					if ( is_wp_error( $id ) ) {
@@ -1643,6 +1655,58 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 			// Clear the Image URL for the Contact.
 			$result = $this->plugin->civicrm->contact->update( $contact_data );
 
+		}
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Filters the CiviCRM Permissions to escalate permissions.
+	 *
+	 * @since 0.5.2
+	 */
+	public function permissions_escalate() {
+		add_action( 'civicrm_permission_check', [ $this, 'permissions_grant' ], 10, 2 );
+	}
+
+
+
+	/**
+	 * Removes the CiviCRM Permissions filter to restore permissions.
+	 *
+	 * @since 0.5.2
+	 */
+	public function permissions_escalate_stop() {
+		remove_action( 'civicrm_permission_check', [ $this, 'permissions_grant' ], 10 );
+	}
+
+
+
+	/**
+	 * Grant the permissions necessary for WordPress Users to read uploaded Files.
+	 *
+	 * This seems to be necessary for WordPress to sideload the image.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param str $permission The requested permission.
+	 * @param bool $granted True if permission granted, false otherwise.
+	 */
+	public function permissions_grant( $permission, &$granted ) {
+
+		// Build array of necessary permissions.
+		$permissions = [
+			'access uploaded files',
+		];
+
+		// Allow the relevant ones.
+		if ( in_array( strtolower( $permission ), $permissions ) ) {
+			$granted = 1;
 		}
 
 	}
