@@ -817,9 +817,9 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		 *
 		 * Used internally by:
 		 *
-		 * * Email
-		 * * Google Map
-		 * * Website
+		 * @see CiviCRM_Profile_Sync_ACF_CiviCRM_Email::query_settings_field()
+		 * @see CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map::query_settings_field()
+		 * @see CiviCRM_Profile_Sync_ACF_CiviCRM_Website::query_settings_field()
 		 *
 		 * Also used by the custom "Bypass" Location, which calls a further filter
 		 * in order to populate the Settings Field.
@@ -844,6 +844,10 @@ class CiviCRM_Profile_Sync_ACF_Field {
 			 * Broadcast that a returned Setting Field has been added.
 			 *
 			 * This action allows extra Setting Fields to be added.
+			 *
+			 * Used internally by:
+			 *
+			 * @see CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field::file_settings_acfe_add()
 			 *
 			 * @since 0.5.2
 			 *
@@ -900,6 +904,10 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		 * Broadcast that a Setting Field has been added.
 		 *
 		 * This action allows extra Setting Fields to be added.
+		 *
+		 * Used internally by:
+		 *
+		 * @see CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field::file_settings_acf_add()
 		 *
 		 * @since 0.5.2
 		 *
