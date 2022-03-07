@@ -187,6 +187,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'text_settings_modify' ], 10, 2 );
 
 		// File Fields require special handling.
+		add_action( 'cwps/acf/field/entity_field_setting/added', [ $this, 'file_settings_add' ], 10, 3 );
 		add_action( 'cwps/acf/field/generic_field_setting/added', [ $this, 'file_settings_add' ], 10, 3 );
 		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'file_settings_modify' ], 10, 2 );
 		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'file_settings_filter' ], 10, 3 );
@@ -1973,6 +1974,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 * @return array $field The modified ACF Field data array.
 	 */
 	public function file_settings_add( $field, $setting_field, $field_group ) {
+
+		// Bail early if not our Field Type.
+		if ( 'file' !== $field['type'] ) {
+			return $field;
+		}
 
 		// Define Setting Field.
 		$usage_setting_field = [
