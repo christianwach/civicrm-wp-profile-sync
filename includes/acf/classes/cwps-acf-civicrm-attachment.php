@@ -135,6 +135,17 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		// Add CiviCRM listeners once CiviCRM is available.
 		add_action( 'civicrm_config', [ $this, 'civicrm_config' ], 10, 1 );
 
+		// Build array of CiviCRM URLs for filtering the ACF Attachment.
+
+		// When loading values via get_field().
+		add_filter( 'acf/load_value/type=file', [ $this, 'acf_load_filter' ], 10, 3 );
+
+		// When rendering the Field, e.g. in ACFE front end Forms.
+		add_filter( 'acf/render_field/type=file', [ $this, 'acf_render_filter' ], 9, 3 );
+
+		// Maybe filter the URL of the File.
+		add_filter( 'acf/load_attachment', [ $this, 'acf_attachment_filter' ], 10, 3 );
+
 	}
 
 
@@ -807,6 +818,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 */
 	public function acf_fields_pre_save( $args ) {
 
+		// Bail if there's no ACF "Post ID".
+		if ( empty( $args['post_id'] ) ) {
+			return;
+		}
+
 		/*
 		$e = new \Exception();
 		$trace = $e->getTraceAsString();
@@ -903,6 +919,228 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 		// --<
 		return $file_field;
+
+	}
+
+
+
+	/**
+	 * Filter the Custom Fields for the Setting of a "File" Field.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param mixed $value The value which was loaded from the database.
+	 * @param mixed $post_id The Post ID from which the value was loaded.
+	 * @param array $field The Field array holding all the Field options.
+	 * @return mixed $value The modified value.
+	 */
+	public function acf_load_filter( $value, $post_id, $field ) {
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( array(
+			'method' => __METHOD__,
+			'value' => $value,
+			'post_id' => $post_id,
+			'field' => $field,
+			//'backtrace' => $trace,
+		), true ) );
+		*/
+
+		// Skip filter if CiviCRM File is not set.
+		if ( empty( $field['civicrm_file_field_type'] ) ) {
+			return $value;
+		}
+
+		// Skip filter if using WordPress File.
+		if ( (int) $field['civicrm_file_field_type'] === 1 ) {
+			return $value;
+		}
+
+		// Skip if already parsed.
+		if ( ! empty( $this->attachments[ $value ] ) ) {
+			return $value;
+		}
+
+		// Skip if the CiviCRM Field key isn't there or isn't populated.
+		$key = $this->civicrm->acf_field_key_get();
+		if ( ! array_key_exists( $key, $field ) || empty( $field[ $key ] ) ) {
+			return $value;
+		}
+
+		// Skip if there is no mapped Custom Field ID.
+		$custom_field_id = $this->civicrm->custom_field->custom_field_id_get( $field );
+		if ( $custom_field_id === false ) {
+			return $value;
+		}
+
+		// Get the Attachment metadata.
+		$meta = $this->metadata_get( $value );
+		if ( empty( $meta['civicrm_file'] ) ) {
+			return $value;
+		}
+
+		// Try and find the CiviCRM File data.
+		$filename = pathinfo( $meta['civicrm_file'], PATHINFO_BASENAME );
+		$civicrm_file = $this->file_get_by_name( $filename );
+		if ( empty( $civicrm_file ) ) {
+			return $value;
+		}
+
+		// Get the full CiviCRM Attachment data.
+		$attachment = $this->get_by_id( $civicrm_file->id );
+		if ( empty( $attachment->url ) ) {
+			return $value;
+		}
+
+		// Store CiviCRM URL for filtering the ACF Attachment data.
+		$this->attachments[ $value ] = $attachment->url;
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( array(
+			'method' => __METHOD__,
+			'attachment_id' => $attachment_id,
+			'attachment' => $attachment,
+			//'backtrace' => $trace,
+		), true ) );
+		*/
+
+		// --<
+		return $value;
+
+	}
+
+
+
+	/**
+	 * Filter the Custom Fields for the Setting of a "File" Field.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param array $field The Field array holding all the Field options.
+	 */
+	public function acf_render_filter( $field ) {
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( array(
+			'method' => __METHOD__,
+			'field' => $field,
+			//'backtrace' => $trace,
+		), true ) );
+		*/
+
+		// Skip filter if CiviCRM File is not set.
+		if ( empty( $field['civicrm_file_field_type'] ) ) {
+			return;
+		}
+
+		// Skip filter if using WordPress File.
+		if ( (int) $field['civicrm_file_field_type'] === 1 ) {
+			return;
+		}
+
+		// Skip filter if there is no value.
+		if ( empty( $field['value'] ) ) {
+			return;
+		}
+
+		// The value is an Attachment ID.
+		$value = (int) $field['value'];
+
+		// Skip if already parsed.
+		if ( ! empty( $this->attachments[ $value ] ) ) {
+			return;
+		}
+
+		// Skip if the CiviCRM Field key isn't there or isn't populated.
+		$key = $this->civicrm->acf_field_key_get();
+		if ( ! array_key_exists( $key, $field ) || empty( $field[ $key ] ) ) {
+			return;
+		}
+
+		// Skip if there is no mapped Custom Field ID.
+		$custom_field_id = $this->civicrm->custom_field->custom_field_id_get( $field );
+		if ( $custom_field_id === false ) {
+			return;
+		}
+
+		// Get the Attachment metadata.
+		$meta = $this->metadata_get( $value );
+		if ( empty( $meta['civicrm_file'] ) ) {
+			return;
+		}
+
+		// Try and find the CiviCRM File data.
+		$filename = pathinfo( $meta['civicrm_file'], PATHINFO_BASENAME );
+		$civicrm_file = $this->file_get_by_name( $filename );
+		if ( empty( $civicrm_file ) ) {
+			return;
+		}
+
+		// Get the full CiviCRM Attachment data.
+		$attachment = $this->get_by_id( $civicrm_file->id );
+		if ( empty( $attachment->url ) ) {
+			return;
+		}
+
+		// Store CiviCRM URL for filtering the ACF Attachment data.
+		$this->attachments[ $value ] = $attachment->url;
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( array(
+			'method' => __METHOD__,
+			'attachment_id' => $attachment_id,
+			'attachment' => $attachment,
+			//'backtrace' => $trace,
+		), true ) );
+		*/
+
+	}
+
+
+
+	/**
+	 * Filter the Custom Fields for the Setting of a "File" Field.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param array $response The array of loaded Attachment data.
+	 * @param WP_Post $attachment The Attachment object.
+	 * @param array|false $meta The array of Attachment metadata, or false if there is none.
+	 * @return mixed $response The modified array of Attachment data.
+	 */
+	public function acf_attachment_filter( $response, $attachment, $meta ) {
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( array(
+			'method' => __METHOD__,
+			'response' => $response,
+			'attachment' => $attachment,
+			'meta' => $meta,
+			'this->attachments' => empty( $this->attachments ) ? 'empty' : $this->attachments,
+			'backtrace' => $trace,
+		), true ) );
+		*/
+
+		// Skip filter if no File URL has been stored.
+		if ( empty( $this->attachments[ (int) $response['id'] ] ) ) {
+			return $response;
+		}
+
+		// Overwrite URL.
+		$response['url'] = $this->attachments[ (int) $response['id'] ];
+
+		// --<
+		return $response;
 
 	}
 

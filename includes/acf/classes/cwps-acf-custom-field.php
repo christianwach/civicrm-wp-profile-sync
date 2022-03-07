@@ -177,6 +177,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'textarea_settings_filter' ], 10, 3 );
 		//add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'true_false_settings_filter' ], 10, 3 );
 		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'url_settings_filter' ], 10, 3 );
+		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'file_settings_filter' ], 10, 3 );
 
 		// Listen for queries from our ACF Field Group class.
 		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'select_settings_modify' ], 10, 2 );
@@ -185,14 +186,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'date_picker_settings_modify' ], 10, 2 );
 		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'date_time_picker_settings_modify' ], 10, 2 );
 		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'text_settings_modify' ], 10, 2 );
+		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'file_settings_modify' ], 10, 2 );
 
 		// File Fields require special handling.
-		add_action( 'cwps/acf/field/entity_field_setting/added', [ $this, 'file_settings_add' ], 10, 3 );
-		add_action( 'cwps/acf/field/generic_field_setting/added', [ $this, 'file_settings_add' ], 10, 3 );
-		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'file_settings_modify' ], 10, 2 );
-		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'file_settings_filter' ], 10, 3 );
-		add_filter( 'acf/load_value/type=file', [ $this, 'file_display_filter' ], 10, 3 );
-		add_filter( 'acf/load_attachment', [ $this, 'file_attachment_filter' ], 10, 3 );
+		add_action( 'cwps/acf/field/entity_field_setting/added', [ $this, 'file_settings_acfe_add' ], 10, 3 );
+		add_action( 'cwps/acf/field/generic_field_setting/added', [ $this, 'file_settings_acf_add' ], 10, 3 );
 
 	}
 
@@ -1964,7 +1962,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 
 	/**
-	 * Add additional Settings to an ACF "File" Field.
+	 * Adds additional Settings to an ACF "File" Field when in an ACFE context.
 	 *
 	 * @since 0.5.2
 	 *
@@ -1973,7 +1971,56 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 * @param array $field_group The ACF Field Group data array.
 	 * @return array $field The modified ACF Field data array.
 	 */
-	public function file_settings_add( $field, $setting_field, $field_group ) {
+	public function file_settings_acfe_add( $field, $setting_field, $field_group ) {
+
+		// Bail early if not our Field Type.
+		if ( 'file' !== $field['type'] ) {
+			return $field;
+		}
+
+		// First add ACF settings.
+		$this->file_settings_acf_add( $field, $setting_field, $field_group );
+
+		// Define Setting Field.
+		$upload_setting_field = [
+			'key' => 'civicrm_file_no_wp',
+			'label' => __( 'CiviCRM Only', 'civicrm-wp-profile-sync' ),
+			'name' => 'civicrm_file_no_wp',
+			'type' => 'true_false',
+			'instructions' => __( 'Delete WordPress Attachment after upload.', 'civicrm-wp-profile-sync' ),
+			'required' => 0,
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			],
+			'acfe_permissions' => '',
+			'message' => '',
+			'default_value' => 0,
+			'ui' => 1,
+			'ui_on_text' => '',
+			'ui_off_text' => '',
+			'conditional_logic' => 0,
+		];
+
+		// Now add it.
+		acf_render_field_setting( $field, $upload_setting_field );
+
+	}
+
+
+
+	/**
+	 * Adds additional Settings to an ACF "File" Field.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param array $field The existing ACF Field data array.
+	 * @param array $setting_field The ACF Field setting array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @return array $field The modified ACF Field data array.
+	 */
+	public function file_settings_acf_add( $field, $setting_field, $field_group ) {
 
 		// Bail early if not our Field Type.
 		if ( 'file' !== $field['type'] ) {
@@ -2107,132 +2154,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 		// --<
 		return $filtered_fields;
-
-	}
-
-
-
-	/**
-	 * Filter the Custom Fields for the Setting of a "File" Field.
-	 *
-	 * @since 0.5.2
-	 *
-	 * @param mixed $value The value which was loaded from the database.
-	 * @param mixed $post_id The Post ID from which the value was loaded.
-	 * @param array $field The Field array holding all the Field options.
-	 * @return mixed $value The modified value.
-	 */
-	public function file_display_filter( $value, $post_id, $field ) {
-
-		// Skip filter if CiviCRM File is not set.
-		if ( empty( $field['civicrm_file_field_type'] ) ) {
-			return $value;
-		}
-
-		// Skip filter if using WordPress File.
-		if ( (int) $field['civicrm_file_field_type'] === 1 ) {
-			return $value;
-		}
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'value' => $value,
-			'post_id' => $post_id,
-			'field' => $field,
-			//'backtrace' => $trace,
-		), true ) );
-		*/
-
-		// Skip if the CiviCRM Field key isn't there or isn't populated.
-		$key = $this->civicrm->acf_field_key_get();
-		if ( ! array_key_exists( $key, $field ) || empty( $field[ $key ] ) ) {
-			return $value;
-		}
-
-		// Skip if there is no mapped Custom Field ID.
-		$custom_field_id = $this->custom_field_id_get( $field );
-		if ( $custom_field_id === false ) {
-			return $value;
-		}
-
-		// Get the Attachment metadata.
-		$meta = $this->civicrm->attachment->metadata_get( $value );
-		if ( empty( $meta['civicrm_file'] ) ) {
-			return $value;
-		}
-
-		// Try and find the CiviCRM File data.
-		$filename = pathinfo( $meta['civicrm_file'], PATHINFO_BASENAME );
-		$civicrm_file = $this->civicrm->attachment->file_get_by_name( $filename );
-		if ( empty( $civicrm_file ) ) {
-			return $value;
-		}
-
-		// Get the full CiviCRM Attachment data.
-		$attachment = $this->civicrm->attachment->get_by_id( $civicrm_file->id );
-		if ( empty( $attachment->url ) ) {
-			return $value;
-		}
-
-		// Store CiviCRM URL for filtering the ACF Attachment data.
-		$this->attachments[ $value ] = $attachment->url;
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'attachment_id' => $attachment_id,
-			'attachment' => $attachment,
-			//'backtrace' => $trace,
-		), true ) );
-		*/
-
-		// --<
-		return $value;
-
-	}
-
-
-
-	/**
-	 * Filter the Custom Fields for the Setting of a "File" Field.
-	 *
-	 * @since 0.5.2
-	 *
-	 * @param array $response The array of loaded Attachment data.
-	 * @param WP_Post $attachment The Attachment object.
-	 * @param array|false $meta The array of Attachment metadata, or false if there is none.
-	 * @return mixed $response The modified array of Attachment data.
-	 */
-	public function file_attachment_filter( $response, $attachment, $meta ) {
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'response' => $response,
-			'attachment' => $attachment,
-			'meta' => $meta,
-			'this->attachments' => $this->attachments,
-			//'backtrace' => $trace,
-		), true ) );
-		*/
-
-		// Skip filter if no File URL has been stored.
-		if ( empty( $this->attachments[ $response['id'] ] ) ) {
-			return $response;
-		}
-
-		// Overwrite URL.
-		$response['url'] = $this->attachments[ $response['id'] ];
-
-		// --<
-		return $response;
 
 	}
 
