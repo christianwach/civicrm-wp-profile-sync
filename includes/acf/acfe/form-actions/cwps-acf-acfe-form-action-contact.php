@@ -417,11 +417,26 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				$field = $custom_group_field[ $this->field_name . 'map_' . $code ];
 				$field = acfe_form_map_field_value_load( $field, $current_post_id, $form );
 				if ( acf_is_field_key( $field ) ) {
+
 					// Allow (string) "0" as valid data.
 					if ( empty( $contact[ $code ] ) && $contact[ $code ] !== '0' ) {
 						continue;
 					}
+
+					// Apply Contact value.
 					$form['map'][ $field ]['value'] = $contact[ $code ];
+
+					// Convert any "File" Custom Fields to WordPress Attachment IDs.
+					if ( $custom_field['data_type'] === 'File' && ! empty( $contact[ $code ] ) ) {
+						$civicrm_file = $this->civicrm->attachment->file_get_by_id( $contact[ $code ] );
+						if ( ! empty( $civicrm_file ) ) {
+							$attachment_id = $this->civicrm->attachment->query_by_file( $civicrm_file->uri, 'civicrm' );
+							if ( ! empty( $attachment_id ) ) {
+								$form['map'][ $field ]['value'] = $attachment_id;
+							}
+						}
+					}
+
 				}
 			}
 
@@ -3653,6 +3668,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// Init return.
 		$data = [];
 
+		// Init File Fields tracker.
+		$file_fields = [];
+
 		// Build data array.
 		foreach ( $this->custom_fields as $key => $custom_group ) {
 
@@ -3665,8 +3683,16 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 				// Get mapped Fields.
 				foreach ( $custom_group['api.CustomField.get']['values'] as $custom_field ) {
+
+					// Add to mapped Fields array.
 					$code = 'custom_' . $custom_field['id'];
 					$fields[ $code ] = $custom_group_field[ $this->field_name . 'map_' . $code ];
+
+					// Track any "File" Custom Fields.
+					if ( $custom_field['data_type'] === 'File' ) {
+						$file_fields[ $code ] = $fields[ $code ];
+					}
+
 				}
 
 			}
@@ -3674,6 +3700,40 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			// Populate data array with values of mapped Fields.
 			$data += acfe_form_map_vs_fields( $fields, $fields, $current_post_id, $form );
 
+		}
+
+		// Post-process data for File Fields.
+		if ( ! empty( $file_fields ) ) {
+			foreach ( $file_fields as $code => $field_ref ) {
+
+				// Skip if empty.
+				// TODO: Maybe delete?
+				if ( empty( $data[ $code ] ) ) {
+					continue;
+				}
+
+				// Get the processed value (the Attachment ID).
+				$attachment_id = (int) $data[ $code ];
+
+				// Get the ACF Field settings.
+				$selector = acfe_form_map_field_value_load( $field_ref, $current_post_id, $form );
+				$settings = get_field_object( $selector, $current_post_id );
+
+				// Build an args array.
+				$args = [
+					'selector' => $selector,
+					'post_id' => $current_post_id,
+				];
+
+				// Overwrite entry in data array with data for CiviCRM.
+				$data[ $code ] = $this->civicrm->attachment->value_get_for_civicrm( $attachment_id, $settings, $args );
+
+				// Maybe delete the WordPress Attachment.
+				if ( ! empty( $settings['civicrm_file_no_wp'] ) ) {
+					wp_delete_attachment( $attachment_id, true );
+				}
+
+			}
 		}
 
 		// --<
