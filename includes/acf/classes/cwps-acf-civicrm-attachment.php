@@ -1593,7 +1593,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		// Transfer the CiviCRM File to WordPress and grab ID.
 		$attachment_id = media_handle_sideload( $files, $target_post_id );
 
-		// TODO: Handle sideload errors.
+		// Handle sideload errors.
+		if ( is_wp_error( $attachment_id ) ) {
+			@unlink( $files['tmp_name'] );
+			return '';
+		}
 
 		/*
 		$e = new \Exception();
