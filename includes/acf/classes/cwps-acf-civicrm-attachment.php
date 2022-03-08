@@ -1415,6 +1415,56 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 
 	/**
+	 * Deletes the CiviCRM and WordPress Attachments given a CiviCRM Attachment ID.
+	 *
+	 * Also clears any associated ACF Fields of type "File" that may be synced via
+	 * their Post Types to the Entity.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param integer $file_id The numeric ID of the CiviCRM Attachment.
+	 * @param array $settings The ACF Field settings.
+	 * @param array $args Any additional arguments.
+	 */
+	public function fields_clear( $file_id, $settings, $args ) {
+
+		// TODO: Return success/failure?
+
+		// Bail if there's no CiviCRM File ID.
+		if ( empty( $file_id ) ) {
+			return;
+		}
+
+		// Get the CiviCRM File data.
+		$civicrm_file = $this->civicrm->attachment->file_get_by_id( $file_id );
+		if ( empty( $civicrm_file ) ) {
+			return;
+		}
+
+		// It seems the Custom Field is cleared by doing this.
+		$this->delete( $civicrm_file->id );
+
+		// Mimic "civicrm_custom" for reverse syncs.
+		$this->mimic_civicrm_custom( $settings, $args );
+
+		// Get the WordPress Attachment ID.
+		$attachment_id = $this->query_by_file( $civicrm_file->uri, 'civicrm' );
+		if ( empty( $attachment_id ) ) {
+			return;
+		}
+
+		// Delete it.
+		wp_delete_attachment( $attachment_id, true );
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
 	 * Queries WordPress Attachments for a given File.
 	 *
 	 * @since 0.5.2
