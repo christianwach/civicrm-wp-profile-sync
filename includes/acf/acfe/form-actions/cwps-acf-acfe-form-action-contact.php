@@ -756,6 +756,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// If we get a Contact.
 		if ( $args['contact'] !== false ) {
 
+			// Post-process Custom Fields now that we have a Contact.
+			$this->form_custom_post_process( $form, $current_post_id, $action, $args['contact'] );
+
 			// Save the Email(s) and Relationship(s).
 			$args['emails'] = $this->form_email_save( $args['contact'], $emails );
 			$args['relationships'] = $this->form_relationship_save( $args['contact'], $relationships );
@@ -3706,18 +3709,28 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		if ( ! empty( $file_fields ) ) {
 			foreach ( $file_fields as $code => $field_ref ) {
 
-				// Skip if empty.
-				// TODO: Maybe delete?
+				// Get the ACF Field settings.
+				$selector = acfe_form_map_field_value_load( $field_ref, $current_post_id, $form );
+				$settings = get_field_object( $selector, $current_post_id );
+
+				// Skip if "CiviCRM only" and no File was uploaded.
 				if ( empty( $data[ $code ] ) ) {
-					continue;
+					if ( ! empty( $settings['civicrm_file_no_wp'] ) ) {
+						continue;
+					}
+				}
+
+				// Flag for possible deletion if no File was uploaded.
+				if ( empty( $data[ $code ] ) ) {
+					$this->file_fields_empty[ $code ] = [
+						'field' => $field_ref,
+						'selector' => $selector,
+						'settings' => $settings,
+					];
 				}
 
 				// Get the processed value (the Attachment ID).
 				$attachment_id = (int) $data[ $code ];
-
-				// Get the ACF Field settings.
-				$selector = acfe_form_map_field_value_load( $field_ref, $current_post_id, $form );
-				$settings = get_field_object( $selector, $current_post_id );
 
 				// Build an args array.
 				$args = [
@@ -3738,6 +3751,82 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// --<
 		return $data;
+
+	}
+
+
+
+	/**
+	 * Processes Custom Fields once a Contact has been established.
+	 *
+	 * This is used when a File has been "deleted" and the ACF Field is set not
+	 * to delete the WordPress Attachment. In such cases, the ACF "File" Field
+	 * may be auto-populated in the Form - so "deleting" it is assumed to mean
+	 * that the submitter wishes to delete the WordPress Attachment and the
+	 * content of the CiviCRM Custom Field.
+	 *
+	 * This is only possible because sending an empty value to the API for the
+	 * CiviCRM Custom Field will cause the update process to be skipped for
+	 * Custom Fields of type "File" - so the previous value will still exist.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param array $form The array of Form data.
+	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
+	 * @param string $action The customised name of the action.
+	 * @param array $contact The array of Contact data.
+	 * @return array $data The array of Custom Fields data.
+	 */
+	public function form_custom_post_process( $form, $current_post_id, $action, $contact ) {
+
+		// Bail if we have no post-process array.
+		if ( empty( $this->file_fields_empty ) ) {
+			return;
+		}
+
+		// Bail if we have no Contact ID.
+		if ( empty( $contact['id'] ) ) {
+			return;
+		}
+
+		// Get the array of Custom Field IDs.
+		$custom_field_ids = array_keys( $this->file_fields_empty );
+		array_walk( $custom_field_ids, function( &$item ) {
+			$item = (int) trim( str_replace( 'custom_', '', $item ) );
+		} );
+
+		// Get the corresponding values.
+		$values = $this->plugin->civicrm->custom_field->values_get_by_contact_id( $contact['id'], $custom_field_ids );
+		if ( empty( $values ) ) {
+			return;
+		}
+
+		// Handle each "deleted" Field.
+		foreach ( $values as $custom_field_id => $file_id ) {
+
+			// Sanity check.
+			if ( empty( $this->file_fields_empty[ 'custom_' . $custom_field_id ] ) ) {
+				continue;
+			}
+
+			// Skip if there's no Custom Field value.
+			if ( empty( $file_id ) ) {
+				continue;
+			}
+
+			// Get the data from the post-process array.
+			$data = $this->file_fields_empty[ 'custom_' . $custom_field_id ];
+
+			// Build args.
+			$args = [
+				'entity_id' => $contact['id'],
+				'custom_field_id' => $custom_field_id,
+			];
+
+			// Hand off to Attachment class.
+			$this->civicrm->attachment->fields_delete( (int) $file_id, $data['settings'], $args );
+
+		}
 
 	}
 
