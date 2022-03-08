@@ -510,6 +510,83 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 
 	/**
+	 * Get the values for a given CiviCRM Case ID and set of Custom Fields.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param integer $case_id The numeric ID of the CiviCRM Case to query.
+	 * @param array $custom_field_ids The Custom Field IDs to query.
+	 * @return array $case_data An array of Case data.
+	 */
+	public function values_get_by_case_id( $case_id, $custom_field_ids = [] ) {
+
+		// Init return.
+		$case_data = [];
+
+		// Bail if we have no Custom Field IDs.
+		if ( empty( $custom_field_ids ) ) {
+			return $case_data;
+		}
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $case_data;
+		}
+
+		// Format codes.
+		$codes = [];
+		foreach ( $custom_field_ids as $custom_field_id ) {
+			$codes[] = 'custom_' . $custom_field_id;
+		}
+
+		// Define params to get queried Case.
+		$params = [
+			'version' => 3,
+			'sequential' => 1,
+			'id' => $case_id,
+			'return' => $codes,
+			'options' => [
+				'limit' => 0, // No limit.
+			],
+		];
+
+		// Call the API.
+		$result = civicrm_api( 'Case', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+			return $case_data;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $case_data;
+		}
+
+		// Overwrite return.
+		foreach ( $result['values'] as $item ) {
+			foreach ( $item as $key => $value ) {
+				if ( substr( $key, 0, 7 ) == 'custom_' ) {
+					$index = (int) str_replace( 'custom_', '', $key );
+					$case_data[ $index ] = $value;
+				}
+			}
+		}
+
+		// Maybe filter here?
+
+		// --<
+		return $case_data;
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
 	 * Intercept when a Post has been updated from a Participant via the Mapper.
 	 *
 	 * Sync any associated ACF Fields mapped to Custom Fields.
