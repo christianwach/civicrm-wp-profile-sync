@@ -411,16 +411,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 */
 	public function file_copy_for_civicrm( $file ) {
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'file' => $file,
-			//'backtrace' => $trace,
-		), true ) );
-		*/
-
 		// Try and init CiviCRM.
 		if ( ! $this->civicrm->is_initialised() ) {
 			return false;
@@ -432,18 +422,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 		// Build path for new File.
 		$new_file = str_replace( $filename, $new_name, $file );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'filename' => $filename,
-			'new_name' => $new_name,
-			'new_file' => $new_file,
-			//'backtrace' => $trace,
-		), true ) );
-		*/
 
 		// Try and copy the File.
 		if ( ! copy( $file, $new_file ) ) {
@@ -479,16 +457,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 */
 	public function file_copy_for_acf( $file ) {
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'file' => $file,
-			//'backtrace' => $trace,
-		), true ) );
-		*/
-
 		// Try and init CiviCRM.
 		if ( ! $this->civicrm->is_initialised() ) {
 			return false;
@@ -496,16 +464,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 		// Use CiviCRM's method to duplicate.
 		$new_file = CRM_Utils_File::duplicate( $file );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'new_file' => $new_file,
-			//'backtrace' => $trace,
-		), true ) );
-		*/
 
 		// --<
 		return $new_file;
@@ -823,16 +781,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 			return;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'args' => $args,
-			//'backtrace' => $trace,
-		), true ) );
-		*/
-
 		// When the ACF "Post ID" is numeric.
 		if ( is_numeric( $args['post_id'] ) ) {
 
@@ -866,16 +814,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 				];
 			}
 		}
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'file_fields' => $this->file_fields,
-			//'backtrace' => $trace,
-		), true ) );
-		*/
 
 	}
 
@@ -936,18 +874,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 */
 	public function acf_load_filter( $value, $post_id, $field ) {
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'value' => $value,
-			'post_id' => $post_id,
-			'field' => $field,
-			//'backtrace' => $trace,
-		), true ) );
-		*/
-
 		// Skip filter if CiviCRM File is not set.
 		if ( empty( $field['civicrm_file_field_type'] ) ) {
 			return $value;
@@ -997,17 +923,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		// Store CiviCRM URL for filtering the ACF Attachment data.
 		$this->attachments[ $value ] = $attachment->url;
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'attachment_id' => $attachment_id,
-			'attachment' => $attachment,
-			//'backtrace' => $trace,
-		), true ) );
-		*/
-
 		// --<
 		return $value;
 
@@ -1023,16 +938,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 * @param array $field The Field array holding all the Field options.
 	 */
 	public function acf_render_filter( $field ) {
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'field' => $field,
-			//'backtrace' => $trace,
-		), true ) );
-		*/
 
 		// Skip filter if CiviCRM File is not set.
 		if ( empty( $field['civicrm_file_field_type'] ) ) {
@@ -1091,17 +996,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		// Store CiviCRM URL for filtering the ACF Attachment data.
 		$this->attachments[ $value ] = $attachment->url;
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'attachment_id' => $attachment_id,
-			'attachment' => $attachment,
-			//'backtrace' => $trace,
-		), true ) );
-		*/
-
 	}
 
 
@@ -1117,19 +1011,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 * @return mixed $response The modified array of Attachment data.
 	 */
 	public function acf_attachment_filter( $response, $attachment, $meta ) {
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'response' => $response,
-			'attachment' => $attachment,
-			'meta' => $meta,
-			'this->attachments' => empty( $this->attachments ) ? 'empty' : $this->attachments,
-			'backtrace' => $trace,
-		), true ) );
-		*/
 
 		// Skip filter if no File URL has been stored.
 		if ( empty( $this->attachments[ (int) $response['id'] ] ) ) {
@@ -1174,47 +1055,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		// Find the data from before the save operation.
 		$file_field = $this->acf_field_pre_save_get( $args['selector'], $args['post_id'] );
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'value' => $value,
-			'settings' => $settings,
-			'args' => $args,
-			'file_field' => $file_field,
-			//'backtrace' => $trace,
-		), true ) );
-		*/
-
 		// When value is empty.
 		if ( empty( $value ) ) {
 
 			// Return early if it was previously empty.
 			if ( empty( $file_field['attachment_id'] ) ) {
-
-				/*
-				$e = new \Exception();
-				$trace = $e->getTraceAsString();
-				error_log( print_r( array(
-					'method' => __METHOD__,
-					'message' => '========================= NO FILE BEFORE OR AFTER ===================================',
-					//'backtrace' => $trace,
-				), true ) );
-				*/
-
 				return '';
 			}
-
-			/*
-			$e = new \Exception();
-			$trace = $e->getTraceAsString();
-			error_log( print_r( array(
-				'method' => __METHOD__,
-				'message' => '========================= ACF FILE HAS BEEN DELETED ===================================',
-				//'backtrace' => $trace,
-			), true ) );
-			*/
 
 			// The ACF Field has been "unlinked" from the Attachment.
 
@@ -1231,18 +1078,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 				// It seems the Custom Field is cleared by doing this.
 				$this->delete( $civicrm_file->id );
-
-				/*
-				$e = new \Exception();
-				$trace = $e->getTraceAsString();
-				error_log( print_r( array(
-					'method' => __METHOD__,
-					'message' => '========================= CiviCRM Attachment DELETED ===================================',
-					'meta' => $meta,
-					'civicrm_file' => $civicrm_file,
-					//'backtrace' => $trace,
-				), true ) );
-				*/
 
 				// Mimic "civicrm_custom" for reverse syncs.
 				$this->mimic_civicrm_custom( $settings, $args );
@@ -1282,34 +1117,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		// Get the current Attachment metadata.
 		$meta = $this->metadata_get( $attachment_id );
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'attachment_id' => $attachment_id,
-			'file' => $file,
-			'meta' => $meta,
-			//'backtrace' => $trace,
-		), true ) );
-		*/
-
 		// If we get metadata for the current Attachment.
 		if ( ! empty( $meta ) ) {
 
 			// Skip the update if there is no change.
 			if ( $meta['wordpress_file'] === $file ) {
-
-				/*
-				$e = new \Exception();
-				$trace = $e->getTraceAsString();
-				error_log( print_r( array(
-					'method' => __METHOD__,
-					'message' => '========================= FILE EXISTS BUT HAS NOT CHANGED ===================================',
-					//'backtrace' => $trace,
-				), true ) );
-				*/
-
 				return '';
 			}
 
@@ -1318,16 +1130,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		// Check if the Attachment has been switched.
 		if ( ! empty( $file_field['attachment_id'] ) ) {
 			if ( (int) $file_field['attachment_id'] !== $attachment_id ) {
-
-				/*
-				$e = new \Exception();
-				$trace = $e->getTraceAsString();
-				error_log( print_r( array(
-					'method' => __METHOD__,
-					'message' => '========================= FILE HAS BEEN CHANGED ===================================',
-					//'backtrace' => $trace,
-				), true ) );
-				*/
 
 				// Try and delete the previous CiviCRM Attachment.
 				$previous_meta = $this->metadata_get( (int) $file_field['attachment_id'] );
@@ -1338,18 +1140,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 						// It seems the Custom Field is cleared by doing this.
 						$this->delete( $civicrm_file->id );
-
-						/*
-						$e = new \Exception();
-						$trace = $e->getTraceAsString();
-						error_log( print_r( array(
-							'method' => __METHOD__,
-							'message' => '========================= Previous CiviCRM Attachment DELETED ===================================',
-							'previous_meta' => $previous_meta,
-							'civicrm_file' => $civicrm_file,
-							//'backtrace' => $trace,
-						), true ) );
-						*/
 
 						// Mimic "civicrm_custom" for reverse syncs.
 						$this->mimic_civicrm_custom( $settings, $args );
@@ -1381,16 +1171,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 			'type' => get_post_mime_type( $attachment_id ),
 		];
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'value-AFTER' => $value,
-			//'backtrace' => $trace,
-		), true ) );
-		*/
-
 		// --<
 		return $value;
 
@@ -1415,31 +1195,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 */
 	public function value_get_for_acf( $value, $field, $selector, $post_id ) {
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'value' => $value,
-			'field' => $field,
-			'selector' => $selector,
-			'post_id' => $post_id,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Grab the raw data (Attachment ID) from the ACF Field.
 		$existing = get_field( $selector, $post_id, false );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'existing' => $existing,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Assume no sync necessary.
 		$sync = false;
@@ -1454,17 +1211,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 			// Get the current Attachment metadata.
 			$meta = $this->metadata_get( (int) $existing );
-
-			/*
-			$e = new \Exception();
-			$trace = $e->getTraceAsString();
-			error_log( print_r( [
-				'method' => __METHOD__,
-				'message' => '========================= HAS META ===================================',
-				'meta' => $meta,
-				//'backtrace' => $trace,
-			], true ) );
-			*/
 
 			// If we get metadata for the current Attachment.
 			if ( ! empty( $meta['civicrm_file'] ) ) {
@@ -1486,30 +1232,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'sync' => $sync ? 'y' : 'n',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Bail if no sync is necessary.
 		if ( $sync === false ) {
-
-			// TODO: Is this right?
-
-			/*
-			$e = new \Exception();
-			$trace = $e->getTraceAsString();
-			error_log( print_r( array(
-				'method' => __METHOD__,
-				'message' => '========================= SYNC NOT NECESSARY ===================================',
-				//'backtrace' => $trace,
-			), true ) );
-			*/
 
 			// The Attachment ID is the existing value.
 			$value = (int) $existing;
@@ -1531,17 +1255,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 		// Copy the File for WordPress to move.
 		$tmp_name = $this->file_copy_for_acf( $config->customFileUploadDir . $value );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'file-to-duplicate' => $config->customFileUploadDir . $value,
-			'duplicate-tmp_name' => $tmp_name,
-			//'backtrace' => $trace,
-		), true ) );
-		*/
 
 		// Find the name of the new File.
 		$name = pathinfo( $tmp_name, PATHINFO_BASENAME );
@@ -1568,16 +1281,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 			'size' => $size,
 		];
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'files-to-sideload' => $files,
-			//'backtrace' => $trace,
-		), true ) );
-		*/
-
 		// Only assign to a Post if the ACF "Post ID" is numeric.
 		if ( ! is_numeric( $post_id ) ) {
 			$target_post_id = null;
@@ -1598,16 +1301,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 			@unlink( $files['tmp_name'] );
 			return '';
 		}
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'attachment_id' => $attachment_id,
-			//'backtrace' => $trace,
-		), true ) );
-		*/
 
 		// Save metadata.
 		$data = [
@@ -1672,18 +1365,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 		// Get the CiviCRM Custom Field.
 		$custom_field = $this->plugin->civicrm->custom_field->get_by_id( $args['custom_field_id'] );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'field_group' => $field_group,
-			'entity_tables' => $entity_tables,
-			'custom_field' => $custom_field,
-			//'backtrace' => $trace,
-		), true ) );
-		*/
 
 		// Handle all Entity Tables.
 		foreach ( $entity_tables as $entity_table ) {
@@ -1768,17 +1449,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		// Do the query.
 		$query = new WP_Query( $args );
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'args' => $args,
-			//'query' => $query,
-			//'backtrace' => $trace,
-		), true ) );
-		*/
-
 		// There should be only one Attachment ID.
 		if ( $query->have_posts() ) {
 			foreach ( $query->get_posts() as $found ) {
@@ -1789,16 +1459,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 		// Reset Post data just in case.
 		wp_reset_postdata();
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'attachment_id' => $attachment_id,
-			//'backtrace' => $trace,
-		), true ) );
-		*/
 
 		// --<
 		return $attachment_id;
@@ -1851,16 +1511,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 			return;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'entity_tag' => $entity_tag,
-			//'backtrace' => $trace,
-		), true ) );
-		*/
-
 		// The Entity ID happens to be the CiviCRM File ID.
 
 		// Get the CiviCRM File being deleted.
@@ -1869,31 +1519,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 			return;
 		}
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'civicrm_file' => $civicrm_file,
-			//'backtrace' => $trace,
-		), true ) );
-		*/
-
 		// Let's try and find a WordPress Attachment.
 		$attachment_id = $this->query_by_file( $civicrm_file->uri, 'civicrm' );
 		if ( empty( $attachment_id ) ) {
 			return;
 		}
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'attachment_id' => $attachment_id,
-			//'backtrace' => $trace,
-		), true ) );
-		*/
 
 		/*
 		 * We have found our way to the WordPress Attachment.
@@ -1916,16 +1546,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 			'wordpress_file' => get_attached_file( $attachment_id, true ),
 			'civicrm_file' => '',
 		];
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'data' => $data,
-			//'backtrace' => $trace,
-		), true ) );
-		*/
 
 		// Force-delete the Attachment.
 		wp_delete_attachment( $attachment_id, true );
