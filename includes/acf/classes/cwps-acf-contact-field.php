@@ -1177,7 +1177,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 * @param array $name The Contact Field name.
 	 * @param string $selector The ACF Field selector.
 	 * @param mixed $post_id The ACF "Post ID".
-	 * @return mixed $value The formatted Field value.
+	 * @return mixed $value The WordPress Attachment ID, or empty on failure.
 	 */
 	public function image_value_get_for_acf( $value, $name, $selector, $post_id ) {
 
@@ -1196,10 +1196,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		} else {
 
 			// Grab the the full size Image data.
-			$url = wp_get_attachment_image_url( (int) $existing, 'full' );
+			$full_size = wp_get_attachment_image_url( (int) $existing, 'full' );
 
 			// If the URL has changed.
-			if ( ! empty( $url ) && $url != $value ) {
+			if ( ! empty( $full_size ) && $full_size != $value ) {
 
 				// Sync the new image.
 				$sync = true;
@@ -1207,215 +1207,156 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 			} else {
 
 				// The ID is the existing value.
-				$id = $existing;
+				$attachment_id = (int) $existing;
 
 			}
 
 		}
 
-		// Maybe transfer the CiviCRM Contact Image to WordPress.
-		if ( $sync === true ) {
-
-			// Get Contact ID for this ACF "Post ID".
-			$contact_id = $this->acf_loader->acf->field->query_contact_id( $post_id );
-
-			// Can't proceed if there's no Contact ID.
-			if ( $contact_id === false ) {
-				return '';
-			}
-
-			// Get full Contact data.
-			$contact = $this->plugin->civicrm->contact->get_by_id( $contact_id );
-
-			/*
-			 * Decode the current Image URL.
-			 *
-			 * We have to do this because Contact Images may have been uploaded
-			 * from a Profile embedded via a Shortcode. Since CiviCRM always runs
-			 * Contact Image URLs through htmlentities() before saving, the URLs
-			 * get "double-encoded" when they are parsed by `redirect_canonical()`
-			 * and result in 404s.
-			 *
-			 * This is only a problem when using Profiles via Shortcodes.
-			 *
-			 * @see CRM_Contact_BAO_Contact::processImageParams()
-			 */
-			$url = html_entity_decode( $contact['image_URL'] );
-
-			// Maybe fix the following function.
-			add_filter( 'attachment_url_to_postid', [ $this, 'image_url_to_post_id_helper' ], 10, 2 );
-
-			// First check for an existing Attachment ID.
-			$possible_id = attachment_url_to_postid( $url );
-
-			// Remove the fix.
-			remove_filter( 'attachment_url_to_postid', [ $this, 'image_url_to_post_id_helper' ], 10 );
-
-			// If no Attachment ID is found.
-			if ( $possible_id === 0 ) {
-
-				// Grab the filename as the "title" if we can.
-				if ( false === strpos( $url, 'photo=' ) ) {
-					$title = __( 'CiviCRM Contact Image', 'civicrm-wp-profile-sync' );
-				} else {
-					$title = explode( 'photo=', $url )[1];
-				}
-
-				// Only assign to a Post if the ACF "Post ID" is numeric.
-				if ( ! is_numeric( $post_id ) ) {
-					$target_post_id = null;
-				} else {
-					$target_post_id = $post_id;
-				}
-
-				// Possibly include the required files.
-				require_once ABSPATH . 'wp-admin/includes/media.php';
-				require_once ABSPATH . 'wp-admin/includes/file.php';
-				require_once ABSPATH . 'wp-admin/includes/image.php';
-
-				// Apply appropriate permissions to read image.
-				$this->permissions_escalate();
-
-				// Transfer the CiviCRM Contact Image to WordPress and grab ID.
-				$id = media_sideload_image( $url, $target_post_id, $title, 'id' );
-
-				// Revoke permissions filter.
-				$this->permissions_escalate_stop();
-
-				// If there's an error.
-				if ( is_wp_error( $id ) ) {
-
-					/*
-					 * It could be that the Contact Image URL is messed up because
-					 * it has been uploaded via a Profile form in a Shortcode.
-					 *
-					 * Reconstruct the URL via the Base Page if we can.
-					 */
-
-					// Bail if there is no filename to grab.
-					if ( false === strpos( $url, 'photo=' ) ) {
-						return '';
-					}
-
-					// Grab the filename.
-					$filename = explode( 'photo=', $url )[1];
-
-					// Retrieve the Base Page setting.
-					$basepage_slug = civicrm_api( 'Setting', 'getvalue', [
-						'version' => 3,
-						'name' => 'wpBasePage',
-						'group' => 'CiviCRM Preferences',
-					] );
-
-					// Query for the Base Page.
-					$pages = get_posts( [
-						'post_type' => 'page',
-						'name' => strtolower( $basepage_slug ),
-						'post_status' => 'publish',
-						'posts_per_page' => 1,
-					] );
-
-					// Bail if the Base Page was not found.
-					if ( empty( $pages ) || ! is_array( $pages ) ) {
-						return '';
-					}
-
-					// Grab what should be the only item.
-					$basepage = array_pop( $pages );
-
-					// Get the Base Page URL.
-					$basepage_url = trailingslashit( get_permalink( $basepage ) );
-
-					// Build URL to Image file.
-					$url = $basepage_url . 'contact/imagefile/?photo=' . $filename;
-
-					// Apply appropriate permissions to read image.
-					$this->permissions_escalate();
-
-					// Transfer the CiviCRM Contact Image to WordPress and grab ID.
-					$id = media_sideload_image( $url, $target_post_id, $title, 'id' );
-
-					// Revoke permissions filter.
-					$this->permissions_escalate_stop();
-
-					// If there's still an error.
-					if ( is_wp_error( $id ) ) {
-
-						// Log as much as we can.
-						$e = new \Exception();
-						$trace = $e->getTraceAsString();
-						error_log( print_r( [
-							'method' => __METHOD__,
-							'error' => $id,
-							'value' => $value,
-							'name' => $name,
-							'selector' => $selector,
-							'post_id' => $post_id,
-							'existing' => $existing,
-							'contact' => $contact,
-							//'backtrace' => $trace,
-						], true ) );
-
-						// Empty return.
-						return '';
-
-					}
-
-				}
-
-				// Grab the the full size Image data.
-				$url = wp_get_attachment_image_url( (int) $id, 'full' );
-
-				// Remove all internal CiviCRM hooks.
-				$this->acf_loader->mapper->hooks_civicrm_remove();
-
-				/**
-				 * Broadcast that we're about to reverse-sync to a Contact.
-				 *
-				 * @since 0.4
-				 *
-				 * @param $contact_data The array of Contact data.
-				 */
-				do_action( 'cwps/acf/contact_field/reverse_sync/pre' );
-
-				// Bare-bones data.
-				$contact_data = [
-					'id' => $contact_id,
-					'image_URL' => $url,
-				];
-
-				// Save the Attachment URL back to the Contact.
-				$result = $this->plugin->civicrm->contact->update( $contact_data );
-
-				/**
-				 * Broadcast that we have reverse-synced to a Contact.
-				 *
-				 * @since 0.4
-				 *
-				 * @param $contact_data The array of Contact data.
-				 */
-				do_action( 'cwps/acf/contact_field/reverse_sync/post', $contact_data );
-
-				// Restore all internal CiviCRM hooks.
-				$this->acf_loader->mapper->hooks_civicrm_add();
-
-			} else {
-
-				// Let's use this Attachment ID.
-				$id = $possible_id;
-
-			}
-
+		// Bail if no sync is necessary.
+		if ( $sync === false ) {
+			return $attachment_id;
 		}
 
-		// Get the Attachment for the ID we've determined.
-		$attachment = acf_get_attachment( $id );
+		// Get Contact ID for this ACF "Post ID".
+		$contact_id = $this->acf_loader->acf->field->query_contact_id( $post_id );
 
-		// The value in ACF is the Attachment ID.
-		$value = $attachment['ID'];
+		// Can't proceed if there's no Contact ID.
+		if ( $contact_id === false ) {
+			return '';
+		}
+
+		// Get full Contact data.
+		$contact = $this->plugin->civicrm->contact->get_by_id( $contact_id );
+
+		/*
+		 * Decode the current Image URL.
+		 *
+		 * We have to do this because Contact Images may have been uploaded
+		 * from a Profile embedded via a Shortcode. Since CiviCRM always runs
+		 * Contact Image URLs through htmlentities() before saving, the URLs
+		 * get "double-encoded" when they are parsed by `redirect_canonical()`
+		 * and result in 404s.
+		 *
+		 * This is only a problem when using Profiles via Shortcodes.
+		 *
+		 * @see CRM_Contact_BAO_Contact::processImageParams()
+		 */
+		$url = html_entity_decode( $contact['image_URL'] );
+
+		// Maybe fix the following function.
+		add_filter( 'attachment_url_to_postid', [ $this, 'image_url_to_post_id_helper' ], 10, 2 );
+
+		// First check for an existing Attachment ID.
+		$possible_id = attachment_url_to_postid( $url );
+
+		// Remove the fix.
+		remove_filter( 'attachment_url_to_postid', [ $this, 'image_url_to_post_id_helper' ], 10 );
+
+		// Return early if we find an existing Attachment ID.
+		if ( ! empty( $possible_id ) ) {
+			$value = (int) $possible_id;
+			return $value;
+		}
+
+		// Bail if we can't extract the filename.
+		if ( false === strpos( $url, 'photo=' ) ) {
+			return '';
+		}
+
+		// Grab the filename.
+		$filename = explode( 'photo=', $url )[1];
+
+		// Get CiviCRM config.
+		$config = CRM_Core_Config::singleton();
+
+		// Copy the File for WordPress to move.
+		$tmp_name = $this->civicrm->attachment->file_copy_for_acf( $config->customFileUploadDir . $filename );
+
+		// Find the name of the new File.
+		$name = pathinfo( $tmp_name, PATHINFO_BASENAME );
+
+		// Find the mime type of the File.
+		$mime_type = wp_check_filetype( $tmp_name );
+
+		// Find the filesize in bytes.
+		$size = filesize( $tmp_name );
+
+		/*
+		 * Normally this is used to store an error should the upload fail.
+		 * Since we aren't actually building an instance of $_FILES, we can
+		 * default to zero instead.
+		 */
+		$error = 0;
+
+		// Create an array that mimics $_FILES.
+		$files = [
+			'name' => $name,
+			'type' => $mime_type,
+			'tmp_name' => $tmp_name,
+			'error' => $error,
+			'size' => $size,
+		];
+
+		// Only assign to a Post if the ACF "Post ID" is numeric.
+		if ( ! is_numeric( $post_id ) ) {
+			$target_post_id = null;
+		} else {
+			$target_post_id = $post_id;
+		}
+
+		// Possibly include the required files.
+		require_once ABSPATH . 'wp-admin/includes/media.php';
+		require_once ABSPATH . 'wp-admin/includes/file.php';
+		require_once ABSPATH . 'wp-admin/includes/image.php';
+
+		// Transfer the CiviCRM File to WordPress and grab ID.
+		$attachment_id = media_handle_sideload( $files, $target_post_id );
+
+		// Handle sideload errors.
+		if ( is_wp_error( $attachment_id ) ) {
+			@unlink( $files['tmp_name'] );
+			return '';
+		}
+
+		// Grab the the full size Image data.
+		$url = wp_get_attachment_image_url( (int) $attachment_id, 'full' );
+
+		// Remove all internal CiviCRM hooks.
+		$this->acf_loader->mapper->hooks_civicrm_remove();
+
+		/**
+		 * Broadcast that we're about to reverse-sync to a Contact.
+		 *
+		 * @since 0.4
+		 *
+		 * @param $contact_data The array of Contact data.
+		 */
+		do_action( 'cwps/acf/contact_field/reverse_sync/pre' );
+
+		// Bare-bones data.
+		$contact_data = [
+			'id' => $contact_id,
+			'image_URL' => $url,
+		];
+
+		// Save the Attachment URL back to the Contact.
+		$result = $this->plugin->civicrm->contact->update( $contact_data );
+
+		/**
+		 * Broadcast that we have reverse-synced to a Contact.
+		 *
+		 * @since 0.4
+		 *
+		 * @param $contact_data The array of Contact data.
+		 */
+		do_action( 'cwps/acf/contact_field/reverse_sync/post', $contact_data );
+
+		// Restore all internal CiviCRM hooks.
+		$this->acf_loader->mapper->hooks_civicrm_add();
 
 		// --<
-		return $value;
+		return $attachment_id;
 
 	}
 
@@ -1655,58 +1596,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 			// Clear the Image URL for the Contact.
 			$result = $this->plugin->civicrm->contact->update( $contact_data );
 
-		}
-
-	}
-
-
-
-	// -------------------------------------------------------------------------
-
-
-
-	/**
-	 * Filters the CiviCRM Permissions to escalate permissions.
-	 *
-	 * @since 0.5.2
-	 */
-	public function permissions_escalate() {
-		add_action( 'civicrm_permission_check', [ $this, 'permissions_grant' ], 10, 2 );
-	}
-
-
-
-	/**
-	 * Removes the CiviCRM Permissions filter to restore permissions.
-	 *
-	 * @since 0.5.2
-	 */
-	public function permissions_escalate_stop() {
-		remove_action( 'civicrm_permission_check', [ $this, 'permissions_grant' ], 10 );
-	}
-
-
-
-	/**
-	 * Grant the permissions necessary for WordPress Users to read uploaded Files.
-	 *
-	 * This seems to be necessary for WordPress to sideload the image.
-	 *
-	 * @since 0.5.2
-	 *
-	 * @param str $permission The requested permission.
-	 * @param bool $granted True if permission granted, false otherwise.
-	 */
-	public function permissions_grant( $permission, &$granted ) {
-
-		// Build array of necessary permissions.
-		$permissions = [
-			'access uploaded files',
-		];
-
-		// Allow the relevant ones.
-		if ( in_array( strtolower( $permission ), $permissions ) ) {
-			$granted = 1;
 		}
 
 	}
