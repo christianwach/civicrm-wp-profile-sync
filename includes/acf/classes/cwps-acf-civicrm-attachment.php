@@ -68,6 +68,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	public $civicrm_hooks = false;
 
 	/**
+	 * WordPress hooks registered flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var bool $wordpress_hooks The WordPress hooks registered flag.
+	 */
+	public $wordpress_hooks = false;
+
+	/**
 	 * WordPress Attachment meta key.
 	 *
 	 * @since 0.5.2
@@ -131,6 +140,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 		// Always register Mapper hooks.
 		$this->register_mapper_hooks();
+
+		// Always register WordPress hooks.
+		//$this->register_wordpress_hooks();
 
 		// Add CiviCRM listeners once CiviCRM is available.
 		add_action( 'civicrm_config', [ $this, 'civicrm_config' ], 10, 1 );
@@ -225,7 +237,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		// Add callback for CiviCRM "preDelete" hook.
 		Civi::service( 'dispatcher' )->addListener(
 			'civi.dao.preDelete',
-			[ $this, 'entity_tag_pre_delete' ],
+			[ $this, 'civicrm_file_pre_delete' ],
 			-100 // Default priority.
 		);
 
@@ -251,11 +263,55 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		// Remove callback for CiviCRM "preDelete" hook.
 		Civi::service( 'dispatcher' )->removeListener(
 			'civi.dao.preDelete',
-			[ $this, 'entity_tag_pre_delete' ]
+			[ $this, 'civicrm_file_pre_delete' ]
 		);
 
 		// Declare unregistered.
 		$this->civicrm_hooks = false;
+
+	}
+
+
+
+	/**
+	 * Add listeners for WordPress Attachment operations.
+	 *
+	 * @since 0.5.2
+	 */
+	public function register_wordpress_hooks() {
+
+		// Bail if already registered.
+		if ( $this->wordpress_hooks === true ) {
+			return;
+		}
+
+		// Add callback for when a WordPress Attachment is deleted.
+		add_action( 'delete_attachment', [ $this, 'wordpress_attachment_deleted' ], 10 );
+
+		// Declare registered.
+		$this->wordpress_hooks = true;
+
+	}
+
+
+
+	/**
+	 * Remove listeners from WordPress Attachment operations.
+	 *
+	 * @since 0.5.2
+	 */
+	public function unregister_wordpress_hooks() {
+
+		// Bail if already unregistered.
+		if ( $this->wordpress_hooks === false ) {
+			return;
+		}
+
+		// Remove WordPress callbacks.
+		remove_action( 'delete_attachment', [ $this, 'wordpress_attachment_deleted' ], 10 );
+
+		// Declare unregistered.
+		$this->wordpress_hooks = false;
 
 	}
 
@@ -352,7 +408,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 *
 	 * @since 0.5.2
 	 *
-	 * @param array $data The numeric ID of the CiviCRM Attachment.
+	 * @param array $attachment_id The numeric ID of the CiviCRM Attachment.
 	 * @return bool $success True if successfully deleted, or false on failure.
 	 */
 	public function delete( $attachment_id ) {
@@ -592,7 +648,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 *
 	 * @since 0.5.2
 	 *
-	 * @param string $filename The name of the File on disk.
+	 * @param string $file_id The numeric ID of the CiviCRM File.
 	 * @return array $file The array of File data, or empty if none.
 	 */
 	public function file_get_by_id( $file_id ) {
@@ -1536,7 +1592,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 * @param object $event The event object.
 	 * @param string $hook The hook name.
 	 */
-	public function entity_tag_pre_delete( $event, $hook ) {
+	public function civicrm_file_pre_delete( $event, $hook ) {
 
 		// Extract CiviCRM Entity Tag for this hook.
 		$entity_tag =& $event->object;
@@ -1599,6 +1655,54 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 		// Force-delete the Attachment.
 		wp_delete_attachment( $attachment_id, true );
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Fires just before an Attachment is deleted.
+	 *
+	 * ACF File Fields store the WordPress Attachment ID, so when an Attachment
+	 * is deleted (and depending on the return format) nothing bad happens.
+	 * CiviCRM Custom Fields of type "File" store the CiviCRM Attachment ID.
+	 *
+	 * The problem here is that there is no way of finding out the ACF Field(s)
+	 * that reference the Attachment that is being deleted, so we cannot know if
+	 * the corresponding CiviCRM Attachment should be deleted.
+	 *
+	 * I am going to leave this disabled pending further thought.
+	 *
+	 * @see self::register_hooks()
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param integer $attachment_id The numeric ID of the Attachment.
+	 */
+	public function wordpress_attachment_deleted( $attachment_id ) {
+
+		// Look for Attachment metadata.
+		$meta = $this->metadata_get( (int) $attachment_id );
+		if ( empty( $meta['civicrm_file'] ) ) {
+			return;
+		}
+
+		// Try and delete the CiviCRM Attachment.
+		$filename = pathinfo( $meta['civicrm_file'], PATHINFO_BASENAME );
+		$civicrm_file = $this->file_get_by_name( $filename );
+		if ( empty( $civicrm_file ) ) {
+			return;
+		}
+
+		// It seems the Custom Field is cleared by doing this.
+		$this->delete( $civicrm_file->id );
+
+		// Mimic "civicrm_custom" for reverse syncs.
+		$this->mimic_civicrm_custom( $settings, $args );
 
 	}
 
