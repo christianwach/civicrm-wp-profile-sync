@@ -742,7 +742,10 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		$form_id = acf_maybe_get( $form, 'ID' );
 
 		// Init array to save for this Action.
-		$args = [ 'form_action' => $this->action_name ];
+		$args = [
+			'form_action' => $this->action_name,
+			'id' => false,
+		];
 
 		// Populate Contact, Email, Relationship and Custom Field data arrays.
 		$contact = $this->form_contact_data( $form, $current_post_id, $action );
@@ -3529,9 +3532,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		$form_action = $form_actions[ $alias ];
 
 		// Bail if we can't find the Contact ID.
-		if ( empty( $form_action['contact'] ) ) {
-			return $contact_id;
-		}
 		if ( empty( $form_action['contact']['id'] ) ) {
 			return $contact_id;
 		}

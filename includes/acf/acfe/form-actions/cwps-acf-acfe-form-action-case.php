@@ -297,18 +297,32 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 		$form_name = acf_maybe_get( $form, 'name' );
 		$form_id = acf_maybe_get( $form, 'ID' );
 
+		// Init array to save for this Action.
+		$args = [
+			'form_action' => $this->action_name,
+			'id' => false,
+		];
+
 		// Populate Case, Email, Relationship and Custom Field data arrays.
 		$case = $this->form_case_data( $form, $current_post_id, $action );
 		$custom_fields = $this->form_custom_data( $form, $current_post_id, $action );
 
 		// Save the Case with the data from the Form.
-		$case = $this->form_case_save( $case, $custom_fields );
+		$args['case'] = $this->form_case_save( $case, $custom_fields );
 
-		// Post-process Custom Fields now that we have a Case.
-		$this->form_custom_post_process( $form, $current_post_id, $action, $case );
+		// If we get a Case.
+		if ( $args['case'] !== false ) {
+
+			// Post-process Custom Fields now that we have a Case.
+			$this->form_custom_post_process( $form, $current_post_id, $action, $args['case'] );
+
+			// Save the Case ID for backwards compatibility.
+			$args['id'] = $args['case']['id'];
+
+		}
 
 		// Save the results of this Action for later use.
-		$this->make_action_save( $action, $case );
+		$this->make_action_save( $action, $args );
 
 	}
 

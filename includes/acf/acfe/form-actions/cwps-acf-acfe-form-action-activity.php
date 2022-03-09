@@ -314,18 +314,32 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		$form_name = acf_maybe_get( $form, 'name' );
 		$form_id = acf_maybe_get( $form, 'ID' );
 
+		// Init array to save for this Action.
+		$args = [
+			'form_action' => $this->action_name,
+			'id' => false,
+		];
+
 		// Populate Activity and Custom Field data arrays.
 		$activity = $this->form_activity_data( $form, $current_post_id, $action );
 		$custom_fields = $this->form_custom_data( $form, $current_post_id, $action );
 
 		// Save the Activity with the data from the Form.
-		$activity = $this->form_activity_save( $activity, $custom_fields );
+		$args['activity'] = $this->form_activity_save( $activity, $custom_fields );
 
-		// Post-process Custom Fields now that we have an Activity.
-		$this->form_custom_post_process( $form, $current_post_id, $action, $activity );
+		// If we get an Activity.
+		if ( $args['activity'] !== false ) {
+
+			// Post-process Custom Fields now that we have an Activity.
+			$this->form_custom_post_process( $form, $current_post_id, $action, $args['activity'] );
+
+			// Save the Activity ID for backwards compatibility.
+			$args['id'] = $args['activity']['id'];
+
+		}
 
 		// Save the results of this Action for later use.
-		$this->make_action_save( $action, $activity );
+		$this->make_action_save( $action, $args );
 
 	}
 
@@ -1181,23 +1195,23 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 			return $case;
 		}
 
-		// Get the Case ID for that Action.
-		$related_case_id = acfe_form_get_action( $action_name, 'id' );
-		if ( empty( $related_case_id ) ) {
+		// Get the Case data for that Action.
+		$related_case = acfe_form_get_action( $action_name, 'case' );
+		if ( empty( $related_case['id'] ) ) {
 			return $case;
 		}
 
 		// Assign to return.
-		$case['case_id'] = (int) $related_case_id;
+		$case['case_id'] = (int) $related_case['id'];
 
 		// Assign flag if creating the Case has been skipped.
-		$skipped = acfe_form_get_action( $action_name, 'skipped' );
+		$skipped = $related_case['skipped'];
 		if ( $skipped ) {
 			$case['skipped'] = true;
 		}
 
 		// Assign flag if the Case has been created.
-		$created = acfe_form_get_action( $action_name, 'created' );
+		$created = $related_case['created'];
 		if ( $created ) {
 			$case['created'] = true;
 		}

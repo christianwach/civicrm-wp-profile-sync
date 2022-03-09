@@ -243,14 +243,30 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 		$form_name = acf_maybe_get( $form, 'name' );
 		$form_id = acf_maybe_get( $form, 'ID' );
 
+		// Init array to save for this Action.
+		$args = [
+			'form_action' => $this->action_name,
+			'id' => false,
+		];
+
 		// Populate Email data array.
-		$civicrm_email = $this->form_email_data( $form, $current_post_id, $action );
+		$email = $this->form_email_data( $form, $current_post_id, $action );
 
 		// Send the Email with the data from the Form.
-		$civicrm_email = $this->form_email_save( $civicrm_email );
+		$args['email'] = $this->form_email_save( $email );
+
+		// If we get an Email.
+		if ( $args['email'] !== false ) {
+
+			// Maybe save the Email ID if there is one.
+			if ( ! empty( $args['email']['id'] ) ) {
+				$args['id'] = $args['email']['id'];
+			}
+
+		}
 
 		// Save the results of this Action for later use.
-		$this->make_action_save( $action, $civicrm_email );
+		$this->make_action_save( $action, $args );
 
 	}
 
@@ -910,14 +926,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 			return $case_id;
 		}
 
-		// Get the Case ID for that Action.
-		$related_case_id = acfe_form_get_action( $action_name, 'id' );
-		if ( empty( $related_case_id ) ) {
+		// Get the Case data for that Action.
+		$related_case = acfe_form_get_action( $action_name, 'case' );
+		if ( empty( $related_case['id'] ) ) {
 			return $case_id;
 		}
 
 		// Assign return.
-		$case_id = (int) $related_case_id;
+		$case_id = (int) $related_case['id'];
 
 		// --<
 		return $case_id;

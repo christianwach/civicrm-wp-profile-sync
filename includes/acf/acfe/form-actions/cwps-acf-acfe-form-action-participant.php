@@ -368,18 +368,32 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 		$form_name = acf_maybe_get( $form, 'name' );
 		$form_id = acf_maybe_get( $form, 'ID' );
 
+		// Init array to save for this Action.
+		$args = [
+			'form_action' => $this->action_name,
+			'id' => false,
+		];
+
 		// Populate Participant and Custom Field data arrays.
 		$participant = $this->form_participant_data( $form, $current_post_id, $action );
 		$custom_fields = $this->form_custom_data( $form, $current_post_id, $action );
 
 		// Save the Participant with the data from the Form.
-		$participant = $this->form_participant_save( $participant, $custom_fields );
+		$args['participant'] = $this->form_participant_save( $participant, $custom_fields );
 
-		// Post-process Custom Fields now that we have a Participant.
-		$this->form_custom_post_process( $form, $current_post_id, $action, $participant );
+		// If we get a Participant.
+		if ( $args['participant'] !== false ) {
+
+			// Post-process Custom Fields now that we have a Participant.
+			$this->form_custom_post_process( $form, $current_post_id, $action, $args['participant'] );
+
+			// Save the Participant ID for backwards compatibility.
+			$args['id'] = $args['participant']['id'];
+
+		}
 
 		// Save the results of this Action for later use.
-		$this->make_action_save( $action, $participant );
+		$this->make_action_save( $action, $args );
 
 	}
 
@@ -1678,13 +1692,13 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 		}
 
 		// Get the Participant data for that Action.
-		$related_participant_id = acfe_form_get_action( $action_name, 'id' );
-		if ( empty( $related_participant_id ) ) {
+		$related_participant = acfe_form_get_action( $action_name, 'participant' );
+		if ( empty( $related_participant['id'] ) ) {
 			return $participant_id;
 		}
 
 		// Assign return.
-		$participant_id = (int) $related_participant_id;
+		$participant_id = (int) $related_participant['id'];
 
 		// --<
 		return $participant_id;
