@@ -209,6 +209,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$this->mapping_field_filters_add( 'email_' . $email_field['name'] );
 		}
 
+		// Email Ref Field.
+		$this->mapping_field_filters_add( 'email_conditional' );
+
 		// Get Website Types.
 		$this->website_types = $this->plugin->civicrm->website->types_options_get();
 
@@ -219,6 +222,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		foreach ( $this->website_fields as $website_field ) {
 			$this->mapping_field_filters_add( 'website_' . $website_field['name'] );
 		}
+
+		// Website Ref Field.
+		$this->mapping_field_filters_add( 'website_conditional' );
 
 		// Get the public Address Fields.
 		$this->address_fields = $this->civicrm->address->civicrm_fields_get( 'public' );
@@ -240,6 +246,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			}
 		}
 
+		// Address Ref Field.
+		$this->mapping_field_filters_add( 'address_conditional' );
+
 		// Get Phone Types.
 		$this->phone_types = $this->plugin->civicrm->phone->phone_types_get();
 
@@ -251,6 +260,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$this->mapping_field_filters_add( 'phone_' . $phone_field['name'] );
 		}
 
+		// Phone Ref Field.
+		$this->mapping_field_filters_add( 'phone_conditional' );
+
 		// Get Instant Messenger Providers.
 		$this->im_providers = $this->civicrm->im->im_providers_get();
 
@@ -261,6 +273,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		foreach ( $this->im_fields as $im_field ) {
 			$this->mapping_field_filters_add( 'im_' . $im_field['name'] );
 		}
+
+		// Instant Messenger Ref Field.
+		$this->mapping_field_filters_add( 'im_conditional' );
 
 		// Group Ref Field.
 		$this->mapping_field_filters_add( 'group_conditional' );
@@ -291,6 +306,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		foreach ( $this->note_fields as $note_field ) {
 			$this->mapping_field_filters_add( 'note_' . $note_field['name'] );
 		}
+
+		// Note Ref Field.
+		$this->mapping_field_filters_add( 'note_conditional' );
 
 		// Tag Ref Field.
 		$this->mapping_field_filters_add( 'tag_conditional' );
@@ -1432,6 +1450,21 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$sub_fields[] = $this->mapping_field_get( 'email_' . $email_field['name'], $email_field['title'] );
 		}
 
+		// ---------------------------------------------------------------------
+
+		// Assign code and label.
+		$code = 'email_conditional';
+		$label = __( 'Conditional On', 'civicrm-wp-profile-sync' );
+
+		$email_conditional = $this->mapping_field_get( $code, $label );
+		$email_conditional['placeholder'] = __( 'Always add', 'civicrm-wp-profile-sync' );
+		$email_conditional['instructions'] = __( 'To add the Email to the Contact only when conditions are met, link this to a Hidden Field with value "1" where the conditional logic of that Field shows it when the conditions are met.', 'civicrm-wp-profile-sync' );
+
+		// Add Field to Repeater's Sub-Fields.
+		$sub_fields[] = $email_conditional;
+
+		// ---------------------------------------------------------------------
+
 		// Add to Repeater.
 		$email_repeater['sub_fields'] = $sub_fields;
 
@@ -1565,6 +1598,21 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		foreach ( $this->website_fields as $website_field ) {
 			$sub_fields[] = $this->mapping_field_get( 'website_' . $website_field['name'], $website_field['title'] );
 		}
+
+		// ---------------------------------------------------------------------
+
+		// Assign code and label.
+		$code = 'website_conditional';
+		$label = __( 'Conditional On', 'civicrm-wp-profile-sync' );
+
+		$website_conditional = $this->mapping_field_get( $code, $label );
+		$website_conditional['placeholder'] = __( 'Always add', 'civicrm-wp-profile-sync' );
+		$website_conditional['instructions'] = __( 'To add the Website to the Contact only when conditions are met, link this to a Hidden Field with value "1" where the conditional logic of that Field shows it when the conditions are met.', 'civicrm-wp-profile-sync' );
+
+		// Add Field to Repeater's Sub-Fields.
+		$sub_fields[] = $website_conditional;
+
+		// ---------------------------------------------------------------------
 
 		// Add to Repeater.
 		$website_repeater['sub_fields'] = $sub_fields;
@@ -1753,6 +1801,21 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		foreach ( $this->address_fields as $address_field ) {
 			$sub_fields[] = $this->mapping_field_get( 'address_' . $address_field['name'], $address_field['title'] );
 		}
+
+		// ---------------------------------------------------------------------
+
+		// Assign code and label.
+		$code = 'address_conditional';
+		$label = __( 'Conditional On', 'civicrm-wp-profile-sync' );
+
+		$address_conditional = $this->mapping_field_get( $code, $label );
+		$address_conditional['placeholder'] = __( 'Always add', 'civicrm-wp-profile-sync' );
+		$address_conditional['instructions'] = __( 'To add the Address to the Contact only when conditions are met, link this to a Hidden Field with value "1" where the conditional logic of that Field shows it when the conditions are met.', 'civicrm-wp-profile-sync' );
+
+		// Add Field to Repeater's Sub-Fields.
+		$sub_fields[] = $address_conditional;
+
+		// ---------------------------------------------------------------------
 
 		// Maybe close Accordion.
 		if ( ! empty( $this->address_custom_fields ) ) {
@@ -2023,6 +2086,21 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$sub_fields[] = $this->mapping_field_get( 'phone_' . $phone_field['name'], $phone_field['title'] );
 		}
 
+		// ---------------------------------------------------------------------
+
+		// Assign code and label.
+		$code = 'phone_conditional';
+		$label = __( 'Conditional On', 'civicrm-wp-profile-sync' );
+
+		$phone_conditional = $this->mapping_field_get( $code, $label );
+		$phone_conditional['placeholder'] = __( 'Always add', 'civicrm-wp-profile-sync' );
+		$phone_conditional['instructions'] = __( 'To add the Phone to the Contact only when conditions are met, link this to a Hidden Field with value "1" where the conditional logic of that Field shows it when the conditions are met.', 'civicrm-wp-profile-sync' );
+
+		// Add Field to Repeater's Sub-Fields.
+		$sub_fields[] = $phone_conditional;
+
+		// ---------------------------------------------------------------------
+
 		// Add to Repeater.
 		$phone_repeater['sub_fields'] = $sub_fields;
 
@@ -2180,6 +2258,21 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		foreach ( $this->im_fields as $im_field ) {
 			$sub_fields[] = $this->mapping_field_get( 'im_' . $im_field['name'], $im_field['title'] );
 		}
+
+		// ---------------------------------------------------------------------
+
+		// Assign code and label.
+		$code = 'im_conditional';
+		$label = __( 'Conditional On', 'civicrm-wp-profile-sync' );
+
+		$im_conditional = $this->mapping_field_get( $code, $label );
+		$im_conditional['placeholder'] = __( 'Always add', 'civicrm-wp-profile-sync' );
+		$im_conditional['instructions'] = __( 'To add the Instant Messenger to the Contact only when conditions are met, link this to a Hidden Field with value "1" where the conditional logic of that Field shows it when the conditions are met.', 'civicrm-wp-profile-sync' );
+
+		// Add Field to Repeater's Sub-Fields.
+		$sub_fields[] = $im_conditional;
+
+		// ---------------------------------------------------------------------
 
 		// Add to Repeater.
 		$im_repeater['sub_fields'] = $sub_fields;
@@ -2646,6 +2739,21 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		foreach ( $this->note_fields as $note_field ) {
 			$sub_fields[] = $this->mapping_field_get( 'note_' . $note_field['name'], $note_field['title'] );
 		}
+
+		// ---------------------------------------------------------------------
+
+		// Assign code and label.
+		$code = 'note_conditional';
+		$label = __( 'Conditional On', 'civicrm-wp-profile-sync' );
+
+		$note_conditional = $this->mapping_field_get( $code, $label );
+		$note_conditional['placeholder'] = __( 'Always add', 'civicrm-wp-profile-sync' );
+		$note_conditional['instructions'] = __( 'To add the Note to the Contact only when conditions are met, link this to a Hidden Field with value "1" where the conditional logic of that Field shows it when the conditions are met.', 'civicrm-wp-profile-sync' );
+
+		// Add Field to Repeater's Sub-Fields.
+		$sub_fields[] = $note_conditional;
+
+		// ---------------------------------------------------------------------
 
 		// Add to Repeater.
 		$note_repeater['sub_fields'] = $sub_fields;
@@ -3873,8 +3981,17 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				$fields[ $email_field['name'] ] = $field[ $this->field_name . 'map_email_' . $email_field['name'] ];
 			}
 
-			// Populate data array with values of mapped Fields.
-			$email_data[] = acfe_form_map_vs_fields( $fields, $fields, $current_post_id, $form );
+			// Get Email Conditional.
+			$fields['email_conditional'] = $field[ $this->field_name . 'map_email_conditional' ];
+
+			// Populate array with mapped Field values.
+			$fields = acfe_form_map_vs_fields( $fields, $fields, $current_post_id, $form );
+
+			// Save Email Conditional Reference.
+			$fields['email_conditional_ref'] = $field[ $this->field_name . 'map_email_conditional' ];
+
+			// Add the data.
+			$email_data[] = $fields;
 
 		}
 
@@ -3914,6 +4031,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 			// Strip out empty Fields.
 			$email = $this->form_data_prepare( $email );
+
+			// Only skip if the Email Conditional Reference Field has a value.
+			if ( ! empty( $email['email_conditional_ref'] ) ) {
+				// And the Email Conditional Field has a value.
+				if ( empty( $email['email_conditional'] ) ) {
+					continue;
+				}
+			}
 
 			// Update the Email.
 			$result = $this->civicrm->email->email_record_update( $contact['id'], $email );
@@ -4338,8 +4463,17 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				$fields[ $website_field['name'] ] = $field[ $this->field_name . 'map_website_' . $website_field['name'] ];
 			}
 
-			// Populate data array with values of mapped Fields.
-			$website_data[] = acfe_form_map_vs_fields( $fields, $fields, $current_post_id, $form );
+			// Get Website Conditional.
+			$fields['website_conditional'] = $field[ $this->field_name . 'map_website_conditional' ];
+
+			// Populate array with mapped Field values.
+			$fields = acfe_form_map_vs_fields( $fields, $fields, $current_post_id, $form );
+
+			// Save Website Conditional Reference.
+			$fields['website_conditional_ref'] = $field[ $this->field_name . 'map_website_conditional' ];
+
+			// Add the data.
+			$website_data[] = $fields;
 
 		}
 
@@ -4383,6 +4517,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			// Skip if there's no Website URL.
 			if ( empty( $website['url'] ) ) {
 				continue;
+			}
+
+			// Only skip if the Website Conditional Reference Field has a value.
+			if ( ! empty( $website['website_conditional_ref'] ) ) {
+				// And the Website Conditional Field has a value.
+				if ( empty( $website['website_conditional'] ) ) {
+					continue;
+				}
 			}
 
 			// Update the Website.
@@ -4453,8 +4595,17 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				$fields += $custom_fields;
 			}
 
-			// Populate data array with values of mapped Fields.
-			$address_data[] = acfe_form_map_vs_fields( $fields, $fields, $current_post_id, $form );
+			// Get Address Conditional.
+			$fields['address_conditional'] = $field[ $this->field_name . 'map_address_conditional' ];
+
+			// Populate array with mapped Field values.
+			$fields = acfe_form_map_vs_fields( $fields, $fields, $current_post_id, $form );
+
+			// Save Address Conditional Reference.
+			$fields['address_conditional_ref'] = $field[ $this->field_name . 'map_address_conditional' ];
+
+			// Add the data.
+			$address_data[] = $fields;
 
 		}
 
@@ -4525,6 +4676,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 			// Strip out empty Fields.
 			$address = $this->form_data_prepare( $address );
+
+			// Only skip if the Address Conditional Reference Field has a value.
+			if ( ! empty( $address['address_conditional_ref'] ) ) {
+				// And the Address Conditional Field has a value.
+				if ( empty( $address['address_conditional'] ) ) {
+					continue;
+				}
+			}
 
 			// Add in empty Fields when requested.
 			if ( ! empty( $address['is_override'] ) ) {
@@ -4599,8 +4758,17 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				$fields[ $phone_field['name'] ] = $field[ $this->field_name . 'map_phone_' . $phone_field['name'] ];
 			}
 
-			// Populate data array with values of mapped Fields.
-			$phone_data[] = acfe_form_map_vs_fields( $fields, $fields, $current_post_id, $form );
+			// Get Phone Conditional.
+			$fields['phone_conditional'] = $field[ $this->field_name . 'map_phone_conditional' ];
+
+			// Populate array with mapped Field values.
+			$fields = acfe_form_map_vs_fields( $fields, $fields, $current_post_id, $form );
+
+			// Save Phone Conditional Reference.
+			$fields['phone_conditional_ref'] = $field[ $this->field_name . 'map_phone_conditional' ];
+
+			// Add the data.
+			$phone_data[] = $fields;
 
 		}
 
@@ -4644,6 +4812,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			// Skip if there's no Phone Number.
 			if ( empty( $phone['phone'] ) ) {
 				continue;
+			}
+
+			// Only skip if the Phone Conditional Reference Field has a value.
+			if ( ! empty( $phone['phone_conditional_ref'] ) ) {
+				// And the Phone Conditional Field has a value.
+				if ( empty( $phone['phone_conditional'] ) ) {
+					continue;
+				}
 			}
 
 			// Try and get the Phone Record.
@@ -4726,8 +4902,17 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				$fields[ $im_field['name'] ] = $field[ $this->field_name . 'map_im_' . $im_field['name'] ];
 			}
 
-			// Populate data array with values of mapped Fields.
-			$im_data[] = acfe_form_map_vs_fields( $fields, $fields, $current_post_id, $form );
+			// Get Instant Messenger Conditional.
+			$fields['im_conditional'] = $field[ $this->field_name . 'map_im_conditional' ];
+
+			// Populate array with mapped Field values.
+			$fields = acfe_form_map_vs_fields( $fields, $fields, $current_post_id, $form );
+
+			// Save Instant Messenger Conditional Reference.
+			$fields['im_conditional_ref'] = $field[ $this->field_name . 'map_im_conditional' ];
+
+			// Add the data.
+			$im_data[] = $fields;
 
 		}
 
@@ -4771,6 +4956,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			// Skip if there's no Instant Messenger.
 			if ( empty( $im['name'] ) ) {
 				continue;
+			}
+
+			// Only skip if the Instant Messenger Conditional Reference Field has a value.
+			if ( ! empty( $im['im_conditional_ref'] ) ) {
+				// And the Instant Messenger Conditional Field has a value.
+				if ( empty( $im['im_conditional'] ) ) {
+					continue;
+				}
 			}
 
 			// Try and get the Phone Record.
@@ -5111,8 +5304,17 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				$fields[ $note_field['name'] ] = $field[ $this->field_name . 'map_note_' . $note_field['name'] ];
 			}
 
-			// Populate data array with values of mapped Fields.
-			$note_data[] = acfe_form_map_vs_fields( $fields, $fields, $current_post_id, $form );
+			// Get Note Conditional.
+			$fields['note_conditional'] = $field[ $this->field_name . 'map_note_conditional' ];
+
+			// Populate array with mapped Field values.
+			$fields = acfe_form_map_vs_fields( $fields, $fields, $current_post_id, $form );
+
+			// Save Note Conditional Reference.
+			$fields['note_conditional_ref'] = $field[ $this->field_name . 'map_note_conditional' ];
+
+			// Add the data.
+			$note_data[] = $fields;
 
 		}
 
@@ -5156,6 +5358,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			// Skip if there's no Note.
 			if ( empty( $note['note'] ) ) {
 				continue;
+			}
+
+			// Only skip if the Note Conditional Reference Field has a value.
+			if ( ! empty( $note['note_conditional_ref'] ) ) {
+				// And the Note Conditional Field has a value.
+				if ( empty( $note['note_conditional'] ) ) {
+					continue;
+				}
 			}
 
 			// Add necessary params.
