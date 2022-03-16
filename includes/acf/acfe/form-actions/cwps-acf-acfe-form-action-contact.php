@@ -3932,7 +3932,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			];
 
 			// Hand off to Attachment class.
-			$this->civicrm->attachment->fields_delete( (int) $file_id, $data['settings'], $args );
+			$this->civicrm->attachment->fields_clear( (int) $file_id, $data['settings'], $args );
 
 		}
 
