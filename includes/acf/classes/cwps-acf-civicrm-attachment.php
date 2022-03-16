@@ -104,8 +104,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 * @var array $attachment_fields The array of public Attachment Fields.
 	 */
 	public $attachment_fields = [
-		'file' => 'file',
-		'content' => 'text',
+		'description' => 'text',
 	];
 
 
