@@ -2037,8 +2037,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		}
 
 		// Append our "Entity Table" if not already present.
-		if ( ! in_array( 'civicrm_contact', $entity_tables ) ) {
-			$entity_tables[] = 'civicrm_contact';
+		if ( ! array_key_exists( 'civicrm_contact', $entity_tables ) ) {
+			$entity_tables['civicrm_contact'] = __( 'Contact', 'civicrm-wp-profile-sync' );
 		}
 
 		// --<

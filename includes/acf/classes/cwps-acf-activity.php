@@ -1750,8 +1750,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		}
 
 		// Append our "Entity Table" if not already present.
-		if ( ! in_array( 'civicrm_activity', $entity_tables ) ) {
-			$entity_tables[] = 'civicrm_activity';
+		if ( ! array_key_exists( 'civicrm_activity', $entity_tables ) ) {
+			$entity_tables['civicrm_activity'] = __( 'Activity', 'civicrm-wp-profile-sync' );
 		}
 
 		// --<

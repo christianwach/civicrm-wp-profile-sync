@@ -1422,7 +1422,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		$custom_field = $this->plugin->civicrm->custom_field->get_by_id( $args['custom_field_id'] );
 
 		// Handle all Entity Tables.
-		foreach ( $entity_tables as $entity_table ) {
+		foreach ( $entity_tables as $entity_table => $entity_name ) {
 
 			// Build Custom Field array.
 			$custom_fields = [];

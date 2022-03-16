@@ -1974,8 +1974,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		}
 
 		// Append our "Entity Table" if not already present.
-		if ( ! in_array( 'civicrm_case', $entity_tables ) ) {
-			$entity_tables[] = 'civicrm_case';
+		if ( ! array_key_exists( 'civicrm_case', $entity_tables ) ) {
+			$entity_tables['civicrm_case'] = __( 'Case', 'civicrm-wp-profile-sync' );
 		}
 
 		// --<

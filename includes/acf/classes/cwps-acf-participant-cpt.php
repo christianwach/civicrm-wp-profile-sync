@@ -1229,8 +1229,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		}
 
 		// Append our "Entity Table" if not already present.
-		if ( ! in_array( 'civicrm_participant', $entity_tables ) ) {
-			$entity_tables[] = 'civicrm_participant';
+		if ( ! array_key_exists( 'civicrm_participant', $entity_tables ) ) {
+			$entity_tables['civicrm_participant'] = __( 'Participant', 'civicrm-wp-profile-sync' );
 		}
 
 		// --<
