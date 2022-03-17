@@ -188,10 +188,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'text_settings_modify' ], 10, 2 );
 		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'file_settings_modify' ], 10, 2 );
 
-		// File Fields require special handling.
-		add_action( 'cwps/acf/field/entity_field_setting/added', [ $this, 'file_settings_acfe_add' ], 10, 3 );
-		add_action( 'cwps/acf/field/generic_field_setting/added', [ $this, 'file_settings_acf_add' ], 10, 3 );
-
 	}
 
 
@@ -2039,108 +2035,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 
 	/**
-	 * Adds additional Settings to an ACF "File" Field when in an ACFE context.
-	 *
-	 * @since 0.5.2
-	 *
-	 * @param array $field The existing ACF Field data array.
-	 * @param array $setting_field The ACF Field setting array.
-	 * @param array $field_group The ACF Field Group data array.
-	 * @return array $field The modified ACF Field data array.
-	 */
-	public function file_settings_acfe_add( $field, $setting_field, $field_group ) {
-
-		// Bail early if not our Field Type.
-		if ( 'file' !== $field['type'] ) {
-			return $field;
-		}
-
-		// First add ACF settings.
-		$this->file_settings_acf_add( $field, $setting_field, $field_group );
-
-		// Define Setting Field.
-		$upload_setting_field = [
-			'key' => 'civicrm_file_no_wp',
-			'label' => __( 'CiviCRM Only', 'civicrm-wp-profile-sync' ),
-			'name' => 'civicrm_file_no_wp',
-			'type' => 'true_false',
-			'instructions' => __( 'Delete WordPress Attachment after upload.', 'civicrm-wp-profile-sync' ),
-			'required' => 0,
-			'wrapper' => [
-				'width' => '',
-				'class' => '',
-				'id' => '',
-			],
-			'acfe_permissions' => '',
-			'message' => '',
-			'default_value' => 0,
-			'ui' => 1,
-			'ui_on_text' => '',
-			'ui_off_text' => '',
-			'conditional_logic' => 0,
-		];
-
-		// Now add it.
-		acf_render_field_setting( $field, $upload_setting_field );
-
-	}
-
-
-
-	/**
-	 * Adds additional Settings to an ACF "File" Field.
-	 *
-	 * @since 0.5.2
-	 *
-	 * @param array $field The existing ACF Field data array.
-	 * @param array $setting_field The ACF Field setting array.
-	 * @param array $field_group The ACF Field Group data array.
-	 * @return array $field The modified ACF Field data array.
-	 */
-	public function file_settings_acf_add( $field, $setting_field, $field_group ) {
-
-		// Bail early if not our Field Type.
-		if ( 'file' !== $field['type'] ) {
-			return $field;
-		}
-
-		// Define Setting Field.
-		$usage_setting_field = [
-			'key' => 'civicrm_file_field_type',
-			'label' => __( 'File Link', 'civicrm-wp-profile-sync' ),
-			'name' => 'civicrm_file_field_type',
-			'type' => 'select',
-			'instructions' => __( 'Choose which File this ACF Field should link to.', 'civicrm-wp-profile-sync' ),
-			'default_value' => '',
-			'placeholder' => '',
-			'allow_null' => 0,
-			'multiple' => 0,
-			'ui' => 0,
-			'required' => 0,
-			'return_format' => 'value',
-			'parent' => $this->acf_loader->acf->field_group->placeholder_group_get(),
-			'choices' => [
-				1 => __( 'Use public WordPress File', 'civicrm-wp-profile-sync' ),
-				2 => __( 'Use permissioned CiviCRM File', 'civicrm-wp-profile-sync' ),
-			],
-			'conditional_logic' => [
-				[
-					[
-						'field' => $this->acf_loader->civicrm->acf_field_key_get(),
-						'operator' => '!=empty',
-					],
-				],
-			],
-		];
-
-		// Now add it.
-		acf_render_field_setting( $field, $usage_setting_field );
-
-	}
-
-
-
-	/**
 	 * Modify the Settings of an ACF "File" Field.
 	 *
 	 * @since 0.5.2
@@ -2181,6 +2075,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 		// Set the "uploader" attribute.
 		$field['uploader'] = 'basic';
+
+		// Set the "max_size" attribute.
+		if ( $this->civicrm->is_initialised() ) {
+			$config = CRM_Core_Config::singleton();
+			$field['max_size'] = $config->maxFileSize;
+		}
 
 		// --<
 		return $field;

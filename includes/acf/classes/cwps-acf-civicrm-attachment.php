@@ -157,6 +157,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		// Maybe filter the URL of the File.
 		add_filter( 'acf/load_attachment', [ $this, 'acf_attachment_filter' ], 10, 3 );
 
+		// ACF File Fields require additional settings.
+		add_action( 'cwps/acf/field/entity_field_setting/added', [ $this, 'field_settings_acfe_add' ], 10, 3 );
+		add_action( 'cwps/acf/field/generic_field_setting/added', [ $this, 'field_settings_acf_add' ], 10, 3 );
+		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'field_settings_modify' ], 10, 2 );
+
+		// Listen for queries from the ACF Bypass class.
+		add_filter( 'cwps/acf/bypass/query_settings_choices', [ $this, 'query_bypass_settings_choices' ], 5, 4 );
+
 	}
 
 
@@ -856,6 +864,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		 * the Fields have been saved.
 		 */
 		$fields = get_fields( $args['post_id'], false );
+
+		// Bail if there are no ACF Fields.
+		if ( empty( $fields ) ) {
+			return;
+		}
 
 		// Loop through the Fields and store any File Fields.
 		$this->file_fields = [];
@@ -1702,6 +1715,267 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 		// Mimic "civicrm_custom" for reverse syncs.
 		$this->mimic_civicrm_custom( $settings, $args );
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Appends an array of Setting Field choices for a Bypass ACF Field Group when found.
+	 *
+	 * @since 0.5
+	 *
+	 * @param array $choices The existing Setting Field choices array.
+	 * @param array $field The ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @param array $entity_array The Entity and ID array.
+	 * @return array|bool $setting_field The Setting Field array if populated, false if conflicting.
+	 */
+	public function query_bypass_settings_choices( $choices, $field, $field_group, $entity_array ) {
+
+		// Bail early if not our Field Type.
+		if ( 'file' !== $field['type'] ) {
+			return $choices;
+		}
+
+		/**
+		 * Query for the choices from Entities that support Attachments.
+		 *
+		 * This filter sends out a request for other classes to respond with an
+		 * Entity Table and Label if they support Attachments.
+		 *
+		 * Internally, this is used by:
+		 *
+		 * @see CiviCRM_Profile_Sync_ACF_CiviCRM_Activity::query_attachment_choices()
+		 * @see CiviCRM_Profile_Sync_ACF_CiviCRM_Note::query_attachment_choices()
+		 *
+		 * @since 0.5.2
+		 *
+		 * @param array $entities Empty array, since we're querying for Entities.
+		 * @param array $entity_array The Entity and ID array.
+		 */
+		$entities = apply_filters( 'cwps/acf/query_attachment_choices', [], $entity_array );
+
+		// Bail if none.
+		if ( empty( $entities ) ) {
+			return $choices;
+		}
+
+		// Build choices.
+		$optgroup_label = esc_attr__( 'Attach to CiviCRM Entity', 'civicrm-wp-profile-sync' );
+		foreach ( $entities as $table => $label ) {
+			$choices[ $optgroup_label ][ $table ] = $label;
+		}
+
+		/**
+		 * Filter the choices to display in the "CiviCRM Field" select.
+		 *
+		 * @since 0.5.2
+		 *
+		 * @param array $choices The choices for the Setting Field array.
+		 */
+		$choices = apply_filters( 'cwps/acf/civicrm/attachment/civicrm_field/choices', $choices );
+
+		// Return populated array.
+		return $choices;
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Adds additional Settings to an ACF "File" Field when in an ACFE context.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param array $field The existing ACF Field data array.
+	 * @param array $setting_field The ACF Field setting array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @return array $field The modified ACF Field data array.
+	 */
+	public function field_settings_acfe_add( $field, $setting_field, $field_group ) {
+
+		// Bail early if not our Field Type.
+		if ( 'file' !== $field['type'] ) {
+			return $field;
+		}
+
+		// First add ACF settings.
+		$this->field_settings_acf_add( $field, $setting_field, $field_group );
+
+		// Define Setting Field.
+		$upload_setting_field = [
+			'key' => 'civicrm_file_no_wp',
+			'label' => __( 'CiviCRM Only', 'civicrm-wp-profile-sync' ),
+			'name' => 'civicrm_file_no_wp',
+			'type' => 'true_false',
+			'instructions' => __( 'Delete WordPress Attachment after upload.', 'civicrm-wp-profile-sync' ),
+			'required' => 0,
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			],
+			'acfe_permissions' => '',
+			'message' => '',
+			'default_value' => 0,
+			'ui' => 1,
+			'ui_on_text' => '',
+			'ui_off_text' => '',
+			'conditional_logic' => [
+				[
+					[
+						'field' => $this->acf_loader->civicrm->acf_field_key_get(),
+						'operator' => '==contains',
+						'value' => 'caicustom_',
+					],
+				],
+			],
+		];
+
+		// Now add it.
+		acf_render_field_setting( $field, $upload_setting_field );
+
+	}
+
+
+
+	/**
+	 * Adds additional Settings to an ACF "File" Field.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param array $field The existing ACF Field data array.
+	 * @param array $setting_field The ACF Field setting array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @return array $field The modified ACF Field data array.
+	 */
+	public function field_settings_acf_add( $field, $setting_field, $field_group ) {
+
+		// Bail early if not our Field Type.
+		if ( 'file' !== $field['type'] ) {
+			return $field;
+		}
+
+		// Define Setting Field.
+		$usage_setting_field = [
+			'key' => 'civicrm_file_field_type',
+			'label' => __( 'File Link', 'civicrm-wp-profile-sync' ),
+			'name' => 'civicrm_file_field_type',
+			'type' => 'select',
+			'instructions' => __( 'Choose which File this ACF Field should link to.', 'civicrm-wp-profile-sync' ),
+			'default_value' => '',
+			'placeholder' => '',
+			'allow_null' => 0,
+			'multiple' => 0,
+			'ui' => 0,
+			'required' => 0,
+			'return_format' => 'value',
+			'parent' => $this->acf_loader->acf->field_group->placeholder_group_get(),
+			'choices' => [
+				1 => __( 'Use public WordPress File', 'civicrm-wp-profile-sync' ),
+				2 => __( 'Use permissioned CiviCRM File', 'civicrm-wp-profile-sync' ),
+			],
+			'conditional_logic' => [
+				[
+					[
+						'field' => $this->acf_loader->civicrm->acf_field_key_get(),
+						'operator' => '==contains',
+						'value' => 'caicustom_',
+					],
+				],
+			],
+		];
+
+		// Now add it.
+		acf_render_field_setting( $field, $usage_setting_field );
+
+	}
+
+
+
+	/**
+	 * Modify the Settings of an ACF "File" Field.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param array $field The existing ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @return array $field The modified ACF Field data array.
+	 */
+	public function field_settings_modify( $field, $field_group ) {
+
+		// Bail early if not our Field Type.
+		if ( 'file' !== $field['type'] ) {
+			return $field;
+		}
+
+		// Skip if the CiviCRM Field key isn't there or isn't populated.
+		$key = $this->civicrm->acf_field_key_get();
+		if ( ! array_key_exists( $key, $field ) || empty( $field[ $key ] ) ) {
+			return $field;
+		}
+
+		// Get the Entities that support Attachments.
+		$entities = $this->field_entities_get();
+
+		if ( ! array_key_exists( $field[ $key ], $entities ) ) {
+			return $field;
+		}
+
+		// Set the "uploader" attribute.
+		$field['uploader'] = 'basic';
+
+		// Set the "max_size" attribute.
+		if ( $this->civicrm->is_initialised() ) {
+			$config = CRM_Core_Config::singleton();
+			$field['max_size'] = $config->maxFileSize;
+		}
+
+		// --<
+		return $field;
+
+	}
+
+
+
+	/**
+	 * Gets an array of CiviCRM Entities that support Attachments.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @return array $entities The array of CiviCRM Entities that support Attachments.
+	 */
+	public function field_entities_get() {
+
+		/**
+		 * Query for the CiviCRM Entities that support Attachments.
+		 *
+		 * This filter sends out a request for other classes to respond with an
+		 * Entity Table and Label if they support Attachments.
+		 *
+		 * Internally, this is used by:
+		 *
+		 * @see CiviCRM_Profile_Sync_ACF_CiviCRM_Activity::query_attachment_support()
+		 * @see CiviCRM_Profile_Sync_ACF_CiviCRM_Note::query_attachment_support()
+		 *
+		 * @since 0.5.2
+		 *
+		 * @param array $entities Empty array, since we're querying for Entities.
+		 * @param array $entity_array The Entity and ID array.
+		 */
+		$entities = apply_filters( 'cwps/acf/query_attachment_support', [] );
+
+		// --<
+		return $entities;
 
 	}
 

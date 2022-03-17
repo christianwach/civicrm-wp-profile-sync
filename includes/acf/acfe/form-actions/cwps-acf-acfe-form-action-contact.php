@@ -310,6 +310,18 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// Note Ref Field.
 		$this->mapping_field_filters_add( 'note_conditional' );
 
+		// Get the public Attachment Fields.
+		$this->attachment_fields = $this->civicrm->attachment->civicrm_fields_get( 'public' );
+
+		// Populate public mapping Fields.
+		foreach ( $this->attachment_fields as $attachment_field ) {
+			$this->mapping_field_filters_add( 'attachment_' . $attachment_field['name'] );
+		}
+
+		// Attachment File and Conditional Fields.
+		$this->mapping_field_filters_add( 'attachment_file' );
+		$this->mapping_field_filters_add( 'attachment_conditional' );
+
 		// Tag Ref Field.
 		$this->mapping_field_filters_add( 'tag_conditional' );
 
@@ -2755,6 +2767,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// ---------------------------------------------------------------------
 
+		$attachment_fields = $this->tab_mapping_accordion_attachment_add();
+		$sub_fields = array_merge( $sub_fields, $attachment_fields );
+
 		// Add to Repeater.
 		$note_repeater['sub_fields'] = $sub_fields;
 
@@ -2778,6 +2793,128 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 					],
 				],
 			],
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			],
+			'acfe_permissions' => '',
+			'open' => 0,
+			'multi_expand' => 1,
+			'endpoint' => 1,
+		];
+
+		// --<
+		return $fields;
+
+	}
+
+
+
+	/**
+	 * Defines the "Attachment(s)" Accordion for "Note" Actions.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @return array $fields The array of Fields for this section.
+	 */
+	public function tab_mapping_accordion_attachment_add() {
+
+		// Init return.
+		$fields = [];
+
+		// "Attachment" Accordion wrapper open.
+		$fields[] = [
+			'key' => $this->field_key . 'mapping_accordion_attachment_open',
+			'label' => __( 'Attachment(s)', 'civicrm-wp-profile-sync' ),
+			'name' => '',
+			'type' => 'accordion',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			],
+			'acfe_permissions' => '',
+			'open' => 0,
+			'multi_expand' => 1,
+			'endpoint' => 0,
+		];
+
+		// Define the Attachment Repeater Field.
+		$attachment_repeater = [
+			'key' => $this->field_key . 'attachment_repeater',
+			'label' => __( 'Attachment Actions', 'civicrm-wp-profile-sync' ),
+			'name' => $this->field_name . 'attachment_repeater',
+			'type' => 'repeater',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			],
+			'acfe_permissions' => '',
+			'acfe_repeater_stylised_button' => 0,
+			'collapsed' => $this->field_key . 'map_attachment_file',
+			'min' => 0,
+			'max' => 3,
+			'layout' => 'block',
+			'button_label' => __( 'Add Attachment action', 'civicrm-wp-profile-sync' ),
+			'sub_fields' => [],
+		];
+
+		// Init Sub-Fields.
+		$sub_fields = [];
+
+		// ---------------------------------------------------------------------
+
+		// First add "File" Field to Repeater's Sub-Fields.
+		$code = 'attachment_file';
+		$label = __( 'File', 'civicrm-wp-profile-sync' );
+		$file = $this->mapping_field_get( $code, $label );
+		$sub_fields[] = $file;
+
+		// ---------------------------------------------------------------------
+
+		// Add "Mapping" Fields to Repeater's Sub-Fields.
+		foreach ( $this->attachment_fields as $attachment_field ) {
+			$sub_fields[] = $this->mapping_field_get( 'attachment_' . $attachment_field['name'], $attachment_field['title'] );
+		}
+
+		// ---------------------------------------------------------------------
+
+		// Assign code and label for "Conditional" Field.
+		$code = 'attachment_conditional';
+		$label = __( 'Conditional On', 'civicrm-wp-profile-sync' );
+
+		$attachment_conditional = $this->mapping_field_get( $code, $label );
+		$attachment_conditional['placeholder'] = __( 'Always add', 'civicrm-wp-profile-sync' );
+		$attachment_conditional['instructions'] = __( 'To add the Attachment to the Note only when conditions are met, link this to a Hidden Field with value "1" where the conditional logic of that Field shows it when the conditions are met.', 'civicrm-wp-profile-sync' );
+
+		// Add Field to Repeater's Sub-Fields.
+		$sub_fields[] = $attachment_conditional;
+
+		// ---------------------------------------------------------------------
+
+		// Add to Repeater.
+		$attachment_repeater['sub_fields'] = $sub_fields;
+
+		// Add Repeater to Fields.
+		$fields[] = $attachment_repeater;
+
+		// "Attachment" Accordion wrapper close.
+		$fields[] = [
+			'key' => $this->field_key . 'mapping_accordion_attachment_close',
+			'label' => __( 'Attachment', 'civicrm-wp-profile-sync' ),
+			'name' => '',
+			'type' => 'accordion',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
 			'wrapper' => [
 				'width' => '',
 				'class' => '',
@@ -5313,6 +5450,12 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			// Save Note Conditional Reference.
 			$fields['note_conditional_ref'] = $field[ $this->field_name . 'map_note_conditional' ];
 
+			// Get the data for the Attachment Sub-actions.
+			$attachments = $this->form_note_attachments_data( $form, $current_post_id, $action, $field );
+			if ( ! empty( $attachments ) ) {
+				$fields['attachments'] = $attachments;
+			}
+
 			// Add the data.
 			$note_data[] = $fields;
 
@@ -5381,15 +5524,163 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				continue;
 			}
 
-			// TODO: Add Note "Attachment".
-
 			// Get the full Note data.
-			$notes[] = $this->civicrm->note->get_by_id( $result['id'] );
+			$note_full = $this->civicrm->note->get_by_id( $result['id'] );
+
+			// Add Note "Attachment(s)".
+			$note_full->attachments = $this->form_note_attachments_save( $note_full, $note['attachments'] );
+
+			// Add the full Note data.
+			$notes[] = $note_full;
 
 		}
 
 		// --<
 		return $notes;
+
+	}
+
+
+
+	/**
+	 * Builds Attachment data array from mapped Fields.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param array $form The array of Form data.
+	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
+	 * @param string $action The customised name of the action.
+	 * @param array $note_field The array of Note Field data.
+	 * @return array $attachment_data The array of Attachment data.
+	 */
+	public function form_note_attachments_data( $form, $current_post_id, $action, $note_field ) {
+
+		// Init return.
+		$attachment_data = [];
+
+		// Get the Attachment Repeater Field.
+		$attachment_repeater = $note_field[ $this->field_name . 'attachment_repeater' ];
+
+		// Skip it if it's empty.
+		if ( empty( $attachment_repeater ) ) {
+			return $attachment_data;
+		}
+
+		// Loop through the Action Fields.
+		foreach ( $attachment_repeater as $field ) {
+
+			// Init Fields.
+			$fields = [];
+
+			// Get File Field.
+			$fields['file'] = $field[ $this->field_name . 'map_attachment_file' ];
+
+			// Get mapped Fields.
+			foreach ( $this->attachment_fields as $attachment_field ) {
+				$fields[ $attachment_field['name'] ] = $field[ $this->field_name . 'map_attachment_' . $attachment_field['name'] ];
+			}
+
+			// Get Attachment Conditional.
+			$fields['attachment_conditional'] = $field[ $this->field_name . 'map_attachment_conditional' ];
+
+			// Populate array with mapped Field values.
+			$fields = acfe_form_map_vs_fields( $fields, $fields, $current_post_id, $form );
+
+			// Save Attachment Conditional Reference.
+			$fields['attachment_conditional_ref'] = $field[ $this->field_name . 'map_attachment_conditional' ];
+
+			// Add the data.
+			$attachment_data[] = $fields;
+
+		}
+
+		// --<
+		return $attachment_data;
+
+	}
+
+
+
+	/**
+	 * Saves the CiviCRM Attachment(s) given data from mapped Fields.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param array $note The array of Note data.
+	 * @param array $attachment_data The array of Attachment data.
+	 * @return array|bool $attachments The array of Attachments, or false on failure.
+	 */
+	public function form_note_attachments_save( $note, $attachment_data ) {
+
+		// Init return.
+		$attachments = false;
+
+		// Bail if there's no Note ID.
+		if ( empty( $note->id ) ) {
+			return $attachments;
+		}
+
+		// Bail if there's no Attachment data.
+		if ( empty( $attachment_data ) ) {
+			return $attachments;
+		}
+
+		// Handle each nested Action in turn.
+		foreach ( $attachment_data as $attachment ) {
+
+			// Strip out empty Fields.
+			$attachment = $this->form_data_prepare( $attachment );
+
+			// Skip if there's no WordPress Attachment ID.
+			if ( empty( $attachment['file'] ) ) {
+				continue;
+			}
+
+			// Only skip if the Attachment Conditional Reference Field has a value.
+			if ( ! empty( $attachment['attachment_conditional_ref'] ) ) {
+				// And the Attachment Conditional Field has a value.
+				if ( empty( $attachment['attachment_conditional'] ) ) {
+					continue;
+				}
+			}
+
+			// Cast Attachment ID as integer.
+			$attachment_id = (int) $attachment['file'];
+
+			// Get the WordPress File, Filename and Mime Type.
+			$file = get_attached_file( $attachment_id, true );
+			$filename = pathinfo( $file, PATHINFO_BASENAME );
+			$mime_type = get_post_mime_type( $attachment_id );
+
+			// Build the API params.
+			$params = [
+				'entity_id' => $note->id,
+				'entity_table' => 'civicrm_note',
+				'name' => $filename,
+				'description' => $attachment['description'],
+				'mime_type' => $mime_type,
+				'options' => [
+					//'move-file' => $new_file,
+					'move-file' => $file,
+				],
+			];
+
+			// Create the Attachment.
+			$result = $this->civicrm->attachment->create( $params );
+			if ( $result === false ) {
+				continue;
+			}
+
+			// Always delete the WordPress Attachment.
+			wp_delete_attachment( $attachment_id, true );
+
+			// Get the full Attachment data.
+			$attachments[] = $this->civicrm->attachment->get_by_id( $result['id'] );
+
+		}
+
+		// --<
+		return $attachments;
 
 	}
 

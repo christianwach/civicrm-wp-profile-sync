@@ -142,6 +142,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 		// Listen for queries from the Attachment class.
 		add_filter( 'cwps/acf/query_entity_table', [ $this, 'query_entity_table' ], 10, 2 );
+		add_filter( 'cwps/acf/query_attachment_support', [ $this, 'query_attachment_support' ], 10 );
+		add_filter( 'cwps/acf/query_attachment_choices', [ $this, 'query_attachment_choices' ], 10, 2 );
 
 		// Listen for queries from the ACF Field class.
 		add_filter( 'cwps/acf/field/query_setting_choices', [ $this, 'query_setting_choices' ], 20, 3 );
@@ -1753,6 +1755,60 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		if ( ! array_key_exists( 'civicrm_activity', $entity_tables ) ) {
 			$entity_tables['civicrm_activity'] = __( 'Activity', 'civicrm-wp-profile-sync' );
 		}
+
+		// --<
+		return $entity_tables;
+
+	}
+
+
+
+	/**
+	 * Listen for Attachment support queries.
+	 *
+	 * This method responds with an "Entity Table" because Activity Attachments
+	 * are supported in the CiviCRM UI.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param array $entity_tables The existing "Entity Tables".
+	 * @return array $entity_tables The mapped "Entity Tables".
+	 */
+	public function query_attachment_support( $entity_tables ) {
+
+		// Append our "Entity Table" if not already present.
+		if ( ! array_key_exists( 'civicrm_activity', $entity_tables ) ) {
+			$entity_tables['civicrm_activity'] = __( 'Activity', 'civicrm-wp-profile-sync' );
+		}
+
+		// --<
+		return $entity_tables;
+
+	}
+
+
+
+	/**
+	 * Respond to queries for Attachment choices from the Attachment class.
+	 *
+	 * This method responds with an "Entity Table" because Activity Attachments
+	 * are supported in the CiviCRM UI.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param array $entity_tables The existing "Entity Tables".
+	 * @param array $entity_array The Entity and ID array.
+	 * @return array $entity_tables The mapped "Entity Tables".
+	 */
+	public function query_attachment_choices( $entity_tables, $entity_array ) {
+
+		// Return early if there is no Location Rule for this Entity.
+		if ( ! array_key_exists( $this->identifier, $entity_array ) ) {
+			return $entity_tables;
+		}
+
+		// Append our "Entity Table" if not already present.
+		$entity_tables = $this->query_attachment_support( $entity_tables );
 
 		// --<
 		return $entity_tables;

@@ -240,6 +240,18 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 			}
 		}
 
+		// Get the public Attachment Fields.
+		$this->attachment_fields = $this->civicrm->attachment->civicrm_fields_get( 'public' );
+
+		// Populate public mapping Fields.
+		foreach ( $this->attachment_fields as $attachment_field ) {
+			$this->mapping_field_filters_add( 'attachment_' . $attachment_field['name'] );
+		}
+
+		// Attachment File and Conditional Fields.
+		$this->mapping_field_filters_add( 'attachment_file' );
+		$this->mapping_field_filters_add( 'attachment_conditional' );
+
 		// Add Case Field if the CiviCase component is active.
 		$case_active = $this->civicrm->is_component_enabled( 'CiviCase' );
 		if ( $case_active ) {
@@ -323,6 +335,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		// Populate Activity and Custom Field data arrays.
 		$activity = $this->form_activity_data( $form, $current_post_id, $action );
 		$custom_fields = $this->form_custom_data( $form, $current_post_id, $action );
+		$attachments = $this->form_attachments_data( $form, $current_post_id, $action );
 
 		// Save the Activity with the data from the Form.
 		$args['activity'] = $this->form_activity_save( $activity, $custom_fields );
@@ -332,6 +345,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 
 			// Post-process Custom Fields now that we have an Activity.
 			$this->form_custom_post_process( $form, $current_post_id, $action, $args['activity'] );
+
+			// Save the Attachments with the data from the Form.
+			$args['attachments'] = $this->form_attachments_save( $args['activity'], $attachments );
 
 			// Save the Activity ID for backwards compatibility.
 			$args['id'] = $args['activity']['id'];
@@ -544,12 +560,16 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		// Build Custom Fields Accordion.
 		$mapping_custom_accordion = $this->tab_mapping_accordion_custom_add();
 
+		// Build Attachment Fields Accordion.
+		$mapping_attachment_accordion = $this->tab_mapping_accordion_attachment_add();
+
 		// Combine Sub-Fields.
 		$fields = array_merge(
 			$mapping_tab_header,
 			$mapping_contacts_accordion,
 			$mapping_activity_accordion,
-			$mapping_custom_accordion
+			$mapping_custom_accordion,
+			$mapping_attachment_accordion
 		);
 
 		// --<
@@ -902,6 +922,128 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		$fields[] = [
 			'key' => $this->field_key . 'mapping_accordion_custom_close',
 			'label' => __( 'Custom Fields', 'civicrm-wp-profile-sync' ),
+			'name' => '',
+			'type' => 'accordion',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			],
+			'acfe_permissions' => '',
+			'open' => 0,
+			'multi_expand' => 1,
+			'endpoint' => 1,
+		];
+
+		// --<
+		return $fields;
+
+	}
+
+
+
+	/**
+	 * Defines the "Attachment" Accordion.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @return array $fields The array of Fields for this section.
+	 */
+	public function tab_mapping_accordion_attachment_add() {
+
+		// Init return.
+		$fields = [];
+
+		// "Attachment" Accordion wrapper open.
+		$fields[] = [
+			'key' => $this->field_key . 'mapping_accordion_attachment_open',
+			'label' => __( 'Attachment(s)', 'civicrm-wp-profile-sync' ),
+			'name' => '',
+			'type' => 'accordion',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			],
+			'acfe_permissions' => '',
+			'open' => 0,
+			'multi_expand' => 1,
+			'endpoint' => 0,
+		];
+
+		// Define the Attachment Repeater Field.
+		$attachment_repeater = [
+			'key' => $this->field_key . 'attachment_repeater',
+			'label' => __( 'Attachment Actions', 'civicrm-wp-profile-sync' ),
+			'name' => $this->field_name . 'attachment_repeater',
+			'type' => 'repeater',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			],
+			'acfe_permissions' => '',
+			'acfe_repeater_stylised_button' => 0,
+			'collapsed' => $this->field_key . 'map_attachment_file',
+			'min' => 0,
+			'max' => 3,
+			'layout' => 'block',
+			'button_label' => __( 'Add Attachment action', 'civicrm-wp-profile-sync' ),
+			'sub_fields' => [],
+		];
+
+		// Init Sub-Fields.
+		$sub_fields = [];
+
+		// ---------------------------------------------------------------------
+
+		// First add "File" Field to Repeater's Sub-Fields.
+		$code = 'attachment_file';
+		$label = __( 'File', 'civicrm-wp-profile-sync' );
+		$file = $this->mapping_field_get( $code, $label );
+		$sub_fields[] = $file;
+
+		// ---------------------------------------------------------------------
+
+		// Add "Mapping" Fields to Repeater's Sub-Fields.
+		foreach ( $this->attachment_fields as $attachment_field ) {
+			$sub_fields[] = $this->mapping_field_get( 'attachment_' . $attachment_field['name'], $attachment_field['title'] );
+		}
+
+		// ---------------------------------------------------------------------
+
+		// Assign code and label for "Conditional" Field.
+		$code = 'attachment_conditional';
+		$label = __( 'Conditional On', 'civicrm-wp-profile-sync' );
+
+		$attachment_conditional = $this->mapping_field_get( $code, $label );
+		$attachment_conditional['placeholder'] = __( 'Always add', 'civicrm-wp-profile-sync' );
+		$attachment_conditional['instructions'] = __( 'To add the Attachment to the Activity only when conditions are met, link this to a Hidden Field with value "1" where the conditional logic of that Field shows it when the conditions are met.', 'civicrm-wp-profile-sync' );
+
+		// Add Field to Repeater's Sub-Fields.
+		$sub_fields[] = $attachment_conditional;
+
+		// ---------------------------------------------------------------------
+
+		// Add to Repeater.
+		$attachment_repeater['sub_fields'] = $sub_fields;
+
+		// Add Repeater to Fields.
+		$fields[] = $attachment_repeater;
+
+		// "Attachment" Accordion wrapper close.
+		$fields[] = [
+			'key' => $this->field_key . 'mapping_accordion_attachment_close',
+			'label' => __( 'Attachment', 'civicrm-wp-profile-sync' ),
 			'name' => '',
 			'type' => 'accordion',
 			'instructions' => '',
@@ -1398,6 +1540,153 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 			$this->civicrm->attachment->fields_clear( (int) $file_id, $data['settings'], $args );
 
 		}
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Builds Attachment data array from mapped Fields.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param array $form The array of Form data.
+	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
+	 * @param string $action The customised name of the action.
+	 * @return array $attachment_data The array of Attachment data.
+	 */
+	public function form_attachments_data( $form, $current_post_id, $action ) {
+
+		// Init return.
+		$attachment_data = [];
+
+		// Get the Attachment Repeater Field.
+		$attachment_repeater = get_sub_field( $this->field_key . 'attachment_repeater' );
+
+		// Skip it if it's empty.
+		if ( empty( $attachment_repeater ) ) {
+			return $attachment_data;
+		}
+
+		// Loop through the Action Fields.
+		foreach ( $attachment_repeater as $field ) {
+
+			// Init Fields.
+			$fields = [];
+
+			// Get File Field.
+			$fields['file'] = $field[ $this->field_name . 'map_attachment_file' ];
+
+			// Get mapped Fields.
+			foreach ( $this->attachment_fields as $attachment_field ) {
+				$fields[ $attachment_field['name'] ] = $field[ $this->field_name . 'map_attachment_' . $attachment_field['name'] ];
+			}
+
+			// Get Attachment Conditional.
+			$fields['attachment_conditional'] = $field[ $this->field_name . 'map_attachment_conditional' ];
+
+			// Populate array with mapped Field values.
+			$fields = acfe_form_map_vs_fields( $fields, $fields, $current_post_id, $form );
+
+			// Save Attachment Conditional Reference.
+			$fields['attachment_conditional_ref'] = $field[ $this->field_name . 'map_attachment_conditional' ];
+
+			// Add the data.
+			$attachment_data[] = $fields;
+
+		}
+
+		// --<
+		return $attachment_data;
+
+	}
+
+
+
+	/**
+	 * Saves the CiviCRM Attachment(s) given data from mapped Fields.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param array $activity The array of Activity data.
+	 * @param array $attachment_data The array of Attachment data.
+	 * @return array|bool $attachments The array of Attachments, or false on failure.
+	 */
+	public function form_attachments_save( $activity, $attachment_data ) {
+
+		// Init return.
+		$attachments = false;
+
+		// Bail if there's no Activity ID.
+		if ( empty( $activity['id'] ) ) {
+			return $attachments;
+		}
+
+		// Bail if there's no Attachment data.
+		if ( empty( $attachment_data ) ) {
+			return $attachments;
+		}
+
+		// Handle each nested Action in turn.
+		foreach ( $attachment_data as $attachment ) {
+
+			// Strip out empty Fields.
+			$attachment = $this->form_data_prepare( $attachment );
+
+			// Skip if there's no WordPress Attachment ID.
+			if ( empty( $attachment['file'] ) ) {
+				continue;
+			}
+
+			// Only skip if the Attachment Conditional Reference Field has a value.
+			if ( ! empty( $attachment['attachment_conditional_ref'] ) ) {
+				// And the Attachment Conditional Field has a value.
+				if ( empty( $attachment['attachment_conditional'] ) ) {
+					continue;
+				}
+			}
+
+			// Cast Attachment ID as integer.
+			$attachment_id = (int) $attachment['file'];
+
+			// Get the WordPress File, Filename and Mime Type.
+			$file = get_attached_file( $attachment_id, true );
+			$filename = pathinfo( $file, PATHINFO_BASENAME );
+			$mime_type = get_post_mime_type( $attachment_id );
+
+			// Build the API params.
+			$params = [
+				'entity_id' => $activity['id'],
+				'entity_table' => 'civicrm_activity',
+				'name' => $filename,
+				'description' => $attachment['description'],
+				'mime_type' => $mime_type,
+				'options' => [
+					//'move-file' => $new_file,
+					'move-file' => $file,
+				],
+			];
+
+			// Create the Attachment.
+			$result = $this->civicrm->attachment->create( $params );
+			if ( $result === false ) {
+				continue;
+			}
+
+			// Always delete the WordPress Attachment.
+			wp_delete_attachment( $attachment_id, true );
+
+			// Get the full Attachment data.
+			$attachments[] = $this->civicrm->attachment->get_by_id( $result['id'] );
+
+		}
+
+		// --<
+		return $attachments;
 
 	}
 

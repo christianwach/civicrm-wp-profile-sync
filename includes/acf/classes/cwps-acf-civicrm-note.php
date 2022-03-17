@@ -93,6 +93,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Note {
 	 */
 	public function register_hooks() {
 
+		// Listen for queries from the Attachment class.
+		add_filter( 'cwps/acf/query_attachment_support', [ $this, 'query_attachment_support' ], 20 );
+		add_filter( 'cwps/acf/query_attachment_choices', [ $this, 'query_attachment_choices' ], 20, 2 );
+
 	}
 
 
@@ -359,6 +363,64 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Note {
 
 		// --<
 		return $fields;
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Listen for Attachment support queries.
+	 *
+	 * This method responds with an "Entity Table" because Note Attachments are
+	 * supported in the CiviCRM UI.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param array $entity_tables The existing "Entity Tables".
+	 * @return array $entity_tables The mapped "Entity Tables".
+	 */
+	public function query_attachment_support( $entity_tables ) {
+
+		// Append our "Entity Table" if not already present.
+		if ( ! array_key_exists( 'civicrm_note', $entity_tables ) ) {
+			$entity_tables['civicrm_note'] = __( 'Note', 'civicrm-wp-profile-sync' );
+		}
+
+		// --<
+		return $entity_tables;
+
+	}
+
+
+
+	/**
+	 * Respond to queries for Attachment choices from the Attachment class.
+	 *
+	 * This method responds with an "Entity Table" because Note Attachments are
+	 * supported in the CiviCRM UI.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param array $entity_tables The existing "Entity Tables".
+	 * @param array $entity_array The Entity and ID array.
+	 * @return array $entity_tables The mapped "Entity Tables".
+	 */
+	public function query_attachment_choices( $entity_tables, $entity_array ) {
+
+		// Return early if there is no Location Rule for the "Contact" Entity.
+		if ( ! array_key_exists( $this->civicrm->contact->identifier, $entity_array ) ) {
+			return $entity_tables;
+		}
+
+		// Append our "Entity Table" if not already present.
+		$entity_tables = $this->query_attachment_support( $entity_tables );
+
+		// --<
+		return $entity_tables;
 
 	}
 
