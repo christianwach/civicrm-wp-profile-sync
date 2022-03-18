@@ -7,7 +7,7 @@
 /**
  * Register ACF Field Type.
  *
- * @since 0.7.3
+ * @since 0.4
  */
 (function($, undefined){
 
@@ -24,14 +24,14 @@
 /**
  * Perform actions when dom_ready fires.
  *
- * @since 0.7.3
+ * @since 0.4
  */
 jQuery(document).ready(function($) {
 
 	/**
 	 * Set up click handler for the "Primary Instant Messenger" radio buttons.
 	 *
-	 * @since 0.7.3
+	 * @since 0.4
 	 *
 	 * @param {Object} event The click event object.
 	 */
@@ -47,7 +47,7 @@ jQuery(document).ready(function($) {
 		/**
 		 * Callback for clicks on the "Primary Instant Messenger" radio buttons.
 		 *
-		 * @since 0.7.3
+		 * @since 0.4
 		 */
 		scope.on( 'click', radios, function( event ) {
 
@@ -81,7 +81,7 @@ jQuery(document).ready(function($) {
 	/**
 	 * Callback for clicks on the "Add Instant Messenger" button.
 	 *
-	 * @since 0.7.3
+	 * @since 0.4
 	 *
 	 * @param {Object} event The click event object.
 	 */
