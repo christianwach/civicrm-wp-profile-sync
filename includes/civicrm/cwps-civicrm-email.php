@@ -413,6 +413,11 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 			return;
 		}
 
+		// Bail if it isn't a Contact Email.
+		if ( empty( $primary_email->contact_id ) ) {
+			return;
+		}
+
 		// If our setting allows CiviCRM to handle Primary Email sync.
 		$email_sync = $this->plugin->admin->setting_get( 'user_profile_email_sync', 2 );
 		if ( $email_sync !== 1 ) {
@@ -469,6 +474,11 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 
 		// Bail if it isn't the Primary Email.
 		if ( empty( $primary_email->is_primary ) || $primary_email->is_primary != 1 ) {
+			return;
+		}
+
+		// Bail if it isn't a Contact Email.
+		if ( empty( $primary_email->contact_id ) ) {
 			return;
 		}
 
