@@ -238,6 +238,11 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 	 */
 	public function get_for_field( $field ) {
 
+		// We need a Field ID.
+		if ( empty( $field['ID'] ) ) {
+			return false;
+		}
+
 		// Only do this once per Field.
 		static $pseudocache;
 		if ( isset( $pseudocache[ $field['ID'] ] ) ) {
