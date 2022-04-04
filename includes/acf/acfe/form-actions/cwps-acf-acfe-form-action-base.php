@@ -658,12 +658,31 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 			return $filtered_data;
 		}
 
-		// Populate Activity data from the Form data.
+		// Populate return array from the Form data.
 		foreach ( $form_data as $param => $value ) {
-			// Allow (string) "0" as valid data.
-			if ( ! empty( $value ) || $value === '0' ) {
-				$filtered_data[ $param ] = $value;
+
+			// Skip if empty but allow (string) "0" as valid data.
+			if ( empty( $value ) && $value !== '0' ) {
+				continue;
 			}
+
+			// Maybe decode entities.
+			if ( is_string( $value ) && ! is_numeric( $value ) ) {
+				$value = html_entity_decode( $value );
+			}
+
+			// Maybe decode entities in arrays.
+			if ( is_array( $value ) ) {
+				array_walk_recursive( $value, function( &$item ) {
+					if ( is_string( $item ) && ! is_numeric( $item ) ) {
+						$item = html_entity_decode( $item );
+					}
+				} );
+			}
+
+			// Finally add value to return array.
+			$filtered_data[ $param ] = $value;
+
 		}
 
 		// --<
