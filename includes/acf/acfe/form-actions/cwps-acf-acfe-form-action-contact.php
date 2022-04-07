@@ -4376,7 +4376,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			 * Let's set the return so it is populated with something - in case
 			 * there is no Primary Email in the data.
 			 */
-			$email = $email_data['email'];
+			$email = $email_item['email'];
 
 		}
 
