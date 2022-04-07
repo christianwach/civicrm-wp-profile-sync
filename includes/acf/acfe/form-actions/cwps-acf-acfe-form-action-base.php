@@ -79,6 +79,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 		// Callback for the "acfe/form/load/..." hook.
 		add_filter( 'acfe/form/load/' . $this->action_name, [ $this, 'load' ], 10, 3 );
 
+		// Callback for the "acfe/form/validation/..." hook.
+ 		add_action( 'acfe/form/validation/' . $this->action_name, [ $this, 'validation' ], 10, 3 );
+
 		// Callback for the "acfe/form/make/..." hook.
 		add_action( 'acfe/form/make/' . $this->action_name, [ $this, 'make' ], 10, 3 );
 
