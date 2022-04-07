@@ -308,7 +308,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$this->mapping_field_filters_add( 'note_' . $note_field['name'] );
 		}
 
-		// Note Ref Field.
+		// Add Note Ref Field.
 		$this->mapping_field_filters_add( 'note_conditional' );
 
 		// Get the public Attachment Fields.
@@ -4297,6 +4297,13 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				}
 			}
 
+			// TODO: Do we need a "Delete record if Email is empty" option?
+
+			// Skip if there is no Email Address to save.
+			if ( empty( $email['email'] ) ) {
+				continue;
+			}
+
 			// Update the Email.
 			$result = $this->civicrm->email->email_record_update( $contact['id'], $email );
 
@@ -4834,17 +4841,19 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			// Strip out empty Fields.
 			$website = $this->form_data_prepare( $website );
 
-			// Skip if there's no Website URL.
-			if ( empty( $website['url'] ) ) {
-				continue;
-			}
-
 			// Only skip if the Website Conditional Reference Field has a value.
 			if ( ! empty( $website['website_conditional_ref'] ) ) {
 				// And the Website Conditional Field has a value.
 				if ( empty( $website['website_conditional'] ) ) {
 					continue;
 				}
+			}
+
+			// TODO: Do we need a "Delete record if Website is empty" option?
+
+			// Skip if there's no Website URL.
+			if ( empty( $website['url'] ) ) {
+				continue;
 			}
 
 			// Update the Website.
@@ -5273,17 +5282,19 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			// Strip out empty Fields.
 			$im = $this->form_data_prepare( $im );
 
-			// Skip if there's no Instant Messenger.
-			if ( empty( $im['name'] ) ) {
-				continue;
-			}
-
 			// Only skip if the Instant Messenger Conditional Reference Field has a value.
 			if ( ! empty( $im['im_conditional_ref'] ) ) {
 				// And the Instant Messenger Conditional Field has a value.
 				if ( empty( $im['im_conditional'] ) ) {
 					continue;
 				}
+			}
+
+			// TODO: Do we need a "Delete record if Instant Messenger is empty" option?
+
+			// Skip if there's no Instant Messenger.
+			if ( empty( $im['name'] ) ) {
+				continue;
 			}
 
 			// Try and get the Phone Record.
@@ -5409,17 +5420,19 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// Handle each nested Action in turn.
 		foreach ( $group_data as $group ) {
 
-			// Skip if there's no Group ID.
-			if ( empty( $group['group_id'] ) ) {
-				continue;
-			}
-
 			// Only skip if the Group Conditional Reference Field has a value.
 			if ( ! empty( $group['group_conditional_ref'] ) ) {
 				// And the Group Conditional Field has a value.
 				if ( empty( $group['group_conditional'] ) ) {
 					continue;
 				}
+			}
+
+			// TODO: Do we need a "Remove from Group if Group is empty" option?
+
+			// Skip if there's no Group ID.
+			if ( empty( $group['group_id'] ) ) {
+				continue;
 			}
 
 			// Skip if already a Group Member.
@@ -5544,17 +5557,17 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			// Strip out empty Fields.
 			$membership = $this->form_data_prepare( $membership );
 
-			// Skip if there's no Membership Type ID.
-			if ( empty( $membership['membership_type_id'] ) ) {
-				continue;
-			}
-
 			// Only skip if the Membership Conditional Reference Field has a value.
 			if ( ! empty( $membership['membership_conditional_ref'] ) ) {
 				// And the Membership Conditional Field has a value.
 				if ( empty( $membership['membership_conditional'] ) ) {
 					continue;
 				}
+			}
+
+			// Skip if there's no Membership Type ID.
+			if ( empty( $membership['membership_type_id'] ) ) {
+				continue;
 			}
 
 			// Skip if Contact already has a current Membership.
@@ -5681,17 +5694,17 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			// Strip out empty Fields.
 			$note = $this->form_data_prepare( $note );
 
-			// Skip if there's no Note.
-			if ( empty( $note['note'] ) ) {
-				continue;
-			}
-
 			// Only skip if the Note Conditional Reference Field has a value.
 			if ( ! empty( $note['note_conditional_ref'] ) ) {
 				// And the Note Conditional Field has a value.
 				if ( empty( $note['note_conditional'] ) ) {
 					continue;
 				}
+			}
+
+			// Skip if there's no Note.
+			if ( empty( $note['note'] ) ) {
+				continue;
 			}
 
 			// Add necessary params.
@@ -5953,17 +5966,19 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// Handle each nested Action in turn.
 		foreach ( $tag_data as $tag ) {
 
-			// Skip if there's no Tag ID.
-			if ( empty( $tag['tag_ids'] ) ) {
-				continue;
-			}
-
 			// Only skip if the Tag Conditional Reference Field has a value.
 			if ( ! empty( $tag['tag_conditional_ref'] ) ) {
 				// And the Tag Conditional Field has a value.
 				if ( empty( $tag['tag_conditional'] ) ) {
 					continue;
 				}
+			}
+
+			// TODO: Do we need a "Delete Tag if Tag is empty" option?
+
+			// Skip if there's no Tag ID.
+			if ( empty( $tag['tag_ids'] ) ) {
+				continue;
 			}
 
 			// Handle each Tag in turn.
