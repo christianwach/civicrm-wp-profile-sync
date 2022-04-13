@@ -3586,7 +3586,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// Reject the submission.
 		acfe_add_validation_error( '', sprintf(
 			/* translators: %s The name of the Form Action */
-			__( 'Not enough data to save "%s".', 'civicrm-wp-profile-sync' ),
+			__( 'Not enough data to save a Contact in "%s".', 'civicrm-wp-profile-sync' ),
 			$action
 		) );
 

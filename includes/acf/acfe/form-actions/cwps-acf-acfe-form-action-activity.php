@@ -295,12 +295,17 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 	 */
 	public function validation( $form, $current_post_id, $action ) {
 
-		/*
 		// Get some Form details.
 		$form_name = acf_maybe_get( $form, 'name' );
 		$form_id = acf_maybe_get( $form, 'ID' );
-		//acfe_add_validation_error( $selector, $message );
-		*/
+
+		// Validate the Activity data.
+		$valid = $this->form_activity_validate( $form, $current_post_id, $action );
+		if ( ! $valid ) {
+			return;
+		}
+
+		// TODO: Check other Activity Entities.
 
 	}
 
@@ -1171,6 +1176,70 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 
 
 	/**
+	 * Validates the Activity data array from mapped Fields.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param array $form The array of Form data.
+	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
+	 * @param string $action The customised name of the action.
+	 * @return bool $valid True if the Activity can be saved, false otherwise.
+	 */
+	public function form_activity_validate( $form, $current_post_id, $action ) {
+
+		// Get the Activity.
+		$activity = $this->form_activity_data( $form, $current_post_id, $action );
+
+		// Skip if the Activity Conditional Reference Field has a value.
+		if ( ! empty( $activity['activity_conditional_ref'] ) ) {
+			// And the Activity Conditional Field has no value.
+			if ( empty( $activity['activity_conditional'] ) ) {
+				return true;
+			}
+		}
+
+		/*
+		 * We have a problem here because the ACFE Forms Actions query var has
+		 * not been populated yet since the "make" actions have not run.
+		 *
+		 * This means that "acfe_form_get_action()" cannot be queried to find
+		 * the referenced Contact ID when using an "Action Reference" Field,
+		 * even though it will be populated later when the "make" actions run.
+		 *
+		 * Other methods for defining the Contact ID will still validate, but
+		 * we're going to have to exclude this check for now.
+		 */
+
+		/*
+		// Reject the submission if there is no Source Contact ID.
+		if ( empty( $activity['source_contact_id'] ) ) {
+			acfe_add_validation_error( '', sprintf(
+				// / * translators: %s The name of the Form Action * /
+				__( 'A Contact ID is required to create an Activity in "%s".', 'civicrm-wp-profile-sync' ),
+				$action
+			) );
+			return false;
+		}
+		*/
+
+		// Reject the submission if the Activity Type ID is missing.
+		if ( empty( $activity['activity_type_id'] ) ) {
+			acfe_add_validation_error( '', sprintf(
+				/* translators: %s The name of the Form Action */
+				__( 'An Activity Type ID is required to create an Activity in "%s".', 'civicrm-wp-profile-sync' ),
+				$action
+			) );
+			return false;
+		}
+
+		// Valid.
+		return true;
+
+	}
+
+
+
+	/**
 	 * Saves the CiviCRM Activity given data from mapped Fields.
 	 *
 	 * @since 0.5
@@ -1190,6 +1259,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 			if ( empty( $activity_data['activity_conditional'] ) ) {
 				return $activity;
 			}
+		}
+
+		// Bail if the Activity can't be created.
+		if ( empty( $activity['source_contact_id'] ) || empty( $activity['activity_type_id'] ) ) {
+			return $activity;
 		}
 
 		// Add Custom Field data if present.

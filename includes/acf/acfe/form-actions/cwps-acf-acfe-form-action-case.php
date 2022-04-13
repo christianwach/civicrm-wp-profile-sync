@@ -278,6 +278,33 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 
 
 	/**
+	 * Performs validation when the Form the Action is attached to is submitted.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param array $form The array of Form data.
+	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
+	 * @param string $action The customised name of the action.
+	 */
+	public function validation( $form, $current_post_id, $action ) {
+
+		// Get some Form details.
+		$form_name = acf_maybe_get( $form, 'name' );
+		$form_id = acf_maybe_get( $form, 'ID' );
+
+		// Validate the Case data.
+		$valid = $this->form_case_validate( $form, $current_post_id, $action );
+		if ( ! $valid ) {
+			return;
+		}
+
+		// TODO: Check other Case Entities.
+
+	}
+
+
+
+	/**
 	 * Performs the action when the Form the Action is attached to is submitted.
 	 *
 	 * @since 0.5
@@ -998,6 +1025,70 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 
 		// --<
 		return $data;
+
+	}
+
+
+
+	/**
+	 * Validates the Case data array from mapped Fields.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param array $form The array of Form data.
+	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
+	 * @param string $action The customised name of the action.
+	 * @return bool $valid True if the Case can be saved, false otherwise.
+	 */
+	public function form_case_validate( $form, $current_post_id, $action ) {
+
+		// Get the Case.
+		$case = $this->form_case_data( $form, $current_post_id, $action );
+
+		// Skip if the Case Conditional Reference Field has a value.
+		if ( ! empty( $case['case_conditional_ref'] ) ) {
+			// And the Case Conditional Field has no value.
+			if ( empty( $case['case_conditional'] ) ) {
+				return true;
+			}
+		}
+
+		/*
+		 * We have a problem here because the ACFE Forms Actions query var has
+		 * not been populated yet since the "make" actions have not run.
+		 *
+		 * This means that "acfe_form_get_action()" cannot be queried to find
+		 * the referenced Contact ID when using an "Action Reference" Field,
+		 * even though it will be populated later when the "make" actions run.
+		 *
+		 * Other methods for defining the Contact ID will still validate, but
+		 * we're going to have to exclude this check for now.
+		 */
+
+		/*
+		// Reject the submission if there is no Contact ID.
+		if ( empty( $case['contact_id'] ) ) {
+			acfe_add_validation_error( '', sprintf(
+				// / * translators: %s The name of the Form Action * /
+				__( 'A Contact ID is required to create a Case in "%s".', 'civicrm-wp-profile-sync' ),
+				$action
+			) );
+			return false;
+		}
+		*/
+
+		// Reject the submission if the Case Type ID is missing.
+		if ( empty( $case['case_type_id'] ) ) {
+			acfe_add_validation_error( '', sprintf(
+				/* translators: %s The name of the Form Action */
+				__( 'A Case Type ID is required to create a Case in "%s".', 'civicrm-wp-profile-sync' ),
+				$action
+			) );
+			return false;
+		}
+
+		// Valid.
+		return true;
 
 	}
 

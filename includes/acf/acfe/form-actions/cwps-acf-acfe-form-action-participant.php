@@ -337,12 +337,17 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 	 */
 	public function validation( $form, $current_post_id, $action ) {
 
-		/*
 		// Get some Form details.
 		$form_name = acf_maybe_get( $form, 'name' );
 		$form_id = acf_maybe_get( $form, 'ID' );
-		//acfe_add_validation_error( $selector, $message );
-		*/
+
+		// Validate the Participant data.
+		$valid = $this->form_participant_validate( $form, $current_post_id, $action );
+		if ( ! $valid ) {
+			return;
+		}
+
+		// TODO: Check other Participant Entities.
 
 	}
 
@@ -1451,7 +1456,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 
 			// Assign to data.
 			if ( ! empty( $contact_id ) && is_numeric( $contact_id ) ) {
-				$data[ $field['name'] ] = $contact_id;
+				$data[ $field['name'] ] = (int) $contact_id;
 			}
 
 		}
@@ -1544,6 +1549,138 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 
 		// --<
 		return $data;
+
+	}
+
+
+
+	/**
+	 * Validates the Participant data array from mapped Fields.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param array $form The array of Form data.
+	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
+	 * @param string $action The customised name of the action.
+	 * @return bool $valid True if the Participant can be saved, false otherwise.
+	 */
+	public function form_participant_validate( $form, $current_post_id, $action ) {
+
+		// Get the Participant.
+		$participant = $this->form_participant_data( $form, $current_post_id, $action );
+
+		// Skip if the Participant Conditional Reference Field has a value.
+		if ( ! empty( $participant['participant_conditional_ref'] ) ) {
+			// And the Participant Conditional Field has no value.
+			if ( empty( $participant['participant_conditional'] ) ) {
+				return true;
+			}
+		}
+
+		// Strip out empty Fields.
+		$participant = $this->form_data_prepare( $participant );
+
+		/*
+		 * We have a problem here because the ACFE Forms Actions query var has
+		 * not been populated yet since the "make" actions have not run.
+		 *
+		 * This means that "acfe_form_get_action()" cannot be queried to find
+		 * the referenced Contact ID when using an "Action Reference" Field,
+		 * even though it will be populated later when the "make" actions run.
+		 *
+		 * Other methods for defining the Contact ID will still validate, but
+		 * we're going to have to exclude this check for now.
+		 */
+
+		/*
+		// Reject the submission if there is no Contact ID.
+		if ( empty( $participant['contact_id'] ) ) {
+			acfe_add_validation_error( '', sprintf(
+				// / * translators: %s The name of the Form Action * /
+				__( 'A Contact ID is required to create a Participant in "%s".', 'civicrm-wp-profile-sync' ),
+				$action
+			) );
+			return false;
+		}
+		*/
+
+		// Reject the submission if the Event ID Field is missing.
+		if ( empty( $participant['event_id'] ) ) {
+			acfe_add_validation_error( '', sprintf(
+				/* translators: %s The name of the Form Action */
+				__( 'An Event ID is required to create a Participant in "%s".', 'civicrm-wp-profile-sync' ),
+				$action
+			) );
+			return false;
+		}
+
+		// Reject the submission if the Role ID Field is missing.
+		if ( empty( $participant['participant_role_id'] ) ) {
+			acfe_add_validation_error( '', sprintf(
+				/* translators: %s The name of the Form Action */
+				__( 'A Participant Role ID is required to create a Participant in "%s".', 'civicrm-wp-profile-sync' ),
+				$action
+			) );
+			return false;
+		}
+
+		// Get the Participant Roles that count towards the total for the Event.
+		$counted = $this->civicrm->participant_role->get_counted();
+
+		// Make sure the keys are integers.
+		$counted_role_ids = array_map( 'intval', array_keys( $counted ) );
+
+		// All's well if the Participant Role is not counted.
+		if ( ! in_array( (int) $participant['participant_role_id'], $counted_role_ids ) ) {
+			return true;
+		}
+
+		// All's well if "Add anyway" is on.
+		if ( ! empty( $participant['add_anyway'] ) ) {
+			return true;
+		}
+
+		// Check the status of the Event.
+		$is_full = $this->civicrm->event->is_full( $participant['event_id'] );
+
+		// Reject the submission if there's an error.
+		if ( $is_full === false ) {
+			acfe_add_validation_error( '', sprintf(
+				/* translators: %s The name of the Form Action */
+				__( 'Could not check if the Event is full in "%s".', 'civicrm-wp-profile-sync' ),
+				$action
+			) );
+			return false;
+		}
+
+		// All's well if the Event is not full.
+		if ( $is_full === 0 ) {
+			return true;
+		}
+
+		// Build feedback from Event details.
+		$event = $this->civicrm->event->get_by_id( $participant['event_id'] );
+		if ( ! empty( $event['title'] ) ) {
+			// Set useful message when there are Event details.
+			$message = sprintf(
+				/* translators: %s The title of the Event */
+				__( 'Cannot add Participant because "%s" is full.', 'civicrm-wp-profile-sync' ),
+				$event['title']
+			);
+		} else {
+			// Set generic message otherwise.
+			$message = sprintf(
+				/* translators: %s The name of the Form Action */
+				__( 'Cannot add Participant because the Event in "%s" is full.', 'civicrm-wp-profile-sync' ),
+				$action
+			);
+		}
+
+		// Reject the submission.
+		acfe_add_validation_error( '', $message );
+
+		// Not valid.
+		return false;
 
 	}
 

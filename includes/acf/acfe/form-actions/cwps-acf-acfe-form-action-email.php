@@ -212,12 +212,17 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 	 */
 	public function validation( $form, $current_post_id, $action ) {
 
-		/*
 		// Get some Form details.
 		$form_name = acf_maybe_get( $form, 'name' );
 		$form_id = acf_maybe_get( $form, 'ID' );
-		//acfe_add_validation_error( $selector, $message );
-		*/
+
+		// Validate the Email data.
+		$valid = $this->form_email_validate( $form, $current_post_id, $action );
+		if ( ! $valid ) {
+			return;
+		}
+
+		// TODO: Check other Email Entities.
 
 	}
 
@@ -812,6 +817,70 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 
 		// --<
 		return $data;
+
+	}
+
+
+
+	/**
+	 * Validates the Email data array from mapped Fields.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param array $form The array of Form data.
+	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
+	 * @param string $action The customised name of the action.
+	 * @return bool $valid True if the Email can be saved, false otherwise.
+	 */
+	public function form_email_validate( $form, $current_post_id, $action ) {
+
+		// Get the Email.
+		$email = $this->form_email_data( $form, $current_post_id, $action );
+
+		// Skip if the Email Conditional Reference Field has a value.
+		if ( ! empty( $email['civicrm_email_conditional_ref'] ) ) {
+			// And the Email Conditional Field has no value.
+			if ( empty( $email['civicrm_email_conditional'] ) ) {
+				return true;
+			}
+		}
+
+		/*
+		 * We have a problem here because the ACFE Forms Actions query var has
+		 * not been populated yet since the "make" actions have not run.
+		 *
+		 * This means that "acfe_form_get_action()" cannot be queried to find
+		 * the referenced Contact ID when using an "Action Reference" Field,
+		 * even though it will be populated later when the "make" actions run.
+		 *
+		 * Other methods for defining the Contact ID will still validate, but
+		 * we're going to have to exclude this check for now.
+		 */
+
+		/*
+		// Reject the submission if there is no Contact ID.
+		if ( empty( $email['contact_id'] ) ) {
+			acfe_add_validation_error( '', sprintf(
+				// / * translators: %s The name of the Form Action * /
+				__( 'A Contact ID is required to send an Email in "%s".', 'civicrm-wp-profile-sync' ),
+				$action
+			) );
+			return false;
+		}
+		*/
+
+		// Reject the submission if the Template ID is missing.
+		if ( empty( $email['template_id'] ) ) {
+			acfe_add_validation_error( '', sprintf(
+				/* translators: %s The name of the Form Action */
+				__( 'A Template ID is required to send an Email in "%s".', 'civicrm-wp-profile-sync' ),
+				$action
+			) );
+			return false;
+		}
+
+		// Valid.
+		return true;
 
 	}
 
