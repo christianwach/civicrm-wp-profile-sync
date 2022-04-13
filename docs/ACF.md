@@ -324,7 +324,7 @@ The "Multi-Select" option is not supported in CiviCRM 5.34 due to a bug that is 
 
 ### File Field
 
-There is no mapping between the CiviCRM "File" and the ACF "File" Field Types yet.
+There is no mapping between the CiviCRM "File" and the ACF "File" Field Types yet. This will be released when [this commit](https://github.com/civicrm/civicrm-core/pull/23002) becomes available in distributed versions of CiviCRM.
 
 ### Current Employer
 
