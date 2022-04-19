@@ -1262,7 +1262,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		}
 
 		// Bail if the Activity can't be created.
-		if ( empty( $activity['source_contact_id'] ) || empty( $activity['activity_type_id'] ) ) {
+		if ( empty( $activity_data['source_contact_id'] ) || empty( $activity_data['activity_type_id'] ) ) {
 			return $activity;
 		}
 
