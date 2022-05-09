@@ -380,7 +380,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-case-type.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-case.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-case-field.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-event-type.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-event.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-event-field.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-participant-role.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-participant.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-participant-field.php';
@@ -435,7 +437,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		$this->case_field = new CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field( $this );
 
 		// Init Event, Participant Role, Participant and Participant Field objects.
+		$this->event_type = new CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Type( $this );
 		$this->event = new CiviCRM_Profile_Sync_ACF_CiviCRM_Event( $this );
+		$this->event_field = new CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field( $this );
 		$this->participant = new CiviCRM_Profile_Sync_ACF_CiviCRM_Participant( $this );
 		$this->participant_field = new CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field( $this );
 		$this->participant_role = new CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role( $this );
