@@ -290,17 +290,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		// Call the API.
 		$result = civicrm_api( 'Event', 'create', $params );
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'params' => $params,
-			'result' => $result,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Bail if there's an error.
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $event_data;
@@ -748,6 +737,50 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 
 
 	/**
+	 * Get the mapped Event Field name if present.
+	 *
+	 * @since 0.5.4
+	 *
+	 * @param array $field The existing Field data array.
+	 * @return string|bool $event_field_name The name of the Event Field, or false if none.
+	 */
+	public function event_field_name_get( $field ) {
+
+		// Init return.
+		$event_field_name = false;
+
+		// Get the ACF CiviCRM Field key.
+		$acf_field_key = $this->civicrm->acf_field_key_get();
+
+		// Set the mapped Event Field name if present.
+		if ( isset( $field[ $acf_field_key ] ) ) {
+			if ( false !== strpos( $field[ $acf_field_key ], $this->event_field_prefix ) ) {
+				$event_field_name = (string) str_replace( $this->event_field_prefix, '', $field[ $acf_field_key ] );
+			}
+		}
+
+		/**
+		 * Filter the Event Field name.
+		 *
+		 * @since 0.5.4
+		 *
+		 * @param integer $event_field_name The existing Event Field name.
+		 * @param array $field The array of ACF Field data.
+		 */
+		$event_field_name = apply_filters( 'cwps/acf/civicrm/event/event_field/name', $event_field_name, $field );
+
+		// --<
+		return $event_field_name;
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
 	 * Returns a Setting Field for a Bypass ACF Field Group when found.
 	 *
 	 * @since 0.5.4
@@ -816,10 +849,30 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		}
 
 		// Get the public Fields on the Entity for this Field Type.
-		$fields_for_entity = $this->civicrm->event_field->data_get( $field['type'], 'public' );
+		$core_fields_for_entity = $this->civicrm->event_field->data_get( $field['type'], 'public' );
+
+		// Get the public Location Fields on the Entity for this Field Type.
+		$location_fields_for_entity = $this->civicrm->event_location->data_get( $field['type'], 'public' );
+
+		// Get the public Location Address Fields on the Entity for this Field Type.
+		$location_address_fields_for_entity = $this->civicrm->event_location->data_address_get( $field['type'], 'public' );
+
+		// Get the public Location Email Fields on the Entity for this Field Type.
+		$location_email_fields_for_entity = $this->civicrm->event_location->data_email_get( $field['type'], 'public' );
+
+		// Get the public Location Phone Fields on the Entity for this Field Type.
+		$location_phone_fields_for_entity = $this->civicrm->event_location->data_phone_get( $field['type'], 'public' );
+
+		// Parse the Event Type.
+		$event_type = reset( $entity_array[ $this->identifier ] );
+		if ( $event_type == '0' ) {
+			$event_type = '';
+		} else {
+			$event_type = (int) $event_type;
+		}
 
 		// Get the Custom Fields for this Entity.
-		$custom_fields = $this->plugin->civicrm->custom_field->get_for_entity_type( 'Event', '' );
+		$custom_fields = $this->plugin->civicrm->custom_field->get_for_entity_type( 'Event', $event_type );
 
 		/**
 		 * Filter the Custom Fields.
@@ -833,14 +886,21 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		$filtered_fields = apply_filters( 'cwps/acf/query_settings/custom_fields_filter', [], $custom_fields, $field );
 
 		// Pass if not populated.
-		if ( empty( $fields_for_entity ) && empty( $filtered_fields ) ) {
+		if (
+			empty( $core_fields_for_entity ) &&
+			empty( $location_fields_for_entity ) &&
+			empty( $location_address_fields_for_entity ) &&
+			empty( $location_email_fields_for_entity ) &&
+			empty( $location_phone_fields_for_entity ) &&
+			empty( $filtered_fields )
+		) {
 			return $choices;
 		}
 
 		// Build Event Field choices array for dropdown.
-		if ( ! empty( $fields_for_entity ) ) {
+		if ( ! empty( $core_fields_for_entity ) ) {
 			$event_fields_label = esc_attr__( 'Event Fields', 'civicrm-wp-profile-sync' );
-			foreach ( $fields_for_entity as $event_field ) {
+			foreach ( $core_fields_for_entity as $event_field ) {
 				$choices[ $event_fields_label ][ $this->event_field_prefix . $event_field['name'] ] = $event_field['title'];
 			}
 		}
@@ -853,6 +913,38 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 				foreach ( $custom_group as $custom_field ) {
 					$choices[ $custom_fields_label ][ $custom_field_prefix . $custom_field['id'] ] = $custom_field['label'];
 				}
+			}
+		}
+
+		// Build Event Location Field choices array for dropdown.
+		if ( ! empty( $location_fields_for_entity ) ) {
+			$event_fields_label = esc_attr__( 'Event Location Fields', 'civicrm-wp-profile-sync' );
+			foreach ( $location_fields_for_entity as $event_field ) {
+				$choices[ $event_fields_label ][ $this->event_field_prefix . $event_field['name'] ] = $event_field['title'];
+			}
+		}
+
+		// Build Event Location Address Field choices array for dropdown.
+		if ( ! empty( $location_address_fields_for_entity ) ) {
+			$event_fields_label = esc_attr__( 'Event Location Address Fields', 'civicrm-wp-profile-sync' );
+			foreach ( $location_address_fields_for_entity as $event_field ) {
+				$choices[ $event_fields_label ][ $this->event_field_prefix . $event_field['name'] ] = $event_field['title'];
+			}
+		}
+
+		// Build Event Location Email Field choices array for dropdown.
+		if ( ! empty( $location_email_fields_for_entity ) ) {
+			$event_fields_label = esc_attr__( 'Event Location Email Fields', 'civicrm-wp-profile-sync' );
+			foreach ( $location_email_fields_for_entity as $event_field ) {
+				$choices[ $event_fields_label ][ $this->event_field_prefix . $event_field['name'] ] = $event_field['title'];
+			}
+		}
+
+		// Build Event Location Phone Field choices array for dropdown.
+		if ( ! empty( $location_phone_fields_for_entity ) ) {
+			$event_fields_label = esc_attr__( 'Event Location Phone Fields', 'civicrm-wp-profile-sync' );
+			foreach ( $location_phone_fields_for_entity as $event_field ) {
+				$choices[ $event_fields_label ][ $this->event_field_prefix . $event_field['name'] ] = $event_field['title'];
 			}
 		}
 
@@ -892,257 +984,20 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 			return $entities;
 		}
 
-		// Add Option Group and add entries for each Event Type.
+		// Add an Option Group.
 		$event_types_title = esc_attr( __( 'Event Types', 'civicrm-wp-profile-sync' ) );
 		$entities[ $event_types_title ] = [];
+
+		// Prepend "All" option.
+		$entities[ $event_types_title ][ $this->identifier . '-0' ] = __( 'Any Event Type', 'civicrm-wp-profile-sync' );
+
+		// Add entries for each Event Type.
 		foreach ( $event_types as $event_type ) {
 			$entities[ $event_types_title ][ $this->identifier . '-' . $event_type['value'] ] = $event_type['label'];
 		}
 
 		// --<
 		return $entities;
-
-	}
-
-
-
-	// -------------------------------------------------------------------------
-
-
-
-	/**
-	 * Gets all Event Locations.
-	 *
-	 * @since 0.5.4
-	 *
-	 * @return array $locations The array of Event Locations keyed by LocBlock ID.
-	 */
-	public function locations_get_all() {
-
-		// Init return.
-		$locations = [];
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $locations;
-		}
-
-		// The fields that we want.
-		$fields = [
-			'loc_block_id',
-			'loc_block_id.address_id.name',
-			'loc_block_id.address_id.street_address',
-			'loc_block_id.address_id.supplemental_address_1',
-			'loc_block_id.address_id.supplemental_address_2',
-			'loc_block_id.address_id.supplemental_address_3',
-			'loc_block_id.address_id.city',
-			'loc_block_id.address_id.state_province_id.name',
-		];
-
-		// Build params.
-		$params = [
-			'version' => 3,
-			'check_permissions' => true,
-			'return' => $fields,
-			'loc_block_id.address_id' => [
-				'IS NOT NULL' => 1,
-			],
-			'options' => [
-				'limit' => 0,
-			],
-		];
-
-		// Call the API.
-		$result = civicrm_api( 'Event', 'get', $params );
-
-		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			return $locations;
-		}
-
-		// Bail if there are no results.
-		if ( empty( $result['values'] ) ) {
-			return $locations;
-		}
-
-		// Build and format the returned array.
-		foreach ( $result['values'] as $location ) {
-
-			$address = '';
-
-			// Add Address elements.
-			foreach ( $fields as $field ) {
-				if ( $field !== 'loc_block_id' && ! empty( $location[ $field ] ) ) {
-					$address .= ( $address ? ' :: ' : '' ) . $location[ $field ];
-				}
-			}
-
-			// Maybe add to return.
-			if ( $address ) {
-				$locations[ (int) $location['loc_block_id'] ] = $address;
-			}
-
-		}
-
-		// Keep the same order as CiviCRM.
-		$locations = CRM_Utils_Array::asort( $locations );
-
-		// --<
-		return $locations;
-
-	}
-
-
-
-	/**
-	 * Gets an Event Location given an ID.
-	 *
-	 * @since 0.5.4
-	 *
-	 * @param int $location_id The numeric ID of the Event Location.
-	 * @param str $mode Flag to determine the returned data. Defaults to API return data.
-	 * @return array|bool $location The array of Event Location data, or false on failure.
-	 */
-	public function location_get_by_id( $location_id, $mode = '' ) {
-
-		// Init return.
-		$location = false;
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $location;
-		}
-
-		// TODO: Build logic to get full Event Location data.
-
-		// Build params.
-		$params = [
-			'version' => 3,
-			'id' => $location_id,
-			'options' => [
-				'limit' => 0,
-			],
-		];
-
-		// Call the API.
-		$result = civicrm_api( 'LocBlock', 'get', $params );
-
-		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			return $location;
-		}
-
-		// Bail if there are no results.
-		if ( empty( $result['values'] ) ) {
-			return $location;
-		}
-
-		// We want what should be the only item.
-		$location = array_pop( $result['values'] );
-
-		// --<
-		return $location;
-
-	}
-
-
-
-	/**
-	 * Create a CiviCRM Event Location for a given set of data.
-	 *
-	 * @since 0.5.4
-	 *
-	 * @param array $location The CiviCRM Event Location data.
-	 * @return array|bool $location_data The array Event Location data from the CiviCRM API, or false on failure.
-	 */
-	public function location_create( $location ) {
-
-		// Init as failure.
-		$location_data = false;
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $location_data;
-		}
-
-		// Build params to create Event Location.
-		$params = [
-			'version' => 3,
-		] + $location;
-
-		/*
-		 * Minimum array to create an Event Location:
-		 *
-		 * $params = [
-		 *   'version' => 3,
-		 * ];
-		 *
-		 * Yeah, it's unusual but no params are required.
-		 *
-		 * Updates are triggered by:
-		 *
-		 * $params['id'] = 654;
-		 */
-
-		// Call the API.
-		$result = civicrm_api( 'LocBlock', 'create', $params );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'params' => $params,
-			'result' => $result,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
-		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			return $location_data;
-		}
-
-		// Bail if there are no results.
-		if ( empty( $result['values'] ) ) {
-			return $location_data;
-		}
-
-		// The result set should contain only one item.
-		$location_data = array_pop( $result['values'] );
-
-		// --<
-		return $location_data;
-
-	}
-
-
-
-	/**
-	 * Update a CiviCRM Event Location with a given set of data.
-	 *
-	 * @since 0.5.4
-	 *
-	 * @param array $location The CiviCRM Event Location data.
-	 * @return array|bool $location_data The array Event Location data from the CiviCRM API, or false on failure.
-	 */
-	public function location_update( $location ) {
-
-		// Log and bail if there's no Event Location ID.
-		if ( empty( $location['id'] ) ) {
-			$e = new \Exception();
-			$trace = $e->getTraceAsString();
-			error_log( print_r( [
-				'method' => __METHOD__,
-				'message' => __( 'A numeric ID must be present to update an Event Location.', 'civicrm-wp-profile-sync' ),
-				'location' => $location,
-				'backtrace' => $trace,
-			], true ) );
-			return $location_data;
-		}
-
-		// Pass through.
-		return $this->location_create( $location );
 
 	}
 
