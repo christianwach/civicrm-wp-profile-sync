@@ -695,6 +695,163 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 
 
 
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Gets the Fields for an ACFE Form "Settings" Group.
+	 *
+	 * @since 0.5.4
+	 *
+	 * @param array $args The arguments for defining the Field.
+	 * @return array $group_field The ACF Group Field.
+	 */
+	public function form_setting_group_get( $args ) {
+
+		// Build default instructions.
+		$instructions = sprintf(
+			/* translators: %s: The name of the Field */
+			__( 'Use one Field to identify the %s setting.', 'civicrm-wp-profile-sync' ),
+			$args['field_title']
+		);
+
+		// Maybe add extra text.
+		if ( ! empty( $args['extra'] ) ) {
+			$instructions = sprintf(
+				/* translators: 1: The default instructions, 2: Extra instructions. */
+				__( '%1$s %2$s', 'civicrm-wp-profile-sync' ),
+				$instructions,
+				$args['extra']
+			);
+		}
+
+		// Wrap in a container group.
+		$group_field = [
+			'key' => $this->field_key . $args['field_name'] . '_group_' . $args['field_name'],
+			'label' => $args['field_title'],
+			'name' => $this->field_name . $args['field_name'] . '_group_' . $args['field_name'],
+			'type' => 'group',
+			'instructions' => $instructions,
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			],
+			'required' => 0,
+			'layout' => 'block',
+		];
+
+		// Init Sub-fields.
+		$group_field['sub_fields'] = [];
+
+		// Define value Field.
+		$value_field = [
+			'key' => $this->field_key . 'value_' . $args['field_name'],
+			'label' => $args['field_title'],
+			'name' => $this->field_name . 'value_' . $args['field_name'],
+			'type' => 'select',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => [
+				[
+					[
+						'field' => $this->field_key . 'map_' . $args['field_name'],
+						'operator' => '==empty',
+					],
+				],
+			],
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+				'data-instruction-placement' => 'field',
+			],
+			'acfe_permissions' => '',
+			'default_value' => '',
+			'placeholder' => __( 'Use mapping', 'civicrm-wp-profile-sync' ),
+			'allow_null' => 1,
+			'multiple' => 0,
+			'ui' => 0,
+			'return_format' => 'value',
+			'choices' => $args['choices'],
+		];
+
+		// Mmaybe modify for Lazy Load.
+		if ( ! empty( $args['lazy_load'] ) ) {
+			$value_field['ui'] = 1;
+			$value_field['ajax'] = 1;
+		}
+
+		// Add value Field.
+		$group_field['sub_fields'][] = $value_field;
+
+		// Define Reference Field.
+		/* translators: %s: The name of the Field */
+		$title = sprintf( __( 'Map %s', 'civicrm-wp-profile-sync' ), $args['field_title'] );
+		$mapping_field = $this->mapping_field_get( $args['field_name'], $title );
+		$mapping_field['instructions'] = __( 'Choose a mapping for this Setting.', 'civicrm-wp-profile-sync' );
+		$mapping_field['conditional_logic'] = [
+			[
+				[
+					'field' => $this->field_key . 'value_' . $args['field_name'],
+					'operator' => '==empty',
+				],
+			],
+		];
+
+		// Add Reference Field.
+		$group_field['sub_fields'][] = $mapping_field;
+
+		// --<
+		return $group_field;
+
+	}
+
+
+
+	/**
+	 * Gets the data from an ACFE Form "Settings" Group.
+	 *
+	 * @since 0.5.4
+	 *
+	 * @param string $field_name The name of the Field.
+	 * @param array $form The array of Form data.
+	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
+	 * @param string $action The customised name of the action.
+	 * @return mixed $setting_value The setting value, or false if not found.
+	 */
+	public function form_setting_value_get( $field_name, $form, $current_post_id, $action ) {
+
+		// Init value.
+		$setting_value = '';
+
+		// Get Group Field.
+		$group_field = get_sub_field( $this->field_key . $field_name . '_group_' . $field_name );
+
+		// Check Setting Field.
+		if ( ! empty( $group_field[ $this->field_name . 'value_' . $field_name ] ) ) {
+			$setting_value = $group_field[ $this->field_name . 'value_' . $field_name ];
+		}
+
+		// Check mapped Field.
+		if ( $setting_value === '' ) {
+			if ( ! empty( $group_field[ $this->field_name . 'map_' . $field_name ] ) ) {
+				$reference = [ $field_name => $group_field[ $this->field_name . 'map_' . $field_name ] ];
+				$reference = acfe_form_map_vs_fields( $reference, $reference, $current_post_id, $form );
+				if ( ! empty( $reference[ $field_name ] ) && is_numeric( $reference[ $field_name ] ) ) {
+					$setting_value = $reference[ $field_name ];
+				}
+			}
+		}
+
+		// --<
+		return $setting_value;
+
+	}
+
+
+
 } // Class ends.
 
 
