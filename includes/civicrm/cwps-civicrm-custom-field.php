@@ -558,12 +558,12 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 
 
 	/**
-	 * Get the Custom Fields for a CiviCRM Entity Type/Subtype.
+	 * Get the Custom Fields for a CiviCRM Entity Type and Subtype.
 	 *
 	 * There's a discussion to be had about whether or not to include Custom Groups
-	 * for a Contact Sub-type or not. The code in this method can return data
-	 * specific to the Sub-type, but it's presumably desirable to include all
-	 * Custom Groups that apply to a Contact Type.
+	 * for a Sub-type or not. The code in this method can return data specific to
+	 * the Sub-type, but it's presumably desirable to include all Custom Groups
+	 * that apply to an Entity Type.
 	 *
 	 * There's also a slight weakness in this code, in that the returned array is
 	 * keyed by the "title" of the Custom Group. It is possible (though unlikely)
