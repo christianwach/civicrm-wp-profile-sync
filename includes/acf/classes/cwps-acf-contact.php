@@ -774,7 +774,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 			if ( empty( $contact_type ) ) {
 				$dedupe_rules[ $type ] = CRM_Dedupe_BAO_RuleGroup::getByType( $type );
 			} elseif ( $contact_type == $type ) {
-				$dedupe_rules[ $type ] = CRM_Dedupe_BAO_RuleGroup::getByType( $type );
+				$dedupe_rules = CRM_Dedupe_BAO_RuleGroup::getByType( $type );
+				break;
 			}
 		}
 
