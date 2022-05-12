@@ -50,13 +50,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 	public $civicrm;
 
 	/**
-	 * Event Location Settings Fields.
+	 * Settings Fields.
 	 *
 	 * These Fields are attached to the Event Entity.
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var array $settings_fields The Event Location Settings Fields.
+	 * @var array $settings_fields The Settings Fields.
 	 */
 	public $settings_fields = [
 		'is_show_location' => 'true_false',
@@ -64,13 +64,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 	];
 
 	/**
-	 * Event Location Address Fields.
+	 * Address Fields.
 	 *
 	 * These Fields are attached to the Address Entity.
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var array $address_fields The Event Location Address Fields.
+	 * @var array $address_fields The Address Fields.
 	 */
 	public $address_fields = [
 		'street_address' => 'text',
@@ -88,26 +88,26 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 	];
 
 	/**
-	 * Event Location Email Fields.
+	 * Email Fields.
 	 *
 	 * These Fields are attached to the Email Entity.
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var array $email_fields The array of Event Location Email Fields.
+	 * @var array $email_fields The array of Email Fields.
 	 */
 	public $email_fields = [
 		'email' => 'email',
 	];
 
 	/**
-	 * Event Location Phone Fields.
+	 * Phone Fields.
 	 *
 	 * These Fields are attached to the Phone Entity.
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var array $phone_fields The array of Event Location Phone Fields.
+	 * @var array $phone_fields The array of Phone Fields.
 	 */
 	public $phone_fields = [
 		'phone' => 'text',
@@ -189,7 +189,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 			return $done;
 		}
 
-		// Build array of all Event Location Fields.
+		// Build array of all Fields.
 		$done = $this->settings_fields;
 		$done += $this->address_fields;
 		$done += $this->email_fields;
@@ -226,7 +226,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 			return $valid;
 		}
 
-		// Get the mapped Event Location Field name if present.
+		// Get the mapped Field name if present.
 		$event_field_name = $this->civicrm->event->event_field_name_get( $field );
 		if ( $event_field_name === false ) {
 			return $valid;
@@ -260,8 +260,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param mixed $value The Event Location Field value.
-	 * @param array $name The Event Location Field name.
+	 * @param mixed $value The Field value.
+	 * @param array $name The Field name.
 	 * @param string $selector The ACF Field selector.
 	 * @param integer|string $post_id The ACF "Post ID".
 	 * @return mixed $value The formatted Field value.
@@ -278,10 +278,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 			return '';
 		}
 
-		// Get the ACF type for this Event Location Field.
+		// Get the ACF type for this Field.
 		$type = $this->get_acf_type( $name );
 
-		// Convert CiviCRM value to ACF value by Event Location Field.
+		// Convert CiviCRM value to ACF value by Field.
 		switch ( $type ) {
 
 			// Unused at present.
@@ -354,7 +354,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param string $name The name of the Event Location Field.
+	 * @param string $name The name of the Field.
 	 * @return array $options The array of Field options.
 	 */
 	public function options_get( $name ) {
@@ -566,8 +566,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 		// Call the API.
 		$result = civicrm_api( 'LocBlock', 'create', $params );
 
-		// Bail if there's an error.
+		// Log and bail if there's an error.
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+			$e = new Exception();
+			$trace = $e->getTraceAsString();
+			error_log( print_r( [
+				'method' => __METHOD__,
+				'params' => $params,
+				'result' => $result,
+				'backtrace' => $trace,
+			], true ) );
 			return $location_data;
 		}
 
@@ -652,7 +660,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 		// Loop through the Post Types.
 		foreach ( $is_event_field_group as $post_type_name ) {
 
-			// Get public Event Location Fields.
+			// Get public Fields.
 			$event_fields_for_type = $this->data_get( $field['type'], 'public' );
 
 			// Merge with return array.
@@ -737,48 +745,26 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 			return $pseudocache[ $filter ][ $field_type ];
 		}
 
-		// Init return.
-		$fields = [];
+		// Get all Fields.
+		$fields = $this->civicrm->event_field->data_get_by_action();
 
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $fields;
-		}
+		// Check for filter.
+		if ( $filter !== 'none' ) {
 
-		// Construct params.
-		$params = [
-			'version' => 3,
-			'api_action' => 'create',
-			'options' => [
-				'limit' => 0, // No limit.
-			],
-		];
+			// Check settings filter.
+			if ( $filter == 'settings' ) {
 
-		// Call the API.
-		$result = civicrm_api( 'Event', 'getfields', $params );
-
-		// Override return if we get some.
-		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
-
-			// Check for no filter.
-			if ( $filter == 'none' ) {
-
-				// Grab all of them.
-				$fields = $result['values'];
-
-			// Check public filter.
-			} elseif ( $filter == 'public' ) {
-
-				// Skip all but those defined in our Event Location Fields array.
-				$public_fields = [];
-				foreach ( $result['values'] as $key => $value ) {
+				// Skip all but those defined in our Settings Fields array.
+				$filtered = [];
+				foreach ( $fields as $key => $value ) {
 					if ( array_key_exists( $value['name'], $this->settings_fields ) ) {
-						$public_fields[] = $value;
+						$filtered[] = $value;
 					}
 				}
 
 				// Skip all but those mapped to the type of ACF Field.
-				foreach ( $public_fields as $key => $value ) {
+				$fields = [];
+				foreach ( $filtered as $key => $value ) {
 					if ( $field_type == $this->settings_fields[ $value['name'] ] ) {
 						$fields[] = $value;
 					}
@@ -801,7 +787,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 
 	/**
-	 * Get the Event Location Address Fields for an ACF Field Type.
+	 * Get the Address Fields for an ACF Field Type.
 	 *
 	 * @since 0.5.4
 	 *
@@ -854,7 +840,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 
 	/**
-	 * Get the Event Location Email Fields for an ACF Field Type.
+	 * Get the Email Fields for an ACF Field Type.
 	 *
 	 * @since 0.5.4
 	 *
@@ -907,7 +893,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 
 	/**
-	 * Get the Event Location Phone Fields for an ACF Field Type.
+	 * Get the Phone Fields for an ACF Field Type.
 	 *
 	 * @since 0.5.4
 	 *
@@ -960,73 +946,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 
 	/**
-	 * Get the Event Location Fields for a given action.
-	 *
-	 * @since 0.5.4
-	 *
-	 * @param string $action The name of the API action, e.g. 'create'.
-	 * @return array $fields The array of Field names.
-	 */
-	public function data_get_by_action( $action = '' ) {
-
-		// Maybe set a key for the subtype.
-		$index = $action;
-		if ( empty( $action ) ) {
-			$index = 'all';
-		}
-
-		// Only do this once per action.
-		static $pseudocache;
-		if ( isset( $pseudocache[ $index ] ) ) {
-			return $pseudocache[ $index ];
-		}
-
-		// Init return.
-		$fields = [];
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $fields;
-		}
-
-		// Construct params.
-		$params = [
-			'version' => 3,
-			'options' => [
-				'limit' => 0, // No limit.
-			],
-		];
-
-		// Maybe add action.
-		if ( ! empty( $action ) ) {
-			$params['api_action'] = $action;
-		}
-
-		// Call the API.
-		$result = civicrm_api( 'Event', 'getfields', $params );
-
-		// Don't cache if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			return $fields;
-		}
-
-		// Grab the result set.
-		$fields = $result['values'];
-
-		// Maybe add to pseudo-cache.
-		if ( ! isset( $pseudocache[ $index ] ) ) {
-			$pseudocache[ $index ] = $fields;
-		}
-
-		// --<
-		return $fields;
-
-	}
-
-
-
-	/**
-	 * Get the Event Location Fields for a give nfilter and action.
+	 * Get the Event Location Fields for a given filter and action.
 	 *
 	 * @since 0.5.4
 	 *
@@ -1048,8 +968,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 			return $pseudocache[ $filter ][ $index ];
 		}
 
-		// Get all Event Location Fields for this action.
-		$fields = $this->data_get_by_action( $action );
+		// Get all Fields for this action.
+		$fields = $this->civicrm->event_field->data_get_by_action( $action );
 
 		// Check for filter.
 		if ( $filter !== 'none' ) {
@@ -1057,7 +977,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 			// Check "public" filter.
 			if ( $filter == 'public' ) {
 
-				// Skip all but those defined in our Event Location Fields array.
+				// Skip all but those defined in our Settings Fields array.
 				$filtered = [];
 				foreach ( $fields as $key => $value ) {
 					if ( array_key_exists( $value['name'], $this->settings_fields ) ) {
@@ -1065,7 +985,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 					}
 				}
 
-				// Maybe order them by our Event Location Fields array.
+				// Maybe order them by our Settings Fields array.
 				$fields = [];
 				if ( ! empty( $filtered ) ) {
 					foreach ( $this->settings_fields as $key => $field_type ) {
@@ -1107,7 +1027,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 		// Init return.
 		$public_fields = [];
 
-		// Get the public Event Location Fields.
+		// Get the public Fields.
 		$public_fields = $this->data_get_filtered( 'public', $action );
 
 		// --<
@@ -1305,7 +1225,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param string $name The name of the Event Location Field.
+	 * @param string $name The name of the Field.
 	 * @return array $fields The array of Field names.
 	 */
 	public function get_acf_type( $name = '' ) {
@@ -1351,7 +1271,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 			return $field;
 		}
 
-		// Get the mapped Event Location Field name if present.
+		// Get the mapped Field name if present.
 		$event_field_name = $this->civicrm->event->event_field_name_get( $field );
 		if ( $event_field_name === false ) {
 			return $field;
@@ -1402,7 +1322,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 			return $field;
 		}
 
-		// Get the mapped Event Location Field name if present.
+		// Get the mapped Field name if present.
 		$event_field_name = $this->civicrm->event->event_field_name_get( $field );
 		if ( $event_field_name === false ) {
 			return $field;

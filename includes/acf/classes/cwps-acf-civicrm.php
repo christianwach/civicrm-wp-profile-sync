@@ -275,6 +275,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	public $event_location;
 
 	/**
+	 * CiviCRM Event Registration object.
+	 *
+	 * @since 0.5.4
+	 * @access public
+	 * @var object $event_registration The CiviCRM Event Registration object.
+	 */
+	public $event_registration;
+
+	/**
 	 * CiviCRM Participant Role object.
 	 *
 	 * @since 0.5
@@ -411,6 +420,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-event.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-event-field.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-event-location.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-event-registration.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-participant-role.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-participant.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-participant-field.php';
@@ -469,6 +479,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		$this->event = new CiviCRM_Profile_Sync_ACF_CiviCRM_Event( $this );
 		$this->event_field = new CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field( $this );
 		$this->event_location = new CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location( $this );
+		$this->event_registration = new CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration( $this );
 		$this->participant = new CiviCRM_Profile_Sync_ACF_CiviCRM_Participant( $this );
 		$this->participant_field = new CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field( $this );
 		$this->participant_role = new CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role( $this );

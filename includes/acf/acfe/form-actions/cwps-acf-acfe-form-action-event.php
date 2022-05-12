@@ -145,6 +145,41 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	];
 
 	/**
+	 * Registration Fields to ignore.
+	 *
+	 * @since 0.5.4
+	 * @access public
+	 * @var array $registration_fields_to_ignore The Registration Fields to ignore.
+	 */
+	public $registration_fields_to_ignore = [
+		'is_online_registration' => 'true_false',
+	];
+
+	/**
+	 * Registration Confirmation Screen Fields to ignore.
+	 *
+	 * @since 0.5.4
+	 * @access public
+	 * @var array $registration_email_fields_to_ignore The Registration Confirmation Screen Fields to ignore.
+	 */
+	public $confirm_fields_to_ignore = [
+		'is_confirm_enabled' => 'true_false',
+	];
+
+	/**
+	 * Registration Confirmation Email Fields to ignore.
+	 *
+	 * @since 0.5.4
+	 * @access public
+	 * @var array $registration_email_fields_to_ignore The Registration Confirmation Email Fields to ignore.
+	 */
+	public $registration_email_fields_to_ignore = [
+		'is_email_confirm' => 'true_false',
+	];
+
+
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 0.5.4
@@ -231,6 +266,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 		}
 
+		// ---------------------------------------------------------------------
+
 		// Populate Event Location Settings mapping Fields.
 		$this->mapping_field_filters_add( 'is_show_location' );
 		$this->mapping_field_filters_add( 'existing_location' );
@@ -287,20 +324,62 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		// Phone Conditional Field.
 		$this->mapping_field_filters_add( 'phone_fields_conditional' );
 
-
+		// ---------------------------------------------------------------------
 
 		// Get the Event Registration Fields.
-		$this->event_registration_fields = $this->civicrm->event_field->get_registration_fields( 'create' );
+		$this->event_registration_fields = $this->civicrm->event_registration->get_settings_fields();
 
 		// Populate Event Registration mapping Fields.
 		foreach ( $this->event_registration_fields as $field ) {
+			if ( ! array_key_exists( $field['name'], $this->registration_fields_to_ignore ) ) {
+				$this->mapping_field_filters_add( $field['name'] );
+			}
+		}
+
+		// Get the Event Registration Screen Fields.
+		$this->event_registration_screen_fields = $this->civicrm->event_registration->get_register_screen_fields();
+
+		// Populate Event Registration Screen mapping Fields.
+		foreach ( $this->event_registration_screen_fields as $field ) {
 			$this->mapping_field_filters_add( $field['name'] );
 		}
 
-		// Registration Conditional Field.
-		$this->mapping_field_filters_add( 'registration_conditional' );
+		// Get the Event Registration Confirmation Screen Fields.
+		$this->event_confirm_screen_fields = $this->civicrm->event_registration->get_confirm_screen_fields();
 
+		// Populate Event Registration Confirmation Screen mapping Fields.
+		foreach ( $this->event_confirm_screen_fields as $field ) {
+			if ( ! array_key_exists( $field['name'], $this->confirm_fields_to_ignore ) ) {
+				$this->mapping_field_filters_add( $field['name'] );
+			}
+		}
 
+		// Get the Event Registration Thank You Screen Fields.
+		$this->event_thankyou_screen_fields = $this->civicrm->event_registration->get_thankyou_screen_fields();
+
+		// Populate Event Registration Thank You Screen mapping Fields.
+		foreach ( $this->event_thankyou_screen_fields as $field ) {
+			$this->mapping_field_filters_add( $field['name'] );
+		}
+
+		// Get the Event Registration Confirmation Email Fields.
+		$this->event_confirmation_email_fields = $this->civicrm->event_registration->get_confirmation_email_fields();
+
+		// Populate Event Registration Confirmation Email mapping Fields.
+		foreach ( $this->event_confirmation_email_fields as $field ) {
+			if ( ! array_key_exists( $field['name'], $this->registration_email_fields_to_ignore ) ) {
+				$this->mapping_field_filters_add( $field['name'] );
+			}
+		}
+
+		// Populate Event Registration Settings mapping Fields.
+		$this->mapping_field_filters_add( 'is_online_registration' );
+		$this->mapping_field_filters_add( 'is_confirm_enabled' );
+		$this->mapping_field_filters_add( 'is_email_confirm' );
+		$this->mapping_field_filters_add( 'custom_pre_id' );
+		$this->mapping_field_filters_add( 'custom_post_id' );
+
+		// ---------------------------------------------------------------------
 
 		// Get the Custom Groups and Fields.
 		$this->custom_fields = $this->plugin->civicrm->custom_group->get_for_entity_type( 'Event', '', true );
@@ -364,7 +443,17 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 			return;
 		}
 
-		// TODO: Check other Event Entities.
+		// Validate the Event Registration data.
+		$valid = $this->form_registration_validate( $form, $current_post_id, $action );
+		if ( ! $valid ) {
+			return;
+		}
+
+		// Validate the Event Location data.
+		$valid = $this->form_locblock_validate( $form, $current_post_id, $action );
+		if ( ! $valid ) {
+			return;
+		}
 
 	}
 
@@ -396,25 +485,26 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 			'id' => false,
 		];
 
-		// Populate Event and Custom Field data arrays.
+		// Populate Event, Registration and Custom Field data arrays.
 		$event = $this->form_event_data( $form, $current_post_id, $action );
-		$custom_fields = $this->form_custom_data( $form, $current_post_id, $action );
+		$registration = $this->form_registration_data( $form, $current_post_id, $action );
+		$custom_fields = $this->form_event_custom_data( $form, $current_post_id, $action );
 
-		// Save the LocBlock with the data from the Form.
+		// First save the LocBlock with the data from the Form.
 		$locblock_data = $this->form_locblock_data( $form, $current_post_id, $action );
-		$locblock = $this->form_locblock_save( $locblock_data );
+		$args['location'] = $this->form_locblock_save( $locblock_data );
 
 		// Save the Event with the data from the Form.
-		$args['event'] = $this->form_event_save( $event, $custom_fields, $locblock );
+		$args['event'] = $this->form_event_save( $event, $custom_fields, $args['location'], $registration );
 
 		// If we get an Event.
 		if ( $args['event'] !== false ) {
 
 			// Post-process Custom Fields now that we have an Event.
-			$this->form_custom_post_process( $form, $current_post_id, $action, $args['event'] );
+			$this->form_event_custom_post_process( $form, $current_post_id, $action, $args['event'] );
 
-			// Save the Event Location.
-			$args['event']['location'] = $locblock;
+			// Maybe enable Registration.
+			$args['profiles'] = $this->form_registration_save( $args['event'], $registration );
 
 			// Save the Event ID for backwards compatibility.
 			$args['id'] = $args['event']['id'];
@@ -1394,6 +1484,415 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 		// ---------------------------------------------------------------------
 
+		// Define "Online Registration" setting Field.
+		$args = [
+			'field_name' => 'is_online_registration',
+			'field_title' => __( 'Allow Online Registration', 'civicrm-wp-profile-sync' ),
+			'choices' => [
+				'1' => __( 'Yes', 'civicrm-wp-profile-sync' ),
+				'0' => __( 'No', 'civicrm-wp-profile-sync' ),
+			],
+		];
+
+		// Add "Online Registration" Group.
+		$fields[] = $this->form_setting_group_get( $args );
+
+		// ---------------------------------------------------------------------
+
+		// "Online Registration Configuration" container group.
+		$container_group_field = [
+			'key' => $this->field_key . 'registration_settings',
+			'label' => __( 'Online Registration Configuration', 'civicrm-wp-profile-sync' ),
+			'name' => $this->field_name . 'registration_settings',
+			'type' => 'group',
+			'instructions' => '',
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			],
+			'required' => 0,
+			'layout' => 'block',
+			'conditional_logic' => [
+				[
+					[
+						'field' => $this->field_key . 'value_is_online_registration',
+						'operator' => '!=',
+						'value' => '0',
+					],
+				],
+			],
+		];
+
+		// Init Sub-fields.
+		$container_group_field['sub_fields'] = [];
+
+		// ---------------------------------------------------------------------
+
+		// "Components" Accordion wrapper open.
+		$container_group_field['sub_fields'][] = [
+			'key' => $this->field_key . 'mapping_accordion_registration_components_open',
+			'label' => __( 'Enable Components', 'civicrm-wp-profile-sync' ),
+			'name' => '',
+			'type' => 'accordion',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			],
+			'acfe_permissions' => '',
+			'open' => 0,
+			'multi_expand' => 1,
+			'endpoint' => 0,
+		];
+
+		// Define "Confirmation Screen" setting Field.
+		$args = [
+			'field_name' => 'is_confirm_enabled',
+			'field_title' => __( 'Enable Confirmation Screen', 'civicrm-wp-profile-sync' ),
+			'choices' => [
+				'1' => __( 'Yes', 'civicrm-wp-profile-sync' ),
+				'0' => __( 'No', 'civicrm-wp-profile-sync' ),
+			],
+		];
+
+		// Add "Confirmation Screen" Group.
+		$container_group_field['sub_fields'][] = $this->form_setting_group_get( $args );
+
+		// Define "Confirmation Email" setting Field.
+		$args = [
+			'field_name' => 'is_email_confirm',
+			'field_title' => __( 'Send Confirmation Email', 'civicrm-wp-profile-sync' ),
+			'choices' => [
+				'1' => __( 'Yes', 'civicrm-wp-profile-sync' ),
+				'0' => __( 'No', 'civicrm-wp-profile-sync' ),
+			],
+		];
+
+		// Add "Confirmation Email" Group.
+		$container_group_field['sub_fields'][] = $this->form_setting_group_get( $args );
+
+		// "Components" Accordion wrapper close.
+		$container_group_field['sub_fields'][] = [
+			'key' => $this->field_key . 'mapping_accordion_registration_components_close',
+			'label' => __( 'Enable Components', 'civicrm-wp-profile-sync' ),
+			'name' => '',
+			'type' => 'accordion',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			],
+			'acfe_permissions' => '',
+			'open' => 0,
+			'multi_expand' => 1,
+			'endpoint' => 1,
+		];
+
+		// ---------------------------------------------------------------------
+
+		// "Settings" Accordion wrapper open.
+		$container_group_field['sub_fields'][] = [
+			'key' => $this->field_key . 'mapping_accordion_registration_settings_open',
+			'label' => __( 'Settings', 'civicrm-wp-profile-sync' ),
+			'name' => '',
+			'type' => 'accordion',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			],
+			'acfe_permissions' => '',
+			'open' => 0,
+			'multi_expand' => 1,
+			'endpoint' => 0,
+		];
+
+		// Add "Event Registration Mapping" Fields.
+		foreach ( $this->event_registration_fields as $field ) {
+			if ( ! array_key_exists( $field['name'], $this->registration_fields_to_ignore ) ) {
+				$container_group_field['sub_fields'][] = $this->mapping_field_get( $field['name'], $field['title'] );
+			}
+		}
+
+		// "Settings" Accordion wrapper close.
+		$container_group_field['sub_fields'][] = [
+			'key' => $this->field_key . 'mapping_accordion_registration_settings_close',
+			'label' => __( 'Settings', 'civicrm-wp-profile-sync' ),
+			'name' => '',
+			'type' => 'accordion',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			],
+			'acfe_permissions' => '',
+			'open' => 0,
+			'multi_expand' => 1,
+			'endpoint' => 1,
+		];
+
+		// ---------------------------------------------------------------------
+
+		// "Registration Screen" Accordion wrapper open.
+		$container_group_field['sub_fields'][] = [
+			'key' => $this->field_key . 'mapping_accordion_registration_screen_settings_open',
+			'label' => __( 'Registration Screen', 'civicrm-wp-profile-sync' ),
+			'name' => '',
+			'type' => 'accordion',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			],
+			'acfe_permissions' => '',
+			'open' => 0,
+			'multi_expand' => 1,
+			'endpoint' => 0,
+		];
+
+		// Add "Event Registration Screen Mapping" Fields.
+		foreach ( $this->event_registration_screen_fields as $field ) {
+			$container_group_field['sub_fields'][] = $this->mapping_field_get( $field['name'], $field['title'] );
+		}
+
+		// Define "Include Profile Top" setting Field.
+		$args = [
+			'field_name' => 'custom_pre_id',
+			'field_title' => __( 'Include Profile (top of page)', 'civicrm-wp-profile-sync' ),
+			'choices' => $this->civicrm->event_registration->profiles_options_get(),
+		];
+
+		// Add "Include Profile Top" Group.
+		$container_group_field['sub_fields'][] = $this->form_setting_group_get( $args );
+
+		// Define "Include Profile Bottom" setting Field.
+		$args = [
+			'field_name' => 'custom_post_id',
+			'field_title' => __( 'Include Profile (bottom of page)', 'civicrm-wp-profile-sync' ),
+			'choices' => $this->civicrm->event_registration->profiles_options_get(),
+		];
+
+		// Add "Include Profile Bottom" Group.
+		$container_group_field['sub_fields'][] = $this->form_setting_group_get( $args );
+
+		// "Registration Screen" Accordion wrapper close.
+		$container_group_field['sub_fields'][] = [
+			'key' => $this->field_key . 'mapping_accordion_registration_screen_settings_close',
+			'label' => __( 'Registration Screen', 'civicrm-wp-profile-sync' ),
+			'name' => '',
+			'type' => 'accordion',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			],
+			'acfe_permissions' => '',
+			'open' => 0,
+			'multi_expand' => 1,
+			'endpoint' => 1,
+		];
+
+		// ---------------------------------------------------------------------
+
+		// "Confirmation Screen" Accordion wrapper open.
+		$container_group_field['sub_fields'][] = [
+			'key' => $this->field_key . 'mapping_accordion_confirm_screen_settings_open',
+			'label' => __( 'Confirmation Screen', 'civicrm-wp-profile-sync' ),
+			'name' => '',
+			'type' => 'accordion',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => [
+				[
+					[
+						'field' => $this->field_key . 'value_is_confirm_enabled',
+						'operator' => '!=',
+						'value' => '0',
+					],
+				],
+			],
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			],
+			'acfe_permissions' => '',
+			'open' => 0,
+			'multi_expand' => 1,
+			'endpoint' => 0,
+		];
+
+		// Add "Confirmation Screen Mapping" Fields.
+		foreach ( $this->event_confirm_screen_fields as $field ) {
+			if ( ! array_key_exists( $field['name'], $this->confirm_fields_to_ignore ) ) {
+				$container_group_field['sub_fields'][] = $this->mapping_field_get( $field['name'], $field['title'] );
+			}
+		}
+
+		// "Confirmation Screen" Accordion wrapper close.
+		$container_group_field['sub_fields'][] = [
+			'key' => $this->field_key . 'mapping_accordion_confirm_screen_settings_close',
+			'label' => __( 'Confirmation Screen', 'civicrm-wp-profile-sync' ),
+			'name' => '',
+			'type' => 'accordion',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => [
+				[
+					[
+						'field' => $this->field_key . 'value_is_confirm_enabled',
+						'operator' => '!=',
+						'value' => '0',
+					],
+				],
+			],
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			],
+			'acfe_permissions' => '',
+			'open' => 0,
+			'multi_expand' => 1,
+			'endpoint' => 1,
+		];
+
+		// ---------------------------------------------------------------------
+
+		// "Thank You Screen" Accordion wrapper open.
+		$container_group_field['sub_fields'][] = [
+			'key' => $this->field_key . 'mapping_accordion_thankyou_screen_settings_open',
+			'label' => __( 'Thank You Screen', 'civicrm-wp-profile-sync' ),
+			'name' => '',
+			'type' => 'accordion',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			],
+			'acfe_permissions' => '',
+			'open' => 0,
+			'multi_expand' => 1,
+			'endpoint' => 0,
+		];
+
+		// Add "Thank You Screen Mapping" Fields.
+		foreach ( $this->event_thankyou_screen_fields as $field ) {
+			$container_group_field['sub_fields'][] = $this->mapping_field_get( $field['name'], $field['title'] );
+		}
+
+		// "Thank You Screen" Accordion wrapper close.
+		$container_group_field['sub_fields'][] = [
+			'key' => $this->field_key . 'mapping_accordion_thankyou_screen_settings_close',
+			'label' => __( 'Thank You Screen', 'civicrm-wp-profile-sync' ),
+			'name' => '',
+			'type' => 'accordion',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			],
+			'acfe_permissions' => '',
+			'open' => 0,
+			'multi_expand' => 1,
+			'endpoint' => 1,
+		];
+
+		// ---------------------------------------------------------------------
+
+		// "Confirmation Email" Accordion wrapper open.
+		$container_group_field['sub_fields'][] = [
+			'key' => $this->field_key . 'mapping_accordion_confirmation_email_settings_open',
+			'label' => __( 'Confirmation Email', 'civicrm-wp-profile-sync' ),
+			'name' => '',
+			'type' => 'accordion',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => [
+				[
+					[
+						'field' => $this->field_key . 'value_is_email_confirm',
+						'operator' => '!=',
+						'value' => '0',
+					],
+				],
+			],
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			],
+			'acfe_permissions' => '',
+			'open' => 0,
+			'multi_expand' => 1,
+			'endpoint' => 0,
+		];
+
+		// Add "Confirmation Email Mapping" Fields.
+		foreach ( $this->event_confirmation_email_fields as $field ) {
+			if ( ! array_key_exists( $field['name'], $this->registration_email_fields_to_ignore ) ) {
+				$container_group_field['sub_fields'][] = $this->mapping_field_get( $field['name'], $field['title'] );
+			}
+		}
+
+		// TODO
+
+		// "Confirmation Email" Accordion wrapper close.
+		$container_group_field['sub_fields'][] = [
+			'key' => $this->field_key . 'mapping_accordion_confirmation_email_settings_close',
+			'label' => __( 'Confirmation Email', 'civicrm-wp-profile-sync' ),
+			'name' => '',
+			'type' => 'accordion',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => [
+				[
+					[
+						'field' => $this->field_key . 'value_is_email_confirm',
+						'operator' => '!=',
+						'value' => '0',
+					],
+				],
+			],
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			],
+			'acfe_permissions' => '',
+			'open' => 0,
+			'multi_expand' => 1,
+			'endpoint' => 1,
+		];
+
+		// Add Group to Fields.
+		$fields[] = $container_group_field;
+
 		// ---------------------------------------------------------------------
 
 		// "Registration" Accordion wrapper close.
@@ -1621,9 +2120,10 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 * @param array $event_data The array of Event data.
 	 * @param array $custom_data The array of Custom Field data.
 	 * @param array $locblock_data The array of LocBlock data.
+	 * @param array $registration The array of Registration data.
 	 * @return array|bool $event The Event data array, or false on failure.
 	 */
-	public function form_event_save( $event_data, $custom_data, $locblock_data ) {
+	public function form_event_save( $event_data, $custom_data, $locblock_data, $registration ) {
 
 		// Init return.
 		$event = false;
@@ -1652,7 +2152,20 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		}
 
 		// Add "Show Location" to Event data.
-		$event_data['is_show_location'] =  ! empty( $locblock_data['is_show_location'] ) ? 1 : 0;
+		$event_data['is_show_location'] = ! empty( $locblock_data['is_show_location'] ) ? 1 : 0;
+
+		// Add "Allow Online Registration" to Event data.
+		$event_data['is_online_registration'] = ! empty( $registration['is_online_registration'] ) ? 1 : 0;
+
+		// Maybe add Registration data - but skip Profile Fields.
+		if ( ! empty( $event_data['is_online_registration'] ) ) {
+			$profile_fields = $this->civicrm->event_registration->profile_fields_get();
+			foreach ( $registration as $key => $value ) {
+				if ( ! array_key_exists( $key, $profile_fields ) ) {
+					$event_data[ $key ] = $value;
+				}
+			}
+		}
 
 		// Unset Event Conditionals.
 		if ( isset( $event_data['event_conditional'] ) ) {
@@ -1667,11 +2180,20 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 		/*
 		 * Event "Is Public" defaults to "1" but is not present in the API return
-		 * values when not explicitly set - and CEO therefore creates a "Private"
-		 * Event in Event Organiser. We need to define it here when not set.
+		 * values when not explicitly set. This causes, for example, CEO to create
+		 *  a "Private" Event in Event Organiser. We define it here when not set.
 		 */
 		if ( ! isset( $event_data['is_public'] ) ) {
 			$event_data['is_public'] = 1;
+		} else {
+			$event_data['is_public'] = 0;
+		}
+
+		// Event "Is Confirm Enabled" defaults to "1" when not explicitly set.
+		if ( ! isset( $event_data['is_confirm_enabled'] ) ) {
+			$event_data['is_confirm_enabled'] = 0;
+		} else {
+			$event_data['is_confirm_enabled'] = 1;
 		}
 
 		// Create the Event.
@@ -1692,40 +2214,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 
 
-	/**
-	 * Finds the linked Contact ID when it has been mapped.
-	 *
-	 * @since 0.5.4
-	 *
-	 * @param string $action_name The name of the referenced Form Action.
-	 * @return integer|bool $contact_id The numeric ID of the Contact, or false if not found.
-	 */
-	public function form_contact_id_get_mapped( $action_name ) {
-
-		// Init return.
-		$contact_id = false;
-
-		// We need an Action Name.
-		if ( empty( $action_name ) ) {
-			return $contact_id;
-		}
-
-		// Get the Contact data for that Action.
-		$related_contact = acfe_form_get_action( $action_name, 'contact' );
-		if ( empty( $related_contact['id'] ) ) {
-			return $contact_id;
-		}
-
-		// Assign return.
-		$contact_id = (int) $related_contact['id'];
-
-		// --<
-		return $contact_id;
-
-	}
-
-
-
 	// -------------------------------------------------------------------------
 
 
@@ -1740,7 +2228,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 * @param string $action The customised name of the action.
 	 * @return array $data The array of Custom Fields data.
 	 */
-	public function form_custom_data( $form, $current_post_id, $action ) {
+	public function form_event_custom_data( $form, $current_post_id, $action ) {
 
 		// Init return.
 		$data = [];
@@ -1851,7 +2339,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 * @param array $event The array of Event data.
 	 * @return array $data The array of Custom Fields data.
 	 */
-	public function form_custom_post_process( $form, $current_post_id, $action, $event ) {
+	public function form_event_custom_post_process( $form, $current_post_id, $action, $event ) {
 
 		// Bail if we have no post-process array.
 		if ( empty( $this->file_fields_empty ) ) {
@@ -1941,13 +2429,13 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		}
 
 		// Get the data that comprises the LocBlock.
-		$address_data = $this->form_address_data( $form, $current_post_id, $action );
-		$email_data = $this->form_email_data( $form, $current_post_id, $action );
-		$phone_data = $this->form_phone_data( $form, $current_post_id, $action );
+		$address_data = $this->form_locblock_address_data( $form, $current_post_id, $action );
+		$email_data = $this->form_locblock_email_data( $form, $current_post_id, $action );
+		$phone_data = $this->form_locblock_phone_data( $form, $current_post_id, $action );
 
 		// Maybe add Address.
 		if ( ! empty( $address_data ) ) {
-			$address = $this->form_address_add( $address_data );
+			$address = $this->form_locblock_address_add( $address_data );
 			if ( $address !== false ) {
 				$locblock_data['address'] = $address;
 			}
@@ -1955,7 +2443,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 		// Maybe add Email(s).
 		if ( ! empty( $email_data ) ) {
-			$emails = $this->form_email_add( $email_data );
+			$emails = $this->form_locblock_email_add( $email_data );
 			if ( $emails !== false ) {
 				foreach ( $emails as $index => $email ) {
 					if ( ! empty( $email ) ) {
@@ -1967,7 +2455,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 		// Maybe add Phone(s).
 		if ( ! empty( $phone_data ) ) {
-			$phones = $this->form_phone_add( $phone_data );
+			$phones = $this->form_locblock_phone_add( $phone_data );
 			if ( $phones !== false ) {
 				foreach ( $phones as $index => $phone ) {
 					if ( ! empty( $phone ) ) {
@@ -1979,6 +2467,73 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 		// --<
 		return $locblock_data;
+
+	}
+
+
+
+	/**
+	 * Validates the Event LocBlock data array from mapped Fields.
+	 *
+	 * @@since 0.5.4
+	 *
+	 * @param array $form The array of Form data.
+	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
+	 * @param string $action The customised name of the action.
+	 * @return bool $valid True if the LocBlock can be saved, false otherwise.
+	 */
+	public function form_locblock_validate( $form, $current_post_id, $action ) {
+
+		// Get the Event LocBlock data.
+		$data = $this->form_locblock_data( $form, $current_post_id, $action );
+
+		// Skip if Event LocBlock ID is set.
+		if ( ! empty( $data['id'] ) ) {
+			return true;
+		}
+
+		// Check Address.
+		if ( ! empty( $data['address'] ) ) {
+			$valid = $this->form_locblock_address_validate( $data['address'], $action );
+			if ( ! $valid ) {
+				return false;
+			}
+		}
+
+		// Check Email.
+		if ( ! empty( $data['email'] ) ) {
+			$valid = $this->form_locblock_email_validate( $data['email'], $action );
+			if ( ! $valid ) {
+				return false;
+			}
+		}
+
+		// Check Email 2.
+		if ( ! empty( $data['email_2'] ) ) {
+			$valid = $this->form_locblock_email_validate( $data['email_2'], $action );
+			if ( ! $valid ) {
+				return false;
+			}
+		}
+
+		// Check Phone.
+		if ( ! empty( $data['phone'] ) ) {
+			$valid = $this->form_locblock_phone_validate( $data['phone'], $action );
+			if ( ! $valid ) {
+				return false;
+			}
+		}
+
+		// Check Phone 2.
+		if ( ! empty( $data['phone_2'] ) ) {
+			$valid = $this->form_locblock_phone_validate( $data['phone_2'], $action );
+			if ( ! $valid ) {
+				return false;
+			}
+		}
+
+		// Valid.
+		return true;
 
 	}
 
@@ -2004,14 +2559,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 		// Strip out empty Fields.
 		$locblock_data = $this->form_data_prepare( $locblock_data );
-
-		// Only skip if the LocBlock Conditional Reference Field has a value.
-		if ( ! empty( $locblock_data['locblock_conditional_ref'] ) ) {
-			// And the LocBlock Conditional Field has a value.
-			if ( empty( $locblock_data['locblock_conditional'] ) ) {
-				return $locblock;
-			}
-		}
 
 		// If there's an existing LocBlock ID.
 		if ( ! empty( $locblock_data['id'] ) ) {
@@ -2049,8 +2596,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		// Use the API return value.
 		$locblock = $result;
 
-		// TODO: We need to fully populate the LocBlock data.
-
 		// --<
 		return $locblock;
 
@@ -2072,7 +2617,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 * @param string $action The customised name of the action.
 	 * @return array $address_data The array of Address data.
 	 */
-	public function form_address_data( $form, $current_post_id, $action ) {
+	public function form_locblock_address_data( $form, $current_post_id, $action ) {
 
 		// Init return.
 		$address_data = [];
@@ -2087,7 +2632,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		}
 
 		// Maybe add Custom Fields.
-		$custom_fields = $this->form_address_custom_data( $location_group_field );
+		$custom_fields = $this->form_locblock_address_custom_data( $location_group_field );
 		if ( ! empty( $custom_fields ) ) {
 			$fields += $custom_fields;
 		}
@@ -2113,6 +2658,44 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 
 	/**
+	 * Validates the Event LocBlock Address data array from mapped Fields.
+	 *
+	 * @@since 0.5.4
+	 *
+	 * @param array $data The array of Event LocBlock Address data.
+	 * @param string $action The customised name of the action.
+	 * @return bool $valid True if the LocBlock Address can be saved, false otherwise.
+	 */
+	public function form_locblock_address_validate( $data, $action ) {
+
+		// Skip if the Address Conditional Reference Field has a value.
+		if ( ! empty( $data['address_conditional_ref'] ) ) {
+			// And the Address Conditional Field has no value.
+			if ( empty( $data['address_conditional'] ) ) {
+				return true;
+			}
+		}
+
+		// CiviCRM Event Organiser requires a "Street Address".
+		if ( defined( 'CIVICRM_WP_EVENT_ORGANISER_VERSION' ) ) {
+			if ( empty( $data['street_address'] ) ) {
+				acfe_add_validation_error( '', sprintf(
+					/* translators: %s The name of the Form Action */
+					__( 'A Street Address is required in "%s".', 'civicrm-wp-profile-sync' ),
+					$action
+				) );
+				return false;
+			}
+		}
+
+		// CiviCRM Addresses seem not to require data.
+		return true;
+
+	}
+
+
+
+	/**
 	 * Builds Address Custom Field data array from mapped Fields.
 	 *
 	 * @since 0.5.4
@@ -2120,7 +2703,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 * @param array $field The Location Group Field.
 	 * @return array $fields The array of Custom Fields data.
 	 */
-	public function form_address_custom_data( $field ) {
+	public function form_locblock_address_custom_data( $field ) {
 
 		// Init return.
 		$fields = [];
@@ -2151,7 +2734,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 * @param array $address_data The array of Address data.
 	 * @return array|bool $addresses The array of Address data, or false on failure.
 	 */
-	public function form_address_add( $address_data ) {
+	public function form_locblock_address_add( $address_data ) {
 
 		// Init return.
 		$address = false;
@@ -2194,62 +2777,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 
 
-	/**
-	 * Saves the CiviCRM Address given data from mapped Fields.
-	 *
-	 * @since 0.5.4
-	 *
-	 * @param array $address_data The array of Address data.
-	 * @return array|bool $addresses The array of Address data, or false on failure.
-	 */
-	public function form_address_save( $address_data ) {
-
-		// Init return.
-		$address = false;
-
-		// Bail if there's no Address data.
-		if ( empty( $address_data ) ) {
-			return $address;
-		}
-
-		// Strip out empty Fields.
-		$address_data = $this->form_data_prepare( $address_data );
-
-		// Only skip if the Address Conditional Reference Field has a value.
-		if ( ! empty( $address_data['address_conditional_ref'] ) ) {
-			// And the Address Conditional Field has a value.
-			if ( empty( $address_data['address_conditional'] ) ) {
-				return $address;
-			}
-		}
-
-		/*
-		// Add in empty Fields when requested.
-		if ( ! empty( $address_data['is_override'] ) ) {
-			foreach ( $this->event_location_address_fields as $address_field ) {
-				if ( ! array_key_exists( $address_field['name'], $address_data ) ) {
-					$address_data[ $address_field['name'] ] = '';
-				}
-			}
-		}
-		*/
-
-		// Update the Address.
-		$result = $this->plugin->civicrm->address->address_record_update( $contact['id'], $address_data );
-		if ( $result === false ) {
-			return $address;
-		}
-
-		// Get the full Address data.
-		$address = $this->plugin->civicrm->address->address_get_by_id( $result['id'] );
-
-		// --<
-		return $address;
-
-	}
-
-
-
 	// -------------------------------------------------------------------------
 
 
@@ -2264,7 +2791,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 * @param string $action The customised name of the action.
 	 * @return array $email_data The array of Email data.
 	 */
-	public function form_email_data( $form, $current_post_id, $action ) {
+	public function form_locblock_email_data( $form, $current_post_id, $action ) {
 
 		// Init return.
 		$email_data = [
@@ -2322,6 +2849,47 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 
 	/**
+	 * Validates the Event LocBlock Email data array from mapped Fields.
+	 *
+	 * @@since 0.5.4
+	 *
+	 * @param array $data The array of Event LocBlock Email data.
+	 * @param string $action The customised name of the action.
+	 * @return bool $valid True if the LocBlock Address can be saved, false otherwise.
+	 */
+	public function form_locblock_email_validate( $data, $action ) {
+
+		// Skip it if there's no data.
+		if ( empty( $data ) ) {
+			return true;
+		}
+
+		// Skip if the Conditional Reference Field has a value.
+		if ( ! empty( $data['email_conditional_ref'] ) ) {
+			// And the Conditional Field has no value.
+			if ( empty( $data['email_conditional'] ) ) {
+				return true;
+			}
+		}
+
+		// Reject if there's an invalid Email.
+		if ( ! empty( $data['email'] ) && ! is_email( $data['email'] ) ) {
+			acfe_add_validation_error( '', sprintf(
+				/* translators: %s The name of the Form Action */
+				__( 'An invalid Email was found in "%s".', 'civicrm-wp-profile-sync' ),
+				$action
+			) );
+			return false;
+		}
+
+		// Valid.
+		return true;
+
+	}
+
+
+
+	/**
 	 * Adds the CiviCRM Email(s) given data from mapped Fields.
 	 *
 	 * @since 0.5.4
@@ -2329,7 +2897,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 * @param array $email_data The array of Email data.
 	 * @return array|bool $emails The array of Emails, or false on failure.
 	 */
-	public function form_email_add( $email_data ) {
+	public function form_locblock_email_add( $email_data ) {
 
 		// Init return.
 		$emails = false;
@@ -2374,65 +2942,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 
 
-	/**
-	 * Saves the CiviCRM Email(s) given data from mapped Fields.
-	 *
-	 * @since 0.5.4
-	 *
-	 * @param array $email_data The array of Email data.
-	 * @return array|bool $emails The array of Emails, or false on failure.
-	 */
-	public function form_email_save( $email_data ) {
-
-		// Init return.
-		$emails = false;
-
-		// Bail if there's no Email data.
-		if ( empty( $email_data ) ) {
-			return $emails;
-		}
-
-		// Handle each nested Action in turn.
-		foreach ( $email_data as $email ) {
-
-			// Strip out empty Fields.
-			$email = $this->form_data_prepare( $email );
-
-			// Only skip if the Email Conditional Reference Field has a value.
-			if ( ! empty( $email['email_conditional_ref'] ) ) {
-				// And the Email Conditional Field has a value.
-				if ( empty( $email['email_conditional'] ) ) {
-					continue;
-				}
-			}
-
-			// TODO: Do we need a "Delete record if Email is empty" option?
-
-			// Skip if there is no Email Address to save.
-			if ( empty( $email['email'] ) ) {
-				continue;
-			}
-
-			// Update the Email.
-			$result = $this->civicrm->email->email_record_update( $contact['id'], $email );
-
-			// Skip on failure.
-			if ( $result === false ) {
-				continue;
-			}
-
-			// Get the full Email data.
-			$emails[] = $this->civicrm->email->email_get_by_id( $result['id'] );
-
-		}
-
-		// --<
-		return $emails;
-
-	}
-
-
-
 	// -------------------------------------------------------------------------
 
 
@@ -2447,7 +2956,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 * @param string $action The customised name of the action.
 	 * @return array $phone_data The array of Phone data.
 	 */
-	public function form_phone_data( $form, $current_post_id, $action ) {
+	public function form_locblock_phone_data( $form, $current_post_id, $action ) {
 
 		// Init return.
 		$phone_data = [
@@ -2477,27 +2986,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 			// Get "Phone Type" value.
 			$field_name = 'phone_type_id';
-			$setting_value = '';
-
-			// Get Group Field.
-			$group_field = $field[ $this->field_name . $field_name . '_group_' . $field_name ];
-
-			// Check Setting Field.
-			if ( ! empty( $group_field[ $this->field_name . 'value_' . $field_name ] ) ) {
-				$setting_value = $group_field[ $this->field_name . 'value_' . $field_name ];
-			}
-
-			// Check mapped Field.
-			if ( $setting_value === '' ) {
-				if ( ! empty( $group_field[ $this->field_name . 'map_' . $field_name ] ) ) {
-					$reference = [ $field_name => $group_field[ $this->field_name . 'map_' . $field_name ] ];
-					$reference = acfe_form_map_vs_fields( $reference, $reference, $current_post_id, $form );
-					if ( ! empty( $reference[ $field_name ] ) && is_numeric( $reference[ $field_name ] ) ) {
-						$setting_value = $reference[ $field_name ];
-					}
-				}
-			}
-
+			$setting_value = $this->form_setting_value_get( $field_name, $form, $current_post_id, $action, $field );
 			$fields[ $field_name ] = $setting_value;
 
 			// Get mapped Fields.
@@ -2532,6 +3021,47 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 
 	/**
+	 * Validates the Event LocBlock Phone data array from mapped Fields.
+	 *
+	 * @@since 0.5.4
+	 *
+	 * @param array $data The array of Event LocBlock Phone data.
+	 * @param string $action The customised name of the action.
+	 * @return bool $valid True if the LocBlock Address can be saved, false otherwise.
+	 */
+	public function form_locblock_phone_validate( $data, $action ) {
+
+		// Skip it if there's no data.
+		if ( empty( $data ) ) {
+			return true;
+		}
+
+		// Skip if the Conditional Reference Field has a value.
+		if ( ! empty( $data['phone_conditional_ref'] ) ) {
+			// And the Conditional Field has no value.
+			if ( empty( $data['phone_conditional'] ) ) {
+				return true;
+			}
+		}
+
+		// Reject if there's no Phone Number.
+		if ( empty( $data['phone'] ) ) {
+			acfe_add_validation_error( '', sprintf(
+				/* translators: %s The name of the Form Action */
+				__( 'A valid Phone Number is required in "%s".', 'civicrm-wp-profile-sync' ),
+				$action
+			) );
+			return false;
+		}
+
+		// Valid.
+		return true;
+
+	}
+
+
+
+	/**
 	 * Adds the CiviCRM Phone(s) given data from mapped Fields.
 	 *
 	 * @since 0.5.4
@@ -2539,7 +3069,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 * @param array $phone_data The array of Phone data.
 	 * @return array|bool $phones The array of Phones, or false on failure.
 	 */
-	public function form_phone_add( $phone_data ) {
+	public function form_locblock_phone_add( $phone_data ) {
 
 		// Init return.
 		$phones = false;
@@ -2584,74 +3114,466 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 
 
+	// -------------------------------------------------------------------------
+
+
+
 	/**
-	 * Saves the CiviCRM Phone(s) given data from mapped Fields.
+	 * Builds Registration data array from mapped Fields.
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param array $phone_data The array of Phone data.
-	 * @return array|bool $phones The array of Phones, or false on failure.
+	 * @param array $form The array of Form data.
+	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
+	 * @param string $action The customised name of the action.
+	 * @return array $data The array of Registration data.
 	 */
-	public function form_phone_save( $phone_data ) {
+	public function form_registration_data( $form, $current_post_id, $action ) {
 
 		// Init return.
-		$phones = false;
+		$data = [];
 
-		// Bail if there's no Phone data.
-		if ( empty( $phone_data ) ) {
-			return $phones;
+		// Get "Online Registration" value.
+		$field_name = 'is_online_registration';
+		$setting_value = $this->form_setting_value_get( $field_name, $form, $current_post_id, $action );
+		$data[ $field_name ] = $setting_value;
+
+		// No need to go further if "Online Registration" is disabled.
+		if ( empty( $setting_value ) ) {
+			$data[ $field_name ] = 0;
+			return $data;
 		}
 
-		// Handle each nested Action in turn.
-		foreach ( $phone_data as $phone ) {
+		// Get the data that is always present for Registration.
+		$settings_data = $this->form_registration_settings_data( $form, $current_post_id, $action );
+		$register_data = $this->form_registration_screen_data( $form, $current_post_id, $action );
+		$confirm_data = $this->form_registration_confirmation_screen_data( $form, $current_post_id, $action );
+		$thankyou_data = $this->form_registration_thankyou_screen_data( $form, $current_post_id, $action );
+		$email_data = $this->form_registration_confirmation_email_data( $form, $current_post_id, $action );
 
-			// Strip out empty Fields.
-			$phone = $this->form_data_prepare( $phone );
-
-			// Skip if there's no Phone Number.
-			if ( empty( $phone['phone'] ) ) {
-				continue;
+		// Maybe add Settings.
+		if ( ! empty( $settings_data ) ) {
+			foreach ( $settings_data as $key => $value ) {
+				$data[ $key ] = $value;
 			}
+		}
 
-			// Only skip if the Phone Conditional Reference Field has a value.
-			if ( ! empty( $phone['phone_conditional_ref'] ) ) {
-				// And the Phone Conditional Field has a value.
-				if ( empty( $phone['phone_conditional'] ) ) {
-					continue;
-				}
+		// Maybe add Registration Screen data.
+		if ( ! empty( $register_data ) ) {
+			foreach ( $register_data as $key => $value ) {
+				$data[ $key ] = $value;
 			}
+		}
 
-			// Try and get the Phone Record.
-			$location_type_id = $phone['location_type_id'];
-			$phone_type_id = $phone['phone_type_id'];
-			$phone_records = $this->plugin->civicrm->phone->phones_get_by_type( $contact['id'], $location_type_id, $phone_type_id );
-
-			// We cannot handle more than one, though CiviCRM allows many.
-			if ( count( $phone_records ) > 1 ) {
-				continue;
+		// Maybe add Confirmation Screen data.
+		if ( ! empty( $confirm_data ) ) {
+			foreach ( $confirm_data as $key => $value ) {
+				$data[ $key ] = $value;
 			}
+		}
 
-			// Add ID to update if found.
-			if ( ! empty( $phone_records ) ) {
-				$phone_record = (array) array_pop( $phone_records );
-				$phone['id'] = $phone_record['id'];
+		// Maybe add Thank You Screen data.
+		if ( ! empty( $thankyou_data ) ) {
+			foreach ( $thankyou_data as $key => $value ) {
+				$data[ $key ] = $value;
 			}
+		}
 
-			// Create/update the Phone Record.
-			$result = $this->plugin->civicrm->phone->update( $contact['id'], $phone );
-
-			// Skip on failure.
-			if ( $result === false ) {
-				continue;
+		// Maybe add Confirmation Email data.
+		if ( ! empty( $email_data ) ) {
+			foreach ( $email_data as $key => $value ) {
+				$data[ $key ] = $value;
 			}
-
-			// Get the full Phone data.
-			$phones[] = $this->plugin->civicrm->phone->phone_get_by_id( $result['id'] );
-
 		}
 
 		// --<
-		return $phones;
+		return $data;
+
+	}
+
+
+
+	/**
+	 * Validates the Event Registration data array from mapped Fields.
+	 *
+	 * @@since 0.5.4
+	 *
+	 * @param array $form The array of Form data.
+	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
+	 * @param string $action The customised name of the action.
+	 * @return bool $valid True if the Event Registration can be enabled, false otherwise.
+	 */
+	public function form_registration_validate( $form, $current_post_id, $action ) {
+
+		// Get the Event Registration data.
+		$data = $this->form_registration_data( $form, $current_post_id, $action );
+
+		// Skip if Event Registration is not enabled.
+		if ( empty( $data['is_online_registration'] ) ) {
+			return true;
+		}
+
+		// Reject the submission if no Profile has been selected.
+		if ( empty( $data['custom_pre_id'] ) && empty( $data['custom_post_id'] ) ) {
+			acfe_add_validation_error( '', sprintf(
+				/* translators: %s The name of the Form Action */
+				__( 'A Profile is required to enable Online Registration in "%s".', 'civicrm-wp-profile-sync' ),
+				$action
+			) );
+			return false;
+		}
+
+		// Check Confirmation Email.
+		$valid = $this->form_registration_confirmation_email_validate( $data, $action );
+		if ( ! $valid ) {
+			return false;
+		}
+
+		// Valid.
+		return true;
+
+	}
+
+
+
+	/**
+	 * Saves the Event Registration Profile given data from mapped Fields.
+	 *
+	 * @since 0.5.4
+	 *
+	 * @param array $event The array of CiviCRM Event data.
+	 * @param array $data The array of Registration data.
+	 * @return array|bool $profiles The array of Profile data, or false on failure.
+	 */
+	public function form_registration_save( $event, $data ) {
+
+		// Init formatted return.
+		$profiles = [
+			'top' => false,
+			'bottom' => false,
+		];
+
+		// Bail if there's no Event ID.
+		if ( empty( $event['id'] ) ) {
+			return $profiles;
+		}
+
+		// Bail if Event Registration is not enabled.
+		if ( empty( $event['is_online_registration'] ) ) {
+			return $profiles;
+		}
+
+		// Bail if there's no Registration data.
+		if ( empty( $data ) ) {
+			return $profiles;
+		}
+
+		// Strip out empty Fields.
+		$data = $this->form_data_prepare( $data );
+
+		// Bail if there's no Profile data.
+		if ( empty( $data['custom_pre_id'] ) && empty( $data['custom_post_id'] ) ) {
+			return $profiles;
+		}
+
+		// Maybe create the Top Profile.
+		if ( ! empty( $data['custom_pre_id'] ) ) {
+			$result = $this->civicrm->event_registration->profile_create( $event, $data['custom_pre_id'] );
+			if ( $result !== false ) {
+				$profiles['top'] = $result;
+			}
+		}
+
+		// Maybe create the Bottom Profile.
+		if ( ! empty( $data['custom_post_id'] ) ) {
+			$result = $this->civicrm->event_registration->profile_create( $event, $data['custom_post_id'] );
+			if ( $result !== false ) {
+				$profiles['bottom'] = $result;
+			}
+		}
+
+		// --<
+		return $profiles;
+
+	}
+
+
+
+	/**
+	 * Builds Event Registration Settings data array from mapped Fields.
+	 *
+	 * @since 0.5.4
+	 *
+	 * @param array $form The array of Form data.
+	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
+	 * @param string $action The customised name of the action.
+	 * @return array $data The array of Settings data.
+	 */
+	public function form_registration_settings_data( $form, $current_post_id, $action ) {
+
+		// Init return.
+		$data = [];
+
+		// Get the Settings Group Field.
+		$group_field = get_sub_field( $this->field_key . 'registration_settings' );
+
+		// Build Fields array.
+		$fields = [];
+		foreach ( $this->event_registration_fields as $field ) {
+			if ( ! array_key_exists( $field['name'], $this->registration_fields_to_ignore ) ) {
+				$fields[ $field['name'] ] = $group_field[ $this->field_name . 'map_' . $field['name'] ];
+			}
+		}
+
+		// Populate array with mapped Field values.
+		$data = acfe_form_map_vs_fields( $fields, $fields, $current_post_id, $form );
+
+		// --<
+		return $data;
+
+	}
+
+
+
+	/**
+	 * Builds Event Registration Screen data array from mapped Fields.
+	 *
+	 * @since 0.5.4
+	 *
+	 * @param array $form The array of Form data.
+	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
+	 * @param string $action The customised name of the action.
+	 * @return array $data The array of Registration Screen data.
+	 */
+	public function form_registration_screen_data( $form, $current_post_id, $action ) {
+
+		// Init return.
+		$data = [];
+
+		// Get the Settings Group Field.
+		$group_field = get_sub_field( $this->field_key . 'registration_settings' );
+
+		// Build Fields array.
+		$fields = [];
+		foreach ( $this->event_registration_screen_fields as $field ) {
+			$fields[ $field['name'] ] = $group_field[ $this->field_name . 'map_' . $field['name'] ];
+		}
+
+		// Populate array with mapped Field values.
+		$data = acfe_form_map_vs_fields( $fields, $fields, $current_post_id, $form );
+
+		// Get "Include Profile Top" value.
+		$field_name = 'custom_pre_id';
+		$setting_value = $this->form_setting_value_get( $field_name, $form, $current_post_id, $action, $group_field );
+		$data[ $field_name ] = $setting_value;
+
+		// Get "Include Profile Bottom" value.
+		$field_name = 'custom_post_id';
+		$setting_value = $this->form_setting_value_get( $field_name, $form, $current_post_id, $action, $group_field );
+		$data[ $field_name ] = $setting_value;
+
+		// Set some defaults.
+		if ( empty( $data['registration_link_text'] ) ) {
+			$data['registration_link_text'] = __( 'Register Now', 'civicrm-wp-profile-sync' );
+		}
+
+		// --<
+		return $data;
+
+	}
+
+
+
+	/**
+	 * Builds Event Registration Confirmation Screen data array from mapped Fields.
+	 *
+	 * @since 0.5.4
+	 *
+	 * @param array $form The array of Form data.
+	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
+	 * @param string $action The customised name of the action.
+	 * @return array $data The array of Confirmation Screen data.
+	 */
+	public function form_registration_confirmation_screen_data( $form, $current_post_id, $action ) {
+
+		// Init return.
+		$data = [];
+
+		// Get the Settings Group Field.
+		$group_field = get_sub_field( $this->field_key . 'registration_settings' );
+
+		// Build Fields array.
+		$fields = [];
+		foreach ( $this->event_confirm_screen_fields as $field ) {
+			if ( ! array_key_exists( $field['name'], $this->confirm_fields_to_ignore ) ) {
+				$fields[ $field['name'] ] = $group_field[ $this->field_name . 'map_' . $field['name'] ];
+			}
+		}
+
+		// Populate array with mapped Field values.
+		$data = acfe_form_map_vs_fields( $fields, $fields, $current_post_id, $form );
+
+		// Add the "Confirmation Screen Enabled" Field.
+		$setting_value = $this->form_setting_value_get( 'is_confirm_enabled', $form, $current_post_id, $action, $group_field );
+		$data['is_confirm_enabled'] = $setting_value;
+
+		// --<
+		return $data;
+
+	}
+
+
+
+	/**
+	 * Builds Event Registration Thank You Screen data array from mapped Fields.
+	 *
+	 * @since 0.5.4
+	 *
+	 * @param array $form The array of Form data.
+	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
+	 * @param string $action The customised name of the action.
+	 * @return array $data The array of Thank You Screen data.
+	 */
+	public function form_registration_thankyou_screen_data( $form, $current_post_id, $action ) {
+
+		// Init return.
+		$data = [];
+
+		// Get the Settings Group Field.
+		$group_field = get_sub_field( $this->field_key . 'registration_settings' );
+
+		// Build Fields array.
+		$fields = [];
+		foreach ( $this->event_thankyou_screen_fields as $field ) {
+			$fields[ $field['name'] ] = $group_field[ $this->field_name . 'map_' . $field['name'] ];
+		}
+
+		// Populate array with mapped Field values.
+		$data = acfe_form_map_vs_fields( $fields, $fields, $current_post_id, $form );
+
+		// --<
+		return $data;
+
+	}
+
+
+
+	/**
+	 * Builds Event Registration Confirmation Email data array from mapped Fields.
+	 *
+	 * @since 0.5.4
+	 *
+	 * @param array $form The array of Form data.
+	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
+	 * @param string $action The customised name of the action.
+	 * @return array $data The array of Confirmation Email data.
+	 */
+	public function form_registration_confirmation_email_data( $form, $current_post_id, $action ) {
+
+		// Init return.
+		$data = [];
+
+		// Get the Settings Group Field.
+		$group_field = get_sub_field( $this->field_key . 'registration_settings' );
+
+		// Build Fields array.
+		$fields = [];
+		foreach ( $this->event_confirmation_email_fields as $field ) {
+			if ( ! array_key_exists( $field['name'], $this->registration_email_fields_to_ignore ) ) {
+				$fields[ $field['name'] ] = $group_field[ $this->field_name . 'map_' . $field['name'] ];
+			}
+		}
+
+		// Populate array with mapped Field values.
+		$data = acfe_form_map_vs_fields( $fields, $fields, $current_post_id, $form );
+
+		// Add the "Confirmation Email Enabled" Field.
+		$setting_value = $this->form_setting_value_get( 'is_email_confirm', $form, $current_post_id, $action, $group_field );
+		$data['is_email_confirm'] = $setting_value;
+
+		// --<
+		return $data;
+
+	}
+
+
+
+	/**
+	 * Validates the Event Registration Confirmation Email data array from mapped Fields.
+	 *
+	 * @@since 0.5.4
+	 *
+	 * @param array $data The array of Event Registration Confirmation Email data.
+	 * @param string $action The customised name of the action.
+	 * @return bool $valid True if the Confirmation Email can be sent, false otherwise.
+	 */
+	public function form_registration_confirmation_email_validate( $data, $action ) {
+
+		// Skip if Confirmation Email is disabled.
+		if ( empty( $data['is_email_confirm'] ) ) {
+			return true;
+		}
+
+		// Reject the submission if no "Confirm From Name" has been selected.
+		if ( empty( $data['confirm_from_name'] ) ) {
+			acfe_add_validation_error( '', sprintf(
+				/* translators: %s The name of the Form Action */
+				__( 'A "From Name" is required to send a Confirmation Email in "%s".', 'civicrm-wp-profile-sync' ),
+				$action
+			) );
+			return false;
+		}
+
+		// Reject the submission if no "Confirm From Email" has been selected.
+		if ( empty( $data['confirm_from_email'] ) ) {
+			acfe_add_validation_error( '', sprintf(
+				/* translators: %s The name of the Form Action */
+				__( 'A "From Email" is required to send a Confirmation Email in "%s".', 'civicrm-wp-profile-sync' ),
+				$action
+			) );
+			return false;
+		}
+
+		// Valid.
+		return true;
+
+	}
+
+
+
+	// -------------------------------------------------------------------------
+
+
+
+	/**
+	 * Finds the linked Contact ID when it has been mapped.
+	 *
+	 * @since 0.5.4
+	 *
+	 * @param string $action_name The name of the referenced Form Action.
+	 * @return integer|bool $contact_id The numeric ID of the Contact, or false if not found.
+	 */
+	public function form_contact_id_get_mapped( $action_name ) {
+
+		// Init return.
+		$contact_id = false;
+
+		// We need an Action Name.
+		if ( empty( $action_name ) ) {
+			return $contact_id;
+		}
+
+		// Get the Contact data for that Action.
+		$related_contact = acfe_form_get_action( $action_name, 'contact' );
+		if ( empty( $related_contact['id'] ) ) {
+			return $contact_id;
+		}
+
+		// Assign return.
+		$contact_id = (int) $related_contact['id'];
+
+		// --<
+		return $contact_id;
 
 	}
 

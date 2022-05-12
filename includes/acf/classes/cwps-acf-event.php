@@ -290,8 +290,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		// Call the API.
 		$result = civicrm_api( 'Event', 'create', $params );
 
-		// Bail if there's an error.
+		// Log and bail if there's an error.
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+			$e = new Exception();
+			$trace = $e->getTraceAsString();
+			error_log( print_r( [
+				'method' => __METHOD__,
+				'params' => $params,
+				'result' => $result,
+				'backtrace' => $trace,
+			], true ) );
 			return $event_data;
 		}
 
@@ -848,20 +856,21 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 			return $choices;
 		}
 
-		// Get the public Fields on the Entity for this Field Type.
-		$core_fields_for_entity = $this->civicrm->event_field->data_get( $field['type'], 'public' );
+		// Get the Fields on the Entity for this Field Type.
+		$core_fields = $this->civicrm->event_field->data_get( $field['type'], 'public' );
 
-		// Get the public Location Fields on the Entity for this Field Type.
-		$location_fields_for_entity = $this->civicrm->event_location->data_get( $field['type'], 'public' );
+		// Get the Location Fields on the Entity for this Field Type.
+		$location_fields = $this->civicrm->event_location->data_get( $field['type'], 'settings' );
+		$location_address_fields = $this->civicrm->event_location->data_address_get( $field['type'], 'public' );
+		$location_email_fields = $this->civicrm->event_location->data_email_get( $field['type'], 'public' );
+		$location_phone_fields = $this->civicrm->event_location->data_phone_get( $field['type'], 'public' );
 
-		// Get the public Location Address Fields on the Entity for this Field Type.
-		$location_address_fields_for_entity = $this->civicrm->event_location->data_address_get( $field['type'], 'public' );
-
-		// Get the public Location Email Fields on the Entity for this Field Type.
-		$location_email_fields_for_entity = $this->civicrm->event_location->data_email_get( $field['type'], 'public' );
-
-		// Get the public Location Phone Fields on the Entity for this Field Type.
-		$location_phone_fields_for_entity = $this->civicrm->event_location->data_phone_get( $field['type'], 'public' );
+		// Get the Registration Fields on the Entity for this Field Type.
+		$registration_fields = $this->civicrm->event_registration->data_get( $field['type'], 'settings' );
+		$registration_screen_fields = $this->civicrm->event_registration->data_get( $field['type'], 'register' );
+		$confirmation_screen_fields = $this->civicrm->event_registration->data_get( $field['type'], 'confirm' );
+		$thankyou_screen_fields = $this->civicrm->event_registration->data_get( $field['type'], 'thankyou' );
+		$email_screen_fields = $this->civicrm->event_registration->data_get( $field['type'], 'email' );
 
 		// Parse the Event Type.
 		$event_type = reset( $entity_array[ $this->identifier ] );
@@ -887,21 +896,23 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 
 		// Pass if not populated.
 		if (
-			empty( $core_fields_for_entity ) &&
-			empty( $location_fields_for_entity ) &&
-			empty( $location_address_fields_for_entity ) &&
-			empty( $location_email_fields_for_entity ) &&
-			empty( $location_phone_fields_for_entity ) &&
+			empty( $core_fields ) &&
+			empty( $location_fields ) &&
+			empty( $location_address_fields ) &&
+			empty( $location_email_fields ) &&
+			empty( $location_phone_fields ) &&
+			empty( $registration_fields ) &&
+			empty( $registration_screen_fields ) &&
 			empty( $filtered_fields )
 		) {
 			return $choices;
 		}
 
 		// Build Event Field choices array for dropdown.
-		if ( ! empty( $core_fields_for_entity ) ) {
-			$event_fields_label = esc_attr__( 'Event Fields', 'civicrm-wp-profile-sync' );
-			foreach ( $core_fields_for_entity as $event_field ) {
-				$choices[ $event_fields_label ][ $this->event_field_prefix . $event_field['name'] ] = $event_field['title'];
+		if ( ! empty( $core_fields ) ) {
+			$label = esc_attr__( 'Event Fields', 'civicrm-wp-profile-sync' );
+			foreach ( $core_fields as $item ) {
+				$choices[ $label ][ $this->event_field_prefix . $item['name'] ] = $item['title'];
 			}
 		}
 
@@ -909,42 +920,91 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		if ( ! empty( $filtered_fields ) ) {
 			$custom_field_prefix = $this->civicrm->custom_field_prefix();
 			foreach ( $filtered_fields as $custom_group_name => $custom_group ) {
-				$custom_fields_label = esc_attr( $custom_group_name );
+				$label = esc_attr( $custom_group_name );
 				foreach ( $custom_group as $custom_field ) {
-					$choices[ $custom_fields_label ][ $custom_field_prefix . $custom_field['id'] ] = $custom_field['label'];
+					$choices[ $label ][ $custom_field_prefix . $custom_field['id'] ] = $custom_field['label'];
 				}
 			}
 		}
 
 		// Build Event Location Field choices array for dropdown.
-		if ( ! empty( $location_fields_for_entity ) ) {
-			$event_fields_label = esc_attr__( 'Event Location Fields', 'civicrm-wp-profile-sync' );
-			foreach ( $location_fields_for_entity as $event_field ) {
-				$choices[ $event_fields_label ][ $this->event_field_prefix . $event_field['name'] ] = $event_field['title'];
+		if ( ! empty( $location_fields ) ) {
+			$label = esc_attr__( 'Event Location Fields', 'civicrm-wp-profile-sync' );
+			foreach ( $location_fields as $item ) {
+				$choices[ $label ][ $this->event_field_prefix . $item['name'] ] = $item['title'];
 			}
 		}
 
 		// Build Event Location Address Field choices array for dropdown.
-		if ( ! empty( $location_address_fields_for_entity ) ) {
-			$event_fields_label = esc_attr__( 'Event Location Address Fields', 'civicrm-wp-profile-sync' );
-			foreach ( $location_address_fields_for_entity as $event_field ) {
-				$choices[ $event_fields_label ][ $this->event_field_prefix . $event_field['name'] ] = $event_field['title'];
+		if ( ! empty( $location_address_fields ) ) {
+			$label = esc_attr__( 'Event Location Address Fields', 'civicrm-wp-profile-sync' );
+			foreach ( $location_address_fields as $item ) {
+				$choices[ $label ][ $this->event_field_prefix . $item['name'] ] = $item['title'];
 			}
 		}
 
 		// Build Event Location Email Field choices array for dropdown.
-		if ( ! empty( $location_email_fields_for_entity ) ) {
-			$event_fields_label = esc_attr__( 'Event Location Email Fields', 'civicrm-wp-profile-sync' );
-			foreach ( $location_email_fields_for_entity as $event_field ) {
-				$choices[ $event_fields_label ][ $this->event_field_prefix . $event_field['name'] ] = $event_field['title'];
+		if ( ! empty( $location_email_fields ) ) {
+			$label = esc_attr__( 'Event Location Email Fields', 'civicrm-wp-profile-sync' );
+			foreach ( $location_email_fields as $item ) {
+				$choices[ $label ][ $this->event_field_prefix . $item['name'] ] = $item['title'];
 			}
 		}
 
 		// Build Event Location Phone Field choices array for dropdown.
-		if ( ! empty( $location_phone_fields_for_entity ) ) {
-			$event_fields_label = esc_attr__( 'Event Location Phone Fields', 'civicrm-wp-profile-sync' );
-			foreach ( $location_phone_fields_for_entity as $event_field ) {
-				$choices[ $event_fields_label ][ $this->event_field_prefix . $event_field['name'] ] = $event_field['title'];
+		if ( ! empty( $location_phone_fields ) ) {
+			$label = esc_attr__( 'Event Location Phone Fields', 'civicrm-wp-profile-sync' );
+			foreach ( $location_phone_fields as $item ) {
+				$choices[ $label ][ $this->event_field_prefix . $item['name'] ] = $item['title'];
+			}
+		}
+
+		// Build Event Registration Field choices array for dropdown.
+		if ( ! empty( $registration_fields ) ) {
+			$label = esc_attr__( 'Event Registration Fields', 'civicrm-wp-profile-sync' );
+			foreach ( $registration_fields as $item ) {
+				$choices[ $label ][ $this->event_field_prefix . $item['name'] ] = $item['title'];
+			}
+		}
+
+		// Build Event Registration Screen Field choices array for dropdown.
+		if ( ! empty( $registration_screen_fields ) ) {
+			$label = esc_attr__( 'Event Registration Screen Fields', 'civicrm-wp-profile-sync' );
+			foreach ( $registration_screen_fields as $item ) {
+				$choices[ $label ][ $this->event_field_prefix . $item['name'] ] = $item['title'];
+			}
+		}
+
+		// Maybe add Profile Fields to Event Registration Screen Field choices array.
+		if ( $field['type'] === 'select' ) {
+			$label = esc_attr__( 'Event Registration Screen Fields', 'civicrm-wp-profile-sync' );
+			$title = __( 'Include Profile (top of page)', 'civicrm-wp-profile-sync' );
+			$choices[ $label ][ $this->event_field_prefix . 'custom_pre_id' ] = $title;
+			$title = __( 'Include Profile (bottom of page)', 'civicrm-wp-profile-sync' );
+			$choices[ $label ][ $this->event_field_prefix . 'custom_post_id' ] = $title;
+		}
+
+		// Build Event Registration Confirmation Screen Field choices array for dropdown.
+		if ( ! empty( $confirmation_screen_fields ) ) {
+			$label = esc_attr__( 'Event Registration Confirmation Screen Fields', 'civicrm-wp-profile-sync' );
+			foreach ( $confirmation_screen_fields as $item ) {
+				$choices[ $label ][ $this->event_field_prefix . $item['name'] ] = $item['title'];
+			}
+		}
+
+		// Build Event Registration Thank You Screen Field choices array for dropdown.
+		if ( ! empty( $thankyou_screen_fields ) ) {
+			$label = esc_attr__( 'Event Registration Thank You Screen Fields', 'civicrm-wp-profile-sync' );
+			foreach ( $thankyou_screen_fields as $item ) {
+				$choices[ $label ][ $this->event_field_prefix . $item['name'] ] = $item['title'];
+			}
+		}
+
+		// Build Event Registration Confirmation Email Field choices array for dropdown.
+		if ( ! empty( $email_screen_fields ) ) {
+			$label = esc_attr__( 'Event Registration Confirmation Email Fields', 'civicrm-wp-profile-sync' );
+			foreach ( $email_screen_fields as $item ) {
+				$choices[ $label ][ $this->event_field_prefix . $item['name'] ] = $item['title'];
 			}
 		}
 
