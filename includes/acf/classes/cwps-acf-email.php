@@ -558,8 +558,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 		}
 
-		// Bail if there's an error.
+		// Log and bail if there's an error.
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+			$e = new Exception();
+			$trace = $e->getTraceAsString();
+			error_log( print_r( [
+				'method' => __METHOD__,
+				'params' => $params,
+				'result' => $result,
+				'backtrace' => $trace,
+			], true ) );
 			return $email;
 		}
 
@@ -938,8 +946,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 		}
 
-		// Bail if there's an error.
+		// Log and bail if there's an error.
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+			$e = new Exception();
+			$trace = $e->getTraceAsString();
+			error_log( print_r( [
+				'method' => __METHOD__,
+				'params' => $params,
+				'result' => $result,
+				'backtrace' => $trace,
+			], true ) );
 			return $email;
 		}
 
@@ -1023,8 +1039,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 		}
 
-		// Bail if there's an error.
+		// Log and bail if there's an error.
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+			$e = new Exception();
+			$trace = $e->getTraceAsString();
+			error_log( print_r( [
+				'method' => __METHOD__,
+				'params' => $params,
+				'result' => $result,
+				'backtrace' => $trace,
+			], true ) );
 			return $email;
 		}
 

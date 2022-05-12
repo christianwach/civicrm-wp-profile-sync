@@ -296,8 +296,16 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 		// Call the API.
 		$result = civicrm_api( 'Phone', 'create', $params );
 
-		// Bail if there's an error.
+		// Log and bail if there's an error.
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+			$e = new Exception();
+			$trace = $e->getTraceAsString();
+			error_log( print_r( [
+				'method' => __METHOD__,
+				'params' => $params,
+				'result' => $result,
+				'backtrace' => $trace,
+			], true ) );
 			return $phone;
 		}
 
