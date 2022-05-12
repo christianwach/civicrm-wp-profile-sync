@@ -821,13 +821,17 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	 * @param string $action The customised name of the action.
 	 * @return mixed $setting_value The setting value, or false if not found.
 	 */
-	public function form_setting_value_get( $field_name, $form, $current_post_id, $action ) {
+	public function form_setting_value_get( $field_name, $form, $current_post_id, $action, $group = '' ) {
 
 		// Init value.
 		$setting_value = '';
 
 		// Get Group Field.
-		$group_field = get_sub_field( $this->field_key . $field_name . '_group_' . $field_name );
+		if ( empty( $group ) ) {
+			$group_field = get_sub_field( $this->field_key . $field_name . '_group_' . $field_name );
+		} else {
+			$group_field = $group[ $this->field_name . $field_name . '_group_' . $field_name ];
+		}
 
 		// Check Setting Field.
 		if ( ! empty( $group_field[ $this->field_name . 'value_' . $field_name ] ) ) {
