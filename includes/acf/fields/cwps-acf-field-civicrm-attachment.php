@@ -167,6 +167,39 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 		// Call parent.
 		parent::__construct();
 
+		// Maybe remove this Field from the list of available Fields.
+		add_filter( 'acf/get_field_types', [ $this, 'remove_field_type' ], 100, 1 );
+
+	}
+
+	/**
+	 * Removes this Field Type from the list of available Field Types.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param array $groups The Field being rendered.
+	 */
+	public function remove_field_type( $groups ) {
+
+		// Bail if the "CiviCRM" group is missing.
+		if ( empty( $groups[ $this->category ] ) ) {
+			return $groups;
+		}
+
+		// Allow if CiviCRM is greater than 5.49.0.
+		$version = $this->plugin->civicrm->get_version();
+		if ( version_compare( $version, '5.49.0', '>=' ) ) {
+			return $groups;
+		}
+
+		// Remove this Field Type if less than 5.49.0.
+		if ( isset( $groups[ $this->category ][ $this->name ] ) ) {
+			unset( $groups[ $this->category ][ $this->name ] );
+		}
+
+		// --<
+		return $groups;
+
 	}
 
 	/**

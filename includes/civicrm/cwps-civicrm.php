@@ -120,6 +120,15 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	public $bulk;
 
 	/**
+	 * CiviCRM version.
+	 *
+	 * @since 0.5.4
+	 * @access public
+	 * @var bool $version The installed version of CiviCRM.
+	 */
+	public $version = false;
+
+	/**
 	 * Mapper hooks registered flag.
 	 *
 	 * @since 0.5.2
@@ -303,6 +312,33 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 
 		// Try and initialise CiviCRM.
 		return civi_wp()->initialize();
+
+	}
+
+	/**
+	 * Checks the installed version of CiviCRM.
+	 *
+	 * @since 0.5.4
+	 *
+	 * @return string|bool The version if CiviCRM initialised, false otherwise.
+	 */
+	public function get_version() {
+
+		// Do nothing if no CiviCRM.
+		if ( ! $this->is_initialised() ) {
+			return $this->version;
+		}
+
+		// Return if already calculated.
+		if ( $this->version !== false ) {
+			return $this->version;
+		}
+
+		// Get and store installed version.
+		$this->version = CRM_Utils_System::version();
+
+		// --<
+		return $this->version;
 
 	}
 
