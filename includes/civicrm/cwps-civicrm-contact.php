@@ -481,6 +481,13 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 			return;
 		}
 
+		/*
+		// Are both "First Name" and "Last Name" required?
+		if ( empty( $user->first_name ) || empty( $user->last_name ) ) {
+			return;
+		}
+		*/
+
 		// Update the CiviCRM Contact "First Name" and "Last Name".
 		$params = [
 			'version' => 3,
