@@ -42,7 +42,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	/**
 	 * CiviCRM available flag.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 * @access public
 	 * @var bool $civicrm_available True when CiviCRM is available, false otherwise.
 	 */
@@ -51,7 +51,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	/**
 	 * CiviCRM listeners registered flag.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 * @access public
 	 * @var bool $civicrm_listeners The CiviCRM listeners registered flag.
 	 */
@@ -565,7 +565,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	/**
 	 * Register CiviCRM File hooks.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 */
 	public function hooks_civicrm_file_add() {
 
@@ -811,7 +811,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	/**
 	 * Unregister CiviCRM File hooks.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 */
 	public function hooks_civicrm_file_remove() {
 
@@ -828,7 +828,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	/**
 	 * Declare CiviCRM available and register listeners.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param object $config The CiviCRM config object.
 	 */
@@ -849,7 +849,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @see https://lab.civicrm.org/dev/core/issues/1638
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 */
 	public function listeners_civicrm_add() {
 
@@ -922,7 +922,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	/**
 	 * Remove CiviCRM listeners.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 */
 	public function listeners_civicrm_remove() {
 
@@ -988,7 +988,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	/**
 	 * Callback for the CiviCRM 'civi.dao.preInsert' hook.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param object $event The event object.
 	 * @param string $hook The hook name.
@@ -1014,7 +1014,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	/**
 	 * Callback for the CiviCRM 'civi.dao.postInsert' hook.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param object $event The event object.
 	 * @param string $hook The hook name.
@@ -1040,7 +1040,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	/**
 	 * Callback for the CiviCRM 'civi.dao.preInsert' hook.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param object $event The event object.
 	 * @param string $hook The hook name.
@@ -1066,7 +1066,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	/**
 	 * Callback for the CiviCRM 'civi.dao.postUpdate' hook.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param object $event The event object.
 	 * @param string $hook The hook name.
@@ -1092,7 +1092,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	/**
 	 * Callback for the CiviCRM 'civi.dao.preDelete' hook.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param object $event The event object.
 	 * @param string $hook The hook name.
@@ -1118,7 +1118,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	/**
 	 * Callback for the CiviCRM 'civi.dao.postDelete' hook.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param object $event The event object.
 	 * @param string $hook The hook name.
@@ -3253,7 +3253,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	/**
 	 * Intercept when a CiviCRM File is about to be deleted.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param object $event The event object.
 	 * @param string $hook The hook name.
@@ -3304,7 +3304,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		/**
 		 * Broadcast that a CiviCRM File is about to be deleted.
 		 *
-		 * @since 0.5.2
+		 * @since 0.5.4
 		 *
 		 * @param array $args The array of CiviCRM params.
 		 */
@@ -3316,7 +3316,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		/**
 		 * Broadcast that a CiviCRM Attachment is about to be deleted.
 		 *
-		 * @since 0.5.2
+		 * @since 0.5.4
 		 *
 		 * @param array $args The array of CiviCRM params.
 		 */
@@ -3329,7 +3329,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * Unused: does not receive events when Attachments are deleted.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param string $op The type of database operation.
 	 * @param string $objectName The type of object.
@@ -3361,7 +3361,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		/**
 		 * Broadcast that a CiviCRM File is about to be deleted.
 		 *
-		 * @since 0.5.2
+		 * @since 0.5.4
 		 *
 		 * @param array $args The array of CiviCRM params.
 		 */
@@ -3373,7 +3373,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		/**
 		 * Broadcast that a CiviCRM Attachment is about to be deleted.
 		 *
-		 * @since 0.5.2
+		 * @since 0.5.4
 		 *
 		 * @param array $args The array of CiviCRM params.
 		 */
@@ -3384,7 +3384,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	/**
 	 * Intercept when a CiviCRM File is created.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param string $op The type of database operation.
 	 * @param string $objectName The type of object.
@@ -3416,7 +3416,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		/**
 		 * Broadcast that a CiviCRM File has been created.
 		 *
-		 * @since 0.5.2
+		 * @since 0.5.4
 		 *
 		 * @param array $args The array of CiviCRM params.
 		 */
@@ -3428,7 +3428,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		/**
 		 * Broadcast that a CiviCRM Attachment has been created.
 		 *
-		 * @since 0.5.2
+		 * @since 0.5.4
 		 *
 		 * @param array $args The array of CiviCRM params.
 		 */
@@ -3439,7 +3439,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	/**
 	 * Intercept when a CiviCRM File is updated.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param string $op The type of database operation.
 	 * @param string $objectName The type of object.
@@ -3471,7 +3471,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		/**
 		 * Broadcast that a CiviCRM File has been updated.
 		 *
-		 * @since 0.5.2
+		 * @since 0.5.4
 		 *
 		 * @param array $args The array of CiviCRM params.
 		 */
@@ -3483,7 +3483,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		/**
 		 * Broadcast that a CiviCRM Attachment has been updated.
 		 *
-		 * @since 0.5.2
+		 * @since 0.5.4
 		 *
 		 * @param array $args The array of CiviCRM params.
 		 */
@@ -3496,7 +3496,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * Unused: does not receive events when Attachments are deleted.
 	 *
-	 * @since 0.5.3
+	 * @since 0.5.4
 	 *
 	 * @param string $op The type of database operation.
 	 * @param string $objectName The type of object.
@@ -3528,7 +3528,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		/**
 		 * Broadcast that a CiviCRM File has been deleted.
 		 *
-		 * @since 0.5.2
+		 * @since 0.5.4
 		 *
 		 * @param array $args The array of CiviCRM params.
 		 */
@@ -3537,7 +3537,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		/**
 		 * Broadcast that a CiviCRM Attachment has been deleted.
 		 *
-		 * @since 0.5.2
+		 * @since 0.5.4
 		 *
 		 * @param array $args The array of CiviCRM params.
 		 */

@@ -5,7 +5,7 @@
  * Handles CiviCRM Activity Attachments functionality.
  *
  * @package CiviCRM_WP_Profile_Sync
- * @since 0.5.2
+ * @since 0.5.4
  */
 
 // Exit if accessed directly.
@@ -16,14 +16,14 @@ defined( 'ABSPATH' ) || exit;
  *
  * A class that encapsulates CiviCRM Activity Attachments functionality.
  *
- * @since 0.5.2
+ * @since 0.5.4
  */
 class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 
 	/**
 	 * Plugin object.
 	 *
-	 * @since 0.5
+	 * @since 0.5.4
 	 * @access public
 	 * @var object $plugin The plugin object.
 	 */
@@ -32,7 +32,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	/**
 	 * ACF Loader object.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 * @access public
 	 * @var object $acf_loader The ACF Loader object.
 	 */
@@ -41,7 +41,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	/**
 	 * Parent (calling) object.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 * @access public
 	 * @var object $civicrm The parent object.
 	 */
@@ -50,7 +50,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	/**
 	 * Mapper hooks registered flag.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 * @access public
 	 * @var bool $mapper_hooks The Mapper hooks registered flag.
 	 */
@@ -59,7 +59,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	/**
 	 * "CiviCRM Attachments" Field key in the ACF Field data.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 * @access public
 	 * @var string $acf_field_key The key of the "CiviCRM Attachments" in the ACF Field data.
 	 */
@@ -68,7 +68,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	/**
 	 * Fields which are handled by this class.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 * @access public
 	 * @var array $fields_handled The array of Fields which are handled by this class.
 	 */
@@ -79,7 +79,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	/**
 	 * Attachment Shortcode object.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 * @access public
 	 * @var object $shortcode_attachment The Attachment Shortcode object.
 	 */
@@ -88,7 +88,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	/**
 	 * Constructor.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param object $parent The parent object reference.
 	 */
@@ -107,7 +107,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	/**
 	 * Initialise this object.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 */
 	public function initialise() {
 
@@ -123,7 +123,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 		/**
 		 * Broadcast that this class is now loaded.
 		 *
-		 * @since 0.5.2
+		 * @since 0.5.4
 		 */
 		do_action( 'cwps/acf/civicrm/activity/attachments/loaded' );
 
@@ -132,7 +132,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	/**
 	 * Include files.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 */
 	public function include_files() {
 
@@ -145,7 +145,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	/**
 	 * Set up the child objects.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 */
 	public function setup_objects() {
 
@@ -158,7 +158,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	/**
 	 * Register hooks.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 */
 	public function register_hooks() {
 
@@ -196,7 +196,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	/**
 	 * Register callbacks for Mapper events.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 */
 	public function register_mapper_hooks() {
 
@@ -218,7 +218,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	/**
 	 * Unregister callbacks for Mapper events.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 */
 	public function unregister_mapper_hooks() {
 
@@ -242,7 +242,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	/**
 	 * Update a CiviCRM Entity's Fields with data from ACF Fields.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param array $args The array of WordPress params.
 	 * @return bool True if updates were successful, or false on failure.
@@ -282,7 +282,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	 * These Fields require special handling because they are not part
 	 * of the core Activity data.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param string $field The ACF Field selector.
 	 * @param mixed $value The ACF Field value.
@@ -313,7 +313,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	 *
 	 * Sync any associated Attachment Fields.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param array $args The array of CiviCRM Activity and WordPress Post params.
 	 */
@@ -360,7 +360,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	/**
 	 * Prepare the CiviCRM Attachment Record from an ACF Field.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param array $value The array of Attachment Record data in the ACF Field.
 	 * @param integer $attachment_id The numeric ID of the Attachment Record (or null if new).
@@ -388,7 +388,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	/**
 	 * Prepare the ACF Field data from a CiviCRM Attachment.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param array $value The array of Attachment data in CiviCRM.
 	 * @return array $attachment_data The ACF Attachment data.
@@ -422,7 +422,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	/**
 	 * Creates a WordPress Attachment.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param array $value The pathless filename of the CiviCRM Attachment.
 	 * @param array $post_id The numeric ID of the WordPress Post.
@@ -512,7 +512,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	/**
 	 * Update all of a CiviCRM Activity's Attachment Records.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param array $values The array of Attachment Record arrays.
 	 * @param integer $activity_id The numeric ID of the Activity.
@@ -702,7 +702,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 				/**
 				 * Broadcast that an Attachment Record has been updated.
 				 *
-				 * @since 0.5.2
+				 * @since 0.5.4
 				 *
 				 * @param array $params The Attachment data.
 				 * @param array $args The array of WordPress params.
@@ -760,7 +760,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	/**
 	 * Creates a CiviCRM Attachment Record.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param array $data The array of relevant data.
 	 * @param array $args The array of WordPress params.
@@ -826,7 +826,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 		 *
 		 * We use this internally to update the ACF Field with the Attachment ID.
 		 *
-		 * @since 0.5.2
+		 * @since 0.5.4
 		 *
 		 * @param array $params The Attachment data.
 		 * @param array $args The array of WordPress params.
@@ -841,7 +841,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	/**
 	 * Deletes a CiviCRM Attachment Record.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param integer $attachment_id The numeric ID of the CiviCRM Attachment.
 	 * @param integer $activity_id The numeric ID of the Activity.
@@ -864,7 +864,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 		/**
 		 * Broadcast that an Attachment Record has been deleted.
 		 *
-		 * @since 0.5.2
+		 * @since 0.5.4
 		 *
 		 * @param array $params The Attachment data.
 		 * @param array $args The array of WordPress params.
@@ -878,7 +878,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	/**
 	 * Intercept when a CiviCRM Attachment Record has been updated.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param array $args The array of CiviCRM params.
 	 */
@@ -905,7 +905,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	/**
 	 * A CiviCRM Activity's Attachment is about to be deleted.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param array $args The array of CiviCRM params.
 	 */
@@ -932,7 +932,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	/**
 	 * Process a CiviCRM Attachment Record.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param object $attachment The CiviCRM Attachment Record object.
 	 * @param array $args The array of CiviCRM params.
@@ -971,7 +971,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 		/**
 		 * Broadcast that an Attachment ACF Field may have been edited.
 		 *
-		 * @since 0.5.2
+		 * @since 0.5.4
 		 *
 		 * @param array $activity The array of CiviCRM Activity data.
 		 * @param object $attachment The CiviCRM Attachment Record object.
@@ -984,7 +984,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	/**
 	 * Update Attachment ACF Fields on an Entity mapped to an Activity ID.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param integer|string $post_id The ACF "Post ID".
 	 * @param object $attachment The CiviCRM Attachment Record object.
@@ -1105,7 +1105,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	/**
 	 * Getter method for the "CiviCRM Attachments" key.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @return string $acf_field_key The key of the "CiviCRM Attachments" in the ACF Field data.
 	 */
@@ -1119,7 +1119,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	/**
 	 * Add any Attachment Fields that are attached to a Post.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param array $acf_fields The existing ACF Fields array.
 	 * @param array $field The ACF Field.
@@ -1145,7 +1145,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	 *
 	 * This method is called when loading values via get_field().
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param mixed $value The value which was loaded from the database.
 	 * @param mixed $post_id The Post ID from which the value was loaded.
@@ -1219,7 +1219,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	 *
 	 * This method is called when rendering the Field, e.g. in ACFE front end Forms.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param array $field The Field array holding all the Field options.
 	 */
@@ -1285,7 +1285,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	/**
 	 * Maybe filter the URL of the File.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param array $response The array of loaded Attachment data.
 	 * @param WP_Post $attachment The Attachment object.
@@ -1315,7 +1315,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	 * The Attachment ID needs to be reverse-synced to the relevant array element
 	 * in the Field.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param array $params The Attachment data.
 	 * @param array $args The array of WordPress params.

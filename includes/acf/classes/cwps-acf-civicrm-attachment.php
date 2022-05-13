@@ -127,7 +127,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	/**
 	 * Initialise this object.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 */
 	public function initialise() {
 
@@ -137,7 +137,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		/**
 		 * Broadcast that this class is now loaded.
 		 *
-		 * @since 0.5.2
+		 * @since 0.5.4
 		 */
 		do_action( 'cwps/acf/civicrm/attachment/loaded' );
 
@@ -447,7 +447,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	/**
 	 * Make a copy of a File.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param string $file The path to the File.
 	 * @param string $new_name The new name of the File.
@@ -1638,7 +1638,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 * the Entities and Custom Fields to which that File is assigned. Keeping
 	 * this code here to remind me where I got to.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param array $args The CiviCRM arguments.
 	 */
@@ -1949,7 +1949,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	/**
 	 * Gets the maximum file size of Attachments for CiviCRM Entities.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @return integer $max_size The the maximum file size of Attachments.
 	 */
@@ -1981,7 +1981,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	/**
 	 * Gets the maximum number of Attachments for CiviCRM Entities.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @return integer $max_attachments The the maximum number of Attachments.
 	 */

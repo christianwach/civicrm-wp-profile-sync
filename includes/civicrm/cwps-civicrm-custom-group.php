@@ -239,7 +239,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 	/**
 	 * Get a Custom Group by its Entity Table.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param string $entity_table The name of the Entity Table.
 	 * @return array $custom_group The array of Custom Group data.

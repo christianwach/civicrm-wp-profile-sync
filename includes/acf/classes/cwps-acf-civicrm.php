@@ -239,7 +239,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	/**
 	 * CiviCRM Activity Attachment object.
 	 *
-	 * @since 0.4
+	 * @since 0.5.4
 	 * @access public
 	 * @var object $activity_attachments The CiviCRM Activity Attachment object.
 	 */

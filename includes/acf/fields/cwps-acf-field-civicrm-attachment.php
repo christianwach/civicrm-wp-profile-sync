@@ -5,7 +5,7 @@
  * Provides a "CiviCRM Attachment Field" Custom ACF Field in ACF 5+.
  *
  * @package CiviCRM_WP_Profile_Sync
- * @since 0.5.2
+ * @since 0.5.4
  */
 
 // Exit if accessed directly.
@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * A class that encapsulates a "CiviCRM Attachment Field" Custom ACF Field in ACF 5+.
  *
- * @since 0.5.2
+ * @since 0.5.4
  */
 class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 
@@ -32,7 +32,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 	/**
 	 * ACF Loader object.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 * @access public
 	 * @var object $acf_loader The ACF Loader object.
 	 */
@@ -41,7 +41,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 	/**
 	 * Advanced Custom Fields object.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 * @access public
 	 * @var object $cpt The Advanced Custom Fields object.
 	 */
@@ -50,7 +50,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 	/**
 	 * CiviCRM Utilities object.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 * @access public
 	 * @var object $civicrm The CiviCRM Utilities object.
 	 */
@@ -61,7 +61,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 	 *
 	 * Single word, no spaces. Underscores allowed.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 * @access public
 	 * @var string $name The Field Type name.
 	 */
@@ -74,7 +74,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 	 *
 	 * Multiple words, can include spaces, visible when selecting a Field Type.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 * @access public
 	 * @var string $label The Field Type label.
 	 */
@@ -87,7 +87,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 	 *
 	 * basic | content | choice | relational | jquery | layout | CUSTOM GROUP NAME
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 * @access public
 	 * @var string $label The Field Type category.
 	 */
@@ -99,7 +99,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 	 * Array of default settings which are merged into the Field object.
 	 * These are used later in settings.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 * @access public
 	 * @var array $defaults The Field Type defaults.
 	 */
@@ -110,7 +110,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 	 *
 	 * Contains "version", "url" and "path" as references for use with assets.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 * @access public
 	 * @var array $settings The Field Type settings.
 	 */
@@ -130,7 +130,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 	 *
 	 * var message = acf._e( 'civicrm_contact', 'error' );
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 * @access public
 	 * @var array $l10n The Field Type translations.
 	 */
@@ -139,7 +139,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 	/**
 	 * Sets up the Field Type.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param object $parent The parent object reference.
 	 */
@@ -175,7 +175,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 	/**
 	 * Removes this Field Type from the list of available Field Types.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param array $groups The Field being rendered.
 	 */
@@ -207,7 +207,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 	 *
 	 * These extra Settings will be visible when editing a Field.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param array $field The Field being edited.
 	 */
@@ -255,7 +255,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 	/**
 	 * Creates the HTML interface for this Field Type.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param array $field The Field being rendered.
 	 */
@@ -272,7 +272,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 	/**
 	 * Prepare this Field Type for display.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param array $field The Field being rendered.
 	 */
@@ -298,7 +298,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 	 * Use this action to add CSS and JavaScript to assist your
 	 * render_field_settings() action.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	public function field_group_admin_enqueue_scripts() {
 
 	}
@@ -311,7 +311,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 	 * Use this action to add CSS and JavaScript to assist your
 	 * render_field_settings() action.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	public function field_group_admin_head() {
 
 	}
@@ -324,7 +324,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 	 * Use this action to add CSS and JavaScript to assist your render_field()
 	 * action.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 */
 	public function input_admin_enqueue_scripts() {
 
@@ -345,7 +345,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 	 * Use this action to add CSS and JavaScript to assist your render_field()
 	 * action.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 */
 	public function input_admin_head() {
 
@@ -365,7 +365,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 	/**
 	 * This filter is applied to the $value after it is loaded from the database.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param mixed $value The value found in the database.
 	 * @param integer $post_id The Post ID from which the value was loaded.
@@ -392,7 +392,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 	/**
 	 * This filter is applied to the $value before it is saved in the database.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param mixed $value The value found in the database.
 	 * @param integer $post_id The Post ID from which the value was loaded.
@@ -415,7 +415,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 	 * This filter is applied to the value after it is loaded from the database
 	 * and before it is returned to the template.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param mixed $value The value which was loaded from the database.
 	 * @param mixed $post_id The Post ID from which the value was loaded.
@@ -449,7 +449,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 	 * This allows you to validate and return messages to the user if the value
 	 * is not correct.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param bool $valid The validation status based on the value and the Field's required setting.
 	 * @param mixed $value The $_POST value.
@@ -488,7 +488,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 	 *
 	 * Please note that saving a blank value is treated as an update, not a delete.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param integer $post_id The Post ID from which the value was deleted.
 	 * @param string $key The meta key which the value was deleted.
@@ -500,7 +500,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 	/**
 	 * This filter is applied to the Field after it is loaded from the database.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param array $field The Field array holding all the Field options.
 	 * @return array $field The modified Field data.
@@ -535,7 +535,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 	/**
 	 * This filter is applied to the Field before it is saved to the database.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param array $field The Field array holding all the Field options.
 	 * @return array $field The modified Field data.
@@ -553,7 +553,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 	/**
 	 * This action is fired after a Field is deleted from the database.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param array $field The Field array holding all the Field options.
 	public function delete_field( $field ) {
@@ -564,7 +564,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 	/**
 	 * Modify the Field with defaults and Subfield definitions.
 	 *
-	 * @since 0.5.2
+	 * @since 0.5.4
 	 *
 	 * @param array $field The Field array holding all the Field options.
 	 * @return array $subfields The subfield array.

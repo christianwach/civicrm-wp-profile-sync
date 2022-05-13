@@ -7,7 +7,7 @@
 /**
  * Register ACF Field Type.
  *
- * @since 0.5.2
+ * @since 0.5.4
  */
 (function($, undefined){
 
