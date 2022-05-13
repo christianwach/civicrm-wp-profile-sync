@@ -247,7 +247,7 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 	}
 
 	/**
-	 * Check if a WordPress User should by synced.
+	 * Check if a WordPress User should be synced.
 	 *
 	 * @since 0.3
 	 *

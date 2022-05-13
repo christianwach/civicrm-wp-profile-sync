@@ -416,7 +416,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 	}
 
 	/**
-	 * Check if a CiviCRM Contact should by synced.
+	 * Check if a CiviCRM Contact should be synced.
 	 *
 	 * @since 0.3
 	 *
@@ -507,7 +507,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 	}
 
 	/**
-	 * Check if a CiviCRM Contact's name should by synced.
+	 * Check if a CiviCRM Contact's name should be synced.
 	 *
 	 * @since 0.3
 	 *
@@ -597,7 +597,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 	}
 
 	/**
-	 * Check if a CiviCRM Contact's "Nickname" should by synced.
+	 * Check if a CiviCRM Contact's "Nickname" should be synced.
 	 *
 	 * @since 0.4
 	 *
