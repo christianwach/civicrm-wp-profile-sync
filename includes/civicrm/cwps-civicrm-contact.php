@@ -481,6 +481,11 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 			return;
 		}
 
+		// Check if the first name or last name is empty, both values are required to update a CiviCRM Contact
+		if (empty($user->first_name) || empty($user->last_name)) {
+			return;
+		}
+
 		// Update the CiviCRM Contact "First Name" and "Last Name".
 		$params = [
 			'version' => 3,
@@ -507,7 +512,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 	}
 
 	/**
-	 * Check if a CiviCRM Contact's name should by synced.
+	 * Check if a CiviCRM Contact's name should be synced.
 	 *
 	 * @since 0.3
 	 *
