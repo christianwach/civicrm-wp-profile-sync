@@ -570,9 +570,11 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function hooks_civicrm_file_add() {
 
 		// Intercept File updates in CiviCRM.
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//add_action( 'civicrm_pre', [ $this, 'file_pre_delete' ], 10, 4 );
 		add_action( 'civicrm_post', [ $this, 'file_created' ], 10, 4 );
 		add_action( 'civicrm_post', [ $this, 'file_edited' ], 10, 4 );
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//add_action( 'civicrm_post', [ $this, 'file_deleted' ], 10, 4 );
 
 	}
@@ -816,9 +818,11 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function hooks_civicrm_file_remove() {
 
 		// Remove Instant Messenger update hooks.
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//remove_action( 'civicrm_pre', [ $this, 'file_pre_delete' ], 10 );
 		remove_action( 'civicrm_post', [ $this, 'file_created' ], 10 );
 		remove_action( 'civicrm_post', [ $this, 'file_edited' ], 10 );
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//remove_action( 'civicrm_post', [ $this, 'file_deleted' ], 10 );
 
 	}
@@ -995,19 +999,19 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 */
 	public function listener_civicrm_pre_create( $event, $hook ) {
 
-		///*
+		// Grab CiviCRM object for this hook.
+		$object =& $event->object;
+
+		/*
 		$e = new \Exception();
 		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
+		error_log( print_r( [
 			'method' => __METHOD__,
 			'event' => $event,
 			'hook' => $hook,
 			//'backtrace' => $trace,
-		), true ) );
-		//*/
-
-		// Grab CiviCRM object for this hook.
-		$object =& $event->object;
+		], true ) );
+		*/
 
 	}
 
@@ -1021,19 +1025,19 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 */
 	public function listener_civicrm_created( $event, $hook ) {
 
-		///*
+		// Grab CiviCRM object for this hook.
+		$object =& $event->object;
+
+		/*
 		$e = new \Exception();
 		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
+		error_log( print_r( [
 			'method' => __METHOD__,
 			'event' => $event,
 			'hook' => $hook,
 			//'backtrace' => $trace,
-		), true ) );
-		//*/
-
-		// Grab CiviCRM object for this hook.
-		$object =& $event->object;
+		], true ) );
+		*/
 
 	}
 
@@ -1047,19 +1051,19 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 */
 	public function listener_civicrm_pre_edit( $event, $hook ) {
 
-		///*
+		// Grab CiviCRM object for this hook.
+		$object =& $event->object;
+
+		/*
 		$e = new \Exception();
 		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
+		error_log( print_r( [
 			'method' => __METHOD__,
 			'event' => $event,
 			'hook' => $hook,
 			//'backtrace' => $trace,
-		), true ) );
-		//*/
-
-		// Grab CiviCRM object for this hook.
-		$object =& $event->object;
+		], true ) );
+		*/
 
 	}
 
@@ -1073,19 +1077,19 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 */
 	public function listener_civicrm_edited( $event, $hook ) {
 
-		///*
+		// Grab CiviCRM object for this hook.
+		$object =& $event->object;
+
+		/*
 		$e = new \Exception();
 		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
+		error_log( print_r( [
 			'method' => __METHOD__,
 			'event' => $event,
 			'hook' => $hook,
 			//'backtrace' => $trace,
-		), true ) );
-		//*/
-
-		// Grab CiviCRM object for this hook.
-		$object =& $event->object;
+		], true ) );
+		*/
 
 	}
 
@@ -1099,19 +1103,19 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 */
 	public function listener_civicrm_pre_delete( $event, $hook ) {
 
-		///*
+		// Grab CiviCRM object for this hook.
+		$object =& $event->object;
+
+		/*
 		$e = new \Exception();
 		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
+		error_log( print_r( [
 			'method' => __METHOD__,
 			'event' => $event,
 			'hook' => $hook,
 			//'backtrace' => $trace,
-		), true ) );
-		//*/
-
-		// Grab CiviCRM object for this hook.
-		$object =& $event->object;
+		], true ) );
+		*/
 
 	}
 
@@ -1125,19 +1129,19 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 */
 	public function listener_civicrm_deleted( $event, $hook ) {
 
-		///*
+		// Grab CiviCRM object for this hook.
+		$object =& $event->object;
+
+		/*
 		$e = new \Exception();
 		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
+		error_log( print_r( [
 			'method' => __METHOD__,
 			'event' => $event,
 			'hook' => $hook,
 			//'backtrace' => $trace,
-		), true ) );
-		//*/
-
-		// Grab CiviCRM object for this hook.
-		$object =& $event->object;
+		], true ) );
+		*/
 
 	}
 
