@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * Custom Shortcodes Class.
  *
@@ -76,8 +74,6 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_City {
 	 */
 	public $cai_tag = 'cai_city';
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -98,8 +94,6 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_City {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -111,8 +105,6 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_City {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -129,11 +121,7 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_City {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Register our Shortcode.
@@ -149,8 +137,6 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_City {
 		add_shortcode( $this->cai_tag, [ $this, 'shortcode_render' ] );
 
 	}
-
-
 
 	/**
 	 * Render the Shortcode.
@@ -195,11 +181,7 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_City {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Add compatibility with Shortcake.
@@ -287,8 +269,6 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_City {
 
 	}
 
-
-
 	/**
 	 * Add stylesheet to TinyMCE when Shortcake is active.
 	 *
@@ -306,8 +286,6 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_City {
 		return $mce_css;
 
 	}
-
-
 
 	/**
 	 * Get Location Types select array for Shortcake registration.
@@ -334,9 +312,4 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_City {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

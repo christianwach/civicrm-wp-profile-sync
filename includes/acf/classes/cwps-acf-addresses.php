@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Addresses Class.
  *
@@ -105,8 +103,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 	 */
 	public $shortcode_city;
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -128,8 +124,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		parent::__construct();
 
 	}
-
-
 
 	/**
 	 * Initialise this object.
@@ -156,8 +150,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 
 	}
 
-
-
 	/**
 	 * Include files.
 	 *
@@ -172,8 +164,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 
 	}
 
-
-
 	/**
 	 * Set up the child objects.
 	 *
@@ -187,8 +177,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		$this->shortcode_state = new CiviCRM_Profile_Sync_ACF_Shortcode_State( $this );
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -210,8 +198,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		add_action( 'cwps/acf/address/created', [ $this, 'maybe_sync_address_data' ], 10, 2 );
 
 	}
-
-
 
 	/**
 	 * Register callbacks for Mapper events.
@@ -236,8 +222,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 
 	}
 
-
-
 	/**
 	 * Unregister callbacks for Mapper events.
 	 *
@@ -261,11 +245,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update a CiviCRM Contact's Fields with data from ACF Fields.
@@ -304,8 +284,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 
 	}
 
-
-
 	/**
 	 * Update a CiviCRM Contact's Addresses with data from an ACF Field.
 	 *
@@ -336,11 +314,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a Post has been updated from a Contact via the Mapper.
@@ -393,8 +367,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 
 	}
 
-
-
 	/**
 	 * Prepare the ACF Field data from a CiviCRM Address.
 	 *
@@ -440,11 +412,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update all of a CiviCRM Contact's Address Records.
@@ -649,8 +617,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 
 	}
 
-
-
 	/**
 	 * Prepare the CiviCRM Address Record data from an ACF Field.
 	 *
@@ -691,11 +657,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a CiviCRM Address Record has been updated.
@@ -732,8 +694,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 
 	}
 
-
-
 	/**
 	 * A CiviCRM Contact's Address Record is about to be deleted.
 	 *
@@ -768,8 +728,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		}
 
 	}
-
-
 
 	/**
 	 * A CiviCRM Address Record has just been deleted.
@@ -815,8 +773,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		}
 
 	}
-
-
 
 	/**
 	 * Process a CiviCRM Address Record.
@@ -901,8 +857,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		do_action( 'cwps/acf/addresses/address/updated', $contact, $address, $acf_address, $args );
 
 	}
-
-
 
 	/**
 	 * Update Address ACF Fields on an Entity mapped to a Contact ID.
@@ -1012,11 +966,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the Location Types that can be mapped to an ACF Field.
@@ -1065,11 +1015,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Getter method for the "CiviCRM Addresses" key.
@@ -1084,8 +1030,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		return $this->acf_field_key;
 
 	}
-
-
 
 	/**
 	 * Add any Address Fields that are attached to a Post.
@@ -1109,11 +1053,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Sync new CiviCRM Address data back to the ACF Fields on a WordPress Post.
@@ -1180,9 +1120,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

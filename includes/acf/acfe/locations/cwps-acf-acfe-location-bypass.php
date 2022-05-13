@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync ACF "Bypass" Location Rule Class.
  *
@@ -21,8 +19,6 @@ defined( 'ABSPATH' ) || exit;
  * @since 0.5
  */
 class CiviCRM_Profile_Sync_ACF_Location_Type_Bypass extends ACF_Location {
-
-
 
 	/**
 	 * Initialise this object.
@@ -39,11 +35,7 @@ class CiviCRM_Profile_Sync_ACF_Location_Type_Bypass extends ACF_Location {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Matches the provided rule against the screen args.
@@ -71,8 +63,6 @@ class CiviCRM_Profile_Sync_ACF_Location_Type_Bypass extends ACF_Location {
 
 	}
 
-
-
 	/**
 	 * Returns an array of operators for this Location Type.
 	 *
@@ -90,8 +80,6 @@ class CiviCRM_Profile_Sync_ACF_Location_Type_Bypass extends ACF_Location {
 		];
 
 	}
-
-
 
 	/**
 	 * Returns an array of possible values for this location.
@@ -118,9 +106,4 @@ class CiviCRM_Profile_Sync_ACF_Location_Type_Bypass extends ACF_Location {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync BuddyPress xProfile Class.
  *
@@ -199,8 +197,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 */
 	public $name = 'cwps_civicrm_field';
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -227,8 +223,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		add_action( 'cwps/buddypress/loaded', [ $this, 'initialise' ] );
 
 	}
-
-
 
 	/**
 	 * Do stuff on plugin init.
@@ -259,8 +253,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 	}
 
-
-
 	/**
 	 * Include files.
 	 *
@@ -278,8 +270,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 	}
 
-
-
 	/**
 	 * Set up this plugin's objects.
 	 *
@@ -296,8 +286,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		$this->website = new CiviCRM_Profile_Sync_BP_CiviCRM_Website( $this );
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -342,8 +330,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 	}
 
-
-
 	/**
 	 * Register callbacks for Mapper events.
 	 *
@@ -364,8 +350,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		$this->mapper_hooks = true;
 
 	}
-
-
 
 	/**
 	 * Unregister callbacks for Mapper events.
@@ -388,11 +372,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Called when a BuddyPress xProfile "Profile Group" has been updated.
@@ -442,8 +422,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 	}
 
-
-
 	/**
 	 * Fires when a BuddyPress xProfile Field has been updated.
 	 *
@@ -465,8 +443,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		*/
 
 	}
-
-
 
 	/**
 	 * Gets the raw value of a BuddyPress xProfile Field.
@@ -492,8 +468,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		return $value;
 
 	}
-
-
 
 	/**
 	 * Gets the full set of BuddyPress xProfile Fields for a given User.
@@ -562,11 +536,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update the value of a BuddyPress xProfile Field.
@@ -598,8 +568,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		return $result;
 
 	}
-
-
 
 	/**
 	 * Get the value of a BuddyPress Field formatted for CiviCRM.
@@ -643,8 +611,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 	}
 
-
-
 	/**
 	 * Get the value of a "Date" Field formatted for CiviCRM.
 	 *
@@ -680,8 +646,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 	}
 
-
-
 	/**
 	 * Get the value of a "Textarea" Field formatted for CiviCRM.
 	 *
@@ -703,8 +667,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		return $value;
 
 	}
-
-
 
 	/**
 	 * Get the value of a "Checkbox" Field formatted for CiviCRM.
@@ -745,11 +707,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Filters the HTML output for an xProfile Field options checkbox button.
@@ -783,8 +741,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 	}
 
-
-
 	/**
 	 * Filters the HTML output for an xProfile Field options select button.
 	 *
@@ -811,8 +767,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 	}
 
-
-
 	/**
 	 * Filters the HTML output for an xProfile Field options multiselect button.
 	 *
@@ -838,8 +792,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		return $new_html;
 
 	}
-
-
 
 	/**
 	 * Filters the HTML output for an xProfile Field options radio button.
@@ -873,11 +825,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Filter the raw submitted Profile Field value.
@@ -969,11 +917,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Fires when the children of a BuddyPress xProfile Field are read.
@@ -1033,8 +977,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		return $children;
 
 	}
-
-
 
 	/**
 	 * Fires when the options of a BuddyPress xProfile Field are filtered.
@@ -1150,8 +1092,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		return $post_option;
 
 	}
-
-
 
 	/**
 	 * Fires when a BuddyPress xProfile Field has been saved.
@@ -1271,11 +1211,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Output a metabox below the xProfile Field Type metabox in the main column.
@@ -1483,8 +1419,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 	}
 
-
-
 	/**
 	 * Enqueue the Javascript for our xProfile Field metabox.
 	 *
@@ -1625,11 +1559,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Gets all of our metadata for a BuddyPress xProfile Field.
@@ -1676,8 +1606,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 	}
 
-
-
 	/**
 	 * Sets all of our metadata for a BuddyPress xProfile Field.
 	 *
@@ -1699,8 +1627,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		bp_xprofile_update_field_meta( $field_id, $this->meta_key, $data );
 
 	}
-
-
 
 	/**
 	 * Gets an item of our metadata for a BuddyPress xProfile Field.
@@ -1739,8 +1665,6 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 	}
 
-
-
 	/**
 	 * Sets an item of our metadata for a BuddyPress xProfile Field.
 	 *
@@ -1773,10 +1697,4 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 	}
 
-
-
-} // Class ends.
-
-
-
-
+}

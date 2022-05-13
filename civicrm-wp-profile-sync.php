@@ -12,7 +12,8 @@
  * Depends: CiviCRM
  */
 
-
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
 
 // Set plugin version here.
 define( 'CIVICRM_WP_PROFILE_SYNC_VERSION', '0.5.4a' );
@@ -41,8 +42,6 @@ if ( ! defined( 'CIVICRM_WP_PROFILE_SYNC_PATH' ) ) {
 if ( ! defined( 'CIVICRM_WP_PROFILE_SYNC_BUDDYPRESS' ) ) {
 	define( 'CIVICRM_WP_PROFILE_SYNC_BUDDYPRESS', false );
 }
-
-
 
 /**
  * CiviCRM Profile Sync Class.
@@ -116,8 +115,6 @@ class CiviCRM_WP_Profile_Sync {
 	 */
 	public $cai;
 
-
-
 	/**
 	 * Initialises this object.
 	 *
@@ -129,8 +126,6 @@ class CiviCRM_WP_Profile_Sync {
 		$this->initialise();
 
 	}
-
-
 
 	/**
 	 * Initialise this plugin.
@@ -166,8 +161,6 @@ class CiviCRM_WP_Profile_Sync {
 
 	}
 
-
-
 	/**
 	 * Enable translation.
 	 *
@@ -183,8 +176,6 @@ class CiviCRM_WP_Profile_Sync {
 		);
 
 	}
-
-
 
 	/**
 	 * Include files.
@@ -204,8 +195,6 @@ class CiviCRM_WP_Profile_Sync {
 
 	}
 
-
-
 	/**
 	 * Set up this plugin's objects.
 	 *
@@ -224,11 +213,7 @@ class CiviCRM_WP_Profile_Sync {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Add BuddyPress sync hooks.
@@ -246,8 +231,6 @@ class CiviCRM_WP_Profile_Sync {
 
 	}
 
-
-
 	/**
 	 * Remove BuddyPress sync hooks.
 	 *
@@ -263,8 +246,6 @@ class CiviCRM_WP_Profile_Sync {
 		do_action( 'cwps/plugin/hooks/bp/remove' );
 
 	}
-
-
 
 	/**
 	 * Add WordPress sync hooks.
@@ -285,8 +266,6 @@ class CiviCRM_WP_Profile_Sync {
 
 	}
 
-
-
 	/**
 	 * Remove WordPress sync hooks.
 	 *
@@ -302,8 +281,6 @@ class CiviCRM_WP_Profile_Sync {
 		do_action( 'cwps/plugin/hooks/wp/remove' );
 
 	}
-
-
 
 	/**
 	 * Add CiviCRM sync hooks.
@@ -323,8 +300,6 @@ class CiviCRM_WP_Profile_Sync {
 
 	}
 
-
-
 	/**
 	 * Remove CiviCRM sync hooks.
 	 *
@@ -341,11 +316,7 @@ class CiviCRM_WP_Profile_Sync {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Check if this plugin is network activated.
@@ -385,8 +356,6 @@ class CiviCRM_WP_Profile_Sync {
 		return $is_network_active;
 
 	}
-
-
 
 	/**
 	 * Check if CiviCRM is network activated.
@@ -432,8 +401,6 @@ class CiviCRM_WP_Profile_Sync {
 		return $civicrm_network_active;
 
 	}
-
-
 
 	/**
 	 * Check if CiviCRM Admin Utilities is hiding CiviCRM except on main site.
@@ -491,11 +458,7 @@ class CiviCRM_WP_Profile_Sync {
 
 	}
 
-
-
-} // Class ends.
-
-
+}
 
 /**
  * Load plugin if not yet loaded and return reference.
@@ -522,8 +485,6 @@ function civicrm_wp_profile_sync() {
 // Load only when CiviCRM has loaded.
 add_action( 'civicrm_instance_loaded', 'civicrm_wp_profile_sync' );
 
-
-
 /**
  * Performs plugin activation tasks.
  *
@@ -542,8 +503,6 @@ function civicrm_wp_profile_sync_activate() {
 
 // Activation.
 register_activation_hook( __FILE__, 'civicrm_wp_profile_sync_activate' );
-
-
 
 /**
  * Performs plugin deactivation tasks.

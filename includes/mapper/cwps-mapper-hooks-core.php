@@ -23,8 +23,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync Mapper Hooks Class.
  *
@@ -61,8 +59,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 */
 	public $hooks;
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -82,8 +78,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -95,8 +89,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -116,8 +108,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	/**
 	 * Unregister hooks.
 	 *
@@ -136,11 +126,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Register WordPress hooks.
@@ -160,8 +146,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	/**
 	 * Remove WordPress hooks.
 	 *
@@ -174,8 +158,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		remove_action( 'profile_update', [ $this, 'user_edited' ], 9 );
 
 	}
-
-
 
 	/**
 	 * Register BuddyPress hooks.
@@ -199,8 +181,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	/**
 	 * Remove BuddyPress hooks.
 	 *
@@ -217,8 +197,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		remove_action( 'xprofile_data_after_save', [ $this, 'bp_field_edited' ], 20 );
 
 	}
-
-
 
 	/**
 	 * Register CiviCRM hooks.
@@ -242,8 +220,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	/**
 	 * Register CiviCRM Contact hooks.
 	 *
@@ -259,8 +235,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	/**
 	 * Register CiviCRM Email hooks.
 	 *
@@ -273,8 +247,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		add_action( 'civicrm_post', [ $this, 'email_edited' ], 10, 4 );
 
 	}
-
-
 
 	/**
 	 * Register CiviCRM Website hooks.
@@ -292,8 +264,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	/**
 	 * Register CiviCRM Phone hooks.
 	 *
@@ -308,8 +278,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		add_action( 'civicrm_post', [ $this, 'phone_deleted' ], 10, 4 );
 
 	}
-
-
 
 	/**
 	 * Register CiviCRM Address hooks.
@@ -327,8 +295,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	/**
 	 * Register CiviCRM Custom Table hooks.
 	 *
@@ -341,11 +307,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Remove CiviCRM hooks.
@@ -364,8 +326,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	/**
 	 * Unregister CiviCRM Contact hooks.
 	 *
@@ -381,8 +341,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	/**
 	 * Unregister CiviCRM Email hooks.
 	 *
@@ -395,8 +353,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		remove_action( 'civicrm_post', [ $this, 'email_edited' ], 10 );
 
 	}
-
-
 
 	/**
 	 * Unregister CiviCRM Website hooks.
@@ -414,8 +370,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	/**
 	 * Unregister CiviCRM Phone hooks.
 	 *
@@ -430,8 +384,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		remove_action( 'civicrm_post', [ $this, 'phone_deleted' ], 10 );
 
 	}
-
-
 
 	/**
 	 * Unregister CiviCRM Address hooks.
@@ -449,8 +401,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	/**
 	 * Unregister CiviCRM Custom Table hooks.
 	 *
@@ -463,11 +413,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Fires when a WordPress User is newly registered.
@@ -506,8 +452,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		$this->hooks_buddypress_add();
 
 	}
-
-
 
 	/**
 	 * Fires when a WordPress User has been edited.
@@ -548,8 +492,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		$this->hooks_buddypress_add();
 
 	}
-
-
 
 	/**
 	 * Fires when a BuddyPress "Profile Group" has been edited.
@@ -612,8 +554,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	/**
 	 * Fires when a BuddyPress User has been signed up.
 	 *
@@ -670,8 +610,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	/**
 	 * Fires when a BuddyPress User has been activated.
 	 *
@@ -724,8 +662,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	/**
 	 * Fires when the content of a BuddyPress xProfile Field has been edited.
 	 *
@@ -760,11 +696,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Fires just before a CiviCRM Contact is created.
@@ -819,8 +751,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	/**
 	 * Fires just before a CiviCRM Contact is edited.
 	 *
@@ -874,8 +804,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	/**
 	 * Fires just after a CiviCRM Contact has been created.
 	 *
@@ -928,8 +856,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		$this->hooks_buddypress_add();
 
 	}
-
-
 
 	/**
 	 * Fires just after a CiviCRM Contact has been edited.
@@ -1011,11 +937,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Fires just before a CiviCRM Email address is edited.
@@ -1061,8 +983,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	/**
 	 * Fires just after a CiviCRM Email address has been edited.
 	 *
@@ -1107,11 +1027,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a CiviCRM Website is about to be edited.
@@ -1156,8 +1072,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	/**
 	 * Intercept when a CiviCRM Website is about to be deleted.
 	 *
@@ -1200,8 +1114,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		do_action( 'cwps/mapper/website/delete/pre', $args );
 
 	}
-
-
 
 	/**
 	 * Intercept when a CiviCRM Website has been created.
@@ -1246,8 +1158,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	/**
 	 * Intercept when a CiviCRM Website has been updated.
 	 *
@@ -1290,8 +1200,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		do_action( 'cwps/mapper/website/edited', $args );
 
 	}
-
-
 
 	/**
 	 * Intercept when a CiviCRM Website has been deleted.
@@ -1336,11 +1244,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a CiviCRM Phone is about to be deleted.
@@ -1385,8 +1289,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	/**
 	 * Intercept when a CiviCRM Phone has been created.
 	 *
@@ -1429,8 +1331,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		do_action( 'cwps/mapper/phone/created', $args );
 
 	}
-
-
 
 	/**
 	 * Intercept when a CiviCRM Phone has been updated.
@@ -1475,8 +1375,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	/**
 	 * Intercept when a CiviCRM Phone has been deleted.
 	 *
@@ -1520,11 +1418,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a CiviCRM Address is about to be edited.
@@ -1569,8 +1463,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	/**
 	 * Intercept when a CiviCRM Address is about to be deleted.
 	 *
@@ -1613,8 +1505,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		do_action( 'cwps/mapper/address/delete/pre', $args );
 
 	}
-
-
 
 	/**
 	 * Intercept when a CiviCRM Contact's Address has been created.
@@ -1659,8 +1549,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	/**
 	 * Intercept when a CiviCRM Contact's Address has been edited.
 	 *
@@ -1703,8 +1591,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		do_action( 'cwps/mapper/address/edited', $args );
 
 	}
-
-
 
 	/**
 	 * Intercept when a CiviCRM Contact's Address has been deleted.
@@ -1749,11 +1635,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a set of CiviCRM Custom Fields has been updated.
@@ -1792,9 +1674,4 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

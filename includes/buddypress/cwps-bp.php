@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync BuddyPress Class.
  *
@@ -84,8 +82,6 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 	 */
 	public $mapper_hooks = false;
 
-
-
 	/**
 	 * Initialises this object.
 	 *
@@ -102,8 +98,6 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 		add_action( 'civicrm_wp_profile_sync_init', [ $this, 'initialise' ] );
 
 	}
-
-
 
 	/**
 	 * Do stuff on plugin init.
@@ -152,8 +146,6 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 
 	}
 
-
-
 	/**
 	 * Include files.
 	 *
@@ -175,8 +167,6 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/buddypress/cwps-bp-xprofile.php';
 
 	}
-
-
 
 	/**
 	 * Set up this plugin's objects.
@@ -200,8 +190,6 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 
 	}
 
-
-
 	/**
 	 * Register hooks.
 	 *
@@ -217,8 +205,6 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 
 	}
 
-
-
 	/**
 	 * Unregister hooks.
 	 *
@@ -233,8 +219,6 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 		remove_action( 'cwps/contact/name/should_be_synced', [ $this, 'name_update_allow' ], 1000 );
 
 	}
-
-
 
 	/**
 	 * Register Mapper hooks.
@@ -258,8 +242,6 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 
 	}
 
-
-
 	/**
 	 * Unregister Mapper hooks.
 	 *
@@ -282,11 +264,7 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept BuddyPress's attempt to sync to WordPress User profile.
@@ -318,8 +296,6 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 
 	}
 
-
-
 	/**
 	 * Check if a CiviCRM Contact's "First Name" and "Last Name" should be synced.
 	 *
@@ -340,9 +316,4 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

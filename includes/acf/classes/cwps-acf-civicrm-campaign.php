@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Campaign Class.
  *
@@ -49,8 +47,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Campaign {
 	 */
 	public $civicrm;
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -70,8 +66,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Campaign {
 
 	}
 
-
-
 	/**
 	 * Register WordPress hooks.
 	 *
@@ -81,11 +75,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Campaign {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Create a CiviCRM Campaign.
@@ -142,8 +132,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Campaign {
 
 	}
 
-
-
 	/**
 	 * Update a CiviCRM Contact with a given set of data.
 	 *
@@ -175,11 +163,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Campaign {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the data for a Campaign.
@@ -226,11 +210,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Campaign {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Gets the currently-active CiviCRM Campaigns.
@@ -292,8 +272,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Campaign {
 
 	}
 
-
-
 	/**
 	 * Gets the choices for the currently-active CiviCRM Campaigns.
 	 *
@@ -323,9 +301,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Campaign {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

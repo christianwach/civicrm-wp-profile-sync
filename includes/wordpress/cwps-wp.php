@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync WordPress compatibility Class.
  *
@@ -49,8 +47,6 @@ class CiviCRM_WP_Profile_Sync_WordPress {
 	 */
 	public $mapper_hooks = false;
 
-
-
 	/**
 	 * Initialises this object.
 	 *
@@ -67,8 +63,6 @@ class CiviCRM_WP_Profile_Sync_WordPress {
 		add_action( 'civicrm_wp_profile_sync_init', [ $this, 'initialise' ] );
 
 	}
-
-
 
 	/**
 	 * Do stuff on plugin init.
@@ -96,8 +90,6 @@ class CiviCRM_WP_Profile_Sync_WordPress {
 
 	}
 
-
-
 	/**
 	 * Include files.
 	 *
@@ -109,8 +101,6 @@ class CiviCRM_WP_Profile_Sync_WordPress {
 		require CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/wordpress/cwps-wp-user.php';
 
 	}
-
-
 
 	/**
 	 * Set up this plugin's objects.
@@ -124,8 +114,6 @@ class CiviCRM_WP_Profile_Sync_WordPress {
 
 	}
 
-
-
 	/**
 	 * Register hooks.
 	 *
@@ -138,8 +126,6 @@ class CiviCRM_WP_Profile_Sync_WordPress {
 
 	}
 
-
-
 	/**
 	 * Unregister hooks.
 	 *
@@ -151,8 +137,6 @@ class CiviCRM_WP_Profile_Sync_WordPress {
 		$this->user->unregister_hooks();
 
 	}
-
-
 
 	/**
 	 * Register Mapper hooks.
@@ -171,8 +155,6 @@ class CiviCRM_WP_Profile_Sync_WordPress {
 
 	}
 
-
-
 	/**
 	 * Unregister Mapper hooks.
 	 *
@@ -189,8 +171,6 @@ class CiviCRM_WP_Profile_Sync_WordPress {
 		$this->mapper_hooks = false;
 
 	}
-
-
 
 	/**
 	 * Replaces paragraph elements with double line-breaks.
@@ -251,9 +231,4 @@ class CiviCRM_WP_Profile_Sync_WordPress {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

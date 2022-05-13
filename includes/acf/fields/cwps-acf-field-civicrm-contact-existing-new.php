@@ -9,8 +9,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * ACF "CiviCRM Existing & New Contact" Class.
  *
@@ -136,8 +134,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 	 */
 	public $acf_slug = 'cwps_participant';
 
-
-
 	/**
 	 * Sets up the Field Type.
 	 *
@@ -183,8 +179,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 
 	}
 
-
-
 	/**
 	 * Removes this Field Type from the list of available Field Types.
 	 *
@@ -209,8 +203,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 
 	}
 
-
-
 	/**
 	 * Creates the HTML interface for this Field Type.
 	 *
@@ -227,8 +219,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 		acf_render_field( $field );
 
 	}
-
-
 
 	/**
 	 * This filter is applied to the Field after it is loaded from the database.
@@ -261,8 +251,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 
 	}
 
-
-
 	/**
 	 * This filter is applied to the Field before it is saved to the database.
 	 *
@@ -283,8 +271,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 		return $field;
 
 	}
-
-
 
 	/**
 	 * Modify the Field with defaults and Subfield definitions.
@@ -313,8 +299,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 
 	}
 
-
-
 	/**
 	 * Registers the ACF Field.
 	 *
@@ -332,8 +316,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 		acf_add_local_field( $field );
 
 	}
-
-
 
 	/**
 	 * Gets the "Existing Contact / New Contact" Field.
@@ -364,8 +346,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 		return $field;
 
 	}
-
-
 
 	/**
 	 * Gets the Sub-fields of this Field.
@@ -545,8 +525,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 
 	}
 
-
-
 	/**
 	 * Prepares a CiviCRM Contact with data from this Field.
 	 *
@@ -619,8 +597,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 
 	}
 
-
-
 	/**
 	 * Prepares this Field with data from a CiviCRM Contact.
 	 *
@@ -654,8 +630,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 		return $field;
 
 	}
-
-
 
 	/**
 	 * Validates the values of this Field prior to saving.
@@ -771,9 +745,4 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

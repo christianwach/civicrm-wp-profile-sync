@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Custom Group compatibility Class.
  *
@@ -49,8 +47,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 	 */
 	public $mapper_hooks = false;
 
-
-
 	/**
 	 * Initialises this object.
 	 *
@@ -69,8 +65,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 
 	}
 
-
-
 	/**
 	 * Do stuff on plugin init.
 	 *
@@ -82,8 +76,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -101,8 +93,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 
 	}
 
-
-
 	/**
 	 * Unregister hooks.
 	 *
@@ -114,8 +104,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 		$this->unregister_mapper_hooks();
 
 	}
-
-
 
 	/**
 	 * Register Mapper hooks.
@@ -134,8 +122,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 
 	}
 
-
-
 	/**
 	 * Unregister Mapper hooks.
 	 *
@@ -153,11 +139,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get all Custom Groups.
@@ -207,8 +189,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 
 	}
 
-
-
 	/**
 	 * Get a Custom Group by its ID.
 	 *
@@ -256,11 +236,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Gets the Custom Groups for all CiviCRM Contacts.
@@ -329,8 +305,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 
 	}
 
-
-
 	/**
 	 * Gets all the Custom Groups for all CiviCRM Contact Types/Subtypes.
 	 *
@@ -393,8 +367,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 
 	}
 
-
-
 	/**
 	 * Get all the Custom Groups for all CiviCRM Activity Types.
 	 *
@@ -450,8 +422,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 		return $custom_groups;
 
 	}
-
-
 
 	/**
 	 * Get all the Custom Groups for all CiviCRM Case Types.
@@ -509,8 +479,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 
 	}
 
-
-
 	/**
 	 * Get all the Custom Groups for all CiviCRM Participant Types.
 	 *
@@ -566,8 +534,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 		return $custom_groups;
 
 	}
-
-
 
 	/**
 	 * Get all the Custom Groups for all CiviCRM Relationship Types.
@@ -632,8 +598,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 		return $custom_groups;
 
 	}
-
-
 
 	/**
 	 * Get all the Custom Groups for CiviCRM Addresses.
@@ -701,8 +665,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 		return $custom_groups;
 
 	}
-
-
 
 	/**
 	 * Get the Custom Groups for a CiviCRM Entity Type/Sub-type.
@@ -799,9 +761,4 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

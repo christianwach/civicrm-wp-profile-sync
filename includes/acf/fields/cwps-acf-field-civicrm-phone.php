@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync Custom ACF Field Type - CiviCRM Phone Field.
  *
@@ -138,8 +136,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Field extends acf_field {
 	 */
 	public $l10n = [];
 
-
-
 	/**
 	 * Sets up the Field Type.
 	 *
@@ -173,8 +169,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Field extends acf_field {
 
 	}
 
-
-
 	/**
 	 * Create extra Settings for this Field Type.
 	 *
@@ -203,8 +197,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Field extends acf_field {
 
 	}
 
-
-
 	/**
 	 * Creates the HTML interface for this Field Type.
 	 *
@@ -221,8 +213,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Field extends acf_field {
 		acf_render_field( $field );
 
 	}
-
-
 
 	/**
 	 * Prepare this Field Type for display.
@@ -246,38 +236,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Field extends acf_field {
 
 	}
 
-
-
-	/**
-	 * This action is called in the "admin_enqueue_scripts" action on the edit
-	 * screen where this Field is edited.
-	 *
-	 * Use this action to add CSS and JavaScript to assist your
-	 * render_field_settings() action.
-	 *
-	 * @since 0.4
-	public function field_group_admin_enqueue_scripts() {
-
-	}
-	 */
-
-
-
-	/**
-	 * This action is called in the "admin_head" action on the edit screen where
-	 * this Field is edited.
-	 *
-	 * Use this action to add CSS and JavaScript to assist your
-	 * render_field_settings() action.
-	 *
-	 * @since 0.4
-	public function field_group_admin_head() {
-
-	}
-	 */
-
-
-
 	/**
 	 * This method is called in the "admin_enqueue_scripts" action on the edit
 	 * screen where this Field is created.
@@ -298,8 +256,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Field extends acf_field {
 		);
 
 	}
-
-
 
 	/**
 	 * This method is called in the admin_head action on the edit screen where
@@ -324,8 +280,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Field extends acf_field {
 		';
 
 	}
-
-
 
 	/**
 	 * This filter is applied to the $value after it is loaded from the database.
@@ -357,8 +311,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Field extends acf_field {
 
 	}
 
-
-
 	/**
 	 * This filter is applied to the $value before it is saved in the database.
 	 *
@@ -380,8 +332,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Field extends acf_field {
 		return $value;
 
 	}
-
-
 
 	/**
 	 * This filter is applied to the value after it is loaded from the database
@@ -413,8 +363,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Field extends acf_field {
 
 	}
 	 */
-
-
 
 	/**
 	 * This filter is used to perform validation on the value prior to saving.
@@ -471,24 +419,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Field extends acf_field {
 
 	}
 
-
-
-	/**
-	 * This action is fired after a value has been deleted from the database.
-	 *
-	 * Please note that saving a blank value is treated as an update, not a delete.
-	 *
-	 * @since 0.4
-	 *
-	 * @param integer $post_id The Post ID from which the value was deleted.
-	 * @param string $key The meta key which the value was deleted.
-	public function delete_value( $post_id, $key ) {
-
-	}
-	 */
-
-
-
 	/**
 	 * This filter is applied to the Field after it is loaded from the database.
 	 *
@@ -524,8 +454,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Field extends acf_field {
 
 	}
 
-
-
 	/**
 	 * This filter is applied to the Field before it is saved to the database.
 	 *
@@ -543,21 +471,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Field extends acf_field {
 		return $field;
 
 	}
-
-
-
-	/**
-	 * This action is fired after a Field is deleted from the database.
-	 *
-	 * @since 0.4
-	 *
-	 * @param array $field The Field array holding all the Field options.
-	public function delete_field( $field ) {
-
-	}
-	 */
-
-
 
 	/**
 	 * Modify the Field with defaults and Subfield definitions.
@@ -754,9 +667,4 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Field extends acf_field {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

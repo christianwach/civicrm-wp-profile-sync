@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Base Class.
  *
@@ -44,8 +42,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Base {
 	 */
 	public $fields_handled = [];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -57,8 +53,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Base {
 		$this->fields_handled_hooks_add();
 
 	}
-
-
 
 	/**
 	 * Register the "Handled Fields" callbacks.
@@ -75,8 +69,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Base {
 
 	}
 
-
-
 	/**
 	 * Unregister the "Handled Fields" callbacks.
 	 *
@@ -92,8 +84,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Base {
 
 	}
 
-
-
 	/**
 	 * Getter method for the "Handled Fields" array.
 	 *
@@ -107,8 +97,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Base {
 		return $this->fields_handled;
 
 	}
-
-
 
 	/**
 	 * Filter the "Handled Fields" array.
@@ -128,8 +116,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Base {
 
 	}
 
-
-
 	/**
 	 * Update a CiviCRM Contact's Fields with data from ACF Fields.
 	 *
@@ -145,9 +131,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Base {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

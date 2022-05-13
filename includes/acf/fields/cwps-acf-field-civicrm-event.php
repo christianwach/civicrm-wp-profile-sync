@@ -9,8 +9,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * ACF "CiviCRM Event Reference" Class.
  *
@@ -127,8 +125,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Field extends acf_field {
 	 */
 	public $l10n = [];
 
-
-
 	/**
 	 * Sets up the Field Type.
 	 *
@@ -171,8 +167,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Field extends acf_field {
 
 	}
 
-
-
 	/**
 	 * Removes this Field Type from the list of available Field Types.
 	 *
@@ -196,8 +190,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Field extends acf_field {
 		return $groups;
 
 	}
-
-
 
 	/**
 	 * Create extra Settings for this Field Type.
@@ -223,8 +215,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Field extends acf_field {
 		acf_render_field_setting( $field, $setting );
 
 	}
-
-
 
 	/**
 	 * Creates the HTML interface for this Field Type.
@@ -280,8 +270,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Field extends acf_field {
 
 	}
 
-
-
 	/**
 	 * AJAX Query callback.
 	 *
@@ -301,8 +289,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Field extends acf_field {
 		acf_send_ajax_results( $response );
 
 	}
-
-
 
 	/**
 	 * AJAX Query callback.
@@ -402,8 +388,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Field extends acf_field {
 
 	}
 
-
-
 	/**
 	 * This method is called in the "admin_enqueue_scripts" action on the edit
 	 * screen where this Field is created.
@@ -425,9 +409,4 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Field extends acf_field {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

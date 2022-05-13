@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * Get "Age" as a string for a given ACF Field.
  *
@@ -69,11 +67,7 @@ function cwps_get_age_from_acf_field( $selector, $post_id = null ) {
 
 }
 
-
-
 // -----------------------------------------------------------------------------
-
-
 
 /**
  * Get the Phone Numbers from a given ACF Field.
@@ -170,8 +164,6 @@ function cwps_get_phone_numbers( $selector, $post_id = null ) {
 	return $phones;
 
 }
-
-
 
 /**
  * Get the Phone Numbers by Type from a given ACF Field.
@@ -274,8 +266,6 @@ function cwps_get_phone_numbers_by_type_ids( $selector, $location_type_id, $phon
 
 }
 
-
-
 /**
  * Get Phone Records by Type(s) from a given ACF Field.
  *
@@ -361,8 +351,6 @@ function cwps_get_phone_records_by_type_ids( $selector, $location_type_id, $phon
 
 }
 
-
-
 /**
  * Get the "Primary" Phone Number from a given ACF Field.
  *
@@ -421,8 +409,6 @@ function cwps_get_primary_phone_number( $selector, $post_id = null ) {
 
 }
 
-
-
 /**
  * Get the "Primary" Phone Record from a given ACF Field.
  *
@@ -465,7 +451,6 @@ function cwps_get_primary_phone_record( $selector, $post_id = null ) {
 	return $phone;
 
 }
-
 
 /**
  * Get the Phone Records from a given ACF Field.
@@ -524,11 +509,7 @@ function cwps_get_phone_records( $selector, $post_id = null ) {
 
 }
 
-
-
 // -----------------------------------------------------------------------------
-
-
 
 /**
  * Get the Instant Messengers from a given ACF Field.
@@ -615,8 +596,6 @@ function cwps_get_ims( $selector, $post_id = null ) {
 	return $ims;
 
 }
-
-
 
 /**
  * Get the Instant Messengers by Type from a given ACF Field.
@@ -709,8 +688,6 @@ function cwps_get_ims_by_type_ids( $selector, $location_type_id, $im_provider_id
 
 }
 
-
-
 /**
  * Get Instant Messenger Records by Type(s) from a given ACF Field.
  *
@@ -796,8 +773,6 @@ function cwps_get_im_records_by_type_ids( $selector, $location_type_id, $im_prov
 
 }
 
-
-
 /**
  * Get the "Primary" Instant Messenger from a given ACF Field.
  *
@@ -857,8 +832,6 @@ function cwps_get_primary_im( $selector, $post_id = null ) {
 
 }
 
-
-
 /**
  * Get the "Primary" Instant Messenger Record from a given ACF Field.
  *
@@ -901,7 +874,6 @@ function cwps_get_primary_im_record( $selector, $post_id = null ) {
 	return $im;
 
 }
-
 
 /**
  * Get the Instant Messenger Records from a given ACF Field.
@@ -960,11 +932,7 @@ function cwps_get_im_records( $selector, $post_id = null ) {
 
 }
 
-
-
 // -----------------------------------------------------------------------------
-
-
 
 /**
  * Get the Addresses from a given ACF Field.
@@ -1077,8 +1045,6 @@ function cwps_get_addresses( $selector, $post_id = null ) {
 
 }
 
-
-
 /**
  * Get the Address for a Location Type from a given ACF Field.
  *
@@ -1176,8 +1142,6 @@ function cwps_get_address_by_type_id( $selector, $location_type_id, $post_id = n
 
 }
 
-
-
 /**
  * Get Address Records by Location Type from a given ACF Field.
  *
@@ -1236,8 +1200,6 @@ function cwps_get_address_records_by_type_id( $selector, $location_type_id, $pos
 	return $addresses;
 
 }
-
-
 
 /**
  * Get the "Primary" Address from a given ACF Field.
@@ -1312,8 +1274,6 @@ function cwps_get_primary_address( $selector, $post_id = null ) {
 
 }
 
-
-
 /**
  * Get the "Primary" Address Record from a given ACF Field.
  *
@@ -1356,8 +1316,6 @@ function cwps_get_primary_address_record( $selector, $post_id = null ) {
 	return $address;
 
 }
-
-
 
 /**
  * Get the Address Records from a given ACF Field.
@@ -1416,11 +1374,7 @@ function cwps_get_address_records( $selector, $post_id = null ) {
 
 }
 
-
-
 // -----------------------------------------------------------------------------
-
-
 
 /**
  * Get the Cities from a given ACF Field.
@@ -1504,8 +1458,6 @@ function cwps_get_cities( $selector, $post_id = null ) {
 
 }
 
-
-
 /**
  * Get the City for a Location Type from a given ACF Field.
  *
@@ -1577,8 +1529,6 @@ function cwps_get_city_by_type_id( $selector, $location_type_id, $return = 'list
 
 }
 
-
-
 /**
  * Get the "Primary" City from a given ACF Field.
  *
@@ -1627,11 +1577,7 @@ function cwps_get_primary_city( $selector, $post_id = null ) {
 
 }
 
-
-
 // -----------------------------------------------------------------------------
-
-
 
 /**
  * Get the States from a given ACF Field.
@@ -1718,8 +1664,6 @@ function cwps_get_states( $selector, $post_id = null ) {
 
 }
 
-
-
 /**
  * Get the State for a Location Type from a given ACF Field.
  *
@@ -1797,8 +1741,6 @@ function cwps_get_state_by_type_id( $selector, $location_type_id, $return = 'lis
 
 }
 
-
-
 /**
  * Get the "Primary" State from a given ACF Field.
  *
@@ -1852,6 +1794,3 @@ function cwps_get_primary_state( $selector, $post_id = null ) {
 	return $state;
 
 }
-
-
-

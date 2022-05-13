@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync WordPress Post Class.
  *
@@ -85,8 +83,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	 */
 	public $participant_id_key = '_civicrm_acf_integration_post_participant_id';
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -104,8 +100,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		add_action( 'cwps/acf/loaded', [ $this, 'initialise' ] );
 
 	}
-
-
 
 	/**
 	 * Initialise this object.
@@ -132,8 +126,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	/**
 	 * Include files.
 	 *
@@ -146,8 +138,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	/**
 	 * Set up the child objects.
 	 *
@@ -159,8 +149,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		$this->tax = new CiviCRM_Profile_Sync_ACF_Post_Tax( $this );
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -206,8 +194,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	/**
 	 * Register callbacks for Mapper events.
 	 *
@@ -235,8 +221,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	/**
 	 * Unregister callbacks for Mapper events.
 	 *
@@ -263,11 +247,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Register meta boxes.
@@ -314,8 +294,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	/**
 	 * Render a meta box on Post edit screens with a link to the Contact.
 	 *
@@ -349,11 +327,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Add a add a Menu Item to the CiviCRM Contact's "Actions" menu.
@@ -456,8 +430,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	/**
 	 * Add a add a Menu Item to the CiviCRM Admin Utilities menu.
 	 *
@@ -531,8 +503,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	/**
 	 * Add a link to action links on the Pages and Posts list tables.
 	 *
@@ -581,11 +551,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Check if a Post is mapped to a Contact.
@@ -613,11 +579,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the CiviCRM Contact ID for a given WordPress Post ID.
@@ -644,8 +606,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	/**
 	 * Set the CiviCRM Contact ID for a given WordPress Post ID.
 	 *
@@ -661,8 +621,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	/**
 	 * Delete the CiviCRM Contact ID for a given WordPress Post ID.
 	 *
@@ -677,11 +635,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the WordPress Post ID(s) for a given CiviCRM Contact ID and Post Type.
@@ -750,11 +704,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Create the WordPress Posts when a CiviCRM Contact is being synced.
@@ -783,8 +733,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		}
 
 	}
-
-
 
 	/**
 	 * Create a WordPress Post when a CiviCRM Contact is being synced.
@@ -840,8 +788,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		do_action( 'cwps/acf/post/contact_sync_to_post', $args );
 
 	}
-
-
 
 	/**
 	 * Create a WordPress Post when a CiviCRM Contact has been created.
@@ -917,8 +863,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		}
 
 	}
-
-
 
 	/**
 	 * Update the synced WordPress Posts when a CiviCRM Contact has been updated.
@@ -1052,11 +996,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Create a WordPress Post from a CiviCRM Contact.
@@ -1127,8 +1067,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	/**
 	 * Sync a CiviCRM Contact with a WordPress Post.
 	 *
@@ -1172,11 +1110,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Check if a Post is mapped to an Activity.
@@ -1204,11 +1138,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the CiviCRM Activity ID for a given WordPress Post ID.
@@ -1235,8 +1165,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	/**
 	 * Set the CiviCRM Activity ID for a given WordPress Post ID.
 	 *
@@ -1252,11 +1180,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the WordPress Post ID for a given CiviCRM Activity ID and Post Type.
@@ -1317,11 +1241,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Create the WordPress Post when a CiviCRM Activity is being synced.
@@ -1347,8 +1267,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		$this->activity_sync_to_post( $args, $post_type );
 
 	}
-
-
 
 	/**
 	 * Create a WordPress Post when a CiviCRM Activity is being synced.
@@ -1397,8 +1315,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		do_action( 'cwps/acf/post/activity/sync', $args );
 
 	}
-
-
 
 	/**
 	 * Create a WordPress Post when a CiviCRM Activity has been created.
@@ -1476,8 +1392,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	/**
 	 * Update a WordPress Post when a CiviCRM Activity has been updated.
 	 *
@@ -1544,11 +1458,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Create a CiviCRM Activity from a WordPress Post.
@@ -1616,8 +1526,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	/**
 	 * Sync a CiviCRM Activity with a WordPress Post.
 	 *
@@ -1666,11 +1574,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Check if a Post is mapped to a Participant.
@@ -1698,11 +1602,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the CiviCRM Participant ID for a given WordPress Post ID.
@@ -1729,8 +1629,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	/**
 	 * Set the CiviCRM Participant ID for a given WordPress Post ID.
 	 *
@@ -1746,11 +1644,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the WordPress Post ID for a given CiviCRM Participant ID and Post Type.
@@ -1811,11 +1705,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Create the WordPress Post when a CiviCRM Participant is being synced.
@@ -1843,8 +1733,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		}
 
 	}
-
-
 
 	/**
 	 * Create a WordPress Post when a CiviCRM Participant is being synced.
@@ -1893,8 +1781,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		do_action( 'cwps/acf/post/participant/sync', $args );
 
 	}
-
-
 
 	/**
 	 * Create a WordPress Post when a CiviCRM Participant has been created.
@@ -1977,8 +1863,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	/**
 	 * Update a WordPress Post when a CiviCRM Participant has been updated.
 	 *
@@ -2050,8 +1934,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	/**
 	 * A CiviCRM Contact's Instant Messenger Record is about to be deleted.
 	 *
@@ -2086,8 +1968,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		}
 
 	}
-
-
 
 	/**
 	 * Delete a WordPress Post when a CiviCRM Participant has been deleted.
@@ -2169,11 +2049,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Create a CiviCRM Participant from a WordPress Post.
@@ -2265,8 +2141,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	/**
 	 * Sync a CiviCRM Participant with a WordPress Post.
 	 *
@@ -2337,8 +2211,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	/**
 	 * Delete a WordPress "Participant" Post.
 	 *
@@ -2361,8 +2233,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		return $post;
 
 	}
-
-
 
 	/**
 	 * Check if a WordPress "Participant" Post Title should be synced.
@@ -2412,11 +2282,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Query for the Contact ID that an ACF "Post ID" is mapped to.
@@ -2448,11 +2314,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Check if a WordPress Post should be synced.
@@ -2499,8 +2361,6 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		return $post;
 
 	}
-
-
 
 	/**
 	 * Check if a WordPress Post Title should be synced.
@@ -2550,9 +2410,4 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Attachment Class.
  *
@@ -107,8 +105,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		'description' => 'text',
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -127,8 +123,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'register_hooks' ] );
 
 	}
-
-
 
 	/**
 	 * Register WordPress hooks.
@@ -167,8 +161,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 	}
 
-
-
 	/**
 	 * Register callbacks for Mapper events.
 	 *
@@ -188,8 +180,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		$this->mapper_hooks = true;
 
 	}
-
-
 
 	/**
 	 * Unregister callbacks for Mapper events.
@@ -211,8 +201,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 	}
 
-
-
 	/**
 	 * Callback for "civicrm_config".
 	 *
@@ -226,8 +214,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		$this->register_civicrm_hooks();
 
 	}
-
-
 
 	/**
 	 * Add listeners for CiviCRM Entity Tag operations.
@@ -253,8 +239,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 	}
 
-
-
 	/**
 	 * Remove listeners from CiviCRM Entity Tag operations.
 	 *
@@ -278,8 +262,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 	}
 
-
-
 	/**
 	 * Add listeners for WordPress Attachment operations.
 	 *
@@ -299,8 +281,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		$this->wordpress_hooks = true;
 
 	}
-
-
 
 	/**
 	 * Remove listeners from WordPress Attachment operations.
@@ -322,11 +302,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Create a CiviCRM Attachment.
@@ -383,8 +359,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 	}
 
-
-
 	/**
 	 * Update a CiviCRM Attachment with a given set of data.
 	 *
@@ -415,8 +389,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		return $this->create( $data );
 
 	}
-
-
 
 	/**
 	 * Deletes a CiviCRM Attachment.
@@ -463,11 +435,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Make a renamed copy of a WordPress File for CiviCRM to copy.
@@ -513,8 +481,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 	}
 
-
-
 	/**
 	 * Make a renamed copy of a CiviCRM File for WordPress to copy.
 	 *
@@ -541,11 +507,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the data for an Attachment.
@@ -591,8 +553,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		return $attachment;
 
 	}
-
-
 
 	/**
 	 * Gets the Attachments for a given Entity ID.
@@ -650,11 +610,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Gets the data for a CiviCRM File by its ID.
@@ -702,8 +658,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		return $file;
 
 	}
-
-
 
 	/**
 	 * Gets the data for a CiviCRM File by its filename.
@@ -754,11 +708,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Gets the CiviCRM Attachment Fields.
@@ -828,11 +778,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Fires just before a set of ACF Fields have been updated.
@@ -893,8 +839,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 	}
 
-
-
 	/**
 	 * Gets the data for an ACF Field before it was saved.
 	 *
@@ -935,8 +879,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		return $file_field;
 
 	}
-
-
 
 	/**
 	 * Filter the Custom Fields for the Setting of a "File" Field.
@@ -1003,8 +945,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		return $value;
 
 	}
-
-
 
 	/**
 	 * Filter the Custom Fields for the Setting of a "File" Field.
@@ -1074,8 +1014,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 	}
 
-
-
 	/**
 	 * Filter the Custom Fields for the Setting of a "File" Field.
 	 *
@@ -1101,11 +1039,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the value of an ACF "File" Field formatted for CiviCRM.
@@ -1252,11 +1186,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Gets the value of a "File" Field as required by an ACF Field.
@@ -1398,8 +1328,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 	}
 
-
-
 	/**
 	 * Mimics the values broadcast by the CiviCRM "civicrm_custom" hook.
 	 *
@@ -1484,11 +1412,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Deletes the CiviCRM and WordPress Attachments given a CiviCRM Attachment ID.
@@ -1534,11 +1458,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Queries WordPress Attachments for a given File.
@@ -1591,11 +1511,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Callback for the CiviCRM 'civi.dao.preDelete' hook.
@@ -1678,11 +1594,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Fires just before an Attachment is deleted.
@@ -1726,11 +1638,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Appends an array of Setting Field choices for a Bypass ACF Field Group when found.
@@ -1793,11 +1701,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Adds additional Settings to an ACF "File" Field when in an ACFE context.
@@ -1854,8 +1758,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 	}
 
-
-
 	/**
 	 * Adds additional Settings to an ACF "File" Field.
 	 *
@@ -1908,8 +1810,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 	}
 
-
-
 	/**
 	 * Modify the Settings of an ACF "File" Field.
 	 *
@@ -1953,8 +1853,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 	}
 
-
-
 	/**
 	 * Gets an array of CiviCRM Entities that support Attachments.
 	 *
@@ -1987,11 +1885,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Gets the metadata for a given WordPress Attachment ID.
@@ -2026,8 +1920,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 	}
 
-
-
 	/**
 	 * Sets the metadata for a given WordPress Attachment ID.
 	 *
@@ -2044,8 +1936,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 	}
 
-
-
 	/**
 	 * Deletes the metadata for a given WordPress Attachment ID.
 	 *
@@ -2061,9 +1951,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

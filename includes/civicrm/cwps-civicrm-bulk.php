@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Bulk Operations Class.
  *
@@ -40,8 +38,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Bulk {
 	 */
 	public $civicrm;
 
-
-
 	/**
 	 * Initialises this object.
 	 *
@@ -62,8 +58,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Bulk {
 
 	}
 
-
-
 	/**
 	 * Do stuff on plugin init.
 	 *
@@ -75,8 +69,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Bulk {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register CiviCRM hooks.
@@ -103,11 +95,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Bulk {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Register directory that CiviCRM searches in for new PHP files.
@@ -135,8 +123,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Bulk {
 		set_include_path( $include_path );
 
 	}
-
-
 
 	/**
 	 * Register directories that CiviCRM searches for php and template files.
@@ -167,8 +153,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Bulk {
 
 	}
 
-
-
 	/**
 	 * Add an option to the Actions dropdown.
 	 *
@@ -192,11 +176,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Bulk {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Prevent recursion when a WordPress User is about to be bulk added.
@@ -211,8 +191,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Bulk {
 
 	}
 
-
-
 	/**
 	 * Re-hook when a WordPress User has been bulk added.
 	 *
@@ -226,9 +204,4 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Bulk {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

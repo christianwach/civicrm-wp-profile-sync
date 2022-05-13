@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync BuddyPress CiviCRM Custom Field Class.
  *
@@ -113,7 +111,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	 */
 	public $custom_field_prefix = 'cwps_custom_';
 
-
 	/**
 	 * Constructor.
 	 *
@@ -134,8 +131,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -151,8 +146,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -192,8 +185,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	/**
 	 * Register Mapper hooks.
 	 *
@@ -213,8 +204,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		$this->mapper_hooks = true;
 
 	}
-
-
 
 	/**
 	 * Unregister Mapper hooks.
@@ -236,11 +225,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Returns the Contact Field choices for a Setting Field from when found.
@@ -325,11 +310,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Gets the mapped Custom Field ID.
@@ -356,8 +337,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		return $custom_field_id;
 
 	}
-
-
 
 	/**
 	 * Get the mapped Custom Field ID for a given BuddyPress Field.
@@ -393,11 +372,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update BuddyPress Fields when a set of CiviCRM Custom Fields has been updated.
@@ -502,8 +477,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	/**
 	 * Get the value of a Custom Field, formatted for BuddyPress.
 	 *
@@ -598,8 +571,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	/**
 	 * Get the "date format" for a given CiviCRM Custom Field ID.
 	 *
@@ -652,11 +623,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Modify the Options of a BuddyPress "Checkbox" Field.
@@ -687,8 +654,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		return $options;
 
 	}
-
-
 
 	/**
 	 * Get the choices for the Setting of a "Checkbox" Field.
@@ -731,8 +696,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	/**
 	 * Filter the Custom Fields for the Setting of a "CheckBox" Field.
 	 *
@@ -766,8 +729,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	/**
 	 * Modify the Options of a BuddyPress "Select" Field.
 	 *
@@ -797,8 +758,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		return $options;
 
 	}
-
-
 
 	/**
 	 * Get the choices for the Setting of a "Select" Field.
@@ -853,8 +812,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	/**
 	 * Filter the Custom Fields for the Setting of a "Select" Field.
 	 *
@@ -901,8 +858,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	/**
 	 * Modify the Options of a BuddyPress "Multi Select" Field.
 	 *
@@ -932,8 +887,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		return $options;
 
 	}
-
-
 
 	/**
 	 * Filter the Custom Fields for the Setting of a "Multi Select Box" Field.
@@ -971,8 +924,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	/**
 	 * Modify the Options of a BuddyPress "Radio" Field.
 	 *
@@ -1002,8 +953,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		return $options;
 
 	}
-
-
 
 	/**
 	 * Get the choices for the Setting of a "Radio" Field.
@@ -1046,8 +995,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	/**
 	 * Filter the Custom Fields for the Setting of a "Radio" Field.
 	 *
@@ -1080,8 +1027,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		return $filtered_fields;
 
 	}
-
-
 
 	/**
 	 * Filter the Custom Fields for the Setting of a "Date" Field.
@@ -1118,8 +1063,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	/**
 	 * Modify the Options of a BuddyPress "Text" Field.
 	 *
@@ -1148,8 +1091,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		return $options;
 
 	}
-
-
 
 	/**
 	 * Filter the Custom Fields for the Setting of a "Text" Field.
@@ -1183,8 +1124,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		return $filtered_fields;
 
 	}
-
-
 
 	/**
 	 * Filter the Custom Fields for the Setting of a "Textarea" Field.
@@ -1221,8 +1160,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	/**
 	 * Filter the Custom Fields for the Setting of a "URL" Field.
 	 *
@@ -1256,9 +1193,4 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Participant Role Class.
  *
@@ -49,8 +47,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 	 */
 	public $civicrm;
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -70,8 +66,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -84,8 +78,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 
 	}
 
-
-
 	/**
 	 * Register hooks.
 	 *
@@ -95,11 +87,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the numeric ID of the "Participant Roles" Option Group.
@@ -155,11 +143,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the data for an "Participant Role" by ID.
@@ -214,8 +198,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 		return $participant_role;
 
 	}
-
-
 
 	/**
 	 * Get the data for an "Participant Role" by value.
@@ -272,11 +254,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the number of Participants for a given CiviCRM Participant Role.
@@ -324,11 +302,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the Participant Role that is mapped to a Post Type.
@@ -357,11 +331,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Gets the CiviCRM Participant Roles as choices for an ACF "Select" Field.
@@ -392,11 +362,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get all Participant Roles.
@@ -458,8 +424,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 
 	}
 
-
-
 	/**
 	 * Gets all Participant Roles that count towards the total for the Event.
 	 *
@@ -490,8 +454,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 		return $not_counted;
 
 	}
-
-
 
 	/**
 	 * Get all Participant Roles that are mapped to Post Types.
@@ -569,8 +531,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 
 	}
 
-
-
 	/**
 	 * Check if a Participant Role is mapped to a Post Type.
 	 *
@@ -597,9 +557,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

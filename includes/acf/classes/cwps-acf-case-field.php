@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Case Field Class.
  *
@@ -85,8 +83,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 		'details' => 'wysiwyg',
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -106,8 +102,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -119,8 +113,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -146,11 +138,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Validate the content of a Field.
@@ -195,11 +183,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a Post has been updated from a Case via the Mapper.
@@ -216,8 +200,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 		$this->post_edited( $args );
 
 	}
-
-
 
 	/**
 	 * Intercept when a Post has been updated from a Case via the Mapper.
@@ -266,11 +248,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the value of a Case Field, formatted for ACF.
@@ -360,11 +338,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the "select" options for a given CiviCRM Case Field.
@@ -404,11 +378,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the CiviCRM Case Fields for an ACF Field.
@@ -455,11 +425,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the Case Field options for a given Field ID.
@@ -510,8 +476,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 		return $field;
 
 	}
-
-
 
 	/**
 	 * Get the core Fields for a CiviCRM Case Type.
@@ -590,8 +554,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 		return $fields;
 
 	}
-
-
 
 	/**
 	 * Get the core Fields for all CiviCRM Case Types.
@@ -673,8 +635,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 	}
 
-
-
 	/**
 	 * Get the public Fields for all CiviCRM Case Types.
 	 *
@@ -695,8 +655,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 		return $public_fields;
 
 	}
-
-
 
 	/**
 	 * Get the Fields for an ACF Field and mapped to a CiviCRM Case Type.
@@ -723,8 +681,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 	}
 
-
-
 	/**
 	 * Get the ACF Field Type for a Case Field.
 	 *
@@ -748,11 +704,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Modify the Settings of an ACF "Select" Field.
@@ -806,8 +758,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 	}
 
-
-
 	/**
 	 * Modify the Settings of an ACF "Date Time Picker" Field.
 	 *
@@ -846,8 +796,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 		return $field;
 
 	}
-
-
 
 	/**
 	 * Get the CiviCRM "DateTime format" for a given CiviCRM Case Field.
@@ -892,11 +840,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Maybe sync the Case "Date" Fields to the ACF Fields on a WordPress Post.
@@ -946,9 +890,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Class.
  *
@@ -345,8 +343,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 */
 	public $acf_field_key = 'field_cacf_civicrm_custom_field';
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -369,8 +365,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		add_action( 'cwps/acf/loaded', [ $this, 'initialise' ] );
 
 	}
-
-
 
 	/**
 	 * Initialise this object.
@@ -396,8 +390,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		do_action( 'cwps/acf/civicrm/loaded' );
 
 	}
-
-
 
 	/**
 	 * Include files.
@@ -449,8 +441,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-contact-id.php';
 
 	}
-
-
 
 	/**
 	 * Set up this plugin's objects.
@@ -508,8 +498,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 
 	}
 
-
-
 	/**
 	 * Register WordPress hooks.
 	 *
@@ -522,8 +510,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		//add_action( 'civicrm_post', [ $this, 'trace_post' ], 10, 4 );
 
 	}
-
-
 
 	/**
 	 * Initialise CiviCRM if necessary.
@@ -551,8 +537,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		return civi_wp()->initialize();
 
 	}
-
-
 
 	/**
 	 * Finds out if a CiviCRM Component is active.
@@ -584,8 +568,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		return $active;
 
 	}
-
-
 
 	/**
 	 * Check a CiviCRM permission.
@@ -622,11 +604,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the values in a given Option Group.
@@ -689,8 +667,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 
 	}
 
-
-
 	/**
 	 * Get the default value for a given Option Group name.
 	 *
@@ -729,11 +705,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Getter method for the "CiviCRM Field" key.
@@ -749,8 +721,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 
 	}
 
-
-
 	/**
 	 * Get ACF Field setting prefix that distinguishes Custom Fields from Contact Fields.
 	 *
@@ -764,8 +734,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		return $this->custom_field->custom_field_prefix;
 
 	}
-
-
 
 	/**
 	 * Get ACF Field setting prefix that distinguishes Contact Fields from Custom Fields.
@@ -781,8 +749,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 
 	}
 
-
-
 	/**
 	 * Get ACF Field setting prefix that distinguishes Activity Fields from Custom Fields.
 	 *
@@ -796,8 +762,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		return $this->activity->activity_field_prefix;
 
 	}
-
-
 
 	/**
 	 * Get ACF Field setting prefix that distinguishes Participant Fields from Custom Fields.
@@ -813,11 +777,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Utility for tracing calls to hook_civicrm_pre.
@@ -844,8 +804,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 
 	}
 
-
-
 	/**
 	 * Utility for tracing calls to hook_civicrm_post.
 	 *
@@ -871,9 +829,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

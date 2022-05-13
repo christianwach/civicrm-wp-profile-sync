@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync ACFE Form Class.
  *
@@ -76,8 +74,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 	 */
 	public $rule_name = 'form_civicrm';
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -99,8 +95,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -119,8 +113,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 
 	}
 
-
-
 	/**
 	 * Include files.
 	 *
@@ -129,8 +121,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 	public function include_files() {
 
 	}
-
-
 
 	/**
 	 * Register WordPress hooks.
@@ -160,8 +150,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 
 	}
 
-
-
 	/**
 	 * Clear the Form Action Query Vars.
 	 *
@@ -176,8 +164,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 		set_query_var( 'acfe_form_actions', [] );
 
 	}
-
-
 
 	/**
 	 * Alters the default "Success Wrapper" class.
@@ -200,8 +186,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 
 	}
 
-
-
 	/**
 	 * Register Location Types.
 	 *
@@ -221,8 +205,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 		acf_register_location_type( 'CiviCRM_Profile_Sync_ACF_Location_Type_Bypass' );
 
 	}
-
-
 
 	/**
 	 * Register Form Actions.
@@ -266,8 +248,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 		}
 
 	}
-
-
 
 	/**
 	 * Enqueue Form Action Javascript.
@@ -360,11 +340,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Listen for queries from the Field Group class.
@@ -395,8 +371,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 		return true;
 
 	}
-
-
 
 	/**
 	 * Check if this Field Group should bypass ACF.
@@ -445,8 +419,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 
 	}
 
-
-
 	/**
 	 * Listen for queries for supported Location Rules.
 	 *
@@ -475,11 +447,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Returns a Setting Field from this Entity when found.
@@ -552,8 +520,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 
 	}
 
-
-
 	/**
 	 * Returns an array containing the Entities and their IDs.
 	 *
@@ -600,9 +566,4 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

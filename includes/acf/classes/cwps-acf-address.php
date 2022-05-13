@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Address Class.
  *
@@ -102,8 +100,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		'country_id' => 'select',
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -123,8 +119,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -136,8 +130,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -157,11 +149,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Gets the CiviCRM Address Fields.
@@ -231,8 +219,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 
 	}
 
-
-
 	/**
 	 * Get the mapped Address Field name if present.
 	 *
@@ -270,8 +256,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		return $address_field_name;
 
 	}
-
-
 
 	/**
 	 * Appends an array of Setting Field choices for a Bypass ACF Field Group when found.
@@ -355,8 +339,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 
 	}
 
-
-
 	/**
 	 * Modify the Settings of an ACF "Text" Field.
 	 *
@@ -397,8 +379,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		return $field;
 
 	}
-
-
 
 	/**
 	 * Validate the content of a Field.
@@ -443,13 +423,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
 	// Retained methods to provide backwards compatibility.
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the data for an Address.
@@ -463,8 +439,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		return $this->plugin->civicrm->address->address_get_by_id( $address_id );
 	}
 
-
-
 	/**
 	 * Get the Addresses for a Contact ID.
 	 *
@@ -477,8 +451,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		return $this->plugin->civicrm->address->addresses_get_by_contact_id( $contact_id );
 	}
 
-
-} // Class ends.
-
-
-
+}

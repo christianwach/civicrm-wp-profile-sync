@@ -12,8 +12,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * Participant Role Taxonomy Class.
  *
@@ -114,8 +112,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 */
 	public $term_counted_meta_key = '_cwps_participant_role_counted';
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -140,8 +136,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -158,8 +152,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks on plugin init.
@@ -200,8 +192,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 	}
 
-
-
 	/**
 	 * Register Mapper hooks.
 	 *
@@ -230,8 +220,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 	}
 
-
-
 	/**
 	 * Remove Mapper hooks.
 	 *
@@ -256,8 +244,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 	}
 
-
-
 	/**
 	 * Callback for "civicrm_config".
 	 *
@@ -271,8 +257,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		$this->register_civicrm_hooks();
 
 	}
-
-
 
 	/**
 	 * Add listeners for CiviCRM Participant Role operations.
@@ -314,8 +298,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 	}
 
-
-
 	/**
 	 * Remove listeners from CiviCRM Participant Role operations.
 	 *
@@ -351,11 +333,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Filters the arguments used to update a Post.
@@ -430,8 +408,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 	}
 
-
-
 	/**
 	 * Get Terms in the Participant Role category.
 	 *
@@ -468,8 +444,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		return $terms;
 
 	}
-
-
 
 	/**
 	 * Hook into the creation of a Term in the Participant Role category.
@@ -518,8 +492,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 	}
 
-
-
 	/**
 	 * Hook into updates to a Participant Role category Term before the Term is updated
 	 * because we need to get the corresponding CiviCRM Participant Role before the
@@ -554,8 +526,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		$this->term_edited = clone $term;
 
 	}
-
-
 
 	/**
 	 * Hook into updates to a Participant Role category Term.
@@ -617,8 +587,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 	}
 
-
-
 	/**
 	 * Hook into updates to a Participant Role category Term before the Term is updated
 	 * because we need to get the corresponding CiviCRM Participant Role before the
@@ -658,8 +626,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		$this->term_deleted->filter = $this->term_counted_get( $term->term_id );
 
 	}
-
-
 
 	/**
 	 * Hook into deletion of a Participant Role category Term.
@@ -704,8 +670,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		unset( $this->term_deleted );
 
 	}
-
-
 
 	/**
 	 * Creates a Term in the Participant Role category.
@@ -764,8 +728,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		return $result;
 
 	}
-
-
 
 	/**
 	 * Updates a Term in the Participant Role category.
@@ -851,8 +813,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 	}
 
-
-
 	/**
 	 * Deletes a Term in the Participant Role category.
 	 *
@@ -878,8 +838,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 	}
 
-
-
 	/**
 	 * Never let Radio Buttons for Taxonomies filter get_terms() to add a null
 	 * Term because CiviCRM requires a Participant to have a Term/Role.
@@ -899,8 +857,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 	}
 
-
-
 	/**
 	 * Trigger hiding of "Parent Category" dropdown in metaboxes.
 	 *
@@ -912,8 +868,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		add_filter( 'wp_dropdown_cats', [ $this, 'terms_dropdown_clear' ], 20, 2 );
 
 	}
-
-
 
 	/**
 	 * Always hide "Parent Category" dropdown in metaboxes.
@@ -938,8 +892,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		return '';
 
 	}
-
-
 
 	/**
 	 * Make sure new Participant Posts have the default Term checked if no Term
@@ -1004,11 +956,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the Term in the Participant Role category for a given CiviCRM Participant Role ID.
@@ -1070,8 +1018,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 	}
 
-
-
 	/**
 	 * Get CiviCRM Participant Role for a Term in the Participant Role category.
 	 *
@@ -1094,8 +1040,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		return $participant_role_id;
 
 	}
-
-
 
 	/**
 	 * Add meta data to a Term in the Participant Role category.
@@ -1152,11 +1096,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get "Is Active" state of a Term in the Participant Role category.
@@ -1180,8 +1120,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		return (int) $active;
 
 	}
-
-
 
 	/**
 	 * Sets the "Is Active" meta data for a Term in the Participant Role category.
@@ -1238,8 +1176,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 	}
 
-
-
 	/**
 	 * Get "Counted" state of a Term in the Participant Role category.
 	 *
@@ -1262,8 +1198,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		return 1;
 
 	}
-
-
 
 	/**
 	 * Sets the "Counted" meta data for a Term in the Participant Role category.
@@ -1320,11 +1254,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Callback for the CiviCRM 'civi.dao.postInsert' hook.
@@ -1378,8 +1308,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 	}
 
-
-
 	/**
 	 * Callback for the CiviCRM 'civi.dao.preUpdate' hook.
 	 *
@@ -1402,8 +1330,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		$this->participant_role_pre = $this->civicrm->participant_role->get_by_id( $participant_role->id );
 
 	}
-
-
 
 	/**
 	 * Callback for the CiviCRM 'civi.dao.postUpdate' hook.
@@ -1453,8 +1379,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 	}
 
-
-
 	/**
 	 * Callback for the CiviCRM 'civi.dao.preDelete' hook.
 	 *
@@ -1496,11 +1420,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Updates a CiviCRM Participant Role.
@@ -1580,8 +1500,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 	}
 
-
-
 	/**
 	 * Delete a CiviCRM Participant Role.
 	 *
@@ -1633,8 +1551,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		return $result;
 
 	}
-
-
 
 	/**
 	 * Get a CiviCRM Participant Role value by its ID.
@@ -1691,8 +1607,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 	}
 
-
-
 	/**
 	 * Syncs all CiviCRM Participant Roles to Terms in the Custom Taxonomy.
 	 *
@@ -1712,8 +1626,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		}
 
 	}
-
-
 
 	/**
 	 * Get all CiviCRM Participant Roles formatted as a dropdown list.
@@ -1771,8 +1683,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 	}
 
-
-
 	/**
 	 * Get the default CiviCRM Participant Role value.
 	 *
@@ -1800,11 +1710,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Add a form element to the "Add Term" form.
@@ -1819,8 +1725,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/taxonomies/term-participant-role-add.php';
 
 	}
-
-
 
 	/**
 	 * Add a form element to the "Edit Term" form.
@@ -1853,11 +1757,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Add a add a Menu Item to the CiviCRM Admin Utilities menu.
@@ -1903,6 +1803,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 	}
 
-
-
-} // Class ends.
+}

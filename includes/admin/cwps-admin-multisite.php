@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync Multisite Admin utility Class.
  *
@@ -58,8 +56,6 @@ class CiviCRM_WP_Profile_Sync_Admin_Multisite {
 	 */
 	public $network_page_slug = 'cwps_network';
 
-
-
 	/**
 	 * Initialises this object.
 	 *
@@ -77,8 +73,6 @@ class CiviCRM_WP_Profile_Sync_Admin_Multisite {
 		add_action( 'cwps/admin/loaded', [ $this, 'initialise' ] );
 
 	}
-
-
 
 	/**
 	 * Do stuff on plugin init.
@@ -98,8 +92,6 @@ class CiviCRM_WP_Profile_Sync_Admin_Multisite {
 		do_action( 'cwps/admin/multisite/loaded' );
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -140,11 +132,7 @@ class CiviCRM_WP_Profile_Sync_Admin_Multisite {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Determine when to show the Admin Notice.
@@ -179,8 +167,6 @@ class CiviCRM_WP_Profile_Sync_Admin_Multisite {
 
 	}
 
-
-
 	/**
 	 * Filter the Settings Page URL in Admin Notices.
 	 *
@@ -201,11 +187,7 @@ class CiviCRM_WP_Profile_Sync_Admin_Multisite {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Add network admin menu item(s) for this plugin.
@@ -243,11 +225,7 @@ class CiviCRM_WP_Profile_Sync_Admin_Multisite {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Register meta boxes.
@@ -273,11 +251,7 @@ class CiviCRM_WP_Profile_Sync_Admin_Multisite {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Restrict access to site Settings Page.
@@ -297,8 +271,6 @@ class CiviCRM_WP_Profile_Sync_Admin_Multisite {
 
 	}
 
-
-
 	/**
 	 * Filter the Settings Page screens.
 	 *
@@ -316,8 +288,6 @@ class CiviCRM_WP_Profile_Sync_Admin_Multisite {
 		return $settings_screens;
 
 	}
-
-
 
 	/**
 	 * Filter the Settings Page Tab URLs.
@@ -338,8 +308,6 @@ class CiviCRM_WP_Profile_Sync_Admin_Multisite {
 		return $urls;
 
 	}
-
-
 
 	/**
 	 * Filter the Settings Page URL.
@@ -371,8 +339,6 @@ class CiviCRM_WP_Profile_Sync_Admin_Multisite {
 
 	}
 
-
-
 	/**
 	 * Filter the Settings Page Submit URL.
 	 *
@@ -393,9 +359,4 @@ class CiviCRM_WP_Profile_Sync_Admin_Multisite {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

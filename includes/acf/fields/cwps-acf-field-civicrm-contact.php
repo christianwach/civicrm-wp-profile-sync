@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync Custom ACF Field Type - CiviCRM Contact Reference Field.
  *
@@ -138,8 +136,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 	 */
 	public $l10n = [];
 
-
-
 	/**
 	 * Sets up the Field Type.
 	 *
@@ -183,8 +179,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 
 	}
 
-
-
 	/**
 	 * Filter the Custom Fields for the Setting of a "CiviCRM Contact" Field.
 	 *
@@ -217,8 +211,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 		return $filtered_fields;
 
 	}
-
-
 
 	/**
 	 * Creates the HTML interface for this Field Type.
@@ -275,8 +267,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 
 	}
 
-
-
 	/**
 	 * AJAX Query callback.
 	 *
@@ -296,8 +286,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 		acf_send_ajax_results( $response );
 
 	}
-
-
 
 	/**
 	 * AJAX Query callback.
@@ -450,8 +438,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 
 	}
 
-
-
 	/**
 	 * This method is called in the "admin_enqueue_scripts" action on the edit
 	 * screen where this Field is created.
@@ -473,9 +459,4 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Contact Field compatibility Class.
  *
@@ -40,8 +38,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Field {
 	 */
 	public $civicrm;
 
-
-
 	/**
 	 * Initialises this object.
 	 *
@@ -60,8 +56,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	/**
 	 * Do stuff on plugin init.
 	 *
@@ -70,8 +64,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Field {
 	public function initialise() {
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -82,8 +74,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	/**
 	 * Unregister hooks.
 	 *
@@ -93,11 +83,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the Contact Field options for a given Field Name.
@@ -144,8 +130,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Field {
 		return $field;
 
 	}
-
-
 
 	/**
 	 * Get "age" as a string for a given date.
@@ -196,9 +180,4 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Field {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

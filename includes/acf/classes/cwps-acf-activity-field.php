@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Activity Field Class.
  *
@@ -87,8 +85,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 		'details' => 'wysiwyg',
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -108,8 +104,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -121,8 +115,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -148,11 +140,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Validate the content of a Field.
@@ -197,11 +185,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a Post has been updated from an Activity via the Mapper.
@@ -218,8 +202,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 		$this->post_edited( $args );
 
 	}
-
-
 
 	/**
 	 * Intercept when a Post has been updated from an Activity via the Mapper.
@@ -268,11 +250,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the value of an Activity Field, formatted for ACF.
@@ -362,11 +340,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the "select" options for a given CiviCRM Activity Field.
@@ -412,11 +386,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the CiviCRM Activity Fields for an ACF Field.
@@ -463,11 +433,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the Activity Field options for a given Field ID.
@@ -514,8 +480,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 		return $field;
 
 	}
-
-
 
 	/**
 	 * Get the core Fields for a CiviCRM Activity Type.
@@ -594,8 +558,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 	}
 
-
-
 	/**
 	 * Get the core Fields for all CiviCRM Activity Types.
 	 *
@@ -664,8 +626,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 	}
 
-
-
 	/**
 	 * Get the public Fields for all CiviCRM Activity Types.
 	 *
@@ -685,8 +645,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 		return $public_fields;
 
 	}
-
-
 
 	/**
 	 * Get the Fields for an ACF Field and mapped to a CiviCRM Activity Type.
@@ -713,8 +671,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 	}
 
-
-
 	/**
 	 * Get the ACF Field Type for an Activity Field.
 	 *
@@ -738,11 +694,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Modify the Settings of an ACF "Select" Field.
@@ -783,8 +735,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 	}
 
-
-
 	/**
 	 * Modify the Settings of an ACF "Date Time Picker" Field.
 	 *
@@ -823,8 +773,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 		return $field;
 
 	}
-
-
 
 	/**
 	 * Get the CiviCRM "DateTime format" for a given CiviCRM Activity Field.
@@ -869,11 +817,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Maybe sync the Activity "Date" Fields to the ACF Fields on a WordPress Post.
@@ -923,9 +867,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

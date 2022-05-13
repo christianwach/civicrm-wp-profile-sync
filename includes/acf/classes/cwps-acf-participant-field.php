@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Participant Field Class.
  *
@@ -72,8 +70,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 		'source' => 'text',
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -93,8 +89,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -106,8 +100,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -133,11 +125,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Validate the content of a Field.
@@ -184,11 +172,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a Post has been updated from a Participant via the Mapper.
@@ -205,8 +189,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 		$this->post_edited( $args );
 
 	}
-
-
 
 	/**
 	 * Intercept when a Post has been updated from a Participant via the Mapper.
@@ -255,11 +237,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the value of a Participant Field, formatted for ACF.
@@ -388,11 +366,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the "select" options for a given CiviCRM Participant Field.
@@ -433,11 +407,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Geta the data for all active Participant Statuses.
@@ -487,8 +457,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 
 	}
 
-
-
 	/**
 	 * Gets the data for a given Participant Status.
 	 *
@@ -537,11 +505,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the CiviCRM Participant Fields for an ACF Field.
@@ -588,11 +552,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the Participant Field options for a given Field ID.
@@ -639,8 +599,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 		return $field;
 
 	}
-
-
 
 	/**
 	 * Get the core Fields for a CiviCRM Participant.
@@ -725,8 +683,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 
 	}
 
-
-
 	/**
 	 * Get the core Fields for CiviCRM Participants.
 	 *
@@ -795,8 +751,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 
 	}
 
-
-
 	/**
 	 * Get the public Fields for CiviCRM Participants.
 	 *
@@ -816,8 +770,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 		return $public_fields;
 
 	}
-
-
 
 	/**
 	 * Get the Fields for an ACF Field and mapped to a CiviCRM Participant.
@@ -846,8 +798,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 
 	}
 
-
-
 	/**
 	 * Get the ACF Field Type for a Participant Field.
 	 *
@@ -871,11 +821,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Modify the Settings of an ACF "Select" Field.
@@ -912,8 +858,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 		return $field;
 
 	}
-
-
 
 	/**
 	 * Modify the Settings of an ACF "Date Time Picker" Field.
@@ -953,8 +897,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 		return $field;
 
 	}
-
-
 
 	/**
 	 * Get the CiviCRM "DateTime format" for a given CiviCRM Participant Field.
@@ -999,11 +941,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Maybe sync the Participant "Date" Fields to the ACF Fields on a WordPress Post.
@@ -1051,9 +989,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

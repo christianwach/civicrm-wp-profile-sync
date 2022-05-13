@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Event Registration Class.
  *
@@ -155,8 +153,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 		'bcc_confirm' => 'email',
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -176,8 +172,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -189,8 +183,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -208,11 +200,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Getter for the public Event Registration Fields.
@@ -239,8 +227,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 		return $done;
 
 	}
-
-
 
 	/**
 	 * Getter for the Settings Fields.
@@ -289,11 +275,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Validate the content of a Field.
@@ -338,11 +320,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the value of an Event Registration Field, formatted for ACF.
@@ -432,11 +410,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the "select" options for a given CiviCRM Event Registration Field.
@@ -473,11 +447,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the CiviCRM Event Registration Fields for an ACF Field.
@@ -524,11 +494,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the Event Registration Field options for a given Field ID.
@@ -576,8 +542,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 		return $field;
 
 	}
-
-
 
 	/**
 	 * Get the Event Registration Fields for an ACF Field Type.
@@ -735,8 +699,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 		return $fields;
 
 	}
-
-
 
 	/**
 	 * Get the Event Registration Fields for a given filter and action.
@@ -925,8 +887,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 
 	}
 
-
-
 	/**
 	 * Get the public Event Registration Fields for a given action.
 	 *
@@ -944,8 +904,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 		return $fields;
 
 	}
-
-
 
 	/**
 	 * Get the public Event Registration Settings Fields.
@@ -965,8 +923,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 
 	}
 
-
-
 	/**
 	 * Get the Event Registration Screen Fields.
 	 *
@@ -984,8 +940,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 		return $fields;
 
 	}
-
-
 
 	/**
 	 * Get the Event Registration Confirmation Screen Fields.
@@ -1005,8 +959,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 
 	}
 
-
-
 	/**
 	 * Get the Event Registration Thank You Screen Fields.
 	 *
@@ -1024,8 +976,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 		return $fields;
 
 	}
-
-
 
 	/**
 	 * Get the Event Registration Confirmation Email Fields.
@@ -1045,11 +995,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the Fields for an ACF Field and mapped to a CiviCRM Event Type.
@@ -1076,8 +1022,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 
 	}
 
-
-
 	/**
 	 * Get the ACF Field Type for an Event Registration Field.
 	 *
@@ -1101,11 +1045,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Modify the Settings of an ACF "Select" Field.
@@ -1160,8 +1100,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 
 	}
 
-
-
 	/**
 	 * Modify the Settings of an ACF "Text" Field.
 	 *
@@ -1208,11 +1146,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Checks if a CiviCRM Event has a Registration Profile.
@@ -1276,8 +1210,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 		return $profile;
 
 	}
-
-
 
 	/**
 	 * Creates a CiviCRM Event Registration Profile for a given Event.
@@ -1356,8 +1288,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 
 	}
 
-
-
 	/**
 	 * Get all CiviCRM Event Registration Profiles.
 	 *
@@ -1420,8 +1350,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 
 	}
 
-
-
 	/**
 	 * Get all CiviCRM Event Registration Profiles formatted for ACF.
 	 *
@@ -1450,8 +1378,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 
 	}
 
-
-
 	/**
 	 * Getter for the Profile Fields.
 	 *
@@ -1464,9 +1390,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

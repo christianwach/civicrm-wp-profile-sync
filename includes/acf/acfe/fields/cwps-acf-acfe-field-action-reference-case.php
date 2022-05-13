@@ -9,8 +9,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * ACFE Form "Case Action Reference" Class.
  *
@@ -145,8 +143,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Case_Action_Ref extends acf_field {
 	 */
 	public $l10n = [];
 
-
-
 	/**
 	 * Sets up the Field Type.
 	 *
@@ -183,8 +179,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Case_Action_Ref extends acf_field {
 
 	}
 
-
-
 	/**
 	 * Removes this Field Type from the list of available Field Types.
 	 *
@@ -208,8 +202,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Case_Action_Ref extends acf_field {
 		return $groups;
 
 	}
-
-
 
 	/**
 	 * Creates the HTML interface for this Field Type.
@@ -242,8 +234,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Case_Action_Ref extends acf_field {
 
 	}
 
-
-
 	/**
 	 * This method is called in the "admin_enqueue_scripts" action on the edit
 	 * screen where this Field is created.
@@ -265,9 +255,4 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Case_Action_Ref extends acf_field {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

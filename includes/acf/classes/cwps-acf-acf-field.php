@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync ACF Field Class.
  *
@@ -84,8 +82,6 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		'civicrm_yes_no',
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -105,8 +101,6 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		add_action( 'cwps/acf/acf/loaded', [ $this, 'register_hooks' ] );
 
 	}
-
-
 
 	/**
 	 * Register WordPress hooks.
@@ -130,11 +124,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the type of WordPress Entity that a Field refers to.
@@ -189,8 +179,6 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 	}
 
-
-
 	/**
 	 * Query for the Contact ID that this ACF "Post ID" is mapped to.
 	 *
@@ -236,11 +224,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get all mapped ACF Fields attached to a Post.
@@ -362,11 +346,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update the value of an ACF Field.
@@ -388,8 +368,6 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		$success = update_field( $selector, $value, $post_id );
 
 	}
-
-
 
 	/**
 	 * Validate the content of a Field mapped to a CiviCRM Custom Field.
@@ -576,11 +554,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the value of an ACF Field formatted for CiviCRM.
@@ -637,8 +611,6 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 	}
 
-
-
 	/**
 	 * Get the value of a "True/False" Field formatted for CiviCRM.
 	 *
@@ -663,8 +635,6 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		return $value;
 
 	}
-
-
 
 	/**
 	 * Get the value of an "Image" Field formatted for CiviCRM.
@@ -716,8 +686,6 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 	}
 
-
-
 	/**
 	 * Get the value of a "Date Picker" Field formatted for CiviCRM.
 	 *
@@ -739,8 +707,6 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 	}
 
-
-
 	/**
 	 * Get the value of a "Date Time Picker" Field formatted for CiviCRM.
 	 *
@@ -761,8 +727,6 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		return $value;
 
 	}
-
-
 
 	/**
 	 * Get the value of a "Text Area" Field formatted for CiviCRM.
@@ -789,11 +753,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Add Setting to Field Settings.
@@ -920,9 +880,4 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

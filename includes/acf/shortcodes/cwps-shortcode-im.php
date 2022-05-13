@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * Custom Shortcodes Class.
  *
@@ -76,8 +74,6 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Instant_Messenger {
 	 */
 	public $cai_tag = 'cai_im';
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -98,8 +94,6 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Instant_Messenger {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -111,8 +105,6 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Instant_Messenger {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -129,11 +121,7 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Instant_Messenger {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Register our Shortcode.
@@ -149,8 +137,6 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Instant_Messenger {
 		add_shortcode( $this->cai_tag, [ $this, 'shortcode_render' ] );
 
 	}
-
-
 
 	/**
 	 * Render the Shortcode.
@@ -196,11 +182,7 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Instant_Messenger {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Add compatibility with Shortcake.
@@ -298,8 +280,6 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Instant_Messenger {
 
 	}
 
-
-
 	/**
 	 * Add stylesheet to TinyMCE when Shortcake is active.
 	 *
@@ -317,8 +297,6 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Instant_Messenger {
 		return $mce_css;
 
 	}
-
-
 
 	/**
 	 * Get Location Types select array for Shortcake registration.
@@ -345,8 +323,6 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Instant_Messenger {
 
 	}
 
-
-
 	/**
 	 * Get Instant Messenger Types select array for Shortcake registration.
 	 *
@@ -367,9 +343,4 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Instant_Messenger {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

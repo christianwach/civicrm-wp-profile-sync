@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Custom Field compatibility Class.
  *
@@ -40,8 +38,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 	 */
 	public $civicrm;
 
-
-
 	/**
 	 * Initialises this object.
 	 *
@@ -60,8 +56,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	/**
 	 * Do stuff on plugin init.
 	 *
@@ -70,8 +64,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 	public function initialise() {
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -82,8 +74,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	/**
 	 * Unregister hooks.
 	 *
@@ -93,11 +83,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the CiviCRM Custom Field data for a given ID.
@@ -150,8 +136,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	/**
 	 * Get the CiviCRM Custom Field data for a given Custom Group ID.
 	 *
@@ -202,11 +186,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the values for a given CiviCRM Contact ID and set of Custom Fields.
@@ -279,11 +259,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the Custom Fields for a given CiviCRM Contact.
@@ -324,8 +300,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 		return $custom_fields;
 
 	}
-
-
 
 	/**
 	 * Gets the Custom Fields for all CiviCRM Contacts.
@@ -392,8 +366,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	/**
 	 * Gets all the Custom Fields for all CiviCRM Contact Types/Subtypes.
 	 *
@@ -459,8 +431,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 		return $custom_fields;
 
 	}
-
-
 
 	/**
 	 * Gets the Custom Fields for a CiviCRM Contact Type/Sub-type.
@@ -554,8 +524,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 		return $custom_fields;
 
 	}
-
-
 
 	/**
 	 * Get the Custom Fields for a CiviCRM Entity Type and Subtype.
@@ -659,9 +627,4 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

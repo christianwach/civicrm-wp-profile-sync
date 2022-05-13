@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync "Case" ACFE Form Action Class.
  *
@@ -138,8 +136,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 		//'manager_id' => 'civicrm_contact',
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -170,8 +166,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 
 	}
 
-
-
 	/**
 	 * Register hooks.
 	 *
@@ -180,8 +174,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 	public function register_hooks() {
 
 	}
-
-
 
 	/**
 	 * Configure this object.
@@ -256,8 +248,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 
 	}
 
-
-
 	/**
 	 * Pre-load mapping Fields with "Generic" choices.
 	 *
@@ -274,8 +264,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 		return $field;
 
 	}
-
-
 
 	/**
 	 * Performs validation when the Form the Action is attached to is submitted.
@@ -301,8 +289,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 		// TODO: Check other Case Entities.
 
 	}
-
-
 
 	/**
 	 * Performs the action when the Form the Action is attached to is submitted.
@@ -353,11 +339,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Defines additional Fields for the "Action" Tab.
@@ -520,11 +502,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Defines the "Mapping" Tab.
@@ -559,8 +537,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 		return $fields;
 
 	}
-
-
 
 	/**
 	 * Defines the Fields in the "Contacts" Accordion.
@@ -737,8 +713,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 
 	}
 
-
-
 	/**
 	 * Defines the Fields in the "Case Fields" Accordion.
 	 *
@@ -802,8 +776,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 		return $fields;
 
 	}
-
-
 
 	/**
 	 * Defines the Fields in the "Custom Fields" Accordion.
@@ -929,11 +901,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Builds Case data array from mapped Fields.
@@ -1028,8 +996,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 
 	}
 
-
-
 	/**
 	 * Validates the Case data array from mapped Fields.
 	 *
@@ -1091,8 +1057,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 		return true;
 
 	}
-
-
 
 	/**
 	 * Saves the CiviCRM Case given data from mapped Fields.
@@ -1201,8 +1165,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 
 	}
 
-
-
 	/**
 	 * Finds the linked Contact ID when it has been mapped.
 	 *
@@ -1235,11 +1197,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Builds Custom Field data array from mapped Fields.
@@ -1339,8 +1297,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 
 	}
 
-
-
 	/**
 	 * Processes Custom Fields once a Case has been established.
 	 *
@@ -1415,9 +1371,4 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

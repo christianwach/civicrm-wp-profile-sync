@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM compatibility Class.
  *
@@ -130,8 +128,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	 */
 	public $mapper_hooks = false;
 
-
-
 	/**
 	 * Initialises this object.
 	 *
@@ -148,8 +144,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 		add_action( 'civicrm_wp_profile_sync_init', [ $this, 'initialise' ] );
 
 	}
-
-
 
 	/**
 	 * Do stuff on plugin init.
@@ -177,8 +171,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 
 	}
 
-
-
 	/**
 	 * Include files.
 	 *
@@ -199,8 +191,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 		require CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/civicrm/cwps-civicrm-bulk.php';
 
 	}
-
-
 
 	/**
 	 * Set up this plugin's objects.
@@ -223,8 +213,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 
 	}
 
-
-
 	/**
 	 * Register hooks.
 	 *
@@ -240,8 +228,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 
 	}
 
-
-
 	/**
 	 * Unregister hooks.
 	 *
@@ -256,8 +242,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 		$this->website->unregister_hooks();
 
 	}
-
-
 
 	/**
 	 * Register Mapper hooks.
@@ -276,8 +260,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 
 	}
 
-
-
 	/**
 	 * Unregister Mapper hooks.
 	 *
@@ -295,11 +277,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Check if CiviCRM is initialised.
@@ -328,11 +306,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Finds out if a CiviCRM Component is active.
@@ -365,8 +339,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 
 	}
 
-
-
 	/**
 	 * Finds out if an Extension is installed and enabled.
 	 *
@@ -392,8 +364,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 		return $active;
 
 	}
-
-
 
 	/**
 	 * Gets the Extensions that are enabled in CiviCRM.
@@ -459,11 +429,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get a CiviCRM Setting.
@@ -503,8 +469,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 
 	}
 
-
-
 	/**
 	 * Gets the active CiviCRM Autocomplete Options.
 	 *
@@ -537,11 +501,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get a CiviCRM admin link.
@@ -578,8 +538,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 
 	}
 
-
-
 	/**
 	 * Utility for de-nullifying CiviCRM data.
 	 *
@@ -601,11 +559,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Gets a CiviCRM Option Group by name.
@@ -663,8 +617,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 
 	}
 
-
-
 	/**
 	 * Get the CiviCRM Option Group data for a given ID.
 	 *
@@ -711,9 +663,4 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

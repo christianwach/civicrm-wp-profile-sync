@@ -13,8 +13,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync ACF Mapper Class.
  *
@@ -89,8 +87,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_ACF {
 		'2' => 'H:i',
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -110,8 +106,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_ACF {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -123,8 +117,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_ACF {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -138,8 +130,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_ACF {
 
 	}
 
-
-
 	/**
 	 * Unregister hooks.
 	 *
@@ -152,11 +142,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_ACF {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Register WordPress hooks.
@@ -171,8 +157,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_ACF {
 
 	}
 
-
-
 	/**
 	 * Remove WordPress hooks.
 	 *
@@ -186,11 +170,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_ACF {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Fires when ACF Fields have been saved.
@@ -228,9 +208,4 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_ACF {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

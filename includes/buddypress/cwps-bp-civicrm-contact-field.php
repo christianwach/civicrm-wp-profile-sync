@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync BuddyPress CiviCRM Contact Field Class.
  *
@@ -151,8 +149,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 	 */
 	public $contact_field_prefix = 'cwps_contact_';
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -173,8 +169,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -186,8 +180,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -228,11 +220,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Returns the Contact Field choices for a Setting Field from when found.
@@ -284,8 +272,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	/**
 	 * Get the CiviCRM Contact Fields for a BuddyPress Field Type.
 	 *
@@ -327,8 +313,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		return $contact_fields;
 
 	}
-
-
 
 	/**
 	 * Get the BuddyPress "selectbox" options for a given CiviCRM Contact Field.
@@ -397,8 +381,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	/**
 	 * Get the "date format" for a given CiviCRM Contact Field.
 	 *
@@ -436,11 +418,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the BuddyPress Field Type for a Contact Field.
@@ -471,11 +449,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the core Contact Fields for a CiviCRM Contact Type.
@@ -572,8 +546,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	/**
 	 * Gets the mapped Contact Field name.
 	 *
@@ -599,8 +571,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		return $name;
 
 	}
-
-
 
 	/**
 	 * Sync a mapped Contact Field to a BuddyPress xProfile Field.
@@ -635,8 +605,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		$result = $this->xprofile->value_update( $params['field_id'], $args['user_id'], $value );
 
 	}
-
-
 
 	/**
 	 * Get the value of a Contact Field, formatted for BuddyPress.
@@ -729,11 +697,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Modify the Options of a BuddyPress "Checkbox" Field.
@@ -766,8 +730,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	/**
 	 * Modify the Options of a BuddyPress "Select" Field.
 	 *
@@ -799,8 +761,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	/**
 	 * Modify the Options of a BuddyPress "Radio" Field.
 	 *
@@ -831,8 +791,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		return $options;
 
 	}
-
-
 
 	/**
 	 * Modify the Settings of a BuddyPress "Date" Field.
@@ -870,8 +828,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	/**
 	 * Modify the Settings of a BuddyPress "Text" Field.
 	 *
@@ -906,11 +862,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Modify the Options of a special case BuddyPress "Checkbox" Field.
@@ -956,8 +908,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	/**
 	 * Filter the Contact Fields for a special case BuddyPress "Checkbox" Field.
 	 *
@@ -992,8 +942,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	/**
 	 * Checks if a "Checkbox" Field is a "True/False" Field.
 	 *
@@ -1026,9 +974,4 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

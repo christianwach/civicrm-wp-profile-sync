@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync "ACF Extended" Class.
  *
@@ -49,8 +47,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 	 */
 	public $form;
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -73,8 +69,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 		add_action( 'cwps/acf/loaded', [ $this, 'initialise' ] );
 
 	}
-
-
 
 	/**
 	 * Initialise this object.
@@ -101,8 +95,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 
 	}
 
-
-
 	/**
 	 * Include files.
 	 *
@@ -114,8 +106,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/classes/cwps-acf-acfe-form.php';
 
 	}
-
-
 
 	/**
 	 * Set up this plugin's objects.
@@ -129,8 +119,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 
 	}
 
-
-
 	/**
 	 * Register hooks.
 	 *
@@ -142,8 +130,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 		add_action( 'acf/include_field_types', [ $this, 'register_field_types' ], 100 );
 
 	}
-
-
 
 	/**
 	 * Registers the Field Types for ACF5.
@@ -176,8 +162,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 
 	}
 
-
-
 	/**
 	 * Check if ACF Extended Pro is present and active.
 	 *
@@ -203,9 +187,4 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

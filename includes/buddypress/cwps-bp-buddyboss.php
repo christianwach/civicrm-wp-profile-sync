@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync BuddyBoss Class.
  *
@@ -40,8 +38,6 @@ class CiviCRM_Profile_Sync_BP_BuddyBoss {
 	 */
 	public $bp_loader;
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -59,8 +55,6 @@ class CiviCRM_Profile_Sync_BP_BuddyBoss {
 		add_action( 'cwps/buddypress/loaded', [ $this, 'initialise' ] );
 
 	}
-
-
 
 	/**
 	 * Do stuff on plugin init.
@@ -81,8 +75,6 @@ class CiviCRM_Profile_Sync_BP_BuddyBoss {
 
 	}
 
-
-
 	/**
 	 * Register hooks.
 	 *
@@ -95,11 +87,7 @@ class CiviCRM_Profile_Sync_BP_BuddyBoss {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Trigger the sync process to populate the core BuddyBoss xProfile Fields.
@@ -128,8 +116,6 @@ class CiviCRM_Profile_Sync_BP_BuddyBoss {
 
 	}
 
-
-
 	/**
 	 * Prevents Nickname sync to BuddyBoss.
 	 *
@@ -142,9 +128,4 @@ class CiviCRM_Profile_Sync_BP_BuddyBoss {
 		return 0;
 	}
 
-
-
-} // Class ends.
-
-
-
+}

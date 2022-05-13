@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Event Class.
  *
@@ -71,8 +69,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 	 */
 	public $event_field_prefix = 'caievent_';
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -91,8 +87,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'register_hooks' ] );
 
 	}
-
-
 
 	/**
 	 * Register WordPress hooks.
@@ -113,11 +107,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the CiviCRM Event data for a given set of IDs.
@@ -169,8 +159,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		return $result['values'];
 
 	}
-
-
 
 	/**
 	 * Get the CiviCRM Event data for a given ID.
@@ -226,11 +214,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Create a CiviCRM Event for a given set of data.
@@ -316,8 +300,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 
 	}
 
-
-
 	/**
 	 * Update a CiviCRM Event with a given set of data.
 	 *
@@ -345,8 +327,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		return $this->create( $event );
 
 	}
-
-
 
 	/**
 	 * Gets the "is_full" status of a CiviCRM Event.
@@ -412,8 +392,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 
 	}
 
-
-
 	/**
 	 * Get the CiviCRM Event data for a given search string.
 	 *
@@ -468,11 +446,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get all CiviCRM Event Types.
@@ -533,8 +507,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 
 	}
 
-
-
 	/**
 	 * Get all CiviCRM Event Types as a formatted array.
 	 *
@@ -561,11 +533,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the numeric ID of the "Event Types" Option Group.
@@ -621,11 +589,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the data for an "Event Type" by ID.
@@ -680,8 +644,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		return $event_type;
 
 	}
-
-
 
 	/**
 	 * Get the data for an "Event Type" by value.
@@ -738,11 +700,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the mapped Event Field name if present.
@@ -782,11 +740,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Returns a Setting Field for a Bypass ACF Field Group when found.
@@ -835,8 +789,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		return $setting_field;
 
 	}
-
-
 
 	/**
 	 * Appends an array of Setting Field choices for a Bypass ACF Field Group when found.
@@ -1022,8 +974,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 
 	}
 
-
-
 	/**
 	 * Appends a nested array of possible values to the Entities array for the
 	 * Bypass Location Rule.
@@ -1061,11 +1011,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the CiviCRM Event Type value for an AJAX request.
@@ -1100,9 +1046,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

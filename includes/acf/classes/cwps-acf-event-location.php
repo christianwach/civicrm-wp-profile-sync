@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Event Location Class.
  *
@@ -115,8 +113,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 		'phone_type_id' => 'select',
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -136,8 +132,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -149,8 +143,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -168,11 +160,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Getter for the public Event Fields.
@@ -200,11 +188,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Validate the content of a Field.
@@ -249,11 +233,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the value of an Event Location Field, formatted for ACF.
@@ -343,11 +323,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the "select" options for a given CiviCRM Event Location Field.
@@ -379,11 +355,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Gets all Event Locations.
@@ -467,8 +439,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 	}
 
-
-
 	/**
 	 * Gets an Event Location given an ID.
 	 *
@@ -520,11 +490,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Create a CiviCRM Event Location for a given set of data.
@@ -592,8 +558,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 	}
 
-
-
 	/**
 	 * Update a CiviCRM Event Location with a given set of data.
 	 *
@@ -622,11 +586,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the CiviCRM Event Location Fields for an ACF Field.
@@ -673,11 +633,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the Event Location Field options for a given Field ID.
@@ -725,8 +681,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 		return $field;
 
 	}
-
-
 
 	/**
 	 * Get the Event Location Fields for an ACF Field Type.
@@ -784,8 +738,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 	}
 
-
-
 	/**
 	 * Get the Address Fields for an ACF Field Type.
 	 *
@@ -836,8 +788,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 		return $fields;
 
 	}
-
-
 
 	/**
 	 * Get the Email Fields for an ACF Field Type.
@@ -890,8 +840,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 	}
 
-
-
 	/**
 	 * Get the Phone Fields for an ACF Field Type.
 	 *
@@ -942,8 +890,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 		return $fields;
 
 	}
-
-
 
 	/**
 	 * Get the Event Location Fields for a given filter and action.
@@ -1012,8 +958,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 	}
 
-
-
 	/**
 	 * Get the public Event Location Fields for a given action.
 	 *
@@ -1035,8 +979,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 	}
 
-
-
 	/**
 	 * Get the Event Location Settings Fields.
 	 *
@@ -1057,8 +999,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 		return $settings_fields;
 
 	}
-
-
 
 	/**
 	 * Get the Event Location Address Fields.
@@ -1101,8 +1041,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 	}
 
-
-
 	/**
 	 * Get the Event Location Email Fields.
 	 *
@@ -1143,8 +1081,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 		return $fields;
 
 	}
-
-
 
 	/**
 	 * Get the Event Location Phone Fields.
@@ -1187,11 +1123,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the Fields for an ACF Field and mapped to a CiviCRM Event Type.
@@ -1218,8 +1150,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 	}
 
-
-
 	/**
 	 * Get the ACF Field Type for an Event Location Field.
 	 *
@@ -1243,11 +1173,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Modify the Settings of an ACF "Select" Field.
@@ -1297,8 +1223,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 		return $field;
 
 	}
-
-
 
 	/**
 	 * Modify the Settings of an ACF "Text" Field.
@@ -1353,9 +1277,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

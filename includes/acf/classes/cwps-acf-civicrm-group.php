@@ -19,8 +19,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Group Class.
  *
@@ -66,8 +64,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 	 */
 	public $mapper_hooks = false;
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -87,8 +83,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 
 	}
 
-
-
 	/**
 	 * Register WordPress hooks.
 	 *
@@ -106,8 +100,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 		add_action( 'cwps/acf/admin/group-to-term/sync', [ $this, 'group_sync' ], 10 );
 
 	}
-
-
 
 	/**
 	 * Register callbacks for Mapper events.
@@ -138,8 +130,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 
 	}
 
-
-
 	/**
 	 * Unregister callbacks for Mapper events.
 	 *
@@ -163,11 +153,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a Post is been synced from a Contact.
@@ -216,8 +202,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 
 	}
 
-
-
 	/**
 	 * Create a WordPress Post when a CiviCRM Contact is being synced.
 	 *
@@ -258,11 +242,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get all mapped CiviCRM Groups.
@@ -329,8 +309,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 
 	}
 
-
-
 	/**
 	 * Get all CiviCRM Groups that are not Smart Groups.
 	 *
@@ -383,8 +361,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 		return $groups;
 
 	}
-
-
 
 	/**
 	 * Get all CiviCRM Groups that a Contact is a "current" member of.
@@ -509,8 +485,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 
 	}
 
-
-
 	/**
 	 * Get all CiviCRM Groups that a Contact is a "removed" member of.
 	 *
@@ -577,11 +551,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the number of Contacts who are members of a CiviCRM Group.
@@ -629,8 +599,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 
 	}
 
-
-
 	/**
 	 * Check if a CiviCRM Contact is a member of a CiviCRM Group.
 	 *
@@ -676,8 +644,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 		return empty( $result['values'] ) ? false : true;
 
 	}
-
-
 
 	/**
 	 * Add a CiviCRM Contact to a CiviCRM Group.
@@ -726,8 +692,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 
 	}
 
-
-
 	/**
 	 * Delete a CiviCRM Contact from a CiviCRM Group.
 	 *
@@ -775,11 +739,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Add a CiviCRM Contact to a CiviCRM Group with Double Opt In.
@@ -841,11 +801,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get "chunked" CiviCRM API Group Contact data for a given Group ID.
@@ -904,11 +860,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept a CiviCRM group prior to it being deleted.
@@ -934,11 +886,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a CiviCRM Contact is added to a Group.
@@ -954,8 +902,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 
 	}
 
-
-
 	/**
 	 * Intercept when a CiviCRM Contact is deleted (or removed) from a Group.
 	 *
@@ -969,8 +915,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 		$this->acf_loader->post->tax->terms_update_for_group_contacts( $args['objectId'], $args['objectRef'], 'remove' );
 
 	}
-
-
 
 	/**
 	 * Intercept when a CiviCRM Contact is re-added to a Group.
@@ -990,9 +934,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

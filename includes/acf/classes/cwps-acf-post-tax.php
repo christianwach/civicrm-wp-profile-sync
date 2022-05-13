@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync Post Taxonomy Class.
  *
@@ -67,8 +65,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	 */
 	public $term_meta_key = '_cai_civicrm_group_id';
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -87,8 +83,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		add_action( 'cwps/acf/post/loaded', [ $this, 'register_hooks' ] );
 
 	}
-
-
 
 	/**
 	 * Register WordPress hooks.
@@ -113,8 +107,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		add_action( 'cwps/acf/contact/post/saved', [ $this, 'post_saved' ], 10 );
 
 	}
-
-
 
 	/**
 	 * Register callbacks for Mapper events.
@@ -143,8 +135,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 	}
 
-
-
 	/**
 	 * Unregister callbacks for Mapper events.
 	 *
@@ -167,8 +157,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		$this->mapper_hooks = false;
 
 	}
-
-
 
 	/**
 	 * Build an array of Taxonomies.
@@ -200,8 +188,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 	}
 
-
-
 	/**
 	 * Register WordPress admin hooks.
 	 *
@@ -219,11 +205,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Add a form element to the "Add Term" form.
@@ -241,8 +223,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/taxonomies/term-add.php';
 
 	}
-
-
 
 	/**
 	 * Add a form element to the "Edit Term" form.
@@ -269,8 +249,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/taxonomies/term-edit.php';
 
 	}
-
-
 
 	/**
 	 * Get the filtered Groups for the "Add Term" and "Edit Term" forms.
@@ -333,11 +311,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Hook into the creation of a term.
@@ -366,8 +340,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 	}
 
-
-
 	/**
 	 * Hook into updates to a term before the term is updated.
 	 *
@@ -395,8 +367,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		$this->term_edited = clone $term;
 
 	}
-
-
 
 	/**
 	 * Hook into updates to a term.
@@ -455,8 +425,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 	}
 
-
-
 	/**
 	 * Hook into deletion of a term.
 	 *
@@ -478,11 +446,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the CiviCRM Group ID for a term.
@@ -506,8 +470,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		return (int) $group_id;
 
 	}
-
-
 
 	/**
 	 * Add meta data to a term.
@@ -569,8 +531,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 	}
 
-
-
 	/**
 	 * Update the meta data for a term.
 	 *
@@ -627,8 +587,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 	}
 
-
-
 	/**
 	 * Get the CiviCRM Group ID for a term.
 	 *
@@ -647,11 +605,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the terms for a given CiviCRM Group.
@@ -705,11 +659,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the terms for a given WordPress Post Type.
@@ -748,8 +698,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 	}
 
-
-
 	/**
 	 * Get the terms for a given WordPress Post ID.
 	 *
@@ -773,11 +721,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the synced terms for a given WordPress Post Type.
@@ -827,8 +771,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 	}
 
-
-
 	/**
 	 * Get the synced terms for a given WordPress Post ID.
 	 *
@@ -866,8 +808,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		return $terms;
 
 	}
-
-
 
 	/**
 	 * Get the terms for a Post that are synced to a CiviCRM Group.
@@ -918,8 +858,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 	}
 
-
-
 	/**
 	 * Get the synced terms for a given WordPress taxonomy.
 	 *
@@ -960,8 +898,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 	}
 
-
-
 	/**
 	 * Get all synced terms in all WordPress taxonomies.
 	 *
@@ -1001,11 +937,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a WordPress Post is about to be updated.
@@ -1046,8 +978,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		$this->terms_pre = $terms;
 
 	}
-
-
 
 	/**
 	 * Update the terms when a WordPress Post has been updated.
@@ -1165,11 +1095,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Process terms for Contacts when they are added or removed from a Group.
@@ -1307,9 +1233,4 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

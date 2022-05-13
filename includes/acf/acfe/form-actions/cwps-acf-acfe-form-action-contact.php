@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync "Contact" ACFE Form Action Class.
  *
@@ -108,8 +106,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		'id' => 'number',
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -140,8 +136,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	/**
 	 * Register hooks.
 	 *
@@ -150,8 +144,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 	public function register_hooks() {
 
 	}
-
-
 
 	/**
 	 * Configure this object.
@@ -368,8 +360,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		$this->mapping_field_filters_add( 'contact_conditional' );
 
 	}
-
-
 
 	/**
 	 * Performs tasks when the Form the Action is attached to is loaded.
@@ -728,8 +718,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	/**
 	 * Performs validation when the Form the Action is attached to is submitted.
 	 *
@@ -754,8 +742,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		*/
 
 	}
-
-
 
 	/**
 	 * Performs the action when the Form the Action is attached to is submitted.
@@ -849,11 +835,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Defines additional Fields for the "Action" Tab.
@@ -1032,11 +1014,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Defines the "Mapping" Tab.
@@ -1133,8 +1111,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	/**
 	 * Defines the Fields in the "Contact Fields" Accordion.
 	 *
@@ -1218,8 +1194,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		return $fields;
 
 	}
-
-
 
 	/**
 	 * Defines the Fields in the "Custom Fields" Accordion.
@@ -1366,8 +1340,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		return $fields;
 
 	}
-
-
 
 	/**
 	 * Defines the "Email" Accordion.
@@ -1522,8 +1494,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	/**
 	 * Defines the "Website" Accordion.
 	 *
@@ -1670,8 +1640,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		return $fields;
 
 	}
-
-
 
 	/**
 	 * Defines the "Address" Accordion.
@@ -1905,8 +1873,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	/**
 	 * Defines the Fields in the "Address Custom Fields" Accordion.
 	 *
@@ -1984,8 +1950,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		return $fields;
 
 	}
-
-
 
 	/**
 	 * Defines the "Phone" Accordion.
@@ -2158,8 +2122,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	/**
 	 * Defines the "Instant Messenger" Accordion.
 	 *
@@ -2331,8 +2293,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	/**
 	 * Defines the "Group" Accordion.
 	 *
@@ -2501,8 +2461,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		return $fields;
 
 	}
-
-
 
 	/**
 	 * Defines the "Membership" Accordion.
@@ -2684,8 +2642,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	/**
 	 * Defines the "Note" Accordion.
 	 *
@@ -2815,8 +2771,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	/**
 	 * Defines the "Attachment(s)" Accordion for "Note" Actions.
 	 *
@@ -2936,8 +2890,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		return $fields;
 
 	}
-
-
 
 	/**
 	 * Defines the "Tag" Accordion.
@@ -3092,11 +3044,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Defines "Relationship" Tab.
@@ -3123,8 +3071,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		return $fields;
 
 	}
-
-
 
 	/**
 	 * Defines the Fields in the "Relationship Fields" Accordion.
@@ -3316,8 +3262,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	/**
 	 * Defines the Fields in the "Relationship Custom Fields" Accordion.
 	 *
@@ -3464,11 +3408,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Builds Contact data array from mapped Fields.
@@ -3521,8 +3461,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		return $data;
 
 	}
-
-
 
 	/**
 	 * Validates the Contact data array from mapped Fields.
@@ -3594,8 +3532,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		return false;
 
 	}
-
-
 
 	/**
 	 * Saves the CiviCRM Contact given data from mapped Fields.
@@ -3753,8 +3689,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	/**
 	 * Finds the Contact ID given data from mapped Fields.
 	 *
@@ -3799,8 +3733,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	/**
 	 * Finds the Contact ID when this is the "Form Submitter".
 	 *
@@ -3833,8 +3765,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		return $contact_id;
 
 	}
-
-
 
 	/**
 	 * Finds the Contact ID in the data from the mapped Contact ID Field.
@@ -3906,8 +3836,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	/**
 	 * Finds the Contact ID when this is a "Related Contact".
 	 *
@@ -3973,8 +3901,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	/**
 	 * Finds the Contact ID given data from mapped Fields.
 	 *
@@ -4015,11 +3941,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Builds Custom Field data array from mapped Fields.
@@ -4119,8 +4041,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	/**
 	 * Processes Custom Fields once a Contact has been established.
 	 *
@@ -4195,11 +4115,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Builds Email data array from mapped Fields.
@@ -4257,8 +4173,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	/**
 	 * Saves the CiviCRM Email(s) given data from mapped Fields.
 	 *
@@ -4291,7 +4205,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 			// Only skip if the Email Conditional Reference Field has a value.
 			if ( ! empty( $email['email_conditional_ref'] ) ) {
-				// And the Email Conditional Field has a value.
+				// And the Email Conditional Field has no value.
 				if ( empty( $email['email_conditional'] ) ) {
 					continue;
 				}
@@ -4321,8 +4235,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		return $emails;
 
 	}
-
-
 
 	/**
 	 * Gets the CiviCRM Primary Email from parsed data.
@@ -4355,7 +4267,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 			// Only skip if the Email Conditional Reference Field has a value.
 			if ( ! empty( $email_item['email_conditional_ref'] ) ) {
-				// And the Email Conditional Field has a value.
+				// And the Email Conditional Field has no value.
 				if ( empty( $email_item['email_conditional'] ) ) {
 					continue;
 				}
@@ -4385,11 +4297,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Builds Relationship data array from mapped Fields.
@@ -4558,8 +4466,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	/**
 	 * Builds Relationship Custom Field data array from mapped Fields.
 	 *
@@ -4594,8 +4500,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		return $fields;
 
 	}
-
-
 
 	/**
 	 * Saves the CiviCRM Relationship(s) given data from mapped Fields.
@@ -4653,8 +4557,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		return $relationships;
 
 	}
-
-
 
 	/**
 	 * Gets the current Relationship offset.
@@ -4747,11 +4649,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Builds Website data array from mapped Fields.
@@ -4809,8 +4707,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	/**
 	 * Saves the CiviCRM Website(s) given data from mapped Fields.
 	 *
@@ -4843,7 +4739,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 			// Only skip if the Website Conditional Reference Field has a value.
 			if ( ! empty( $website['website_conditional_ref'] ) ) {
-				// And the Website Conditional Field has a value.
+				// And the Website Conditional Field has no value.
 				if ( empty( $website['website_conditional'] ) ) {
 					continue;
 				}
@@ -4872,11 +4768,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Builds Address data array from mapped Fields.
@@ -4943,8 +4835,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	/**
 	 * Builds Address Custom Field data array from mapped Fields.
 	 *
@@ -4973,8 +4863,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		return $fields;
 
 	}
-
-
 
 	/**
 	 * Saves the CiviCRM Address(es) given data from mapped Fields.
@@ -5008,7 +4896,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 			// Only skip if the Address Conditional Reference Field has a value.
 			if ( ! empty( $address['address_conditional_ref'] ) ) {
-				// And the Address Conditional Field has a value.
+				// And the Address Conditional Field has no value.
 				if ( empty( $address['address_conditional'] ) ) {
 					continue;
 				}
@@ -5041,11 +4929,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Builds Phone data array from mapped Fields.
@@ -5106,8 +4990,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	/**
 	 * Saves the CiviCRM Phone(s) given data from mapped Fields.
 	 *
@@ -5145,7 +5027,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 			// Only skip if the Phone Conditional Reference Field has a value.
 			if ( ! empty( $phone['phone_conditional_ref'] ) ) {
-				// And the Phone Conditional Field has a value.
+				// And the Phone Conditional Field has no value.
 				if ( empty( $phone['phone_conditional'] ) ) {
 					continue;
 				}
@@ -5185,11 +5067,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Builds Instant Messenger data array from mapped Fields.
@@ -5250,8 +5128,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	/**
 	 * Saves the CiviCRM Instant Messenger(s) given data from mapped Fields.
 	 *
@@ -5284,7 +5160,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 			// Only skip if the Instant Messenger Conditional Reference Field has a value.
 			if ( ! empty( $im['im_conditional_ref'] ) ) {
-				// And the Instant Messenger Conditional Field has a value.
+				// And the Instant Messenger Conditional Field has no value.
 				if ( empty( $im['im_conditional'] ) ) {
 					continue;
 				}
@@ -5331,11 +5207,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Builds Group data array from mapped Fields.
@@ -5391,8 +5263,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	/**
 	 * Adds the Contact to the CiviCRM Group(s) given data from Group Actions.
 	 *
@@ -5422,7 +5292,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 			// Only skip if the Group Conditional Reference Field has a value.
 			if ( ! empty( $group['group_conditional_ref'] ) ) {
-				// And the Group Conditional Field has a value.
+				// And the Group Conditional Field has no value.
 				if ( empty( $group['group_conditional'] ) ) {
 					continue;
 				}
@@ -5463,11 +5333,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Builds Membership data array from mapped Fields.
@@ -5525,8 +5391,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	/**
 	 * Adds the CiviCRM Membership(s) to the Contact given data from Membership Actions.
 	 *
@@ -5559,7 +5423,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 			// Only skip if the Membership Conditional Reference Field has a value.
 			if ( ! empty( $membership['membership_conditional_ref'] ) ) {
-				// And the Membership Conditional Field has a value.
+				// And the Membership Conditional Field has no value.
 				if ( empty( $membership['membership_conditional'] ) ) {
 					continue;
 				}
@@ -5597,11 +5461,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Builds Note data array from mapped Fields.
@@ -5662,8 +5522,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	/**
 	 * Saves the CiviCRM Note(s) given data from mapped Fields.
 	 *
@@ -5696,7 +5554,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 			// Only skip if the Note Conditional Reference Field has a value.
 			if ( ! empty( $note['note_conditional_ref'] ) ) {
-				// And the Note Conditional Field has a value.
+				// And the Note Conditional Field has no value.
 				if ( empty( $note['note_conditional'] ) ) {
 					continue;
 				}
@@ -5735,8 +5593,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		return $notes;
 
 	}
-
-
 
 	/**
 	 * Builds Attachment data array from mapped Fields.
@@ -5795,8 +5651,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	/**
 	 * Saves the CiviCRM Attachment(s) given data from mapped Fields.
 	 *
@@ -5834,7 +5688,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 			// Only skip if the Attachment Conditional Reference Field has a value.
 			if ( ! empty( $attachment['attachment_conditional_ref'] ) ) {
-				// And the Attachment Conditional Field has a value.
+				// And the Attachment Conditional Field has no value.
 				if ( empty( $attachment['attachment_conditional'] ) ) {
 					continue;
 				}
@@ -5880,11 +5734,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Builds Tag data array from mapped Fields.
@@ -5937,8 +5787,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
 	/**
 	 * Adds the Contact to the CiviCRM Tag(s) given data from Tag Actions.
 	 *
@@ -5968,7 +5816,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 			// Only skip if the Tag Conditional Reference Field has a value.
 			if ( ! empty( $tag['tag_conditional_ref'] ) ) {
-				// And the Tag Conditional Field has a value.
+				// And the Tag Conditional Field has no value.
 				if ( empty( $tag['tag_conditional'] ) ) {
 					continue;
 				}
@@ -6011,9 +5859,4 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

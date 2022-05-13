@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Activity Class.
  *
@@ -80,8 +78,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 	 */
 	public $activity_field_prefix = 'caiactivity_';
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -101,8 +97,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -114,8 +108,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -157,8 +149,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 	}
 
-
-
 	/**
 	 * Register callbacks for Mapper events.
 	 *
@@ -179,8 +169,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		$this->mapper_hooks = true;
 
 	}
-
-
 
 	/**
 	 * Unregister callbacks for Mapper events.
@@ -203,11 +191,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update a CiviCRM Activity when a WordPress Post is synced.
@@ -222,8 +206,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		$this->post_saved( $args );
 
 	}
-
-
 
 	/**
 	 * Update a CiviCRM Activity when a WordPress Post has been updated.
@@ -297,8 +279,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 	}
 
-
-
 	/**
 	 * Update a CiviCRM Activity when the ACF Fields on a WordPress Post are synced.
 	 *
@@ -312,8 +292,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		$this->acf_fields_saved( $args );
 
 	}
-
-
 
 	/**
 	 * Update a CiviCRM Activity when the ACF Fields on a WordPress Post have been updated.
@@ -400,11 +378,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get "chunked" CiviCRM API Activity data for a given Activity Type.
@@ -459,11 +433,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Check whether an Activity's Activity Type is mapped to a Post Type.
@@ -550,8 +520,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 	}
 
-
-
 	/**
 	 * Check if an Activity is mapped to a Post of a particular Post Type.
 	 *
@@ -605,11 +573,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the CiviCRM Activity data for a given ID.
@@ -679,11 +643,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the CiviCRM Activity Target Contact IDs for a given ID.
@@ -747,8 +707,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 	}
 
-
-
 	/**
 	 * Get the CiviCRM Activity Assignee Contact IDs for a given ID.
 	 *
@@ -811,11 +769,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Create a CiviCRM Activity for a given set of data.
@@ -896,8 +850,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 	}
 
-
-
 	/**
 	 * Update a CiviCRM Activity with a given set of data.
 	 *
@@ -925,8 +877,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		return $this->create( $activity );
 
 	}
-
-
 
 	/**
 	 * Fill out the missing data for a CiviCRM Activity.
@@ -958,11 +908,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Prepare the required CiviCRM Activity data from a WordPress Post.
@@ -1042,8 +988,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 	}
 
-
-
 	/**
 	 * Create a CiviCRM Activity from a WordPress Post.
 	 *
@@ -1066,8 +1010,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		return $activity;
 
 	}
-
-
 
 	/**
 	 * Sync a WordPress Post with a CiviCRM Activity.
@@ -1096,11 +1038,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Prepare the required CiviCRM Activity data from a set of ACF Fields.
@@ -1204,8 +1142,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 	}
 
-
-
 	/**
 	 * Update a CiviCRM Activity with data from ACF Fields.
 	 *
@@ -1232,11 +1168,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Return the "CiviCRM Field" ACF Settings Field.
@@ -1299,8 +1231,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 	}
 
-
-
 	/**
 	 * Get the mapped Activity Field name if present.
 	 *
@@ -1339,11 +1269,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Returns the choices for a Setting Field from this Entity when found.
@@ -1419,8 +1345,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 	}
 
-
-
 	/**
 	 * Returns a Setting Field for a Bypass ACF Field Group when found.
 	 *
@@ -1468,8 +1392,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		return $setting_field;
 
 	}
-
-
 
 	/**
 	 * Appends an array of Setting Field choices for a Bypass ACF Field Group when found.
@@ -1551,8 +1473,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 	}
 
-
-
 	/**
 	 * Appends a nested array of possible values to the Entities array for the
 	 * Bypass Location Rule.
@@ -1585,8 +1505,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 	}
 
-
-
 	/**
 	 * Listen for queries from the Field Group class.
 	 *
@@ -1617,8 +1535,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 	}
 
-
-
 	/**
 	 * Listen for queries from the Custom Field class.
 	 *
@@ -1648,8 +1564,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		return $custom_fields;
 
 	}
-
-
 
 	/**
 	 * Listen for queries from the Custom Field class.
@@ -1737,8 +1651,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 	}
 
-
-
 	/**
 	 * Listen for queries from the Attachment class.
 	 *
@@ -1769,8 +1681,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 	}
 
-
-
 	/**
 	 * Listen for Attachment support queries.
 	 *
@@ -1793,8 +1703,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		return $entity_tables;
 
 	}
-
-
 
 	/**
 	 * Respond to queries for Attachment choices from the Attachment class.
@@ -1823,11 +1731,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Check if a Field Group has been mapped to one or more Activity Post Types.
@@ -1894,9 +1798,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

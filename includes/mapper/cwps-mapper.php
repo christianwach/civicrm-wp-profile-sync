@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync Mapper Parent Class.
  *
@@ -74,8 +72,6 @@ class CiviCRM_WP_Profile_Sync_Mapper {
 		'yy' => 'Y',
 	];
 
-
-
 	/**
 	 * Initialises this object.
 	 *
@@ -92,8 +88,6 @@ class CiviCRM_WP_Profile_Sync_Mapper {
 		add_action( 'civicrm_wp_profile_sync_init', [ $this, 'initialise' ] );
 
 	}
-
-
 
 	/**
 	 * Do stuff on plugin init.
@@ -117,8 +111,6 @@ class CiviCRM_WP_Profile_Sync_Mapper {
 
 	}
 
-
-
 	/**
 	 * Include files.
 	 *
@@ -131,8 +123,6 @@ class CiviCRM_WP_Profile_Sync_Mapper {
 		require CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/mapper/cwps-mapper-ufmatch.php';
 
 	}
-
-
 
 	/**
 	 * Set up this plugin's objects.
@@ -147,8 +137,6 @@ class CiviCRM_WP_Profile_Sync_Mapper {
 
 	}
 
-
-
 	/**
 	 * Register hooks.
 	 *
@@ -161,8 +149,6 @@ class CiviCRM_WP_Profile_Sync_Mapper {
 		$this->ufmatch->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Unregister hooks.
@@ -177,9 +163,4 @@ class CiviCRM_WP_Profile_Sync_Mapper {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

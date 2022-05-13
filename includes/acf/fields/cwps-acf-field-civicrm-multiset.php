@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync Custom ACF Field Type - CiviCRM Multiple Record Set Field.
  *
@@ -138,8 +136,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set extends acf_field 
 	 */
 	public $l10n = [];
 
-
-
 	/**
 	 * Sets up the Field Type.
 	 *
@@ -173,8 +169,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set extends acf_field 
 
 	}
 
-
-
 	/**
 	 * Create extra Settings for this Field Type.
 	 *
@@ -187,8 +181,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set extends acf_field 
 
 	}
 	 */
-
-
 
 	/**
 	 * Creates the HTML interface for this Field Type.
@@ -207,8 +199,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set extends acf_field 
 
 	}
 
-
-
 	/**
 	 * This action is called in the "admin_enqueue_scripts" action on the edit
 	 * screen where this Field is edited.
@@ -222,8 +212,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set extends acf_field 
 	}
 	 */
 
-
-
 	/**
 	 * This action is called in the "admin_head" action on the edit screen where
 	 * this Field is edited.
@@ -236,8 +224,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set extends acf_field 
 
 	}
 	 */
-
-
 
 	/**
 	 * This method is called in the "admin_enqueue_scripts" action on the edit
@@ -259,8 +245,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set extends acf_field 
 		);
 
 	}
-
-
 
 	/**
 	 * This method is called in the admin_head action on the edit screen where
@@ -286,8 +270,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set extends acf_field 
 
 	}
 
-
-
 	/**
 	 * This filter is applied to the $value after it is loaded from the database.
 	 *
@@ -310,8 +292,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set extends acf_field 
 
 	}
 
-
-
 	/**
 	 * This filter is applied to the $value before it is saved in the database.
 	 *
@@ -328,8 +308,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set extends acf_field 
 
 	}
 	 */
-
-
 
 	/**
 	 * This filter is appied to the value after it is loaded from the database
@@ -362,8 +340,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set extends acf_field 
 	}
 	 */
 
-
-
 	/**
 	 * This filter is used to perform validation on the value prior to saving.
 	 *
@@ -391,8 +367,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set extends acf_field 
 
 	}
 
-
-
 	/**
 	 * This action is fired after a value has been deleted from the database.
 	 *
@@ -406,8 +380,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set extends acf_field 
 
 	}
 	 */
-
-
 
 	/**
 	 * This filter is applied to the Field after it is loaded from the database.
@@ -444,8 +416,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set extends acf_field 
 
 	}
 
-
-
 	/**
 	 * This filter is applied to the Field before it is saved to the database.
 	 *
@@ -464,8 +434,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set extends acf_field 
 
 	}
 
-
-
 	/**
 	 * This action is fired after a Field is deleted from the database.
 	 *
@@ -476,8 +444,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set extends acf_field 
 
 	}
 	 */
-
-
 
 	/**
 	 * Modify the Field with defaults and Subfield definitions.
@@ -660,9 +626,4 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set extends acf_field 
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

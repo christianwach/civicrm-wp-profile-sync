@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync BuddyPress CiviCRM Address Class.
  *
@@ -104,8 +102,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 		//'name' => 'textbox',
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -126,8 +122,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -143,8 +137,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -178,8 +170,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 	}
 
-
-
 	/**
 	 * Register callbacks for Mapper events.
 	 *
@@ -202,8 +192,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 		$this->mapper_hooks = true;
 
 	}
-
-
 
 	/**
 	 * Unregister callbacks for Mapper events.
@@ -228,11 +216,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a CiviCRM Address Record has been updated.
@@ -276,8 +260,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 		}
 
 	}
-
-
 
 	/**
 	 * Process a CiviCRM Address Record.
@@ -367,8 +349,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 	}
 
-
-
 	/**
 	 * Get the value of a Address Field, formatted for BuddyPress.
 	 *
@@ -423,11 +403,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Save Address(es) when BuddyPress Profile Fields have been saved.
@@ -495,8 +471,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 		}
 
 	}
-
-
 
 	/**
 	 * Prepares the CiviCRM Contact data from an array of BuddyPress Field data.
@@ -569,11 +543,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Returns the Address Field choices for a Setting Field from when found.
@@ -623,8 +593,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 	}
 
-
-
 	/**
 	 * Get the CiviCRM Address Fields for a BuddyPress Field Type.
 	 *
@@ -656,11 +624,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the core Fields for a CiviCRM Address Type.
@@ -739,11 +703,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the BuddyPress Field Type for an Address Field.
@@ -767,8 +727,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 		return $type;
 
 	}
-
-
 
 	/**
 	 * Gets the mapped Address Field name.
@@ -796,11 +754,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the BuddyPress "selectbox" options for a given CiviCRM Contact Field.
@@ -848,11 +802,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Listen for queries from the Custom Field class.
@@ -914,11 +864,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Modify the Options of a BuddyPress "Select" Field.
@@ -951,8 +897,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 	}
 
-
-
 	/**
 	 * Modify the Options of a BuddyPress "Checkbox" Field.
 	 *
@@ -984,11 +928,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Modify the Options of a special case BuddyPress "Checkbox" Field.
@@ -1034,8 +974,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 	}
 
-
-
 	/**
 	 * Filter the Address Fields for a special case BuddyPress "Checkbox" Field.
 	 *
@@ -1069,8 +1007,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 	}
 
-
-
 	/**
 	 * Checks if a "Checkbox" Field is a "True/False" Field.
 	 *
@@ -1103,9 +1039,4 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

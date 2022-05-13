@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Contact Type compatibility Class.
  *
@@ -53,8 +51,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Type {
 		'Organization',
 	];
 
-
-
 	/**
 	 * Initialises this object.
 	 *
@@ -73,8 +69,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Type {
 
 	}
 
-
-
 	/**
 	 * Do stuff on plugin init.
 	 *
@@ -83,8 +77,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Type {
 	public function initialise() {
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -95,8 +87,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Type {
 
 	}
 
-
-
 	/**
 	 * Unregister hooks.
 	 *
@@ -106,11 +96,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Type {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get all top-level CiviCRM Contact Types.
@@ -125,8 +111,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Type {
 		return $this->top_level_types;
 
 	}
-
-
 
 	/**
 	 * Get all CiviCRM Contact Types.
@@ -178,8 +162,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Type {
 		return $all;
 
 	}
-
-
 
 	/**
 	 * Get all CiviCRM Contact Types, nested by parent.
@@ -255,11 +237,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Type {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the CiviCRM Contact Type and Sub-type for a given Contact Type.
@@ -350,8 +328,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Type {
 
 	}
 
-
-
 	/**
 	 * Get the CiviCRM Contact Type and Sub-type for a given Contact Type ID.
 	 *
@@ -369,8 +345,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Type {
 		return $types;
 
 	}
-
-
 
 	/**
 	 * Get the Contact Type hierarchy for a given a Contact.
@@ -418,8 +392,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Type {
 		return $types;
 
 	}
-
-
 
 	/**
 	 * Convert a Contact Type hierarchy into an array separated items.
@@ -472,11 +444,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Type {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the CiviCRM Contact Type data for a given ID or name.
@@ -550,9 +518,4 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Type {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

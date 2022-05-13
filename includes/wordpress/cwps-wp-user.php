@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync WordPress User compatibility Class.
  *
@@ -49,8 +47,6 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 	 */
 	public $mapper_hooks = false;
 
-
-
 	/**
 	 * Initialises this object.
 	 *
@@ -71,8 +67,6 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 
 	}
 
-
-
 	/**
 	 * Do stuff on plugin init.
 	 *
@@ -88,8 +82,6 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -107,8 +99,6 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 
 	}
 
-
-
 	/**
 	 * Unregister hooks.
 	 *
@@ -120,8 +110,6 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 		$this->unregister_mapper_hooks();
 
 	}
-
-
 
 	/**
 	 * Register Mapper hooks.
@@ -144,8 +132,6 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 
 	}
 
-
-
 	/**
 	 * Unregister Mapper hooks.
 	 *
@@ -167,11 +153,7 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Updates a CiviCRM Contact when a WordPress User is edited.
@@ -264,8 +246,6 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 
 	}
 
-
-
 	/**
 	 * Check if a WordPress User should by synced.
 	 *
@@ -306,11 +286,7 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update a WordPress User's "First Name" and "Last Name" Fields.
@@ -344,8 +320,6 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 
 	}
 
-
-
 	/**
 	 * Update a WordPress User's "Nickname" Field.
 	 *
@@ -374,8 +348,6 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 		update_user_meta( $user_id, 'nickname', $contact->nick_name );
 
 	}
-
-
 
 	/**
 	 * Update a WordPress User's Email address.
@@ -413,8 +385,6 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 		$this->plugin->hooks_bp_add();
 
 	}
-
-
 
 	/**
 	 * Update a WordPress User's Website URL.
@@ -472,9 +442,4 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync ACF Field Type Class.
  *
@@ -67,8 +65,6 @@ class CiviCRM_Profile_Sync_ACF_Field_Type {
 	 */
 	public $contact_group;
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -88,8 +84,6 @@ class CiviCRM_Profile_Sync_ACF_Field_Type {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -102,8 +96,6 @@ class CiviCRM_Profile_Sync_ACF_Field_Type {
 
 	}
 
-
-
 	/**
 	 * Register hooks.
 	 *
@@ -115,8 +107,6 @@ class CiviCRM_Profile_Sync_ACF_Field_Type {
 		add_action( 'acf/include_field_types', [ $this, 'register_field_types' ] );
 
 	}
-
-
 
 	/**
 	 * Registers the Field Types for ACF5.
@@ -134,8 +124,6 @@ class CiviCRM_Profile_Sync_ACF_Field_Type {
 		$this->setup_field_types( $version );
 
 	}
-
-
 
 	/**
 	 * Include Field Types for ACF5.
@@ -172,8 +160,6 @@ class CiviCRM_Profile_Sync_ACF_Field_Type {
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-contact-existing-new.php';
 
 	}
-
-
 
 	/**
 	 * Include Field Types for ACF5.
@@ -212,9 +198,4 @@ class CiviCRM_Profile_Sync_ACF_Field_Type {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

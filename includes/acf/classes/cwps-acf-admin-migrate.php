@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync ACF Admin Migrate Class
  *
@@ -76,8 +74,6 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	 */
 	public $cai_settings_key = 'civicrm_acf_integration_mapping_settings';
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -96,8 +92,6 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -109,8 +103,6 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register WordPress hooks.
@@ -135,11 +127,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Show a notice when CiviCRM ACF Integration is present.
@@ -186,11 +174,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Add our admin page(s) to the WordPress admin menu.
@@ -245,8 +229,6 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 
 	}
 
-
-
 	/**
 	 * Add metabox scripts and initialise plugin help.
 	 *
@@ -260,8 +242,6 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 		wp_enqueue_script( 'dashboard' );
 
 	}
-
-
 
 	/**
 	 * Enqueue any styles needed by our Migrate page.
@@ -280,8 +260,6 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 		);
 
 	}
-
-
 
 	/**
 	 * Append the "ACF Integration" page to Settings page.
@@ -304,11 +282,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Show our "ACF Integration" page.
@@ -352,8 +326,6 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 
 	}
 
-
-
 	/**
 	 * Append the "ACF Integration" page URL to the subpage URLs.
 	 *
@@ -372,8 +344,6 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 
 	}
 
-
-
 	/**
 	 * Show subpage tabs on settings pages.
 	 *
@@ -391,8 +361,6 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 		return $show_tabs;
 
 	}
-
-
 
 	/**
 	 * Add subpage tab to tabs on settings pages.
@@ -420,8 +388,6 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 
 	}
 
-
-
 	/**
 	 * Get the URL for the form action.
 	 *
@@ -446,11 +412,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Register meta boxes.
@@ -520,8 +482,6 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 
 	}
 
-
-
 	/**
 	 * Render Submit meta box on Admin screen.
 	 *
@@ -537,8 +497,6 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 
 	}
 
-
-
 	/**
 	 * Render "Migrate Settings" meta box on Admin screen.
 	 *
@@ -553,8 +511,6 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/metaboxes/metabox-acf-migrate-info.php';
 
 	}
-
-
 
 	/**
 	 * Perform actions when the form has been submitted.
@@ -574,8 +530,6 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 		$this->form_redirect();
 
 	}
-
-
 
 	/**
 	 * Migrate the settings.
@@ -598,8 +552,6 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 
 	}
 
-
-
 	/**
 	 * Check the nonce.
 	 *
@@ -611,8 +563,6 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 		check_admin_referer( 'cwps_migrate_action', 'cwps_migrate_nonce' );
 
 	}
-
-
 
 	/**
 	 * Redirect to the Settings page with an extra param.
@@ -633,11 +583,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Test existence of a specified option.
@@ -663,8 +609,6 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 
 	}
 
-
-
 	/**
 	 * Return a value for a specified option.
 	 *
@@ -689,8 +633,6 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 
 	}
 
-
-
 	/**
 	 * Set a value for a specified option.
 	 *
@@ -712,8 +654,6 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 
 	}
 
-
-
 	/**
 	 * Delete a specified option.
 	 *
@@ -734,9 +674,4 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

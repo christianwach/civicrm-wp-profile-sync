@@ -11,9 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
-
 /**
  * Participants Custom Post Type Class.
  *
@@ -122,8 +119,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 */
 	public $acf_slug = 'cwps_participant';
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -151,8 +146,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -178,8 +171,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	/**
 	 * Include files.
 	 *
@@ -193,8 +184,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	/**
 	 * Set up objects.
 	 *
@@ -207,8 +196,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		$this->term_html = new CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML( $this );
 
 	}
-
-
 
 	/**
 	 * Register WordPress hooks.
@@ -268,8 +255,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	/**
 	 * Register callbacks for Mapper events.
 	 *
@@ -296,8 +281,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	/**
 	 * Unregister callbacks for Mapper events.
 	 *
@@ -321,8 +304,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		$this->mapper_hooks = false;
 
 	}
-
-
 
 	/**
 	 * Register callbacks for CPT events.
@@ -355,8 +336,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	/**
 	 * Unregister callbacks for CPT events.
 	 *
@@ -376,8 +355,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	/**
 	 * Register callbacks for ACF events.
 	 *
@@ -393,8 +370,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	/**
 	 * Unregister callbacks for ACF events.
 	 *
@@ -407,11 +382,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Act when the CPT is enabled via the CiviCRM Event Component settings.
@@ -446,11 +417,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update a CiviCRM Participant when a WordPress Post is synced.
@@ -465,8 +432,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		$this->post_saved( $args );
 
 	}
-
-
 
 	/**
 	 * Update a CiviCRM Participant when a WordPress Post has been updated.
@@ -499,8 +464,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	/**
 	 * Update a CiviCRM Participant when the ACF Fields on a WordPress Post are synced.
 	 *
@@ -514,8 +477,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		$this->acf_fields_saved( $args );
 
 	}
-
-
 
 	/**
 	 * Update a CiviCRM Participant when the ACF Fields on a WordPress Post have been updated.
@@ -606,11 +567,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Prepare the required CiviCRM Participant data from a set of ACF Fields.
@@ -745,8 +702,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	/**
 	 * Create a CiviCRM Participant with data from ACF Fields.
 	 *
@@ -769,8 +724,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		return $participant;
 
 	}
-
-
 
 	/**
 	 * Update a CiviCRM Participant with data from ACF Fields.
@@ -799,11 +752,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Create the WordPress Post when a CiviCRM Participant is being synced.
@@ -855,8 +804,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		do_action( 'cwps/acf/post/participant/sync', $args );
 
 	}
-
-
 
 	/**
 	 * Create a WordPress Post when a CiviCRM Participant has been created.
@@ -932,8 +879,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	/**
 	 * Update a WordPress Post when a CiviCRM Participant has been updated.
 	 *
@@ -998,8 +943,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	/**
 	 * Delete a WordPress Post when a CiviCRM Participant has been deleted.
 	 *
@@ -1053,11 +996,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Listen for queries from the Field Group class.
@@ -1089,8 +1028,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	/**
 	 * Listen for queries from the Custom Field class.
 	 *
@@ -1120,8 +1057,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		return $custom_fields;
 
 	}
-
-
 
 	/**
 	 * Listen for queries from the Custom Field class.
@@ -1206,8 +1141,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	/**
 	 * Listen for queries from the Attachment class.
 	 *
@@ -1238,11 +1171,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Filter the Post Types mapped to a Field Group.
@@ -1269,8 +1198,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		return $is_participant_field_group;
 
 	}
-
-
 
 	/**
 	 * Check if a Field Group has been mapped to the Participant Post Type.
@@ -1324,11 +1251,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Add a link to action links on the Pages and Posts list tables.
@@ -1394,8 +1317,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		return $actions;
 
 	}
-
-
 
 	/**
 	 * Add a add a Menu Item to the CiviCRM Admin Utilities menu.
@@ -1492,11 +1413,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Create our Custom Post Type.
@@ -1572,8 +1489,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	/**
 	 * Removes the Title Field from our Custom Post Type.
 	 *
@@ -1585,8 +1500,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		remove_post_type_support( $this->post_type_name, 'title' );
 
 	}
-
-
 
 	/**
 	 * Override messages for a Custom Post Type.
@@ -1673,8 +1586,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	/**
 	 * Override the "Add title" label.
 	 *
@@ -1698,11 +1609,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Create our Custom Taxonomy.
@@ -1813,8 +1720,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	/**
 	 * Fix the Custom Taxonomy metabox.
 	 *
@@ -1840,8 +1745,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	/**
 	 * Create our Feature Image size.
 	 *
@@ -1858,8 +1761,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		);
 
 	}
-
-
 
 	/**
 	 * Add a filter for this Custom Taxonomy to the Custom Post Type listing.
@@ -1895,11 +1796,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Adds the ACF Field Group.
@@ -1960,11 +1857,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Gets the "Registration Date" Field data.
@@ -1993,8 +1886,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		return $field;
 
 	}
-
-
 
 	/**
 	 * Gets the "Status ID" Field data.
@@ -2027,8 +1918,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	/**
 	 * Gets the "Source" Field data.
 	 *
@@ -2058,11 +1947,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Maybe hide a Field.
@@ -2155,11 +2040,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Filter the mapped Post Types to include this one.
@@ -2177,8 +2058,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		return $post_types;
 
 	}
-
-
 
 	/**
 	 * Filter the mapped Participant Roles.
@@ -2203,8 +2082,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
 	/**
 	 * Filter the mapped Post Types to include this one.
 	 *
@@ -2224,8 +2101,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		return $post_types;
 
 	}
-
-
 
 	/**
 	 * Filter the mapped Participant Roles.
@@ -2247,9 +2122,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

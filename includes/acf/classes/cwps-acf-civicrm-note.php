@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Note Class.
  *
@@ -63,8 +61,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Note {
 		'subject' => 'text',
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -84,8 +80,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Note {
 
 	}
 
-
-
 	/**
 	 * Register WordPress hooks.
 	 *
@@ -99,11 +93,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Note {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Create a CiviCRM Note.
@@ -160,8 +150,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Note {
 
 	}
 
-
-
 	/**
 	 * Update a CiviCRM Contact with a given set of data.
 	 *
@@ -193,11 +181,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Note {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the data for a Note.
@@ -243,8 +227,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Note {
 		return $note;
 
 	}
-
-
 
 	/**
 	 * Get the Notes for a given Contact ID.
@@ -300,11 +282,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Note {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Gets the CiviCRM Note Fields.
@@ -374,11 +352,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Note {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Listen for Attachment support queries.
@@ -402,8 +376,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Note {
 		return $entity_tables;
 
 	}
-
-
 
 	/**
 	 * Respond to queries for Attachment choices from the Attachment class.
@@ -432,9 +404,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Note {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

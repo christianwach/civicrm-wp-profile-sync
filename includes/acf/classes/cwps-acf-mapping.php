@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync ACF Mapping Class.
  *
@@ -117,8 +115,6 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 */
 	public $settings_key = 'cwps_acf_mapping_settings';
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -136,8 +132,6 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		add_action( 'cwps/acf/loaded', [ $this, 'initialise' ] );
 
 	}
-
-
 
 	/**
 	 * Initialise this object.
@@ -173,8 +167,6 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		do_action( 'cwps/acf/mapping/loaded' );
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -221,11 +213,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Register directory that CiviCRM searches in for our form template file.
@@ -256,11 +244,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Enable a WordPress Custom Post Type to be linked to a CiviCRM Contact Type.
@@ -372,8 +356,6 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 	}
 
-
-
 	/**
 	 * Callback for the Add/Edit Contact Type form's postSave hook.
 	 *
@@ -403,8 +385,6 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		$this->saved_contact_type_id = $objectRef->id;
 
 	}
-
-
 
 	/**
 	 * Callback for the Add/Edit Contact Type form's postProcess hook.
@@ -477,11 +457,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Enable a WordPress Custom Post Type to be linked to a CiviCRM Activity Type.
@@ -615,8 +591,6 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 	}
 
-
-
 	/**
 	 * Callback for the Add/Edit Activity Type form's postSave hook.
 	 *
@@ -667,8 +641,6 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		$this->saved_activity_type_id = (int) $activity_type['value'];
 
 	}
-
-
 
 	/**
 	 * Callback for the Add/Edit Activity Type form's postProcess hook.
@@ -753,11 +725,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Enable a WordPress Custom Post Type to be linked to a CiviCRM Participant Role.
@@ -880,8 +848,6 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 	}
 
-
-
 	/**
 	 * Callback for the Add/Edit Participant Role form's postSave hook.
 	 *
@@ -932,8 +898,6 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		$this->saved_participant_role_id = (int) $participant_role['value'];
 
 	}
-
-
 
 	/**
 	 * Callback for the Add/Edit Participant Role form's postProcess hook.
@@ -1018,11 +982,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Enable or disable the "Participant" Custom Post Type provided by this plugin.
@@ -1075,8 +1035,6 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		]);
 
 	}
-
-
 
 	/**
 	 * Callback for the CiviEvent Component Settings form's postProcess hook.
@@ -1144,11 +1102,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get all Entity Type to Post Type mappings.
@@ -1169,8 +1123,6 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 	}
 
-
-
 	/**
 	 * Delete the mappings array.
 	 *
@@ -1183,11 +1135,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get all Contact Type to Post Type mappings.
@@ -1202,8 +1150,6 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		return ! empty( $this->mappings['contact-post'] ) ? $this->mappings['contact-post'] : [];
 
 	}
-
-
 
 	/**
 	 * Get the WordPress Post Type for a CiviCRM Contact Type.
@@ -1228,8 +1174,6 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 	}
 
-
-
 	/**
 	 * Add or update the link between a CiviCRM Contact Type and a WordPress Post Type.
 	 *
@@ -1247,8 +1191,6 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		$this->option_set( $this->mappings_key, $this->mappings );
 
 	}
-
-
 
 	/**
 	 * Maybe delete the link between a CiviCRM Contact Type and a WordPress Post Type.
@@ -1275,11 +1217,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get all Activity Type to Post Type mappings.
@@ -1294,8 +1232,6 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		return ! empty( $this->mappings['activity-post'] ) ? $this->mappings['activity-post'] : [];
 
 	}
-
-
 
 	/**
 	 * Get the WordPress Post Type for a CiviCRM Activity Type.
@@ -1320,8 +1256,6 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 	}
 
-
-
 	/**
 	 * Add or update the link between a CiviCRM Activity Type and a WordPress Post Type.
 	 *
@@ -1339,8 +1273,6 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		$this->option_set( $this->mappings_key, $this->mappings );
 
 	}
-
-
 
 	/**
 	 * Maybe delete the link between a CiviCRM Activity Type and a WordPress Post Type.
@@ -1367,11 +1299,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get all Participant Role to Post Type mappings.
@@ -1386,8 +1314,6 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		return ! empty( $this->mappings['participant-role-post'] ) ? $this->mappings['participant-role-post'] : [];
 
 	}
-
-
 
 	/**
 	 * Get the WordPress Post Type for a CiviCRM Participant Role.
@@ -1412,8 +1338,6 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 	}
 
-
-
 	/**
 	 * Add or update the link between a CiviCRM Participant Role and a WordPress Post Type.
 	 *
@@ -1431,8 +1355,6 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		$this->option_set( $this->mappings_key, $this->mappings );
 
 	}
-
-
 
 	/**
 	 * Maybe delete the link between a CiviCRM Participant Role and a WordPress Post Type.
@@ -1459,11 +1381,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get all mapped settings.
@@ -1479,8 +1397,6 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 	}
 
-
-
 	/**
 	 * Delete the settings array.
 	 *
@@ -1492,8 +1408,6 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		$this->option_delete( $this->settings_key );
 
 	}
-
-
 
 	/**
 	 * Get the mapped settings for a WordPress Post Type.
@@ -1518,8 +1432,6 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 	}
 
-
-
 	/**
 	 * Add or update the mapped settings for a WordPress Post Type.
 	 *
@@ -1537,8 +1449,6 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		$this->option_set( $this->settings_key, $this->settings );
 
 	}
-
-
 
 	/**
 	 * Maybe delete the mapped settings for a WordPress Post Type.
@@ -1559,11 +1469,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Test existence of a specified option.
@@ -1589,8 +1495,6 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 	}
 
-
-
 	/**
 	 * Return a value for a specified option.
 	 *
@@ -1615,8 +1519,6 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 	}
 
-
-
 	/**
 	 * Set a value for a specified option.
 	 *
@@ -1638,8 +1540,6 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 	}
 
-
-
 	/**
 	 * Delete a specified option.
 	 *
@@ -1660,9 +1560,4 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

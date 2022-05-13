@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync Admin utility Class.
  *
@@ -112,8 +110,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 */
 	public $settings_page_slug = 'cwps_settings';
 
-
-
 	/**
 	 * Initialises this object.
 	 *
@@ -130,8 +126,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		add_action( 'civicrm_wp_profile_sync_init', [ $this, 'initialise' ] );
 
 	}
-
-
 
 	/**
 	 * Do stuff on plugin init.
@@ -160,8 +154,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		do_action( 'cwps/admin/loaded' );
 
 	}
-
-
 
 	/**
 	 * Initialise settings.
@@ -194,8 +186,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 	}
 
-
-
 	/**
 	 * Include files.
 	 *
@@ -210,8 +200,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 	}
 
-
-
 	/**
 	 * Set up this plugin's objects.
 	 *
@@ -225,8 +213,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		}
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -246,8 +232,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 	}
 
-
-
 	/**
 	 * Unregister hooks.
 	 *
@@ -262,11 +246,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Do stuff when an upgrade is required.
@@ -292,8 +272,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		*/
 
 	}
-
-
 
 	/**
 	 * Show a warning when a settings upgrade is required.
@@ -423,8 +401,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 	}
 
-
-
 	/**
 	 * Do stuff when a settings upgrade is required.
 	 *
@@ -469,11 +445,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Add admin menu item(s) for this plugin.
@@ -533,8 +505,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 	}
 
-
-
 	/**
 	 * Highlight the plugin's parent menu item.
 	 *
@@ -573,8 +543,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 	}
 
-
-
 	/**
 	 * Initialise plugin help.
 	 *
@@ -589,11 +557,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get Settings Page Tab URLs.
@@ -628,8 +592,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		return $this->urls;
 
 	}
-
-
 
 	/**
 	 * Show our Settings Page.
@@ -680,8 +642,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 	}
 
-
-
 	/**
 	 * Get our Settings Page screens.
 	 *
@@ -708,8 +668,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 	}
 
-
-
 	/**
 	 * Get the URL of the Settings Page.
 	 *
@@ -735,8 +693,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		return $url;
 
 	}
-
-
 
 	/**
 	 * Get the URL for the Settings Page form action attribute.
@@ -766,8 +722,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 	}
 
-
-
 	/**
 	 * Get the URL to the Settings Page in our Admin Notices.
 	 *
@@ -794,11 +748,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Register meta boxes.
@@ -853,8 +803,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 	}
 
-
-
 	/**
 	 * Render Save Settings meta box on Admin screen.
 	 *
@@ -866,8 +814,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/metaboxes/metabox-admin-settings-submit.php';
 
 	}
-
-
 
 	/**
 	 * Render User Profile Settings meta box on Admin screen.
@@ -904,11 +850,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get default settings for this plugin.
@@ -945,8 +887,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 	}
 
-
-
 	/**
 	 * Route settings updates to relevant methods.
 	 *
@@ -973,8 +913,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		}
 
 	}
-
-
 
 	/**
 	 * Update options supplied by our Settings Page.
@@ -1038,11 +976,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Save array as option.
@@ -1058,8 +992,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 	}
 
-
-
 	/**
 	 * Check whether a specified setting exists.
 	 *
@@ -1074,8 +1006,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		return array_key_exists( $setting_name, $this->settings );
 
 	}
-
-
 
 	/**
 	 * Return a value for a specified setting.
@@ -1093,8 +1023,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 	}
 
-
-
 	/**
 	 * Sets a value for a specified setting.
 	 *
@@ -1110,8 +1038,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 	}
 
-
-
 	/**
 	 * Deletes a specified setting.
 	 *
@@ -1126,11 +1052,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Test existence of a specified option.
@@ -1151,8 +1073,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 	}
 
-
-
 	/**
 	 * Return a value for a specified option.
 	 *
@@ -1172,8 +1092,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 	}
 
-
-
 	/**
 	 * Set a value for a specified option.
 	 *
@@ -1190,8 +1108,6 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 	}
 
-
-
 	/**
 	 * Delete a specified option.
 	 *
@@ -1207,9 +1123,4 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

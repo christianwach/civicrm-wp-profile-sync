@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync Mapper Class.
  *
@@ -100,8 +98,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		'id' => false,
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -120,8 +116,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -133,8 +127,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -151,11 +143,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Store the Entity being edited that originally triggered the callbacks.
@@ -180,8 +168,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Get the Entity being edited that originally triggered the callbacks.
 	 *
@@ -196,11 +182,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Register WordPress hooks.
@@ -220,8 +202,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Register WordPress Post hooks.
 	 *
@@ -233,8 +213,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		add_action( 'save_post', [ $this, 'post_saved' ], 1, 3 );
 
 	}
-
-
 
 	/**
 	 * Register WordPress ACF Field hooks.
@@ -250,8 +228,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		add_action( 'acf/save_post', [ $this, 'acf_fields_saved' ], 20, 1 );
 
 	}
-
-
 
 	/**
 	 * Register WordPress Taxonomy hooks.
@@ -273,11 +249,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Remove WordPress hooks.
@@ -297,8 +269,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Unregister WordPress Post hooks.
 	 *
@@ -310,8 +280,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		remove_action( 'save_post', [ $this, 'post_saved' ], 1 );
 
 	}
-
-
 
 	/**
 	 * Unregister WordPress ACF Field hooks.
@@ -325,8 +293,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		remove_action( 'acf/save_post', [ $this, 'acf_fields_saved' ], 20 );
 
 	}
-
-
 
 	/**
 	 * Unregister WordPress Taxonomy hooks.
@@ -344,11 +310,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Register CiviCRM hooks.
@@ -395,8 +357,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Register CiviCRM Contact hooks.
 	 *
@@ -411,8 +371,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		add_action( 'civicrm_post', [ $this, 'contact_edited' ], 10, 4 );
 
 	}
-
-
 
 	/**
 	 * Register CiviCRM Activity hooks.
@@ -429,8 +387,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		add_action( 'civicrm_post', [ $this, 'activity_deleted' ], 10, 4 );
 
 	}
-
-
 
 	/**
 	 * Register CiviCRM Participant hooks.
@@ -449,8 +405,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Register CiviCRM Email hooks.
 	 *
@@ -464,8 +418,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		add_action( 'civicrm_post', [ $this, 'email_deleted' ], 10, 4 );
 
 	}
-
-
 
 	/**
 	 * Register CiviCRM Website hooks.
@@ -483,8 +435,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Register CiviCRM Phone hooks.
 	 *
@@ -499,8 +449,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		add_action( 'civicrm_post', [ $this, 'phone_deleted' ], 10, 4 );
 
 	}
-
-
 
 	/**
 	 * Register CiviCRM Instant Messenger hooks.
@@ -517,8 +465,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Register CiviCRM Relationship hooks.
 	 *
@@ -533,8 +479,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		add_action( 'civicrm_post', [ $this, 'relationship_deleted' ], 10, 4 );
 
 	}
-
-
 
 	/**
 	 * Register CiviCRM Address hooks.
@@ -552,8 +496,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Register CiviCRM Custom Table hooks.
 	 *
@@ -567,8 +509,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Register CiviCRM Group hooks.
 	 *
@@ -580,8 +520,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		add_action( 'civicrm_pre', [ $this, 'group_pre_delete' ], 10, 4 );
 
 	}
-
-
 
 	/**
 	 * Register CiviCRM Group Contact hooks.
@@ -597,11 +535,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Remove CiviCRM hooks.
@@ -648,8 +582,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Unregister CiviCRM Contact hooks.
 	 *
@@ -664,8 +596,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		remove_action( 'civicrm_post', [ $this, 'contact_edited' ], 10 );
 
 	}
-
-
 
 	/**
 	 * Unregister CiviCRM Activity hooks.
@@ -682,8 +612,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		remove_action( 'civicrm_post', [ $this, 'activity_deleted' ], 10 );
 
 	}
-
-
 
 	/**
 	 * Unregister CiviCRM Participant hooks.
@@ -702,8 +630,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Unregister CiviCRM Email hooks.
 	 *
@@ -717,8 +643,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		remove_action( 'civicrm_post', [ $this, 'email_deleted' ], 10 );
 
 	}
-
-
 
 	/**
 	 * Unregister CiviCRM Website hooks.
@@ -736,8 +660,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Unregister CiviCRM Phone hooks.
 	 *
@@ -752,8 +674,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		remove_action( 'civicrm_post', [ $this, 'phone_deleted' ], 10 );
 
 	}
-
-
 
 	/**
 	 * Unregister CiviCRM Instant Messenger hooks.
@@ -770,8 +690,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Unregister CiviCRM Relationship hooks.
 	 *
@@ -786,8 +704,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		remove_action( 'civicrm_post', [ $this, 'relationship_deleted' ], 10 );
 
 	}
-
-
 
 	/**
 	 * Unregister CiviCRM Address hooks.
@@ -805,8 +721,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Unregister CiviCRM Custom Table hooks.
 	 *
@@ -820,8 +734,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Unregister CiviCRM Group hooks.
 	 *
@@ -833,8 +745,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		remove_action( 'civicrm_pre', [ $this, 'group_pre_delete' ], 10 );
 
 	}
-
-
 
 	/**
 	 * Unregister CiviCRM Group Contact hooks.
@@ -850,11 +760,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Fires just before a CiviCRM Entity is created.
@@ -899,8 +805,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		do_action( 'cwps/acf/mapper/contact/create/pre', $args );
 
 	}
-
-
 
 	/**
 	 * Fires just before a CiviCRM Entity is updated.
@@ -949,8 +853,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		do_action( 'cwps/acf/mapper/contact/edit/pre', $args );
 
 	}
-
-
 
 	/**
 	 * Create a WordPress Post when a CiviCRM Contact is created.
@@ -1003,8 +905,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		do_action( 'cwps/acf/mapper/contact/created', $args );
 
 	}
-
-
 
 	/**
 	 * Update a WordPress Post when a CiviCRM Contact is updated.
@@ -1089,11 +989,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a CiviCRM Email is created.
@@ -1138,8 +1034,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Intercept when a CiviCRM Email is updated.
 	 *
@@ -1182,8 +1076,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		do_action( 'cwps/acf/mapper/email/edited', $args );
 
 	}
-
-
 
 	/**
 	 * Intercept when a CiviCRM Email is deleted.
@@ -1228,11 +1120,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a CiviCRM Website is about to be edited.
@@ -1277,8 +1165,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Intercept when a CiviCRM Website is about to be deleted.
 	 *
@@ -1321,8 +1207,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		do_action( 'cwps/acf/mapper/website/delete/pre', $args );
 
 	}
-
-
 
 	/**
 	 * Intercept when a CiviCRM Website is created.
@@ -1367,8 +1251,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Intercept when a CiviCRM Website is updated.
 	 *
@@ -1411,8 +1293,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		do_action( 'cwps/acf/mapper/website/edited', $args );
 
 	}
-
-
 
 	/**
 	 * Intercept when a CiviCRM Website is deleted.
@@ -1457,11 +1337,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a CiviCRM Phone is about to be deleted.
@@ -1506,8 +1382,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Intercept when a CiviCRM Phone is created.
 	 *
@@ -1550,8 +1424,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		do_action( 'cwps/acf/mapper/phone/created', $args );
 
 	}
-
-
 
 	/**
 	 * Intercept when a CiviCRM Phone is updated.
@@ -1596,8 +1468,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Intercept when a CiviCRM Phone has been deleted.
 	 *
@@ -1641,11 +1511,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a CiviCRM Instant Messenger is about to be deleted.
@@ -1690,8 +1556,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Intercept when a CiviCRM Instant Messenger is created.
 	 *
@@ -1734,8 +1598,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		do_action( 'cwps/acf/mapper/im/created', $args );
 
 	}
-
-
 
 	/**
 	 * Intercept when a CiviCRM Instant Messenger is updated.
@@ -1780,8 +1642,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Intercept when a CiviCRM Instant Messenger has been deleted.
 	 *
@@ -1825,11 +1685,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a CiviCRM Relationship is about to be edited.
@@ -1874,8 +1730,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Intercept when a CiviCRM Contact's Relationship has been created.
 	 *
@@ -1918,8 +1772,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		do_action( 'cwps/acf/mapper/relationship/created', $args );
 
 	}
-
-
 
 	/**
 	 * Intercept when a CiviCRM Contact's Relationship has been updated.
@@ -1964,8 +1816,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Intercept when a CiviCRM Contact's Relationship has been deleted.
 	 *
@@ -2009,11 +1859,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a CiviCRM Address is about to be edited.
@@ -2058,8 +1904,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Intercept when a CiviCRM Address is about to be deleted.
 	 *
@@ -2102,8 +1946,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		do_action( 'cwps/acf/mapper/address/delete/pre', $args );
 
 	}
-
-
 
 	/**
 	 * Intercept when a CiviCRM Contact's Address has been created.
@@ -2148,8 +1990,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Intercept when a CiviCRM Contact's Address has been edited.
 	 *
@@ -2192,8 +2032,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		do_action( 'cwps/acf/mapper/address/edited', $args );
 
 	}
-
-
 
 	/**
 	 * Intercept when a CiviCRM Contact's Address has been deleted.
@@ -2238,11 +2076,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a set of Custom Fields is about to be updated.
@@ -2283,8 +2117,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		do_action( 'cwps/acf/mapper/civicrm/custom/edit/pre', $args );
 
 	}
-
-
 
 	/**
 	 * Intercept Custom Field updates.
@@ -2327,11 +2159,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept a CiviCRM group prior to it being deleted.
@@ -2376,11 +2204,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a CiviCRM Contact is added to a Group.
@@ -2430,8 +2254,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Intercept when a CiviCRM Contact is deleted (or removed) from a Group.
 	 *
@@ -2479,8 +2301,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		do_action( 'cwps/acf/mapper/group/contacts/deleted', $args );
 
 	}
-
-
 
 	/**
 	 * Intercept when a CiviCRM Contact is re-added to a Group.
@@ -2534,11 +2354,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Fires just before a CiviCRM Activity is created.
@@ -2583,8 +2399,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Fires just before a CiviCRM Entity is updated.
 	 *
@@ -2627,8 +2441,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		do_action( 'cwps/acf/mapper/activity/edit/pre', $args );
 
 	}
-
-
 
 	/**
 	 * Create a WordPress Post when a CiviCRM Activity is created.
@@ -2675,8 +2487,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		do_action( 'cwps/acf/mapper/activity/created', $args );
 
 	}
-
-
 
 	/**
 	 * Update a WordPress Post when a CiviCRM Activity is updated.
@@ -2733,8 +2543,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Intercept when a CiviCRM Activity has been deleted.
 	 *
@@ -2781,11 +2589,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Fires just before a CiviCRM Participant is created.
@@ -2830,8 +2634,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Fires just before a CiviCRM Participant is updated.
 	 *
@@ -2875,8 +2677,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Fires just before a CiviCRM Participant is deleted.
 	 *
@@ -2919,8 +2719,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		do_action( 'cwps/acf/mapper/participant/delete/pre', $args );
 
 	}
-
-
 
 	/**
 	 * Create a WordPress Post when a CiviCRM Participant is created.
@@ -2967,8 +2765,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		do_action( 'cwps/acf/mapper/participant/created', $args );
 
 	}
-
-
 
 	/**
 	 * Update a WordPress Post when a CiviCRM Participant is updated.
@@ -3025,8 +2821,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Intercept when a CiviCRM Participant has been deleted.
 	 *
@@ -3073,11 +2867,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept the Post saved operation.
@@ -3118,8 +2908,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Fires just before the ACF Fields saved operation.
 	 *
@@ -3149,8 +2937,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		do_action( 'cwps/acf/mapper/acf_fields/saved/pre', $args );
 
 	}
-
-
 
 	/**
 	 * Intercept the ACF Fields saved operation.
@@ -3184,11 +2970,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Hook into updates to a term before the term is updated.
@@ -3222,8 +3004,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Hook in before a Term is deleted.
 	 *
@@ -3255,8 +3035,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		do_action( 'cwps/acf/mapper/term/delete/pre', $args );
 
 	}
-
-
 
 	/**
 	 * Hook into the creation of a term.
@@ -3292,8 +3070,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
 	/**
 	 * Hook into updates to a term.
 	 *
@@ -3327,8 +3103,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		do_action( 'cwps/acf/mapper/term/edited', $args );
 
 	}
-
-
 
 	/**
 	 * Hook into deletion of a term.
@@ -3366,9 +3140,4 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

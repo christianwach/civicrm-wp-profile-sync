@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync "CiviCRM Email" ACFE Form Action Class.
  *
@@ -94,8 +92,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 	 */
 	public $field_name = 'cwps_civicrm_email_action_';
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -122,8 +118,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 		parent::__construct();
 
 	}
-
-
 
 	/**
 	 * Configure this object.
@@ -180,8 +174,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	/**
 	 * Pre-load mapping Fields with "Generic" choices.
 	 *
@@ -198,8 +190,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 		return $field;
 
 	}
-
-
 
 	/**
 	 * Performs validation when the Form the Action is attached to is submitted.
@@ -225,8 +215,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 		// TODO: Check other Email Entities.
 
 	}
-
-
 
 	/**
 	 * Performs the action when the Form the Action is attached to is submitted.
@@ -275,11 +263,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Defines additional Fields for the "Action" Tab.
@@ -450,11 +434,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Defines the "Mapping" Tab.
@@ -485,8 +465,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 		return $fields;
 
 	}
-
-
 
 	/**
 	 * Defines the Fields in the "Contacts" Accordion.
@@ -663,8 +641,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	/**
 	 * Defines the Fields in the "Email Fields" Accordion.
 	 *
@@ -727,11 +703,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Builds Email data array from mapped Fields.
@@ -820,8 +792,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	/**
 	 * Validates the Email data array from mapped Fields.
 	 *
@@ -884,8 +854,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	/**
 	 * Sends the CiviCRM Email given data from mapped Fields.
 	 *
@@ -941,8 +909,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	/**
 	 * Finds the linked Contact ID when it has been mapped.
 	 *
@@ -974,8 +940,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 		return $contact_id;
 
 	}
-
-
 
 	/**
 	 * Finds the linked Case ID when it has been mapped.
@@ -1009,9 +973,4 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

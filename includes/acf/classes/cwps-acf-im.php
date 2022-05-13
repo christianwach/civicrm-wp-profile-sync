@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Instant Messenger Class.
  *
@@ -105,8 +103,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		//'provider_id' => 'select',
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -128,8 +124,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		parent::__construct();
 
 	}
-
-
 
 	/**
 	 * Initialise this object.
@@ -156,8 +150,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 	}
 
-
-
 	/**
 	 * Include files.
 	 *
@@ -170,8 +162,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 	}
 
-
-
 	/**
 	 * Set up the child objects.
 	 *
@@ -183,8 +173,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		$this->shortcode = new CiviCRM_Profile_Sync_ACF_Shortcode_Instant_Messenger( $this );
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -214,8 +202,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 	}
 
-
-
 	/**
 	 * Register callbacks for Mapper events.
 	 *
@@ -238,8 +224,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		$this->mapper_hooks = true;
 
 	}
-
-
 
 	/**
 	 * Unregister callbacks for Mapper events.
@@ -264,11 +248,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update a CiviCRM Contact's Fields with data from ACF Fields.
@@ -307,8 +287,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 	}
 
-
-
 	/**
 	 * Update a CiviCRM Contact's Field with data from an ACF Field.
 	 *
@@ -339,11 +317,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the data for an Instant Messenger Record.
@@ -389,8 +363,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		return $im;
 
 	}
-
-
 
 	/**
 	 * Get the data for a Contact's Instant Messenger Records by Type.
@@ -443,11 +415,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the Instant Messenger Records for a given Contact ID.
@@ -503,11 +471,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a Post is been synced from a Contact.
@@ -559,8 +523,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		}
 
 	}
-
-
 
 	/**
 	 * Update all of a CiviCRM Contact's Instant Messenger Records.
@@ -765,8 +727,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 	}
 
-
-
 	/**
 	 * Prepare the CiviCRM Instant Messenger Record from an ACF Field.
 	 *
@@ -797,8 +757,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 	}
 
-
-
 	/**
 	 * Prepare the ACF Field data from a CiviCRM Instant Messenger Record.
 	 *
@@ -828,8 +786,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		return $im_data;
 
 	}
-
-
 
 	/**
 	 * Update a CiviCRM Contact's Instant Messenger Record.
@@ -889,8 +845,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 	}
 
-
-
 	/**
 	 * Delete an Instant Messenger Record in CiviCRM.
 	 *
@@ -936,11 +890,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a CiviCRM Instant Messenger Record has been updated.
@@ -963,8 +913,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		$this->im_process( $civicrm_im, $args );
 
 	}
-
-
 
 	/**
 	 * A CiviCRM Contact's Instant Messenger Record is about to be deleted.
@@ -1001,8 +949,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 	}
 
-
-
 	/**
 	 * A CiviCRM Instant Messenger Record has just been deleted.
 	 *
@@ -1034,8 +980,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		$this->im_process( $this->im_pre, $args );
 
 	}
-
-
 
 	/**
 	 * Process a CiviCRM Instant Messenger Record.
@@ -1097,11 +1041,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update Instant Messenger ACF Fields on an Entity mapped to a Contact ID.
@@ -1211,11 +1151,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the Instant Messenger Locations that can be mapped to an ACF Field.
@@ -1258,8 +1194,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		return $location_types;
 
 	}
-
-
 
 	/**
 	 * Get the Instant Messenger Providers that are defined in CiviCRM.
@@ -1305,8 +1239,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 	}
 
-
-
 	/**
 	 * Get the Instant Messenger Providers that can be mapped to an ACF Field.
 	 *
@@ -1344,8 +1276,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 	}
 
-
-
 	/**
 	 * Add any Instant Messenger Fields that are attached to a Post.
 	 *
@@ -1368,11 +1298,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Sync the CiviCRM "Instant Messenger ID" to the ACF Fields on a WordPress Post.
@@ -1420,11 +1346,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Gets the CiviCRM Instant Messenger Fields.
@@ -1494,8 +1416,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 	}
 
-
-
 	/**
 	 * Get the Instant Messenger Field options for a given Field ID.
 	 *
@@ -1542,8 +1462,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 	}
 
-
-
 	/**
 	 * Get the mapped Instant Messenger Field name if present.
 	 *
@@ -1581,8 +1499,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		return $im_field_name;
 
 	}
-
-
 
 	/**
 	 * Appends an array of Setting Field choices for a Bypass ACF Field Group when found.
@@ -1639,8 +1555,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 	}
 
-
-
 	/**
 	 * Modify the Settings of an ACF "Select" Field.
 	 *
@@ -1680,8 +1594,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 	}
 
-
-
 	/**
 	 * Get the "select" options for a given CiviCRM Instant Messenger Field.
 	 *
@@ -1706,8 +1618,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		return $options;
 
 	}
-
-
 
 	/**
 	 * Modify the Settings of an ACF "Text" Field.
@@ -1750,9 +1660,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Contact Class.
  *
@@ -80,8 +78,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 */
 	public $contact_field_prefix = 'caicontact_';
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -101,8 +97,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -114,8 +108,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -155,8 +147,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-
-
 	/**
 	 * Register callbacks for Mapper events.
 	 *
@@ -177,8 +167,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		$this->mapper_hooks = true;
 
 	}
-
-
 
 	/**
 	 * Unregister callbacks for Mapper events.
@@ -201,11 +189,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update a CiviCRM Contact when a WordPress Post is synced.
@@ -220,8 +204,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		$this->post_saved( $args );
 
 	}
-
-
 
 	/**
 	 * Update a CiviCRM Contact when a WordPress Post has been updated.
@@ -287,8 +269,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-
-
 	/**
 	 * Update a CiviCRM Contact when the ACF Fields on a WordPress Post are synced.
 	 *
@@ -302,8 +282,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		$this->acf_fields_saved( $args );
 
 	}
-
-
 
 	/**
 	 * Update a CiviCRM Contact when the ACF Fields on a WordPress Post have been updated.
@@ -393,11 +371,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Getter method for the "Handled Fields" array.
@@ -424,11 +398,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Gets the Contact ID for a given checksum.
@@ -474,8 +444,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-
-
 	/**
 	 * Gets the Contact data for the logged-in User.
 	 *
@@ -499,8 +467,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		return $contact_id;
 
 	}
-
-
 
 	/**
 	 * Get the CiviCRM Contact data for a given search string.
@@ -602,8 +568,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-
-
 	/**
 	 * Get the CiviCRM Contacts with a given Image URL.
 	 *
@@ -662,8 +626,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-
-
 	/**
 	 * Gets a suggested CiviCRM Contact ID via the "Unsupervised" Dedupe Rule.
 	 *
@@ -702,8 +664,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		return $contact_id;
 
 	}
-
-
 
 	/**
 	 * Gets a suggested CiviCRM Contact ID using a specified Dedupe Rule.
@@ -746,8 +706,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-
-
 	/**
 	 * Get Dedupe Rules.
 	 *
@@ -784,11 +742,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get "chunked" CiviCRM API Contact data for a given Contact Type ID.
@@ -847,11 +801,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Check whether any of a Contact's Contact Types is mapped to a Post Type.
@@ -961,8 +911,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-
-
 	/**
 	 * Check if a Contact is mapped to a Post of a particular Post Type.
 	 *
@@ -1021,11 +969,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Prepare the required CiviCRM Contact data from a WordPress Post.
@@ -1162,8 +1106,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-
-
 	/**
 	 * Create a CiviCRM Contact from a WordPress Post.
 	 *
@@ -1198,8 +1140,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-
-
 	/**
 	 * Sync a WordPress Post with a CiviCRM Contact.
 	 *
@@ -1228,11 +1168,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Prepare the required CiviCRM Contact data from a set of ACF Fields.
@@ -1325,8 +1261,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-
-
 	/**
 	 * Update a CiviCRM Contact with data from ACF Fields.
 	 *
@@ -1353,11 +1287,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Return the "CiviCRM Field" ACF Settings Field.
@@ -1420,8 +1350,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-
-
 	/**
 	 * Get the mapped Contact Field name if present.
 	 *
@@ -1460,11 +1388,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Check with CiviCRM that this Contact can be viewed.
@@ -1501,11 +1425,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Returns the choices for a Setting Field from this Entity when found.
@@ -1609,8 +1529,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-
-
 	/**
 	 * Returns a Setting Field for a Bypass ACF Field Group when found.
 	 *
@@ -1683,8 +1601,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		return $setting_field;
 
 	}
-
-
 
 	/**
 	 * Appends an array of Setting Field choices for a Bypass ACF Field Group when found.
@@ -1784,8 +1700,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-
-
 	/**
 	 * Appends a nested array of possible values to the Entities array for the
 	 * Bypass Location Rule.
@@ -1833,8 +1747,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-
-
 	/**
 	 * Listen for queries from the Field Group class.
 	 *
@@ -1864,8 +1776,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		return true;
 
 	}
-
-
 
 	/**
 	 * Listen for queries from the Custom Field class.
@@ -1916,8 +1826,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		return $custom_fields;
 
 	}
-
-
 
 	/**
 	 * Listen for queries from the Custom Field class.
@@ -2015,8 +1923,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-
-
 	/**
 	 * Listen for queries from the Attachment class.
 	 *
@@ -2047,11 +1953,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Check if a Field Group has been mapped to one or more Contact Post Types.
@@ -2118,13 +2020,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
 	// Retained methods to provide backwards compatibility.
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the CiviCRM Contact data for a given ID.
@@ -2138,9 +2036,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		return $this->plugin->civicrm->contact->get_by_id( $contact_id );
 	}
 
-
-
-} // Class ends.
-
-
-
+}

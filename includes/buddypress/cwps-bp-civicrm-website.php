@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync BuddyPress CiviCRM Website Class.
  *
@@ -93,8 +91,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 		],
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -115,8 +111,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -132,8 +126,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -152,8 +144,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 		add_filter( 'cwps/bp/contact/bp_fields_edited', [ $this, 'bp_fields_edited' ], 10 );
 
 	}
-
-
 
 	/**
 	 * Register callbacks for Mapper events.
@@ -179,8 +169,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 
 	}
 
-
-
 	/**
 	 * Unregister callbacks for Mapper events.
 	 *
@@ -205,11 +193,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Fires when a CiviCRM Contact's Website is about to be edited.
@@ -245,8 +229,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 		$this->website_pre = (object) $this->plugin->civicrm->website->get_by_id( $website->id );
 
 	}
-
-
 
 	/**
 	 * Fires when a CiviCRM Contact's Website is about to be deleted.
@@ -294,8 +276,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 		$this->website_process( $deleted, $args );
 
 	}
-
-
 
 	/**
 	 * Intercept when a CiviCRM Website Record has been updated.
@@ -489,8 +469,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 
 	}
 
-
-
 	/**
 	 * Process a CiviCRM Website Record.
 	 *
@@ -579,8 +557,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 
 	}
 
-
-
 	/**
 	 * Get the value of a Website Field, formatted for BuddyPress.
 	 *
@@ -620,11 +596,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Save Website(s) when BuddyPress Profile Fields have been saved.
@@ -671,8 +643,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 		}
 
 	}
-
-
 
 	/**
 	 * Prepares the CiviCRM Website data from an array of BuddyPress Field data.
@@ -743,11 +713,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Returns the Website Field choices for a Setting Field from when found.
@@ -798,8 +764,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 
 	}
 
-
-
 	/**
 	 * Get the CiviCRM Website Fields for a BuddyPress Field Type.
 	 *
@@ -831,11 +795,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the core Fields for a CiviCRM Website Type.
@@ -920,11 +880,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the BuddyPress Field Type for a Website Field.
@@ -948,8 +904,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 		return $type;
 
 	}
-
-
 
 	/**
 	 * Gets the mapped Website Field name.
@@ -977,9 +931,4 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync UFMatch Class.
  *
@@ -30,8 +28,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 	 * @var object $plugin The plugin object.
 	 */
 	public $plugin;
-
-
 
 	/**
 	 * Constructor.
@@ -51,8 +47,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -65,8 +59,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 
 	}
 
-
-
 	/**
 	 * Register hooks.
 	 *
@@ -75,8 +67,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 	public function register_hooks() {
 
 	}
-
-
 
 	/**
 	 * Unregister hooks.
@@ -87,11 +77,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get a CiviCRM Contact ID for a given WordPress User ID.
@@ -160,8 +146,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 
 	}
 
-
-
 	/**
 	 * Get a CiviCRM Contact for a given WordPress User ID.
 	 *
@@ -189,11 +173,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get a WordPress User ID given a CiviCRM Contact ID.
@@ -250,8 +230,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 
 	}
 
-
-
 	/**
 	 * Get a WordPress User given a CiviCRM Contact ID.
 	 *
@@ -279,11 +257,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Create a link between a WordPress User and a CiviCRM Contact.
@@ -344,8 +318,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 
 	}
 
-
-
 	/**
 	 * Delete the link between a WordPress User and a CiviCRM Contact.
 	 *
@@ -393,11 +365,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the UFMatch data for a given CiviCRM Contact ID.
@@ -483,8 +451,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 
 	}
 
-
-
 	/**
 	 * Get the UFMatch data for a given WordPress User ID.
 	 *
@@ -568,8 +534,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		return $entry;
 
 	}
-
-
 
 	/**
 	 * Get the UFMatch data for a given WordPress User email.
@@ -655,9 +619,4 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

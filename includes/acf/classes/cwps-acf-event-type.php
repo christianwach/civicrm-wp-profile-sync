@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Event Type Class.
  *
@@ -49,8 +47,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Type {
 	 */
 	public $civicrm;
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -70,8 +66,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Type {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -84,8 +78,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Type {
 
 	}
 
-
-
 	/**
 	 * Register hooks.
 	 *
@@ -95,11 +87,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Type {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the numeric ID of the "Event Types" Option Group.
@@ -155,11 +143,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Type {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the data for an "Event Type" by ID.
@@ -214,8 +198,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Type {
 		return $event_type;
 
 	}
-
-
 
 	/**
 	 * Get the data for an "Event Type" by value.
@@ -272,11 +254,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Type {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the number of Events for a given CiviCRM Event Type.
@@ -327,11 +305,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Type {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the Event Type that is mapped to a Post Type.
@@ -360,11 +334,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Type {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Gets the CiviCRM Event Types as choices for an ACF "Select" Field.
@@ -427,11 +397,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Type {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get all Event Types.
@@ -492,8 +458,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Type {
 		return $event_types;
 
 	}
-
-
 
 	/**
 	 * Get all Event Types that are mapped to Post Types.
@@ -571,8 +535,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Type {
 
 	}
 
-
-
 	/**
 	 * Check if an Event Type is mapped to a Post Type.
 	 *
@@ -599,9 +561,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Type {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

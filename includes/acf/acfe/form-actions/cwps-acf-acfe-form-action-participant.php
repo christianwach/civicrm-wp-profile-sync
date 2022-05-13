@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync "Participant" ACFE Form Action Class.
  *
@@ -162,8 +160,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 		'event_id' => 'civicrm_event',
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -194,8 +190,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 
 	}
 
-
-
 	/**
 	 * Register hooks.
 	 *
@@ -204,8 +198,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 	public function register_hooks() {
 
 	}
-
-
 
 	/**
 	 * Configure this object.
@@ -305,8 +297,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 
 	}
 
-
-
 	/**
 	 * Pre-load mapping Fields with "Generic" choices.
 	 *
@@ -323,8 +313,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 		return $field;
 
 	}
-
-
 
 	/**
 	 * Performs validation when the Form the Action is attached to is submitted.
@@ -350,8 +338,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 		// TODO: Check other Participant Entities.
 
 	}
-
-
 
 	/**
 	 * Performs the action when the Form the Action is attached to is submitted.
@@ -402,11 +388,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Defines additional Fields for the "Action" Tab.
@@ -557,11 +539,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Defines the "Mapping" Tab.
@@ -604,8 +582,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 		return $fields;
 
 	}
-
-
 
 	/**
 	 * Defines the Fields in the "Contacts" Accordion.
@@ -782,8 +758,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 
 	}
 
-
-
 	/**
 	 * Defines the Fields in the "Participants" Accordion.
 	 *
@@ -959,8 +933,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 
 	}
 
-
-
 	/**
 	 * Defines the Fields in the "Event" Accordion.
 	 *
@@ -1122,8 +1094,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 
 	}
 
-
-
 	/**
 	 * Defines the Fields in the "Participant Fields" Accordion.
 	 *
@@ -1187,8 +1157,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 		return $fields;
 
 	}
-
-
 
 	/**
 	 * Defines the Fields in the "Custom Fields" Accordion.
@@ -1389,11 +1357,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Builds Participant data array from mapped Fields.
@@ -1552,8 +1516,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 
 	}
 
-
-
 	/**
 	 * Validates the Participant data array from mapped Fields.
 	 *
@@ -1684,8 +1646,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 
 	}
 
-
-
 	/**
 	 * Saves the CiviCRM Participant given data from mapped Fields.
 	 *
@@ -1774,8 +1734,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 
 	}
 
-
-
 	/**
 	 * Finds the linked Contact ID when it has been mapped.
 	 *
@@ -1807,8 +1765,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 		return $contact_id;
 
 	}
-
-
 
 	/**
 	 * Finds the linked Participant ID when it has been mapped.
@@ -1842,11 +1798,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Builds Custom Field data array from mapped Fields.
@@ -1946,8 +1898,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 
 	}
 
-
-
 	/**
 	 * Processes Custom Fields once a Participant has been established.
 	 *
@@ -2022,9 +1972,4 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

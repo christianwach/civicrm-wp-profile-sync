@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Membership Class.
  *
@@ -65,8 +63,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Membership {
 		'source' => 'text',
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -83,11 +79,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Membership {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get all free CiviCRM Membership Types.
@@ -141,11 +133,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Membership {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Gets the current CiviCRM Memberships for a Contact.
@@ -223,8 +211,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Membership {
 
 	}
 
-
-
 	/**
 	 * Checks if a CiviCRM Contact has a current Membership of a given Type.
 	 *
@@ -249,8 +235,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Membership {
 		return $has_current;
 
 	}
-
-
 
 	/**
 	 * Creates a CiviCRM Membership.
@@ -304,8 +288,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Membership {
 
 	}
 
-
-
 	/**
 	 * Update a CiviCRM Membership with a given set of data.
 	 *
@@ -336,8 +318,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Membership {
 		return $this->create( $data );
 
 	}
-
-
 
 	/**
 	 * Gets the Membership data for a given ID.
@@ -384,11 +364,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Membership {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Gets the CiviCRM Membership Fields.
@@ -459,9 +435,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Membership {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

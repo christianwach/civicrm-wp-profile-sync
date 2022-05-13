@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Phone Class.
  *
@@ -40,8 +38,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 	 */
 	public $civicrm;
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -60,8 +56,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -74,8 +68,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 
 	}
 
-
-
 	/**
 	 * Register hooks.
 	 *
@@ -84,8 +76,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 	public function register_hooks() {
 
 	}
-
-
 
 	/**
 	 * Unregister hooks.
@@ -96,11 +86,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the data for a Phone Record.
@@ -147,8 +133,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 		return $phone;
 
 	}
-
-
 
 	/**
 	 * Get the data for a Contact's Phone Records by Type.
@@ -200,8 +184,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 		return $phones;
 
 	}
-
-
 
 	/**
 	 * Get the Phone Records for a given Contact ID.
@@ -258,11 +240,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update a CiviCRM Contact's Phone Record.
@@ -322,8 +300,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 
 	}
 
-
-
 	/**
 	 * Delete a Phone Record in CiviCRM.
 	 *
@@ -370,11 +346,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the Phone Types that are defined in CiviCRM.
@@ -421,11 +393,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the Phone Field options for a given Field Name.
@@ -473,9 +441,4 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

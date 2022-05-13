@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Contact ID Class.
  *
@@ -69,8 +67,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_ID extends CiviCRM_Profile_Sync_A
 		'civicrm_contact_id',
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -93,8 +89,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_ID extends CiviCRM_Profile_Sync_A
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -106,8 +100,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_ID extends CiviCRM_Profile_Sync_A
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -126,8 +118,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_ID extends CiviCRM_Profile_Sync_A
 		add_action( 'cwps/acf/post/contact_sync_to_post', [ $this, 'contact_sync_to_post' ], 10 );
 
 	}
-
-
 
 	/**
 	 * Register callbacks for Mapper events.
@@ -150,8 +140,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_ID extends CiviCRM_Profile_Sync_A
 
 	}
 
-
-
 	/**
 	 * Unregister callbacks for Mapper events.
 	 *
@@ -173,11 +161,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_ID extends CiviCRM_Profile_Sync_A
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a Post has been updated from a Contact via the Mapper.
@@ -208,11 +192,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_ID extends CiviCRM_Profile_Sync_A
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a CiviCRM Contact Record has been updated.
@@ -268,8 +248,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_ID extends CiviCRM_Profile_Sync_A
 
 	}
 
-
-
 	/**
 	 * Update Contact ID ACF Fields on an Entity mapped to a Contact ID.
 	 *
@@ -295,11 +273,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_ID extends CiviCRM_Profile_Sync_A
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Add any Contact ID Fields that are attached to a Post.
@@ -323,9 +297,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_ID extends CiviCRM_Profile_Sync_A
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

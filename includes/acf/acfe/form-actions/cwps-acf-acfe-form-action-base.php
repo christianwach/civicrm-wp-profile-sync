@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync "Base" ACFE Form Action Class.
  *
@@ -67,8 +65,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	 */
 	public $field_name = '';
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -90,16 +86,12 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 
 	}
 
-
-
 	/**
 	 * Allow classes to configure themselves prior to the Layout being returned.
 	 *
 	 * @since 0.5
 	 */
 	public function configure() {}
-
-
 
 	/**
 	 * Performs tasks when the Form that the Action is attached to is loaded.
@@ -113,8 +105,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	public function load( $form, $current_post_id, $action ) {
 		return $form;
 	}
-
-
 
 	/**
 	 * Saves the result of the Action for use by subsequent Actions.
@@ -139,8 +129,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 
 	}
 
-
-
 	/**
 	 * Performs the Action when the Form the Action is attached to is submitted.
 	 *
@@ -151,8 +139,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	 * @param string $action The customised name of the action.
 	 */
 	public function make( $form, $current_post_id, $action ) {}
-
-
 
 	/**
 	 * Maybe skip the Action when the Form the Action is attached to is submitted.
@@ -197,8 +183,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 
 	}
 
-
-
 	/**
 	 * Saves the result of the Action for use by subsequent Actions.
 	 *
@@ -221,8 +205,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 		set_query_var( 'acfe_form_actions', $actions );
 
 	}
-
-
 
 	/**
 	 * Defines the action by adding a layout.
@@ -283,11 +265,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Defines the "Action" Tab.
@@ -364,8 +342,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 
 	}
 
-
-
 	/**
 	 * Defines additional Fields for the "Action" Tab.
 	 *
@@ -378,8 +354,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 		return $fields;
 	}
 
-
-
 	/**
 	 * Defines the "Mapping" Tab.
 	 *
@@ -391,8 +365,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 		$fields = [];
 		return $fields;
 	}
-
-
 
 	/**
 	 * Defines the "Mapping" Tab Header.
@@ -435,8 +407,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 
 	}
 
-
-
 	/**
 	 * Defines the "Relationship" Tab.
 	 *
@@ -448,8 +418,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 		$fields = [];
 		return $fields;
 	}
-
-
 
 	/**
 	 * Defines the "Relationship" Tab Header.
@@ -500,11 +468,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Gets the array that defines a "Map Field" for the "Mapping" Tab.
@@ -557,8 +521,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 
 	}
 
-
-
 	/**
 	 * Adds filters that configure "Mapping Fields" when loaded.
 	 *
@@ -576,11 +538,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Adds "Contact Reference Field" actions to the Javascript ACF Model.
@@ -599,8 +557,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 
 	}
 
-
-
 	/**
 	 * Adds "Case Reference Field" actions to the Javascript ACF Model.
 	 *
@@ -617,8 +573,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 		} );
 
 	}
-
-
 
 	/**
 	 * Adds "Participant Reference Field" actions to the Javascript ACF Model.
@@ -637,11 +591,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Prepare the data from an ACFE Form.
@@ -693,11 +643,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Gets the Fields for an ACFE Form "Settings" Group.
@@ -808,8 +754,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 
 	}
 
-
-
 	/**
 	 * Gets the data from an ACFE Form "Settings" Group.
 	 *
@@ -854,9 +798,4 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

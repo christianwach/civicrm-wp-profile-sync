@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync WordPress User Class.
  *
@@ -78,8 +76,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 		'user_form',
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -97,8 +93,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 		add_action( 'cwps/acf/loaded', [ $this, 'initialise' ] );
 
 	}
-
-
 
 	/**
 	 * Do stuff on plugin init.
@@ -121,8 +115,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 		do_action( 'cwps/acf/user/loaded' );
 
 	}
-
-
 
 	/**
 	 * Register hooks on plugin init.
@@ -157,8 +149,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	/**
 	 * Register callbacks for query filters.
 	 *
@@ -185,8 +175,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	/**
 	 * Unregister callbacks for query filters.
 	 *
@@ -204,8 +192,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 		remove_filter( 'cwps/acf/query_contact_id', [ $this, 'query_contact_id' ], 10 );
 
 	}
-
-
 
 	/**
 	 * Register callbacks for CiviCRM Entities that have their own hooks.
@@ -227,8 +213,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	/**
 	 * Unregister callbacks for CiviCRM Entities that have their own hooks.
 	 *
@@ -248,8 +232,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$this->mapper_wp_hooks = false;
 
 	}
-
-
 
 	/**
 	 * Register callbacks for CiviCRM Entities that have their own hooks.
@@ -322,8 +304,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	/**
 	 * Unregister callbacks for CiviCRM Entities that have their own hooks.
 	 *
@@ -395,11 +375,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update the CiviCRM Contact when the ACF Fields on a WordPress User have been edited.
@@ -501,11 +477,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update a WordPress User when a CiviCRM Contact has been edited.
@@ -548,11 +520,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update an Email ACF Field on a User when a CiviCRM Contact has been edited.
@@ -591,11 +559,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * A CiviCRM Contact's Website is about to be edited.
@@ -633,8 +597,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$this->website_pre = $this->civicrm->website->website_get_by_id( $website->id );
 
 	}
-
-
 
 	/**
 	 * Update Website ACF Fields on a User when a CiviCRM Contact has been edited.
@@ -693,8 +655,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	/**
 	 * Intercept when a CiviCRM Website is about to be deleted.
 	 *
@@ -741,11 +701,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update Phone ACF Fields on a User when a CiviCRM Contact has been edited.
@@ -787,8 +743,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	/**
 	 * A CiviCRM Contact's Phone Record is about to be deleted.
 	 *
@@ -822,8 +776,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 		}
 
 	}
-
-
 
 	/**
 	 * A CiviCRM Phone Record has just been deleted.
@@ -878,11 +830,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update Instant Messenger ACF Fields on a User when a CiviCRM Contact has been edited.
@@ -924,8 +872,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	/**
 	 * A CiviCRM Contact's Instant Messenger Record is about to be deleted.
 	 *
@@ -959,8 +905,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 		}
 
 	}
-
-
 
 	/**
 	 * A CiviCRM Instant Messenger Record has just been deleted.
@@ -1015,11 +959,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update a Relationship ACF Field on a User when a CiviCRM Contact has been edited.
@@ -1038,8 +978,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$this->relationship_update( $relationship->contact_id_b, $relationship, $args['op'] );
 
 	}
-
-
 
 	/**
 	 * Update the Relationship ACF Field on a Post mapped to a Contact ID.
@@ -1077,11 +1015,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update Address ACF Fields on a User when a CiviCRM Contact has been edited.
@@ -1123,8 +1057,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	/**
 	 * A CiviCRM Contact's Address Record is about to be deleted.
 	 *
@@ -1158,8 +1090,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 		}
 
 	}
-
-
 
 	/**
 	 * A CiviCRM Address Record has just been deleted.
@@ -1214,11 +1144,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * A CiviCRM Contact's Address is about to be edited.
@@ -1252,8 +1178,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$this->map_address_pre = $this->plugin->civicrm->address->address_get_by_id( $address->id );
 
 	}
-
-
 
 	/**
 	 * A CiviCRM Contact's Address has just been created.
@@ -1321,8 +1245,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$this->register_mapper_wp_hooks();
 
 	}
-
-
 
 	/**
 	 * Update an Address ACF Field on a User when a CiviCRM Contact has been edited.
@@ -1394,8 +1316,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	/**
 	 * A CiviCRM Contact's Address has just been deleted.
 	 *
@@ -1466,11 +1386,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update City ACF Fields on a User when a CiviCRM Contact has been edited.
@@ -1509,8 +1425,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	/**
 	 * A CiviCRM Contact's Address Record is about to be deleted.
 	 *
@@ -1543,8 +1457,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 		}
 
 	}
-
-
 
 	/**
 	 * A CiviCRM Address Record has just been deleted.
@@ -1596,11 +1508,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update City ACF Fields on a User when a CiviCRM Contact has been edited.
@@ -1639,8 +1547,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	/**
 	 * A CiviCRM Contact's Address Record is about to be deleted.
 	 *
@@ -1673,8 +1579,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 		}
 
 	}
-
-
 
 	/**
 	 * A CiviCRM Address Record has just been deleted.
@@ -1726,11 +1630,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update a Contact ID ACF Field on a User when a CiviCRM Contact has been edited.
@@ -1769,11 +1669,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update ACF Fields when a set of CiviCRM Custom Fields has been updated.
@@ -1796,11 +1692,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Listen for queries from the Field Group class.
@@ -1831,8 +1723,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 		return true;
 
 	}
-
-
 
 	/**
 	 * Returns the choices for a Setting Field from this Entity when found.
@@ -1955,8 +1845,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	/**
 	 * Listen for queries from the Custom Field class.
 	 *
@@ -2018,8 +1906,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	/**
 	 * Listen for queries from the Contact Field class.
 	 *
@@ -2059,8 +1945,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 		return $contact_fields;
 
 	}
-
-
 
 	/**
 	 * Listen for queries from the Relationship class.
@@ -2145,8 +2029,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	/**
 	 * Listen for queries from the Custom Field class.
 	 *
@@ -2208,8 +2090,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	/**
 	 * Listen for queries from the Attachment class.
 	 *
@@ -2240,8 +2120,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	/**
 	 * Query for the Contact ID that an ACF "Post ID" is mapped to.
 	 *
@@ -2271,8 +2149,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 		return $contact_id;
 
 	}
-
-
 
 	/**
 	 * Listen for queries for supported Location Rules.
@@ -2310,11 +2186,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Filter the Contact data.
@@ -2354,8 +2226,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 		return $contact_data;
 
 	}
-
-
 
 	/**
 	 * Check if a User is mapped to a Contact.
@@ -2408,8 +2278,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
 	/**
 	 * Check if this Field Group has been mapped to a WordPress User Form.
 	 *
@@ -2457,9 +2325,4 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

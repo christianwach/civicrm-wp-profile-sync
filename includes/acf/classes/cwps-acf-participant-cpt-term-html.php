@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * Participant Role Term Description Class.
  *
@@ -83,8 +81,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML {
 	 */
 	public $taxonomy_name;
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -109,8 +105,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML {
 
 	}
 
-
-
 	/**
 	 * Initialise object.
 	 *
@@ -127,8 +121,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML {
 		add_action( 'admin_init', [ $this, 'register_hooks' ] );
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -157,11 +149,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Add the WYSIWYG editor to the "Edit" Field.
@@ -193,8 +181,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML {
 		<?php
 
 	}
-
-
 
 	/**
 	 * Add the WYSIWYG editor to the "Add" Field.
@@ -237,6 +223,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML {
 
 	}
 
-
-
-} // Class ends.
+}

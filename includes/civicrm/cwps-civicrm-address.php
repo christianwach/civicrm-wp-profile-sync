@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Address Class.
  *
@@ -40,8 +38,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 	 */
 	public $civicrm;
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -60,8 +56,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -74,8 +68,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 	}
 
-
-
 	/**
 	 * Register hooks.
 	 *
@@ -84,8 +76,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 	public function register_hooks() {
 
 	}
-
-
 
 	/**
 	 * Unregister hooks.
@@ -96,11 +86,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get a Country by its numeric ID.
@@ -149,8 +135,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 	}
 
-
-
 	/**
 	 * Get a Country by its "short name".
 	 *
@@ -198,8 +182,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 	}
 
-
-
 	/**
 	 * Get all State/Provinces as an array keyed by State ID.
 	 *
@@ -225,8 +207,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		return $state_provinces;
 
 	}
-
-
 
 	/**
 	 * Get all State/Provinces as an array keyed by Country ID.
@@ -281,8 +261,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 	}
 
-
-
 	/**
 	 * Get a State/Province by its numeric ID.
 	 *
@@ -329,8 +307,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		return $state_province;
 
 	}
-
-
 
 	/**
 	 * Get a State/Province by its "short name".
@@ -379,8 +355,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 	}
 
-
-
 	/**
 	 * Get all Counties keyed by County ID.
 	 *
@@ -422,8 +396,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		return $counties;
 
 	}
-
-
 
 	/**
 	 * Get all Counties keyed by State ID.
@@ -467,8 +439,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		return $counties;
 
 	}
-
-
 
 	/**
 	 * Get the State ID for a given County ID.
@@ -514,11 +484,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the data for Shared Addresses.
@@ -572,8 +538,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 	}
 
-
-
 	/**
 	 * Get the data for an Address.
 	 *
@@ -619,8 +583,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		return $address;
 
 	}
-
-
 
 	/**
 	 * Get the data for a Contact's Address by Location Type.
@@ -670,8 +632,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 	}
 
-
-
 	/**
 	 * Get the Addresses for a Contact ID.
 	 *
@@ -720,8 +680,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 	}
 
-
-
 	/**
 	 * Get the Primary Address for a Contact ID.
 	 *
@@ -769,11 +727,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get a Location Type by its numeric ID.
@@ -821,8 +775,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		return $location_type;
 
 	}
-
-
 
 	/**
 	 * Get the Location Types that are defined in CiviCRM.
@@ -873,11 +825,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update a CiviCRM Contact's Address Record.
@@ -937,8 +885,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 	}
 
-
-
 	/**
 	 * Delete an Address Record in CiviCRM.
 	 *
@@ -984,8 +930,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		return $success;
 
 	}
-
-
 
 	/**
 	 * Update a CiviCRM Contact's Address Record.
@@ -1036,11 +980,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the Address Field options for a given Field Name.
@@ -1088,9 +1028,4 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

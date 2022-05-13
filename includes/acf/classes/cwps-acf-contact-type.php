@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Contact Type Class.
  *
@@ -67,8 +65,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 	 */
 	public $bridging_array = [];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -88,8 +84,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 
 	}
 
-
-
 	/**
 	 * Register WordPress hooks.
 	 *
@@ -101,8 +95,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 		$this->register_mapper_hooks();
 
 	}
-
-
 
 	/**
 	 * Register callbacks for Mapper events.
@@ -125,8 +117,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 
 	}
 
-
-
 	/**
 	 * Unregister callbacks for Mapper events.
 	 *
@@ -148,11 +138,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the number of Contacts who are of a CiviCRM Contact Type.
@@ -207,11 +193,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the Contact Type hierarchy that is mapped to a Post Type.
@@ -242,8 +224,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 
 	}
 
-
-
 	/**
 	 * Get the Contact Type that is mapped to a Post Type.
 	 *
@@ -270,8 +250,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 		return $contact_type_id;
 
 	}
-
-
 
 	/**
 	 * Gets the CiviCRM Contact Types as choices for an ACF "Select" Field.
@@ -316,8 +294,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 
 	}
 
-
-
 	/**
 	 * Gets the top-level CiviCRM Contact Types as choices for an ACF "Select" Field.
 	 *
@@ -350,8 +326,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 		return $choices;
 
 	}
-
-
 
 	/**
 	 * Gets the CiviCRM Contact Sub-Types as choices for an ACF "Select" Field.
@@ -395,8 +369,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 		return $choices;
 
 	}
-
-
 
 	/**
 	 * Get all Contact Types that are mapped to Post Types.
@@ -473,8 +445,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 
 	}
 
-
-
 	/**
 	 * Check if a Contact Type is mapped to a Post Type.
 	 *
@@ -537,11 +507,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * When a CiviCRM Contact is about to be updated, get existing data.
@@ -559,8 +525,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 		$this->bridging_array[ $args['objectId'] ] = $contact;
 
 	}
-
-
 
 	/**
 	 * When a CiviCRM Contact has been updated, compare with existing data.
@@ -607,13 +571,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
 	// Retained methods to provide backwards compatibility.
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get all top-level CiviCRM Contact Types.
@@ -626,9 +586,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 		return $this->plugin->civicrm->contact_type->types_get_top_level();
 	}
 
-
-
-} // Class ends.
-
-
-
+}

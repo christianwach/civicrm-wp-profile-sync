@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync ACF Blocks Class.
  *
@@ -49,8 +47,6 @@ class CiviCRM_Profile_Sync_ACF_Blocks {
 	 */
 	public $acf;
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -70,8 +66,6 @@ class CiviCRM_Profile_Sync_ACF_Blocks {
 
 	}
 
-
-
 	/**
 	 * Register WordPress hooks.
 	 *
@@ -89,11 +83,7 @@ class CiviCRM_Profile_Sync_ACF_Blocks {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Register some Blocks.
@@ -141,8 +131,6 @@ class CiviCRM_Profile_Sync_ACF_Blocks {
 
 	}
 
-
-
 	/**
 	 * Render a Test Block.
 	 *
@@ -181,9 +169,4 @@ class CiviCRM_Profile_Sync_ACF_Blocks {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

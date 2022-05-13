@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync "CiviCRM ACF Integration" Class.
  *
@@ -40,8 +38,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 	 */
 	public $cai = false;
 
-
-
 	/**
 	 * Initialises this object.
 	 *
@@ -58,8 +54,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		add_action( 'civicrm_wp_profile_sync_init', [ $this, 'initialise' ] );
 
 	}
-
-
 
 	/**
 	 * Do stuff on plugin init.
@@ -92,8 +86,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 	}
 
-
-
 	/**
 	 * Get the CiviCRM ACF Integration reference.
 	 *
@@ -107,8 +99,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		return $this->cai;
 
 	}
-
-
 
 	/**
 	 * Register hooks on plugin init.
@@ -143,8 +133,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 	}
 
-
-
 	/**
 	 * Register callbacks for CiviCRM ACF Integration filters.
 	 *
@@ -161,8 +149,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		add_filter( 'civicrm_acf_integration_query_contact_id', [ $this, 'query_contact_id' ], 10, 3 );
 
 	}
-
-
 
 	/**
 	 * Unregister callbacks for CiviCRM ACF Integration filters.
@@ -181,8 +167,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 	}
 
-
-
 	/**
 	 * Register callbacks for CiviCRM Entities that have their own hooks.
 	 *
@@ -195,8 +179,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 	}
 
-
-
 	/**
 	 * Unregister callbacks for CiviCRM Entities that have their own hooks.
 	 *
@@ -208,8 +190,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		remove_action( 'cwps/mapper/acf_fields_saved', [ $this, 'acf_fields_saved' ], 10 );
 
 	}
-
-
 
 	/**
 	 * Register callbacks for CiviCRM Entities that have their own hooks.
@@ -273,8 +253,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 	}
 
-
-
 	/**
 	 * Unregister callbacks for CiviCRM Entities that have their own hooks.
 	 *
@@ -337,11 +315,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update the CiviCRM Contact when the ACF Fields on a WordPress User have been edited.
@@ -447,11 +421,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update a WordPress User when a CiviCRM Contact has been edited.
@@ -494,11 +464,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update an Email ACF Field on a User when a CiviCRM Contact has been edited.
@@ -537,11 +503,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * A CiviCRM Contact's Website is about to be edited.
@@ -575,8 +537,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		$this->cai->civicrm->website->website_pre_edit( $args );
 
 	}
-
-
 
 	/**
 	 * Update Website ACF Fields on a User when a CiviCRM Contact has been edited.
@@ -614,11 +574,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update Phone ACF Fields on a User when a CiviCRM Contact has been edited.
@@ -660,8 +616,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 	}
 
-
-
 	/**
 	 * A CiviCRM Contact's Phone Record is about to be deleted.
 	 *
@@ -695,8 +649,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		}
 
 	}
-
-
 
 	/**
 	 * A CiviCRM Phone Record has just been deleted.
@@ -751,11 +703,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update Instant Messenger ACF Fields on a User when a CiviCRM Contact has been edited.
@@ -797,8 +745,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 	}
 
-
-
 	/**
 	 * A CiviCRM Contact's Instant Messenger Record is about to be deleted.
 	 *
@@ -832,8 +778,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		}
 
 	}
-
-
 
 	/**
 	 * A CiviCRM Instant Messenger Record has just been deleted.
@@ -888,11 +832,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update a Relationship ACF Field on a User when a CiviCRM Contact has been edited.
@@ -911,8 +851,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		$this->relationship_update( $relationship->contact_id_b, $relationship, $args['op'] );
 
 	}
-
-
 
 	/**
 	 * Update the Relationship ACF Field on a Post mapped to a Contact ID.
@@ -950,11 +888,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update Address ACF Fields on a User when a CiviCRM Contact has been edited.
@@ -996,8 +930,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 	}
 
-
-
 	/**
 	 * A CiviCRM Contact's Address Record is about to be deleted.
 	 *
@@ -1031,8 +963,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		}
 
 	}
-
-
 
 	/**
 	 * A CiviCRM Address Record has just been deleted.
@@ -1087,11 +1017,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * A CiviCRM Contact's Address is about to be edited.
@@ -1125,8 +1051,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		$this->map_address_pre = $this->cai->civicrm->address->address_get_by_id( $address->id );
 
 	}
-
-
 
 	/**
 	 * A CiviCRM Contact's Address has just been created.
@@ -1194,8 +1118,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		$this->register_mapper_wp_hooks();
 
 	}
-
-
 
 	/**
 	 * Update an Address ACF Field on a User when a CiviCRM Contact has been edited.
@@ -1267,8 +1189,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 	}
 
-
-
 	/**
 	 * A CiviCRM Contact's Address has just been deleted.
 	 *
@@ -1339,11 +1259,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update City ACF Fields on a User when a CiviCRM Contact has been edited.
@@ -1382,8 +1298,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 	}
 
-
-
 	/**
 	 * A CiviCRM Contact's Address Record is about to be deleted.
 	 *
@@ -1416,8 +1330,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		}
 
 	}
-
-
 
 	/**
 	 * A CiviCRM Address Record has just been deleted.
@@ -1469,11 +1381,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update City ACF Fields on a User when a CiviCRM Contact has been edited.
@@ -1512,8 +1420,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 	}
 
-
-
 	/**
 	 * A CiviCRM Contact's Address Record is about to be deleted.
 	 *
@@ -1546,8 +1452,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		}
 
 	}
-
-
 
 	/**
 	 * A CiviCRM Address Record has just been deleted.
@@ -1599,11 +1503,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update a Contact ID ACF Field on a User when a CiviCRM Contact has been edited.
@@ -1642,11 +1542,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update ACF Fields when a set of CiviCRM Custom Fields has been updated.
@@ -1669,11 +1565,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Listen for queries from the Field Group class.
@@ -1704,8 +1596,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		return true;
 
 	}
-
-
 
 	/**
 	 * Listen for queries from the Custom Field class.
@@ -1768,8 +1658,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 	}
 
-
-
 	/**
 	 * Listen for queries from the Contact Field class.
 	 *
@@ -1809,8 +1697,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		return $contact_fields;
 
 	}
-
-
 
 	/**
 	 * Listen for queries from the Relationship class.
@@ -1895,8 +1781,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 	}
 
-
-
 	/**
 	 * Listen for queries from the Custom Field class.
 	 *
@@ -1958,8 +1842,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 	}
 
-
-
 	/**
 	 * Query for the Contact ID that an ACF "Post ID" is mapped to.
 	 *
@@ -1990,11 +1872,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Filter the Contact data.
@@ -2034,8 +1912,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		return $contact_data;
 
 	}
-
-
 
 	/**
 	 * Check if a User is mapped to a Contact.
@@ -2088,8 +1964,6 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 	}
 
-
-
 	/**
 	 * Check if this Field Group has been mapped to a WordPress User Form.
 	 *
@@ -2137,9 +2011,4 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync Google Map Class.
  *
@@ -90,8 +88,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		'google_map',
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -114,8 +110,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -127,8 +121,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -163,8 +155,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 	}
 
-
-
 	/**
 	 * Register callbacks for Mapper events.
 	 *
@@ -187,8 +177,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		$this->mapper_hooks = true;
 
 	}
-
-
 
 	/**
 	 * Unregister callbacks for Mapper events.
@@ -213,11 +201,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update a CiviCRM Contact's Fields with data from ACF Fields.
@@ -255,8 +239,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		return $success;
 
 	}
-
-
 
 	/**
 	 * Update a CiviCRM Contact's Address with data from an ACF Field.
@@ -315,8 +297,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 	}
 
-
-
 	/**
 	 * Update a CiviCRM Contact's Address.
 	 *
@@ -348,8 +328,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		return true;
 
 	}
-
-
 
 	/**
 	 * Prepare CiviCRM Address data from the data in a Google Maps ACF Field.
@@ -487,11 +465,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * A CiviCRM Contact is about to be edited.
@@ -532,8 +506,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		}
 
 	}
-
-
 
 	/**
 	 * Intercept when a Post has been updated from a Contact via the Mapper.
@@ -627,11 +599,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * A CiviCRM Contact's Address has just been created.
@@ -668,8 +636,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 	}
 
-
-
 	/**
 	 * A CiviCRM Contact's Address is about to be edited.
 	 *
@@ -702,8 +668,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		$this->address_pre = $this->plugin->civicrm->address->address_get_by_id( $address->id );
 
 	}
-
-
 
 	/**
 	 * A CiviCRM Contact's Address has just been edited.
@@ -742,8 +706,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		}
 
 	}
-
-
 
 	/**
 	 * A CiviCRM Contact's Address has just been deleted.
@@ -788,8 +750,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		}
 
 	}
-
-
 
 	/**
 	 * Check if the Address has had any properties toggled.
@@ -862,8 +822,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 	}
 
-
-
 	/**
 	 * Update the Google Map ACF Field on a Post mapped to a Contact ID.
 	 *
@@ -923,8 +881,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 	}
 
-
-
 	/**
 	 * Update the Google Map ACF Field on an Entity mapped to a Contact ID.
 	 *
@@ -955,8 +911,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		}
 
 	}
-
-
 
 	/**
 	 * Update the Google Map ACF Field on a Post mapped to a Contact ID.
@@ -998,8 +952,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		$this->acf_loader->acf->field->value_update( $selector, $field_data, $post_id );
 
 	}
-
-
 
 	/**
 	 * Prepare the Address data for updating a Google Map ACF Field.
@@ -1100,8 +1052,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		return $field_data;
 
 	}
-
-
 
 	/**
 	 * Get the ACF Fields to update.
@@ -1240,11 +1190,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the Location Types that can be mapped to an ACF Field.
@@ -1293,11 +1239,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Return the "CiviCRM Google Map" ACF Settings Field.
@@ -1359,8 +1301,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 	}
 
-
-
 	/**
 	 * Return the "Make Read Only" ACF Settings Field.
 	 *
@@ -1413,8 +1353,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 	}
 
-
-
 	/**
 	 * Getter method for the "CiviCRM Google Map" key.
 	 *
@@ -1429,8 +1367,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 	}
 
-
-
 	/**
 	 * Getter method for the "Make Read Only" key.
 	 *
@@ -1444,8 +1380,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		return $this->acf_field_edit_key;
 
 	}
-
-
 
 	/**
 	 * Add any Google Map Fields that are attached to a Post.
@@ -1472,11 +1406,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Returns a Setting Field for an ACF "Google Map" Field when found.
@@ -1525,8 +1455,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 	}
 
-
-
 	/**
 	 * Add CSS when "Google Map" Field is loaded.
 	 *
@@ -1561,8 +1489,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		echo $style;
 
 	}
-
-
 
 	/**
 	 * Maybe modify the value of a "Google Map" Field.
@@ -1651,8 +1577,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 	}
 
-
-
 	/**
 	 * Maybe modify the Setting of a "Google Map" Field.
 	 *
@@ -1698,9 +1622,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

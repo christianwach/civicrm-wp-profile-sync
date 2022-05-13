@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Relationships Class.
  *
@@ -103,8 +101,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		'case_id' => 'select',
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -127,8 +123,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -140,8 +134,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -166,8 +158,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 	}
 
-
-
 	/**
 	 * Register callbacks for Mapper events.
 	 *
@@ -189,8 +179,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		$this->mapper_hooks = true;
 
 	}
-
-
 
 	/**
 	 * Unregister callbacks for Mapper events.
@@ -214,11 +202,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a Post has been updated from a Contact via the Mapper.
@@ -257,11 +241,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update a CiviCRM Contact's Fields with data from ACF Fields.
@@ -299,8 +279,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		return $success;
 
 	}
-
-
 
 	/**
 	 * Update a CiviCRM Contact's Relationship with data from an ACF Field.
@@ -345,11 +323,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update all of a CiviCRM Contact's Relationships.
@@ -689,8 +663,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 	}
 
-
-
 	/**
 	 * Activate a CiviCRM Relationship.
 	 *
@@ -721,8 +693,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		$this->relationship_update( $contact_id, $relationship, 'edit' );
 
 	}
-
-
 
 	/**
 	 * Deactivate a CiviCRM Relationship.
@@ -755,11 +725,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Create a CiviCRM Relationship.
@@ -813,8 +779,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 	}
 
-
-
 	/**
 	 * Edit a CiviCRM Relationship.
 	 *
@@ -865,8 +829,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 	}
 
-
-
 	/**
 	 * Creates or updates a CiviCRM Relationship Record.
 	 *
@@ -912,11 +874,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Create a CiviCRM Relationship.
@@ -965,8 +923,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 	}
 
-
-
 	/**
 	 * Update a CiviCRM Relationship with a given set of data.
 	 *
@@ -995,11 +951,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the data for a Relationship.
@@ -1046,8 +998,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 	}
 
-
-
 	/**
 	 * Query for Relationships given a set of arguments.
 	 *
@@ -1092,11 +1042,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a CiviCRM Contact's Relationship has been updated.
@@ -1115,8 +1061,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		$this->relationship_update( $relationship->contact_id_b, $relationship, $args['op'] );
 
 	}
-
-
 
 	/**
 	 * Update the Relationship ACF Field on a Post mapped to a Contact ID.
@@ -1166,8 +1110,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		do_action( 'cwps/acf/relationship/updated', $contact_id, $relationship, $op );
 
 	}
-
-
 
 	/**
 	 * Update the Relationship ACF Fields on an Entity mapped to a Contact ID.
@@ -1260,11 +1202,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Gets the CiviCRM Relationship Fields.
@@ -1334,11 +1272,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get all Relationship Types.
@@ -1383,8 +1317,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		return $relationships;
 
 	}
-
-
 
 	/**
 	 * Get a Relationship Type by its numeric ID.
@@ -1431,8 +1363,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		return $relationship;
 
 	}
-
-
 
 	/**
 	 * Get a Relationship Type by its "name" or "label".
@@ -1503,11 +1433,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the Relationships for a CiviCRM Contact Type mapped to an ACF Field.
@@ -1588,8 +1514,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 	}
 
-
-
 	/**
 	 * Get all the Relationships for a given CiviCRM Contact.
 	 *
@@ -1662,8 +1586,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 	}
 
-
-
 	/**
 	 * Get all the Relationships for a given CiviCRM Contact.
 	 *
@@ -1725,8 +1647,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 	}
 
-
-
 	/**
 	 * Get all Relationship Types for a top-level Contact Type.
 	 *
@@ -1781,11 +1701,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Return the "CiviCRM Relationship" ACF Settings Field.
@@ -1825,8 +1741,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 	}
 
-
-
 	/**
 	 * Getter method for the "CiviCRM Relationship" key.
 	 *
@@ -1840,8 +1754,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		return $this->acf_field_key;
 
 	}
-
-
 
 	/**
 	 * Add any Relationship Fields that are attached to a Post.
@@ -1868,9 +1780,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

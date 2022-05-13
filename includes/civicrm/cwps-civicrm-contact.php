@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Contact compatibility Class.
  *
@@ -49,8 +47,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 	 */
 	public $mapper_hooks = false;
 
-
-
 	/**
 	 * Initialises this object.
 	 *
@@ -69,8 +65,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 	}
 
-
-
 	/**
 	 * Do stuff on plugin init.
 	 *
@@ -86,8 +80,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register CiviCRM hooks.
@@ -111,8 +103,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 	}
 
-
-
 	/**
 	 * Unregister CiviCRM hooks.
 	 *
@@ -129,8 +119,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		remove_action( 'cwps/wordpress/user_sync', [ $this, 'nickname_update' ], 10 );
 
 	}
-
-
 
 	/**
 	 * Register Mapper hooks.
@@ -153,8 +141,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 	}
 
-
-
 	/**
 	 * Unregister Mapper hooks.
 	 *
@@ -176,11 +162,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Add back CiviCRM's callbacks.
@@ -220,8 +202,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		do_action( 'civicrm_wp_profile_sync_hooks_core_added' );
 
 	}
-
-
 
 	/**
 	 * Remove CiviCRM's callbacks.
@@ -263,11 +243,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Fires when a CiviCRM Contact is edited, but prior to any operations taking place.
@@ -300,8 +276,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		$this->plugin->hooks_bp_remove();
 
 	}
-
-
 
 	/**
 	 * Update a WordPress User when a CiviCRM Contact is edited.
@@ -385,8 +359,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 	}
 
-
-
 	/**
 	 * Update a CiviCRM Contact when a WordPress User is edited.
 	 *
@@ -441,8 +413,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 	}
 
-
-
 	/**
 	 * Check if a CiviCRM Contact should by synced.
 	 *
@@ -483,11 +453,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update a CiviCRM Contact's "First Name" and "Last Name".
@@ -538,8 +504,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 	}
 
-
-
 	/**
 	 * Check if a CiviCRM Contact's name should by synced.
 	 *
@@ -581,11 +545,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update a CiviCRM Contact's "Nickname".
@@ -634,8 +594,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 	}
 
-
-
 	/**
 	 * Check if a CiviCRM Contact's "Nickname" should by synced.
 	 *
@@ -669,11 +627,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Create a CiviCRM Contact for a given set of data.
@@ -761,8 +715,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 	}
 
-
-
 	/**
 	 * Update a CiviCRM Contact with a given set of data.
 	 *
@@ -794,8 +746,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		return $this->create( $contact );
 
 	}
-
-
 
 	/**
 	 * Delete a CiviCRM Contact for a given set of data.
@@ -855,11 +805,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the CiviCRM Contact data for a given ID.
@@ -916,8 +862,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 	}
 
-
-
 	/**
 	 * Get the CiviCRM Contact data for a set of given IDs.
 	 *
@@ -970,11 +914,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get all CiviCRM Contact Types.
@@ -1027,8 +967,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 	}
 
-
-
 	/**
 	 * Get a CiviCRM Contact Type.
 	 *
@@ -1079,11 +1017,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Add a link to the Contact View screen to the WordPress admin menu.
@@ -1129,8 +1063,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 	}
 
-
-
 	/**
 	 * Check with CiviCRM that this Contact can be viewed.
 	 *
@@ -1171,9 +1103,4 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

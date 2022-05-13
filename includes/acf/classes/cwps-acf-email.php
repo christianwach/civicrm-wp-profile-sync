@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Email Class.
  *
@@ -106,8 +104,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		'is_bulkmail' => 'true_false',
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -130,8 +126,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -143,8 +137,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -170,8 +162,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	/**
 	 * Register callbacks for Mapper events.
 	 *
@@ -193,8 +183,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		$this->mapper_hooks = true;
 
 	}
-
-
 
 	/**
 	 * Unregister callbacks for Mapper events.
@@ -218,11 +206,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update CiviCRM Email Fields with data from ACF Fields.
@@ -260,8 +244,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		return $success;
 
 	}
-
-
 
 	/**
 	 * Update a CiviCRM Email Field with data from an ACF Field.
@@ -312,11 +294,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the data for an Email.
@@ -362,8 +340,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		return $email;
 
 	}
-
-
 
 	/**
 	 * Get the data for a Contact's Email by Location Type.
@@ -411,8 +387,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		return $email;
 
 	}
-
-
 
 	/**
 	 * Get the Primary Email for a given Contact ID.
@@ -465,8 +439,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		return $email;
 
 	}
-
-
 
 	/**
 	 * Update a CiviCRM Contact's Primary Email.
@@ -579,11 +551,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the Emails for a given Contact ID.
@@ -639,11 +607,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Sends an Email when the Email API Extension is present.
@@ -695,11 +659,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Gets the set of Email Templates.
@@ -757,8 +717,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	/**
 	 * Gets the options for displaying Email Templates in an ACF select.
 	 *
@@ -791,11 +749,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a Post is been synced from a Contact.
@@ -852,8 +806,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		}
 
 	}
-
-
 
 	/**
 	 * Update a CiviCRM Contact's Email Address.
@@ -967,8 +919,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	/**
 	 * Update a CiviCRM Contact's Email Address Record.
 	 *
@@ -1060,11 +1010,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a CiviCRM Email has been updated.
@@ -1129,8 +1075,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	/**
 	 * Update an Email ACF Field on an Entity mapped to a Contact ID.
 	 *
@@ -1170,11 +1114,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Gets the CiviCRM Email Fields.
@@ -1244,11 +1184,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the Location Types that can be mapped to an ACF Field.
@@ -1316,8 +1252,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	/**
 	 * Return the "CiviCRM Email" ACF Settings Field.
 	 *
@@ -1377,8 +1311,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	/**
 	 * Getter method for the "CiviCRM Email" key.
 	 *
@@ -1392,8 +1324,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		return $this->acf_field_key;
 
 	}
-
-
 
 	/**
 	 * Add any Email Fields that are attached to a Post.
@@ -1419,8 +1349,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		return $acf_fields;
 
 	}
-
-
 
 	/**
 	 * Returns a Setting Field for an ACF "Email" Field when found.
@@ -1479,11 +1407,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Appends an array of Setting Field choices for a Bypass ACF Field Group when found.
@@ -1547,9 +1471,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

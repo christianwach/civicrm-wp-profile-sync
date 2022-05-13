@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Multiple Record Set Class.
  *
@@ -69,8 +67,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		'civicrm_multiset',
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -93,8 +89,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -106,8 +100,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -131,8 +123,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		*/
 
 	}
-
-
 
 	/**
 	 * Register callbacks for Mapper events.
@@ -159,8 +149,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 	}
 
-
-
 	/**
 	 * Unregister callbacks for Mapper events.
 	 *
@@ -184,11 +172,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update a CiviCRM Contact's Fields with data from ACF Fields.
@@ -224,8 +208,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 	}
 
-
-
 	/**
 	 * Update a CiviCRM Contact's Field with data from an ACF Field.
 	 *
@@ -256,11 +238,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the data for a Multiple Record Set.
@@ -277,11 +255,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the Multiple Record Sets for a given Contact ID.
@@ -337,11 +311,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a Post is been synced from a Contact.
@@ -393,8 +363,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		}
 
 	}
-
-
 
 	/**
 	 * Update all of a CiviCRM Contact's Multiple Record Sets.
@@ -599,8 +567,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 	}
 
-
-
 	/**
 	 * Prepare the CiviCRM Multiple Record Set from an ACF Field.
 	 *
@@ -631,8 +597,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 	}
 
-
-
 	/**
 	 * Prepare the ACF Field data from a CiviCRM Multiple Record Set.
 	 *
@@ -662,8 +626,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		return $multiset_data;
 
 	}
-
-
 
 	/**
 	 * Update a CiviCRM Contact's Multiple Record Set.
@@ -715,8 +677,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 	}
 
-
-
 	/**
 	 * Delete a Multiple Record Set in CiviCRM.
 	 *
@@ -762,11 +722,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a CiviCRM Multiple Record Set has been updated.
@@ -789,8 +745,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		$this->multiset_process( $civicrm_multiset, $args );
 
 	}
-
-
 
 	/**
 	 * A CiviCRM Contact's Multiple Record Set is about to be deleted.
@@ -826,8 +780,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 	}
 
-
-
 	/**
 	 * A CiviCRM Multiple Record Set has just been deleted.
 	 *
@@ -859,8 +811,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		$this->multiset_process( $this->multiset_pre, $args );
 
 	}
-
-
 
 	/**
 	 * Process a CiviCRM Multiple Record Set.
@@ -989,11 +939,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the Multiple Record Sets that can be mapped to an ACF Field.
@@ -1073,11 +1019,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Return the "CiviCRM Group" ACF Settings Field.
@@ -1135,8 +1077,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 	}
 
-
-
 	/**
 	 * Add any Multiple Record Set Fields that are attached to a Post.
 	 *
@@ -1159,11 +1099,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Sync the CiviCRM "Multiple Record Set ID" to the ACF Fields on a WordPress Post.
@@ -1199,9 +1135,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Website compatibility Class.
  *
@@ -49,8 +47,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 	 */
 	public $mapper_hooks = false;
 
-
-
 	/**
 	 * Initialises this object.
 	 *
@@ -71,8 +67,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 
 	}
 
-
-
 	/**
 	 * Do stuff on plugin init.
 	 *
@@ -89,8 +83,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 
 	}
 
-
-
 	/**
 	 * Register CiviCRM hooks.
 	 *
@@ -106,8 +98,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 
 	}
 
-
-
 	/**
 	 * Unregister CiviCRM hooks.
 	 *
@@ -122,8 +112,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		remove_action( 'cwps/wordpress/user_sync', [ $this, 'website_update' ], 10 );
 
 	}
-
-
 
 	/**
 	 * Register Mapper hooks.
@@ -149,8 +137,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 
 	}
 
-
-
 	/**
 	 * Unregister Mapper hooks.
 	 *
@@ -175,11 +161,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Fires when a CiviCRM Contact's Website is about to be edited.
@@ -208,8 +190,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		$this->pre_edit = (object) $this->get_by_id( $website->id );
 
 	}
-
-
 
 	/**
 	 * Updates a WordPress User when a CiviCRM Contact's Website is edited.
@@ -348,8 +328,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 
 	}
 
-
-
 	/**
 	 * Fires when a CiviCRM Contact's Website is about to be deleted.
 	 *
@@ -379,8 +357,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		$this->pre_delete = $website;
 
 	}
-
-
 
 	/**
 	 * Clears a WordPress User's Website when a CiviCRM Contact's Website is deleted.
@@ -431,11 +407,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Updates a CiviCRM Contact's Website with the WordPress User's Website.
@@ -469,8 +441,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		$website = $this->update_for_contact( $website_type_id, $contact->contact_id, $user->user_url );
 
 	}
-
-
 
 	/**
 	 * Updates a CiviCRM Contact's Website.
@@ -540,11 +510,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Creates a CiviCRM Website record.
@@ -598,8 +564,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 
 	}
 
-
-
 	/**
 	 * Updates a CiviCRM Website record.
 	 *
@@ -630,8 +594,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		return $this->create( $website );
 
 	}
-
-
 
 	/**
 	 * Deletes a CiviCRM Website record.
@@ -693,11 +655,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the data for a Website.
@@ -743,8 +701,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		return $website;
 
 	}
-
-
 
 	/**
 	 * Get CiviCRM Contact's Website by Website Type.
@@ -803,11 +759,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the Website Types.
@@ -842,8 +794,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 
 	}
 
-
-
 	/**
 	 * Get the Website Types.
 	 *
@@ -874,8 +824,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 
 	}
 
-
-
 	/**
 	 * Gets the URL of the CiviCRM "Website Types Options" admin page.
 	 *
@@ -903,9 +851,4 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

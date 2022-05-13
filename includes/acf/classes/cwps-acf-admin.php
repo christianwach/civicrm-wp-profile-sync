@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync ACF Admin Class
  *
@@ -75,8 +73,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		'participant_roles' => 10, // Number of Participants per CiviCRM Participant Role.
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -95,8 +91,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -108,8 +102,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register WordPress hooks.
@@ -148,11 +140,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Add our admin page(s) to the WordPress admin menu.
@@ -202,8 +190,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 	}
 
-
-
 	/**
 	 * Initialise plugin help.
 	 *
@@ -217,8 +203,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		wp_enqueue_script( 'dashboard' );
 
 	}
-
-
 
 	/**
 	 * Enqueue any styles needed by our Sync page.
@@ -237,8 +221,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		);
 
 	}
-
-
 
 	/**
 	 * Enqueue any scripts needed by our Sync page.
@@ -466,8 +448,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 	}
 
-
-
 	/**
 	 * Append the "Manual Sync" page to Settings page.
 	 *
@@ -488,8 +468,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		return $subpages;
 
 	}
-
-
 
 	/**
 	 * Get the URL for the form action.
@@ -512,11 +490,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Show our "Manual Sync" page.
@@ -564,8 +538,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 	}
 
-
-
 	/**
 	 * Append the Manual Sync settings page URL to the subpage URLs.
 	 *
@@ -584,8 +556,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 	}
 
-
-
 	/**
 	 * Show subpage tabs on settings pages.
 	 *
@@ -603,8 +573,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		return $show_tabs;
 
 	}
-
-
 
 	/**
 	 * Add subpage tab to tabs on settings pages.
@@ -632,11 +600,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Register meta boxes.
@@ -755,8 +719,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 	}
 
-
-
 	/**
 	 * Load our meta boxes as closed by default.
 	 *
@@ -777,8 +739,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		return $classes;
 
 	}
-
-
 
 	/**
 	 * Render WordPress Posts to CiviCRM Contacts meta box.
@@ -801,8 +761,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 	}
 
-
-
 	/**
 	 * Render CiviCRM Contacts to WordPress Posts meta box.
 	 *
@@ -823,8 +781,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/metaboxes/metabox-acf-contacts-posts.php';
 
 	}
-
-
 
 	/**
 	 * Render WordPress Posts to CiviCRM Activities meta box.
@@ -847,8 +803,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 	}
 
-
-
 	/**
 	 * Render CiviCRM Activities to WordPress Posts meta box.
 	 *
@@ -869,8 +823,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/metaboxes/metabox-acf-activities-posts.php';
 
 	}
-
-
 
 	/**
 	 * Render WordPress Posts to CiviCRM Participants meta box.
@@ -902,8 +854,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 	}
 
-
-
 	/**
 	 * Render CiviCRM Participant Roles to WordPress Posts meta box.
 	 *
@@ -934,8 +884,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 	}
 
-
-
 	/**
 	 * Render CiviCRM Groups to WordPress Terms meta box.
 	 *
@@ -957,11 +905,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Route settings updates to relevant methods.
@@ -1327,8 +1271,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 	}
 
-
-
 	/**
 	 * Stepped synchronisation of WordPress Posts to CiviCRM Contacts.
 	 *
@@ -1493,8 +1435,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 	}
 
-
-
 	/**
 	 * Stepped synchronisation of CiviCRM Contacts to WordPress Posts.
 	 *
@@ -1635,8 +1575,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 	}
-
-
 
 	/**
 	 * Stepped synchronisation of WordPress Posts to CiviCRM Activities.
@@ -1801,8 +1739,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 	}
 
-
-
 	/**
 	 * Stepped synchronisation of CiviCRM Activities to WordPress Posts.
 	 *
@@ -1942,8 +1878,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 	}
-
-
 
 	/**
 	 * Stepped synchronisation of WordPress Posts to CiviCRM Participants.
@@ -2113,8 +2047,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 	}
 
-
-
 	/**
 	 * Stepped synchronisation of CiviCRM Participants to WordPress Posts.
 	 *
@@ -2259,7 +2191,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 	}
-
 
 	/**
 	 * Stepped synchronisation of WordPress Posts to CiviCRM Participants.
@@ -2406,8 +2337,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 	}
 
-
-
 	/**
 	 * Stepped synchronisation of CiviCRM Participants to WordPress Posts.
 	 *
@@ -2552,9 +2481,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 	}
 
-
-
-
 	/**
 	 * Stepped synchronisation of CiviCRM Groups to WordPress Terms.
 	 *
@@ -2690,8 +2616,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 	}
 
-
-
 	/**
 	 * Init the synchronisation stepper.
 	 *
@@ -2723,8 +2647,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 	}
 
-
-
 	/**
 	 * Update the synchronisation stepper.
 	 *
@@ -2743,8 +2665,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 	}
 
-
-
 	/**
 	 * Delete the synchronisation stepper.
 	 *
@@ -2762,11 +2682,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get all step counts.
@@ -2787,8 +2703,6 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		return apply_filters( 'cwps/acf/step_counts/get', $this->step_counts );
 
 	}
-
-
 
 	/**
 	 * Get the step count for a given mapping.
@@ -2815,9 +2729,4 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

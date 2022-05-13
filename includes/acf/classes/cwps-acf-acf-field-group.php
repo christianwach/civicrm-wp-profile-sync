@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync ACF Field Group Class.
  *
@@ -58,8 +56,6 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 	 */
 	public $placeholder_group = 'group_cacf_placeholder_group';
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -79,8 +75,6 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 
 	}
 
-
-
 	/**
 	 * Register WordPress hooks.
 	 *
@@ -92,8 +86,6 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 		add_action( 'acf/update_field_group', [ $this, 'field_group_updated' ] );
 
 	}
-
-
 
 	/**
 	 * Getter method for the "Placeholder Group" Field Group key.
@@ -109,11 +101,7 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Hook into Field Group updates.
@@ -188,8 +176,6 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 
 	}
 
-
-
 	/**
 	 * Recursively fire our "pre-update" filter.
 	 *
@@ -225,11 +211,7 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get Field Group from Field data.
@@ -292,11 +274,7 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get Field Group from CiviCRM Custom Group ID.
@@ -321,11 +299,7 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the ACF Fields for a given Field Group.
@@ -350,11 +324,7 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Check if a Field Group has been mapped to a WordPress Entity.
@@ -466,9 +436,4 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync BuddyPress CiviCRM Phone Class.
  *
@@ -97,8 +95,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 		'phone_ext' => 'textbox',
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -119,8 +115,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -136,8 +130,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -166,8 +158,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 	}
 
-
-
 	/**
 	 * Register callbacks for Mapper events.
 	 *
@@ -190,8 +180,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 		$this->mapper_hooks = true;
 
 	}
-
-
 
 	/**
 	 * Unregister callbacks for Mapper events.
@@ -216,11 +204,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a CiviCRM Phone Record has been updated.
@@ -248,8 +232,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 		$this->phone_process( $phone, $args );
 
 	}
-
-
 
 	/**
 	 * Process a CiviCRM Phone Record.
@@ -345,8 +327,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 	}
 
-
-
 	/**
 	 * Get the value of a Phone Field, formatted for BuddyPress.
 	 *
@@ -394,11 +374,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Save Phone(s) when BuddyPress Profile Fields have been saved.
@@ -482,8 +458,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 	}
 
-
-
 	/**
 	 * Prepares the CiviCRM Contact data from an array of BuddyPress Field data.
 	 *
@@ -555,11 +529,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Returns the Phone Field choices for a Setting Field from when found.
@@ -609,8 +579,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 	}
 
-
-
 	/**
 	 * Get the CiviCRM Phone Fields for a BuddyPress Field Type.
 	 *
@@ -642,11 +610,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the core Fields for a CiviCRM Phone Type.
@@ -731,11 +695,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the BuddyPress Field Type for a Phone Field.
@@ -759,8 +719,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 		return $type;
 
 	}
-
-
 
 	/**
 	 * Gets the mapped Phone Field name.
@@ -788,11 +746,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Modify the Options of a special case BuddyPress "Checkbox" Field.
@@ -837,8 +791,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 	}
 
-
-
 	/**
 	 * Filter the Phone Fields for a special case BuddyPress "Checkbox" Field.
 	 *
@@ -872,8 +824,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 	}
 
-
-
 	/**
 	 * Checks if a "Checkbox" Field is a "True/False" Field.
 	 *
@@ -906,9 +856,4 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

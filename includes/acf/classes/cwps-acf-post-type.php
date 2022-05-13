@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync WordPress Post Type Class
  *
@@ -49,8 +47,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 	 */
 	public $rule_name = 'post_type';
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -69,8 +65,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -82,8 +76,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -97,11 +89,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get all Post Types.
@@ -138,11 +126,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get all Post Types that a Contact Type may be synced with.
@@ -185,8 +169,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 
 	}
 
-
-
 	/**
 	 * Get the Post Type that is mapped to a Contact Type.
 	 *
@@ -202,11 +184,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get all Post Types that an Activity Type may be synced with.
@@ -249,8 +227,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 
 	}
 
-
-
 	/**
 	 * Get the Post Type that is mapped to an Activity Type.
 	 *
@@ -266,11 +242,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get all Post Types that a Participant Role may be synced with.
@@ -313,8 +285,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 
 	}
 
-
-
 	/**
 	 * Get the Post Type that is mapped to a Participant Role.
 	 *
@@ -330,11 +300,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the number of Posts in a WordPress Post Type.
@@ -370,11 +336,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get all Post Types that are mapped to an Entity Type.
@@ -431,8 +393,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 
 	}
 
-
-
 	/**
 	 * Check if a Post Type is mapped to a Contact Type.
 	 *
@@ -463,8 +423,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 		return $is_linked;
 
 	}
-
-
 
 	/**
 	 * Check if a Post Type is mapped to an Activity Type.
@@ -497,8 +455,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 
 	}
 
-
-
 	/**
 	 * Check if a Post Type is mapped to Participant Roles.
 	 *
@@ -530,11 +486,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the singular label for a given Post Type.
@@ -562,11 +514,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Listen for queries for supported Location Rules.
@@ -596,9 +544,4 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

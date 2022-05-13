@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Contact Field Class.
  *
@@ -131,8 +129,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		'household_name' => 'text',
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -152,8 +148,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -165,8 +159,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -199,11 +191,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a Post has been updated from a Contact via the Mapper.
@@ -228,8 +216,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		$this->post_edited( $args );
 
 	}
-
-
 
 	/**
 	 * Intercept when a Post has been updated from a Contact via the Mapper.
@@ -287,11 +273,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the value of a Contact Field, formatted for ACF.
@@ -398,11 +380,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the "date format" for a given CiviCRM Contact Field.
@@ -435,11 +413,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the "select" options for a given CiviCRM Contact Field.
@@ -508,11 +482,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the CiviCRM Contact Fields for an ACF Field.
@@ -594,11 +564,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the core Fields for a CiviCRM Contact Type.
@@ -695,8 +661,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	/**
 	 * Get the core Fields for all CiviCRM Contact Types.
 	 *
@@ -785,8 +749,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	/**
 	 * Get the Fields for a CiviCRM Contact Type.
 	 *
@@ -819,8 +781,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	/**
 	 * Get the public Fields for all top-level CiviCRM Contact Types.
 	 *
@@ -840,8 +800,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		return $public_fields;
 
 	}
-
-
 
 	/**
 	 * Get the Fields for an ACF Field and mapped to a CiviCRM Contact Type.
@@ -872,8 +830,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	/**
 	 * Get the ACF Field Type for a Contact Field.
 	 *
@@ -903,11 +859,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Modify the Settings of an ACF "Select" Field.
@@ -953,8 +905,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	/**
 	 * Modify the Settings of an ACF "Checkbox" Field.
 	 *
@@ -994,8 +944,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	/**
 	 * Modify the Settings of an ACF "Radio" Field.
 	 *
@@ -1034,8 +982,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		return $field;
 
 	}
-
-
 
 	/**
 	 * Modify the Settings of an ACF "Date Picker" Field.
@@ -1080,8 +1026,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	/**
 	 * Modify the Settings of an ACF "Text" Field.
 	 *
@@ -1123,8 +1067,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	/**
 	 * Modify the Settings of an "Image" Field as required by a Contact Field.
 	 *
@@ -1165,8 +1107,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		return $field;
 
 	}
-
-
 
 	/**
 	 * Get the value of an "Image" Field as required by an ACF Field.
@@ -1360,8 +1300,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	/**
 	 * Tries to convert an Attachment URL (for intermediate/edited sized image) into a Post ID.
 	 *
@@ -1481,8 +1419,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	/**
 	 * Callback for the Contact postSave hook.
 	 *
@@ -1548,8 +1484,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 	}
 
-
-
 	/**
 	 * Fires just before an Attachment is deleted.
 	 *
@@ -1600,9 +1534,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

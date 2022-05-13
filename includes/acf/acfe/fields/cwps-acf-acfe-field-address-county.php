@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync Custom ACF Field Type - CiviCRM County Field.
  *
@@ -147,8 +145,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_County extends acf_field {
 	 */
 	public $l10n = [];
 
-
-
 	/**
 	 * Sets up the Field Type.
 	 *
@@ -181,8 +177,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_County extends acf_field {
 		add_action( 'wp_ajax_cwps_get_state_field', [ $this, 'ajax_query' ] );
 
 	}
-
-
 
 	/**
 	 * Create extra Settings for this Field Type.
@@ -273,8 +267,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_County extends acf_field {
 
 	}
 
-
-
 	/**
 	 * AJAX Query callback.
 	 *
@@ -294,8 +286,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_County extends acf_field {
 		acf_send_ajax_results( $response );
 
 	}
-
-
 
 	/**
 	 * AJAX Query callback.
@@ -378,8 +368,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_County extends acf_field {
 
 	}
 
-
-
 	/**
 	 * Get the State Fields for the AJAX Query.
 	 *
@@ -425,8 +413,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_County extends acf_field {
 		return $choices;
 
 	}
-
-
 
 	/**
 	 * Creates the HTML interface for this Field Type.
@@ -479,139 +465,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_County extends acf_field {
 
 	}
 
-
-
-	/**
-	 * This filter is applied to the $value after it is loaded from the database.
-	 *
-	 * @since 0.5
-	 *
-	 * @param mixed $value The value found in the database.
-	 * @param integer|string $post_id The ACF "Post ID" from which the value was loaded.
-	 * @param array $field The Field array holding all the Field options.
-	 * @return mixed $value The modified value.
-	public function load_value( $value, $post_id, $field ) {
-
-		// Assign County for this Field if empty.
-		if ( empty( $value ) ) {
-			$value = $this->get_county( $value, $post_id, $field );
-		}
-
-		// --<
-		return $value;
-
-	}
-	 */
-
-
-
-	/**
-	 * This filter is applied to the $value before it is saved in the database.
-	 *
-	 * @since 0.5
-	 *
-	 * @param mixed $value The value found in the database.
-	 * @param integer $post_id The Post ID from which the value was loaded.
-	 * @param array $field The Field array holding all the Field options.
-	 * @return mixed $value The modified value.
-	public function update_value( $value, $post_id, $field ) {
-
-		// Assign County for this Field if empty.
-		if ( empty( $value ) ) {
-			$value = $this->get_county( $value, $post_id, $field );
-		}
-
-		// --<
-		return $value;
-
-	}
-	 */
-
-
-
-	/**
-	 * This filter is applied to the value after it is loaded from the database
-	 * and before it is returned to the template.
-	 *
-	 * @since 0.5
-	 *
-	 * @param mixed $value The value which was loaded from the database.
-	 * @param mixed $post_id The Post ID from which the value was loaded.
-	 * @param array $field The Field array holding all the Field options.
-	 * @return mixed $value The modified value.
-	public function format_value( $value, $post_id, $field ) {
-
-		// Bail early if no value.
-		if ( empty( $value ) ) {
-			return $value;
-		}
-
-		// Apply setting.
-		if ( $field['font_size'] > 12 ) {
-
-			// format the value
-			// $value = 'something';
-
-		}
-
-		// --<
-		return $value;
-
-	}
-	 */
-
-
-
-	/**
-	 * This filter is used to perform validation on the value prior to saving.
-	 *
-	 * All values are validated regardless of the Field's required setting.
-	 * This allows you to validate and return messages to the user if the value
-	 * is not correct.
-	 *
-	 * @since 0.5
-	 *
-	 * @param bool $valid The validation status based on the value and the Field's required setting.
-	 * @param mixed $value The $_POST value.
-	 * @param array $field The Field array holding all the Field options.
-	 * @param string $input The corresponding input name for $_POST value.
-	 * @return string|bool $valid False if not valid, or string for error message.
-	public function validate_value( $valid, $value, $field, $input ) {
-
-		// Basic usage.
-		if ( $value < $field['custom_minimum_setting'] ) {
-			$valid = false;
-		}
-
-		// Advanced usage.
-		if ( $value < $field['custom_minimum_setting'] ) {
-			$valid = __( 'The value is too little!', 'civicrm-wp-profile-sync' ),
-		}
-
-		// --<
-		return $valid;
-
-	}
-	 */
-
-
-
-	/**
-	 * This action is fired after a value has been deleted from the database.
-	 *
-	 * Please note that saving a blank value is treated as an update, not a delete.
-	 *
-	 * @since 0.5
-	 *
-	 * @param integer $post_id The Post ID from which the value was deleted.
-	 * @param string $key The meta key which the value was deleted.
-	public function delete_value( $post_id, $key ) {
-
-	}
-	 */
-
-
-
 	/**
 	 * This filter is applied to the Field after it is loaded from the database.
 	 *
@@ -641,54 +494,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_County extends acf_field {
 		return $field;
 
 	}
-
-
-
-	/**
-	 * This filter is applied to the Field before it is saved to the database.
-	 *
-	 * @since 0.5
-	 *
-	 * @param array $field The Field array holding all the Field options.
-	 * @return array $field The modified Field data.
-	public function update_field( $field ) {
-
-		// Try and init CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return $field;
-		}
-
-		// Get CiviCRM config.
-		$config = CRM_Core_Config::singleton();
-
-		$field['allow_null'] = 0;
-		$field['multiple'] = 0;
-		$field['ui'] = 1;
-		$field['ajax'] = 0;
-		$field['return_format'] = 'value';
-		$field['choices'] = CRM_Core_PseudoConstant::county();
-		$field['default_value'] = $config->defaultContactCounty;
-
-		// --<
-		return $field;
-
-	}
-	 */
-
-
-
-	/**
-	 * This action is fired after a Field is deleted from the database.
-	 *
-	 * @since 0.5
-	 *
-	 * @param array $field The Field array holding all the Field options.
-	public function delete_field( $field ) {
-
-	}
-	 */
-
-
 
 	/**
 	 * This method is called in the "admin_enqueue_scripts" action on the edit
@@ -728,9 +533,4 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_County extends acf_field {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

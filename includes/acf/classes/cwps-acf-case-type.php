@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Case Type Class.
  *
@@ -49,8 +47,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Type {
 	 */
 	public $civicrm;
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -70,8 +66,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Type {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -84,8 +78,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Type {
 
 	}
 
-
-
 	/**
 	 * Register hooks.
 	 *
@@ -95,11 +87,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Type {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the data for a "Case Type" by ID.
@@ -155,11 +143,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Type {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the number of Cases for a given CiviCRM Case Type.
@@ -210,11 +194,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Type {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the Case Type that is mapped to a Post Type.
@@ -243,11 +223,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Type {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Gets the CiviCRM Case Types as choices for an ACF "Select" Field.
@@ -313,11 +289,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Type {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get all Case Types.
@@ -378,8 +350,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Type {
 		return $case_types;
 
 	}
-
-
 
 	/**
 	 * Get all Case Types that are mapped to Post Types.
@@ -456,8 +426,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Type {
 
 	}
 
-
-
 	/**
 	 * Check if a Case Type is mapped to a Post Type.
 	 *
@@ -484,9 +452,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Type {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

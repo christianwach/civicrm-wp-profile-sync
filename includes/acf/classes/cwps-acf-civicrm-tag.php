@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Tag Class.
  *
@@ -49,8 +47,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Tag {
 	 */
 	public $civicrm;
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -70,8 +66,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Tag {
 
 	}
 
-
-
 	/**
 	 * Register WordPress hooks.
 	 *
@@ -81,11 +75,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Tag {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Create a CiviCRM Tag.
@@ -142,8 +132,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Tag {
 
 	}
 
-
-
 	/**
 	 * Update a CiviCRM Contact with a given set of data.
 	 *
@@ -175,11 +163,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Tag {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the data for a Tag.
@@ -226,11 +210,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Tag {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the Tags that can be applied to CiviCRM Contacts.
@@ -280,8 +260,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Tag {
 
 	}
 
-
-
 	/**
 	 * Check if a CiviCRM Contact has a Tag.
 	 *
@@ -323,8 +301,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Tag {
 		return empty( $result['values'] ) ? false : true;
 
 	}
-
-
 
 	/**
 	 * Add a Tag to a CiviCRM Contact.
@@ -368,9 +344,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Tag {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

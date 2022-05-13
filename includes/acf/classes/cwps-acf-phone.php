@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Phone Class.
  *
@@ -106,8 +104,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		//'phone_type_id' => 'select',
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -129,8 +125,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		parent::__construct();
 
 	}
-
-
 
 	/**
 	 * Initialise this object.
@@ -157,8 +151,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	/**
 	 * Include files.
 	 *
@@ -171,8 +163,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	/**
 	 * Set up the child objects.
 	 *
@@ -184,8 +174,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		$this->shortcode = new CiviCRM_Profile_Sync_ACF_Shortcode_Phone( $this );
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -215,8 +203,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	/**
 	 * Register callbacks for Mapper events.
 	 *
@@ -239,8 +225,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		$this->mapper_hooks = true;
 
 	}
-
-
 
 	/**
 	 * Unregister callbacks for Mapper events.
@@ -265,11 +249,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update a CiviCRM Contact's Fields with data from ACF Fields.
@@ -308,8 +288,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	/**
 	 * Update a CiviCRM Contact's Field with data from an ACF Field.
 	 *
@@ -340,11 +318,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a Post is been synced from a Contact.
@@ -396,8 +370,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		}
 
 	}
-
-
 
 	/**
 	 * Update all of a CiviCRM Contact's Phone Records.
@@ -602,8 +574,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	/**
 	 * Prepare the CiviCRM Phone Record data from an ACF Field.
 	 *
@@ -634,8 +604,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		return $phone_data;
 
 	}
-
-
 
 	/**
 	 * Prepare the ACF Field data from a CiviCRM Phone Record.
@@ -671,11 +639,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a CiviCRM Phone Record has been updated.
@@ -698,8 +662,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		$this->phone_process( $civicrm_phone, $args );
 
 	}
-
-
 
 	/**
 	 * A CiviCRM Contact's Phone Record is about to be deleted.
@@ -736,8 +698,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	/**
 	 * A CiviCRM Phone Record has just been deleted.
 	 *
@@ -769,8 +729,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		$this->phone_process( $this->phone_pre, $args );
 
 	}
-
-
 
 	/**
 	 * Process a CiviCRM Phone Record.
@@ -832,11 +790,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update Phone ACF Fields on an Entity mapped to a Contact ID.
@@ -946,11 +900,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the Phone Locations that can be mapped to an ACF Field.
@@ -994,8 +944,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	/**
 	 * Get the Phone Types that can be mapped to an ACF Field.
 	 *
@@ -1033,8 +981,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	/**
 	 * Add any Phone Fields that are attached to a Post.
 	 *
@@ -1057,11 +1003,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Sync the CiviCRM "Phone ID" to the ACF Fields on a WordPress Post.
@@ -1109,11 +1051,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Gets the CiviCRM Phone Fields.
@@ -1183,8 +1121,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	/**
 	 * Get the mapped Phone Field name if present.
 	 *
@@ -1222,8 +1158,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		return $phone_field_name;
 
 	}
-
-
 
 	/**
 	 * Appends an array of Setting Field choices for a Bypass ACF Field Group when found.
@@ -1280,8 +1214,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	/**
 	 * Modify the Settings of an ACF "Select" Field.
 	 *
@@ -1321,8 +1253,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
 	/**
 	 * Get the "select" options for a given CiviCRM Phone Field.
 	 *
@@ -1347,8 +1277,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		return $options;
 
 	}
-
-
 
 	/**
 	 * Modify the Settings of an ACF "Text" Field.
@@ -1391,9 +1319,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

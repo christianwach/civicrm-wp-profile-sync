@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Event Field Class.
  *
@@ -146,8 +144,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -167,8 +163,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -180,8 +174,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -199,11 +191,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Getter for the public Event Fields.
@@ -234,11 +222,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Validate the content of a Field.
@@ -283,11 +267,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the value of an Event Field, formatted for ACF.
@@ -377,11 +357,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the "select" options for a given CiviCRM Event Field.
@@ -429,11 +405,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the CiviCRM Event Fields for an ACF Field.
@@ -480,11 +452,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the Event Field options for a given Field ID.
@@ -518,8 +486,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 		return $field;
 
 	}
-
-
 
 	/**
 	 * Get the Event Fields for an ACF Field Type.
@@ -580,8 +546,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 
 	}
 
-
-
 	/**
 	 * Get the Fields for all CiviCRM Event Types.
 	 *
@@ -641,8 +605,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 		return $fields;
 
 	}
-
-
 
 	/**
 	 * Get the core Fields for all CiviCRM Event Types.
@@ -786,8 +748,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 
 	}
 
-
-
 	/**
 	 * Get the public Fields for all CiviCRM Event Types.
 	 *
@@ -808,8 +768,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 		return $public_fields;
 
 	}
-
-
 
 	/**
 	 * Get the Event Settings Fields.
@@ -832,11 +790,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the Fields for an ACF Field and mapped to a CiviCRM Event Type.
@@ -863,8 +817,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 
 	}
 
-
-
 	/**
 	 * Get the ACF Field Type for an Event Field.
 	 *
@@ -888,11 +840,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Modify the Settings of an ACF "Select" Field.
@@ -947,8 +895,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 
 	}
 
-
-
 	/**
 	 * Modify the Settings of an ACF "Date Time Picker" Field.
 	 *
@@ -993,8 +939,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 
 	}
 
-
-
 	/**
 	 * Get the CiviCRM "DateTime format" for a given CiviCRM Event Field.
 	 *
@@ -1038,9 +982,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

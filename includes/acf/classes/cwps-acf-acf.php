@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync ACF Class.
  *
@@ -76,8 +74,6 @@ class CiviCRM_Profile_Sync_ACF {
 	 */
 	//public $blocks;
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -100,8 +96,6 @@ class CiviCRM_Profile_Sync_ACF {
 		add_action( 'cwps/acf/loaded', [ $this, 'initialise' ] );
 
 	}
-
-
 
 	/**
 	 * Initialise this object.
@@ -128,8 +122,6 @@ class CiviCRM_Profile_Sync_ACF {
 
 	}
 
-
-
 	/**
 	 * Include files.
 	 *
@@ -144,8 +136,6 @@ class CiviCRM_Profile_Sync_ACF {
 		//include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-acf-blocks.php';
 
 	}
-
-
 
 	/**
 	 * Set up this plugin's objects.
@@ -168,8 +158,6 @@ class CiviCRM_Profile_Sync_ACF {
 
 	}
 
-
-
 	/**
 	 * Register hooks.
 	 *
@@ -178,8 +166,6 @@ class CiviCRM_Profile_Sync_ACF {
 	public function register_hooks() {
 
 	}
-
-
 
 	/**
 	 * Checks if ACF Pro is installed.
@@ -195,9 +181,4 @@ class CiviCRM_Profile_Sync_ACF {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

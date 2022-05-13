@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync BuddyPress CiviCRM Contact Field Class.
  *
@@ -58,8 +56,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact {
 	 */
 	public $xprofile;
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -80,8 +76,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -93,8 +87,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -114,11 +106,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Fires when a BuddyPress xProfile "Profile Group" with mapped Fields has been updated.
@@ -158,8 +146,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact {
 		do_action( 'cwps/bp/contact/bp_fields_edited', $args );
 
 	}
-
-
 
 	/**
 	 * Prepares the CiviCRM Contact data from an array of BuddyPress Field data.
@@ -237,11 +223,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Populate the BuddyPress xProfile Fields.
@@ -321,11 +303,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Listen for queries from the Custom Field class.
@@ -376,9 +354,4 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

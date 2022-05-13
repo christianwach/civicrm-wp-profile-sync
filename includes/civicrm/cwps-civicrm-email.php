@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Email compatibility Class.
  *
@@ -49,8 +47,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 	 */
 	public $mapper_hooks = false;
 
-
-
 	/**
 	 * Initialises this object.
 	 *
@@ -71,8 +67,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 
 	}
 
-
-
 	/**
 	 * Do stuff on plugin init.
 	 *
@@ -88,8 +82,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -114,8 +106,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 
 	}
 
-
-
 	/**
 	 * Unregister hooks.
 	 *
@@ -131,8 +121,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		remove_action( 'cwps/wordpress/user_sync', [ $this, 'email_update' ], 10 );
 
 	}
-
-
 
 	/**
 	 * Register Mapper hooks.
@@ -155,8 +143,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 
 	}
 
-
-
 	/**
 	 * Unregister Mapper hooks.
 	 *
@@ -178,11 +164,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the current value of the CiviCRM "Sync CMS Email" setting.
@@ -224,8 +206,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 
 	}
 
-
-
 	/**
 	 * Set the CiviCRM "Sync CMS Email" setting.
 	 *
@@ -251,8 +231,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 
 	}
 
-
-
 	/**
 	 * Set the CiviCRM "Sync CMS Email" setting without listening.
 	 *
@@ -272,8 +250,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		add_action( 'civicrm_postSave_civicrm_setting', [ $this, 'sync_setting_override' ], 10 );
 
 	}
-
-
 
 	/**
 	 * Prevent CiviCRM from syncing Primary Email with WordPress User.
@@ -313,8 +289,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 
 	}
 
-
-
 	/**
 	 * Show a notice on the CiviCRM Settings "Email Sync" metabox.
 	 *
@@ -335,8 +309,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 
 	}
 
-
-
 	/**
 	 * Add some Javascript on the CiviCRM Settings "Email Sync" metabox.
 	 *
@@ -356,8 +328,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		</script>';
 
 	}
-
-
 
 	/**
 	 * Filter the "Email Sync" submit button attributes.
@@ -383,11 +353,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Listens for when a CiviCRM Contact's Primary Email address is about to be edited.
@@ -444,8 +410,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		do_action( 'civicrm_wp_profile_sync_primary_email_pre_update', $args['objectId'], $args['objectRef'] );
 
 	}
-
-
 
 	/**
 	 * Listens for when a CiviCRM Contact's Primary Email address has been edited.
@@ -509,8 +473,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 
 	}
 
-
-
 	/**
 	 * Update a CiviCRM Contact's Primary Email address.
 	 *
@@ -567,11 +529,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get a CiviCRM Email record by its ID.
@@ -617,8 +575,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		return $email;
 
 	}
-
-
 
 	/**
 	 * Get a CiviCRM Contact's Primary Email record.
@@ -666,9 +622,4 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

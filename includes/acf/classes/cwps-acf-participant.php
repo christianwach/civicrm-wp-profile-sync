@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Participant Class.
  *
@@ -114,8 +112,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		'campaign_id',
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -135,8 +131,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
 
 	}
-
-
 
 	/**
 	 * Initialise this object.
@@ -163,8 +157,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-
-
 	/**
 	 * Include files.
 	 *
@@ -177,8 +169,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-
-
 	/**
 	 * Set up objects.
 	 *
@@ -190,8 +180,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		$this->cpt = new CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT( $this );
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -237,8 +225,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-
-
 	/**
 	 * Register callbacks for Mapper events.
 	 *
@@ -259,8 +245,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		$this->mapper_hooks = true;
 
 	}
-
-
 
 	/**
 	 * Unregister callbacks for Mapper events.
@@ -283,11 +267,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update a CiviCRM Participant when a WordPress Post is synced.
@@ -302,8 +282,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		$this->post_saved( $args );
 
 	}
-
-
 
 	/**
 	 * Update a CiviCRM Participant when a WordPress Post has been updated.
@@ -336,8 +314,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-
-
 	/**
 	 * Update a CiviCRM Participant when the ACF Fields on a WordPress Post are synced.
 	 *
@@ -351,8 +327,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		$this->acf_fields_saved( $args );
 
 	}
-
-
 
 	/**
 	 * Update a CiviCRM Participant when the ACF Fields on a WordPress Post have been updated.
@@ -445,11 +419,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get "chunked" CiviCRM API Participant data.
@@ -506,8 +476,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		return $result;
 
 	}
-
-
 
 	/**
 	 * Get "chunked" CiviCRM API Participant data for a given Participant Role.
@@ -573,11 +541,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Check whether a Participant's Participant Role is mapped to a Post Type.
@@ -686,8 +650,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-
-
 	/**
 	 * Check if a Participant is mapped to a Post of a particular Post Type.
 	 *
@@ -741,11 +703,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the CiviCRM Participant data for a given ID.
@@ -808,11 +766,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Create a CiviCRM Participant for a given set of data.
@@ -893,8 +847,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-
-
 	/**
 	 * Update a CiviCRM Participant with a given set of data.
 	 *
@@ -922,8 +874,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		return $this->create( $participant );
 
 	}
-
-
 
 	/**
 	 * Fill out the missing data for a CiviCRM Participant.
@@ -953,11 +903,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Prepare the required CiviCRM Participant data from a set of ACF Fields.
@@ -1083,8 +1029,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-
-
 	/**
 	 * Creates a CiviCRM Contact with data from the "Contact Group" ACF Field.
 	 *
@@ -1134,8 +1078,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-
-
 	/**
 	 * Create a CiviCRM Participant with data from ACF Fields.
 	 *
@@ -1158,8 +1100,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		return $participant;
 
 	}
-
-
 
 	/**
 	 * Update a CiviCRM Participant with data from ACF Fields.
@@ -1188,11 +1128,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Return the "CiviCRM Field" ACF Settings Field.
@@ -1255,8 +1191,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-
-
 	/**
 	 * Get the mapped Participant Field name if present.
 	 *
@@ -1295,11 +1229,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Returns the choices for a Setting Field from this Entity when found.
@@ -1375,8 +1305,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-
-
 	/**
 	 * Returns a Setting Field for a Bypass ACF Field Group when found.
 	 *
@@ -1424,8 +1352,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		return $setting_field;
 
 	}
-
-
 
 	/**
 	 * Appends an array of Setting Field choices for a Bypass ACF Field Group when found.
@@ -1500,8 +1426,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-
-
 	/**
 	 * Appends a nested array of possible values to the Entities array for the
 	 * Bypass Location Rule.
@@ -1534,8 +1458,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-
-
 	/**
 	 * Listen for queries from the Field Group class.
 	 *
@@ -1566,8 +1488,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-
-
 	/**
 	 * Listen for queries from the Custom Field class.
 	 *
@@ -1597,8 +1517,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		return $custom_fields;
 
 	}
-
-
 
 	/**
 	 * Listen for queries from the Custom Field class.
@@ -1696,8 +1614,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-
-
 	/**
 	 * Listen for queries from the Attachment class.
 	 *
@@ -1728,11 +1644,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Check if a Field Group has been mapped to one or more Participant Post Types.
@@ -1812,11 +1724,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Add a link to action links on the Pages and Posts list tables.
@@ -1876,8 +1784,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		return $actions;
 
 	}
-
-
 
 	/**
 	 * Add a add a Menu Item to the CiviCRM Admin Utilities menu.
@@ -1971,9 +1877,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

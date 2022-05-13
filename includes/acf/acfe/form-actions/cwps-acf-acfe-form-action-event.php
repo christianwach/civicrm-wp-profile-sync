@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync "Event" ACFE Form Action Class.
  *
@@ -177,8 +175,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		'is_email_confirm' => 'true_false',
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -209,8 +205,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	/**
 	 * Register hooks.
 	 *
@@ -219,8 +213,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	public function register_hooks() {
 
 	}
-
-
 
 	/**
 	 * Configure this object.
@@ -401,8 +393,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	/**
 	 * Pre-load mapping Fields with "Generic" choices.
 	 *
@@ -419,8 +409,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		return $field;
 
 	}
-
-
 
 	/**
 	 * Performs validation when the Form the Action is attached to is submitted.
@@ -456,8 +444,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		}
 
 	}
-
-
 
 	/**
 	 * Performs the action when the Form the Action is attached to is submitted.
@@ -516,11 +502,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Defines additional Fields for the "Action" Tab.
@@ -545,11 +527,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Defines the "Mapping" Tab.
@@ -592,8 +570,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		return $fields;
 
 	}
-
-
 
 	/**
 	 * Defines the Fields in the "Contacts" Accordion.
@@ -809,8 +785,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	/**
 	 * Defines the Fields in the "Event Fields" Accordion.
 	 *
@@ -874,8 +848,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		return $fields;
 
 	}
-
-
 
 	/**
 	 * Defines the Fields in the "Custom Fields" Accordion.
@@ -1004,8 +976,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		return $fields;
 
 	}
-
-
 
 	/**
 	 * Defines the "Location" Accordion.
@@ -1447,8 +1417,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		return $fields;
 
 	}
-
-
 
 	/**
 	 * Defines the "Registration" Accordion.
@@ -1920,11 +1888,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Builds Event data array from mapped Fields.
@@ -2026,8 +1990,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	/**
 	 * Validates the Event data array from mapped Fields.
 	 *
@@ -2109,8 +2071,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		return true;
 
 	}
-
-
 
 	/**
 	 * Saves the CiviCRM Event given data from mapped Fields.
@@ -2212,11 +2172,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Builds Custom Field data array from mapped Fields.
@@ -2316,8 +2272,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	/**
 	 * Processes Custom Fields once an Event has been established.
 	 *
@@ -2392,11 +2346,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Builds LocBlock data array from mapped Fields.
@@ -2470,8 +2420,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	/**
 	 * Validates the Event LocBlock data array from mapped Fields.
 	 *
@@ -2537,8 +2485,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	/**
 	 * Saves the CiviCRM LocBlock given data from mapped Fields.
 	 *
@@ -2601,11 +2547,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Builds Address data array from mapped Fields.
@@ -2655,8 +2597,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	/**
 	 * Validates the Event LocBlock Address data array from mapped Fields.
 	 *
@@ -2693,8 +2633,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	/**
 	 * Builds Address Custom Field data array from mapped Fields.
 	 *
@@ -2724,8 +2662,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	/**
 	 * Adds the CiviCRM Address given data from mapped Fields.
 	 *
@@ -2749,7 +2685,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 		// Only skip if the Address Conditional Reference Field has a value.
 		if ( ! empty( $address_data['address_conditional_ref'] ) ) {
-			// And the Address Conditional Field has a value.
+			// And the Address Conditional Field has no value.
 			if ( empty( $address_data['address_conditional'] ) ) {
 				return $address;
 			}
@@ -2775,11 +2711,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Builds Email data array from mapped Fields.
@@ -2846,8 +2778,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	/**
 	 * Validates the Event LocBlock Email data array from mapped Fields.
 	 *
@@ -2887,8 +2817,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	/**
 	 * Adds the CiviCRM Email(s) given data from mapped Fields.
 	 *
@@ -2915,7 +2843,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 			// Only skip if the Email Conditional Reference Field has a value.
 			if ( ! empty( $email['email_conditional_ref'] ) ) {
-				// And the Email Conditional Field has a value.
+				// And the Email Conditional Field has no value.
 				if ( empty( $email['email_conditional'] ) ) {
 					continue;
 				}
@@ -2940,11 +2868,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Builds Phone data array from mapped Fields.
@@ -3018,8 +2942,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	/**
 	 * Validates the Event LocBlock Phone data array from mapped Fields.
 	 *
@@ -3059,8 +2981,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	/**
 	 * Adds the CiviCRM Phone(s) given data from mapped Fields.
 	 *
@@ -3087,7 +3007,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 			// Only skip if the Phone Conditional Reference Field has a value.
 			if ( ! empty( $phone['phone_conditional_ref'] ) ) {
-				// And the Phone Conditional Field has a value.
+				// And the Phone Conditional Field has no value.
 				if ( empty( $phone['phone_conditional'] ) ) {
 					continue;
 				}
@@ -3112,11 +3032,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Builds Registration data array from mapped Fields.
@@ -3191,8 +3107,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	/**
 	 * Validates the Event Registration data array from mapped Fields.
 	 *
@@ -3233,8 +3147,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		return true;
 
 	}
-
-
 
 	/**
 	 * Saves the Event Registration Profile given data from mapped Fields.
@@ -3297,8 +3209,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	/**
 	 * Builds Event Registration Settings data array from mapped Fields.
 	 *
@@ -3332,8 +3242,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		return $data;
 
 	}
-
-
 
 	/**
 	 * Builds Event Registration Screen data array from mapped Fields.
@@ -3382,8 +3290,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	/**
 	 * Builds Event Registration Confirmation Screen data array from mapped Fields.
 	 *
@@ -3422,8 +3328,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	/**
 	 * Builds Event Registration Thank You Screen data array from mapped Fields.
 	 *
@@ -3455,8 +3359,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		return $data;
 
 	}
-
-
 
 	/**
 	 * Builds Event Registration Confirmation Email data array from mapped Fields.
@@ -3495,8 +3397,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		return $data;
 
 	}
-
-
 
 	/**
 	 * Validates the Event Registration Confirmation Email data array from mapped Fields.
@@ -3539,11 +3439,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Finds the linked Contact ID when it has been mapped.
@@ -3577,9 +3473,4 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync Mapper Hooks Class.
  *
@@ -67,8 +65,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks {
 	 */
 	public $acf_loaded = false;
 
-
-
 	/**
 	 * Initialises this object.
 	 *
@@ -86,8 +82,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks {
 		add_action( 'cwps/mapper/loaded', [ $this, 'initialise' ] );
 
 	}
-
-
 
 	/**
 	 * Do stuff on plugin init.
@@ -111,8 +105,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks {
 
 	}
 
-
-
 	/**
 	 * Include files.
 	 *
@@ -129,8 +121,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks {
 		}
 
 	}
-
-
 
 	/**
 	 * Set up this plugin's objects.
@@ -150,8 +140,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks {
 
 	}
 
-
-
 	/**
 	 * Register hooks.
 	 *
@@ -168,8 +156,6 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks {
 		}
 
 	}
-
-
 
 	/**
 	 * Unregister hooks.
@@ -188,9 +174,4 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

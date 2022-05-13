@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Case Class.
  *
@@ -80,8 +78,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 	 */
 	public $case_field_prefix = 'caicase_';
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -101,8 +97,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -114,8 +108,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -155,8 +147,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 	}
 
-
-
 	/**
 	 * Register callbacks for Mapper events.
 	 *
@@ -177,8 +167,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$this->mapper_hooks = true;
 
 	}
-
-
 
 	/**
 	 * Unregister callbacks for Mapper events.
@@ -201,11 +189,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Update a CiviCRM Case when a WordPress Post is synced.
@@ -220,8 +204,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$this->post_saved( $args );
 
 	}
-
-
 
 	/**
 	 * Update a CiviCRM Case when a WordPress Post has been updated.
@@ -295,8 +277,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 	}
 
-
-
 	/**
 	 * Update a CiviCRM Case when the ACF Fields on a WordPress Post are synced.
 	 *
@@ -310,8 +290,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$this->acf_fields_saved( $args );
 
 	}
-
-
 
 	/**
 	 * Update a CiviCRM Case when the ACF Fields on a WordPress Post have been updated.
@@ -398,11 +376,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get "chunked" CiviCRM API Case data for a given Case Type.
@@ -457,11 +431,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Check whether a Case's Case Type is mapped to a Post Type.
@@ -548,8 +518,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 	}
 
-
-
 	/**
 	 * Check if a Case is mapped to a Post of a particular Post Type.
 	 *
@@ -603,11 +571,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the CiviCRM Case data for a given ID.
@@ -678,8 +642,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		return $case_data;
 
 	}
-
-
 
 	/**
 	 * Get the CiviCRM Case data for a given Case Type ID and Contact ID.
@@ -755,11 +717,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the CiviCRM Case Target Contact IDs for a given ID.
@@ -823,8 +781,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 	}
 
-
-
 	/**
 	 * Get the CiviCRM Case Assignee Contact IDs for a given ID.
 	 *
@@ -887,11 +843,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Create a CiviCRM Case for a given set of data.
@@ -972,8 +924,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 	}
 
-
-
 	/**
 	 * Update a CiviCRM Case with a given set of data.
 	 *
@@ -1001,8 +951,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		return $this->create( $case );
 
 	}
-
-
 
 	/**
 	 * Fill out the missing data for a CiviCRM Case.
@@ -1034,11 +982,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Create a CiviCRM Case Contact for a given set of data.
@@ -1092,11 +1036,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Create a CiviCRM Case Manager for a given set of data.
@@ -1188,11 +1128,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Prepare the required CiviCRM Case data from a WordPress Post.
@@ -1272,8 +1208,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 	}
 
-
-
 	/**
 	 * Create a CiviCRM Case from a WordPress Post.
 	 *
@@ -1296,8 +1230,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		return $case;
 
 	}
-
-
 
 	/**
 	 * Sync a WordPress Post with a CiviCRM Case.
@@ -1326,11 +1258,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Prepare the required CiviCRM Case data from a set of ACF Fields.
@@ -1434,8 +1362,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 	}
 
-
-
 	/**
 	 * Update a CiviCRM Case with data from ACF Fields.
 	 *
@@ -1462,11 +1388,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Return the "CiviCRM Field" ACF Settings Field.
@@ -1529,8 +1451,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 	}
 
-
-
 	/**
 	 * Get the mapped Case Field name if present.
 	 *
@@ -1569,11 +1489,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Returns the choices for a Setting Field from this Entity when found.
@@ -1649,8 +1565,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 	}
 
-
-
 	/**
 	 * Returns a Setting Field for a Bypass ACF Field Group when found.
 	 *
@@ -1698,8 +1612,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		return $setting_field;
 
 	}
-
-
 
 	/**
 	 * Appends an array of Setting Field choices for a Bypass ACF Field Group when found.
@@ -1781,8 +1693,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 	}
 
-
-
 	/**
 	 * Appends a nested array of possible values to the Entities array for the
 	 * Bypass Location Rule.
@@ -1815,8 +1725,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 	}
 
-
-
 	/**
 	 * Listen for queries from the Field Group class.
 	 *
@@ -1847,8 +1755,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 	}
 
-
-
 	/**
 	 * Listen for queries from the Custom Field class.
 	 *
@@ -1878,8 +1784,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		return $custom_fields;
 
 	}
-
-
 
 	/**
 	 * Listen for queries from the Custom Field class.
@@ -1967,8 +1871,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 	}
 
-
-
 	/**
 	 * Listen for queries from the Attachment class.
 	 *
@@ -1999,11 +1901,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Check if a Field Group has been mapped to one or more Case Post Types.
@@ -2070,9 +1968,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

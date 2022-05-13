@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM State Class.
  *
@@ -69,8 +67,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 		'civicrm_address_state',
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -93,8 +89,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -106,8 +100,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -126,8 +118,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 		add_action( 'cwps/acf/post/contact_sync_to_post', [ $this, 'contact_sync_to_post' ], 10 );
 
 	}
-
-
 
 	/**
 	 * Register callbacks for Mapper events.
@@ -152,8 +142,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 
 	}
 
-
-
 	/**
 	 * Unregister callbacks for Mapper events.
 	 *
@@ -177,11 +165,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a Post has been updated from a Contact via the Mapper.
@@ -256,11 +240,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a CiviCRM Address Record has been updated.
@@ -297,8 +277,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 
 	}
 
-
-
 	/**
 	 * A CiviCRM Contact's Address Record is about to be deleted.
 	 *
@@ -333,8 +311,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 		}
 
 	}
-
-
 
 	/**
 	 * A CiviCRM Address Record has just been deleted.
@@ -375,8 +351,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 		}
 
 	}
-
-
 
 	/**
 	 * Process a CiviCRM Address Record.
@@ -433,8 +407,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 		do_action( 'cwps/acf/address/state/updated', $contact, $address, $args );
 
 	}
-
-
 
 	/**
 	 * Update State ACF Fields on an Entity mapped to a Contact ID.
@@ -500,11 +472,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Add any State Fields that are attached to a Post.
@@ -532,9 +500,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

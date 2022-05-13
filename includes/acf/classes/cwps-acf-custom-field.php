@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync CiviCRM Custom Field Class.
  *
@@ -104,8 +102,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		'Multi-Select State/Province',
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -125,8 +121,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -138,8 +132,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register hooks.
@@ -190,8 +182,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	/**
 	 * Register callbacks for Mapper events.
 	 *
@@ -212,8 +202,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		$this->mapper_hooks = true;
 
 	}
-
-
 
 	/**
 	 * Unregister callbacks for Mapper events.
@@ -236,11 +224,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a Post has been updated from a Contact via the Mapper.
@@ -309,8 +293,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	/**
 	 * Get the Custom Field correspondences for a given Contact ID and Post Type.
 	 *
@@ -355,11 +337,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a Post has been updated from an Activity via the Mapper.
@@ -425,8 +403,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		}
 
 	}
-
-
 
 	/**
 	 * Get the values for a given CiviCRM Activity ID and set of Custom Fields.
@@ -499,11 +475,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the values for a given CiviCRM Case ID and set of Custom Fields.
@@ -576,11 +548,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Intercept when a Post has been updated from a Participant via the Mapper.
@@ -646,8 +614,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		}
 
 	}
-
-
 
 	/**
 	 * Get the values for a given CiviCRM Participant ID and set of Custom Fields.
@@ -720,11 +686,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Callback for the CiviCRM Add/Edit Custom Field postSave hook.
@@ -749,8 +711,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		}
 
 	}
-
-
 
 	/**
 	 * Callback for the CiviCRM Add/Edit Option Value postSave hook.
@@ -794,11 +754,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Called when a set of CiviCRM Custom Fields is about to be updated.
@@ -821,8 +777,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		*/
 
 	}
-
-
 
 	/**
 	 * Update ACF Fields when a set of CiviCRM Custom Fields has been updated.
@@ -932,11 +886,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the value of a Custom Field, formatted for ACF.
@@ -1035,11 +985,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the CiviCRM Custom Fields for an ACF Field.
@@ -1094,11 +1040,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Get the mapped Custom Field ID if present.
@@ -1137,8 +1079,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		return $custom_field_id;
 
 	}
-
-
 
 	/**
 	 * Return the "CiviCRM Field" ACF Settings Field when there is only Custom Field data.
@@ -1196,11 +1136,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Modify the Settings of an ACF "Select" Field.
@@ -1237,8 +1173,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		return $field;
 
 	}
-
-
 
 	/**
 	 * Get the choices for the Setting of a "Select" Field.
@@ -1293,8 +1227,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	/**
 	 * Filter the Custom Fields for the Setting of a "Select" Field.
 	 *
@@ -1348,8 +1280,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	/**
 	 * Modify the Settings of an ACF "Radio" Field.
 	 *
@@ -1385,8 +1315,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		return $field;
 
 	}
-
-
 
 	/**
 	 * Get the choices for the Setting of a "Radio" Field.
@@ -1429,8 +1357,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	/**
 	 * Filter the Custom Fields for the Setting of a "Radio" Field.
 	 *
@@ -1463,8 +1389,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		return $filtered_fields;
 
 	}
-
-
 
 	/**
 	 * Modify the Settings of an ACF "Checkbox" Field.
@@ -1501,8 +1425,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		return $field;
 
 	}
-
-
 
 	/**
 	 * Get the choices for the Setting of a "Checkbox" Field.
@@ -1545,8 +1467,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	/**
 	 * Filter the Custom Fields for the Setting of a "CheckBox" Field.
 	 *
@@ -1579,8 +1499,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		return $filtered_fields;
 
 	}
-
-
 
 	/**
 	 * Modify the Settings of an ACF "Date Picker" Field.
@@ -1648,8 +1566,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	/**
 	 * Filter the Custom Fields for the Setting of a "Date" Field.
 	 *
@@ -1684,8 +1600,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		return $filtered_fields;
 
 	}
-
-
 
 	/**
 	 * Modify the Settings of an ACF "Date Time Picker" Field.
@@ -1759,8 +1673,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	/**
 	 * Filter the Custom Fields for the Setting of a "Date Time" Field.
 	 *
@@ -1795,8 +1707,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		return $filtered_fields;
 
 	}
-
-
 
 	/**
 	 * Modify the Settings of an ACF "Text" Field.
@@ -1857,8 +1767,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	/**
 	 * Filter the Custom Fields for the Setting of a "Text" Field.
 	 *
@@ -1891,8 +1799,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		return $filtered_fields;
 
 	}
-
-
 
 	/**
 	 * Filter the Custom Fields for the Setting of a "Wysiwyg" Field.
@@ -1927,8 +1833,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	/**
 	 * Filter the Custom Fields for the Setting of a "Textarea" Field.
 	 *
@@ -1961,8 +1865,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		return $filtered_fields;
 
 	}
-
-
 
 	/**
 	 * Filter the Custom Fields for the Setting of a "True/False" Field.
@@ -1997,8 +1899,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	/**
 	 * Filter the Custom Fields for the Setting of a "URL" Field.
 	 *
@@ -2031,8 +1931,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		return $filtered_fields;
 
 	}
-
-
 
 	/**
 	 * Modify the Settings of an ACF "File" Field.
@@ -2087,8 +1985,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-
-
 	/**
 	 * Filter the Custom Fields for the Setting of a "File" Field.
 	 *
@@ -2134,9 +2030,4 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

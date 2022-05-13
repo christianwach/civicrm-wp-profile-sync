@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync Loader Class.
  *
@@ -130,8 +128,6 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 	 */
 	public $acf_pro = false;
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -149,8 +145,6 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 
 	}
 
-
-
 	/**
 	 * Getter for loaded property.
 	 *
@@ -164,8 +158,6 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 		return $this->loaded;
 
 	}
-
-
 
 	/**
 	 * Initialise.
@@ -220,8 +212,6 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 
 	}
 
-
-
 	/**
 	 * Include files.
 	 *
@@ -264,8 +254,6 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 
 	}
 
-
-
 	/**
 	 * Set up this plugin's objects.
 	 *
@@ -302,9 +290,4 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 
 	}
 
-
-
 }
-
-
-

@@ -11,8 +11,6 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-
-
 /**
  * CiviCRM Profile Sync "Activity" ACFE Form Action Class.
  *
@@ -139,8 +137,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		'assignee_contact_id' => 'civicrm_contact',
 	];
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -171,8 +167,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 
 	}
 
-
-
 	/**
 	 * Register hooks.
 	 *
@@ -181,8 +175,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 	public function register_hooks() {
 
 	}
-
-
 
 	/**
 	 * Configure this object.
@@ -263,8 +255,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 
 	}
 
-
-
 	/**
 	 * Pre-load mapping Fields with "Generic" choices.
 	 *
@@ -281,8 +271,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		return $field;
 
 	}
-
-
 
 	/**
 	 * Performs validation when the Form the Action is attached to is submitted.
@@ -308,8 +296,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		// TODO: Check other Activity Entities.
 
 	}
-
-
 
 	/**
 	 * Performs the action when the Form the Action is attached to is submitted.
@@ -364,11 +350,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Defines additional Fields for the "Action" Tab.
@@ -538,11 +520,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Defines the "Mapping" Tab.
@@ -581,8 +559,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		return $fields;
 
 	}
-
-
 
 	/**
 	 * Defines the Fields in the "Contacts" Accordion.
@@ -759,8 +735,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 
 	}
 
-
-
 	/**
 	 * Defines the Fields in the "Activity Fields" Accordion.
 	 *
@@ -824,8 +798,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		return $fields;
 
 	}
-
-
 
 	/**
 	 * Defines the Fields in the "Custom Fields" Accordion.
@@ -948,8 +920,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 
 	}
 
-
-
 	/**
 	 * Defines the "Attachment" Accordion.
 	 *
@@ -1070,11 +1040,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Builds Activity data array from mapped Fields.
@@ -1173,8 +1139,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 
 	}
 
-
-
 	/**
 	 * Validates the Activity data array from mapped Fields.
 	 *
@@ -1236,8 +1200,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		return true;
 
 	}
-
-
 
 	/**
 	 * Saves the CiviCRM Activity given data from mapped Fields.
@@ -1311,8 +1273,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 
 	}
 
-
-
 	/**
 	 * Notifies the CiviCRM Activity Assignees.
 	 *
@@ -1353,8 +1313,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 
 	}
 
-
-
 	/**
 	 * Finds the linked Contact ID when it has been mapped.
 	 *
@@ -1386,8 +1344,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		return $contact_id;
 
 	}
-
-
 
 	/**
 	 * Finds the linked Case data when it has been mapped.
@@ -1437,11 +1393,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Builds Custom Field data array from mapped Fields.
@@ -1541,8 +1493,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 
 	}
 
-
-
 	/**
 	 * Processes Custom Fields once an Activity has been established.
 	 *
@@ -1617,11 +1567,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Builds Attachment data array from mapped Fields.
@@ -1679,8 +1625,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 
 	}
 
-
-
 	/**
 	 * Saves the CiviCRM Attachment(s) given data from mapped Fields.
 	 *
@@ -1718,7 +1662,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 
 			// Only skip if the Attachment Conditional Reference Field has a value.
 			if ( ! empty( $attachment['attachment_conditional_ref'] ) ) {
-				// And the Attachment Conditional Field has a value.
+				// And the Attachment Conditional Field has no value.
 				if ( empty( $attachment['attachment_conditional'] ) ) {
 					continue;
 				}
@@ -1764,9 +1708,4 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}
