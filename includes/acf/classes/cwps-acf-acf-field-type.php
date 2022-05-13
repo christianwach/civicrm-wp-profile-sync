@@ -147,6 +147,7 @@ class CiviCRM_Profile_Sync_ACF_Field_Type {
 			include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-address.php';
 			include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-phone.php';
 			include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-im.php';
+			include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-attachment.php';
 		}
 
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
@@ -184,6 +185,7 @@ class CiviCRM_Profile_Sync_ACF_Field_Type {
 			new CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Field( $this );
 			new CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Field( $this );
 			new CiviCRM_Profile_Sync_Custom_CiviCRM_Instant_Messenger( $this );
+			new CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment( $this );
 		}
 
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar

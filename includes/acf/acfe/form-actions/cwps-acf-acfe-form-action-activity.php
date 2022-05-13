@@ -1686,7 +1686,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 				'description' => $attachment['description'],
 				'mime_type' => $mime_type,
 				'options' => [
-					//'move-file' => $new_file,
 					'move-file' => $file,
 				],
 			];

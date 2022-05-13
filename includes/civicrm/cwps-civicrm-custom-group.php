@@ -236,6 +236,52 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 
 	}
 
+	/**
+	 * Get a Custom Group by its Entity Table.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param string $entity_table The name of the Entity Table.
+	 * @return array $custom_group The array of Custom Group data.
+	 */
+	public function get_by_entity_table( $entity_table ) {
+
+		// Init return.
+		$custom_group = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $custom_group;
+		}
+
+		// Construct params.
+		$params = [
+			'version' => 3,
+			'sequential' => 1,
+			'entity_table' => $entity_table,
+		];
+
+		// Call the API.
+		$result = civicrm_api( 'CustomGroup', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+			return $custom_group;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $custom_group;
+		}
+
+		// The result set should contain only one item.
+		$custom_group = array_pop( $result['values'] );
+
+		// --<
+		return $custom_group;
+
+	}
+
 	// -------------------------------------------------------------------------
 
 	/**

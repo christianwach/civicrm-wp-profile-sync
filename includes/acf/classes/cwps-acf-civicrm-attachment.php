@@ -120,7 +120,26 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		$this->civicrm = $parent;
 
 		// Init when the ACF CiviCRM object is loaded.
-		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'register_hooks' ] );
+		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
+
+	}
+
+	/**
+	 * Initialise this object.
+	 *
+	 * @since 0.5.2
+	 */
+	public function initialise() {
+
+		// Register hooks.
+		$this->register_hooks();
+
+		/**
+		 * Broadcast that this class is now loaded.
+		 *
+		 * @since 0.5.2
+		 */
+		do_action( 'cwps/acf/civicrm/attachment/loaded' );
 
 	}
 
@@ -141,15 +160,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		// Add CiviCRM listeners once CiviCRM is available.
 		add_action( 'civicrm_config', [ $this, 'civicrm_config' ], 10, 1 );
 
-		// Build array of CiviCRM URLs for filtering the ACF Attachment.
-
-		// When loading values via get_field().
+		// Build array of CiviCRM URLs and maybe filter the ACF Attachment URL.
 		add_filter( 'acf/load_value/type=file', [ $this, 'acf_load_filter' ], 10, 3 );
-
-		// When rendering the Field, e.g. in ACFE front end Forms.
 		add_filter( 'acf/render_field/type=file', [ $this, 'acf_render_filter' ], 9, 3 );
-
-		// Maybe filter the URL of the File.
 		add_filter( 'acf/load_attachment', [ $this, 'acf_attachment_filter' ], 10, 3 );
 
 		// ACF File Fields require additional settings.
@@ -228,12 +241,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 			return;
 		}
 
-		// Add callback for CiviCRM "preDelete" hook.
-		Civi::service( 'dispatcher' )->addListener(
-			'civi.dao.preDelete',
-			[ $this, 'civicrm_file_pre_delete' ],
-			-100 // Default priority.
-		);
+		// Intercept before a CiviCRM File/Attachment is deleted.
+		add_action( 'cwps/acf/mapper/attachment/delete/pre', [ $this, 'civicrm_file_pre_delete' ], 10 );
 
 		// Declare registered.
 		$this->civicrm_hooks = true;
@@ -252,11 +261,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 			return;
 		}
 
-		// Remove callback for CiviCRM "preDelete" hook.
-		Civi::service( 'dispatcher' )->removeListener(
-			'civi.dao.preDelete',
-			[ $this, 'civicrm_file_pre_delete' ]
-		);
+		// Remove Mapper callbacks.
+		remove_action( 'cwps/acf/mapper/attachment/delete/pre', [ $this, 'civicrm_file_pre_delete' ], 10 );
 
 		// Declare unregistered.
 		$this->civicrm_hooks = false;
@@ -439,6 +445,43 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	// -------------------------------------------------------------------------
 
 	/**
+	 * Make a copy of a File.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param string $file The path to the File.
+	 * @param string $new_name The new name of the File.
+	 * @return string|bool $new_file The path to the copied File, or false on failure.
+	 */
+	public function file_copy( $file, $new_name ) {
+
+		// Extract the filename so we can rename it.
+		$filename = pathinfo( $file, PATHINFO_BASENAME );
+
+		// Build path for new File.
+		$new_file = str_replace( $filename, $new_name, $file );
+
+		// Try and copy the File.
+		if ( ! copy( $file, $new_file ) ) {
+			$e = new \Exception();
+			$trace = $e->getTraceAsString();
+			error_log( print_r( [
+				'method' => __METHOD__,
+				'message' => __( 'Could not copy File.', 'civicrm-wp-profile-sync' ),
+				'file' => $file,
+				'new_name' => $new_name,
+				'new_file' => $new_file,
+				'backtrace' => $trace,
+			], true ) );
+			return false;
+		}
+
+		// --<
+		return $new_file;
+
+	}
+
+	/**
 	 * Make a renamed copy of a WordPress File for CiviCRM to copy.
 	 *
 	 * The CiviCRM API moves a File to the secure directory, so we need to make
@@ -456,26 +499,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 			return false;
 		}
 
-		// Extract the filename so we can rename it in CiviCRM style.
+		// Extract the filename.
 		$filename = pathinfo( $file, PATHINFO_BASENAME );
+
+		// Make a new file name in CiviCRM style.
 		$new_name = CRM_Utils_File::makeFileName( $filename );
 
-		// Build path for new File.
-		$new_file = str_replace( $filename, $new_name, $file );
-
-		// Try and copy the File.
-		if ( ! copy( $file, $new_file ) ) {
-			$e = new \Exception();
-			$trace = $e->getTraceAsString();
-			error_log( print_r( [
-				'method' => __METHOD__,
-				'message' => __( 'Could not copy File.', 'civicrm-wp-profile-sync' ),
-				'file' => $file,
-				'new_file' => $new_file,
-				'backtrace' => $trace,
-			], true ) );
-			return false;
-		}
+		// Try and make a copy.
+		$new_file = $this->file_copy( $file, $new_name );
 
 		// --<
 		return $new_file;
@@ -882,7 +913,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	}
 
 	/**
-	 * Filter the Custom Fields for the Setting of a "File" Field.
+	 * Builds an array of CiviCRM URLs for filtering the ACF Attachment.
+	 *
+	 * This method is called when loading values via get_field().
 	 *
 	 * @since 0.5.2
 	 *
@@ -892,6 +925,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 * @return mixed $value The modified value.
 	 */
 	public function acf_load_filter( $value, $post_id, $field ) {
+
+		// Skip filter if there is no value.
+		if ( empty( $value ) ) {
+			return $value;
+		}
 
 		// Skip filter if CiviCRM File is not set.
 		if ( empty( $field['civicrm_file_field_type'] ) ) {
@@ -948,7 +986,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	}
 
 	/**
-	 * Filter the Custom Fields for the Setting of a "File" Field.
+	 * Builds an array of CiviCRM URLs for filtering the ACF Attachment.
+	 *
+	 * This method is called when rendering the Field, e.g. in ACFE front end Forms.
 	 *
 	 * @since 0.5.2
 	 *
@@ -1016,7 +1056,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	}
 
 	/**
-	 * Filter the Custom Fields for the Setting of a "File" Field.
+	 * Maybe filter the URL of the File.
 	 *
 	 * @since 0.5.2
 	 *
@@ -1043,13 +1083,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Get the value of an ACF "File" Field formatted for CiviCRM.
-	 *
-	 * The only kind of sync that an ACF File Field can do at the moment is to
-	 * sync with a CiviCRM Custom Field.
-	 *
-	 * Other CiviCRM Entities can also accept files as "Attachments" but we'll
-	 * return to that later.
+	 * Get the value of an ACF "File" Field formatted for a CiviCRM Custom Field.
 	 *
 	 * The ACF File Field return format can be either 'array', 'url' or 'id' so
 	 * we need to extract the appropriate file info to send to CiviCRM.
@@ -1528,54 +1562,46 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 * File deletion process because the "Entity File" has already been deleted.
 	 * We can use the File API, however *happy face*.
 	 *
+	 * I have opened an issue and PR that allows us to distinguish between Files
+	 * that are "Attachments" and Files that are uploaded to Custom Fields to be
+	 * distinguished from one another.
+	 *
+	 * With the patch in the GitHub PR, this method is able to delete
+	 *
+	 * @see https://lab.civicrm.org/dev/core/-/issues/3130
+	 * @see https://github.com/civicrm/civicrm-core/pull/22994
+	 *
 	 * @since 0.5.2
 	 *
-	 * @param object $event The event object.
-	 * @param string $hook The hook name.
+	 * @param array $args The CiviCRM arguments.
 	 */
-	public function civicrm_file_pre_delete( $event, $hook ) {
+	public function civicrm_file_pre_delete( $args ) {
 
-		// Extract CiviCRM Entity Tag for this hook.
-		$entity_tag =& $event->object;
+		// We have my patch if there is a CiviCRM Attachment.
+		if ( ! empty( $args['attachment'] ) ) {
 
-		// Bail if this isn't the type of object we're after.
-		if ( ! ( $entity_tag instanceof CRM_Core_BAO_EntityTag ) ) {
+			// Bail if this is not a File attached to a Custom Field.
+			if ( strstr( $args['attachment']->entity_table, 'civicrm_value_' ) === false ) {
+				return;
+			}
+
+			/*
+			// Pass to separate method and skip.
+			$this->civicrm_attachment_pre_delete( $args );
 			return;
+			*/
+
 		}
 
-		// Make sure we have an Entity Table.
-		if ( empty( $entity_tag->entity_table ) ) {
-			return;
-		}
-
-		// Bail if this doesn't refer to a "File".
-		if ( $entity_tag->entity_table !== 'civicrm_file' ) {
-			return;
-		}
-
-		// Bail if there's no Entity ID.
-		if ( empty( $entity_tag->entity_id ) ) {
-			return;
-		}
-
-		// The Entity ID happens to be the CiviCRM File ID.
-
-		// Get the CiviCRM File being deleted.
-		$civicrm_file = $this->file_get_by_id( $entity_tag->entity_id );
-		if ( $civicrm_file === false ) {
-			return;
-		}
-
-		// Let's try and find a WordPress Attachment.
-		$attachment_id = $this->query_by_file( $civicrm_file->uri, 'civicrm' );
-		if ( empty( $attachment_id ) ) {
+		// Sanity check.
+		if ( empty( $args['objectRef'] ) ) {
 			return;
 		}
 
 		/*
-		 * We have found our way to the WordPress Attachment.
-		 *
 		 * What do we want to do now?
+		 *
+		 * When we have found our way to the WordPress Attachment:
 		 *
 		 * We could delete it, which would at least guarantee that all ACF Fields
 		 * that relate to it will refer to a non-existent Attachment.
@@ -1588,6 +1614,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		 * @see CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field::image_attachment_deleted()
 		 */
 
+		// Let's try and find a WordPress Attachment.
+		$attachment_id = $this->query_by_file( $args['objectRef']->uri, 'civicrm' );
+		if ( empty( $attachment_id ) ) {
+			return;
+		}
+
 		// Save metadata.
 		$data = [
 			'wordpress_file' => get_attached_file( $attachment_id, true ),
@@ -1596,6 +1628,65 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 		// Force-delete the Attachment.
 		wp_delete_attachment( $attachment_id, true );
+
+	}
+
+	/**
+	 * Update the ACF Fields that need their Attachment ID removed.
+	 *
+	 * It seems remarkably difficult to work backwards from the Attachment to
+	 * the Entities and Custom Fields to which that File is assigned. Keeping
+	 * this code here to remind me where I got to.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param array $args The CiviCRM arguments.
+	 */
+	public function civicrm_attachment_pre_delete( $args ) {
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( array(
+			'method' => __METHOD__,
+			'args' => $args,
+			//'backtrace' => $trace,
+		), true ) );
+		*/
+
+		// Make sure we have an Entity Table.
+		if ( empty( $args['attachment']->entity_table ) ) {
+			return;
+		}
+
+		// Get the Custom Group for this Entity Table.
+		$custom_group = $this->plugin->custom_group->get_by_entity_table( $args['attachment']->entity_table );
+		if ( empty( $custom_group ) ) {
+			return;
+		}
+
+		$params = [
+			'version' => 3,
+			'sequential' => 1,
+			'custom_group_id' => $custom_group['id'],
+			'data_type' => "File",
+		];
+
+		// This will return the Custom Fields of type "File" in that Group.
+		$result = civicrm_api( 'CustomField', 'get', $params );
+
+		/*
+		 * We can tell the CiviCRM Entity by the Custom Group "entity" value.
+		 *
+		 * Can we query that Entity using 'custom_N' for Fields with the value
+		 * of the File ID? Will that help? I'm note sure yet.
+		 *
+		 * It looks at the moment as though its good enough just to delete the
+		 * WordPress Attachment - although my patch is needed so that deleting
+		 * CiviCRM Attachments on Activitiesn (for example) can also update the
+		 * "CiviCRM Activity: Attachments" ACF Fields so they don't lose their
+		 * data integrity.
+		 */
 
 	}
 
@@ -1848,14 +1939,63 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		$field['uploader'] = 'basic';
 
 		// Set the "max_size" attribute.
-		if ( $this->civicrm->is_initialised() ) {
-			$config = CRM_Core_Config::singleton();
-			// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
-			$field['max_size'] = $config->maxFileSize;
-		}
+		$field['max_size'] = $this->field_max_size_get();
 
 		// --<
 		return $field;
+
+	}
+
+	/**
+	 * Gets the maximum file size of Attachments for CiviCRM Entities.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @return integer $max_size The the maximum file size of Attachments.
+	 */
+	public function field_max_size_get() {
+
+		// Default to 3MB.
+		$max_size = 3;
+
+		// Bail if no CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $max_size;
+		}
+
+		// Get the "max_size" attribute.
+		$config = CRM_Core_Config::singleton();
+		$max_size = $config->maxFileSize;
+
+		// Default to 3MB if not set for some reason.
+		if ( empty( $max_size ) ) {
+			$max_size = 3;
+		}
+
+		// --<
+		return $max_size;
+
+	}
+
+	/**
+	 * Gets the maximum number of Attachments for CiviCRM Entities.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @return integer $max_attachments The the maximum number of Attachments.
+	 */
+	public function field_max_attachments_get() {
+
+		// Get the Attachments limit.
+		$max_attachments = $this->plugin->civicrm->get_setting( 'max_attachments' );
+
+		// If it's not set for some reason, default to 3.
+		if ( empty( $max_attachments ) ) {
+			$max_attachments = 3;
+		}
+
+		// --<
+		return $max_attachments;
 
 	}
 

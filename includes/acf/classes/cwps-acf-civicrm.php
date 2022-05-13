@@ -237,6 +237,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	public $activity_field;
 
 	/**
+	 * CiviCRM Activity Attachment object.
+	 *
+	 * @since 0.4
+	 * @access public
+	 * @var object $activity_attachments The CiviCRM Activity Attachment object.
+	 */
+	public $activity_attachments;
+
+	/**
 	 * CiviCRM Event Type object.
 	 *
 	 * @since 0.5.4
@@ -405,6 +414,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-activity-type.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-activity.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-activity-field.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-activity-attachments.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-case-type.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-case.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-case-field.php';
@@ -454,10 +464,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		$this->contact = new CiviCRM_Profile_Sync_ACF_CiviCRM_Contact( $this );
 		$this->contact_field = new CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field( $this );
 
-		// Init Activity Type, Activity and Activity Field objects.
+		// Init Activity Type, Activity, Activity Field and Activity Attachment objects.
 		$this->activity_type = new CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type( $this );
 		$this->activity = new CiviCRM_Profile_Sync_ACF_CiviCRM_Activity( $this );
 		$this->activity_field = new CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field( $this );
+		$this->activity_attachments = new CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments( $this );
 
 		// Init Case Type, Case and Case Field objects.
 		$this->case_type = new CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Type( $this );

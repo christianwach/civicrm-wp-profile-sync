@@ -40,6 +40,24 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public $acf_loader;
 
 	/**
+	 * CiviCRM available flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var bool $civicrm_available True when CiviCRM is available, false otherwise.
+	 */
+	public $civicrm_available = false;
+
+	/**
+	 * CiviCRM listeners registered flag.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var bool $civicrm_listeners The CiviCRM listeners registered flag.
+	 */
+	public $civicrm_listeners = false;
+
+	/**
 	 * Define date format mappings (CiviCRM to ACF).
 	 *
 	 * @since 0.4
@@ -140,6 +158,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Register CiviCRM hooks.
 		$this->hooks_civicrm_add();
+
+		// Add CiviCRM listeners once CiviCRM is available.
+		add_action( 'civicrm_config', [ $this, 'civicrm_available' ], 10, 1 );
 
 	}
 
@@ -355,6 +376,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		// Intercept Group Membership updates in CiviCRM.
 		$this->hooks_civicrm_group_contact_add();
 
+		// Intercept File updates in CiviCRM.
+		$this->hooks_civicrm_file_add();
+
+		// Add CiviCRM listeners.
+		$this->listeners_civicrm_add();
+
 	}
 
 	/**
@@ -535,6 +562,21 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 	}
 
+	/**
+	 * Register CiviCRM File hooks.
+	 *
+	 * @since 0.5.2
+	 */
+	public function hooks_civicrm_file_add() {
+
+		// Intercept File updates in CiviCRM.
+		//add_action( 'civicrm_pre', [ $this, 'file_pre_delete' ], 10, 4 );
+		add_action( 'civicrm_post', [ $this, 'file_created' ], 10, 4 );
+		add_action( 'civicrm_post', [ $this, 'file_edited' ], 10, 4 );
+		//add_action( 'civicrm_post', [ $this, 'file_deleted' ], 10, 4 );
+
+	}
+
 	// -------------------------------------------------------------------------
 
 	/**
@@ -579,6 +621,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Remove Group Membership update hooks.
 		$this->hooks_civicrm_group_contact_remove();
+
+		// Remove File update hooks.
+		$this->hooks_civicrm_file_remove();
+
+		// Remove CiviCRM listeners.
+		$this->listeners_civicrm_remove();
 
 	}
 
@@ -757,6 +805,339 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		remove_action( 'civicrm_pre', [ $this, 'group_contacts_created' ], 10 );
 		remove_action( 'civicrm_pre', [ $this, 'group_contacts_deleted' ], 10 );
 		remove_action( 'civicrm_pre', [ $this, 'group_contacts_rejoined' ], 10 );
+
+	}
+
+	/**
+	 * Unregister CiviCRM File hooks.
+	 *
+	 * @since 0.5.2
+	 */
+	public function hooks_civicrm_file_remove() {
+
+		// Remove Instant Messenger update hooks.
+		//remove_action( 'civicrm_pre', [ $this, 'file_pre_delete' ], 10 );
+		remove_action( 'civicrm_post', [ $this, 'file_created' ], 10 );
+		remove_action( 'civicrm_post', [ $this, 'file_edited' ], 10 );
+		//remove_action( 'civicrm_post', [ $this, 'file_deleted' ], 10 );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Declare CiviCRM available and register listeners.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param object $config The CiviCRM config object.
+	 */
+	public function civicrm_available( &$config ) {
+
+		// Declare available.
+		$this->civicrm_available = true;
+
+		// CiviCRM listeners can now be registered.
+		$this->listeners_civicrm_add();
+
+	}
+
+	/**
+	 * Add CiviCRM listeners.
+	 *
+	 * These listeners mean that this plugin requires CiviCRM 5.26+.
+	 *
+	 * @see https://lab.civicrm.org/dev/core/issues/1638
+	 *
+	 * @since 0.5.2
+	 */
+	public function listeners_civicrm_add() {
+
+		// Bail if CiviCRM unavailable.
+		if ( $this->civicrm_available === false ) {
+			return;
+		}
+
+		// Bail if already registered.
+		if ( $this->civicrm_listeners === true ) {
+			return;
+		}
+
+		/*
+		// Add callback for CiviCRM "preInsert" hook.
+		Civi::service( 'dispatcher' )->addListener(
+			'civi.dao.preInsert',
+			[ $this, 'listener_civicrm_pre_create' ],
+			-100 // Default priority.
+		);
+
+		// Add callback for CiviCRM "postInsert" hook.
+		Civi::service( 'dispatcher' )->addListener(
+			'civi.dao.postInsert',
+			[ $this, 'listener_civicrm_created' ],
+			-100 // Default priority.
+		);
+
+		// Add callback for CiviCRM "preUpdate" hook.
+		Civi::service( 'dispatcher' )->addListener(
+			'civi.dao.preUpdate',
+			[ $this, 'listener_civicrm_pre_edit' ],
+			-100 // Default priority.
+		);
+
+		// Add callback for CiviCRM "postUpdate" hook.
+		Civi::service( 'dispatcher' )->addListener(
+			'civi.dao.postUpdate',
+			[ $this, 'listener_civicrm_edited' ],
+			-100 // Default priority.
+		);
+
+		// Add callback for CiviCRM "preDelete" hook.
+		Civi::service( 'dispatcher' )->addListener(
+			'civi.dao.preDelete',
+			[ $this, 'listener_civicrm_pre_delete' ],
+			-100 // Default priority.
+		);
+
+		// Add callback for CiviCRM "postDelete" hook.
+		Civi::service( 'dispatcher' )->addListener(
+			'civi.dao.postDelete',
+			[ $this, 'listener_civicrm_deleted' ],
+			-100 // Default priority.
+		);
+		*/
+
+		// Add callback for CiviCRM "preDelete" hook.
+		Civi::service( 'dispatcher' )->addListener(
+			'civi.dao.preDelete',
+			[ $this, 'file_pre_delete_listener' ],
+			-100 // Default priority.
+		);
+
+		// Declare registered.
+		$this->civicrm_listeners = true;
+
+	}
+
+	/**
+	 * Remove CiviCRM listeners.
+	 *
+	 * @since 0.5.2
+	 */
+	public function listeners_civicrm_remove() {
+
+		// Bail if CiviCRM unavailable.
+		if ( $this->civicrm_available === false ) {
+			return;
+		}
+
+		// Bail if already unregistered.
+		if ( $this->civicrm_hooks === false ) {
+			return;
+		}
+
+		/*
+		// Add callback for CiviCRM "preInsert" hook.
+		Civi::service( 'dispatcher' )->removeListener(
+			'civi.dao.preInsert',
+			[ $this, 'listener_civicrm_pre_create' ]
+		);
+
+		// Add callback for CiviCRM "postInsert" hook.
+		Civi::service( 'dispatcher' )->removeListener(
+			'civi.dao.postInsert',
+			[ $this, 'listener_civicrm_created' ]
+		);
+
+		// Add callback for CiviCRM "preUpdate" hook.
+		Civi::service( 'dispatcher' )->removeListener(
+			'civi.dao.preUpdate',
+			[ $this, 'listener_civicrm_pre_edit' ]
+		);
+
+		// Add callback for CiviCRM "postUpdate" hook.
+		Civi::service( 'dispatcher' )->removeListener(
+			'civi.dao.postUpdate',
+			[ $this, 'listener_civicrm_edited' ]
+		);
+
+		// Remove callback for CiviCRM "preDelete" hook.
+		Civi::service( 'dispatcher' )->removeListener(
+			'civi.dao.preDelete',
+			[ $this, 'listener_civicrm_pre_delete' ]
+		);
+
+		// Add callback for CiviCRM "postDelete" hook.
+		Civi::service( 'dispatcher' )->removeListener(
+			'civi.dao.postDelete',
+			[ $this, 'listener_civicrm_deleted' ]
+		);
+		*/
+
+		// Remove callback for CiviCRM "preDelete" hook.
+		Civi::service( 'dispatcher' )->removeListener(
+			'civi.dao.preDelete',
+			[ $this, 'file_pre_delete_listener' ]
+		);
+
+		// Declare unregistered.
+		$this->civicrm_hooks = false;
+
+	}
+
+	/**
+	 * Callback for the CiviCRM 'civi.dao.preInsert' hook.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param object $event The event object.
+	 * @param string $hook The hook name.
+	 */
+	public function listener_civicrm_pre_create( $event, $hook ) {
+
+		///*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( array(
+			'method' => __METHOD__,
+			'event' => $event,
+			'hook' => $hook,
+			//'backtrace' => $trace,
+		), true ) );
+		//*/
+
+		// Grab CiviCRM object for this hook.
+		$object =& $event->object;
+
+	}
+
+	/**
+	 * Callback for the CiviCRM 'civi.dao.postInsert' hook.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param object $event The event object.
+	 * @param string $hook The hook name.
+	 */
+	public function listener_civicrm_created( $event, $hook ) {
+
+		///*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( array(
+			'method' => __METHOD__,
+			'event' => $event,
+			'hook' => $hook,
+			//'backtrace' => $trace,
+		), true ) );
+		//*/
+
+		// Grab CiviCRM object for this hook.
+		$object =& $event->object;
+
+	}
+
+	/**
+	 * Callback for the CiviCRM 'civi.dao.preInsert' hook.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param object $event The event object.
+	 * @param string $hook The hook name.
+	 */
+	public function listener_civicrm_pre_edit( $event, $hook ) {
+
+		///*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( array(
+			'method' => __METHOD__,
+			'event' => $event,
+			'hook' => $hook,
+			//'backtrace' => $trace,
+		), true ) );
+		//*/
+
+		// Grab CiviCRM object for this hook.
+		$object =& $event->object;
+
+	}
+
+	/**
+	 * Callback for the CiviCRM 'civi.dao.postUpdate' hook.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param object $event The event object.
+	 * @param string $hook The hook name.
+	 */
+	public function listener_civicrm_edited( $event, $hook ) {
+
+		///*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( array(
+			'method' => __METHOD__,
+			'event' => $event,
+			'hook' => $hook,
+			//'backtrace' => $trace,
+		), true ) );
+		//*/
+
+		// Grab CiviCRM object for this hook.
+		$object =& $event->object;
+
+	}
+
+	/**
+	 * Callback for the CiviCRM 'civi.dao.preDelete' hook.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param object $event The event object.
+	 * @param string $hook The hook name.
+	 */
+	public function listener_civicrm_pre_delete( $event, $hook ) {
+
+		///*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( array(
+			'method' => __METHOD__,
+			'event' => $event,
+			'hook' => $hook,
+			//'backtrace' => $trace,
+		), true ) );
+		//*/
+
+		// Grab CiviCRM object for this hook.
+		$object =& $event->object;
+
+	}
+
+	/**
+	 * Callback for the CiviCRM 'civi.dao.postDelete' hook.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param object $event The event object.
+	 * @param string $hook The hook name.
+	 */
+	public function listener_civicrm_deleted( $event, $hook ) {
+
+		///*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( array(
+			'method' => __METHOD__,
+			'event' => $event,
+			'hook' => $hook,
+			//'backtrace' => $trace,
+		), true ) );
+		//*/
+
+		// Grab CiviCRM object for this hook.
+		$object =& $event->object;
 
 	}
 
@@ -2864,6 +3245,303 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		 * @param array $args The array of CiviCRM params.
 		 */
 		do_action( 'cwps/acf/mapper/participant/deleted', $args );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Intercept when a CiviCRM File is about to be deleted.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param object $event The event object.
+	 * @param string $hook The hook name.
+	 */
+	public function file_pre_delete_listener( $event, $hook ) {
+
+		// Extract CiviCRM Entity Tag for this hook.
+		$entity_tag =& $event->object;
+
+		// Bail if this isn't the type of object we're after.
+		if ( ! ( $entity_tag instanceof CRM_Core_BAO_EntityTag ) ) {
+			return;
+		}
+
+		// Make sure we have an Entity Table.
+		if ( empty( $entity_tag->entity_table ) ) {
+			return;
+		}
+
+		// Bail if this doesn't refer to a "File".
+		if ( $entity_tag->entity_table !== 'civicrm_file' ) {
+			return;
+		}
+
+		// Bail if there's no Entity ID.
+		if ( empty( $entity_tag->entity_id ) ) {
+			return;
+		}
+
+		// The Entity ID happens to be the CiviCRM File ID.
+
+		// Get the CiviCRM File being deleted.
+		$civicrm_file = $this->acf_loader->civicrm->attachment->file_get_by_id( $entity_tag->entity_id );
+		if ( $civicrm_file === false ) {
+			return;
+		}
+
+		// Let's make an array of the params.
+		$args = [
+			'op' => 'delete',
+			'objectName' => 'File',
+			'objectId' => (int) $entity_tag->entity_id,
+		];
+
+		// Maybe cast objectRef as object.
+		$args['objectRef'] = is_object( $civicrm_file ) ? $civicrm_file : (object) $civicrm_file;
+
+		/**
+		 * Broadcast that a CiviCRM File is about to be deleted.
+		 *
+		 * @since 0.5.2
+		 *
+		 * @param array $args The array of CiviCRM params.
+		 */
+		do_action( 'cwps/acf/mapper/file/delete/pre', $args );
+
+		// Get the full Attachment.
+		$args['attachment'] = $this->acf_loader->civicrm->attachment->get_by_id( $args['objectId'] );
+
+		/**
+		 * Broadcast that a CiviCRM Attachment is about to be deleted.
+		 *
+		 * @since 0.5.2
+		 *
+		 * @param array $args The array of CiviCRM params.
+		 */
+		do_action( 'cwps/acf/mapper/attachment/delete/pre', $args );
+
+	}
+
+	/**
+	 * Intercept when a CiviCRM File is about to be deleted.
+	 *
+	 * Unused: does not receive events when Attachments are deleted.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param string $op The type of database operation.
+	 * @param string $objectName The type of object.
+	 * @param integer $objectId The ID of the object.
+	 * @param object $objectRef The object.
+	 */
+	public function file_pre_delete( $op, $objectName, $objectId, $objectRef ) {
+
+		// Bail if not the context we want.
+		if ( $op != 'delete' ) {
+			return;
+		}
+
+		// Bail if this is not an File.
+		if ( $objectName != 'File' ) {
+			return;
+		}
+
+		// Let's make an array of the params.
+		$args = [
+			'op' => $op,
+			'objectName' => $objectName,
+			'objectId' => $objectId,
+		];
+
+		// Maybe cast objectRef as object.
+		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+
+		/**
+		 * Broadcast that a CiviCRM File is about to be deleted.
+		 *
+		 * @since 0.5.2
+		 *
+		 * @param array $args The array of CiviCRM params.
+		 */
+		do_action( 'cwps/acf/mapper/file/delete/pre', $args );
+
+		// Get the full Attachment.
+		$args['attachment'] = $this->acf_loader->civicrm->attachment->get_by_id( $objectId );
+
+		/**
+		 * Broadcast that a CiviCRM Attachment is about to be deleted.
+		 *
+		 * @since 0.5.2
+		 *
+		 * @param array $args The array of CiviCRM params.
+		 */
+		do_action( 'cwps/acf/mapper/attachment/delete/pre', $args );
+
+	}
+
+	/**
+	 * Intercept when a CiviCRM File is created.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param string $op The type of database operation.
+	 * @param string $objectName The type of object.
+	 * @param integer $objectId The ID of the object.
+	 * @param object $objectRef The object.
+	 */
+	public function file_created( $op, $objectName, $objectId, $objectRef ) {
+
+		// Bail if not the context we want.
+		if ( $op != 'create' ) {
+			return;
+		}
+
+		// Bail if this is not an File.
+		if ( $objectName != 'File' ) {
+			return;
+		}
+
+		// Let's make an array of the CiviCRM params.
+		$args = [
+			'op' => $op,
+			'objectName' => $objectName,
+			'objectId' => $objectId,
+		];
+
+		// Maybe cast objectRef as object.
+		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+
+		/**
+		 * Broadcast that a CiviCRM File has been created.
+		 *
+		 * @since 0.5.2
+		 *
+		 * @param array $args The array of CiviCRM params.
+		 */
+		do_action( 'cwps/acf/mapper/file/created', $args );
+
+		// Get the full Attachment.
+		$args['attachment'] = $this->acf_loader->civicrm->attachment->get_by_id( $objectId );
+
+		/**
+		 * Broadcast that a CiviCRM Attachment has been created.
+		 *
+		 * @since 0.5.2
+		 *
+		 * @param array $args The array of CiviCRM params.
+		 */
+		do_action( 'cwps/acf/mapper/attachment/created', $args );
+
+	}
+
+	/**
+	 * Intercept when a CiviCRM File is updated.
+	 *
+	 * @since 0.5.2
+	 *
+	 * @param string $op The type of database operation.
+	 * @param string $objectName The type of object.
+	 * @param integer $objectId The ID of the object.
+	 * @param object $objectRef The object.
+	 */
+	public function file_edited( $op, $objectName, $objectId, $objectRef ) {
+
+		// Bail if not the context we want.
+		if ( $op != 'edit' ) {
+			return;
+		}
+
+		// Bail if this is not an File.
+		if ( $objectName != 'File' ) {
+			return;
+		}
+
+		// Let's make an array of the CiviCRM params.
+		$args = [
+			'op' => $op,
+			'objectName' => $objectName,
+			'objectId' => $objectId,
+		];
+
+		// Maybe cast objectRef as object.
+		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+
+		/**
+		 * Broadcast that a CiviCRM File has been updated.
+		 *
+		 * @since 0.5.2
+		 *
+		 * @param array $args The array of CiviCRM params.
+		 */
+		do_action( 'cwps/acf/mapper/file/edited', $args );
+
+		// Get the full Attachment.
+		$args['attachment'] = $this->acf_loader->civicrm->attachment->get_by_id( $objectId );
+
+		/**
+		 * Broadcast that a CiviCRM Attachment has been updated.
+		 *
+		 * @since 0.5.2
+		 *
+		 * @param array $args The array of CiviCRM params.
+		 */
+		do_action( 'cwps/acf/mapper/attachment/edited', $args );
+
+	}
+
+	/**
+	 * Intercept when a CiviCRM File has been deleted.
+	 *
+	 * Unused: does not receive events when Attachments are deleted.
+	 *
+	 * @since 0.5.3
+	 *
+	 * @param string $op The type of database operation.
+	 * @param string $objectName The type of object.
+	 * @param integer $objectId The ID of the object.
+	 * @param object $objectRef The object.
+	 */
+	public function file_deleted( $op, $objectName, $objectId, $objectRef ) {
+
+		// Bail if not the context we want.
+		if ( $op != 'delete' ) {
+			return;
+		}
+
+		// Bail if this is not an File.
+		if ( $objectName != 'File' ) {
+			return;
+		}
+
+		// Let's make an array of the params.
+		$args = [
+			'op' => $op,
+			'objectName' => $objectName,
+			'objectId' => $objectId,
+		];
+
+		// Maybe cast objectRef as object.
+		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+
+		/**
+		 * Broadcast that a CiviCRM File has been deleted.
+		 *
+		 * @since 0.5.2
+		 *
+		 * @param array $args The array of CiviCRM params.
+		 */
+		do_action( 'cwps/acf/mapper/file/deleted', $args );
+
+		/**
+		 * Broadcast that a CiviCRM Attachment has been deleted.
+		 *
+		 * @since 0.5.2
+		 *
+		 * @param array $args The array of CiviCRM params.
+		 */
+		do_action( 'cwps/acf/mapper/attachment/deleted', $args );
 
 	}
 
