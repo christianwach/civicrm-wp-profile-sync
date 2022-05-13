@@ -350,8 +350,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 		// Add entries for each CiviCRM Contact Type.
 		foreach ( $contact_types as $contact_type ) {
 
+			/*
 			// Skip top level types.
-			//$choices[$contact_type['id']] = $contact_type['label'];
+			$choices[$contact_type['id']] = $contact_type['label'];
+			*/
 
 			// Skip Sub-types if there aren't any.
 			if ( empty( $contact_type['children'] ) ) {
@@ -474,7 +476,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 		if ( is_numeric( $contact_type ) ) {
 
 			// Assign the numeric ID.
-			$contact_type_id = $contact_type = (int) $contact_type;
+			$contact_type = (int) $contact_type;
+			$contact_type_id = $contact_type;
 
 		}
 

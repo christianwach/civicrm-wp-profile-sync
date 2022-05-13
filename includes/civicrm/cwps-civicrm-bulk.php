@@ -120,6 +120,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Bulk {
 
 		// Add to include path.
 		$include_path = $custom_path . PATH_SEPARATOR . get_include_path();
+		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.runtime_configuration_set_include_path
 		set_include_path( $include_path );
 
 	}
@@ -149,6 +150,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Bulk {
 
 		// Register template directories.
 		$template_include_path = $custom_path . PATH_SEPARATOR . get_include_path();
+		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.runtime_configuration_set_include_path
 		set_include_path( $template_include_path );
 
 	}

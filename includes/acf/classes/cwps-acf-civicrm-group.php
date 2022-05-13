@@ -443,6 +443,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 		 */
 
 		// Query via cache method.
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//$cache = CRM_Contact_BAO_GroupContactCache::contactGroup( $contact_id );
 
 		/*

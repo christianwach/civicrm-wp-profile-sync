@@ -1,4 +1,14 @@
-<!-- assets/templates/wordpress/metaboxes/metabox-acf-migrate-submit.php -->
+<?php
+/**
+ * Migration Page Submit metabox template.
+ *
+ * Handles markup for the Migration Page Submit metabox.
+ *
+ * @package CiviCRM_WP_Profile_Sync
+ * @since 0.4
+ */
+
+?><!-- assets/templates/wordpress/metaboxes/metabox-acf-migrate-submit.php -->
 <div class="submitbox">
 	<div id="minor-publishing">
 		<div id="misc-publishing-actions">

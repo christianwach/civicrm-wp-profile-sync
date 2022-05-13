@@ -149,6 +149,7 @@ class CiviCRM_Profile_Sync_ACF_Field_Type {
 			include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-im.php';
 		}
 
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-multiset.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-yes-no.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-activity-creator.php';
@@ -185,6 +186,7 @@ class CiviCRM_Profile_Sync_ACF_Field_Type {
 			new CiviCRM_Profile_Sync_Custom_CiviCRM_Instant_Messenger( $this );
 		}
 
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//new CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set( $this );
 		new CiviCRM_Profile_Sync_Custom_CiviCRM_Yes_No( $this );
 

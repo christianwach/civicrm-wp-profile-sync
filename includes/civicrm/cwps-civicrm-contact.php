@@ -133,6 +133,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		}
 
 		// Intercept Contact updates in CiviCRM.
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//add_action( 'cwps/mapper/contact/edit/pre', [ $this, 'contact_pre' ], 10, 4 );
 		add_action( 'cwps/mapper/contact/edited', [ $this, 'contact_edited' ], 10 );
 
@@ -154,6 +155,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		}
 
 		// Remove all CiviCRM callbacks.
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//remove_action( 'cwps/mapper/contact/edit/pre', [ $this, 'contact_pre' ], 10 );
 		remove_action( 'cwps/mapper/contact/edited', [ $this, 'contact_edited' ], 10 );
 
@@ -317,11 +319,11 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		 */
 		do_action( 'cwps/civicrm/contact/contact_sync/pre', $args );
 
-		 // TODO: It seems overkill to update the User twice here.
+		// TODO: It seems overkill to update the User twice here.
 
-		 // Update the WordPress User.
-		 $this->plugin->wp->user->name_update( $args );
-		 $this->plugin->wp->user->nickname_update( $args );
+		// Update the WordPress User.
+		$this->plugin->wp->user->name_update( $args );
+		$this->plugin->wp->user->nickname_update( $args );
 
 		/**
 		 * Allow plugins to hook into the sync process.

@@ -224,7 +224,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Participant_Action_Ref extends acf_fiel
 		// Init choices array.
 		$field['choices'] = [];
 
-		// Overwrite with
+		// Overwrite with Field value.
 		if ( ! empty( $field['value'] ) ) {
 			$field['choices'][ $field['value'] ] = $field['value'];
 		}
@@ -250,7 +250,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Participant_Action_Ref extends acf_fiel
 			'acf-input-' . $this->name,
 			plugins_url( 'assets/js/acf/acfe/fields/cwps-field-action-reference-participant.js', CIVICRM_WP_PROFILE_SYNC_FILE ),
 			[ 'acf-input' ],
-			CIVICRM_WP_PROFILE_SYNC_VERSION // Version.
+			CIVICRM_WP_PROFILE_SYNC_VERSION, // Version.
+			true
 		);
 
 	}

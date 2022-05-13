@@ -173,6 +173,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		add_action( 'cwps/acf/post/contact_sync_to_post', [ $this, 'contact_sync_to_post' ], 10 );
 
 		// Some Contact "Text" Fields need their own validation.
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//add_filter( 'acf/validate_value/type=text', [ $this, 'value_validate' ], 10, 4 );
 
 		// Intercept Contact Image delete.
@@ -403,10 +404,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 			$format = CRM_Utils_Date::getDateFormat( 'birth' );
 		}
 
+		/*
 		// If it's empty, fall back on CiviCRM-wide setting.
 		if ( empty( $format ) ) {
 			// No need yet - `getDateFormat()` already does this.
 		}
+		*/
 
 		// --<
 		return $format;
@@ -1211,6 +1214,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		$config = CRM_Core_Config::singleton();
 
 		// Copy the File for WordPress to move.
+		// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 		$tmp_name = $this->civicrm->attachment->file_copy_for_acf( $config->customFileUploadDir . $filename );
 
 		// Find the name of the new File.
@@ -1371,6 +1375,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 			'%' . serialize( $basename ) . '%'
 		);
 
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		$results = $wpdb->get_results( $sql );
 		foreach ( $results as $row ) {
 
@@ -1401,6 +1406,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 						$row->post_id
 					);
 
+					// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 					$meta = maybe_unserialize( $wpdb->get_var( $sql ) );
 					if ( isset( $meta['file'] ) && dirname( $meta['file'] ) === $dirname ) {
 						// URL is for a "backup" of an edited image.
@@ -1443,6 +1449,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		}
 
 		// Bail if image_URL isn't the string 'null'.
+		// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 		if ( $objectRef->image_URL !== 'null' ) {
 			return;
 		}

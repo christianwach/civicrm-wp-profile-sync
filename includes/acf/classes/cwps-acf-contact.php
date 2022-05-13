@@ -139,6 +139,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		add_filter( 'cwps/acf/field/query_setting_choices', [ $this, 'query_setting_choices' ], 10, 3 );
 
 		// Listen for queries from the ACF Bypass class.
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//add_filter( 'cwps/acf/bypass/query_settings_field', [ $this, 'query_bypass_settings_field' ], 20, 4 );
 		add_filter( 'cwps/acf/bypass/query_settings_choices', [ $this, 'query_bypass_settings_choices' ], 20, 4 );
 
@@ -297,8 +298,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 			return;
 		}
 
-		// Bail early if this Post Type shouldn't be synced.
-		// @see self::post_saved()
+		/*
+		 * Bail early if this Post Type shouldn't be synced.
+		 * @see self::post_saved()
+		 */
 		if ( $this->do_not_sync === true ) {
 			return;
 		}
@@ -338,10 +341,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 		// TODO: Decide if we should get the ACF Field data without formatting.
 		// This also applies to any calls to get_field_object().
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//$fields = get_fields( $post->ID, false );
-
-		// Get submitted values. (No need for this - see hook priority)
-		//$submitted_values = acf_maybe_get_POST( 'acf' );
 
 		// Update the Contact with this data.
 		$contact = $this->update_from_fields( $contact_id, $fields, $post->ID );
@@ -418,7 +419,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		}
 
 		// The checksum must be accompanied by a Contact ID.
-		if ( empty( $_GET['cid'] ) || ! is_numeric( $_GET['cid'] ) ) {
+		if ( empty( $_GET['cid'] ) || ! is_numeric( wp_unslash( $_GET['cid'] ) ) ) {
 			return $contact_id;
 		}
 
@@ -428,8 +429,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		}
 
 		// Bail if no "Edit Contact" permission or not a valid checksum.
-		$cid = (int) trim( $_GET['cid'] );
-		$checksum = trim( $_GET['cs'] );
+		$cid = (int) trim( wp_unslash( $_GET['cid'] ) );
+		$checksum = trim( wp_unslash( $_GET['cs'] ) );
 		$allowed = CRM_Contact_BAO_Contact_Permission::allow( $cid, CRM_Core_Permission::EDIT );
 		$valid = CRM_Contact_BAO_Contact_Utils::validChecksum( $cid, $checksum );
 		if ( ! $allowed && ! $valid ) {

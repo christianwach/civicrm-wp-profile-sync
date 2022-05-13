@@ -185,7 +185,9 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 		// Listen for events from our Mapper that require Address updates.
 		add_action( 'cwps/mapper/address/created', [ $this, 'address_edited' ], 10 );
 		add_action( 'cwps/mapper/address/edited', [ $this, 'address_edited' ], 10 );
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//add_action( 'cwps/mapper/address/delete/pre', [ $this, 'address_pre_delete' ], 10 );
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//add_action( 'cwps/mapper/address/deleted', [ $this, 'address_deleted' ], 10 );
 
 		// Declare registered.
@@ -208,7 +210,9 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 		// Remove all Mapper listeners.
 		remove_action( 'cwps/mapper/address/created', [ $this, 'address_edited' ], 10 );
 		remove_action( 'cwps/mapper/address/edited', [ $this, 'address_edited' ], 10 );
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//remove_action( 'cwps/mapper/address/delete/pre', [ $this, 'address_pre_delete' ], 10 );
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//remove_action( 'cwps/mapper/address/deleted', [ $this, 'address_deleted' ], 10 );
 
 		// Declare unregistered.
@@ -246,6 +250,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 		// TODO: Handle shared Address.
 		return;
 
+		/*
 		// If this address is a "Master Address" then it will return "Shared Addresses".
 		$addresses_shared = $this->plugin->civicrm->address->addresses_shared_get_by_id( $address->id );
 
@@ -258,6 +263,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 		foreach ( $addresses_shared as $address_shared ) {
 			$this->address_process( $address_shared, $args );
 		}
+		*/
 
 	}
 
@@ -786,6 +792,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 			$config = CRM_Core_Config::singleton();
 			// Only get the list of States/Provinces if some are chosen.
 			// BuddyPress becomes unresponsive when all are returned.
+			// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 			if ( ! empty( $config->provinceLimit ) ) {
 				$options = $this->plugin->civicrm->address->state_provinces_get();
 			}

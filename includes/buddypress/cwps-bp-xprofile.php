@@ -297,6 +297,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		// Modify the xProfile Field display and its User values.
 
 		// Filter the output of an xProfile Field.
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//add_action( 'xprofile_get_field_data', [ $this, 'data_get' ], 10, 3 );
 
 		// Filter the xProfile Field options when displaying the Field.
@@ -344,6 +345,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 		// Listen for events from our Mapper that require Contact updates.
 		add_action( 'cwps/mapper/bp_xprofile/edited', [ $this, 'fields_edited' ], 50 );
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//add_action( 'cwps/mapper/bp_field/edited', [ $this, 'field_edited' ], 50 );
 
 		// Declare registered.
@@ -365,6 +367,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 		// Remove all Mapper listeners.
 		remove_action( 'cwps/mapper/bp_xprofile/edited', [ $this, 'fields_edited' ], 50 );
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//remove_action( 'cwps/mapper/bp_field/edited', [ $this, 'field_edited' ], 50 );
 
 		// Declare unregistered.
@@ -479,11 +482,13 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 */
 	public function fields_get_for_user( $user_id ) {
 
+		/*
 		// TODO: Only do this once per User?
 		static $pseudocache;
 		if ( isset( $pseudocache[ $user_id ] ) ) {
 			//return $pseudocache[ $user_id ];
 		}
+		*/
 
 		// Init return.
 		$fields = [];
@@ -526,10 +531,12 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 		}
 
+		/*
 		// Maybe add to pseudo-cache.
 		if ( ! isset( $pseudocache[ $user_id ] ) ) {
 			//$pseudocache[ $user_id ] = $fields;
 		}
+		*/
 
 		// --<
 		return $fields;
@@ -930,10 +937,12 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 */
 	public function get_children( $children, $for_editing, $field ) {
 
+		/*
 		// We only want to filter them on the Edit Field screen.
 		if ( ! $for_editing ) {
-			//return $children;
+			return $children;
 		}
+		*/
 
 		// Get metadata for this xProfile Field.
 		$args = $this->get_metadata_all( $field );
@@ -983,14 +992,14 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $post_option The submitted options array. (Need to check!)
+	 * @param array $post_option The submitted options array. Need to check.
 	 * @param string $field_type The type of xProfile Field.
 	 */
 	public function options_before_save( $post_option, $field_type ) {
 
 		// Extract the Entity Type from our metabox.
 		$entity_type = '';
-		if ( isset( $_POST[ $this->entity_type ] ) && $_POST[ $this->entity_type ] ) {
+		if ( ! empty( $_POST[ $this->entity_type ] ) ) {
 			$entity_type = wp_unslash( $_POST[ $this->entity_type ] );
 		}
 
@@ -1004,7 +1013,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 			// Extract the Website Type ID from our metabox.
 			$website_type_id = '';
-			if ( isset( $_POST[ $this->website_type_id ] ) && $_POST[ $this->website_type_id ] ) {
+			if ( ! empty( $_POST[ $this->website_type_id ] ) ) {
 				$website_type_id = wp_unslash( $_POST[ $this->website_type_id ] );
 			}
 
@@ -1020,7 +1029,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 			// Extract the Location Type ID from our metabox.
 			$location_type_id = '';
-			if ( isset( $_POST[ $this->location_type_id ] ) && $_POST[ $this->location_type_id ] ) {
+			if ( ! empty( $_POST[ $this->location_type_id ] ) ) {
 				$location_type_id = wp_unslash( $_POST[ $this->location_type_id ] );
 			}
 
@@ -1036,13 +1045,13 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 			// Extract the Contact Type ID from our metabox.
 			$contact_type_id = '';
-			if ( isset( $_POST[ $this->contact_type_id ] ) && $_POST[ $this->contact_type_id ] ) {
+			if ( ! empty( $_POST[ $this->contact_type_id ] ) ) {
 				$contact_type_id = wp_unslash( $_POST[ $this->contact_type_id ] );
 			}
 
 			// Extract the Contact Subtype ID from our metabox.
 			$contact_subtype_id = '';
-			if ( isset( $_POST[ $this->contact_subtype_id ] ) && $_POST[ $this->contact_subtype_id ] ) {
+			if ( ! empty( $_POST[ $this->contact_subtype_id ] ) ) {
 				$contact_subtype_id = wp_unslash( $_POST[ $this->contact_subtype_id ] );
 			}
 
@@ -1056,7 +1065,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 		// Extract the value from our metabox.
 		$value = '';
-		if ( isset( $_POST[ $this->name ] ) && $_POST[ $this->name ] ) {
+		if ( ! empty( $_POST[ $this->name ] ) ) {
 			$value = wp_unslash( $_POST[ $this->name ] );
 		}
 
@@ -1104,7 +1113,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 		// Extract the Entity Type from our metabox.
 		$entity_type = '';
-		if ( isset( $_POST[ $this->entity_type ] ) && $_POST[ $this->entity_type ] ) {
+		if ( ! empty( $_POST[ $this->entity_type ] ) ) {
 			$entity_type = wp_unslash( $_POST[ $this->entity_type ] );
 		}
 
@@ -1121,13 +1130,13 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 			// Extract the Contact Type ID from our metabox.
 			$contact_type_id = '';
-			if ( isset( $_POST[ $this->contact_type_id ] ) && $_POST[ $this->contact_type_id ] ) {
+			if ( ! empty( $_POST[ $this->contact_type_id ] ) ) {
 				$contact_type_id = wp_unslash( $_POST[ $this->contact_type_id ] );
 			}
 
 			// Extract the Contact Subtype ID from our metabox.
 			$contact_subtype_id = '';
-			if ( isset( $_POST[ $this->contact_subtype_id ] ) && $_POST[ $this->contact_subtype_id ] ) {
+			if ( ! empty( $_POST[ $this->contact_subtype_id ] ) ) {
 				$contact_subtype_id = wp_unslash( $_POST[ $this->contact_subtype_id ] );
 			}
 
@@ -1144,7 +1153,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 			// Extract the Location Type ID from our metabox.
 			$location_type_id = '';
-			if ( isset( $_POST[ $this->location_type_id ] ) && $_POST[ $this->location_type_id ] ) {
+			if ( ! empty( $_POST[ $this->location_type_id ] ) ) {
 				$location_type_id = wp_unslash( $_POST[ $this->location_type_id ] );
 			}
 
@@ -1158,7 +1167,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 				// Extract the Phone Type ID from our metabox.
 				$phone_type_id = '';
-				if ( isset( $_POST[ $this->phone_type_id ] ) && $_POST[ $this->phone_type_id ] ) {
+				if ( ! empty( $_POST[ $this->phone_type_id ] ) ) {
 					$phone_type_id = wp_unslash( $_POST[ $this->phone_type_id ] );
 				}
 
@@ -1174,7 +1183,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 			// Extract the Website Type ID from our metabox.
 			$website_type_id = '';
-			if ( isset( $_POST[ $this->website_type_id ] ) && $_POST[ $this->website_type_id ] ) {
+			if ( ! empty( $_POST[ $this->website_type_id ] ) ) {
 				$website_type_id = wp_unslash( $_POST[ $this->website_type_id ] );
 			}
 
@@ -1185,7 +1194,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 		// Extract the value from our metabox.
 		$value = '';
-		if ( isset( $_POST[ $this->name ] ) && $_POST[ $this->name ] ) {
+		if ( ! empty( $_POST[ $this->name ] ) ) {
 			$value = wp_unslash( $_POST[ $this->name ] );
 		}
 
@@ -1427,6 +1436,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	public function enqueue_js() {
 
 		// Same check as BuddyPress.
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 		if ( ! empty( $_GET['page'] ) && strpos( $_GET['page'], 'bp-profile-setup' ) !== false ) {
 
 			// Enqueue our JavaScript.
@@ -1434,7 +1444,8 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 				'cwps-xprofile-admin-js',
 				plugins_url( 'assets/js/buddypress/xprofile/cwps-bp-civicrm-field.js', CIVICRM_WP_PROFILE_SYNC_FILE ),
 				[ 'xprofile-admin-js' ],
-				CIVICRM_WP_PROFILE_SYNC_VERSION // Version.
+				CIVICRM_WP_PROFILE_SYNC_VERSION, // Version.
+				true
 			);
 
 			// Init options.
@@ -1581,11 +1592,13 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 			$field_id = $field;
 		}
 
+		/*
 		// Only do this once per Field ID.
 		static $pseudocache;
 		if ( isset( $pseudocache[ $field_id ] ) ) {
-			//return $pseudocache[ $field_id ];
+			return $pseudocache[ $field_id ];
 		}
+		*/
 
 		// Grab the metadata.
 		$meta = bp_xprofile_get_meta( $field_id, 'field', $this->meta_key );
@@ -1596,10 +1609,12 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		// Grab the data. Unserialise?
 		$data = $meta;
 
+		/*
 		// Maybe add to pseudo-cache.
 		if ( ! isset( $pseudocache[ $field_id ] ) ) {
-			//$pseudocache[ $field_id ] = $data;
+			$pseudocache[ $field_id ] = $data;
 		}
+		*/
 
 		// --<
 		return $data;

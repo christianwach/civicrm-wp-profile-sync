@@ -217,6 +217,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		add_filter( 'cwps/acf/field/query_setting_choices', [ $this, 'query_setting_choices' ], 30, 3 );
 
 		// Listen for queries from the ACF Bypass class.
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//add_filter( 'cwps/acf/bypass/query_settings_field', [ $this, 'query_bypass_settings_field' ], 20, 4 );
 		add_filter( 'cwps/acf/bypass/query_settings_choices', [ $this, 'query_bypass_settings_choices' ], 20, 4 );
 
@@ -342,8 +343,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 			return;
 		}
 
-		// Bail early if this Post Type shouldn't be synced.
-		// @see self::post_saved()
+		/*
+		 * Bail early if this Post Type shouldn't be synced.
+		 * @see self::post_saved()
+		 */
 		if ( $this->do_not_sync === true ) {
 			return;
 		}
@@ -372,6 +375,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 		// TODO: Decide if we should get the ACF Field data without formatting.
 		// This also applies to any calls to get_field_object().
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//$fields = get_fields( $post->ID, false );
 
 		// Get the Participant ID.
@@ -1741,9 +1745,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 			return $actions;
 		}
 
+		/*
 		// Do we need to know?
 		if ( is_post_type_hierarchical( $post->post_type ) ) {
 		}
+		*/
 
 		// Get Participant ID.
 		$participant_id = $this->acf_loader->post->participant_id_get( $post->ID );

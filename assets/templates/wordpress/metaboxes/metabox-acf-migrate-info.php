@@ -1,4 +1,14 @@
-<!-- assets/templates/wordpress/metaboxes/metabox-acf-migrate-info.php -->
+<?php
+/**
+ * Migration Page Info metabox template.
+ *
+ * Handles markup for the Migration Page Info metabox.
+ *
+ * @package CiviCRM_WP_Profile_Sync
+ * @since 0.4
+ */
+
+?><!-- assets/templates/wordpress/metaboxes/metabox-acf-migrate-info.php -->
 <?php if ( $metabox['args']['migrated'] === false ) : ?>
 
 	<h3><?php esc_html_e( 'Why migrate?', 'civicrm-wp-profile-sync' ); ?></h3>

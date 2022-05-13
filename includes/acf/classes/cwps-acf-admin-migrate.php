@@ -209,11 +209,12 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 		// Ensure correct menu item is highlighted.
 		add_action( 'admin_head-' . $this->migrate_page, [ $this->plugin->admin, 'admin_menu_highlight' ], 50 );
 
-		// Add styles and scripts only on our "ACF Integration" page.
-		// @see wp-admin/admin-header.php
+		/*
+		 * Add styles and scripts only on our "ACF Integration" page.
+		 * @see wp-admin/admin-header.php
+		 */
 		add_action( 'admin_head-' . $this->migrate_page, [ $this, 'admin_head' ] );
 		add_action( 'admin_print_styles-' . $this->migrate_page, [ $this, 'admin_styles' ] );
-		//add_action( 'admin_print_scripts-' . $this->migrate_page, [ $this, 'admin_scripts' ] );
 
 		// Filter the list of single site subpages and add multidomain page.
 		add_filter( 'cwps/admin/settings/subpages', [ $this, 'admin_subpages_filter' ] );
@@ -368,7 +369,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	 * @since 0.4
 	 *
 	 * @param array $urls The array of subpage URLs.
-	 * @param string The key of the active tab in the subpage URLs array.
+	 * @param string $active_tab The key of the active tab in the subpage URLs array.
 	 */
 	public function page_add_tab( $urls, $active_tab ) {
 

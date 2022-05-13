@@ -241,7 +241,8 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set extends acf_field 
 			'acf-input-' . $this->name,
 			plugins_url( 'assets/js/acf/fields/civicrm-multiset-field.js', CIVICRM_WP_PROFILE_SYNC_FILE ),
 			[ 'acf-pro-input' ],
-			CIVICRM_WP_PROFILE_SYNC_VERSION // Version.
+			CIVICRM_WP_PROFILE_SYNC_VERSION, // Version.
+			true
 		);
 
 	}

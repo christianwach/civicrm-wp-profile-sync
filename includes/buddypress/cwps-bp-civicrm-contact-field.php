@@ -195,6 +195,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		add_filter( 'cwps/bp/field/query_options', [ $this, 'checkbox_settings_modify' ], 10, 3 );
 		add_filter( 'cwps/bp/field/query_options', [ $this, 'true_false_settings_modify' ], 10, 3 );
 		add_filter( 'cwps/bp/field/query_options', [ $this, 'select_settings_modify' ], 10, 3 );
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//add_filter( 'cwps/bp/field/query_options', [ $this, 'multiselect_settings_modify' ], 10, 3 );
 		add_filter( 'cwps/bp/field/query_options', [ $this, 'radio_settings_modify' ], 10, 3 );
 
@@ -204,19 +205,23 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		// Determine if a "Checkbox" Field is a "True/False" Field.
 		add_filter( 'cwps/bp/xprofile/value/checkbox/query_type', [ $this, 'true_false_field_query' ], 10, 2 );
 
+		/*
 		// Filter the xProfile Field settings when saving on the "Edit Field" screen.
 		//add_filter( 'cwps/bp/field/post_update', [ $this, 'date_settings_modify' ], 10, 2 );
 		//add_filter( 'cwps/bp/field/post_update', [ $this, 'text_settings_modify' ], 10, 2 );
+		*/
 
 		// Listen for when a Contact Field need syncing to an xProfile Field.
 		add_action( 'cwps/buddypress/contact/field/sync', [ $this, 'bp_field_update' ], 10, 2 );
 
+		/*
 		// Some Contact "Text" Fields need their own validation.
 		//add_filter( 'bp/validate_value/type=text', [ $this, 'value_validate' ], 10, 4 );
 
 		// Intercept Contact Image delete.
 		//add_action( 'civicrm_postSave_civicrm_contact', [ $this, 'image_deleted' ], 10 );
 		//add_action( 'delete_attachment', [ $this, 'image_attachment_deleted' ], 10 );
+		*/
 
 	}
 
@@ -402,10 +407,12 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 			$format = CRM_Utils_Date::getDateFormat( 'birth' );
 		}
 
+		/*
 		// If it's empty, fall back on CiviCRM-wide setting.
 		if ( empty( $format ) ) {
 			// No need yet - `getDateFormat()` already does this.
 		}
+		*/
 
 		// Get the mappings.
 		$mappings = $this->plugin->mapper->date_mappings;
@@ -433,11 +440,15 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		// Init return.
 		$type = false;
 
+		// phpcs:disable WordPress.WhiteSpace.PrecisionAlignment.Found
+
 		// Combine different arrays.
 		$contact_fields = $this->contact_fields_individual +
 						  $this->contact_fields_organization +
 						  $this->contact_fields_household +
 						  $this->contact_fields_common;
+
+		// phpcs:enable WordPress.WhiteSpace.PrecisionAlignment.Found
 
 		// if the key exists, return the value - which is the BuddyPress Type.
 		if ( array_key_exists( $name, $contact_fields ) ) {
@@ -816,6 +827,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		// TODO: This can't be done here directly.
 		return $options;
 
+		/*
 		// Get Contact Field data.
 		$format = $this->date_format_get( $contact_field_name );
 
@@ -825,6 +837,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		// Set the date "format" attributes.
 		$field['display_format'] = $bp_format;
 		$field['return_format'] = $bp_format;
+		*/
 
 	}
 
@@ -852,6 +865,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		// TODO: This can't be done here directly.
 		return $options;
 
+		/*
 		// Get Contact Field data.
 		$field_data = $this->plugin->civicrm->contact_field->get_by_name( $contact_field_name );
 
@@ -859,6 +873,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		if ( ! empty( $field_data['maxlength'] ) ) {
 			$field['maxlength'] = $field_data['maxlength'];
 		}
+		*/
 
 	}
 

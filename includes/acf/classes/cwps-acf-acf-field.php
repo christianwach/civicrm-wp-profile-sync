@@ -115,6 +115,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		add_filter( 'acf/validate_value/type=text', [ $this, 'value_validate' ], 10, 4 );
 
 		// Add Setting Field to Fields.
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//add_action( 'acf/render_field_settings', [ $this, 'field_setting_add' ] );
 
 		// For newly-added Fields, we need to specify our supported Fields.

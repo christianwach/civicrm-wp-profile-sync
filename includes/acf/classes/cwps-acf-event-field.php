@@ -102,6 +102,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 	 * @var array $fee_fields The Event Fee Fields.
 	 */
 	public $fee_fields = [
+		// phpcs:disable WordPress.Arrays.ArrayIndentation.ItemNotAligned
 		'is_monetary' => 'true_false',
 		'currency' => 'select',
 		//'payment_processor' => 'select',
@@ -121,6 +122,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 			//'initial_amount_label' => 'text',
 			//'initial_amount_help_text' => 'textarea',
 			//'min_initial_amount' => 'number',
+		// phpcs:enable WordPress.Arrays.ArrayIndentation.ItemNotAligned
 	];
 
 	/**
@@ -133,6 +135,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 	 * @var array $event_fields_unused The unused Event Fields.
 	 */
 	public $event_fields_unused = [
+		// phpcs:disable Squiz.Commenting.InlineComment.InvalidEndChar
 
 		// Template.
 		//'is_template' => 'true_false',
@@ -142,6 +145,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 		//'parent_event_id' => 'select',
 		//'slot_label_id' => 'select',
 
+		// phpcs:enable Squiz.Commenting.InlineComment.InvalidEndChar
 	];
 
 	/**
@@ -183,6 +187,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 	public function register_hooks() {
 
 		// Some Event "Text" Fields need their own validation.
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//add_filter( 'acf/validate_value/type=text', [ $this, 'value_validate' ], 10, 4 );
 
 		// Listen for queries from our ACF Field class.
@@ -928,8 +933,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 			return $field;
 		}
 
+		/*
 		// Try and get CiviCRM format.
 		//$civicrm_format = $this->date_time_format_get( $event_field_name );
+		*/
 
 		// Set just the "Display Format" attribute.
 		$field['display_format'] = 'Y-m-d H:i:s';
@@ -966,6 +973,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 
 			// Override if we get the default.
 			$config = CRM_Core_Config::singleton();
+			// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 			if ( $config->dateInputFormat == $format ) {
 				$format = '';
 			}

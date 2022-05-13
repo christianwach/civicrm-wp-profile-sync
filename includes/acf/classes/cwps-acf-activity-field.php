@@ -763,8 +763,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 			return $field;
 		}
 
+		/*
 		// Try and get CiviCRM format.
 		//$civicrm_format = $this->date_time_format_get( $activity_field_name );
+		*/
 
 		// Set just the "Display Format" attribute.
 		$field['display_format'] = 'Y-m-d H:i:s';
@@ -801,6 +803,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 			// Override if we get the default.
 			$config = CRM_Core_Config::singleton();
+			// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 			if ( $config->dateInputFormat == $format ) {
 				$format = '';
 			}

@@ -1,4 +1,14 @@
-<!-- assets/templates/wordpress/metaboxes/metabox-admin-settings-submit.php -->
+<?php
+/**
+ * Admin Settings page Submit metabox template.
+ *
+ * Handles markup for the Admin Settings page Submit metabox.
+ *
+ * @package CiviCRM_WP_Profile_Sync
+ * @since 0.4
+ */
+
+?><!-- assets/templates/wordpress/metaboxes/metabox-admin-settings-submit.php -->
 <div class="submitbox">
 	<div id="minor-publishing">
 		<div id="misc-publishing-actions">

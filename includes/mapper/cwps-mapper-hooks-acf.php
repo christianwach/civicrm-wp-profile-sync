@@ -152,6 +152,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_ACF {
 	public function hooks_acf_add() {
 
 		// Callbacks for ACF Fields pre- and post-edited actions.
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//add_action( 'acf/save_post', [ $this, 'acf_fields_saved' ], 5, 1 );
 		add_action( 'acf/save_post', [ $this, 'acf_fields_saved' ], 20, 1 );
 
@@ -165,6 +166,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_ACF {
 	public function hooks_acf_remove() {
 
 		// Remove callbacks for ACF Fields pre- and post-edited actions.
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//remove_action( 'acf/save_post', [ $this, 'acf_fields_saved' ], 5 );
 		remove_action( 'acf/save_post', [ $this, 'acf_fields_saved' ], 20 );
 

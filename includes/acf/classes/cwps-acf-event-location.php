@@ -151,8 +151,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 	 */
 	public function register_hooks() {
 
+		/*
 		// Some Event Location "Text" Fields need their own validation.
 		//add_filter( 'acf/validate_value/type=text', [ $this, 'value_validate' ], 10, 4 );
+		*/
 
 		// Listen for queries from our ACF Field class.
 		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'select_settings_modify' ], 20, 2 );

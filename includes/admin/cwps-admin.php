@@ -255,9 +255,11 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 */
 	public function upgrade_tasks() {
 
+		/*
 		// If this is a new install (or an upgrade from a version prior to 0.4).
 		if ( $this->plugin_version === false ) {
 		}
+		*/
 
 		// If this is an upgrade.
 		if ( $this->plugin_version != CIVICRM_WP_PROFILE_SYNC_VERSION ) {
@@ -432,11 +434,13 @@ class CiviCRM_WP_Profile_Sync_Admin {
 			$save = true;
 		}
 
+		/*
 		// Things to always check on upgrade.
 		if ( $this->is_upgrade ) {
 			// Add them here.
 			//$save = true;
 		}
+		*/
 
 		// Save settings if need be.
 		if ( $save === true ) {
@@ -476,9 +480,11 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		// Add WordPress scripts and help text.
 		add_action( 'admin_head-' . $this->parent_page, [ $this, 'admin_head' ], 50 );
 
+		/*
 		// Add scripts and styles.
-		//add_action( 'admin_print_styles-' . $this->parent_page, [ $this, 'admin_css' ] );
-		//add_action( 'admin_print_scripts-' . $this->parent_page, [ $this, 'admin_js' ] );
+		add_action( 'admin_print_styles-' . $this->parent_page, [ $this, 'admin_css' ] );
+		add_action( 'admin_print_scripts-' . $this->parent_page, [ $this, 'admin_js' ] );
+		*/
 
 		// Add Settings Page.
 		$this->settings_page = add_submenu_page(
@@ -499,9 +505,11 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		// Ensure correct menu item is highlighted.
 		add_action( 'admin_head-' . $this->settings_page, [ $this, 'admin_menu_highlight' ], 50 );
 
+		/*
 		// Add scripts and styles
-		//add_action( 'admin_print_styles-' . $this->settings_page, [ $this, 'admin_css' ] );
-		//add_action( 'admin_print_scripts-' . $this->settings_page, [ $this, 'admin_js' ] );
+		add_action( 'admin_print_styles-' . $this->settings_page, [ $this, 'admin_css' ] );
+		add_action( 'admin_print_scripts-' . $this->settings_page, [ $this, 'admin_js' ] );
+		*/
 
 	}
 
@@ -537,7 +545,9 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 		// This tweaks the Settings subnav menu to show only one menu item.
 		if ( in_array( $plugin_page, $subpages ) ) {
+			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 			$plugin_page = $this->parent_page_slug;
+			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 			$submenu_file = $this->parent_page_slug;
 		}
 
@@ -600,7 +610,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 */
 	public function page_settings() {
 
-		// Check user permissions
+		// Check user permissions.
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
@@ -926,8 +936,8 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 		// Get User Profile Website Type.
 		$website_type = ! empty( $_POST['cwps_website_type_select'] ) ?
-						(int) trim( $_POST['cwps_website_type_select'] ) :
-						0;
+			(int) trim( wp_unslash( $_POST['cwps_website_type_select'] ) ) :
+			0;
 
 		// Did we set a CiviCRM Website Type?
 		if ( $website_type !== 0 ) {
@@ -936,8 +946,8 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 		// Get User Profile Email Sync.
 		$email_sync = isset( $_POST['cwps_email_sync_select'] ) ?
-					  (int) trim( $_POST['cwps_email_sync_select'] ) :
-					  2;
+			(int) trim( wp_unslash( $_POST['cwps_email_sync_select'] ) ) :
+			2;
 
 		// Did we choose an Email Sync setting?
 		if ( $email_sync !== 2 ) {

@@ -291,11 +291,13 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 
 		return;
 
+		/*
 		// Get Field Group.
 		$field_group = acf_get_field_group( $field_group_id );
 
 		// --<
 		return $field_group;
+		*/
 
 	}
 
@@ -316,11 +318,13 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 
 		return;
 
+		/*
 		// Get Field Group.
 		$field_group = acf_get_field_group( $field_group_id );
 
 		// --<
 		return $field_group;
+		*/
 
 	}
 

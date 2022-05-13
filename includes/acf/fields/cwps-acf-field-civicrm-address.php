@@ -252,7 +252,8 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Field extends acf_field {
 			'acf-input-' . $this->name,
 			plugins_url( 'assets/js/acf/fields/civicrm-address-field.js', CIVICRM_WP_PROFILE_SYNC_FILE ),
 			[ 'acf-pro-input' ],
-			CIVICRM_WP_PROFILE_SYNC_VERSION // Version.
+			CIVICRM_WP_PROFILE_SYNC_VERSION, // Version.
+			true
 		);
 
 	}
@@ -712,6 +713,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Field extends acf_field {
 				'id' => '',
 			],
 			'choices' => CRM_Core_PseudoConstant::country(),
+			// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 			'default_value' => $config->defaultContactCountry,
 			'allow_null' => 1,
 			'multiple' => 0,

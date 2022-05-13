@@ -518,9 +518,11 @@ class CiviCRM_Profile_Sync_ACF_Post {
 			return $actions;
 		}
 
+		/*
 		// Do we need to know?
 		if ( is_post_type_hierarchical( $post->post_type ) ) {
 		}
+		*/
 
 		// Get Contact ID.
 		$contact_id = $this->contact_id_get( $post->ID );
@@ -670,7 +672,9 @@ class CiviCRM_Profile_Sync_ACF_Post {
 			'post_type' => $post_type,
 			'post_status' => [ 'publish', 'trash', 'draft' ],
 			'no_found_rows' => true,
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 			'meta_key' => $this->contact_id_key,
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 			'meta_value' => (string) $contact_id,
 			'posts_per_page' => -1,
 			'order' => 'ASC',
@@ -1208,7 +1212,9 @@ class CiviCRM_Profile_Sync_ACF_Post {
 			'post_type' => $post_type,
 			//'post_status' => 'publish',
 			'no_found_rows' => true,
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 			'meta_key' => $this->activity_id_key,
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 			'meta_value' => (string) $activity_id,
 			'posts_per_page' => -1,
 		];
@@ -1672,7 +1678,9 @@ class CiviCRM_Profile_Sync_ACF_Post {
 			'post_type' => $post_type,
 			//'post_status' => 'publish',
 			'no_found_rows' => true,
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 			'meta_key' => $this->participant_id_key,
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 			'meta_value' => (string) $participant_id,
 			'posts_per_page' => -1,
 		];

@@ -173,7 +173,9 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 		// Listen for events from our Mapper that require Phone updates.
 		add_action( 'cwps/mapper/phone/created', [ $this, 'phone_edited' ], 10 );
 		add_action( 'cwps/mapper/phone/edited', [ $this, 'phone_edited' ], 10 );
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//add_action( 'cwps/mapper/phone/delete/pre', [ $this, 'phone_pre_delete' ], 10 );
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//add_action( 'cwps/mapper/phone/deleted', [ $this, 'phone_deleted' ], 10 );
 
 		// Declare registered.
@@ -196,7 +198,9 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 		// Remove all Mapper listeners.
 		remove_action( 'cwps/mapper/phone/created', [ $this, 'phone_edited' ], 10 );
 		remove_action( 'cwps/mapper/phone/edited', [ $this, 'phone_edited' ], 10 );
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//remove_action( 'cwps/mapper/phone/delete/pre', [ $this, 'phone_pre_delete' ], 10 );
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//remove_action( 'cwps/mapper/phone/deleted', [ $this, 'phone_deleted' ], 10 );
 
 		// Declare unregistered.

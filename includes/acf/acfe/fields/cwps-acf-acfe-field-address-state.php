@@ -228,11 +228,15 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 			'placeholder' => __( 'Select the Country Field', 'civicrm-wp-profile-sync' ),
 			'default_value' => 0,
 			'required' => 0,
-			'conditional_logic' => [ [ [
-				'field' => 'country_source',
-				'operator' => '==contains',
-				'value' => 2,
-			] ] ],
+			'conditional_logic' => [
+				[
+					[
+						'field' => 'country_source',
+						'operator' => '==contains',
+						'value' => 2,
+					],
+				],
+			],
 		];
 
 		// Add existing choice if present.
@@ -260,11 +264,15 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 			'default_value' => 0,
 			'required' => 0,
 			'choices' => CRM_Core_PseudoConstant::country(),
-			'conditional_logic' => [ [ [
-				'field' => 'country_source',
-				'operator' => '==contains',
-				'value' => 3,
-			] ] ],
+			'conditional_logic' => [
+				[
+					[
+						'field' => 'country_source',
+						'operator' => '==contains',
+						'value' => 3,
+					],
+				],
+			],
 		];
 
 		// Now add it.
@@ -285,6 +293,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 		}
 
 		// Get response.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		$response = $this->ajax_get_response( $_POST );
 
 		// Send results.
@@ -459,6 +468,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 
 		} else {
 
+			// phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+
 			// Add choices from the default Country.
 			$country_id = $config->defaultContactCountry;
 			if ( ! empty( $config->defaultContactCountry ) ) {
@@ -469,6 +480,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 					$field['value'] = $config->defaultContactStateProvince;
 				}
 			}
+
+			// phpcs:enable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 
 		}
 
@@ -527,7 +540,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 			'acf-input-' . $this->name,
 			plugins_url( 'assets/js/acf/acfe/fields/civicrm-address-state-field.js', CIVICRM_WP_PROFILE_SYNC_FILE ),
 			[ 'acf-input' ],
-			CIVICRM_WP_PROFILE_SYNC_VERSION // Version.
+			CIVICRM_WP_PROFILE_SYNC_VERSION, // Version.
+			true
 		);
 
 		// Get the States keyed by Country ID.

@@ -213,9 +213,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 			// Also build array of data for CiviCRM Fields.
 			$this->fields_for_contacts[] = $field;
 
+			/*
 			// Pre-load with "Generic" values.
-			//$filter = 'acf/prepare_field/name=' . $this->field_name . 'map_' . $field['name'];
-			//add_filter( $filter, [ $this, 'prepare_choices' ], 5 );
+			$filter = 'acf/prepare_field/name=' . $this->field_name . 'map_' . $field['name'];
+			add_filter( $filter, [ $this, 'prepare_choices' ], 5 );
+			*/
 
 		}
 

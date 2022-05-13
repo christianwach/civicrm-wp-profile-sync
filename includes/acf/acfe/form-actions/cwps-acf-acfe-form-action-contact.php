@@ -737,10 +737,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// TODO: Check other Contact Entities.
 
-		/*
-		acfe_add_validation_error( $selector, $message );
-		*/
-
 	}
 
 	/**

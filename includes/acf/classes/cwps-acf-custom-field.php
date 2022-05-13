@@ -146,6 +146,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		// Intercept Post synced from Contact events.
 		add_action( 'cwps/acf/post/contact_sync_to_post', [ $this, 'contact_sync_to_post' ], 10 );
 
+		/*
 		// Intercept Post synced from Activity events.
 		//add_action( 'cwps/acf/post/activity/sync', [ $this, 'activity_sync_to_post' ], 10 );
 
@@ -157,6 +158,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 		// Intercept CiviCRM Add/Edit Option Value postSave hook.
 		//add_action( 'civicrm_postSave_civicrm_option_value', [ $this, 'option_value_edited' ], 10 );
+		*/
 
 		// Listen for queries from our Entity classes.
 		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'select_settings_filter' ], 10, 3 );
@@ -167,6 +169,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'text_settings_filter' ], 10, 3 );
 		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'wysiwyg_settings_filter' ], 10, 3 );
 		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'textarea_settings_filter' ], 10, 3 );
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'true_false_settings_filter' ], 10, 3 );
 		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'url_settings_filter' ], 10, 3 );
 		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'file_settings_filter' ], 10, 3 );
@@ -195,6 +198,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		}
 
 		// Intercept when the content of a set of CiviCRM Custom Fields is updated.
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//add_action( 'cwps/acf/mapper/civicrm/custom/edit/pre', [ $this, 'custom_pre_edit' ], 10 );
 		add_action( 'cwps/acf/mapper/civicrm/custom/edited', [ $this, 'custom_edited' ], 10 );
 
@@ -216,6 +220,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		}
 
 		// Remove all Mapper listeners.
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//remove_action( 'cwps/acf/mapper/civicrm/custom/edit/pre', [ $this, 'custom_pre_edit' ], 10 );
 		remove_action( 'cwps/acf/mapper/civicrm/custom/edited', [ $this, 'custom_edited' ], 10 );
 
@@ -1977,6 +1982,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		// Set the "max_size" attribute.
 		if ( $this->civicrm->is_initialised() ) {
 			$config = CRM_Core_Config::singleton();
+			// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 			$field['max_size'] = $config->maxFileSize;
 		}
 

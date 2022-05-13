@@ -76,7 +76,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 		add_filter( 'acfe/form/load/' . $this->action_name, [ $this, 'load' ], 10, 3 );
 
 		// Callback for the "acfe/form/validation/..." hook.
- 		add_action( 'acfe/form/validation/' . $this->action_name, [ $this, 'validation' ], 10, 3 );
+		add_action( 'acfe/form/validation/' . $this->action_name, [ $this, 'validation' ], 10, 3 );
 
 		// Callback for the "acfe/form/make/..." hook.
 		add_action( 'acfe/form/make/' . $this->action_name, [ $this, 'make' ], 10, 3 );
@@ -763,6 +763,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	 * @param array $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
 	 * @param string $action The customised name of the action.
+	 * @param array $group The optional nested ACF Group array.
 	 * @return mixed $setting_value The setting value, or false if not found.
 	 */
 	public function form_setting_value_get( $field_name, $form, $current_post_id, $action, $group = '' ) {

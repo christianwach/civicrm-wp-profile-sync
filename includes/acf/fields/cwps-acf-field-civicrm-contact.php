@@ -280,6 +280,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 		}
 
 		// Get choices.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		$response = $this->get_ajax_query( $_POST );
 
 		// Send results.
@@ -454,7 +455,8 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 			'acf-input-' . $this->name,
 			plugins_url( 'assets/js/acf/fields/civicrm-contact-field.js', CIVICRM_WP_PROFILE_SYNC_FILE ),
 			[ 'acf-input' ],
-			CIVICRM_WP_PROFILE_SYNC_VERSION // Version.
+			CIVICRM_WP_PROFILE_SYNC_VERSION, // Version.
+			true
 		);
 
 	}

@@ -99,6 +99,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		add_action( 'wp_ajax_event_type_get_value', [ $this, 'ajax_event_type_get' ] );
 
 		// Listen for queries from the ACF Bypass class.
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//add_filter( 'cwps/acf/bypass/query_settings_field', [ $this, 'query_bypass_settings_field' ], 20, 4 );
 		add_filter( 'cwps/acf/bypass/query_settings_choices', [ $this, 'query_bypass_settings_choices' ], 20, 4 );
 
@@ -1024,7 +1025,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		$data = [ 'success' => false ];
 
 		// Get Event ID from POST.
-		$event_id = empty( $_POST['value'] ) ? false : (int) trim( $_POST['value'] );
+		$event_id = empty( $_POST['value'] ) ? false : (int) trim( wp_unslash( $_POST['value'] ) );
 		if ( $event_id === false ) {
 			wp_send_json( $data );
 		}

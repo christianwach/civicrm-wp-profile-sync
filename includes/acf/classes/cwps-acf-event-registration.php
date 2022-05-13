@@ -192,6 +192,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 	public function register_hooks() {
 
 		// Some "Text" Fields need their own validation.
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//add_filter( 'acf/validate_value/type=text', [ $this, 'value_validate' ], 10, 4 );
 
 		// Listen for queries from our ACF Field class.

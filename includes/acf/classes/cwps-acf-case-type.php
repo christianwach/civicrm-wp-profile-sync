@@ -74,6 +74,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Type {
 	public function initialise() {
 
 		// Register hooks.
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//$this->register_hooks();
 
 	}

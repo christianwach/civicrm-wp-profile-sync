@@ -223,11 +223,15 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_County extends acf_field {
 			'placeholder' => __( 'Select the State/Province Field', 'civicrm-wp-profile-sync' ),
 			'default_value' => 0,
 			'required' => 0,
-			'conditional_logic' => [ [ [
-				'field' => 'state_source',
-				'operator' => '==contains',
-				'value' => 2,
-			] ] ],
+			'conditional_logic' => [
+				[
+					[
+						'field' => 'state_source',
+						'operator' => '==contains',
+						'value' => 2,
+					],
+				],
+			],
 		];
 
 		// Add existing choice if present.
@@ -255,11 +259,15 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_County extends acf_field {
 			'default_value' => 0,
 			'required' => 0,
 			'choices' => CRM_Core_PseudoConstant::stateProvince(),
-			'conditional_logic' => [ [ [
-				'field' => 'state_source',
-				'operator' => '==contains',
-				'value' => 3,
-			] ] ],
+			'conditional_logic' => [
+				[
+					[
+						'field' => 'state_source',
+						'operator' => '==contains',
+						'value' => 3,
+					],
+				],
+			],
 		];
 
 		// Now add it.
@@ -280,6 +288,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_County extends acf_field {
 		}
 
 		// Get response.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		$response = $this->ajax_get_response( $_POST );
 
 		// Send results.
@@ -453,6 +462,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_County extends acf_field {
 		} else {
 
 			// Add choices from the default State/Province.
+			// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 			$state_id = $config->defaultContactStateProvince;
 			if ( ! empty( $state_id ) ) {
 				$field['choices'] = CRM_Core_PseudoConstant::countyForState( $state_id );
@@ -511,7 +521,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_County extends acf_field {
 			'acf-input-' . $this->name,
 			plugins_url( 'assets/js/acf/acfe/fields/civicrm-address-county-field.js', CIVICRM_WP_PROFILE_SYNC_FILE ),
 			[ 'acf-input' ],
-			CIVICRM_WP_PROFILE_SYNC_VERSION // Version.
+			CIVICRM_WP_PROFILE_SYNC_VERSION, // Version.
+			true
 		);
 
 		// Get the Counties keyed by State ID.

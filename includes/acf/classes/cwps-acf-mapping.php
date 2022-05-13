@@ -185,7 +185,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		add_action( 'civicrm_postProcess', [ $this, 'form_contact_type_process' ], 10, 2 );
 
 		// Intercept CiviCRM Add/Edit Contact Type postSave hook.
-		add_action( 'civicrm_postSave_civicrm_contact_type', [ $this, 'form_contact_type_postSave' ], 10 );
+		add_action( 'civicrm_postSave_civicrm_contact_type', [ $this, 'form_contact_type_post_save' ], 10 );
 
 		// Modify CiviCRM Add/Edit Activity Type form.
 		add_action( 'civicrm_buildForm', [ $this, 'form_activity_type_build' ], 10, 2 );
@@ -194,7 +194,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		add_action( 'civicrm_postProcess', [ $this, 'form_activity_type_process' ], 10, 2 );
 
 		// Intercept CiviCRM Add/Edit Activity Type postSave hook.
-		add_action( 'civicrm_postSave_civicrm_option_value', [ $this, 'form_activity_type_postSave' ], 10 );
+		add_action( 'civicrm_postSave_civicrm_option_value', [ $this, 'form_activity_type_post_save' ], 10 );
 
 		// Modify CiviCRM Add/Edit Participant Role form.
 		add_action( 'civicrm_buildForm', [ $this, 'form_participant_role_build' ], 10, 2 );
@@ -203,7 +203,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		add_action( 'civicrm_postProcess', [ $this, 'form_participant_role_process' ], 10, 2 );
 
 		// Intercept CiviCRM Add/Edit Participant Role postSave hook.
-		add_action( 'civicrm_postSave_civicrm_option_value', [ $this, 'form_participant_role_postSave' ], 10 );
+		add_action( 'civicrm_postSave_civicrm_option_value', [ $this, 'form_participant_role_post_save' ], 10 );
 
 		// Modify CiviCRM Event Component Settings form.
 		add_action( 'civicrm_buildForm', [ $this, 'form_participant_build' ], 10, 2 );
@@ -240,6 +240,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 		// Register template directory.
 		$template_include_path = $custom_path . PATH_SEPARATOR . get_include_path();
+		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.runtime_configuration_set_include_path
 		set_include_path( $template_include_path );
 
 	}
@@ -324,8 +325,10 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 			[]
 		);
 
+		/*
 		// Add a description.
-		//$form->assign( 'cwps_acf_cpt_desc', __( 'Blah', 'civicrm-wp-profile-sync' ) );
+		$form->assign( 'cwps_acf_cpt_desc', __( 'Blah', 'civicrm-wp-profile-sync' ) );
+		*/
 
 		// Amend form in edit mode.
 		if ( $mode === 'edit' ) {
@@ -344,8 +347,10 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 			}
 
+			/*
 			// Do we allow changes to be made?
-			//$cpt_select->freeze();
+			$cpt_select->freeze();
+			*/
 
 		}
 
@@ -369,7 +374,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @param object $objectRef The DAO object.
 	 */
-	public function form_contact_type_postSave( $objectRef ) {
+	public function form_contact_type_post_save( $objectRef ) {
 
 		// Bail if not Contact Type save operation.
 		if ( ! ( $objectRef instanceof CRM_Contact_DAO_ContactType ) ) {
@@ -559,8 +564,10 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 			[]
 		);
 
+		/*
 		// Add a description.
-		//$form->assign( 'cwps_acf_cpt_desc', __( 'Blah', 'civicrm-wp-profile-sync' ) );
+		$form->assign( 'cwps_acf_cpt_desc', __( 'Blah', 'civicrm-wp-profile-sync' ) );
+		*/
 
 		// Amend form in edit mode.
 		if ( $mode === 'edit' ) {
@@ -579,8 +586,10 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 			}
 
+			/*
 			// Do we allow changes to be made?
-			//$cpt_select->freeze();
+			$cpt_select->freeze();
+			*/
 
 		}
 
@@ -604,7 +613,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @param object $objectRef The DAO object.
 	 */
-	public function form_activity_type_postSave( $objectRef ) {
+	public function form_activity_type_post_save( $objectRef ) {
 
 		// Bail if not Activity Type save operation.
 		if ( ! ( $objectRef instanceof CRM_Core_DAO_OptionValue ) ) {
@@ -816,8 +825,10 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 			[]
 		);
 
+		/*
 		// Add a description.
-		//$form->assign( 'cwps_acf_cpt_desc', __( 'Blah', 'civicrm-wp-profile-sync' ) );
+		$form->assign( 'cwps_acf_cpt_desc', __( 'Blah', 'civicrm-wp-profile-sync' ) );
+		*/
 
 		// Amend form in edit mode.
 		if ( $mode === 'edit' ) {
@@ -836,8 +847,10 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 			}
 
+			/*
 			// Do we allow changes to be made?
-			//$cpt_select->freeze();
+			$cpt_select->freeze();
+			*/
 
 		}
 
@@ -861,7 +874,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @param object $objectRef The DAO object.
 	 */
-	public function form_participant_role_postSave( $objectRef ) {
+	public function form_participant_role_post_save( $objectRef ) {
 
 		// Bail if not Participant Role save operation.
 		if ( ! ( $objectRef instanceof CRM_Core_DAO_OptionValue ) ) {

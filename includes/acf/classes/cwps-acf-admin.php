@@ -167,8 +167,10 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		// Ensure correct menu item is highlighted.
 		add_action( 'admin_head-' . $this->sync_page, [ $this->plugin->admin, 'admin_menu_highlight' ], 50 );
 
-		// Add styles and scripts only on our "Manual Sync" page.
-		// @see wp-admin/admin-header.php
+		/*
+		 * Add styles and scripts only on our "Manual Sync" page.
+		 * @see wp-admin/admin-header.php
+		 */
 		add_action( 'admin_head-' . $this->sync_page, [ $this, 'admin_head' ] );
 		add_action( 'admin_print_styles-' . $this->sync_page, [ $this, 'admin_styles' ] );
 		add_action( 'admin_print_scripts-' . $this->sync_page, [ $this, 'admin_scripts' ] );
@@ -234,7 +236,8 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			'cwps-admin-script',
 			CIVICRM_WP_PROFILE_SYNC_URL . 'assets/js/acf/pages/page-admin-acf-sync.js',
 			[ 'jquery', 'jquery-ui-core', 'jquery-ui-progressbar' ],
-			CIVICRM_WP_PROFILE_SYNC_VERSION
+			CIVICRM_WP_PROFILE_SYNC_VERSION,
+			true
 		);
 
 		// Get all Post Types mapped to Contacts.
@@ -479,10 +482,12 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	public function admin_form_url_get() {
 
 		// Sanitise admin page url.
-		$target_url = $_SERVER['REQUEST_URI'];
-		$url_array = explode( '&', $target_url );
-		if ( $url_array ) {
-			$target_url = htmlentities( $url_array[0] . '&updated=true' );
+		$target_url = isset( $_SERVER['REQUEST_URI'] ) ? wp_unslash( $_SERVER['REQUEST_URI'] ) : '';
+		if ( ! empty( $target_url ) ) {
+			$url_array = explode( '&', $target_url );
+			if ( $url_array ) {
+				$target_url = htmlentities( $url_array[0] . '&updated=true' );
+			}
 		}
 
 		// --<
@@ -580,7 +585,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	 * @since 0.4
 	 *
 	 * @param array $urls The array of subpage URLs.
-	 * @param string The key of the active tab in the subpage URLs array.
+	 * @param string $active_tab The key of the active tab in the subpage URLs array.
 	 */
 	public function page_add_tab( $urls, $active_tab ) {
 
@@ -1293,7 +1298,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		if ( ! wp_doing_ajax() ) {
 			$contact_post_type = empty( $entity ) ? '' : $entity;
 		} else {
-			$contact_post_type = isset( $_POST['entity_id'] ) ? trim( $_POST['entity_id'] ) : '';
+			$contact_post_type = isset( $_POST['entity_id'] ) ? trim( wp_unslash( $_POST['entity_id'] ) ) : '';
 		}
 
 		// Sanity check input.
@@ -1598,7 +1603,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		if ( ! wp_doing_ajax() ) {
 			$activity_post_type = empty( $entity ) ? '' : $entity;
 		} else {
-			$activity_post_type = isset( $_POST['entity_id'] ) ? trim( $_POST['entity_id'] ) : '';
+			$activity_post_type = isset( $_POST['entity_id'] ) ? trim( wp_unslash( $_POST['entity_id'] ) ) : '';
 		}
 
 		// Sanity check input.
@@ -1901,7 +1906,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		if ( ! wp_doing_ajax() ) {
 			$participant_post_type = empty( $entity ) ? '' : $entity;
 		} else {
-			$participant_post_type = isset( $_POST['entity_id'] ) ? trim( $_POST['entity_id'] ) : '';
+			$participant_post_type = isset( $_POST['entity_id'] ) ? trim( wp_unslash( $_POST['entity_id'] ) ) : '';
 		}
 
 		// If "participant", then bail.
@@ -2063,7 +2068,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		if ( ! wp_doing_ajax() ) {
 			$participant_role_id = is_numeric( $entity ) ? $entity : 0;
 		} else {
-			$participant_role_id = isset( $_POST['entity_id'] ) ? trim( $_POST['entity_id'] ) : 0;
+			$participant_role_id = isset( $_POST['entity_id'] ) ? trim( wp_unslash( $_POST['entity_id'] ) ) : 0;
 		}
 
 		// If "cpt", then bail.
@@ -2205,7 +2210,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		if ( ! wp_doing_ajax() ) {
 			$entity_id = empty( $entity ) ? '' : $entity;
 		} else {
-			$entity_id = isset( $_POST['entity_id'] ) ? trim( $_POST['entity_id'] ) : '';
+			$entity_id = isset( $_POST['entity_id'] ) ? trim( wp_unslash( $_POST['entity_id'] ) ) : '';
 		}
 
 		// If not "participant", then bail.
@@ -2353,7 +2358,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		if ( ! wp_doing_ajax() ) {
 			$entity_id = $entity == 'cpt' ? $entity : 0;
 		} else {
-			$entity_id = isset( $_POST['entity_id'] ) ? trim( $_POST['entity_id'] ) : 0;
+			$entity_id = isset( $_POST['entity_id'] ) ? trim( wp_unslash( $_POST['entity_id'] ) ) : 0;
 		}
 
 		// If not "cpt", then bail.

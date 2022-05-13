@@ -178,6 +178,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		add_action( 'cwps/acf/mapper/website/delete/pre', [ $this, 'website_pre_delete' ], 10 );
 		add_action( 'cwps/acf/mapper/website/created', [ $this, 'website_edited' ], 10 );
 		add_action( 'cwps/acf/mapper/website/edited', [ $this, 'website_edited' ], 10 );
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//add_action( 'cwps/acf/mapper/website/deleted', [ $this, 'website_deleted' ], 10 );
 
 		// Declare registered.
@@ -202,6 +203,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		remove_action( 'cwps/acf/mapper/website/delete/pre', [ $this, 'website_pre_delete' ], 10 );
 		remove_action( 'cwps/acf/mapper/website/created', [ $this, 'website_edited' ], 10 );
 		remove_action( 'cwps/acf/mapper/website/edited', [ $this, 'website_edited' ], 10 );
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//remove_action( 'cwps/acf/mapper/website/deleted', [ $this, 'website_deleted' ], 10 );
 
 		// Declare unregistered.

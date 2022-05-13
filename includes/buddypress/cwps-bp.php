@@ -120,7 +120,7 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 		if ( defined( 'BP_PLATFORM_VERSION' ) && BP_PLATFORM_VERSION ) {
 			$this->is_buddyboss = true;
 
-			// NOTE: bp_hide_last_name()
+			// NOTE: bp_hide_last_name().
 
 		}
 

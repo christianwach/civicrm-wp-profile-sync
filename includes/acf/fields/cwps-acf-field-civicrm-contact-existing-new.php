@@ -174,8 +174,10 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 		// Force validation.
 		add_filter( 'acf/validate_value/type=group', [ $this, 'validate_value' ], 10, 4 );
 
+		/*
 		// Remove this Field from the list of available Fields.
-		//add_filter( 'acf/get_field_types', [ $this, 'remove_field_type' ], 100, 1 );
+		add_filter( 'acf/get_field_types', [ $this, 'remove_field_type' ], 100, 1 );
+		*/
 
 	}
 
@@ -394,11 +396,15 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 			'type' => 'text',
 			'instructions' => '',
 			'required' => 0,
-			'conditional_logic' => [[[
-				'field' => 'field_' . $this->acf_slug . '_contact_type',
-				'operator' => '==',
-				'value' => 'Individual',
-			]]],
+			'conditional_logic' => [
+				[
+					[
+						'field' => 'field_' . $this->acf_slug . '_contact_type',
+						'operator' => '==',
+						'value' => 'Individual',
+					],
+				],
+			],
 			'wrapper' => [
 				'width' => '50',
 				'class' => '',
@@ -419,11 +425,15 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 			'type' => 'text',
 			'instructions' => '',
 			'required' => 0,
-			'conditional_logic' => [[[
-				'field' => 'field_' . $this->acf_slug . '_contact_type',
-				'operator' => '==',
-				'value' => 'Individual',
-			]]],
+			'conditional_logic' => [
+				[
+					[
+						'field' => 'field_' . $this->acf_slug . '_contact_type',
+						'operator' => '==',
+						'value' => 'Individual',
+					],
+				],
+			],
 			'wrapper' => [
 				'width' => '50',
 				'class' => '',
@@ -444,11 +454,15 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 			'type' => 'text',
 			'instructions' => '',
 			'required' => 0,
-			'conditional_logic' => [[[
-				'field' => 'field_' . $this->acf_slug . '_contact_type',
-				'operator' => '==',
-				'value' => 'Household',
-			]]],
+			'conditional_logic' => [
+				[
+					[
+						'field' => 'field_' . $this->acf_slug . '_contact_type',
+						'operator' => '==',
+						'value' => 'Household',
+					],
+				],
+			],
 			'default_value' => '',
 			'placeholder' => '',
 			'prepend' => '',
@@ -464,11 +478,15 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 			'type' => 'text',
 			'instructions' => '',
 			'required' => 0,
-			'conditional_logic' => [[[
-				'field' => 'field_' . $this->acf_slug . '_contact_type',
-				'operator' => '==',
-				'value' => 'Organization',
-			]]],
+			'conditional_logic' => [
+				[
+					[
+						'field' => 'field_' . $this->acf_slug . '_contact_type',
+						'operator' => '==',
+						'value' => 'Organization',
+					],
+				],
+			],
 			'default_value' => '',
 			'placeholder' => '',
 			'prepend' => '',
@@ -499,10 +517,14 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 			'instructions' => __( 'Create a new Contact in CiviCRM.', 'civicrm-wp-profile-sync' ),
 			'instruction_placement' => 'field',
 			'required' => 0,
-			'conditional_logic' => [[[
-				'field' => 'field_' . $this->acf_slug . '_contact_id',
-				'operator' => '==empty',
-			]]],
+			'conditional_logic' => [
+				[
+					[
+						'field' => 'field_' . $this->acf_slug . '_contact_id',
+						'operator' => '==empty',
+					],
+				],
+			],
 			'layout' => 'block',
 			'sub_fields' => [
 				$contact_type,

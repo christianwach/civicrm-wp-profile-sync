@@ -72,6 +72,7 @@ class CiviCRM_Profile_Sync_ACF {
 	 * @access public
 	 * @var object $blocks The ACF Blocks object.
 	 */
+	// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 	//public $blocks;
 
 	/**
@@ -133,6 +134,7 @@ class CiviCRM_Profile_Sync_ACF {
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-acf-field-type.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-acf-field-group.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-acf-field.php';
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-acf-blocks.php';
 
 	}
@@ -154,6 +156,7 @@ class CiviCRM_Profile_Sync_ACF {
 		$this->field = new CiviCRM_Profile_Sync_ACF_Field( $this );
 
 		// Init Blocks object.
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//$this->blocks = new CiviCRM_Profile_Sync_ACF_Blocks( $this );
 
 	}

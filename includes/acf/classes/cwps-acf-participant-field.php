@@ -153,19 +153,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 			return $valid;
 		}
 
+		/*
 		// Validate depending on the Field name.
 		switch ( $participant_field_name ) {
 
-			/*
 			case 'duration' :
 				// Must be an integer.
 				if ( ! ctype_digit( $value ) ) {
 					$valid = __( 'Must be an integer.', 'civicrm-wp-profile-sync' );
 				}
 				break;
-				*/
 
 		}
+		*/
 
 		// --<
 		return $valid;
@@ -887,8 +887,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 			return $field;
 		}
 
+		/*
 		// Try and get CiviCRM format.
 		//$civicrm_format = $this->date_time_format_get( $participant_field_name );
+		*/
 
 		// Set just the "Display Format" attribute.
 		$field['display_format'] = 'Y-m-d H:i:s';
@@ -925,6 +927,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 
 			// Override if we get the default.
 			$config = CRM_Core_Config::singleton();
+			// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 			if ( $config->dateInputFormat == $format ) {
 				$format = '';
 			}

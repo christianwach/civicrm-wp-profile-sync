@@ -216,6 +216,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_Country extends acf_field {
 		$field['ajax'] = 0;
 		$field['return_format'] = 'value';
 		$field['choices'] = CRM_Core_PseudoConstant::country();
+		// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 		$field['default_value'] = $config->defaultContactCountry;
 
 		// --<
@@ -239,7 +240,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_Country extends acf_field {
 			'acf-input-' . $this->name,
 			plugins_url( 'assets/js/acf/acfe/fields/civicrm-address-country-field.js', CIVICRM_WP_PROFILE_SYNC_FILE ),
 			[ 'acf-input' ],
-			CIVICRM_WP_PROFILE_SYNC_VERSION // Version.
+			CIVICRM_WP_PROFILE_SYNC_VERSION, // Version.
+			true
 		);
 
 	}

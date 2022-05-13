@@ -491,6 +491,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		$primary_email = $this->primary_record_get_by_contact_id( $contact->contact_id );
 
 		// If there isn't a current Primary Email.
+		// phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
 		if ( $primary_email === false ) {
 
 			// TODO: Create it? With what Location Type and Email Type?

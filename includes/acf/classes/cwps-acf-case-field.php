@@ -121,13 +121,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 	 */
 	public function register_hooks() {
 
+		/*
 		// Intercept Post created, updated (or synced) from Case events.
-		//add_action( 'cwps/acf/post/case/created', [ $this, 'post_edited' ], 10 );
-		//add_action( 'cwps/acf/post/case/edited', [ $this, 'post_edited' ], 10 );
-		//add_action( 'cwps/acf/post/case/sync', [ $this, 'case_sync_to_post' ], 10 );
+		add_action( 'cwps/acf/post/case/created', [ $this, 'post_edited' ], 10 );
+		add_action( 'cwps/acf/post/case/edited', [ $this, 'post_edited' ], 10 );
+		add_action( 'cwps/acf/post/case/sync', [ $this, 'case_sync_to_post' ], 10 );
 
 		// Maybe sync the various Case "Date" Fields to ACF Fields attached to the WordPress Post.
-		//add_action( 'cwps/acf/case/acf_fields_saved', [ $this, 'maybe_sync_fields' ], 10 );
+		add_action( 'cwps/acf/case/acf_fields_saved', [ $this, 'maybe_sync_fields' ], 10 );
+		*/
 
 		// Some Case "Text" Fields need their own validation.
 		add_filter( 'acf/validate_value/type=text', [ $this, 'value_validate' ], 10, 4 );
@@ -786,8 +788,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 			return $field;
 		}
 
+		/*
 		// Try and get CiviCRM format.
-		//$civicrm_format = $this->date_time_format_get( $case_field_name );
+		$civicrm_format = $this->date_time_format_get( $case_field_name );
+		*/
 
 		// Set just the "Display Format" attribute.
 		$field['display_format'] = 'Y-m-d H:i:s';
@@ -824,6 +828,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 			// Override if we get the default.
 			$config = CRM_Core_Config::singleton();
+			// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 			if ( $config->dateInputFormat == $format ) {
 				$format = '';
 			}

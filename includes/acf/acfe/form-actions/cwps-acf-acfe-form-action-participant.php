@@ -236,9 +236,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 			// Also build array of data for CiviCRM Fields.
 			$this->fields_for_contacts[] = $field;
 
+			/*
 			// Pre-load with "Generic" values.
-			//$filter = 'acf/prepare_field/name=' . $this->field_name . 'map_' . $field['name'];
-			//add_filter( $filter, [ $this, 'prepare_choices' ], 5 );
+			$filter = 'acf/prepare_field/name=' . $this->field_name . 'map_' . $field['name'];
+			add_filter( $filter, [ $this, 'prepare_choices' ], 5 );
+			*/
 
 		}
 
@@ -255,9 +257,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 			// Also build array of data for CiviCRM Fields.
 			$this->fields_for_participants[] = $field;
 
+			/*
 			// Pre-load with "Generic" values.
-			//$filter = 'acf/prepare_field/name=' . $this->field_name . 'map_' . $field['name'];
-			//add_filter( $filter, [ $this, 'prepare_choices' ], 5 );
+			$filter = 'acf/prepare_field/name=' . $this->field_name . 'map_' . $field['name'];
+			add_filter( $filter, [ $this, 'prepare_choices' ], 5 );
+			*/
 
 		}
 
@@ -271,9 +275,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 			// Also build array of data for CiviCRM Fields.
 			$this->fields_for_events[] = $field;
 
+			/*
 			// Pre-load with "Generic" values.
-			//$filter = 'acf/prepare_field/name=' . $this->field_name . 'map_' . $field['name'];
-			//add_filter( $filter, [ $this, 'prepare_choices' ], 5 );
+			$filter = 'acf/prepare_field/name=' . $this->field_name . 'map_' . $field['name'];
+			add_filter( $filter, [ $this, 'prepare_choices' ], 5 );
+			*/
 
 		}
 
@@ -880,8 +886,10 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 				],
 			];
 
+			/*
 			// Add Participant ID Field.
-			//$participant_group_field['sub_fields'][] = $pid_field;
+			$participant_group_field['sub_fields'][] = $pid_field;
+			*/
 
 			// Define Custom Participant Reference Field.
 			$title = __( 'Custom Participant Reference', 'civicrm-wp-profile-sync' );

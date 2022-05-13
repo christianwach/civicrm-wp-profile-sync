@@ -113,7 +113,7 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_City {
 	 */
 	public function register_hooks() {
 
-		// Register Shortcode
+		// Register Shortcode.
 		add_action( 'init', [ $this, 'shortcode_register' ] );
 
 		// Shortcake compatibility.
@@ -195,8 +195,10 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_City {
 			return;
 		}
 
+		/*
 		// Add styles for TinyMCE editor.
-		//add_filter( 'mce_css', [ $this, 'shortcake_styles' ] );
+		add_filter( 'mce_css', [ $this, 'shortcake_styles' ] );
+		*/
 
 		// ACF Field selector.
 		$field = [
@@ -249,6 +251,7 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_City {
 			'listItemImage' => 'dashicons-building',
 
 			// Limit to synced CPTs only?
+			// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 			//'post_type' => array_values( $mapped_post_types ),
 
 			// Window elements.

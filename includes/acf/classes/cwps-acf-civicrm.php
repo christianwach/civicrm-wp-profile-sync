@@ -505,9 +505,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 */
 	public function register_hooks() {
 
+		/*
 		// Trace database operations.
-		//add_action( 'civicrm_pre', [ $this, 'trace_pre' ], 10, 4 );
-		//add_action( 'civicrm_post', [ $this, 'trace_post' ], 10, 4 );
+		add_action( 'civicrm_pre', [ $this, 'trace_pre' ], 10, 4 );
+		add_action( 'civicrm_post', [ $this, 'trace_post' ], 10, 4 );
+		*/
 
 	}
 

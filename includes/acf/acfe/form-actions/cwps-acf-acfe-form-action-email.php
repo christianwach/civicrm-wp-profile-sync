@@ -157,9 +157,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 			// Add Contact Action Reference Field to ACF Model.
 			$this->js_model_contact_reference_field_add( $this->field_name . 'ref_' . $name );
 
+			/*
 			// Pre-load with "Generic" values.
-			//$filter = 'acf/prepare_field/name=' . $this->field_name . 'map_' . $name;
-			//add_filter( $filter, [ $this, 'prepare_choices' ], 5 );
+			$filter = 'acf/prepare_field/name=' . $this->field_name . 'map_' . $name;
+			add_filter( $filter, [ $this, 'prepare_choices' ], 5 );
+			*/
 
 		}
 

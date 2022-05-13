@@ -759,7 +759,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		// If we don't get one.
 		if ( empty( $term_id ) ) {
 
-			// Create Term,
+			// Create Term.
 			$result = $this->term_create( $new_role );
 
 			// How did we do?
@@ -971,6 +971,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		// Query Terms for the Term with the ID of the CiviCRM Participant Role in meta data.
 		$args = [
 			'hide_empty' => false,
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 			'meta_query' => [
 				[
 					'key' => $this->term_meta_key,
@@ -1056,6 +1057,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		$meta_id = add_term_meta( $term_id, $this->term_meta_key, intval( $participant_role_id ), true );
 
 		// Log something if there's an error.
+		// phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
 		if ( $meta_id === false ) {
 
 			/*
@@ -1136,6 +1138,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		$meta_id = update_term_meta( $term_id, $this->term_active_meta_key, (int) $active );
 
 		// Log something if there's an error.
+		// phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
 		if ( $meta_id === false ) {
 
 			/*
@@ -1214,6 +1217,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		$meta_id = update_term_meta( $term_id, $this->term_counted_meta_key, (int) $counted );
 
 		// Log something if there's an error.
+		// phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
 		if ( $meta_id === false ) {
 
 			/*

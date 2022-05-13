@@ -113,7 +113,7 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Phone {
 	 */
 	public function register_hooks() {
 
-		// Register Shortcode
+		// Register Shortcode.
 		add_action( 'init', [ $this, 'shortcode_register' ] );
 
 		// Shortcake compatibility.
@@ -196,8 +196,10 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Phone {
 			return;
 		}
 
+		/*
 		// Add styles for TinyMCE editor.
-		//add_filter( 'mce_css', [ $this, 'shortcake_styles' ] );
+		add_filter( 'mce_css', [ $this, 'shortcake_styles' ] );
+		*/
 
 		// ACF Field selector.
 		$field = [
@@ -259,6 +261,7 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Phone {
 			'listItemImage' => 'dashicons-phone',
 
 			// Limit to synced CPTs only?
+			// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 			//'post_type' => array_values( $mapped_post_types ),
 
 			// Window elements.

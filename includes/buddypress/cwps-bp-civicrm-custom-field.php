@@ -177,11 +177,14 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		add_filter( 'cwps/bp/field/query_options', [ $this, 'radio_settings_get' ], 10, 3 );
 
 		// TODO: Filter the xProfile Field settings when saving on the "Edit Field" screen.
+
+		/*
 		//add_filter( 'cwps/bp/field/query_options', [ $this, 'date_settings_get' ], 10, 3 );
 		//add_filter( 'cwps/bp/field/query_options', [ $this, 'text_settings_get' ], 10, 3 );
 
 		// Intercept Post synced from Contact events.
 		//add_action( 'cwps/bp/post/contact_sync_to_post', [ $this, 'contact_sync_to_post' ], 10 );
+		*/
 
 	}
 
@@ -515,6 +518,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 			case 'ContactReference':
 
 				// Test for a numeric value.
+				// phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
 				if ( ! is_numeric( $value ) ) {
 
 					/*
@@ -1050,7 +1054,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 			foreach ( $custom_group as $custom_field ) {
 				if ( ! empty( $custom_field['data_type'] ) && $custom_field['data_type'] == 'Date' ) {
 					if ( ! empty( $custom_field['html_type'] ) && $custom_field['html_type'] == 'Select Date' ) {
-						if ( ! isset( $custom_field['time_format'] ) or $custom_field['time_format'] == '0' ) {
+						if ( ! isset( $custom_field['time_format'] ) || $custom_field['time_format'] == '0' ) {
 							$filtered_fields[ $custom_group_name ][] = $custom_field;
 						}
 					}
@@ -1084,8 +1088,10 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 			return $options;
 		}
 
+		/*
 		// Get keyed array of settings.
-		//$options = $this->radio_choices_get( $custom_field_id );
+		$options = $this->radio_choices_get( $custom_field_id );
+		*/
 
 		// --<
 		return $options;

@@ -854,6 +854,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 			}
 
 			// TODO: Find the ACF Fields to update.
+			// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 			//$fields_to_update = $this->fields_to_update_get( $acf_fields, $multiset, $args['op'] );
 
 			// Let's look at each ACF Field in turn.
@@ -1001,7 +1002,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 		// Get all Multiple Record Sets for this Entity Type.
 		// NOTE: "$extra" is not implemented. See the method for details.
-		$custom_groups = $this->plugin->civicrm->custom_group->get_for_entity_type( $type = '', $subtype = '', $extra );
+		$type = '';
+		$subtype = '';
+		$custom_groups = $this->plugin->civicrm->custom_group->get_for_entity_type( $type, $subtype, $extra );
 
 		// Filter groups to include only "Multiple".
 		$filtered_groups = [];

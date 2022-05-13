@@ -1,4 +1,14 @@
-<!-- assets/templates/wordpress/pages/page-admin-settings.php -->
+<?php
+/**
+ * Admin Settings template.
+ *
+ * Handles markup for the Admin Settings page.
+ *
+ * @package CiviCRM_WP_Profile_Sync
+ * @since 0.4
+ */
+
+?><!-- assets/templates/wordpress/pages/page-admin-settings.php -->
 <div class="wrap">
 
 	<h1><?php esc_html_e( 'CiviCRM Profile Sync', 'civicrm-wp-profile-sync' ); ?></h1>

@@ -156,8 +156,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML {
 	 *
 	 * @since 0.5
 	 *
-	 * @param $term The WordPress Term.
-	 * @param $taxonomy The WordPress Taxonomy.
+	 * @param object $term The WordPress Term.
+	 * @param string $taxonomy The WordPress Taxonomy.
 	 */
 	public function render_field_edit( $term, $taxonomy ) {
 
@@ -170,7 +170,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML {
 
 		?>
 		<tr>
-			<th scope="row" valign="top"><label for="description"><?php _ex( 'Description', 'Taxonomy Description', 'civicrm-wp-profile-sync' ); ?></label></th>
+			<th scope="row" valign="top"><label for="description"><?php echo esc_html_x( 'Description', 'Taxonomy Description', 'civicrm-wp-profile-sync' ); ?></label></th>
 			<td><?php wp_editor( htmlspecialchars_decode( $term->description ), 'html-description', $settings ); ?>
 			<span class="description"><?php esc_html_e( 'The description is not prominent by default, however some themes may show it.', 'civicrm-wp-profile-sync' ); ?></span></td>
 			<script type="text/javascript">
@@ -187,7 +187,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML {
 	 *
 	 * @since 0.5
 	 *
-	 * @param $taxonomy The WordPress Taxonomy.
+	 * @param string $taxonomy The WordPress Taxonomy.
 	 */
 	public function render_field_add( $taxonomy ) {
 
@@ -200,7 +200,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML {
 
 		?>
 		<div class="form-field term-description-wrap">
-			<label for="tag-description"><?php _ex( 'Description', 'Taxonomy Description', 'civicrm-wp-profile-sync' ); ?></label>
+			<label for="tag-description"><?php echo esc_html_x( 'Description', 'Taxonomy Description', 'civicrm-wp-profile-sync' ); ?></label>
 			<?php wp_editor( '', 'html-tag-description', $settings ); ?>
 			<p class="description"><?php esc_html_e( 'The description is not prominent by default, however some themes may show it.', 'civicrm-wp-profile-sync' ); ?></p>
 			<script type="text/javascript">

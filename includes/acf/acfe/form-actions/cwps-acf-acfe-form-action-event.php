@@ -252,9 +252,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 			// Also build array of data for CiviCRM Fields.
 			$this->fields_for_contacts[] = $field;
 
+			/*
 			// Pre-load with "Generic" values.
-			//$filter = 'acf/prepare_field/name=' . $this->field_name . 'map_' . $field['name'];
-			//add_filter( $filter, [ $this, 'prepare_choices' ], 5 );
+			$filter = 'acf/prepare_field/name=' . $this->field_name . 'map_' . $field['name'];
+			add_filter( $filter, [ $this, 'prepare_choices' ], 5 );
+			*/
 
 		}
 
@@ -1828,7 +1830,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 			}
 		}
 
-		// TODO
+		// TODO: Conditional Field?
 
 		// "Confirmation Email" Accordion wrapper close.
 		$container_group_field['sub_fields'][] = [
@@ -2915,7 +2917,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 			// Get mapped Fields.
 			foreach ( $this->event_location_phone_fields as $phone_field ) {
-			if ( ! array_key_exists( $phone_field['name'], $this->phone_fields_to_ignore ) ) {
+				if ( ! array_key_exists( $phone_field['name'], $this->phone_fields_to_ignore ) ) {
 					$fields[ $phone_field['name'] ] = $field[ $this->field_name . 'map_' . $phone_field['name'] ];
 				}
 			}

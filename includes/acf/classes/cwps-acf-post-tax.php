@@ -486,6 +486,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		$meta_id = add_term_meta( $term_id, $this->term_meta_key, (int) $group_id, true );
 
 		// Log something if there's an error.
+		// phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
 		if ( $meta_id === false ) {
 
 			/*
@@ -621,6 +622,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		$args = [
 			'taxonomy' => $this->taxonomies,
 			'hide_empty' => false,
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 			'meta_query' => [
 				[
 					'key' => $this->term_meta_key,
@@ -745,6 +747,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		$args = [
 			'taxonomy' => $taxonomies,
 			'hide_empty' => false,
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 			'meta_query' => [
 				[
 					'key' => $this->term_meta_key,
@@ -783,6 +786,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 		// Limit terms to those with Group IDs in their meta.
 		$params = [
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 			'meta_query' => [
 				[
 					'key' => $this->term_meta_key,
@@ -872,6 +876,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		$args = [
 			'taxonomy' => $taxonomy,
 			'hide_empty' => false,
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 			'meta_query' => [
 				[
 					'key' => $this->term_meta_key,
@@ -911,6 +916,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		$args = [
 			'taxonomy' => $this->taxonomies,
 			'hide_empty' => false,
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 			'meta_query' => [
 				[
 					'key' => $this->term_meta_key,

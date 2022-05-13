@@ -144,8 +144,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		// Listen for queries from our ACF Field Group class.
 		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'text_settings_modify' ], 10, 2 );
 
+		/*
 		// Some Address "Text" Fields need their own validation.
-		//add_filter( 'acf/validate_value/type=text', [ $this, 'value_validate' ], 10, 4 );
+		add_filter( 'acf/validate_value/type=text', [ $this, 'value_validate' ], 10, 4 );
+		*/
 
 	}
 

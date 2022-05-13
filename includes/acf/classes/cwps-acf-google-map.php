@@ -133,6 +133,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		$this->register_mapper_hooks();
 
 		// Customise "Google Map" Fields.
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//add_action( 'acf/render_field_settings/type=google_map', [ $this, 'map_setting_add' ] );
 
 		// Add any Google Map Fields attached to a Post.
@@ -290,7 +291,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		}
 
 		// Update the Address.
-		$success = $this->address_update( $field, $value, $contact_id, $settings, $args );
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
+		//$success = $this->address_update( $field, $value, $contact_id, $settings, $args );
 
 		// --<
 		return $success;
@@ -312,9 +314,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 * @return bool True if updates were successful, or false on failure.
 	 */
 	public function address_update( $field, $value, $contact_id, $settings, $args ) {
-
-		// Disabled.
-		return true;
 
 		// Prepare the incoming Address data for CiviCRM.
 		$address = $this->address_prepare_from_map( $value );

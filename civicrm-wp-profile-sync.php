@@ -10,6 +10,9 @@
  * Text Domain: civicrm-wp-profile-sync
  * Domain Path: /languages
  * Depends: CiviCRM
+ *
+ * @package CiviCRM_WP_Profile_Sync
+ * @since 0.1
  */
 
 // Exit if accessed directly.
@@ -169,6 +172,7 @@ class CiviCRM_WP_Profile_Sync {
 	public function translation() {
 
 		// Load translations.
+		// phpcs:ignore WordPress.WP.DeprecatedParameters.Load_plugin_textdomainParam2Found
 		load_plugin_textdomain(
 			'civicrm-wp-profile-sync', // Unique name.
 			false, // Deprecated argument.

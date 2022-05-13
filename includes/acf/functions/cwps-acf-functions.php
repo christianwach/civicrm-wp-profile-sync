@@ -485,7 +485,7 @@ function cwps_get_phone_records( $selector, $post_id = null ) {
 		return $records;
 	}
 
-	 // Bail if it's not a CiviCRM Phone Field.
+	// Bail if it's not a CiviCRM Phone Field.
 	if ( $acf_settings['type'] != 'civicrm_phone' ) {
 		return $records;
 	}
@@ -908,7 +908,7 @@ function cwps_get_im_records( $selector, $post_id = null ) {
 		return $records;
 	}
 
-	 // Bail if it's not a CiviCRM Instant Messenger Field.
+	// Bail if it's not a CiviCRM Instant Messenger Field.
 	if ( $acf_settings['type'] != 'civicrm_im' ) {
 		return $records;
 	}
@@ -1350,7 +1350,7 @@ function cwps_get_address_records( $selector, $post_id = null ) {
 		return $records;
 	}
 
-	 // Bail if it's not a CiviCRM Address Field.
+	// Bail if it's not a CiviCRM Address Field.
 	if ( $acf_settings['type'] != 'civicrm_address' ) {
 		return $records;
 	}

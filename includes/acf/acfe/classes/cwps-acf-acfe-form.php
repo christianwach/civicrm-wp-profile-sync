@@ -142,8 +142,10 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 		// Add Form Actions Javascript.
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_form_action_scripts' ] );
 
+		/*
 		// Clear Form Action Query Vars.
-		//add_action( 'acfe/form/submit', [ $this, 'form_action_query_vars_clear' ] );
+		add_action( 'acfe/form/submit', [ $this, 'form_action_query_vars_clear' ] );
+		*/
 
 		// Set a better Form Wrapper class.
 		add_filter( 'acfe/form/load', [ $this, 'form_wrapper' ], 10, 2 );
@@ -270,7 +272,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 			'cwps-acfe-form-actions',
 			plugins_url( 'assets/js/acf/acfe/form-actions/cwps-form-action-model.js', CIVICRM_WP_PROFILE_SYNC_FILE ),
 			[ 'acf-extended' ],
-			CIVICRM_WP_PROFILE_SYNC_VERSION // Version.
+			CIVICRM_WP_PROFILE_SYNC_VERSION, // Version.
+			true
 		);
 
 		// Init the Contact Reference Field actions array.
@@ -548,8 +551,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 				if ( $rule['param'] === $this->rule_name ) {
 
 					// Extract the Entity and ID.
-					//$entity_map = [];
 					$tmp = explode( '-', $rule['value'] );
+
+					// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
+					//$entity_map = [];
+					// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 					//$entity_map[] = [ 'entity' => $tmp[0], 'entity_id' => (int) $tmp[1] ];
 
 					// Add to return.

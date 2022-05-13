@@ -132,13 +132,15 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 		// TODO: Create AJAX-based Manual Sync.
 
+		/*
 		// Listen for the start and end of the User-to-Contact sync process.
-		//add_action( 'cwps/wordpress/user_sync/pre', [ $this, 'wp_user_sync_pre' ], 10 );
-		//add_action( 'cwps/wordpress/user_sync/post', [ $this, 'wp_user_synced' ], 10 );
+		add_action( 'cwps/wordpress/user_sync/pre', [ $this, 'wp_user_sync_pre' ], 10 );
+		add_action( 'cwps/wordpress/user_sync/post', [ $this, 'wp_user_synced' ], 10 );
 
 		// Listen for the start and end of the Contact-to-User sync process.
-		//add_action( 'cwps/civicrm/contact/contact_sync/pre', [ $this, 'contact_sync_pre' ], 10 );
-		//add_action( 'cwps/civicrm/contact/contact_sync/post', [ $this, 'contact_synced' ], 10 );
+		add_action( 'cwps/civicrm/contact/contact_sync/pre', [ $this, 'contact_sync_pre' ], 10 );
+		add_action( 'cwps/civicrm/contact/contact_sync/post', [ $this, 'contact_synced' ], 10 );
+		*/
 
 		// Check if a Contact is being trashed and has a WordPress User.
 		add_filter( 'cwps/acf/civicrm/contact/post/data', [ $this, 'contact_data' ], 50, 2 );
@@ -260,6 +262,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		add_action( 'cwps/acf/mapper/website/delete/pre', [ $this, 'website_pre_delete' ], 10 );
 		add_action( 'cwps/acf/mapper/website/created', [ $this, 'website_edited' ], 10 );
 		add_action( 'cwps/acf/mapper/website/edited', [ $this, 'website_edited' ], 10 );
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//add_action( 'cwps/acf/mapper/website/deleted', [ $this, 'website_deleted' ], 10 );
 
 		add_action( 'cwps/acf/mapper/phone/created', [ $this, 'phone_edited' ], 10 );
@@ -331,6 +334,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		remove_action( 'cwps/acf/mapper/website/delete/pre', [ $this, 'website_pre_delete' ], 10 );
 		remove_action( 'cwps/acf/mapper/website/created', [ $this, 'website_edited' ], 10 );
 		remove_action( 'cwps/acf/mapper/website/edited', [ $this, 'website_edited' ], 10 );
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//remove_action( 'cwps/acf/mapper/website/deleted', [ $this, 'website_deleted' ], 10 );
 
 		remove_action( 'cwps/acf/mapper/phone/created', [ $this, 'phone_edited' ], 10 );

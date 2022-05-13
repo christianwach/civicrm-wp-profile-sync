@@ -135,6 +135,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		$this->register_mapper_hooks();
 
 		// Always register WordPress hooks.
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//$this->register_wordpress_hooks();
 
 		// Add CiviCRM listeners once CiviCRM is available.
@@ -1260,6 +1261,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		$config = CRM_Core_Config::singleton();
 
 		// Copy the File for WordPress to move.
+		// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 		$tmp_name = $this->file_copy_for_acf( $config->customFileUploadDir . $value );
 
 		// Find the name of the new File.
@@ -1311,6 +1313,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		// Save metadata.
 		$data = [
 			'wordpress_file' => get_attached_file( $attachment_id, true ),
+			// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 			'civicrm_file' => $config->customFileUploadDir . $value,
 		];
 
@@ -1485,7 +1488,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 			'post_type' => 'attachment',
 			'post_status' => 'any',
 			'no_found_rows' => true,
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 			'meta_key' => $meta_key,
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 			'meta_value' => $filename,
 			'meta_compare' => 'LIKE',
 			'posts_per_page' => -1,
@@ -1845,6 +1850,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		// Set the "max_size" attribute.
 		if ( $this->civicrm->is_initialised() ) {
 			$config = CRM_Core_Config::singleton();
+			// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 			$field['max_size'] = $config->maxFileSize;
 		}
 

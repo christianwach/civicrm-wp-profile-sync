@@ -1,4 +1,14 @@
-<!-- assets/templates/wordpress/metaboxes/metabox-admin-settings-profile.php -->
+<?php
+/**
+ * Admin Settings page Profile metabox template.
+ *
+ * Handles markup for the Admin Settings page Profile metabox.
+ *
+ * @package CiviCRM_WP_Profile_Sync
+ * @since 0.4
+ */
+
+?><!-- assets/templates/wordpress/metaboxes/metabox-admin-settings-profile.php -->
 <table class="form-table">
 	<tr>
 		<th scope="row">
@@ -17,7 +27,10 @@
 			<p class="description"><?php esc_html_e( 'By default, CiviCRM is set to sync the Primary Email of a Contact to the email of a linked WordPress User. Unfortunately, CiviCRM is a bit clumsy in the way that it does this. Since you have CiviCRM Profile Sync installed, it is recommended that you let this plugin handle Primary Email sync for you.', 'civicrm-wp-profile-sync' ); ?></p>
 		</td>
 	</tr>
-	<?php /* ?>
+	<?php
+
+	/*
+	?>
 	<tr>
 		<th scope="row">
 			<label for="cwps_email_location_type_select"><?php esc_html_e( 'Email Location Type', 'civicrm-wp-profile-sync' ); ?></label>
@@ -39,7 +52,10 @@
 			<?php endif; ?>
 		</td>
 	</tr>
-	<?php */ ?>
+	<?php
+	*/
+
+	?>
 	<tr>
 		<th scope="row">
 			<label for="cwps_website_type_select"><?php esc_html_e( 'Website Type', 'civicrm-wp-profile-sync' ); ?></label>
@@ -57,12 +73,14 @@
 						<?php endforeach; ?>
 					</select>
 				</p>
-				<p class="description"><?php echo sprintf(
-					/* translators: 1: Opening anchor tag, 2: Closing anchor tag */
-					__( 'The CiviCRM Website Type that the WordPress User Profile Website syncs with. Tip: you can manage your %1$sWebsite Types in CiviCRM%2$s.', 'civicrm-wp-profile-sync' ),
-					'<a href="' . $website_types_link . '">',
-					'</a>'
-					 ); ?></p>
+				<p class="description"><?php
+					echo sprintf(
+						/* translators: 1: Opening anchor tag, 2: Closing anchor tag */
+						__( 'The CiviCRM Website Type that the WordPress User Profile Website syncs with. Tip: you can manage your %1$sWebsite Types in CiviCRM%2$s.', 'civicrm-wp-profile-sync' ),
+						'<a href="' . $website_types_link . '">',
+						'</a>'
+					);
+				?></p>
 			<?php endif; ?>
 		</td>
 	</tr>

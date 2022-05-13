@@ -332,6 +332,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		add_action( 'restrict_manage_posts', [ $this, 'taxonomy_filter_post_type' ] );
 
 		// Add feature image size.
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//add_action( 'after_setup_theme', [ $this, 'feature_image_create' ] );
 
 	}
@@ -351,6 +352,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		remove_action( 'init', [ $this, 'taxonomies_create' ] );
 		remove_filter( 'wp_terms_checklist_args', [ $this, 'taxonomy_fix_metabox' ] );
 		remove_action( 'restrict_manage_posts', [ $this, 'taxonomy_filter_post_type' ] );
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//remove_action( 'after_setup_theme', [ $this, 'feature_image_create' ] );
 
 	}
@@ -401,10 +403,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		// Get current setting data.
 		$data = $this->acf_loader->mapping->setting_get( $this->post_type_name );
 
+		/*
 		// Only do this once.
 		if ( ! empty( $data['synced'] ) && $data['synced'] === 1 ) {
 			//return;
 		}
+		*/
 
 		// Sync them.
 		$this->tax->participant_roles_sync_to_terms();
@@ -492,8 +496,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 			return;
 		}
 
-		// Bail early if this Post Type shouldn't be synced.
-		// @see self::post_saved()
+		/*
+		 * Bail early if this Post Type shouldn't be synced.
+		 * @see self::post_saved()
+		 */
 		if ( $this->do_not_sync === true ) {
 			return;
 		}
@@ -522,6 +528,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 		// TODO: Decide if we should get the ACF Field data without formatting.
 		// This also applies to any calls to get_field_object().
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//$fields = get_fields( $post->ID, false );
 
 		// Get the Participant ID from Post meta.
@@ -1273,9 +1280,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 			return $actions;
 		}
 
+		/*
 		// Do we need to know?
 		if ( is_post_type_hierarchical( $post->post_type ) ) {
 		}
+		*/
 
 		// Get Participant ID.
 		$participant_id = $this->acf_loader->post->participant_id_get( $post->ID );
@@ -1482,6 +1491,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 		] );
 
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//flush_rewrite_rules();
 
 		// Flag done.
@@ -1626,19 +1636,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 		// Register a Taxonomy for this CPT.
 		register_taxonomy(
-
 			// Taxonomy name.
 			$this->taxonomy_name,
-
 			// Post type.
 			$this->post_type_name,
-
 			// Arguments.
 			[
-
 				// Same as "category".
 				'hierarchical' => true,
-
 				// Labels.
 				'labels' => [
 					'name'              => _x( 'Participant Roles', 'taxonomy general name', 'civicrm-wp-profile-sync' ),
@@ -1655,35 +1660,26 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 					'no_terms'         => __( 'No Participant Roles', 'civicrm-wp-profile-sync' ),
 					'menu_name'         => __( 'Participant Roles', 'civicrm-wp-profile-sync' ),
 				],
-
 				// Rewrite rules.
 				'rewrite' => [
 					'slug' => 'participant-roles',
 				],
-
 				// Show column in wp-admin.
 				'show_admin_column' => true,
 				'show_ui' => true,
-
 			]
-
 		);
 
 		// Register a free Taxonomy for this CPT.
 		register_taxonomy(
-
 			// Taxonomy name.
 			$this->tag_name,
-
 			// Post type.
 			$this->post_type_name,
-
 			// Arguments.
 			[
-
 				// Same as "tags".
 				'hierarchical' => false,
-
 				// Labels.
 				'labels' => [
 					'name'              => _x( 'Participant Tags', 'taxonomy general name', 'civicrm-wp-profile-sync' ),
@@ -1699,20 +1695,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 					'not_found'         => __( 'No Participant Tags found.', 'civicrm-wp-profile-sync' ),
 					'menu_name'         => __( 'Participant Tags', 'civicrm-wp-profile-sync' ),
 				],
-
 				// Rewrite rules.
 				'rewrite' => [
 					'slug' => 'participant-tags',
 				],
-
 				// Show column in wp-admin.
+				// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 				//'show_admin_column' => true,
+				// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 				//'show_ui' => true,
-
 			]
-
 		);
 
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//flush_rewrite_rules();
 
 		// Flag done.
@@ -1772,7 +1767,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		// Access current Post Type.
 		global $typenow;
 
-		// Bail if not our Post Type,
+		// Bail if not our Post Type.
 		if ( $typenow != $this->post_type_name ) {
 			return;
 		}
@@ -1787,7 +1782,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 			'taxonomy' => $this->taxonomy_name,
 			'name' => $this->taxonomy_name,
 			'orderby' => 'name',
-			'selected' => isset( $_GET[ $this->taxonomy_name ] ) ? $_GET[ $this->taxonomy_name ] : '',
+			'selected' => isset( $_GET[ $this->taxonomy_name ] ) ? wp_unslash( $_GET[ $this->taxonomy_name ] ) : '',
 			'show_count' => true,
 			'hide_empty' => true,
 			'value_field' => 'slug',
@@ -1813,11 +1808,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		$source = $this->field_source_get();
 
 		// Attach the Field Group to our CPT.
-		$field_group_location = [[[
-			'param' => 'post_type',
-			'operator' => '==',
-			'value' => $this->post_type_name,
-		]]];
+		$field_group_location = [
+			[
+				[
+					'param' => 'post_type',
+					'operator' => '==',
+					'value' => $this->post_type_name,
+				],
+			],
+		];
 
 		// Hide UI elements on our CPT edit page.
 		$field_group_hide_elements = [
@@ -2009,11 +2008,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		if ( $custom_group['extends_entity_column_id'] == 2 ) {
 			$or = [];
 			foreach ( $custom_group['extends_entity_column_value'] as $value ) {
-				$or[] = [[
-					'field' => 'field_' . $this->acf_slug . '_event_id',
-					'operator' => '==',
-					'value' => $value,
-				]];
+				$or[] = [
+					[
+						'field' => 'field_' . $this->acf_slug . '_event_id',
+						'operator' => '==',
+						'value' => $value,
+					],
+				];
 			}
 			if ( ! empty( $or ) ) {
 				$field['conditional_logic'] = $or;
@@ -2024,11 +2025,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		if ( $custom_group['extends_entity_column_id'] == 3 ) {
 			$or = [];
 			foreach ( $custom_group['extends_entity_column_value'] as $value ) {
-				$or[] = [[
-					'field' => 'field_' . $this->acf_slug . '_event_type',
-					'operator' => '==',
-					'value' => $value,
-				]];
+				$or[] = [
+					[
+						'field' => 'field_' . $this->acf_slug . '_event_type',
+						'operator' => '==',
+						'value' => $value,
+					],
+				];
 			}
 			if ( ! empty( $or ) ) {
 				$field['conditional_logic'] = $or;
@@ -2047,7 +2050,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 *
 	 * @since 0.5
 	 *
-	 * @param $post_types The mapped WordPress Post Types.
+	 * @param array $post_types The mapped WordPress Post Types array.
+	 * @return array $post_types The modified mapped WordPress Post Types array.
 	 */
 	public function admin_sync_router_add_cpt( $post_types ) {
 
@@ -2064,7 +2068,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 *
 	 * @since 0.5
 	 *
-	 * @param $participant_roles The mapped CiviCRM Participant Roles.
+	 * @param array $participant_roles The mapped CiviCRM Participant Roles array.
+	 * @return array $participant_roles The modified mapped CiviCRM Participant Roles array.
 	 */
 	public function admin_sync_router_add_role( $participant_roles ) {
 
@@ -2087,7 +2092,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 *
 	 * @since 0.5
 	 *
-	 * @param $post_types The mapped WordPress Post Types.
+	 * @param array $post_types The mapped WordPress Post Types array.
+	 * @return array $post_types The modified mapped WordPress Post Types array.
 	 */
 	public function admin_sync_add_cpt( $post_types ) {
 
@@ -2107,7 +2113,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 *
 	 * @since 0.5
 	 *
-	 * @param $participant_roles The mapped CiviCRM Participant Roles.
+	 * @param array $participant_roles The mapped CiviCRM Participant Roles array.
+	 * @return array $participant_roles The modified mapped CiviCRM Participant Roles array.
 	 */
 	public function admin_sync_add_role( $participant_roles ) {
 

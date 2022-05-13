@@ -380,6 +380,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Group extends acf_field {
 			'multiple' => 0,
 			'ui' => 0,
 			'return_format' => 'value',
+
 			/*
 			'conditional_logic' => [
 				[
@@ -507,7 +508,8 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Group extends acf_field {
 			'acf-input-' . $this->name,
 			plugins_url( 'assets/js/acf/fields/civicrm-event-group-field.js', CIVICRM_WP_PROFILE_SYNC_FILE ),
 			[ 'acf-input' ],
-			CIVICRM_WP_PROFILE_SYNC_VERSION // Version.
+			CIVICRM_WP_PROFILE_SYNC_VERSION, // Version.
+			true
 		);
 
 		// Init settings and localisation array.
