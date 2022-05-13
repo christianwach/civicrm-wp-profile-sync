@@ -1669,7 +1669,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 			'version' => 3,
 			'sequential' => 1,
 			'custom_group_id' => $custom_group['id'],
-			'data_type' => "File",
+			'data_type' => 'File',
 		];
 
 		// This will return the Custom Fields of type "File" in that Group.
@@ -1965,6 +1965,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 		// Get the "max_size" attribute.
 		$config = CRM_Core_Config::singleton();
+		// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 		$max_size = $config->maxFileSize;
 
 		// Default to 3MB if not set for some reason.

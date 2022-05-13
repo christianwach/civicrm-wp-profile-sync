@@ -137,6 +137,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	public function include_files() {
 
 		// Include Shortcode class files.
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/shortcodes/cwps-shortcode-attachment.php';
 
 	}
@@ -149,6 +150,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	public function setup_objects() {
 
 		// Init Shortcode objects.
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//$this->shortcode_attachment = new CiviCRM_Profile_Sync_ACF_Shortcode_Attachment( $this );
 
 	}
@@ -167,6 +169,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 		add_filter( 'cwps/acf/fields_get_for_post', [ $this, 'acf_fields_get_for_post' ], 10, 3 );
 
 		// Intercept Post created from Activity events.
+		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//add_action( 'cwps/acf/post/activity/sync', [ $this, 'fields_handled_update' ], 10 );
 
 		/*
@@ -439,6 +442,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 		$config = CRM_Core_Config::singleton();
 
 		// Copy the File for WordPress to move.
+		// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 		$tmp_name = $this->civicrm->attachment->file_copy_for_acf( $config->customFileUploadDir . $value );
 
 		// Find the name of the new File.
@@ -491,6 +495,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 		// Save metadata.
 		$data = [
 			'wordpress_file' => get_attached_file( $attachment_id, true ),
+			// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 			'civicrm_file' => $config->customFileUploadDir . $value,
 		];
 
@@ -842,7 +847,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	 * @param integer $activity_id The numeric ID of the Activity.
 	 * @param string $selector The ACF Field selector.
 	 * @param array $args The array of WordPress params.
-	 * @return array|bool $attachments The array of Attachment Record data, or false on failure.
 	 */
 	public function attachment_delete( $attachment_id, $activity_id, $selector, $args = [] ) {
 
