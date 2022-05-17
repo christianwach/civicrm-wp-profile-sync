@@ -3501,13 +3501,25 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		if ( ! empty( $contact['display_name'] ) ) {
 			$display = true;
 		}
-		$first_last = false;
-		if ( ! empty( $contact['first_name'] ) && ! empty( $contact['last_name'] ) ) {
-			$first_last = true;
+
+		// Determine Contact Type and check name accordingly.
+		$full_name = false;
+		if ( $contact['contact_type'] === 'Individual' ) {
+			if ( ! empty( $contact['first_name'] ) && ! empty( $contact['last_name'] ) ) {
+				$full_name = true;
+			}
+		} elseif ( $contact['contact_type'] === 'Organization' ) {
+			if ( ! empty( $contact['organization_name'] ) ) {
+				$full_name = true;
+			}
+		} elseif ( $contact['contact_type'] === 'Household' ) {
+			if ( ! empty( $contact['household_name'] ) ) {
+				$full_name = true;
+			}
 		}
 
 		// All's well if we can create the Contact with what we have.
-		if ( $first_last || $display ) {
+		if ( $full_name || $display ) {
 			return true;
 		}
 
@@ -3579,7 +3591,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			 * Check if we have the minimum data necessary to create a Contact.
 			 *
 			 * We are mirroring the logic in the CiviCRM admin UI here such that
-			 * "First Name" and "Last Name" OR an Email must be set.
+			 * "First Name" and "Last Name" OR an Email must be set. The "Name"
+			 * of an Organisation or Household suffices too.
 			 *
 			 * Unlike the CiviCRM UI, this plugin also allows a "Display Name"
 			 * to be set instead.
@@ -3589,9 +3602,19 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			 *
 			 * @see self::validation()
 			 */
-			$first_last = false;
-			if ( ! empty( $contact_data['first_name'] ) && ! empty( $contact_data['last_name'] ) ) {
-				$first_last = true;
+			$full_name = false;
+			if ( $contact_data['contact_type'] === 'Individual' ) {
+				if ( ! empty( $contact_data['first_name'] ) && ! empty( $contact_data['last_name'] ) ) {
+					$full_name = true;
+				}
+			} elseif ( $contact_data['contact_type'] === 'Organization' ) {
+				if ( ! empty( $contact_data['organization_name'] ) ) {
+					$full_name = true;
+				}
+			} elseif ( $contact_data['contact_type'] === 'Household' ) {
+				if ( ! empty( $contact_data['household_name'] ) ) {
+					$full_name = true;
+				}
 			}
 			$display = false;
 			if ( ! empty( $contact_data['display_name'] ) ) {
@@ -3599,7 +3622,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			}
 
 			// If we can't create the Contact with what we have.
-			if ( ! $first_last && ! $display ) {
+			if ( ! $full_name && ! $display ) {
 				// Try and assign an Email as the Display Name.
 				$email = $this->form_email_primary_get( $email_data );
 				if ( ! empty( $email ) ) {
@@ -3609,7 +3632,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			}
 
 			// Bail if we still can't create the Contact.
-			if ( ! $first_last && ! $display ) {
+			if ( ! $full_name && ! $display ) {
 				return $contact;
 			}
 
