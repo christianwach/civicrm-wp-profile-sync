@@ -867,11 +867,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
 				'method' => __METHOD__,
-				'message' => __( 'A numerical ID must be present to update a Participant.', 'civicrm-wp-profile-sync' ),
+				'message' => __( 'A numeric ID must be present to update a Participant.', 'civicrm-wp-profile-sync' ),
 				'participant' => $participant,
 				'backtrace' => $trace,
 			], true ) );
-			return $participant_data;
+			return false;
 		}
 
 		// Pass through.

@@ -943,11 +943,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
 				'method' => __METHOD__,
-				'message' => __( 'A numerical ID must be present to update a Case.', 'civicrm-wp-profile-sync' ),
+				'message' => __( 'A numeric ID must be present to update a Case.', 'civicrm-wp-profile-sync' ),
 				'case' => $case,
 				'backtrace' => $trace,
 			], true ) );
-			return $case_data;
+			return false;
 		}
 
 		// Pass through.

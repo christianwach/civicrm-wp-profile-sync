@@ -744,7 +744,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
 				'method' => __METHOD__,
-				'message' => __( 'A numerical ID must be present to update a Contact.', 'civicrm-wp-profile-sync' ),
+				'message' => __( 'A numeric ID must be present to update a Contact.', 'civicrm-wp-profile-sync' ),
 				'contact' => $contact,
 				'backtrace' => $trace,
 			], true ) );
@@ -781,7 +781,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
 				'method' => __METHOD__,
-				'message' => __( 'A numerical ID must be present to delete a Contact.', 'civicrm-wp-profile-sync' ),
+				'message' => __( 'A numeric ID must be present to delete a Contact.', 'civicrm-wp-profile-sync' ),
 				'contact' => $contact,
 				'backtrace' => $trace,
 			], true ) );

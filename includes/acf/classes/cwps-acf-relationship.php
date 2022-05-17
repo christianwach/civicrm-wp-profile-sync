@@ -939,11 +939,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
 				'method' => __METHOD__,
-				'message' => __( 'A numerical ID must be present to update a Relationship.', 'civicrm-wp-profile-sync' ),
+				'message' => __( 'A numeric ID must be present to update a Relationship.', 'civicrm-wp-profile-sync' ),
 				'relationship' => $relationship,
 				'backtrace' => $trace,
 			], true ) );
-			return $relationship_data;
+			return false;
 		}
 
 		// Pass through.
