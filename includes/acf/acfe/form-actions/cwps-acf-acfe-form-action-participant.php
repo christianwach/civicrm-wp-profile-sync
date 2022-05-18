@@ -630,7 +630,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 				'label' => $field['title'],
 				'name' => $this->field_name . 'contact_group_' . $field['name'],
 				'type' => 'group',
-				/* translators: %s: The Field title */
+				/* translators: %s: The name of the Field */
 				'instructions' => sprintf( __( 'Use one Field to identify the %s.', 'civicrm-wp-profile-sync' ), $field['title'] ),
 				'wrapper' => [
 					'width' => '',
@@ -985,7 +985,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 				'label' => $field['title'],
 				'name' => $this->field_name . 'event_group',
 				'type' => 'group',
-				/* translators: %s: The Field title */
+				/* translators: %s: The name of the Field */
 				'instructions' => sprintf( __( 'Use one Field to identify the %s.', 'civicrm-wp-profile-sync' ), $field['title'] ),
 				'wrapper' => [
 					'width' => '',

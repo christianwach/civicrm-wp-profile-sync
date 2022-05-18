@@ -239,6 +239,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
       if ( email_exists( $row['email'] ) ) {
         error_log( print_r( [
           'method' => __METHOD__,
+          /* translators: %s: The email address */
           'message' => sprintf( __( 'The email %s already exists.', 'civicrm-wp-profile-sync' ), $row['email'] ),
         ], true ) );
         $failure[] = $row['display_name'];
@@ -252,6 +253,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
       if ( ! validate_username( $username ) ) {
         error_log( print_r( [
           'method' => __METHOD__,
+          /* translators: %s: The username */
           'message' => sprintf( __( 'The username %s is not valid.', 'civicrm-wp-profile-sync' ), $username ),
         ], true ) );
         $failure[] = $row['display_name'];
@@ -340,6 +342,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
     // Build success message.
     if ( ! empty( $success ) ) {
       $users_added = sprintf(
+          /* translators: %s: The comma-delimited array of User IDs */
         __( 'Users successfully added to WordPress: %s', 'civicrm-wp-profile-sync' ),
         implode( ', ', $success )
       );
@@ -349,6 +352,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
     // Build failure message.
     if ( ! empty( $failure ) ) {
       $users_not_added = sprintf(
+          /* translators: %s: The comma-delimited array of User IDs */
         __( 'Users not added to WordPress: %s. Please review these Contacts and try again.', 'civicrm-wp-profile-sync' ),
         implode( ', ', $failure )
       );
