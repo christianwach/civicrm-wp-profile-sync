@@ -86,6 +86,12 @@ I'll say it again: test early, test often and - above all - test on a developmen
 
 == Changelog ==
 
+= 0.5.4 =
+
+* Introduces CiviCRM Activity Attachments Field.
+* Introduces CiviCRM Event Action.
+* Fixes CiviCRM Settings not showing in ACF Field settings.
+
 = 0.5.3 =
 
 * Fixes error on CiviCRM Activity Action.
