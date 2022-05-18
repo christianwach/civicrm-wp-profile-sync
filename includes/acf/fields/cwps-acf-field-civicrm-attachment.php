@@ -250,6 +250,17 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 		// Now add it.
 		acf_render_field_setting( $field, $show_attachment_id );
 
+		// Define "Mime Types" Field.
+		$mime_types = [
+			'label' => __( 'Allowed file types', 'civicrm-wp-profile-sync' ),
+			'name' => 'mime_types',
+			'type' => 'text',
+			'instructions' => __( 'Comma separated list. Leave blank for all types', 'civicrm-wp-profile-sync' ),
+		];
+
+		// Now add it.
+		acf_render_field_setting( $field, $mime_types );
+
 	}
 
 	/**
@@ -606,7 +617,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 			'uploader' => 'basic',
 			'min_size' => 0,
 			'max_size' => $this->civicrm->attachment->field_max_size_get(),
-			'mime_types' => '',
+			'mime_types' => $field['mime_types'],
 			'library' => 'all',
 			'return_format' => 'array',
 		];
