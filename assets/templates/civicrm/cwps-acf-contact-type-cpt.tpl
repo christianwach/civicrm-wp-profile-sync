@@ -11,7 +11,7 @@
   {literal}
 
   // jQuery will not move an item unless it is wrapped.
-  cj('tr.cwps_acf_block').insertBefore('.crm-contact-type-form-block .crm-contact-type-form-block-image_URL');
+  cj('tr.cwps_acf_block').insertAfter('.crm-contact-type-form-block .crm-contact-type-form-block-parent_id');
 
   {/literal}
 </script>
