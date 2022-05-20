@@ -356,6 +356,10 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// Add Contact Action Reference Field to ACF Model.
 		$this->js_model_contact_reference_field_add( $this->field_name . 'relationship_action_ref' );
 
+		// Populate Relationship Settings mapping Fields.
+		$this->mapping_field_filters_add( 'is_current_employee' );
+		$this->mapping_field_filters_add( 'is_current_employer' );
+
 		// Contact Conditional Field.
 		$this->mapping_field_filters_add( 'contact_conditional' );
 
@@ -522,6 +526,32 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 					$field = acfe_form_map_field_value_load( $field, $current_post_id, $form );
 					if ( acf_is_field_key( $field ) && ! empty( $relationship[ $relationship_field['name'] ] ) ) {
 						$form['map'][ $field ]['value'] = $relationship[ $relationship_field['name'] ];
+					}
+				}
+
+				// Get the Relationship "Is Current Employee" Group.
+				$field_name = 'is_current_employee';
+				$group_field = $relationship_action[ $this->field_name . $field_name . '_group_' . $field_name ];
+
+				// Populate the Relationship "Is Current Employee" Field.
+				$field = $group_field[ $this->field_name . 'map_' . $field_name ];
+				$field = acfe_form_map_field_value_load( $field, $current_post_id, $form );
+				if ( acf_is_field_key( $field ) ) {
+					if ( ! empty( $relationship['is_current_employee'] ) ) {
+						$form['map'][ $field ]['value'] = $relationship['is_current_employee'];
+					}
+				}
+
+				// Get the Relationship "Is Current Employer" Group.
+				$field_name = 'is_current_employer';
+				$group_field = $relationship_action[ $this->field_name . $field_name . '_group_' . $field_name ];
+
+				// Populate the Relationship "Is Current Employer" Field.
+				$field = $group_field[ $this->field_name . 'map_' . $field_name ];
+				$field = acfe_form_map_field_value_load( $field, $current_post_id, $form );
+				if ( acf_is_field_key( $field ) ) {
+					if ( ! empty( $relationship['is_current_employer'] ) ) {
+						$form['map'][ $field ]['value'] = $relationship['is_current_employer'];
 					}
 				}
 
