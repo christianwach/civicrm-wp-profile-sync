@@ -86,6 +86,11 @@ I'll say it again: test early, test often and - above all - test on a developmen
 
 == Changelog ==
 
+= 0.5.5 =
+
+* Improves handling of Contact Relationships in ACF Extended Forms.
+* Fixes a bug when syncing Attachments.
+
 = 0.5.4 =
 
 * Introduces CiviCRM Activity Attachments Field.
