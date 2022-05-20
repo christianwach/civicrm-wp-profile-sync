@@ -1467,6 +1467,46 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 	}
 
+	/**
+	 * Checks an CiviCRM Employer/Employee Relationship for "Is Current" status.
+	 *
+	 * @since 0.5.7
+	 *
+	 * @param array $relationship The array of Relationship data.
+	 * @return bool $is_current True if current Employer/Employee Relationship, false otherwise.
+	 */
+	public function is_employer_employee( $relationship ) {
+
+		// Init return.
+		$is_current = false;
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $is_current;
+		}
+
+		// Make sure it's an array.
+		if ( is_object( $relationship ) ) {
+			$relationship = (array) $relationship;
+		}
+
+		// Bail if not the Employer/Employee Relationship Type.
+		$relationship_type_id = $this->type_id_employer_employee_get();
+		if ( (int) $relationship['relationship_type_id'] !== $relationship_type_id ) {
+			return $is_current;
+		}
+
+		// Check against Individual's Employer ID setting.
+		$employer_id = CRM_Core_DAO::getFieldValue( 'CRM_Contact_DAO_Contact', $relationship['contact_id_a'], 'employer_id' );
+		if ( (int) $relationship['contact_id_b'] === (int) $employer_id ) {
+			$is_current = true;
+		}
+
+		// --<
+		return $is_current;
+
+	}
+
 	// -------------------------------------------------------------------------
 
 	/**
