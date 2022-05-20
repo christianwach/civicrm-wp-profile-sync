@@ -1228,13 +1228,28 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 *
 	 * @since 0.5.2
 	 *
-	 * @param mixed $value The Custom Field value (the filename).
+	 * @param mixed $value The Custom Field value - either the filename or the File ID.
 	 * @param array $field The Custom Field data.
 	 * @param string $selector The ACF Field selector.
 	 * @param mixed $post_id The ACF "Post ID".
 	 * @return mixed $value The formatted Field value.
 	 */
 	public function value_get_for_acf( $value, $field, $selector, $post_id ) {
+
+		/*
+		 * If it's numeric, overwrite the "value" with the filename.
+		 *
+		 * This happens because there is a mismatch between the value returned
+		 * when querying the Custom Field and the Custom Field data receieved by
+		 * the "civicrm_custom" callback.
+		 */
+		if ( is_numeric( $value ) ) {
+			$civicrm_file = $this->file_get_by_id( $value );
+			if ( empty( $civicrm_file ) ) {
+				return '';
+			}
+			$value = $civicrm_file->uri;
+		}
 
 		// Grab the raw data (Attachment ID) from the ACF Field.
 		$existing = get_field( $selector, $post_id, false );
