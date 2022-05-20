@@ -715,7 +715,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 			],
 			'acfe_permissions' => '',
 			'default_value' => '',
-			'placeholder' => __( 'Use mapping', 'civicrm-wp-profile-sync' ),
+			'placeholder' => __( 'Use Mapping Field', 'civicrm-wp-profile-sync' ),
 			'allow_null' => 1,
 			'multiple' => 0,
 			'ui' => 0,
