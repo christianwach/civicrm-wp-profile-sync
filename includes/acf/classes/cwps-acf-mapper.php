@@ -936,7 +936,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		}
 
 		// Bail if already unregistered.
-		if ( $this->civicrm_hooks === false ) {
+		if ( $this->civicrm_listeners === false ) {
 			return;
 		}
 
@@ -985,7 +985,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		);
 
 		// Declare unregistered.
-		$this->civicrm_hooks = false;
+		$this->civicrm_listeners = false;
 
 	}
 
