@@ -706,14 +706,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 			'type' => 'select',
 			'instructions' => '',
 			'required' => 0,
-			'conditional_logic' => [
-				[
-					[
-						'field' => $this->field_key . 'map_' . $args['field_name'],
-						'operator' => '==empty',
-					],
-				],
-			],
+			'conditional_logic' => 0,
 			'wrapper' => [
 				'width' => '',
 				'class' => '',
