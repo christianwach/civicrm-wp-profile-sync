@@ -672,6 +672,12 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 			);
 		}
 
+		// Maybe set Conditional Logic.
+		$conditional_logic = 0;
+		if ( ! empty( $args['conditional_logic'] ) ) {
+			$conditional_logic = $args['conditional_logic'];
+		}
+
 		// Wrap in a container group.
 		$group_field = [
 			'key' => $this->field_key . $args['field_name'] . '_group_' . $args['field_name'],
@@ -679,6 +685,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 			'name' => $this->field_name . $args['field_name'] . '_group_' . $args['field_name'],
 			'type' => 'group',
 			'instructions' => $instructions,
+			'conditional_logic' => $conditional_logic,
 			'wrapper' => [
 				'width' => '',
 				'class' => '',

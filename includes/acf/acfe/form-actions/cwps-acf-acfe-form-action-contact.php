@@ -3198,6 +3198,56 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			'choices' => $this->relationship_choices,
 		];
 
+		// Check the Employer/Employee Relationship Type.
+		$employer_type_id = $this->civicrm->relationship->type_id_employer_employee_get();
+		if ( ! empty( $employer_type_id ) ) {
+
+			// Define "Is Current Employee" setting Field.
+			$args = [
+				'field_name' => 'is_current_employee',
+				'field_title' => __( 'Is Current Employee', 'civicrm-wp-profile-sync' ),
+				'conditional_logic' => [
+					[
+						[
+							'field' => $this->field_key . 'relationship_type',
+							'operator' => '==',
+							'value' => $employer_type_id . '_ab',
+						],
+					],
+				],
+				'choices' => [
+					'1' => __( 'Yes', 'civicrm-wp-profile-sync' ),
+					'0' => __( 'No', 'civicrm-wp-profile-sync' ),
+				],
+			];
+
+			// Add "Is Current Employer" Group.
+			$sub_fields[] = $this->form_setting_group_get( $args );
+
+			// Define "Is Current Employer" setting Field.
+			$args = [
+				'field_name' => 'is_current_employer',
+				'field_title' => __( 'Is Current Employer', 'civicrm-wp-profile-sync' ),
+				'conditional_logic' => [
+					[
+						[
+							'field' => $this->field_key . 'relationship_type',
+							'operator' => '==',
+							'value' => $employer_type_id . '_ba',
+						],
+					],
+				],
+				'choices' => [
+					'1' => __( 'Yes', 'civicrm-wp-profile-sync' ),
+					'0' => __( 'No', 'civicrm-wp-profile-sync' ),
+				],
+			];
+
+			// Add "Is Current Employer" Group.
+			$sub_fields[] = $this->form_setting_group_get( $args );
+
+		}
+
 		// Add "Mapping" Fields to Repeater's Sub-Fields.
 		foreach ( $this->relationship_fields as $field ) {
 
@@ -4363,7 +4413,23 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			}
 
 			// Populate data array with values of mapped Fields.
-			$relationship_data[] = acfe_form_map_vs_fields( $fields, $fields, $current_post_id, $form );
+			$data = acfe_form_map_vs_fields( $fields, $fields, $current_post_id, $form );
+
+			// Get the "Is Current Employee" Field.
+			$is_current_employee = $this->form_setting_value_get( 'is_current_employee', $form, $current_post_id, $action, $field );
+
+			// Get the "Is Current Employer" Field.
+			$is_current_employer = $this->form_setting_value_get( 'is_current_employer', $form, $current_post_id, $action, $field );
+
+			// If either is populated, add to data.
+			if ( ! empty( $is_current_employee ) || ! empty( $is_current_employer ) ) {
+				$data['is_current_employer'] = 1;
+			} else {
+				$data['is_current_employer'] = 0;
+			}
+
+			// Add to array that will be parsed.
+			$relationship_data[] = $data;
 
 		}
 

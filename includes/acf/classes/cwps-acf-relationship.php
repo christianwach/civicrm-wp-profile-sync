@@ -1433,6 +1433,40 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 	}
 
+	/**
+	 * Gets the CiviCRM Employer/Employee Relationship Type ID.
+	 *
+	 * @since 0.5.5
+	 *
+	 * @return int|bool $relationship_type_id The ID of the Employer/Employee Relationship Type, or false on failure.
+	 */
+	public function type_id_employer_employee_get() {
+
+		// Init return.
+		$relationship_type_id = false;
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $relationship_type_id;
+		}
+
+		// Try and get the Employer/Employee Relationship Type ID.
+		try {
+			$relationship_type_id = CRM_Contact_BAO_RelationshipType::getEmployeeRelationshipTypeID();
+		} catch ( API_Exception $e ) {
+			return false;
+		}
+
+		// Sanity check.
+		if ( empty( $relationship_type_id ) ) {
+			return;
+		}
+
+		// --<
+		return (int) $relationship_type_id;
+
+	}
+
 	// -------------------------------------------------------------------------
 
 	/**
