@@ -1450,17 +1450,31 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 			return $relationship_type_id;
 		}
 
-		// Try and get the Employer/Employee Relationship Type ID.
-		try {
-			$relationship_type_id = CRM_Contact_BAO_RelationshipType::getEmployeeRelationshipTypeID();
-		} catch ( API_Exception $e ) {
-			return false;
+		// Construct API query.
+		$params = [
+			'version' => 3,
+			'name_a_b' => 'Employee of',
+			'contact_type_a' => 'Individual',
+		];
+
+		// Call the CiviCRM API.
+		$result = civicrm_api( 'RelationshipType', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+			return $relationship_type_id;
 		}
 
-		// Sanity check.
-		if ( empty( $relationship_type_id ) ) {
-			return;
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $relationship_type_id;
 		}
+
+		// The result set should contain only one item.
+		$relationship = array_pop( $result['values'] );
+
+		// We only want the ID.
+		$relationship_type_id = $relationship['id'];
 
 		// --<
 		return (int) $relationship_type_id;
