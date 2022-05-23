@@ -537,6 +537,18 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				$field = $group_field[ $this->field_name . 'map_' . $field_name ];
 				$field = acfe_form_map_field_value_load( $field, $current_post_id, $form );
 				if ( acf_is_field_key( $field ) ) {
+
+					///*
+					$e = new \Exception();
+					$trace = $e->getTraceAsString();
+					error_log( print_r( array(
+						'method' => __METHOD__,
+						'relationship' => $relationship,
+						'contact' => $contact,
+						//'backtrace' => $trace,
+					), true ) );
+					//*/
+
 					if ( ! empty( $relationship['is_current_employee'] ) ) {
 						$form['map'][ $field ]['value'] = $relationship['is_current_employee'];
 					}
@@ -550,6 +562,18 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				$field = $group_field[ $this->field_name . 'map_' . $field_name ];
 				$field = acfe_form_map_field_value_load( $field, $current_post_id, $form );
 				if ( acf_is_field_key( $field ) ) {
+
+					///*
+					$e = new \Exception();
+					$trace = $e->getTraceAsString();
+					error_log( print_r( array(
+						'method' => __METHOD__,
+						'relationship' => $relationship,
+						'contact' => $contact,
+						//'backtrace' => $trace,
+					), true ) );
+					//*/
+
 					if ( ! empty( $relationship['is_current_employer'] ) ) {
 						$form['map'][ $field ]['value'] = $relationship['is_current_employer'];
 					}
