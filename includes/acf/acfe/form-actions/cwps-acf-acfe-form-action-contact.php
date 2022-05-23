@@ -537,20 +537,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				$field = $group_field[ $this->field_name . 'map_' . $field_name ];
 				$field = acfe_form_map_field_value_load( $field, $current_post_id, $form );
 				if ( acf_is_field_key( $field ) ) {
-
-					///*
-					$e = new \Exception();
-					$trace = $e->getTraceAsString();
-					error_log( print_r( array(
-						'method' => __METHOD__,
-						'relationship' => $relationship,
-						'contact' => $contact,
-						//'backtrace' => $trace,
-					), true ) );
-					//*/
-
-					if ( ! empty( $relationship['is_current_employee'] ) ) {
-						$form['map'][ $field ]['value'] = $relationship['is_current_employee'];
+					if ( $this->civicrm->relationship->is_employer_employee( $relationship ) ) {
+						$form['map'][ $field ]['value'] = 1;
 					}
 				}
 
@@ -562,20 +550,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				$field = $group_field[ $this->field_name . 'map_' . $field_name ];
 				$field = acfe_form_map_field_value_load( $field, $current_post_id, $form );
 				if ( acf_is_field_key( $field ) ) {
-
-					///*
-					$e = new \Exception();
-					$trace = $e->getTraceAsString();
-					error_log( print_r( array(
-						'method' => __METHOD__,
-						'relationship' => $relationship,
-						'contact' => $contact,
-						//'backtrace' => $trace,
-					), true ) );
-					//*/
-
-					if ( ! empty( $relationship['is_current_employer'] ) ) {
-						$form['map'][ $field ]['value'] = $relationship['is_current_employer'];
+					if ( $this->civicrm->relationship->is_employer_employee( $relationship ) ) {
+						$form['map'][ $field ]['value'] = 1;
 					}
 				}
 
@@ -3273,6 +3249,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 					'1' => __( 'Yes', 'civicrm-wp-profile-sync' ),
 					'0' => __( 'No', 'civicrm-wp-profile-sync' ),
 				],
+				'mapping_instructions' => __( 'Use an ACF "True/False" Field to choose a mapping for this Setting.', 'civicrm-wp-profile-sync' ),
 			];
 
 			// Add "Is Current Employer" Group.
@@ -3295,6 +3272,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 					'1' => __( 'Yes', 'civicrm-wp-profile-sync' ),
 					'0' => __( 'No', 'civicrm-wp-profile-sync' ),
 				],
+				'mapping_instructions' => __( 'Use an ACF "True/False" Field to choose a mapping for this Setting.', 'civicrm-wp-profile-sync' ),
 			];
 
 			// Add "Is Current Employer" Group.
