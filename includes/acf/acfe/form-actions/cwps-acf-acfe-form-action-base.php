@@ -732,11 +732,17 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 		// Add value Field.
 		$group_field['sub_fields'][] = $value_field;
 
+		// Define mapping instructions.
+		$mapping_instructions = __( 'Choose a mapping for this Setting.', 'civicrm-wp-profile-sync' );
+		if ( ! empty( $args['mapping_instructions'] ) ) {
+			$mapping_instructions = $args['mapping_instructions'];
+		}
+
 		// Define Reference Field.
 		/* translators: %s: The name of the Field */
 		$title = sprintf( __( 'Map %s', 'civicrm-wp-profile-sync' ), $args['field_title'] );
 		$mapping_field = $this->mapping_field_get( $args['field_name'], $title );
-		$mapping_field['instructions'] = __( 'Choose a mapping for this Setting.', 'civicrm-wp-profile-sync' );
+		$mapping_field['instructions'] = $mapping_instructions;
 		$mapping_field['conditional_logic'] = [
 			[
 				[
