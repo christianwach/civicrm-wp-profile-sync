@@ -86,6 +86,10 @@ I'll say it again: test early, test often and - above all - test on a developmen
 
 == Changelog ==
 
+= 0.5.7 =
+
+* Fixes error on versions of CiviCRM prior to 5.47.
+
 = 0.5.6 =
 
 * Maintenance release.
