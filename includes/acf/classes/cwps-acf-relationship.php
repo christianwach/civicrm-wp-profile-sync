@@ -1504,6 +1504,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 			$relationship = (array) $relationship;
 		}
 
+		// Bail if we don't have Contact A or B.
+		if ( empty( $relationship['contact_id_a'] ) || empty( $relationship['contact_id_b'] ) ) {
+			return $is_current;
+		}
+
 		// Bail if not the Employer/Employee Relationship Type.
 		$relationship_type_id = $this->type_id_employer_employee_get();
 		if ( (int) $relationship['relationship_type_id'] !== $relationship_type_id ) {
