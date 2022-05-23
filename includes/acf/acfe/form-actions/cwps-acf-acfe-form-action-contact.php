@@ -396,7 +396,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Get the Relationships.
-		$relationships = $this->form_relationship_data( $form, $current_post_id, $action );
+		$relationships = $this->form_relationship_data( $form, $current_post_id, $action, $contact_id );
 
 		// Try finding the Contact ID by Relationship.
 		if ( ! $contact_id ) {
@@ -4408,9 +4408,10 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 	 * @param array $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
 	 * @param string $action The customised name of the action.
+	 * @param integer $contact_id The numeric ID of the Contact if loaded.
 	 * @return array $relationship_data The array of Relationship data.
 	 */
-	public function form_relationship_data( $form, $current_post_id, $action ) {
+	public function form_relationship_data( $form, $current_post_id, $action, $contact_id = false ) {
 
 		// Init return.
 		$relationship_data = [];
@@ -4468,7 +4469,36 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// Init parsed array.
 		$relationship_parsed = [];
 
-		// Let's inspect each of them.
+		// We may be able to short-circuit if we have a loaded Contact ID.
+		if ( ! empty( $contact_id ) ) {
+
+			// Get the Relationship data for this Action.
+			$relationships = acfe_form_get_action( $action, 'relationships' );
+
+			// Sanity check.
+			if ( ! empty( $relationships ) ) {
+
+				// Build parsed array from saved data.
+				foreach ( $relationships as $key => $relationship ) {
+
+					// Cast as array.
+					if ( is_object( $relationship ) ) {
+						$relationship = (array) $relationship;
+					}
+
+					// Merge into field data and add to parsed array.
+					$relationship_parsed[] = array_merge( $relationship_data[ $key ], $relationship );
+
+				}
+
+				// --<
+				return $relationship_parsed;
+
+			}
+
+		}
+
+		// Let's inspect each of the Action Fields.
 		foreach ( $relationship_data as $field ) {
 
 			// Get the related Contact Action Name.
@@ -4750,7 +4780,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				}
 
 				// Skip those that don't relate to the same Contact.
-				if ( $direction !== 'equal' && $contact_id != $related_contact_id ) {
+				if ( $direction !== 'equal' && (int) $contact_id !== (int) $related_contact_id ) {
 					continue;
 				}
 
