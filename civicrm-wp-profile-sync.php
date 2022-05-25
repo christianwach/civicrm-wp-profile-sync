@@ -486,7 +486,7 @@ function civicrm_wp_profile_sync() {
 
 }
 
-// Load only when CiviCRM has loaded.
+// Load only when CiviCRM has loaded on the "plugins_loaded" hook.
 add_action( 'civicrm_instance_loaded', 'civicrm_wp_profile_sync' );
 
 /**
