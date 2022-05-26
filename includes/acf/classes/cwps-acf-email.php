@@ -845,6 +845,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		// Create a new Email if there are no results.
 		if ( empty( $existing_email['values'] ) ) {
 
+			// Skip if there is no incoming value.
+			if ( empty( $value ) ) {
+				return $email;
+			}
+
 			// Define params to create new Email.
 			$params = [
 				'version' => 3,
