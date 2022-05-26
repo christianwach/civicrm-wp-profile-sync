@@ -231,4 +231,63 @@ class CiviCRM_WP_Profile_Sync_WordPress {
 
 	}
 
+	/**
+	 * Returns the timezone of the current site.
+	 *
+	 * Gets timezone settings from the database. If a timezone identifier is used
+	 * just turns it into a DateTimeZone object. If an offset is used, tries to
+	 * find a suitable timezone. If all else fails, uses UTC.
+	 *
+	 * This is a modified version of the "eo_get_blog_timezone" function in the
+	 * Event Organiser plugin.
+	 *
+	 * @see https://github.com/stephenharris/Event-Organiser/blob/develop/includes/event-organiser-utility-functions.php#L352
+	 *
+	 * @since 0.5.8
+	 *
+	 * @return DateTimeZone $timezone The site timezone.
+	 */
+	public function get_site_timezone() {
+
+		// Init return.
+		$timezone = false;
+
+		$tzstring = get_option( 'timezone_string' );
+		$offset = get_option( 'gmt_offset' );
+
+		/*
+		 * Setting manual offsets should be discouraged.
+		 *
+		 * The IANA timezone database that provides PHP's timezone support uses
+		 * (reversed) POSIX style signs.
+		 *
+		 * @see https://github.com/stephenharris/Event-Organiser/issues/287
+		 * @see http://us.php.net/manual/en/timezones.others.php
+		 * @see https://bugs.php.net/bug.php?id=45543
+		 * @see https://bugs.php.net/bug.php?id=45528
+		 */
+		if ( empty( $tzstring ) && 0 != $offset && floor( $offset ) == $offset ) {
+			$offset_string = $offset > 0 ? "-$offset" : '+' . absint( $offset );
+			$tzstring = 'Etc/GMT' . $offset_string;
+		}
+
+		// Default to 'UTC' if the timezone string is empty.
+		if ( empty( $tzstring ) ) {
+			$tzstring = 'UTC';
+		}
+
+		// If we already have a DateTimeZone object, return that.
+		if ( $tzstring instanceof DateTimeZone ) {
+			$timezone = $tzstring;
+			return $timezone;
+		}
+
+		// Create DateTimeZone object from timezone string.
+		$timezone = new DateTimeZone( $tzstring );
+
+		// --<
+		return $timezone;
+
+	}
+
 }
