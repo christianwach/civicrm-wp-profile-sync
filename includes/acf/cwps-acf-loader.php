@@ -252,6 +252,11 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 		// Include ACFE class.
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/classes/cwps-acf-acfe.php';
 
+		// Maybe include Geo Mashup compatibility class.
+		if ( defined( 'GEO_MASHUP_VERSION' ) ) {
+			include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/compat/cwps-acf-geo-mashup.php';
+		}
+
 	}
 
 	/**
@@ -287,6 +292,11 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 
 		// Init ACFE object.
 		$this->acfe = new CiviCRM_Profile_Sync_ACF_ACFE( $this );
+
+		// Maybe init Geo Mashup compatibility object.
+		if ( defined( 'GEO_MASHUP_VERSION' ) ) {
+			$this->geo_mashup = new CiviCRM_WP_Profile_Sync_ACF_Geo_Mashup( $this );
+		}
 
 	}
 
