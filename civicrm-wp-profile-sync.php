@@ -46,6 +46,11 @@ if ( ! defined( 'CIVICRM_WP_PROFILE_SYNC_BUDDYPRESS' ) ) {
 	define( 'CIVICRM_WP_PROFILE_SYNC_BUDDYPRESS', false );
 }
 
+// Set plugin debugging state.
+if ( ! defined( 'CIVICRM_WP_PROFILE_SYNC_DEBUG' ) ) {
+	define( 'CIVICRM_WP_PROFILE_SYNC_DEBUG', false );
+}
+
 /**
  * CiviCRM Profile Sync Class.
  *
@@ -459,6 +464,35 @@ class CiviCRM_WP_Profile_Sync {
 		// CAU is hiding CiviCRM.
 		$civicrm_hidden = true;
 		return $civicrm_hidden;
+
+	}
+
+	/**
+	 * Write to the error log.
+	 *
+	 * @since 0.5.8
+	 *
+	 * @param array $data The data to write to the log file.
+	 */
+	public function log_error( $data = [] ) {
+
+		// Skip if not debugging.
+		if ( CIVICRM_WP_PROFILE_SYNC_DEBUG === false ) {
+			return;
+		}
+
+		// Skip if empty.
+		if ( empty( $data ) ) {
+			return;
+		}
+
+		// Format data.
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+		$error = print_r( $data, true );
+
+		// Write to log file.
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+		error_log( $error );
 
 	}
 
