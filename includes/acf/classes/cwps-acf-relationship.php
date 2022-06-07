@@ -1776,6 +1776,60 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		// Call the CiviCRM API.
 		$result = civicrm_api( 'RelationshipType', 'get', $params );
 
+		// Extract the result set if we can.
+		if ( empty( $result['is_error'] ) && ! empty( $result['values'] ) ) {
+			$relationships = $result['values'];
+		}
+
+		// Maybe append the "all-to-all" Relationships.
+		$all = $this->relationships_get_all_to_all();
+		if ( ! empty( $all ) ) {
+			foreach ( $all as $item ) {
+				$relationships[] = $item;
+			}
+		}
+
+		// --<
+		return $relationships;
+
+	}
+
+	/**
+	 * Get "all-to-all" Relationship Types.
+	 *
+	 * @since 0.5.8
+	 *
+	 * @param integer $contact_type The top-level Contact Type.
+	 * @return array $relationships The array of Relationships.
+	 */
+	public function relationships_get_all_to_all() {
+
+		// Init return.
+		$relationships = [];
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $relationships;
+		}
+
+		// Query for those Relationships which are "all-to-all".
+		$params = [
+			'version' => 3,
+			'sequential' => 1,
+			'contact_type_a' => [
+				'IS NULL' => 1,
+			],
+			'contact_type_b' => [
+				'IS NULL' => 1,
+			],
+			'options' => [
+				'limit' => 0,
+			],
+		];
+
+		// Call the CiviCRM API.
+		$result = civicrm_api( 'RelationshipType', 'get', $params );
+
 		// Bail if there's an error.
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			return $relationships;
