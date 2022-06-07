@@ -328,14 +328,30 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// Build the choices for the Relationship Types.
 		$choices = [];
+		$all = __( 'All Contacts', 'civicrm-wp-profile-sync' );
 		$relationship_types = $this->civicrm->relationship->types_get_all();
 		foreach ( $relationship_types as $relationship ) {
-			if ( $relationship['label_a_b'] !== $relationship['label_b_a'] ) {
-				$choices[ $relationship['contact_type_a'] ][ $relationship['id'] . '_ab' ] = esc_html( $relationship['label_a_b'] );
-				$choices[ $relationship['contact_type_b'] ][ $relationship['id'] . '_ba' ] = esc_html( $relationship['label_b_a'] );
+
+			// If undefined, the Contact Type is "all".
+			if ( empty( $relationship['contact_type_a'] ) ) {
+				$contact_type_a = $all;
 			} else {
-				$choices[ $relationship['contact_type_a'] ][ $relationship['id'] . '_equal' ] = esc_html( $relationship['label_a_b'] );
+				$contact_type_a = $relationship['contact_type_a'];
 			}
+			if ( empty( $relationship['contact_type_b'] ) ) {
+				$contact_type_b = $all;
+			} else {
+				$contact_type_b = $relationship['contact_type_b'];
+			}
+
+			// Now assign to ACF array.
+			if ( $relationship['label_a_b'] !== $relationship['label_b_a'] ) {
+				$choices[ $contact_type_a ][ $relationship['id'] . '_ab' ] = esc_html( $relationship['label_a_b'] );
+				$choices[ $contact_type_b ][ $relationship['id'] . '_ba' ] = esc_html( $relationship['label_b_a'] );
+			} else {
+				$choices[ $contact_type_a ][ $relationship['id'] . '_equal' ] = esc_html( $relationship['label_a_b'] );
+			}
+
 		}
 
 		// Assign to a property.
