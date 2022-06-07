@@ -114,7 +114,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	 * @param string $action The name of the Action.
 	 * @param array $data The result of the Action.
 	 */
-	public function load_action_save( $action = '', $data ) {
+	public function load_action_save( $action, $data ) {
 
 		// Get the existing array of Action results.
 		$actions = get_query_var( 'acfe_form_actions', [] );
@@ -191,7 +191,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	 * @param string $action The name of the Action.
 	 * @param array $data The result of the Action.
 	 */
-	public function make_action_save( $action = '', $data ) {
+	public function make_action_save( $action, $data ) {
 
 		// Get the existing array of Action results.
 		$actions = get_query_var( 'acfe_form_actions', [] );

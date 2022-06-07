@@ -676,7 +676,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 * @param integer $dedupe_rule_id The Dedupe Rule ID.
 	 * @return integer|bool $contact_id The numeric Contact ID, or false on failure.
 	 */
-	public function get_by_dedupe_rule( $contact, $contact_type = 'Individual', $dedupe_rule_id ) {
+	public function get_by_dedupe_rule( $contact, $contact_type, $dedupe_rule_id ) {
 
 		// Bail if we have no Contact data.
 		if ( empty( $contact ) ) {

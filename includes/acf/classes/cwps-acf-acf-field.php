@@ -568,7 +568,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 * @param array $args Any additional arguments.
 	 * @return mixed $value The Field value formatted for CiviCRM.
 	 */
-	public function value_get_for_civicrm( $value = 0, $type, $settings, $args = [] ) {
+	public function value_get_for_civicrm( $value, $type, $settings, $args = [] ) {
 
 		// Set appropriate value per Field Type.
 		switch ( $type ) {
@@ -696,7 +696,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 * @param array $settings The ACF Field settings.
 	 * @return string $value The modified value for CiviCRM.
 	 */
-	public function date_picker_value_get( $value = '', $settings ) {
+	public function date_picker_value_get( $value, $settings ) {
 
 		// There are problems with the "d/m/Y" format, so convert.
 		if ( false !== strpos( $settings['return_format'], 'd/m/Y' ) ) {
@@ -717,7 +717,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 * @param array $settings The ACF Field settings.
 	 * @return string $value The modified value for CiviCRM.
 	 */
-	public function date_time_picker_value_get( $value = '', $settings ) {
+	public function date_time_picker_value_get( $value, $settings ) {
 
 		// There are problems with the "d/m/Y" format, so convert.
 		if ( false !== strpos( $settings['return_format'], 'd/m/Y' ) ) {
@@ -738,7 +738,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 * @param array $settings The ACF Field settings.
 	 * @return string $value The modified value for CiviCRM.
 	 */
-	public function textarea_value_get( $value = '', $settings ) {
+	public function textarea_value_get( $value, $settings ) {
 
 		// Undo ACF new lines.
 		if ( $settings['new_lines'] === 'wpautop' ) {

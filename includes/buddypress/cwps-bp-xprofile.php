@@ -586,7 +586,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 * @param array $args Any additional arguments.
 	 * @return mixed $value The value formatted for CiviCRM.
 	 */
-	public function value_get_for_civicrm( $value = 0, $field_type, $args = [] ) {
+	public function value_get_for_civicrm( $value, $field_type, $args = [] ) {
 
 		// Always unslash.
 		$value = wp_unslash( $value );
@@ -627,7 +627,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 * @param array $args Any additional arguments.
 	 * @return string $value The modified value for CiviCRM.
 	 */
-	public function date_value_get_for_civicrm( $value = '', $args ) {
+	public function date_value_get_for_civicrm( $value, $args ) {
 
 		// Init format.
 		$format = '';
@@ -662,7 +662,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 * @param array $args Any additional arguments.
 	 * @return string $value The modified value for CiviCRM.
 	 */
-	public function textarea_value_get_for_civicrm( $value = '', $args ) {
+	public function textarea_value_get_for_civicrm( $value, $args ) {
 
 		// Convert to full HTML.
 		$value = wptexturize( $value );
@@ -687,7 +687,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 * @param array $args Any additional arguments.
 	 * @return string $value The modified value for CiviCRM.
 	 */
-	public function checkbox_value_get_for_civicrm( $value = '', $args ) {
+	public function checkbox_value_get_for_civicrm( $value, $args ) {
 
 		// Bail if empty since this is an allowed value.
 		if ( empty( $value ) ) {
