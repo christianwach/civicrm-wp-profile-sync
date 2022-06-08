@@ -110,11 +110,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Bulk {
 	 */
 	public function register_php_directory( &$config ) {
 
-		// Kick out if no CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return;
-		}
-
 		// Define our custom path.
 		$custom_path = CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/civicrm/custom_php';
 
@@ -133,11 +128,6 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Bulk {
 	 * @param object $config The CiviCRM config object.
 	 */
 	public function register_template_directory( &$config ) {
-
-		// Kick out if no CiviCRM.
-		if ( ! $this->civicrm->is_initialised() ) {
-			return;
-		}
 
 		// Define our custom path.
 		$custom_path = CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/civicrm/custom_templates';

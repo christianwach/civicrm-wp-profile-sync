@@ -224,11 +224,6 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 */
 	public function register_form_directory( &$config ) {
 
-		// Kick out if no CiviCRM.
-		if ( ! $this->acf_loader->civicrm->is_initialised() ) {
-			return;
-		}
-
 		// Get template instance.
 		$template = CRM_Core_Smarty::singleton();
 
