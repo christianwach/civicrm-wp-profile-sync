@@ -543,6 +543,9 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	 */
 	public function term_meta_update( $term_id, $group_id ) {
 
+		// Get the existing Group ID from the term's meta data.
+		$existing_id = $this->term_meta_get( $term_id );
+
 		// Update the Group ID in the term's meta data.
 		$meta_id = update_term_meta( $term_id, $this->term_meta_key, (int) $group_id );
 
@@ -551,17 +554,24 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 			return $meta_id;
 		}
 
-		// Log something if there's an error.
+		/*
+		 * Log something if there's an error.
+		 *
+		 * Note that this is also triggered when the value has not changed, so
+		 * we have to compare against the existing value as well.
+		 */
 		if ( $meta_id === false ) {
-			$e = new \Exception();
-			$trace = $e->getTraceAsString();
-			error_log( print_r( [
-				'method' => __METHOD__,
-				'message' => __( 'Could not update term_meta', 'civicrm-wp-profile-sync' ),
-				'term_id' => $term_id,
-				'group_id' => $group_id,
-				'backtrace' => $trace,
-			], true ) );
+			if ( $existing_id !== false && (int) $existing_id !== (int) $group_id ) {
+				$e = new \Exception();
+				$trace = $e->getTraceAsString();
+				error_log( print_r( [
+					'method' => __METHOD__,
+					'message' => __( 'Could not update term_meta', 'civicrm-wp-profile-sync' ),
+					'term_id' => $term_id,
+					'group_id' => $group_id,
+					'backtrace' => $trace,
+				], true ) );
+			}
 		}
 
 		// Log a message if the term_id is ambiguous between taxonomies.
