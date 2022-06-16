@@ -154,7 +154,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		}
 
 		// Load settings array.
-		$this->settings = $this->option_get( $this->settings_key, $this->settings_key );
+		$this->settings = $this->option_get( $this->settings_key, $this->settings );
 
 		// Register hooks.
 		$this->register_hooks();
