@@ -476,9 +476,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 *
 	 * @param string $search The search string to query.
 	 * @param array $args The array of search params to query.
+	 * @param array $advanced The array of "Advanced Filter" search params.
 	 * @return array|bool $contact_data An array of Contact data, or false on failure.
 	 */
-	public function get_by_search_string( $search, $args = [] ) {
+	public function get_by_search_string( $search, $args = [], $advanced = [] ) {
 
 		// Init return.
 		$contact_data = false;
@@ -523,13 +524,18 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		}
 
 		// Maybe narrow the search to a Contact Sub-type.
-		if ( ! empty( $args['contact_type'] ) && ! empty( $args['contact_subtype'] ) ) {
+		if ( ! empty( $args['contact_sub_type'] ) ) {
 			$params['contact_sub_type'] = $args['contact_sub_type'];
 		}
 
 		// Maybe narrow the search to Group Membership.
 		if ( ! empty( $args['groups'] ) && is_array( $args['groups'] ) ) {
 			$params['group'] = $args['groups'];
+		}
+
+		// Maybe narrow the search to the "Advanced Filter".
+		if ( ! empty( $advanced ) ) {
+			$params = array_merge( $params, $advanced );
 		}
 
 		// Maybe define an offset.

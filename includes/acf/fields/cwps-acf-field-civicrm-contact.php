@@ -371,6 +371,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 
 		// Get the Contact Reference Field's Groups.
 		$groups = [];
+		$advanced = [];
 		if ( ! empty( $field[ $acf_field_key ] ) ) {
 
 			// Find the Custom Field ID.
@@ -382,11 +383,36 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 				$custom_field = $this->plugin->civicrm->custom_field->get_by_id( $custom_field_id );
 				if ( $custom_field !== false && ! empty( $custom_field['filter'] ) ) {
 
-					// Extract the Groups array.
+					// Extract the Filter array.
 					$filter_params = [];
 					parse_str( $custom_field['filter'], $filter_params );
-					if ( ! empty( $filter_params['group'] ) ) {
-						$groups = explode( ',', $filter_params['group'] );
+
+					// Skip if there's no "action".
+					if ( ! empty( $filter_params['action'] ) ) {
+
+						// Have one or more Groups been chosen?
+						if ( ! empty( $filter_params['group'] ) ) {
+							$groups = explode( ',', $filter_params['group'] );
+						}
+
+						// Has the "Advanced Filter" been used?
+						if ( 'get' === $filter_params['action'] ) {
+
+							// The filter params *are* the API params.
+							$advanced = $filter_params;
+
+							// Groups must be applied separately.
+							if ( isset( $advanced['groups'] ) ) {
+								unset( $advanced['groups'] );
+							}
+
+							// We don't want to override the "action".
+							if ( isset( $advanced['action'] ) ) {
+								unset( $advanced['action'] );
+							}
+
+						}
+
 					}
 
 				}
@@ -401,11 +427,15 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 			'return' => $this->plugin->civicrm->get_autocomplete_options( 'contact_reference_options' ),
 			'rowCount' => $autocomplete_count,
 			'offset' => $offset,
-			'groups' => $groups,
 		];
 
+		// Maybe apply the "Groups Filter".
+		if ( ! empty( $groups ) ) {
+			$params['groups'] = $groups;
+		}
+
 		// Get Contacts.
-		$contacts = $this->civicrm->contact->get_by_search_string( $args['search'], $params );
+		$contacts = $this->civicrm->contact->get_by_search_string( $args['search'], $params, $advanced );
 
 		// Maybe append results.
 		$results = [];
