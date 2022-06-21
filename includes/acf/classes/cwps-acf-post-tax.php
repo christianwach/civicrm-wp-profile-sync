@@ -721,7 +721,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	public function terms_get_for_post( $post_id ) {
 
 		// Grab the terms.
-		$terms = wp_get_object_terms( $post_id, $this->taxonomies );
+		$terms = get_the_terms( $post_id, $this->taxonomies );
 
 		// Bail if there are no terms or there's an error.
 		if ( empty( $terms ) || is_wp_error( $terms ) ) {
