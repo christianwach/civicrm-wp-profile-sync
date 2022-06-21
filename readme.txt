@@ -86,6 +86,12 @@ I'll say it again: test early, test often and - above all - test on a developmen
 
 == Changelog ==
 
+= 0.5.8 =
+
+* Fixes PHP 8 notices
+* Fixes Contact Image uploads
+* Enables basic support for "Advanced Filter" in Contact Ref Fields
+
 = 0.5.7 =
 
 * Fixes error on versions of CiviCRM prior to 5.47.
