@@ -383,7 +383,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Geo_Mashup {
 	 *
 	 * @since 0.5.8
 	 *
-	 * @param object $venue The Venue object.
+	 * @param array $address The array of Address data.
 	 * @return array $location The array of Location data.
 	 */
 	public function prepare_from_address( $address ) {
@@ -766,9 +766,9 @@ class CiviCRM_WP_Profile_Sync_ACF_Geo_Mashup {
 		}
 
 		// Insert template block into the page.
-		CRM_Core_Region::instance( 'page-body' )->add([
-			'template' => 'cwps-acf-geo-mashup-compat.tpl'
-		]);
+		CRM_Core_Region::instance( 'page-body' )->add( [
+			'template' => 'cwps-acf-geo-mashup-compat.tpl',
+		] );
 
 	}
 
