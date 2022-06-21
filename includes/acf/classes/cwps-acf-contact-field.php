@@ -1350,8 +1350,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		$dir = wp_get_upload_dir();
 		$path = $url;
 
-		$site_url = parse_url( $dir['url'] );
-		$image_path = parse_url( $path );
+		$site_url = wp_parse_url( $dir['url'] );
+		$image_path = wp_parse_url( $path );
 
 		// Force the protocols to match if needed.
 		if ( isset( $image_path['scheme'] ) && ( $image_path['scheme'] !== $site_url['scheme'] ) ) {
