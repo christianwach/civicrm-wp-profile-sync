@@ -1018,6 +1018,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 				];
 
 				// Add it to the Field data.
+				// phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
 				if ( in_array( $code, $cannot_be_empty ) && empty( $value ) ) {
 					// Skip.
 				} else {

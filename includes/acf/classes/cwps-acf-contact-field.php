@@ -1455,21 +1455,25 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		}
 
 		// Bail if GET doesn't contain the path we want.
-		if ( empty( $_GET['q'] ) || $_GET['q'] != 'civicrm/contact/image' ) {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( empty( $_GET['q'] ) || $_GET['q'] !== 'civicrm/contact/image' ) {
 			return;
 		}
 
 		// Bail if GET doesn't contain the matching Contact ID.
-		if ( empty( $_GET['cid'] ) || $_GET['cid'] != $objectRef->id ) {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( empty( $_GET['cid'] ) || $_GET['cid'] !== $objectRef->id ) {
 			return;
 		}
 
 		// Bail if GET doesn't contain the delete action.
-		if ( empty( $_GET['action'] ) || $_GET['action'] != 'delete' ) {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( empty( $_GET['action'] ) || $_GET['action'] !== 'delete' ) {
 			return;
 		}
 
 		// Bail if GET doesn't contain the confirmed flag.
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( empty( $_GET['confirmed'] ) || $_GET['confirmed'] != 1 ) {
 			return;
 		}

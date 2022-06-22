@@ -694,6 +694,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 				];
 
 				// Add it to the Field data.
+				// phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
 				if ( in_array( $code, $cannot_be_empty ) && empty( $value ) ) {
 					// Skip.
 				} else {
@@ -1543,17 +1544,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 			4 => __( 'Participant updated.', 'civicrm-wp-profile-sync' ),
 
 			// Item restored to a revision.
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			5 => isset( $_GET['revision'] ) ?
 
-					// Revision text.
-					sprintf(
-						/* translators: %s: Date and time of the revision */
-						__( 'Participant restored to revision from %s', 'civicrm-wp-profile-sync' ),
-						wp_post_revision_title( (int) $_GET['revision'], false )
-					) :
+				// Revision text.
+				sprintf(
+					/* translators: %s: Date and time of the revision */
+					__( 'Participant restored to revision from %s', 'civicrm-wp-profile-sync' ),
+					// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+					wp_post_revision_title( (int) $_GET['revision'], false )
+				) :
 
-					// No revision.
-					false,
+				// No revision.
+				false,
 
 			// Item published.
 			6 => sprintf(
@@ -1782,6 +1785,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 			'taxonomy' => $this->taxonomy_name,
 			'name' => $this->taxonomy_name,
 			'orderby' => 'name',
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Recommended
 			'selected' => isset( $_GET[ $this->taxonomy_name ] ) ? wp_unslash( $_GET[ $this->taxonomy_name ] ) : '',
 			'show_count' => true,
 			'hide_empty' => true,

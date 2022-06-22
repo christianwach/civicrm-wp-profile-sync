@@ -482,6 +482,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	public function admin_form_url_get() {
 
 		// Sanitise admin page url.
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		$target_url = isset( $_SERVER['REQUEST_URI'] ) ? wp_unslash( $_SERVER['REQUEST_URI'] ) : '';
 		if ( ! empty( $target_url ) ) {
 			$url_array = explode( '&', $target_url );
@@ -1298,7 +1299,9 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		if ( ! wp_doing_ajax() ) {
 			$contact_post_type = empty( $entity ) ? '' : $entity;
 		} else {
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			$contact_post_type = isset( $_POST['entity_id'] ) ? trim( wp_unslash( $_POST['entity_id'] ) ) : '';
+			$contact_post_type = sanitize_text_field( $contact_post_type );
 		}
 
 		// Sanity check input.
@@ -1603,7 +1606,9 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		if ( ! wp_doing_ajax() ) {
 			$activity_post_type = empty( $entity ) ? '' : $entity;
 		} else {
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			$activity_post_type = isset( $_POST['entity_id'] ) ? trim( wp_unslash( $_POST['entity_id'] ) ) : '';
+			$activity_post_type = sanitize_text_field( $activity_post_type );
 		}
 
 		// Sanity check input.
@@ -1906,7 +1911,9 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		if ( ! wp_doing_ajax() ) {
 			$participant_post_type = empty( $entity ) ? '' : $entity;
 		} else {
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			$participant_post_type = isset( $_POST['entity_id'] ) ? trim( wp_unslash( $_POST['entity_id'] ) ) : '';
+			$participant_post_type = sanitize_text_field( $participant_post_type );
 		}
 
 		// If "participant", then bail.

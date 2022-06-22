@@ -1025,6 +1025,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		$data = [ 'success' => false ];
 
 		// Get Event ID from POST.
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		$event_id = empty( $_POST['value'] ) ? false : (int) trim( wp_unslash( $_POST['value'] ) );
 		if ( $event_id === false ) {
 			wp_send_json( $data );

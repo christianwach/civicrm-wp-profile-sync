@@ -399,7 +399,8 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	public function page_submit_url_get() {
 
 		// Sanitise admin page url.
-		$target_url = $_SERVER['REQUEST_URI'];
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$target_url = isset( $_SERVER['REQUEST_URI'] ) ? wp_unslash( $_SERVER['REQUEST_URI'] ) : '';
 		$url_array = explode( '&', $target_url );
 
 		// Strip flag, if present, and rebuild.
@@ -521,6 +522,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	public function form_submitted() {
 
 		// Bail if our submit button wasn't clicked.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( empty( $_POST['cwps_migrate_submit'] ) ) {
 			return;
 		}

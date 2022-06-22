@@ -932,6 +932,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 			case 'ContactReference':
 
 				// Test for a numeric value.
+				// phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
 				if ( ! is_numeric( $value ) ) {
 
 					/*

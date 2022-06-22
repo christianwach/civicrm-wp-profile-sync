@@ -3736,7 +3736,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 			// If we have a Contact Image we will have the Attachment ID.
 			if ( ! empty( $contact_data['image_URL'] ) ) {
-				 $contact_data['image_URL'] = $this->acf_loader->acf->field->image_value_get( $contact_data['image_URL'] );
+				$contact_data['image_URL'] = $this->acf_loader->acf->field->image_value_get( $contact_data['image_URL'] );
 			}
 
 			// Okay, we should be good to create the Contact.
@@ -3789,7 +3789,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 			// If we have a Contact Image we will have the Attachment ID.
 			if ( ! empty( $contact_data['image_URL'] ) ) {
-				 $contact_data['image_URL'] = $this->acf_loader->acf->field->image_value_get( $contact_data['image_URL'] );
+				$contact_data['image_URL'] = $this->acf_loader->acf->field->image_value_get( $contact_data['image_URL'] );
 			}
 
 			// Okay, we're good to update now.

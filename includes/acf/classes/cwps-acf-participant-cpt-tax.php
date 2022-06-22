@@ -551,6 +551,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		$new_term = get_term_by( 'id', $args['term_id'], $this->taxonomy_name );
 
 		// Is this an Inline Edit?
+		// phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
 		if ( ! empty( $_POST['action'] ) && $_POST['action'] == 'inline-save-tax' ) {
 
 			// There will be no change to "Is Active" or "Counted".

@@ -1799,7 +1799,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	 *
 	 * @since 0.5.8
 	 *
-	 * @param integer $contact_type The top-level Contact Type.
 	 * @return array $relationships The array of Relationships.
 	 */
 	public function relationships_get_all_to_all() {
