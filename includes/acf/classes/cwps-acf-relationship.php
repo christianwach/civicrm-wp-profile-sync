@@ -153,8 +153,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		// Add any Relationship Fields attached to a Post.
 		add_filter( 'cwps/acf/fields_get_for_post', [ $this, 'acf_fields_get_for_post' ], 10, 3 );
 
-		// Intercept Post synced from Contact events.
-		add_action( 'cwps/acf/post/contact_sync_to_post', [ $this, 'contact_sync_to_post' ], 10 );
+		// Intercept Post-Contact sync event.
+		add_action( 'cwps/acf/post/contact/sync', [ $this, 'contact_sync_to_post' ], 10 );
 
 	}
 

@@ -150,8 +150,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		// Add any Website Fields that are Custom Fields.
 		add_filter( 'cwps/acf/contact/custom_field/id_get', [ $this, 'custom_field_id_get' ], 10, 2 );
 
-		// Intercept Post created from Contact events.
-		add_action( 'cwps/acf/post/contact_sync_to_post', [ $this, 'contact_sync_to_post' ], 10 );
+		// Intercept Post-Contact sync event.
+		add_action( 'cwps/acf/post/contact/sync', [ $this, 'contact_sync_to_post' ], 10 );
 
 		// Listen for queries from the ACF Field class.
 		add_filter( 'cwps/acf/query_settings_field', [ $this, 'query_settings_field' ], 51, 3 );

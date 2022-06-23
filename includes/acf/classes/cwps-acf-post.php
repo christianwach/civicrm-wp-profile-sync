@@ -758,11 +758,23 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		/**
 		 * Broadcast that a WordPress Post is about to be synced from Contact details.
 		 *
+		 * This action is now deprecated in favour of "cwps/acf/post/contact/sync/pre"
+		 * for hook naming consistency.
+		 *
 		 * @since 0.4
 		 *
 		 * @param array $args The array of CiviCRM and discovered params.
 		 */
 		do_action( 'cwps/acf/post/contact_sync_to_post/pre', $args );
+
+		/**
+		 * Broadcast that a WordPress Post is about to be synced from Contact details.
+		 *
+		 * @since 0.5.9
+		 *
+		 * @param array $args The array of CiviCRM and discovered params.
+		 */
+		do_action( 'cwps/acf/post/contact/sync/pre', $args );
 
 		// Remove WordPress callbacks to prevent recursion.
 		$this->acf_loader->mapper->hooks_wordpress_remove();
@@ -783,16 +795,28 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		/**
 		 * Broadcast that a WordPress Post has been synced from Contact details.
 		 *
-		 * Used internally to:
-		 *
-		 * * Update the ACF Fields for the WordPress Post.
-		 * * Update the Terms for the WordPress Post.
+		 * This action is now deprecated in favour of "cwps/acf/post/contact/sync"
+		 * for hook naming consistency.
 		 *
 		 * @since 0.4
 		 *
 		 * @param array $args The array of CiviCRM and discovered params.
 		 */
 		do_action( 'cwps/acf/post/contact_sync_to_post', $args );
+
+		/**
+		 * Broadcast that a WordPress Post has been synced from Contact details.
+		 *
+		 * Used internally to:
+		 *
+		 * * Update the ACF Fields for the WordPress Post.
+		 * * Update the Terms for the WordPress Post.
+		 *
+		 * @since 0.5.9
+		 *
+		 * @param array $args The array of CiviCRM and discovered params.
+		 */
+		do_action( 'cwps/acf/post/contact/sync', $args );
 
 	}
 

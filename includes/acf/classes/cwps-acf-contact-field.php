@@ -170,7 +170,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		// Intercept Post created, updated (or synced) from Contact events.
 		add_action( 'cwps/acf/post/created', [ $this, 'post_edited' ], 10 );
 		add_action( 'cwps/acf/post/edited', [ $this, 'post_edited' ], 10 );
-		add_action( 'cwps/acf/post/contact_sync_to_post', [ $this, 'contact_sync_to_post' ], 10 );
+		// Intercept Post-Contact sync event.
+		add_action( 'cwps/acf/post/contact/sync', [ $this, 'contact_sync_to_post' ], 10 );
 
 		// Some Contact "Text" Fields need their own validation.
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar

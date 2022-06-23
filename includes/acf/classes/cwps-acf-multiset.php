@@ -115,8 +115,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		// Add any Multiple Record Set Fields attached to a Post.
 		add_filter( 'cwps/acf/fields_get_for_post', [ $this, 'acf_fields_get_for_post' ], 10, 3 );
 
-		// Intercept Post created from Contact events.
-		add_action( 'cwps/acf/post/contact_sync_to_post', [ $this, 'contact_sync_to_post' ], 10 );
+		// Intercept Post-Contact sync event.
+		add_action( 'cwps/acf/post/contact/sync', [ $this, 'contact_sync_to_post' ], 10 );
 
 		// Maybe sync the Multiple Record Set "Multiple Record Set ID" to the ACF Subfields.
 		add_action( 'cwps/acf/multiset/created', [ $this, 'maybe_sync_multiset_id' ], 10, 2 );

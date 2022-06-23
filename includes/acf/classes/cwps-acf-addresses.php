@@ -192,7 +192,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		add_filter( 'cwps/acf/fields_get_for_post', [ $this, 'acf_fields_get_for_post' ], 10, 3 );
 
 		// Intercept Post-Contact sync event.
-		add_action( 'cwps/acf/post/contact_sync_to_post', [ $this, 'contact_sync_to_post' ], 10 );
+		add_action( 'cwps/acf/post/contact/sync', [ $this, 'contact_sync_to_post' ], 10 );
 
 		// Maybe sync the Address ID to the ACF Subfields.
 		add_action( 'cwps/acf/address/created', [ $this, 'maybe_sync_address_data' ], 10, 2 );

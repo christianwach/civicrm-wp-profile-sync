@@ -876,7 +876,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 			if ( $post_ids === false && $create_post === 'create' ) {
 
 				// Prevent recursion and the resulting unexpected Post creation.
-				if ( doing_action( 'cwps/acf/post/contact_sync_to_post' ) ) {
+				if ( doing_action( 'cwps/acf/post/contact/sync' ) ) {
 					continue;
 				}
 

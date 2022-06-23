@@ -140,10 +140,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		add_filter( 'cwps/acf/fields_get_for_post', [ $this, 'acf_fields_get_for_post' ], 10, 3 );
 
 		// Check Contact prior to Post-Contact sync event.
-		add_action( 'cwps/acf/post/contact_sync_to_post/pre', [ $this, 'contact_sync_to_post_pre' ], 10 );
+		add_action( 'cwps/acf/post/contact/sync/pre', [ $this, 'contact_sync_to_post_pre' ], 10 );
 
 		// Intercept Post-Contact sync event.
-		add_action( 'cwps/acf/post/contact_sync_to_post', [ $this, 'contact_sync_to_post' ], 10 );
+		add_action( 'cwps/acf/post/contact/sync', [ $this, 'contact_sync_to_post' ], 10 );
 
 		// Listen for queries from the ACF Field class.
 		add_filter( 'cwps/acf/query_settings_field', [ $this, 'query_settings_field' ], 51, 3 );

@@ -93,8 +93,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 		// Always register Mapper hooks.
 		$this->register_mapper_hooks();
 
-		// Intercept Post created from Contact events.
-		add_action( 'cwps/acf/post/contact_sync_to_post', [ $this, 'contact_sync_to_post' ], 10 );
+		// Intercept Post-Contact sync event.
+		add_action( 'cwps/acf/post/contact/sync', [ $this, 'contact_sync_to_post' ], 10 );
 
 		// Intercept calls to sync the Group.
 		add_action( 'cwps/acf/admin/group-to-term/sync', [ $this, 'group_sync' ], 10 );
