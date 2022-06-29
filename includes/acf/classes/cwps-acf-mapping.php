@@ -257,6 +257,12 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 			return;
 		}
 
+		// Bail if this is the CiviCRM "Delete Action".
+		$action = $form->getVar( '_action' );
+		if ( isset( $action ) && 8 === (int) $action ) {
+			return;
+		}
+
 		// Get CiviCRM Contact Type.
 		$contact_type = $form->getVar( '_values' );
 
@@ -415,6 +421,17 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 			}
 		}
 
+		// Is this the CiviCRM "Delete Action"?
+		$action = $form->getVar( '_action' );
+		if ( isset( $action ) && 8 === (int) $action ) {
+			$contact_type_id = $form->getVar( '_id' );
+		}
+
+		// Bail if we don't get a Contact Type for some reason.
+		if ( empty( $contact_type_id ) ) {
+			return;
+		}
+
 		// Grab submitted values.
 		$values = $form->getSubmitValues();
 
@@ -476,6 +493,12 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 		// Is this the Activity Type edit form?
 		if ( $form->get( 'gName' ) != 'activity_type' ) {
+			return;
+		}
+
+		// Bail if this is the CiviCRM "Delete Action".
+		$action = $form->getVar( '_action' );
+		if ( isset( $action ) && 8 === (int) $action ) {
 			return;
 		}
 
@@ -673,9 +696,6 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 			return;
 		}
 
-		// Grab submitted values.
-		$values = $form->getSubmitValues();
-
 		// Get Activity Type ID if not present in the form.
 		if ( ! empty( $values['value'] ) ) {
 			$activity_type_id = (int) $values['value'];
@@ -685,10 +705,19 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 			}
 		}
 
+		// Is this the CiviCRM "Delete Action"?
+		$action = $form->getVar( '_action' );
+		if ( isset( $action ) && 8 === (int) $action ) {
+			$activity_type_id = $form->getVar( '_id' );
+		}
+
 		// Bail if we don't get an Activity Type for some reason.
 		if ( empty( $activity_type_id ) ) {
 			return;
 		}
+
+		// Grab submitted values.
+		$values = $form->getSubmitValues();
 
 		// Inspect our select value.
 		if ( empty( $values['cwps_acf_cpt'] ) ) {
@@ -751,9 +780,9 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 			return;
 		}
 
-		// Bail if it's the "Delete" form.
-		// TODO: Check "Activity Type" form for this.
-		if ( $form->get( 'action' ) == 8 ) {
+		// Bail if this is the CiviCRM "Delete Action".
+		$action = $form->getVar( '_action' );
+		if ( isset( $action ) && 8 === (int) $action ) {
 			return;
 		}
 
@@ -943,6 +972,15 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		} else {
 			if ( isset( $this->saved_participant_role_id ) ) {
 				$participant_role_id = $this->saved_participant_role_id;
+			}
+		}
+
+		// Is this the CiviCRM "Delete Action"?
+		$action = $form->getVar( '_action' );
+		if ( isset( $action ) && 8 === (int) $action ) {
+			$form_values = $form->getVar( '_values' );
+			if ( ! empty( $form_values['value'] ) ) {
+				$participant_role_id = (int) $form_values['value'];
 			}
 		}
 

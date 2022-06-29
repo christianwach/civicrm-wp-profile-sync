@@ -695,6 +695,12 @@ class CiviCRM_WP_Profile_Sync_ACF_Geo_Mashup {
 			return;
 		}
 
+		// Bail if this is the CiviCRM "Delete Action".
+		$action = $form->getVar( '_action' );
+		if ( isset( $action ) && 8 === (int) $action ) {
+			return;
+		}
+
 		// Get CiviCRM Contact Type.
 		$contact_type = $form->getVar( '_values' );
 
