@@ -285,7 +285,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		// Create CiviCRM Settings and Sync metabox.
 		add_meta_box(
 			'cwps_acf_metabox',
-			__( 'CiviCRM ACF Integration', 'civicrm-wp-profile-sync' ),
+			__( 'CiviCRM', 'civicrm-wp-profile-sync' ),
 			[ $this, 'meta_box_link_render' ], // Callback.
 			$post_type, // Post Type.
 			'side', // Column: options are 'normal' and 'side'.
