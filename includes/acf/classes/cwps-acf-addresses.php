@@ -394,12 +394,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		$address_data['field_address_location_type'] = (int) $value->location_type_id;
 		$address_data['field_address_primary'] = empty( $value->is_primary ) ? '0' : '1';
 		$address_data['field_address_billing'] = empty( $value->is_billing ) ? '0' : '1';
-		$address_data['field_address_street_address'] = trim( $value->street_address );
+		$address_data['field_address_street_address'] = $this->plugin->civicrm->denullify( trim( $value->street_address ) );
 		$address_data['field_address_supplemental_address_1'] = $this->plugin->civicrm->denullify( $address_1 );
 		$address_data['field_address_supplemental_address_2'] = $this->plugin->civicrm->denullify( $address_2 );
 		$address_data['field_address_supplemental_address_3'] = $this->plugin->civicrm->denullify( $address_3 );
-		$address_data['field_address_city'] = empty( $value->city ) ? '' : trim( $value->city );
-		$address_data['field_address_postal_code'] = empty( $value->postal_code ) ? '' : trim( $value->postal_code );
+		$address_data['field_address_city'] = empty( $value->city ) ? '' : $this->plugin->civicrm->denullify( trim( $value->city ) );
+		$address_data['field_address_postal_code'] = empty( $value->postal_code ) ? '' : $this->plugin->civicrm->denullify( trim( $value->postal_code ) );
 		$address_data['field_address_country_id'] = empty( $value->country_id ) ? '' : (int) $value->country_id;
 		$address_data['field_address_state_province_id'] = empty( $value->state_province_id ) ? '' : (int) $value->state_province_id;
 		$address_data['field_address_geo_code_1'] = empty( $value->geo_code_1 ) ? '' : (float) $value->geo_code_1;
