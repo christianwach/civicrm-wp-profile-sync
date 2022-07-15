@@ -71,6 +71,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 	 * @var array $address_fields The Address Fields.
 	 */
 	public $address_fields = [
+		'address_name' => 'text',
 		'street_address' => 'text',
 		'supplemental_address_1' => 'text',
 		'supplemental_address_2' => 'text',
@@ -925,11 +926,17 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 			// Check "public" filter.
 			if ( $filter == 'public' ) {
 
+				// Get the CiviCRM Address Options.
+				$address_options = $this->plugin->civicrm->address->settings_get();
+
 				// Skip all but those defined in our Settings Fields array.
 				$filtered = [];
 				foreach ( $fields as $key => $value ) {
 					if ( array_key_exists( $value['name'], $this->settings_fields ) ) {
-						$filtered[] = $value;
+						// The Address Field must also be enabled in CiviCRM.
+						if ( ! empty( $address_options[ $key ] ) ) {
+							$filtered[] = $value;
+						}
 					}
 				}
 

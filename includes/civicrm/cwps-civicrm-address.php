@@ -828,6 +828,37 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 	// -------------------------------------------------------------------------
 
 	/**
+	 * Gets the CiviCRM "Address Options" settings.
+	 *
+	 * @since 0.5.9
+	 *
+	 * @return array|bool $settings The array of Address Options, or false on failure.
+	 */
+	public function settings_get() {
+
+		// Init return.
+		$settings = false;
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $settings;
+		}
+
+		// Use internal CiviCRM method.
+		$settings = CRM_Core_BAO_Setting::valueOptions(
+			CRM_Core_BAO_Setting::SYSTEM_PREFERENCES_NAME,
+			'address_options',
+			true, null, true
+		);
+
+		// --<
+		return $settings;
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
 	 * Update a CiviCRM Contact's Address Record.
 	 *
 	 * If you want to "create" an Address Record, do not pass $data['id'] in. The

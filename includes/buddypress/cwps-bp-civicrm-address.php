@@ -88,6 +88,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 	public $address_fields = [
 		'is_primary' => 'true_false',
 		'is_billing' => 'true_false',
+		'address_name' => 'textbox',
 		'street_address' => 'textbox',
 		'supplemental_address_1' => 'textbox',
 		'supplemental_address_2' => 'textbox',

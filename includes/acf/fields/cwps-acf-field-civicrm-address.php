@@ -563,6 +563,28 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Field extends acf_field {
 			'save_custom' => 0,
 		];
 
+		// Define Address Name Field.
+		$address_name = [
+			'key' => 'field_address_name',
+			'label' => __( 'Address Name', 'civicrm-wp-profile-sync' ),
+			'name' => 'address_name',
+			'type' => 'text',
+			'parent' => $field['key'],
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			],
+			'default_value' => '',
+			'placeholder' => '',
+			'prepend' => '',
+			'append' => '',
+			'maxlength' => '',
+		];
+
 		// Define Street Address Field.
 		$street_address = [
 			'key' => 'field_address_street_address',
@@ -844,24 +866,85 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Field extends acf_field {
 			'prefix' => '',
 		];
 
+		// Get the CiviCRM Address Options.
+		$address_options = $this->plugin->civicrm->address->settings_get();
+
 		// Add Subfields.
 		$field['sub_fields'] = [
 			$location,
 			$primary,
 			$billing,
-			$street_address,
-			$supplemental_address_1,
-			$supplemental_address_2,
-			$supplemental_address_3,
-			$city,
-			$post_code,
-			$country_id,
-			$state_province_id,
-			$geo_code_1,
-			$geo_code_2,
-			$manual_geo_code,
-			$address_id,
 		];
+
+		// Maybe add Address Name.
+		if ( ! empty( $address_options['address_name'] ) ) {
+			$field['sub_fields'][] = $address_name;
+		}
+
+		// Maybe add Street Address.
+		if ( ! empty( $address_options['street_address'] ) ) {
+			$field['sub_fields'][] = $street_address;
+		}
+
+		// Maybe add Supplemental Address 1.
+		if ( ! empty( $address_options['supplemental_address_1'] ) ) {
+			$field['sub_fields'][] = $supplemental_address_1;
+		}
+
+		// Maybe add Supplemental Address 2.
+		if ( ! empty( $address_options['supplemental_address_2'] ) ) {
+			$field['sub_fields'][] = $supplemental_address_2;
+		}
+
+		// Maybe add Supplemental Address 3.
+		if ( ! empty( $address_options['supplemental_address_3'] ) ) {
+			$field['sub_fields'][] = $supplemental_address_3;
+		}
+
+		// Maybe add City.
+		if ( ! empty( $address_options['city'] ) ) {
+			$field['sub_fields'][] = $city;
+		}
+
+		// Maybe add Post Code.
+		if ( ! empty( $address_options['postal_code'] ) ) {
+			$field['sub_fields'][] = $post_code;
+		}
+
+		/*
+		// Maybe add Post Code Suffix.
+		if ( ! empty( $address_options['postal_code_suffix'] ) ) {
+			$field['sub_fields'][] = $post_code_suffix;
+		}
+		*/
+
+		// Maybe add Country.
+		if ( ! empty( $address_options['country'] ) ) {
+			$field['sub_fields'][] = $country_id;
+		}
+
+		// Maybe add State/Province.
+		if ( ! empty( $address_options['state_province'] ) ) {
+			$field['sub_fields'][] = $state_province_id;
+		}
+
+		// Maybe add Latitude.
+		if ( ! empty( $address_options['geo_code_1'] ) ) {
+			$field['sub_fields'][] = $geo_code_1;
+		}
+
+		// Maybe add Longitude.
+		if ( ! empty( $address_options['geo_code_2'] ) ) {
+			$field['sub_fields'][] = $geo_code_2;
+		}
+
+		// Maybe add Geo Code Override.
+		if ( ! empty( $address_options['geo_code_1'] ) && ! empty( $address_options['geo_code_2'] ) ) {
+			$field['sub_fields'][] = $manual_geo_code;
+		}
+
+		// Always add Address ID.
+		$field['sub_fields'][] = $address_id;
 
 		// --<
 		return $field;

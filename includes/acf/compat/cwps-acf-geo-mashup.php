@@ -391,9 +391,14 @@ class CiviCRM_WP_Profile_Sync_ACF_Geo_Mashup {
 		// Init return.
 		$location = [];
 
-		// Convert whatever we can.
-		$location['saved_name']  = isset( $address['field_address_street_address'] ) ? $address['field_address_street_address'] : '';
-		$location['postal_code'] = isset( $address['field_address_postal_code'] ) ? $address['field_address_postal_code'] : '';
+		// Assign "Saved Name" from Address Name or Street Address.
+		$location['saved_name']  = empty( $address['field_address_name'] ) ? '' : $address['field_address_name'];
+		if ( empty( $location['saved_name'] ) ) {
+			$location['saved_name']  = empty( $address['field_address_street_address'] ) ? '' : $address['field_address_street_address'];
+		}
+
+		// Post Code.
+		$location['postal_code'] = empty( $address['field_address_postal_code'] ) ? '' : $address['field_address_postal_code'];
 
 		// Maybe add "State/Province" to array.
 		$state_id = isset( $address['field_address_state_province_id'] ) ? $address['field_address_state_province_id'] : '';

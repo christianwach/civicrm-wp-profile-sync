@@ -70,6 +70,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	public $address_fields = [
 		'is_primary' => 'true_false',
 		'is_billing' => 'true_false',
+		'address_name' => 'text',
 		'street_address' => 'text',
 		'supplemental_address_1' => 'text',
 		'supplemental_address_2' => 'text',
@@ -79,6 +80,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		'state_province_id' => 'select',
 		'country_id' => 'select',
 		'postal_code' => 'text',
+		//'postal_code_suffix' => 'text',
 		'geo_code_1' => 'text',
 		'geo_code_2' => 'text',
 		'name' => 'text',
@@ -200,10 +202,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 			// Check public filter.
 			} elseif ( $filter == 'public' ) {
 
+				// Get the CiviCRM Address Options.
+				$address_options = $this->plugin->civicrm->address->settings_get();
+
 				// Skip all but those defined in our public Address Fields array.
 				foreach ( $result['values'] as $key => $value ) {
 					if ( array_key_exists( $value['name'], $this->address_fields ) ) {
-						$fields[] = $value;
+						// The Address Field must also be enabled in CiviCRM.
+						if ( ! empty( $address_options[ $key ] ) ) {
+							$fields[] = $value;
+						}
 					}
 				}
 
