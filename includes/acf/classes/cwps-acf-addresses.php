@@ -1159,7 +1159,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		if ( ! empty( $existing[ $params['key'] ] ) ) {
 
 			// Assign Address ID.
-			$params['value']['field_address_id'] = $params['address']->id;
+			if ( ! empty( $params['address']->id ) ) {
+				$params['value']['field_address_id'] = $params['address']->id;
+			}
 
 			// Maybe assign Latitude.
 			if ( ! empty( $params['address']->geo_code_1 ) ) {
