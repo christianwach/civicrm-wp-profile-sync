@@ -451,7 +451,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 	 * @param str $mode Flag to determine the returned data. Defaults to API return data.
 	 * @return array|bool $location The array of Event Location data, or false on failure.
 	 */
-	public function location_get_by_id( $location_id, $mode = '' ) {
+	public function get_by_id( $location_id, $mode = '' ) {
 
 		// Init return.
 		$location = false;
