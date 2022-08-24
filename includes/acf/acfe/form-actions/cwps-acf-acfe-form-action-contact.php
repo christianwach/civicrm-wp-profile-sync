@@ -400,7 +400,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			return $form;
 		}
 
-		// Init Contact and Relationships.
+		// Init Contact.
 		$contact = [];
 
 		// Try finding the Contact ID.
@@ -3843,16 +3843,16 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			return $from_field;
 		}
 
-		// Try the "Related Contact".
-		$related = $this->form_contact_id_get_related( $relationship_data );
-		if ( $related ) {
-			return $related;
-		}
-
 		// Try the "Deduped Contact".
 		$deduped = $this->form_contact_id_get_deduped( $contact_data, $email_data );
 		if ( $deduped ) {
 			return $deduped;
+		}
+
+		// Try the "Related Contact".
+		$related = $this->form_contact_id_get_related( $relationship_data );
+		if ( $related ) {
+			return $related;
 		}
 
 		// --<
@@ -4029,7 +4029,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 	}
 
 	/**
-	 * Finds the Contact ID given data from mapped Fields.
+	 * Finds the Contact ID using Dedupe Rules given data from mapped Fields.
 	 *
 	 * @since 0.5
 	 *
@@ -4042,25 +4042,35 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// Init return.
 		$contact_id = false;
 
-		// Add the Primary Email.
-		$primary_email = '';
-		foreach ( $email_data as $email_array ) {
-			if ( $email_array['is_primary'] ) {
-				$contact_data['email'] = $email_array['email'];
+		// Dedupe on each available Email.
+		foreach ( $email_data as $email ) {
+
+			// Skip when there's no Email.
+			if ( empty( $email['email'] ) ) {
+				continue;
+			}
+
+			// Make a copy of the Contact data and add Email.
+			$dedupe = $contact_data;
+			$dedupe['email'] = $email['email'];
+
+			// Get the chosen Dedupe Rule.
+			$dedupe_rule_id = get_sub_field( $this->field_key . 'dedupe_rules' );
+
+			// If a Dedupe Rule is selected, use it.
+			if ( ! empty( $dedupe_rule_id ) ) {
+				$contact_id = $this->civicrm->contact->get_by_dedupe_rule( $dedupe, $dedupe['contact_type'], $dedupe_rule_id );
+			} else {
+				// Use the default unsupervised rule.
+				// NOTE: We need the Email Address to use the default unsupervised rule.
+				$contact_id = $this->civicrm->contact->get_by_dedupe_unsupervised( $dedupe, $dedupe['contact_type'] );
+			}
+
+			// Go no further when we get a Contact ID.
+			if ( ! empty( $contact_id ) ) {
 				break;
 			}
-		}
 
-		// Get the chosen Dedupe Rule.
-		$dedupe_rule_id = get_sub_field( $this->field_key . 'dedupe_rules' );
-
-		// If a Dedupe Rule is selected, use it.
-		if ( ! empty( $dedupe_rule_id ) ) {
-			$contact_id = $this->civicrm->contact->get_by_dedupe_rule( $contact_data, $contact_data['contact_type'], $dedupe_rule_id );
-		} else {
-			// Use the default unsupervised rule.
-			// NOTE: We need the Email Address to use the default unsupervised rule.
-			$contact_id = $this->civicrm->contact->get_by_dedupe_unsupervised( $contact_data, $contact_data['contact_type'] );
 		}
 
 		// --<
