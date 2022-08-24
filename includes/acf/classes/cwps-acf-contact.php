@@ -662,7 +662,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		$contact_ids = CRM_Dedupe_Finder::dupesByParams( $dedupe_params, $contact_type, 'Unsupervised' );
 
 		// Return the suggested Contact ID if present.
-		$contact_id = 0;
+		$contact_id = false;
 		if ( ! empty( $contact_ids ) ) {
 			$contact_ids = array_reverse( $contact_ids );
 			$contact_id = array_pop( $contact_ids );
@@ -702,7 +702,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		$contact_ids = CRM_Dedupe_Finder::dupesByParams( $dedupe_params, $contact_type, null, [], $dedupe_rule_id );
 
 		// Return the suggested Contact ID if present.
-		$contact_id = 0;
+		$contact_id = false;
 		if ( ! empty( $contact_ids ) ) {
 			$contact_ids = array_reverse( $contact_ids );
 			$contact_id = array_pop( $contact_ids );
