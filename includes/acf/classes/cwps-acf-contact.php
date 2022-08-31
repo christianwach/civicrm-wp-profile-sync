@@ -438,7 +438,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		$checksum = [];
 
 		// Bail if there is no checksum.
-		if ( ! $this->has_checksum() ) {
+		if ( ! $this->checksum_exists() ) {
 			return $checksum;
 		}
 
