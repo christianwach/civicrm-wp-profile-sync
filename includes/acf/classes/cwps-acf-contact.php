@@ -402,6 +402,56 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	// -------------------------------------------------------------------------
 
 	/**
+	 * Checks if there is a valid checksum.
+	 *
+	 * @since 0.5.9
+	 *
+	 * @return bool True when there is a checksum, false otherwise.
+	 */
+	public function checksum_exists() {
+
+		// Bail if there is no checksum.
+		if ( empty( $_GET['cs'] ) ) {
+			return false;
+		}
+
+		// The checksum must be accompanied by a Contact ID.
+		if ( empty( $_GET['cid'] ) || ! is_numeric( wp_unslash( $_GET['cid'] ) ) ) {
+			return false;
+		}
+
+		// We have a valid checksum.
+		return true;
+
+	}
+
+	/**
+	 * Gets the checksum data if present.
+	 *
+	 * @since 0.5.9
+	 *
+	 * @return array $checksum The array of checksum data, false otherwise.
+	 */
+	public function checksum_get() {
+
+		// Init return.
+		$checksum = [];
+
+		// Bail if there is no checksum.
+		if ( ! $this->has_checksum() ) {
+			return $checksum;
+		}
+
+		// Assign checksum values.
+		$checksum['checksum'] = trim( wp_unslash( $_GET['cs'] ) );
+		$checksum['contact_id'] = (int) trim( wp_unslash( $_GET['cid'] ) );
+
+		// --<
+		return $checksum;
+
+	}
+
+	/**
 	 * Gets the Contact ID for a given checksum.
 	 *
 	 * @since 0.5
@@ -413,32 +463,26 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		// Fail by default.
 		$contact_id = false;
 
-		// Bail if there is no checksum.
-		if ( empty( $_GET['cs'] ) ) {
-			return $contact_id;
-		}
-
-		// The checksum must be accompanied by a Contact ID.
-		if ( empty( $_GET['cid'] ) || ! is_numeric( wp_unslash( $_GET['cid'] ) ) ) {
-			return $contact_id;
-		}
-
 		// Try and init CiviCRM.
 		if ( ! $this->civicrm->is_initialised() ) {
 			return $contact_id;
 		}
 
+		// Try and get the checksum.
+		$checksum = $this->checksum_get();
+		if ( empty( $checksum ) ) {
+			return $contact_id;
+		}
+
 		// Bail if no "Edit Contact" permission or not a valid checksum.
-		$cid = (int) trim( wp_unslash( $_GET['cid'] ) );
-		$checksum = trim( wp_unslash( $_GET['cs'] ) );
-		$allowed = CRM_Contact_BAO_Contact_Permission::allow( $cid, CRM_Core_Permission::EDIT );
-		$valid = CRM_Contact_BAO_Contact_Utils::validChecksum( $cid, $checksum );
+		$allowed = CRM_Contact_BAO_Contact_Permission::allow( $checksum['contact_id'], CRM_Core_Permission::EDIT );
+		$valid = CRM_Contact_BAO_Contact_Utils::validChecksum( $checksum['contact_id'], $checksum['checksum'] );
 		if ( ! $allowed && ! $valid ) {
 			return $contact_id;
 		}
 
 		// Okay, looks good.
-		$contact_id = $cid;
+		$contact_id = $checksum['contact_id'];
 
 		// --<
 		return $contact_id;
