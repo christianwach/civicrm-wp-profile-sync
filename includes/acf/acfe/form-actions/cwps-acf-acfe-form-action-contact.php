@@ -3754,7 +3754,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// Check "Related Contact" when autoloading, autoupdating and not the "Submitter Contact" Action.
 		if ( $this->action_is_autoload() && $this->action_is_autoupdate() && ! $this->action_is_submitter() ) {
 
-			// TODO: Relationships.
+			// Parse Relationships.
 			$relationship_data = $this->form_relationship_data( $form, $current_post_id, $action );
 			$relationships = $this->form_relationship_load( $action, $relationship_data );
 
@@ -4761,8 +4761,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			}
 
 			// Extract some variables from the array for brevity.
-			$type_id = $relationships['type_id'];
-			$related_contact_id = $relationships['related_contact']['id'];
+			$type_id = (int) $relationships['type_id'];
+			$related_contact_id = (int) $relationships['related_contact']['id'];
 			$inverse = $relationships['inverse'];
 
 			// If there aren't any Relationships, build an array to create one.
@@ -4787,6 +4787,33 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 			// Let's reset the keys since the array is keyed by Relationship ID.
 			$relationships_reset = array_values( $relationships['relationships'] );
+
+			// The "Employer/Employee" Relationship needs special handling. Duh.
+			$employer_employee_type_id = $this->civicrm->relationship->type_id_employer_employee_get();
+			if ( $employer_employee_type_id === $type_id ) {
+
+				// When "Current Employer/Employee" is specified.
+				if ( ! empty( $field['is_current_employer'] ) || ! empty( $field['is_current_employee'] ) ) {
+
+					// Try and find the "current" Relationship.
+					$current = [];
+					foreach ( $relationships_reset as $employer_employee ) {
+						$is_current = $this->civicrm->relationship->is_employer_employee( $employer_employee );
+						if ( $is_current === true ) {
+							$current = $employer_employee;
+							break;
+						}
+					}
+
+					// Use it if we find the "current" Relationship.
+					if ( ! empty( $current ) ) {
+						$relationship_parsed[] = $this->form_relationship_fill( $current, $field );
+						continue;
+					}
+
+				}
+
+			}
 
 			// Get the Relationship offset.
 			$offset = $this->form_relationship_offset( $relationships_reset, $type_id, $related_contact_id, $inverse );
