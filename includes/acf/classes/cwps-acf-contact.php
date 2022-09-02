@@ -411,12 +411,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	public function checksum_exists() {
 
 		// Bail if there is no checksum.
-		if ( empty( $_GET['cs'] ) ) {
+		$checksum = filter_input( INPUT_GET, 'cs' );
+		if ( empty( $checksum ) ) {
 			return false;
 		}
 
 		// The checksum must be accompanied by a Contact ID.
-		if ( empty( $_GET['cid'] ) || ! is_numeric( wp_unslash( $_GET['cid'] ) ) ) {
+		$contact_id = filter_input( INPUT_GET, 'cid' );
+		if ( empty( $contact_id ) || ! is_numeric( wp_unslash( $contact_id ) ) ) {
 			return false;
 		}
 
@@ -443,8 +445,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		}
 
 		// Assign checksum values.
-		$checksum['checksum'] = trim( wp_unslash( $_GET['cs'] ) );
-		$checksum['contact_id'] = (int) trim( wp_unslash( $_GET['cid'] ) );
+		$checksum['checksum'] = trim( wp_unslash( filter_input( INPUT_GET, 'cs' ) ) );
+		$checksum['contact_id'] = (int) trim( wp_unslash( filter_input( INPUT_GET, 'cid' ) ) );
 
 		// --<
 		return $checksum;
