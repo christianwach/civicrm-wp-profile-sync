@@ -5001,10 +5001,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 			// Assign Contact ID when it's a new Relationship.
 			if ( empty( $relationship['id'] ) ) {
-				if ( ! empty( $relationship['contact_id_b'] ) ) {
-					$relationship['contact_id_a'] = $contact['id'];
-				} else {
+				if ( empty( $relationship['contact_id_b'] ) && ! empty( $relationship['contact_id_a'] ) ) {
 					$relationship['contact_id_b'] = $contact['id'];
+				}
+				if ( empty( $relationship['contact_id_a'] ) && ! empty( $relationship['contact_id_b'] ) ) {
+					$relationship['contact_id_a'] = $contact['id'];
 				}
 			}
 
