@@ -1442,12 +1442,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	 */
 	public function type_id_employer_employee_get() {
 
-		// Init return.
-		$relationship_type_id = false;
+		// Only do this once.
+		static $relationship_type_id;
+		if ( isset( $relationship_type_id ) ) {
+			return $relationship_type_id;
+		}
 
 		// Try and init CiviCRM.
 		if ( ! $this->civicrm->is_initialised() ) {
-			return $relationship_type_id;
+			return false;
 		}
 
 		// Construct API query.
@@ -1462,27 +1465,27 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 		// Bail if there's an error.
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			return $relationship_type_id;
+			return false;
 		}
 
 		// Bail if there are no results.
 		if ( empty( $result['values'] ) ) {
-			return $relationship_type_id;
+			return false;
 		}
 
 		// The result set should contain only one item.
 		$relationship = array_pop( $result['values'] );
 
 		// We only want the ID.
-		$relationship_type_id = $relationship['id'];
+		$relationship_type_id = (int) $relationship['id'];
 
 		// --<
-		return (int) $relationship_type_id;
+		return $relationship_type_id;
 
 	}
 
 	/**
-	 * Checks an CiviCRM Employer/Employee Relationship for "Is Current" status.
+	 * Checks a CiviCRM Employer/Employee Relationship for "Is Current" status.
 	 *
 	 * @since 0.5.7
 	 *
