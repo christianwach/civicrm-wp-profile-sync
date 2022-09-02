@@ -402,7 +402,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Checks if there is a valid checksum.
+	 * Checks if there are valid checksum query params.
 	 *
 	 * @since 0.5.9
 	 *
@@ -420,7 +420,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 			return false;
 		}
 
-		// We have a valid checksum.
+		// We have valid checksum query params.
 		return true;
 
 	}
@@ -437,7 +437,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		// Init return.
 		$checksum = [];
 
-		// Bail if there is no checksum.
+		// Bail if there are no checksum values.
 		if ( ! $this->checksum_exists() ) {
 			return $checksum;
 		}
