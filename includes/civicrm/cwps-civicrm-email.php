@@ -463,6 +463,10 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		/**
 		 * Broadcast that a CiviCRM Contact's Email has been synced.
 		 *
+		 * Used internally by:
+		 *
+		 * * CiviCRM_WP_Profile_Sync_Mapper_UFMatch::entries_update()
+		 *
 		 * @since 0.4
 		 *
 		 * @param integer $user_id The ID of the WordPress User.

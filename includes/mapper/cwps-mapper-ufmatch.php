@@ -66,6 +66,9 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 	 */
 	public function register_hooks() {
 
+		// Listen for WordPress User Email changes.
+		add_action( 'civicrm_wp_profile_sync_primary_email_synced', [ $this, 'entries_update' ], 10, 3 );
+
 	}
 
 	/**
@@ -182,7 +185,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 	 *
 	 * @param integer $contact_id The numeric ID of the CiviCRM Contact.
 	 * @param integer|string $domain_id The Domain ID (defaults to current Domain ID) or a string to search all Domains.
-	 * @return WP_User|bool $user The WordPress User object, or false on failure.
+	 * @return int|bool $user_id The numeric WordPress User ID, or false on failure.
 	 */
 	public function user_id_get_by_contact_id( $contact_id, $domain_id = '' ) {
 
@@ -262,46 +265,60 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 	/**
 	 * Create a link between a WordPress User and a CiviCRM Contact.
 	 *
-	 * This method optionally allows a Domain ID to be specified.
+	 * This method optionally allows a Domain ID to be specified in the UFMatch
+	 * data array. If none is specified, then CiviCRM will default to the current
+	 * Domain ID.
 	 *
 	 * @since 0.4
 	 *
-	 * @param integer $contact_id The numeric ID of the CiviCRM Contact.
-	 * @param integer $user_id The numeric ID of the WordPress User.
-	 * @param string $username The WordPress username.
-	 * @param integer $domain_id The CiviCRM Domain ID (defaults to current Domain ID).
-	 * @return array|bool The UFMatch data on success, or false on failure.
+	 * @param array $ufmatch The CiviCRM UFMatch data.
+	 * @return array|bool $ufmatch_data The UFMatch data on success, or false on failure.
 	 */
-	public function entry_create( $contact_id, $user_id, $username, $domain_id = '' ) {
+	public function entry_create( $ufmatch ) {
+
+		// Init as failure.
+		$ufmatch_data = false;
 
 		// Bail if CiviCRM is not active.
 		if ( ! $this->plugin->civicrm->is_initialised() ) {
-			return false;
+			return $ufmatch_data;
 		}
 
-		// Sanity checks.
-		if ( ! is_numeric( $contact_id ) || ! is_numeric( $user_id ) ) {
-			return false;
-		}
-
-		// Construct params.
+		// Build params to create a UFMatch record.
 		$params = [
 			'version' => 3,
-			'uf_id' => $user_id,
-			'uf_name' => $username,
-			'contact_id' => $contact_id,
-		];
+			//'debug' => 1,
+		] + $ufmatch;
 
 		// Maybe add Domain ID.
-		if ( ! empty( $domain_id ) ) {
-			$params['domain_id'] = $domain_id;
+		if ( ! empty( $ufmatch['domain_id'] ) ) {
+			$params['domain_id'] = $ufmatch['domain_id'];
 		}
+
+		/*
+		 * Minimum array to create a UFMatch record:
+		 *
+		 * $params = [
+		 *   'version' => 3,
+		 *   'uf_id' => 123,
+		 *   'uf_name' => "foo@bar.com",
+		 *   'contact_id' => 456,
+		 * ];
+		 *
+		 * Updates are triggered by:
+		 *
+		 * $params['id'] = 789;
+		 *
+		 * A Domain ID can be specified with:
+		 *
+		 * $params['domain_id'] = 10;
+		 */
 
 		// Create record via API.
 		$result = civicrm_api( 'UFMatch', 'create', $params );
 
 		// Log and bail on failure.
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -313,8 +330,47 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 			return false;
 		}
 
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $ufmatch_data;
+		}
+
+		// The result set should contain only one item.
+		$ufmatch_data = array_pop( $result['values'] );
+
 		// --<
-		return $result;
+		return $ufmatch_data;
+
+	}
+
+	/**
+	 * Updates a CiviCRM UFMatch record with a given set of data.
+	 *
+	 * This is an alias of `self::entry_create()` except that we expect a
+	 * UFMatch ID to have been set in the data array.
+	 *
+	 * @since 0.5.9
+	 *
+	 * @param array $ufmatch The CiviCRM UFMatch data.
+	 * @return array|bool The array of UFMatch data, or false on failure.
+	 */
+	public function entry_update( $ufmatch ) {
+
+		// Log and bail if there's no UFMatch ID.
+		if ( empty( $ufmatch['id'] ) ) {
+			$e = new \Exception();
+			$trace = $e->getTraceAsString();
+			error_log( print_r( [
+				'method' => __METHOD__,
+				'message' => __( 'A numeric ID must be present to update a UFMatch record.', 'civicrm-wp-profile-sync' ),
+				'ufmatch' => $ufmatch,
+				'backtrace' => $trace,
+			], true ) );
+			return false;
+		}
+
+		// Pass through.
+		return $this->entry_create( $ufmatch );
 
 	}
 
@@ -348,7 +404,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		$result = civicrm_api( 'UFMatch', 'delete', $params );
 
 		// Log and bail on failure.
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
 			error_log( print_r( [
@@ -370,9 +426,10 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 	/**
 	 * Get the UFMatch data for a given CiviCRM Contact ID.
 	 *
-	 * This method optionally allows a Domain ID to be specified.
-	 * If no Domain ID is passed, then we default to current Domain ID.
-	 * If a Domain ID is passed as a string, then we search all Domain IDs.
+	 * This method optionally allows a Domain ID to be specified:
+	 *
+	 * * If no Domain ID is passed, then we default to current Domain ID.
+	 * * If a Domain ID is passed as a string, then we search all Domain IDs.
 	 *
 	 * @since 0.4
 	 *
@@ -410,6 +467,19 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		if ( ! empty( $domain_id ) && is_numeric( $domain_id ) ) {
 			$params['domain_id'] = $domain_id;
 		}
+
+		/**
+		 * Filters the params used to query the UFMatch data.
+		 *
+		 * This filter may be used, for example, to modify the Domain ID when a
+		 * Contact is edited by a CiviCRM Admin and that Contact does NOT have a
+		 * UFMatch record in the current Domain.
+		 *
+		 * @since 0.5.9
+		 *
+		 * @param array $params The params passed to the CiviCRM API.
+		 */
+		$params = apply_filters( 'cwps/mapper/ufmatch/entry_get_by_contact_id', $params );
 
 		// Get all UFMatch records via API.
 		$result = civicrm_api( 'UFMatch', 'get', $params );
@@ -454,9 +524,10 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 	/**
 	 * Get the UFMatch data for a given WordPress User ID.
 	 *
-	 * This method optionally allows a Domain ID to be specified.
-	 * If no Domain ID is passed, then we default to current Domain ID.
-	 * If a Domain ID is passed as a string, then we search all Domain IDs.
+	 * This method optionally allows a Domain ID to be specified:
+	 *
+	 * * If no Domain ID is passed, then we default to current Domain ID.
+	 * * If a Domain ID is passed as a string, then we search all Domain IDs.
 	 *
 	 * @since 0.4
 	 *
@@ -494,6 +565,15 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		if ( ! empty( $domain_id ) && is_numeric( $domain_id ) ) {
 			$params['domain_id'] = $domain_id;
 		}
+
+		/**
+		 * Filters the params used to query the UFMatch data.
+		 *
+		 * @since 0.5.9
+		 *
+		 * @param array $params The params passed to the CiviCRM API.
+		 */
+		$params = apply_filters( 'cwps/mapper/ufmatch/entry_get_by_user_id', $params );
 
 		// Get all UFMatch records via API.
 		$result = civicrm_api( 'UFMatch', 'get', $params );
@@ -616,6 +696,79 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 
 		// --<
 		return $entry;
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Updates the UFMatch entry in the current Domain for a CiviCRM Contact when
+	 * their Primary Email changes.
+	 *
+	 * We only need to update the UFMatch entry in the current Domain because
+	 * the CiviCRM Multisite Extension updates the rest when CiviCRM is set up to
+	 * use multiple Domains.
+	 *
+	 * @see https://github.com/eileenmcnaughton/org.civicrm.multisite/blob/master/multisite.php#L143-L167
+	 *
+	 * @since 0.5.9
+	 *
+	 * @param integer $user_id The ID of the WordPress User.
+	 * @param integer $email_id The ID of the CiviCRM Email.
+	 * @param object $email The CiviCRM Email object.
+	 */
+	public function entries_update( $user_id, $email_id, $email ) {
+
+		// Bail if CiviCRM is not active.
+		if ( ! $this->plugin->civicrm->is_initialised() ) {
+			return;
+		}
+
+		// Never overwrite with an empty Email address.
+		if ( empty( $email->email ) ) {
+			return;
+		}
+
+		// The Email must be associated with a Contact.
+		if ( empty( $email->contact_id ) ) {
+			return;
+		}
+
+		// Must be the Primary Email.
+		if ( empty( $email->is_primary ) || $email->is_primary != 1 ) {
+			return;
+		}
+
+		// Get the UFMatch entry for this Contact in the current Domain.
+		$entry = $this->entry_get_by_contact_id( $email->contact_id );
+
+		// Bail if there's no UFMatch entry.
+		if ( $entry === false ) {
+			return;
+		}
+
+		// When we get an array back, there are multiple entries.
+		if ( is_array( $entry ) ) {
+			// In this context, this is an error.
+			return;
+		}
+
+		// When we get an object back, there's only one entry.
+		if ( ! is_object( $entry ) ) {
+			return;
+		}
+
+		// Build params.
+		$params = [
+			'id' => $entry->id,
+			'uf_id' => $entry->uf_id,
+			'uf_name' => $email->email,
+			'contact_id' => $entry->contact_id,
+			'domain_id' => $entry->domain_id,
+		];
+
+		// Update the UFMatch record.
+		$ufmatch = $this->entry_update( $params );
 
 	}
 
