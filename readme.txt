@@ -86,6 +86,11 @@ I'll say it again: test early, test often and - above all - test on a developmen
 
 == Changelog ==
 
+= 0.5.9 =
+
+* Refines deduping in Contact Action for ACF Extended Forms.
+* Fixes fatal error in Event Action for ACF Extended Forms.
+
 = 0.5.8 =
 
 * Fixes PHP 8 notices
