@@ -1,4 +1,4 @@
-<?php
+ph<?php
 /**
  * Admin Settings page Profile metabox template.
  *
@@ -73,14 +73,18 @@
 						<?php endforeach; ?>
 					</select>
 				</p>
-				<p class="description"><?php
+				<p class="description">
+					<?php
+
 					echo sprintf(
 						/* translators: 1: Opening anchor tag, 2: Closing anchor tag */
 						__( 'The CiviCRM Website Type that the WordPress User Profile Website syncs with. Tip: you can manage your %1$sWebsite Types in CiviCRM%2$s.', 'civicrm-wp-profile-sync' ),
 						'<a href="' . $website_types_link . '">',
 						'</a>'
 					);
-				?></p>
+
+					?>
+				</p>
 			<?php endif; ?>
 		</td>
 	</tr>

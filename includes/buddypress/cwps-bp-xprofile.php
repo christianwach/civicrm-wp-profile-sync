@@ -999,7 +999,9 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 		// Extract the Entity Type from our metabox.
 		$entity_type = '';
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( ! empty( $_POST[ $this->entity_type ] ) ) {
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			$entity_type = wp_unslash( $_POST[ $this->entity_type ] );
 		}
 
@@ -1013,7 +1015,9 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 			// Extract the Website Type ID from our metabox.
 			$website_type_id = '';
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( ! empty( $_POST[ $this->website_type_id ] ) ) {
+				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 				$website_type_id = wp_unslash( $_POST[ $this->website_type_id ] );
 			}
 
@@ -1029,7 +1033,9 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 			// Extract the Location Type ID from our metabox.
 			$location_type_id = '';
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( ! empty( $_POST[ $this->location_type_id ] ) ) {
+				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 				$location_type_id = wp_unslash( $_POST[ $this->location_type_id ] );
 			}
 
@@ -1045,13 +1051,17 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 			// Extract the Contact Type ID from our metabox.
 			$contact_type_id = '';
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( ! empty( $_POST[ $this->contact_type_id ] ) ) {
+				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 				$contact_type_id = wp_unslash( $_POST[ $this->contact_type_id ] );
 			}
 
 			// Extract the Contact Subtype ID from our metabox.
 			$contact_subtype_id = '';
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( ! empty( $_POST[ $this->contact_subtype_id ] ) ) {
+				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 				$contact_subtype_id = wp_unslash( $_POST[ $this->contact_subtype_id ] );
 			}
 
@@ -1065,7 +1075,9 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 		// Extract the value from our metabox.
 		$value = '';
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( ! empty( $_POST[ $this->name ] ) ) {
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			$value = wp_unslash( $_POST[ $this->name ] );
 		}
 
@@ -1113,7 +1125,9 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 		// Extract the Entity Type from our metabox.
 		$entity_type = '';
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( ! empty( $_POST[ $this->entity_type ] ) ) {
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			$entity_type = wp_unslash( $_POST[ $this->entity_type ] );
 		}
 
@@ -1130,13 +1144,17 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 			// Extract the Contact Type ID from our metabox.
 			$contact_type_id = '';
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( ! empty( $_POST[ $this->contact_type_id ] ) ) {
+				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 				$contact_type_id = wp_unslash( $_POST[ $this->contact_type_id ] );
 			}
 
 			// Extract the Contact Subtype ID from our metabox.
 			$contact_subtype_id = '';
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( ! empty( $_POST[ $this->contact_subtype_id ] ) ) {
+				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 				$contact_subtype_id = wp_unslash( $_POST[ $this->contact_subtype_id ] );
 			}
 
@@ -1153,7 +1171,9 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 			// Extract the Location Type ID from our metabox.
 			$location_type_id = '';
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( ! empty( $_POST[ $this->location_type_id ] ) ) {
+				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 				$location_type_id = wp_unslash( $_POST[ $this->location_type_id ] );
 			}
 
@@ -1167,7 +1187,9 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 				// Extract the Phone Type ID from our metabox.
 				$phone_type_id = '';
+				// phpcs:ignore WordPress.Security.NonceVerification.Missing
 				if ( ! empty( $_POST[ $this->phone_type_id ] ) ) {
+					// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 					$phone_type_id = wp_unslash( $_POST[ $this->phone_type_id ] );
 				}
 
@@ -1183,7 +1205,9 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 			// Extract the Website Type ID from our metabox.
 			$website_type_id = '';
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( ! empty( $_POST[ $this->website_type_id ] ) ) {
+				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 				$website_type_id = wp_unslash( $_POST[ $this->website_type_id ] );
 			}
 
@@ -1194,7 +1218,9 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 		// Extract the value from our metabox.
 		$value = '';
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( ! empty( $_POST[ $this->name ] ) ) {
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			$value = wp_unslash( $_POST[ $this->name ] );
 		}
 
@@ -1436,8 +1462,8 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	public function enqueue_js() {
 
 		// Same check as BuddyPress.
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-		if ( ! empty( $_GET['page'] ) && strpos( $_GET['page'], 'bp-profile-setup' ) !== false ) {
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		if ( ! empty( $_GET['page'] ) && false !== strpos( wp_unslash( $_GET['page'] ), 'bp-profile-setup' ) ) {
 
 			// Enqueue our JavaScript.
 			wp_enqueue_script(

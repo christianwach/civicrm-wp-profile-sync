@@ -905,6 +905,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	public function settings_update_router() {
 
 		// Was the "Settings" form submitted?
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( isset( $_POST['cwps_save'] ) ) {
 
 			// Update the settings.
@@ -936,6 +937,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 		// Get User Profile Website Type.
 		$website_type = ! empty( $_POST['cwps_website_type_select'] ) ?
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			(int) trim( wp_unslash( $_POST['cwps_website_type_select'] ) ) :
 			0;
 
@@ -946,6 +948,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 		// Get User Profile Email Sync.
 		$email_sync = isset( $_POST['cwps_email_sync_select'] ) ?
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			(int) trim( wp_unslash( $_POST['cwps_email_sync_select'] ) ) :
 			2;
 

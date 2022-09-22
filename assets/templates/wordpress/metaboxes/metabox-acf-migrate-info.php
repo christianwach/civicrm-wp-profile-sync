@@ -47,12 +47,18 @@
 
 	<p><em><?php esc_html_e( 'CiviCRM Profile Sync has migrated your CiviCRM ACF Integration plugin settings.', 'civicrm-wp-profile-sync' ); ?></em></p>
 
-	<p><?php echo sprintf(
-		/* translators: 1: Opening anchor tag, 2: Closing anchor tag */
-		__( 'You can now go to your %1$sPlugins page%2$s and deactivate the CiviCRM ACF Integration plugin.', 'civicrm-wp-profile-sync' ),
-		'<a href="' . admin_url( 'plugins.php' ) . '">',
-		'</a>'
-	); ?></p>
+	<p>
+		<?php
+
+		echo sprintf(
+			/* translators: 1: Opening anchor tag, 2: Closing anchor tag */
+			__( 'You can now go to your %1$sPlugins page%2$s and deactivate the CiviCRM ACF Integration plugin.', 'civicrm-wp-profile-sync' ),
+			'<a href="' . admin_url( 'plugins.php' ) . '">',
+			'</a>'
+		);
+
+		?>
+	</p>
 
 	<p><?php esc_html_e( 'When you have done that, you will be able to access the "Manual Sync" page here instead of this page.', 'civicrm-wp-profile-sync' ); ?></p>
 
