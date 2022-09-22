@@ -851,6 +851,20 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 			true, null, true
 		);
 
+		// The items that are missing the "_id" suffix.
+		$missing = [
+			'county',
+			'state_province',
+			'country',
+		];
+
+		// Backfill the items that are missing "_id".
+		foreach( $missing as $item ) {
+			if ( array_key_exists( $item, $settings ) ) {
+				$settings[ $item . '_id' ] = $settings[ $item ];
+			}
+		}
+
 		// --<
 		return $settings;
 
