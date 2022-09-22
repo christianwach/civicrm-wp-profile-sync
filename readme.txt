@@ -86,6 +86,10 @@ I'll say it again: test early, test often and - above all - test on a developmen
 
 == Changelog ==
 
+= 0.6.0 =
+
+* Fixes missing fields in Form Actions for ACF Extended Forms.
+
 = 0.5.9 =
 
 * Refines deduping in Contact Action for ACF Extended Forms.
