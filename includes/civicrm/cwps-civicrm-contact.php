@@ -706,7 +706,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 				'method' => __METHOD__,
 				'params' => $params,
 				'result' => $result,
-				//'backtrace' => $trace,
+				'backtrace' => $trace,
 			], true ) );
 			return $contact_data;
 		}

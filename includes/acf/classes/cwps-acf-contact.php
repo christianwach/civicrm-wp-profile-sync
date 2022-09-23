@@ -1106,7 +1106,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		if ( $post->post_status == 'trash' ) {
 			$contact_data['is_deleted'] = 1;
 		} else {
-			$contact_data['is_deleted'] = 0;
+			if ( ! empty( $contact['id'] ) ) {
+				$contact_data['is_deleted'] = 0;
+			}
 		}
 
 		/**
