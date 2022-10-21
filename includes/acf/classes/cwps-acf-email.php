@@ -477,6 +477,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		// Create a Primary Email if there are no results.
 		if ( empty( $primary_email['values'] ) ) {
 
+			// But only if there is an incoming Email Address.
+			if ( empty( $value ) ) {
+				return $email;
+			}
+
 			// Define params to create new Primary Email.
 			$params = [
 				'version' => 3,
