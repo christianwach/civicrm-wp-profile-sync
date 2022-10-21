@@ -665,11 +665,19 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 			// Only update if the Email has changed.
 			if ( $primary_email->email != $user->user_email ) {
 
-				// Construct params to update the Email record.
+				/*
+				 * Construct params to update the Email record.
+				 *
+				 * We need to specify a Location Type so that the API keeps the
+				 * existing Location Type rather than reverting to the default
+				 * Location Type.
+				 */
 				$params = [
 					'id' => $primary_email->id,
+					'location_type_id' => $primary_email->location_type_id,
 					'contact_id' => $contact->contact_id,
 					'email' => $user->user_email,
+					'is_primary' => 1,
 				];
 
 				// Update it.
