@@ -1977,53 +1977,125 @@ class CiviCRM_Profile_Sync_ACF_User {
 		// Get all Relationship Types.
 		$relationship_types = $this->civicrm->relationship->types_get_all();
 
-		// Get the Custom Fields for each CiviCRM Relationship Type.
+		// Define "All Contacts" string.
+		$all = __( 'All Contacts', 'civicrm-wp-profile-sync' );
+
+		// Build the options for each CiviCRM Relationship Type.
 		foreach ( $relationship_types as $relationship_type ) {
 
-			// Define key.
-			$key = $relationship_type['id'] . '_ab';
+			// Check for an "All-to-all" relationship.
+			if ( empty( $relationship_type['contact_type_a'] ) && empty( $relationship_type['contact_type_b'] ) ) {
 
-			// Add to subtype optgroup if possible.
-			if ( ! empty( $relationship_type['contact_sub_type_a'] ) ) {
-				$relationships[ $relationship_type['contact_sub_type_a'] ][ $key ] = sprintf(
-					/* translators: %s: The Relationship label */
-					__( '%s (A-B)', 'civicrm-wp-profile-sync' ),
-					$relationship_type['label_a_b']
-				);
-			}
+				// Define key.
+				$key = $relationship_type['id'] . '_ab';
 
-			// Add to type optgroup if not already added - and no subtype.
-			if ( empty( $relationship_type['contact_sub_type_a'] ) ) {
-				if ( ! isset( $relationships[ $relationship_type['contact_type_a'] ][ $key ] ) ) {
-					$relationships[ $relationship_type['contact_type_a'] ][ $key ] = sprintf(
+				// Add to "All Contacts" optgroup if not already added.
+				if ( ! isset( $filtered[ $all ][ $key ] ) ) {
+					$relationships[ $all ][ $key ] = sprintf(
 						/* translators: %s: The Relationship label */
 						__( '%s (A-B)', 'civicrm-wp-profile-sync' ),
 						$relationship_type['label_a_b']
 					);
 				}
-			}
 
-			// Define key.
-			$key = $relationship_type['id'] . '_ba';
+				// Define key.
+				$key = $relationship_type['id'] . '_ba';
 
-			// Add to subtype optgroup if possible.
-			if ( ! empty( $relationship_type['contact_sub_type_b'] ) ) {
-				$relationships[ $relationship_type['contact_sub_type_b'] ][ $key ] = sprintf(
-					/* translators: %s: The Relationship label */
-					__( '%s (B-A)', 'civicrm-wp-profile-sync' ),
-					$relationship_type['label_b_a']
-				);
-			}
-
-			// Add to type optgroup if not already added - and no subtype.
-			if ( empty( $relationship_type['contact_sub_type_b'] ) ) {
-				if ( ! isset( $relationships[ $relationship_type['contact_type_b'] ][ $key ] ) ) {
-					$relationships[ $relationship_type['contact_type_b'] ][ $key ] = sprintf(
+				// Add to "All Contacts" optgroup if not already added.
+				if ( ! isset( $filtered[ $all ][ $key ] ) ) {
+					$relationships[ $all ][ $key ] = sprintf(
 						/* translators: %s: The Relationship label */
 						__( '%s (B-A)', 'civicrm-wp-profile-sync' ),
 						$relationship_type['label_b_a']
 					);
 				}
+
+				continue;
+
+			}
+
+			// Check the A-to-B relationship.
+			if ( ! empty( $relationship_type['contact_type_a'] ) ) {
+
+				// Define key.
+				$key = $relationship_type['id'] . '_ab';
+
+				// Add to subtype optgroup if possible.
+				if ( ! empty( $relationship_type['contact_sub_type_a'] ) ) {
+					$relationships[ $relationship_type['contact_sub_type_a'] ][ $key ] = sprintf(
+						/* translators: %s: The Relationship label */
+						__( '%s (A-B)', 'civicrm-wp-profile-sync' ),
+						$relationship_type['label_a_b']
+					);
+				}
+
+				// Add to type optgroup if not already added - and no subtype.
+				if ( ! isset( $relationships[ $relationship_type['contact_type_a'] ][ $key ] ) ) {
+					if ( empty( $relationship_type['contact_sub_type_a'] ) ) {
+						$relationships[ $relationship_type['contact_type_a'] ][ $key ] = sprintf(
+							/* translators: %s: The Relationship label */
+							__( '%s (A-B)', 'civicrm-wp-profile-sync' ),
+							$relationship_type['label_a_b']
+						);
+					}
+				}
+
+			} else {
+
+				// Define key.
+				$key = $relationship_type['id'] . '_ab';
+
+				// Add to "All Contacts" optgroup if not already added.
+				if ( ! isset( $relationships[ $all ][ $key ] ) ) {
+					$relationships[ $all ][ $key ] = sprintf(
+						/* translators: %s: The Relationship label */
+						__( '%s (A-B)', 'civicrm-wp-profile-sync' ),
+						$relationship_type['label_a_b']
+					);
+				}
+
+			}
+
+			// Check the B-to-A relationship.
+			if ( ! empty( $relationship_type['contact_type_b'] ) ) {
+
+				// Define key.
+				$key = $relationship_type['id'] . '_ba';
+
+				// Add to subtype optgroup if possible.
+				if ( ! empty( $relationship_type['contact_sub_type_b'] ) ) {
+					$relationships[ $relationship_type['contact_sub_type_b'] ][ $key ] = sprintf(
+						/* translators: %s: The Relationship label */
+						__( '%s (B-A)', 'civicrm-wp-profile-sync' ),
+						$relationship_type['label_b_a']
+					);
+				}
+
+				// Add to type optgroup if not already added - and no subtype.
+				if ( ! isset( $relationships[ $relationship_type['contact_type_b'] ][ $key ] ) ) {
+					if ( empty( $relationship_type['contact_sub_type_b'] ) ) {
+						$relationships[ $relationship_type['contact_type_b'] ][ $key ] = sprintf(
+							/* translators: %s: The Relationship label */
+							__( '%s (B-A)', 'civicrm-wp-profile-sync' ),
+							$relationship_type['label_b_a']
+						);
+					}
+				}
+
+			} else {
+
+				// Define key.
+				$key = $relationship_type['id'] . '_ba';
+
+				// Add to "All Contacts" optgroup if not already added.
+				if ( ! isset( $relationships[ $all ][ $key ] ) ) {
+					$relationships[ $all ][ $key ] = sprintf(
+						/* translators: %s: The Relationship label */
+						__( '%s (B-A)', 'civicrm-wp-profile-sync' ),
+						$relationship_type['label_b_a']
+					);
+				}
+
 			}
 
 		}
