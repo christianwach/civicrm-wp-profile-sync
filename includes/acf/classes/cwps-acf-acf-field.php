@@ -607,6 +607,11 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 		}
 
+		// The CiviCRM API does not like empty arrays so assign empty string.
+		if ( is_array( $value ) && empty( $value ) ) {
+			$value = '';
+		}
+
 		// --<
 		return $value;
 

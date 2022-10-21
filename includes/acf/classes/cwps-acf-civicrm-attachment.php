@@ -1093,7 +1093,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 * @param integer|null $value The Field value (the Attachment data).
 	 * @param array $settings The ACF Field settings.
 	 * @param array $args Any additional arguments.
-	 * @return string $value The path of the file.
+	 * @return array|string $value Array containing the path and mime type of the file, or empty string on failure.
 	 */
 	public function value_get_for_civicrm( $value, $settings, $args ) {
 

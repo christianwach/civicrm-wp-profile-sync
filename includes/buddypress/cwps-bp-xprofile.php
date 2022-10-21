@@ -613,6 +613,11 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 
 		}
 
+		// The CiviCRM API does not like empty arrays so assign empty string.
+		if ( is_array( $value ) && empty( $value ) ) {
+			$value = '';
+		}
+
 		// --<
 		return $value;
 
