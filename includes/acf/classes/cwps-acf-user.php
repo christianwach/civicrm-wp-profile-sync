@@ -686,7 +686,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		}
 
 		// Save a copy of the URL just in case.
-		$website->deleted_url = $website->url;
+		$website->deleted_url = ! empty( $website->url ) ? $website->url : '';
 
 		// Clear URL to clear the ACF Field.
 		$website->url = '';
