@@ -66,7 +66,10 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 	 */
 	public function register_hooks() {
 
-		// Listen for WordPress User Email changes.
+		// Listen for changes to WordPress User Email.
+		add_action( 'cwps/civicrm/email/primary_updated', [ $this, 'entries_update' ], 10, 3 );
+
+		// Listen for changes to CiviCRM Contact Primary Email.
 		add_action( 'civicrm_wp_profile_sync_primary_email_synced', [ $this, 'entries_update' ], 10, 3 );
 
 	}

@@ -356,6 +356,151 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 	// -------------------------------------------------------------------------
 
 	/**
+	 * Creates a CiviCRM Email record.
+	 *
+	 * @since 0.6.1
+	 *
+	 * @param array $email The array of CiviCRM Email data.
+	 * @return array|bool $email_data The array of Email data, or false on failure.
+	 */
+	public function create( $email ) {
+
+		// Init return.
+		$email_data = false;
+
+		// Try and initialise CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $email_data;
+		}
+
+		// Build params to create Email.
+		$params = [
+			'version' => 3,
+		] + $email;
+
+		// Call the CiviCRM API.
+		$result = civicrm_api( 'Email', 'create', $params );
+
+		// Log and bail if there's an error.
+		if ( ! empty( $result['is_error'] ) ) {
+			$e = new Exception();
+			$trace = $e->getTraceAsString();
+			error_log( print_r( [
+				'method' => __METHOD__,
+				'params' => $params,
+				'result' => $result,
+				'backtrace' => $trace,
+			], true ) );
+			return $email;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $email_data;
+		}
+
+		// The result set should contain only one item.
+		$email_data = array_pop( $result['values'] );
+
+		// --<
+		return $email_data;
+
+	}
+
+	/**
+	 * Updates a CiviCRM Email record.
+	 *
+	 * This is an alias of `self::email_create()` except that we expect an ID
+	 * to have been set in the Email data.
+	 *
+	 * @since 0.6.1
+	 *
+	 * @param array $email The array of CiviCRM ACL data.
+	 * @return array|bool The array of Email data from the CiviCRM API, or false on failure.
+	 */
+	public function update( $email ) {
+
+		// Log and bail if there's no ID.
+		if ( empty( $email['id'] ) ) {
+			$e = new Exception();
+			$trace = $e->getTraceAsString();
+			error_log( print_r( [
+				'method' => __METHOD__,
+				'message' => __( 'An ID must be present to edit an Email.', 'civicrm-wp-profile-sync' ),
+				'email' => $email,
+				'backtrace' => $trace,
+			], true ) );
+			return false;
+		}
+
+		// Pass through.
+		return $this->create( $email );
+
+	}
+
+	/**
+	 * Deletes a CiviCRM Email record.
+	 *
+	 * @since 0.6.1
+	 *
+	 * @param integer $email_id The numeric ID of the CiviCRM Email.
+	 * @return bool $success True if the operation was successful, false on failure.
+	 */
+	public function delete( $email_id ) {
+
+		// Init as failure.
+		$success = false;
+
+		// Try and initialise CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $success;
+		}
+
+		// Log and bail if there's no Email ID.
+		if ( empty( $email_id ) ) {
+			$e = new Exception();
+			$trace = $e->getTraceAsString();
+			error_log( print_r( [
+				'method' => __METHOD__,
+				'message' => __( 'An ID must be present to delete an Email.', 'civicrm-wp-profile-sync' ),
+				'backtrace' => $trace,
+			], true ) );
+			return false;
+		}
+
+		// Build params to delete Email.
+		$params = [
+			'version' => 3,
+			'id' => $email_id,
+		];
+
+		// Call the CiviCRM API.
+		$result = civicrm_api( 'Email', 'delete', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) ) {
+			$e = new Exception();
+			$trace = $e->getTraceAsString();
+			error_log( print_r( [
+				'method' => __METHOD__,
+				'params' => $params,
+				'result' => $result,
+				'backtrace' => $trace,
+			], true ) );
+			return $success;
+		}
+
+		// Success.
+		$success = true;
+
+		// --<
+		return $success;
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
 	 * Listens for when a CiviCRM Contact's Primary Email address is about to be edited.
 	 *
 	 * @see CRM_Core_BAO_Email::add()
@@ -480,6 +625,9 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 	/**
 	 * Update a CiviCRM Contact's Primary Email address.
 	 *
+	 * This is called when a WordPress User is updated. Users must have an Email
+	 * Address, so we do not need to account for it being empty.
+	 *
 	 * @since 0.1
 	 * @since 0.4 Params reduced to single array.
 	 *
@@ -495,42 +643,69 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		$primary_email = $this->primary_record_get_by_contact_id( $contact->contact_id );
 
 		// If there isn't a current Primary Email.
-		// phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
 		if ( $primary_email === false ) {
 
-			// TODO: Create it? With what Location Type and Email Type?
+			/*
+			 * Construct params to create a Primary Email record.
+			 *
+			 * When we do not specify a Location Type, the API will create one
+			 * with the default Location Type.
+			 */
+			$params = [
+				'contact_id' => $contact->contact_id,
+				'email' => $user->user_email,
+				'is_primary' => 1,
+			];
+
+			// Create it.
+			$email = $this->create( $params );
 
 		} else {
 
-			// Has it changed?
+			// Only update if the Email has changed.
 			if ( $primary_email->email != $user->user_email ) {
 
-				// Construct params to update the email.
+				// Construct params to update the Email record.
 				$params = [
-					'version' => 3,
 					'id' => $primary_email->id,
 					'contact_id' => $contact->contact_id,
 					'email' => $user->user_email,
 				];
 
-				// Call the CiviCRM API.
-				$result = civicrm_api( 'Email', 'create', $params );
-
-				// Log something on failure.
-				if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-					$e = new \Exception();
-					$trace = $e->getTraceAsString();
-					error_log( print_r( [
-						'method' => __METHOD__,
-						'message' => __( 'Could not update the email of the CiviCRM Contact.', 'civicrm-wp-profile-sync' ),
-						'result' => $result,
-						'backtrace' => $trace,
-					], true ) );
-				}
+				// Update it.
+				$email = $this->update( $params );
 
 			}
 
 		}
+
+		// Bail if we have no Email object.
+		if ( empty( $email ) ) {
+			return;
+		}
+
+		// Cast Email as object.
+		$email = (object) $email;
+
+		// Prepare params.
+		$user_id = $user->ID;
+		$email_id = $email->id;
+
+		/**
+		 * Fires when a WordPress User's Email has been synced to a CiviCRM
+		 * Contact's Primary Email record.
+		 *
+		 * Used internally by:
+		 *
+		 * * CiviCRM_WP_Profile_Sync_Mapper_UFMatch::entries_update()
+		 *
+		 * @since 0.6.1
+		 *
+		 * @param integer $user_id The ID of the WordPress User.
+		 * @param integer $email_id The ID of the CiviCRM Email.
+		 * @param object $email The CiviCRM Email object.
+		 */
+		do_action( 'cwps/civicrm/email/primary_updated', $user_id, $email_id, $email );
 
 	}
 
