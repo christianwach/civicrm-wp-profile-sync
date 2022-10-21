@@ -759,7 +759,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		// Return it if the Field has a reference to a Website Custom Field.
 		if ( ! empty( $field[ $website_key ] ) ) {
 			if ( false !== strpos( $field[ $website_key ], $this->civicrm->custom_field_prefix() ) ) {
-				$custom_field_id = absint( str_replace( $this->civicrm->custom_field_prefix(), '', $field[ $website_key ] ) );
+				$custom_field_id = (int) str_replace( $this->civicrm->custom_field_prefix(), '', $field[ $website_key ] );
 			}
 		}
 

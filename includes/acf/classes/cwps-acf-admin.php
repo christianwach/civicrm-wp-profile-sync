@@ -530,7 +530,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		do_action( 'add_meta_boxes', $screen->id, null );
 
 		// Get the column CSS class.
-		$columns = absint( $screen->get_columns() );
+		$columns = (int) $screen->get_columns();
 		$columns_css = '';
 		if ( $columns ) {
 			$columns_css = " columns-$columns";

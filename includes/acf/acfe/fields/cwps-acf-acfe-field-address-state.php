@@ -334,7 +334,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 		}
 
 		// Grab the Post ID.
-		$post_id = absint( $options['post_id'] );
+		$post_id = (int) $options['post_id'];
 
 		// Strip slashes - search may be an integer.
 		$search = wp_unslash( (string) $options['s'] );

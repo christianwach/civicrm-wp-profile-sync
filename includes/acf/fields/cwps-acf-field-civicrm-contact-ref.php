@@ -317,7 +317,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Ref extends acf_field {
 		}
 
 		// Grab the Post ID.
-		$post_id = absint( $options['post_id'] );
+		$post_id = (int) $options['post_id'];
 
 		// Init args.
 		$args = [];

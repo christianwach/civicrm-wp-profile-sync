@@ -692,7 +692,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 
 		// Get options.
 		if ( ! empty( $field_data['option_group_id'] ) ) {
-			$choices = CRM_Core_OptionGroup::valuesByID( absint( $field_data['option_group_id'] ) );
+			$choices = CRM_Core_OptionGroup::valuesByID( (int) $field_data['option_group_id'] );
 		}
 
 		// --<
@@ -796,7 +796,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 
 		// Populate with child options where possible.
 		if ( ! empty( $field_data['option_group_id'] ) ) {
-			$choices = CRM_Core_OptionGroup::valuesByID( absint( $field_data['option_group_id'] ) );
+			$choices = CRM_Core_OptionGroup::valuesByID( (int) $field_data['option_group_id'] );
 		}
 
 		// "Country" selects require special handling.
@@ -991,7 +991,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 
 		// Get options.
 		if ( ! empty( $field_data['option_group_id'] ) ) {
-			$choices = CRM_Core_OptionGroup::valuesByID( absint( $field_data['option_group_id'] ) );
+			$choices = CRM_Core_OptionGroup::valuesByID( (int) $field_data['option_group_id'] );
 		}
 
 		// --<

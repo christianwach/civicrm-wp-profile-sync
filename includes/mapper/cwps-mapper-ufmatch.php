@@ -125,13 +125,13 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 
 				// Get the Contact ID if present.
 				if ( ! empty( $entry->contact_id ) ) {
-					$contact_id = absint( $entry->contact_id );
+					$contact_id = (int) $entry->contact_id;
 				}
 
 				// Get the Contact ID from the returned array.
 				if ( is_array( $entry ) ) {
 					foreach ( $entry as $item ) {
-						$contact_id = absint( $item->contact_id );
+						$contact_id = (int) $item->contact_id;
 						break;
 					}
 				}
@@ -211,13 +211,13 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 
 			// Get the User ID if a single UFMatch item is returned.
 			if ( ! empty( $entry->uf_id ) ) {
-				$user_id = absint( $entry->uf_id );
+				$user_id = (int) $entry->uf_id;
 			}
 
 			// Get the User ID from the returned array.
 			if ( is_array( $entry ) ) {
 				foreach ( $entry as $item ) {
-					$user_id = absint( $item->uf_id );
+					$user_id = (int) $item->uf_id;
 					break;
 				}
 			}

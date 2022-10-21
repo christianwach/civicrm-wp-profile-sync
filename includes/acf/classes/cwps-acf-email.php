@@ -287,7 +287,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		}
 
 		// The ID of the Location Type is the setting.
-		$location_type_id = absint( $settings[ $email_key ] );
+		$location_type_id = (int) $settings[ $email_key ];
 
 		// Update the Email.
 		$this->email_update( $location_type_id, $contact_id, $value );

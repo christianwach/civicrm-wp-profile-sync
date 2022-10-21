@@ -347,7 +347,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Relationship extends acf_field {
 
 			// Get the Relationship ID.
 			$relationship_data = explode( '_', $field[ $relationship_key ] );
-			$relationship_id = absint( $relationship_data[0] );
+			$relationship_id = (int) $relationship_data[0];
 			$relationship_direction = $relationship_data[1];
 
 			// Get the Relationship Type.

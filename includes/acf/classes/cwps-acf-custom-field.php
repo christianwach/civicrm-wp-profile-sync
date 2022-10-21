@@ -1067,7 +1067,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		// Get the mapped Custom Field ID if present.
 		if ( isset( $field[ $acf_field_key ] ) ) {
 			if ( false !== strpos( $field[ $acf_field_key ], $this->custom_field_prefix ) ) {
-				$custom_field_id = absint( str_replace( $this->custom_field_prefix, '', $field[ $acf_field_key ] ) );
+				$custom_field_id = (int) str_replace( $this->custom_field_prefix, '', $field[ $acf_field_key ] );
 			}
 		}
 
@@ -1213,7 +1213,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 		// Populate with child options where possible.
 		if ( ! empty( $field_data['option_group_id'] ) ) {
-			$choices = CRM_Core_OptionGroup::valuesByID( absint( $field_data['option_group_id'] ) );
+			$choices = CRM_Core_OptionGroup::valuesByID( (int) $field_data['option_group_id'] );
 		}
 
 		// "Country" selects require special handling.
@@ -1355,7 +1355,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 		// Get options.
 		if ( ! empty( $field_data['option_group_id'] ) ) {
-			$choices = CRM_Core_OptionGroup::valuesByID( absint( $field_data['option_group_id'] ) );
+			$choices = CRM_Core_OptionGroup::valuesByID( (int) $field_data['option_group_id'] );
 		}
 
 		// --<
@@ -1465,7 +1465,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 		// Get options.
 		if ( ! empty( $field_data['option_group_id'] ) ) {
-			$choices = CRM_Core_OptionGroup::valuesByID( absint( $field_data['option_group_id'] ) );
+			$choices = CRM_Core_OptionGroup::valuesByID( (int) $field_data['option_group_id'] );
 		}
 
 		// --<

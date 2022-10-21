@@ -408,7 +408,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 		// Get the WordPress User ID.
 		$tmp = explode( '_', $args['post_id'] );
-		$user_id = absint( $tmp[1] );
+		$user_id = (int) $tmp[1];
 
 		// Bail if this is not a WordPress User.
 		$user = new WP_User( $user_id );
@@ -2328,7 +2328,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 		// Get the WordPress User ID.
 		$tmp = explode( '_', $post_id );
-		$user_id = absint( $tmp[1] );
+		$user_id = (int) $tmp[1];
 
 		// We need the User itself.
 		$user = new WP_User( $user_id );
@@ -2347,7 +2347,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		}
 
 		// Make sure we return an integer.
-		$is_mapped = absint( $contact_id );
+		$is_mapped = (int) $contact_id;
 
 		// --<
 		return $is_mapped;

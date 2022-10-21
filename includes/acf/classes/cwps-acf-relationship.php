@@ -347,7 +347,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 		// Get the Relationship data.
 		$relationship_data = explode( '_', $code );
-		$relationship_type_id = absint( $relationship_data[0] );
+		$relationship_type_id = (int) $relationship_data[0];
 		$relationship_direction = $relationship_data[1];
 
 		// Get the current Relationships.
@@ -1135,7 +1135,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 
 			// Get the Relationship data.
 			$relationship_data = explode( '_', $value );
-			$relationship_type_id = absint( $relationship_data[0] );
+			$relationship_type_id = (int) $relationship_data[0];
 			$relationship_direction = $relationship_data[1];
 
 			// Skip if this Relationship is not mapped to the Field.
