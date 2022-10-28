@@ -3944,7 +3944,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			 * The following handles all possibilities.
 			 */
 			if ( ! empty( $contact_data['contact_sub_type'] ) ) {
-				$existing_contact = $this->plugin->civicrm->contact->get_by_id( $contact_id );
+				$existing_contact = $this->plugin->civicrm->contact->get_by_id( $contact_data['id'] );
 
 				// When there is already more than one Sub-type.
 				if ( is_array( $existing_contact['contact_sub_type'] ) ) {
