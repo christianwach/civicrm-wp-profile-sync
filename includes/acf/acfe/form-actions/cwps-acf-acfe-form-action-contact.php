@@ -910,7 +910,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$tags = $this->form_tag_data( $form, $current_post_id, $action );
 			$args['tags'] = $this->form_tag_save( $args['contact'], $tags );
 
-			// Add the Contact to the Group(s) with the data from the Form.
+			// Add or remove the Contact to/from the Group(s) with the data from the Form.
 			$groups = $this->form_group_data( $form, $current_post_id, $action );
 			$args['groups'] = $this->form_group_save( $args['contact'], $groups );
 
@@ -2566,7 +2566,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// Assign code and label.
 		$code = 'group_id';
-		$label = __( 'Add To Group', 'civicrm-wp-profile-sync' );
+		$label = __( 'Group', 'civicrm-wp-profile-sync' );
 
 		// Get Group Type "Mapping" Field.
 		$group_field = $this->mapping_field_get( $code, $label );
@@ -2590,15 +2590,23 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// ---------------------------------------------------------------------
 
 		// Assign code and label.
-		$code = 'group_conditional';
-		$label = __( 'Conditional On', 'civicrm-wp-profile-sync' );
+		$code = 'group_add_remove';
+		$label = __( 'Add or Remove the Contact', 'civicrm-wp-profile-sync' );
 
-		$group_conditional = $this->mapping_field_get( $code, $label );
-		$group_conditional['placeholder'] = __( 'Always add', 'civicrm-wp-profile-sync' );
-		$group_conditional['instructions'] = __( 'To add the Contact to the Group only when conditions are met, link this to a Hidden Field with value "1" where the conditional logic of that Field shows it when the conditions are met.', 'civicrm-wp-profile-sync' );
+		// Get a "Mapping" Field.
+		$group_add_remove_field = $this->mapping_field_get( $code, $label );
+
+		// Define choices.
+		$group_add_remove_field['choices'] = [
+			'add' => __( 'Add to Group', 'civicrm-wp-profile-sync' ),
+			'remove' => __( 'Remove from Group', 'civicrm-wp-profile-sync' ),
+		];
+		$group_add_remove_field['search_placeholder'] = '';
+		$group_add_remove_field['allow_null'] = 0;
+		$group_add_remove_field['ui'] = 0;
 
 		// Add Field to Repeater's Sub-Fields.
-		$sub_fields[] = $group_conditional;
+		$sub_fields[] = $group_add_remove_field;
 
 		// ---------------------------------------------------------------------
 
@@ -2610,7 +2618,15 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			'type' => 'true_false',
 			'instructions' => '',
 			'required' => 0,
-			'conditional_logic' => 0,
+			'conditional_logic' => [
+				[
+					[
+						'field' => $this->field_key . 'map_' . 'group_add_remove',
+						'operator' => '==',
+						'value' => 'add',
+					],
+				],
+			],
 			'wrapper' => [
 				'width' => '',
 				'class' => '',
@@ -2624,6 +2640,21 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			'ui_on_text' => '',
 			'ui_off_text' => '',
 		];
+
+		// ---------------------------------------------------------------------
+
+		// Assign code and label.
+		$code = 'group_conditional';
+		$label = __( 'Conditional On', 'civicrm-wp-profile-sync' );
+
+		$group_conditional = $this->mapping_field_get( $code, $label );
+		$group_conditional['placeholder'] = __( 'Always add or remove', 'civicrm-wp-profile-sync' );
+		$group_conditional['instructions'] = __( 'To add or remove the Contact to the Group only when conditions are met, link this to a Hidden Field with value "1" where the conditional logic of that Field shows it when the conditions are met.', 'civicrm-wp-profile-sync' );
+
+		// Add Field to Repeater's Sub-Fields.
+		$sub_fields[] = $group_conditional;
+
+		// ---------------------------------------------------------------------
 
 		// Add to Repeater.
 		$group_repeater['sub_fields'] = $sub_fields;
@@ -5959,6 +5990,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			// Get Group ID.
 			$fields['group_id'] = $field[ $this->field_name . 'map_group_id' ];
 
+			// Retain backwards compatibility.
+			$fields['group_add_remove'] = 'add';
+
+			// Get Add or Remove the Contact.
+			if ( ! empty( $field[ $this->field_name . 'map_group_add_remove' ] ) ) {
+				$fields['group_add_remove'] = $field[ $this->field_name . 'map_group_add_remove' ];
+			}
+
 			// Get Group Conditional.
 			$fields['group_conditional'] = $field[ $this->field_name . 'map_group_conditional' ];
 
@@ -6016,33 +6055,64 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				}
 			}
 
-			// TODO: Do we need a "Remove from Group if Group is empty" option?
-
 			// Skip if there's no Group ID.
 			if ( empty( $group['group_id'] ) ) {
 				continue;
 			}
 
-			// Skip if already a Group Member.
+			// Get the current Group Membership status for the Contact.
 			$is_member = $this->civicrm->group->group_contact_exists( $group['group_id'], $contact['id'] );
-			if ( $is_member === true ) {
-				continue;
+
+			// Maybe add Contact to Group.
+			if ( 'add' === $group['group_add_remove'] ) {
+
+				// Skip if already a Group Member.
+				if ( $is_member === true ) {
+					continue;
+				}
+
+				// Add with or without Opt In.
+				if ( empty( $group['double_optin'] ) ) {
+					$result = $this->civicrm->group->group_contact_create( $group['group_id'], $contact['id'] );
+				} else {
+					$result = $this->civicrm->group->group_contact_create_via_opt_in( $group['group_id'], $contact['id'] );
+				}
+
+				// Skip adding Group ID on failure.
+				if ( $result === false ) {
+					continue;
+				}
+
+				// Add Group ID to return.
+				$groups[] = $group['group_id'];
+
 			}
 
-			// Add with or without Opt In.
-			if ( empty( $group['double_optin'] ) ) {
-				$result = $this->civicrm->group->group_contact_create( $group['group_id'], $contact['id'] );
-			} else {
-				$result = $this->civicrm->group->group_contact_create_via_opt_in( $group['group_id'], $contact['id'] );
-			}
+			// Maybe remove Contact from Group.
+			if ( 'remove' === $group['group_add_remove'] ) {
 
-			// Skip adding Group ID on failure.
-			if ( $result === false ) {
-				continue;
-			}
+				// Skip if not a Group Member.
+				if ( $is_member === false ) {
+					continue;
+				}
 
-			// Add Group ID to return.
-			$groups[] = $group['group_id'];
+				// Remove the Contact.
+				$result = $this->civicrm->group->group_contact_delete( $group['group_id'], $contact['id'] );
+
+				// Skip removing Group ID on failure.
+				if ( $result === false ) {
+					continue;
+				}
+
+				// Remove Group ID from return if present.
+				if ( is_array( $groups ) ) {
+					$key = array_search( $group['group_id'], $groups );
+					if ( false !== $key ) {
+						unset( $groups[ $key ] );
+					}
+				}
+
+			}
 
 		}
 
