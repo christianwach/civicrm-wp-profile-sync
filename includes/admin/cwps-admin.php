@@ -880,8 +880,8 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		// Set impossible default "User Email Sync" value.
 		$settings['user_profile_email_sync'] = 2;
 
-		// Default "User Nickname Sync" to "on" since that's previous behaviour.
-		$settings['user_profile_nickname_sync'] = 1;
+		// Default "User Nickname Sync" to "off".
+		$settings['user_profile_nickname_sync'] = 0;
 
 		/**
 		 * Filter default settings.
