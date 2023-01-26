@@ -1,4 +1,4 @@
-ph<?php
+<?php
 /**
  * Admin Settings page Profile metabox template.
  *
