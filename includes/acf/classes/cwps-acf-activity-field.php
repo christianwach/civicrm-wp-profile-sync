@@ -286,7 +286,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 			case 'checkbox':
 
 				// Convert if the value has the special CiviCRM array-like format.
-				if ( false !== strpos( $value, CRM_Core_DAO::VALUE_SEPARATOR ) ) {
+				if ( is_string( $value ) && false !== strpos( $value, CRM_Core_DAO::VALUE_SEPARATOR ) ) {
 					$value = CRM_Utils_Array::explodePadded( $value );
 				}
 
