@@ -392,7 +392,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 		// Build params.
 		$params = [
 			'version' => 3,
-			'check_permissions' => true,
 			'return' => $fields,
 			'loc_block_id.address_id' => [
 				'IS NOT NULL' => 1,
