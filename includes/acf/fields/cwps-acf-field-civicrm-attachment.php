@@ -344,7 +344,8 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 			'acf-input-' . $this->name,
 			plugins_url( 'assets/js/acf/fields/civicrm-attachment-field.js', CIVICRM_WP_PROFILE_SYNC_FILE ),
 			[ 'acf-pro-input' ],
-			CIVICRM_WP_PROFILE_SYNC_VERSION // Version.
+			CIVICRM_WP_PROFILE_SYNC_VERSION, // Version.
+			false
 		);
 
 	}

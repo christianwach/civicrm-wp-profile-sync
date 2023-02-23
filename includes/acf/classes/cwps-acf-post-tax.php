@@ -328,7 +328,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		}
 
 		// Sanitise input.
-		$group_id = (int) $_POST['cwps-civicrm-group'];
+		$group_id = (int) sanitize_text_field( wp_unslash( $_POST['cwps-civicrm-group'] ) );
 
 		// Bail if Group ID is zero.
 		if ( $group_id == 0 ) {
@@ -383,7 +383,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		}
 
 		// Sanitise input.
-		$group_id = (int) $_POST['cwps-civicrm-group'];
+		$group_id = (int) sanitize_text_field( wp_unslash( $_POST['cwps-civicrm-group'] ) );
 
 		// Assume we have no edited term.
 		$old_term = null;

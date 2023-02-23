@@ -217,7 +217,8 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	 */
 	public function settings_acf_update() {
 
-		// Get ACF Integration Enabled setting.
+		// Get ACF Integration Enabled setting. Nonce is checked in admin class.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		$acf_enabled = ! empty( $_POST['cwps_acf_integration_checkbox'] ) ? 1 : 0;
 
 		// Always set ACF Integration Enabled setting.
@@ -2160,7 +2161,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		if ( ! wp_doing_ajax() ) {
 			$participant_role_id = is_numeric( $entity ) ? $entity : 0;
 		} else {
-			$participant_role_id = isset( $_POST['entity_id'] ) ? trim( wp_unslash( $_POST['entity_id'] ) ) : 0;
+			$participant_role_id = isset( $_POST['entity_id'] ) ? sanitize_text_field( wp_unslash( $_POST['entity_id'] ) ) : 0;
 		}
 
 		// If "cpt", then bail.
@@ -2302,7 +2303,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		if ( ! wp_doing_ajax() ) {
 			$entity_id = empty( $entity ) ? '' : $entity;
 		} else {
-			$entity_id = isset( $_POST['entity_id'] ) ? trim( wp_unslash( $_POST['entity_id'] ) ) : '';
+			$entity_id = isset( $_POST['entity_id'] ) ? sanitize_text_field( wp_unslash( $_POST['entity_id'] ) ) : '';
 		}
 
 		// If not "participant", then bail.
@@ -2450,7 +2451,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		if ( ! wp_doing_ajax() ) {
 			$entity_id = $entity == 'cpt' ? $entity : 0;
 		} else {
-			$entity_id = isset( $_POST['entity_id'] ) ? trim( wp_unslash( $_POST['entity_id'] ) ) : 0;
+			$entity_id = isset( $_POST['entity_id'] ) ? sanitize_text_field( wp_unslash( $_POST['entity_id'] ) ) : 0;
 		}
 
 		// If not "cpt", then bail.

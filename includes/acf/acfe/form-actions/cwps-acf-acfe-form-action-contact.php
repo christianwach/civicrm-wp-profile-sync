@@ -2621,7 +2621,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			'conditional_logic' => [
 				[
 					[
-						'field' => $this->field_key . 'map_' . 'group_add_remove',
+						'field' => $this->field_key . 'map_group_add_remove',
 						'operator' => '==',
 						'value' => 'add',
 					],
