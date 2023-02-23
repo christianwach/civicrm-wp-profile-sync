@@ -113,7 +113,7 @@ class CiviCRM_WP_Profile_Sync_Admin_Multisite {
 		add_action( 'network_admin_menu', [ $this, 'admin_menu' ], 20 );
 
 		// Add our meta boxes.
-		add_action( 'add_meta_boxes', [ $this, 'meta_boxes_add' ], 11 );
+		add_action( 'cwps/admin/page/settings/add_meta_boxes', [ $this, 'meta_boxes_add' ], 11 );
 
 		// Filter access capabilities.
 		add_filter( 'cwps/admin/page/settings/cap', [ $this, 'caps_filter' ] );

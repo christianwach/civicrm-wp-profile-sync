@@ -228,7 +228,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		add_action( 'admin_menu', [ $this, 'admin_menu' ], 20 );
 
 		// Add our meta boxes.
-		add_action( 'add_meta_boxes', [ $this, 'meta_boxes_add' ], 11 );
+		add_action( 'cwps/admin/page/settings/add_meta_boxes', [ $this, 'meta_boxes_add' ], 11 );
 
 	}
 
@@ -242,7 +242,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		// Remove the callbacks registered by this class.
 		remove_action( 'admin_notices', [ $this, 'upgrade_warning' ] );
 		remove_action( 'admin_menu', [ $this, 'admin_menu' ], 20 );
-		remove_action( 'add_meta_boxes', [ $this, 'meta_boxes_add' ], 11 );
+		remove_action( 'cwps/admin/page/settings/add_meta_boxes', [ $this, 'meta_boxes_add' ], 11 );
 
 	}
 
@@ -642,7 +642,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		 *
 		 * @param string $screen_id The ID of the current screen.
 		 */
-		do_action( 'add_meta_boxes', $screen->id, null );
+		do_action( 'cwps/admin/page/settings/add_meta_boxes', $screen->id, null );
 
 		// Grab columns.
 		$columns = ( 1 == $screen->get_columns() ? '1' : '2' );
@@ -810,6 +810,15 @@ class CiviCRM_WP_Profile_Sync_Admin {
 			'normal', // Column: options are 'normal' and 'side'.
 			'core' // Vertical placement: options are 'core', 'high', 'low'.
 		);
+
+		/**
+		 * Allow plugins to add meta boxes.
+		 *
+		 * @since 0.6.1
+		 *
+		 * @param string $screen_id The Admin Page Screen ID.
+		 */
+		do_action( 'cwps/admin/page/settings/meta_boxes/added', $screen_id );
 
 	}
 

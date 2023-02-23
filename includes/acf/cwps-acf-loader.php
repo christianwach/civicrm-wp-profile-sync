@@ -190,6 +190,20 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 
 		}
 
+		// Return early if ACF Integration has been disabled.
+		$acf_enabled = (int) $this->plugin->admin->setting_get( 'acf_integration_enabled', 1 );
+		if ( 1 !== $acf_enabled ) {
+
+			// Include Admin class and init.
+			include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-admin.php';
+			$this->admin = new CiviCRM_Profile_Sync_ACF_Admin( $this );
+			$this->admin->initialise();
+
+			$done = true;
+			return;
+
+		}
+
 		// Save ACF Pro flag.
 		$this->acf_pro = ( defined( 'ACF_PRO' ) && ACF_PRO ) ? true : false;
 

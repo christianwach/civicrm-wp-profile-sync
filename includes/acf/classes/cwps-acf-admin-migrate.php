@@ -123,7 +123,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 		add_action( 'admin_menu', [ $this, 'admin_menu' ], 30 );
 
 		// Add our meta boxes.
-		add_action( 'add_meta_boxes', [ $this, 'meta_boxes_add' ], 11, 1 );
+		add_action( 'cwps/acf/admin/migrate/page/add_meta_boxes', [ $this, 'meta_boxes_add' ], 11, 1 );
 
 	}
 
@@ -314,7 +314,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 		 *
 		 * @param string $screen_id The ID of the current screen.
 		 */
-		do_action( 'add_meta_boxes', $screen->id, null );
+		do_action( 'cwps/acf/admin/migrate/page/add_meta_boxes', $screen->id, null );
 
 		// Grab columns.
 		$columns = ( 1 == $screen->get_columns() ? '1' : '2' );

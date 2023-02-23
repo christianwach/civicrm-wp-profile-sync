@@ -120,11 +120,22 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			return;
 		}
 
+		// Add our ACF Settings.
+		add_filter( 'cwps/settings/defaults', [ $this, 'settings_meta_boxes_add' ], 10, 1 );
+		add_action( 'cwps/admin/page/settings/meta_boxes/added', [ $this, 'settings_meta_boxes_add' ], 11, 1 );
+		add_action( 'cwps/admin/settings/update/pre', [ $this, 'settings_acf_update' ] );
+
+		// Return early when ACF Integration is disabled.
+		$acf_enabled = (int) $this->plugin->admin->setting_get( 'acf_integration_enabled', 1 );
+		if ( 1 !== $acf_enabled ) {
+			return;
+		}
+
 		// Add menu item(s) to WordPress admin menu.
 		add_action( 'admin_menu', [ $this, 'admin_menu' ], 30 );
 
-		// Add our meta boxes.
-		add_action( 'add_meta_boxes', [ $this, 'meta_boxes_add' ], 11, 1 );
+		// Add our ACF Integration meta boxes.
+		add_action( 'cwps/acf/admin/page/add_meta_boxes', [ $this, 'meta_boxes_sync_add' ], 11, 1 );
 
 		// Add AJAX handlers.
 		add_action( 'wp_ajax_sync_posts_to_contacts', [ $this, 'stepped_sync_posts_to_contacts' ] );
@@ -137,6 +148,80 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		add_action( 'wp_ajax_sync_participant_roles_to_posts', [ $this, 'stepped_sync_participants_to_posts' ] );
 		add_action( 'wp_ajax_sync_posts_to_participant_roles', [ $this, 'stepped_sync_posts_to_participant_roles' ] );
 		add_action( 'wp_ajax_sync_participant_roles_to_posts', [ $this, 'stepped_sync_participant_roles_to_posts' ] );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Adds the default ACF Integration settings.
+	 *
+	 * @since 0.6.1
+	 *
+	 * @param array $settings The existing default settings array.
+	 * @return array $settings The modified default settings array.
+	 */
+	public function settings_acf_defaults( $settings ) {
+
+		// Default "ACF Integration Enabled" to "on".
+		$settings['acf_integration_enabled'] = 1;
+
+		// --<
+		return $settings;
+
+	}
+
+	/**
+	 * Register settings meta boxes.
+	 *
+	 * @since 0.6.1
+	 *
+	 * @param string $screen_id The Admin Page Screen ID.
+	 */
+	public function settings_meta_boxes_add( $screen_id ) {
+
+		// Create ACF Settings metabox.
+		add_meta_box(
+			'cwps_acf_integration',
+			__( 'ACF Settings', 'civicrm-wp-profile-sync' ),
+			[ $this, 'settings_meta_box_acf_render' ], // Callback.
+			$screen_id, // Screen ID.
+			'normal', // Column: options are 'normal' and 'side'.
+			'core' // Vertical placement: options are 'core', 'high', 'low'.
+		);
+
+	}
+
+	/**
+	 * Render ACF Settings meta box on Admin screen.
+	 *
+	 * @since 0.6.1
+	 */
+	public function settings_meta_box_acf_render() {
+
+		// Get ACF Integration Enabled setting.
+		$acf_enabled = (int) $this->plugin->admin->setting_get( 'acf_integration_enabled', 1 );
+
+		// Init template vars.
+		$acf_enabled_checked = $acf_enabled === 1 ? ' checked="checked"' : '';
+
+		// Include template file.
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/metaboxes/metabox-admin-settings-acf.php';
+
+	}
+
+	/**
+	 * Updates the Integration Enabled setting value when saved on the Admin screen.
+	 *
+	 * @since 0.6.1
+	 */
+	public function settings_acf_update() {
+
+		// Get ACF Integration Enabled setting.
+		$acf_enabled = ! empty( $_POST['cwps_acf_integration_checkbox'] ) ? 1 : 0;
+
+		// Always set ACF Integration Enabled setting.
+		$this->plugin->admin->setting_set( 'acf_integration_enabled', $acf_enabled );
 
 	}
 
@@ -527,7 +612,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		 *
 		 * @param string $screen_id The ID of the current screen.
 		 */
-		do_action( 'add_meta_boxes', $screen->id, null );
+		do_action( 'cwps/acf/admin/page/add_meta_boxes', $screen->id, null );
 
 		// Get the column CSS class.
 		$columns = (int) $screen->get_columns();
@@ -609,13 +694,13 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Register meta boxes.
+	 * Register sync meta boxes.
 	 *
 	 * @since 0.4
 	 *
 	 * @param string $screen_id The Admin Page Screen ID.
 	 */
-	public function meta_boxes_add( $screen_id ) {
+	public function meta_boxes_sync_add( $screen_id ) {
 
 		// Define valid Screen IDs.
 		$screen_ids = [
