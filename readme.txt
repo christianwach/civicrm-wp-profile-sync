@@ -86,6 +86,11 @@ I'll say it again: test early, test often and - above all - test on a developmen
 
 == Changelog ==
 
+= 0.6.1 =
+
+* Allow ACF integration to be disabled.
+* Enable "Remove from Group" in ACFE Form Contact action.
+
 = 0.6.0 =
 
 * Fixes missing fields in Form Actions for ACF Extended Forms.
