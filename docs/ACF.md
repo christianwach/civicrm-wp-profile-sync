@@ -3,7 +3,7 @@ Integration with ACF
 
 CiviCRM Profile Sync enables integration between CiviCRM Entities and WordPress Entities with data synced via Advanced Custom Fields.
 
-Please be aware that ACF integration is at an early stage of development and, although it is limited in its coverage of the entities that can be linked, it is fairly comprehensive in its mapping of the built-in CiviCRM Custom Field Types with their corresponding ACF Field Types.
+Please be aware that ACF integration is still in development and, although it is limited in its coverage of the entities that can be linked, it is fairly comprehensive in its mapping of the built-in CiviCRM Custom Field Types with their corresponding ACF Field Types.
 
 So if, for example, you want to display (or create) a Contact Type on your WordPress site with ACF Fields that contain synced CiviCRM data, read on.
 
@@ -167,13 +167,13 @@ Syncs between the ACF Field and a CiviCRM Yes/No Custom Field. This Field Type i
 **NOTE: Requires ACF Pro.** Syncs with all the CiviCRM "Address" Contact Fields. Use the supplied template functions to display particular Addresses in your templates. Here are some examples:
 
 ```php
-<p><strong><?php echo __( 'All Addresses as list:', 'your-slug' ); ?></strong>
+<p><strong><?php esc_html_e( 'All Addresses as list:', 'your-slug' ); ?></strong>
 <?php echo cwps_get_addresses( 'address_field' ); ?></p>
 
-<p><strong><?php echo __( 'Primary Address:', 'your-slug' ); ?></strong>
+<p><strong><?php esc_html_e( 'Primary Address:', 'your-slug' ); ?></strong>
 <?php echo cwps_get_primary_address( 'address_field' ); ?></p>
 
-<p><strong><?php echo __( 'Main Address:', 'your-slug' ); ?></strong>
+<p><strong><?php esc_html_e( 'Main Address:', 'your-slug' ); ?></strong>
 <?php echo cwps_get_address_by_type_id( 'address_field', 3 ); ?></p>
 ```
 
@@ -219,7 +219,7 @@ Populates with the name of the Country in the synced CiviCRM Address. You can sp
 **NOTE: Requires ACF Pro.** Syncs with all the CiviCRM "Phone" Contact Fields. Use the supplied template functions to display particular Phone Numbers in your templates. Here are some examples:
 
 ```php
-<p><strong><?php echo __( 'Primary Phone Number:', 'your-slug' ); ?></strong> <?php echo cwps_get_primary_phone_number( 'phone_numbers' ); ?></p>
+<p><strong><?php esc_html_e( 'Primary Phone Number:', 'your-slug' ); ?></strong> <?php echo cwps_get_primary_phone_number( 'phone_numbers' ); ?></p>
 
 <p><strong><?php esc_html_e( 'All Numbers as list:', 'your-slug' ). ' '; ?></strong></p>
 <?php echo cwps_get_phone_numbers( 'phone_numbers' ); ?>
@@ -227,11 +227,11 @@ Populates with the name of the Country in the synced CiviCRM Address. You can sp
 <p><strong><?php esc_html_e( 'All Home Phone Numbers as list:', 'your-slug' ). ' '; ?></strong></p>
 <?php echo cwps_get_phone_numbers_by_type_ids( 'phone_numbers', 1 ); ?>
 
-<p><strong><?php echo __( 'All Home Phone Numbers as string:', 'your-slug' ); ?></strong><br />
+<p><strong><?php esc_html_e( 'All Home Phone Numbers as string:', 'your-slug' ); ?></strong><br />
 <?php echo cwps_get_phone_numbers_by_type_ids( 'phone_numbers', 1, null, 'commas' );
 ?></p>
 
-<p><strong><?php echo __( 'Voicemail:', 'your-slug' ). ' '; ?></strong>
+<p><strong><?php esc_html_e( 'Voicemail:', 'your-slug' ). ' '; ?></strong>
 <?php echo cwps_get_phone_numbers_by_type_ids( 'phone_numbers', 0, 5, 'commas' );
 ?></p>
 ```
@@ -260,7 +260,7 @@ Some examples might be:
 **NOTE: Requires ACF Pro.** Syncs with all the CiviCRM "Instant Messenger" Contact Fields. As with the "CiviCRM Phone" Field, use the supplied template functions to display particular Instant Messenger Records in your templates. Here are some examples:
 
 ```php
-<p><strong><?php echo __( 'Primary IM:', 'your-slug' ); ?></strong> <?php echo cwps_get_primary_im( 'instant_messenger' ); ?></p>
+<p><strong><?php esc_html_e( 'Primary IM:', 'your-slug' ); ?></strong> <?php echo cwps_get_primary_im( 'instant_messenger' ); ?></p>
 
 <p><strong><?php esc_html_e( 'All IMs as list:', 'your-slug' ). ' '; ?></strong></p>
 <?php echo cwps_get_ims( 'instant_messenger' ); ?>
