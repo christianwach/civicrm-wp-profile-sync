@@ -711,21 +711,36 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	}
 
 	/**
-	 * Get the terms for a given WordPress Post ID.
+	 * Gets all the Terms in Synced Taxonomies for a given WordPress Post ID.
 	 *
 	 * @since 0.4
 	 *
 	 * @param integer|string $post_id The ACF "Post ID".
-	 * @return array $terms The array of term objects.
+	 * @return array $terms The array of Term objects.
 	 */
 	public function terms_get_for_post( $post_id ) {
 
-		// Grab the terms.
-		$terms = get_the_terms( $post_id, $this->taxonomies );
+		$terms = [];
 
-		// Bail if there are no terms or there's an error.
-		if ( empty( $terms ) || is_wp_error( $terms ) ) {
-			return [];
+		// Bail if there are no Taxonomies.
+		if ( empty( $this->taxonomies ) ) {
+			return $terms;
+		}
+
+		// Build array of all Terms.
+		foreach ( $this->taxonomies as $taxonomy ) {
+
+			// Grab the Terms.
+			$terms_in_tax = get_the_terms( $post_id, $taxonomy );
+
+			// Skip if there are no Terms or there's an error.
+			if ( empty( $terms_in_tax ) || is_wp_error( $terms_in_tax ) ) {
+				continue;
+			}
+
+			// Append Terms.
+			$terms = array_merge( $terms, $terms_in_tax );
+
 		}
 
 		// --<
@@ -1126,8 +1141,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 		// Get Term IDs that are synced to this Group ID.
 		$terms_for_group = $this->terms_get_by_group_id( $group_id );
-
-		// Bail if there are none.
 		if ( empty( $terms_for_group ) ) {
 			return;
 		}
