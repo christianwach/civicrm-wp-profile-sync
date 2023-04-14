@@ -1108,7 +1108,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			],
 			'acfe_permissions' => '',
 			'default_value' => '',
-			'placeholder' => '',
+			'placeholder' => __( 'CiviCRM Default', 'civicrm-wp-profile-sync' ),
 			'allow_null' => 1,
 			'multiple' => 0,
 			'ui' => 0,
