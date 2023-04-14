@@ -469,6 +469,29 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 			'ui_off_text' => '',
 		];
 
+		// Define "Email receipt?" Field.
+		$participant_email_receipt = [
+			'key' => $this->field_key . 'email_receipt',
+			'label' => __( 'Email receipt?', 'civicrm-wp-profile-sync' ),
+			'name' => $this->field_name . 'email_receipt',
+			'type' => 'true_false',
+			'instructions' => '',
+			'required' => 0,
+			'wrapper' => [
+				'width' => '',
+				'class' => '',
+				'id' => '',
+				'data-instruction-placement' => 'field',
+			],
+			'conditional_logic' => 0,
+			'acfe_permissions' => '',
+			'message' => '',
+			'default_value' => 0,
+			'ui' => 1,
+			'ui_on_text' => '',
+			'ui_off_text' => '',
+		];
+
 		// Define Status Field.
 		$participant_status_field = [
 			'key' => $this->field_key . 'participant_status_id',
@@ -498,6 +521,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 		$fields = [
 			$participant_roles_field,
 			$participant_add_anyway,
+			$participant_email_receipt,
 			$participant_status_field,
 		];
 
@@ -1393,6 +1417,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 		// Get the Participant Role & Status.
 		$data['participant_role_id'] = get_sub_field( $this->field_key . 'participant_roles' );
 		$data['add_anyway'] = get_sub_field( $this->field_key . 'add_anyway' );
+		$data['email_receipt'] = get_sub_field( $this->field_key . 'email_receipt' );
 		$data['status_id'] = get_sub_field( $this->field_key . 'participant_status_id' );
 
 		// Get the Participant Contacts.
@@ -1721,6 +1746,13 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 
 		}
 
+		// Unset "Email receipt" param.
+		$email_receipt = false;
+		if ( isset( $participant_data['email_receipt'] ) ) {
+			$email_receipt = true;
+			unset( $participant_data['email_receipt'] );
+		}
+
 		// Unset "Add anyway" param.
 		if ( isset( $participant_data['add_anyway'] ) ) {
 			unset( $participant_data['add_anyway'] );
@@ -1736,6 +1768,32 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 
 		// Get the full Participant data.
 		$participant = $this->civicrm->participant->get_by_id( $result['id'] );
+
+		// Maybe email receipt.
+		if ( true === $email_receipt ) {
+
+			// Initialise values.
+			$values = [];
+			$values['custom_pre_id'] = '';
+			$values['custom_post_id'] = '';
+
+			// The full Event data is needed.
+			$event = $this->civicrm->event->get_by_id( $participant['event_id'] );
+			$values['event'] = $event;
+
+			// The full Participant data is needed.
+			$values['params'] = $participant;
+
+			// Location data is needed, whether populated or not.
+			$values['location'] = CRM_Core_BAO_Location::getValues( [
+				'entity_id' => $event['id'],
+				'entity_table' => 'civicrm_event',
+			] );
+
+			// Okay, go ahead and send.
+			$sent = CRM_Event_BAO_Event::sendMail( $participant['contact_id'], $values, $participant['id'] );
+
+		}
 
 		// --<
 		return $participant;
