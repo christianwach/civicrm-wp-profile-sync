@@ -2580,9 +2580,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// Add Group choices and modify Field.
 		$group_field['choices'] = $choices;
-		$group_field['search_placeholder'] = '';
 		$group_field['allow_null'] = 0;
-		$group_field['ui'] = 0;
 
 		// Add Field to Repeater's Sub-Fields.
 		$sub_fields[] = $group_field;
