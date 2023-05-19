@@ -778,16 +778,57 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 			return [];
 		}
 
-		// Add the Dedupe rules for all Contact Types.
+		// Init return.
 		$dedupe_rules = [];
-		$types = [ 'Organization', 'Household', 'Individual' ];
-		foreach ( $types as $type ) {
-			if ( empty( $contact_type ) ) {
-				$dedupe_rules[ $type ] = CRM_Dedupe_BAO_RuleGroup::getByType( $type );
-			} elseif ( $contact_type == $type ) {
-				$dedupe_rules = CRM_Dedupe_BAO_RuleGroup::getByType( $type );
-				break;
+
+		/*
+		 * If the API4 Entity is available, use it.
+		 *
+		 * @see https://github.com/civicrm/civicrm-core/blob/master/Civi/Api4/DedupeRuleGroup.php#L20
+		 */
+		$version = CRM_Utils_System::version();
+		if ( version_compare( $version, '5.39', '>=' ) ) {
+
+			// Build params to get Dedupe Rule Groups.
+			$params = [
+				'limit' => 0,
+				'checkPermissions' => false,
+			];
+
+			// Maybe limit by Contact Type.
+			if ( ! empty( $contact_type ) ) {
+				$params['where'] = [
+					[ 'contact_type', '=', 'Individual' ],
+				];
 			}
+
+			// Call CiviCRM API4.
+			$result = civicrm_api4( 'DedupeRuleGroup', 'get', $params );
+
+			// Bail if there are no results.
+			if ( empty( $result->count() ) ) {
+				return $dedupe_rules;
+			}
+
+			// Add the results to the return array.
+			foreach ( $result as $item ) {
+				$title = ! empty( $item['title'] ) ? $item['title'] : ( ! empty( $item['name'] ) ? $item['name'] : $item['contact_type'] );
+				$dedupe_rules[ $item['contact_type'] ][ $item['id'] ] = $title . ' - ' . $item['used'];
+			}
+
+		} else {
+
+			// Add the Dedupe Rules for all Contact Types.
+			$top_level_types = $this->plugin->civicrm->contact_type->types_get_top_level();
+			foreach ( $top_level_types as $type ) {
+				if ( empty( $contact_type ) ) {
+					$dedupe_rules[ $type ] = CRM_Dedupe_BAO_RuleGroup::getByType( $type );
+				} elseif ( $contact_type == $type ) {
+					$dedupe_rules = CRM_Dedupe_BAO_RuleGroup::getByType( $type );
+					break;
+				}
+			}
+
 		}
 
 		// --<
