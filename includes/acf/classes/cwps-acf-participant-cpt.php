@@ -1579,7 +1579,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 			9 => sprintf(
 				/* translators: 1: The Date string, 2: The Link URL */
 				__( 'Participant scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview Participant</a>', 'civicrm-wp-profile-sync' ),
-				/* translators: Publish box date format, see http://php.net/date */
+				/* translators: Publish box date format, see https://php.net/date */
 				date_i18n( __( 'M j, Y @ G:i', 'civicrm-wp-profile-sync' ),
 				strtotime( $post->post_date ) ),
 				esc_url( get_permalink( $post_ID ) )

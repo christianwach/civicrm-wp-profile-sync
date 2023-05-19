@@ -262,7 +262,7 @@ class CiviCRM_WP_Profile_Sync_WordPress {
 		 * (reversed) POSIX style signs.
 		 *
 		 * @see https://github.com/stephenharris/Event-Organiser/issues/287
-		 * @see http://us.php.net/manual/en/timezones.others.php
+		 * @see https://www.php.net/manual/en/timezones.others.php
 		 * @see https://bugs.php.net/bug.php?id=45543
 		 * @see https://bugs.php.net/bug.php?id=45528
 		 */
