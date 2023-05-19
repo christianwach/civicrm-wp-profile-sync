@@ -586,6 +586,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 	 * @return array $top_level_types The top level CiviCRM Contact Types.
 	 */
 	public function types_get_top_level() {
+		_deprecated_function( __METHOD__, '0.5' );
 		return $this->plugin->civicrm->contact_type->types_get_top_level();
 	}
 
