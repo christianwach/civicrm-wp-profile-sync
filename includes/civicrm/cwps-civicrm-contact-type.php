@@ -101,7 +101,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Type {
 	/**
 	 * Get all top-level CiviCRM Contact Types.
 	 *
-	 * @since 0.4
+	 * @since 0.5
 	 *
 	 * @return array $top_level_types The top level CiviCRM Contact Types.
 	 */
