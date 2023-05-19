@@ -86,6 +86,11 @@ I'll say it again: test early, test often and - above all - test on a developmen
 
 == Changelog ==
 
+= 0.6.2 =
+
+* Fixes potential fatal error on CiviCRM 5.62.x.
+* Enable Registration Receipts in ACFE Form Participants action.
+
 = 0.6.1 =
 
 * Allow ACF integration to be disabled.
