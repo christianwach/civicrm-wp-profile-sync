@@ -460,6 +460,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 			// Get the Group Field.
 			$custom_group_field = get_sub_field( $this->field_key . 'custom_group_' . $custom_group['id'] );
+			if ( empty( $custom_group_field ) ) {
+				continue;
+			}
 
 			// Populate the Custom Fields.
 			foreach ( $custom_group['api.CustomField.get']['values'] as $custom_field ) {
@@ -586,7 +589,13 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 						// Get the Group Field.
 						$group_field_identifier = $this->field_name . 'relationship_custom_group_' . $custom_group['id'];
+						if ( empty( $relationship_action[ $group_field_identifier ] ) ) {
+							continue;
+						}
 						$custom_group_field = $relationship_action[ $group_field_identifier ];
+						if ( empty( $custom_group_field ) ) {
+							continue;
+						}
 
 						// Populate the Relationship Custom Fields.
 						foreach ( $custom_group['api.CustomField.get']['values'] as $custom_field ) {
@@ -4317,9 +4326,12 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 			// Get Group Field.
 			$custom_group_field = get_sub_field( $this->field_key . 'custom_group_' . $custom_group['id'] );
-			foreach ( $custom_group_field as $field ) {
+			if ( empty( $custom_group_field ) ) {
+				continue;
+			}
 
-				// Get mapped Fields.
+			// Get mapped Fields.
+			foreach ( $custom_group_field as $field ) {
 				foreach ( $custom_group['api.CustomField.get']['values'] as $custom_field ) {
 
 					// Add to mapped Fields array.
@@ -4332,7 +4344,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 					}
 
 				}
-
 			}
 
 			// Populate data array with values of mapped Fields.
@@ -4980,16 +4991,23 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// Build data array.
 		foreach ( $this->relationship_custom_fields as $key => $custom_group ) {
 
+			// Skip if there's no data in the field.
+			if ( empty( $field[ $this->field_name . 'relationship_custom_group_' . $custom_group['id'] ] ) ) {
+				continue;
+			}
+
 			// Get Group Field.
 			$custom_group_field = $field[ $this->field_name . 'relationship_custom_group_' . $custom_group['id'] ];
-			foreach ( $custom_group_field as $group_field ) {
+			if ( empty( $custom_group_field ) ) {
+				continue;
+			}
 
-				// Get mapped Fields.
+			// Get mapped Fields.
+			foreach ( $custom_group_field as $group_field ) {
 				foreach ( $custom_group['api.CustomField.get']['values'] as $custom_field ) {
 					$code = 'custom_' . $custom_field['id'];
 					$fields[ $code ] = $custom_group_field[ $this->field_name . 'map_' . $code ];
 				}
-
 			}
 
 		}

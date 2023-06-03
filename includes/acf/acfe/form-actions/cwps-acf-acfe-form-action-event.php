@@ -2202,9 +2202,12 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 			// Get Group Field.
 			$custom_group_field = get_sub_field( $this->field_key . 'custom_group_' . $custom_group['id'] );
-			foreach ( $custom_group_field as $field ) {
+			if ( empty( $custom_group_field ) ) {
+				continue;
+			}
 
-				// Get mapped Fields.
+			// Get mapped Fields.
+			foreach ( $custom_group_field as $field ) {
 				foreach ( $custom_group['api.CustomField.get']['values'] as $custom_field ) {
 
 					// Add to mapped Fields array.
@@ -2217,7 +2220,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 					}
 
 				}
-
 			}
 
 			// Populate data array with values of mapped Fields.
