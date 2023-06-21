@@ -25,7 +25,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -34,16 +34,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $acf_loader The ACF Loader object.
+	 * @var object
 	 */
 	public $acf_loader;
 
 	/**
-	 * Parent (calling) object.
+	 * CiviCRM object.
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $civicrm The parent object.
+	 * @var object
 	 */
 	public $civicrm;
 
@@ -54,7 +54,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var string $address_field_prefix The prefix of the "CiviCRM Field" value.
+	 * @var string
 	 */
 	public $address_field_prefix = 'caiaddress_';
 
@@ -65,7 +65,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var array $address_fields The array of public Address Fields.
+	 * @var array
 	 */
 	public $address_fields = [
 		'is_primary' => 'true_false',
@@ -94,7 +94,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var array $bypass_fields The Address Fields to remove for the Bypass Location Rule.
+	 * @var array
 	 */
 	public $bypass_fields_to_remove = [
 		'county_id' => 'select',

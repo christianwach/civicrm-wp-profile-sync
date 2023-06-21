@@ -37,7 +37,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -46,7 +46,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $mapper The Mapper object.
+	 * @var object
 	 */
 	public $mapper;
 
@@ -55,7 +55,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $hooks The Mapper object.
+	 * @var object
 	 */
 	public $hooks;
 

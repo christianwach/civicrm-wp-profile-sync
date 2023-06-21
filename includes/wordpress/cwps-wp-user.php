@@ -25,16 +25,16 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
 	/**
-	 * Parent (calling) object.
+	 * WordPress object.
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $wp The parent object.
+	 * @var object
 	 */
 	public $wp;
 
@@ -43,7 +43,7 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 	 *
 	 * @since 0.5.2
 	 * @access public
-	 * @var bool $mapper_hooks The Mapper hooks registered flag.
+	 * @var bool
 	 */
 	public $mapper_hooks = false;
 

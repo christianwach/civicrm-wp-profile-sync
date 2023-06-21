@@ -25,7 +25,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -34,16 +34,16 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $bp_loader The BuddyPress Loader object.
+	 * @var object
 	 */
 	public $bp_loader;
 
 	/**
-	 * Parent (calling) object.
+	 * CiviCRM object.
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $civicrm The parent object.
+	 * @var object
 	 */
 	public $civicrm;
 
@@ -52,7 +52,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $xprofile The BuddyPress xProfile object.
+	 * @var object
 	 */
 	public $xprofile;
 
@@ -61,7 +61,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 	 *
 	 * @since 0.5.2
 	 * @access public
-	 * @var bool $mapper_hooks The Mapper hooks registered flag.
+	 * @var bool
 	 */
 	public $mapper_hooks = false;
 
@@ -72,7 +72,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var string $phone_field_prefix The prefix of the "CiviCRM Field" value.
+	 * @var string
 	 */
 	public $phone_field_prefix = 'cwps_phone_';
 
@@ -83,7 +83,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var array $phone_fields The array of public Phone Fields.
+	 * @var array
 	 */
 	public $phone_fields = [
 		'is_primary' => 'true_false',

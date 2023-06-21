@@ -25,7 +25,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -34,7 +34,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $mapper The Mapper object.
+	 * @var object
 	 */
 	public $mapper;
 
@@ -43,7 +43,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $core The Core Hooks utility object.
+	 * @var object
 	 */
 	public $core;
 
@@ -52,16 +52,18 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $acf The ACF Hooks utility object.
+	 * @var object
 	 */
 	public $acf;
 
 	/**
 	 * ACF loaded flag.
 	 *
+	 * True if ACF is present, false otherwise.
+	 *
 	 * @since 0.4
 	 * @access public
-	 * @var bool $acf_loaded True if ACF is present, false otherwise.
+	 * @var bool
 	 */
 	public $acf_loaded = false;
 

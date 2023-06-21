@@ -28,7 +28,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_ACF {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -37,7 +37,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_ACF {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $mapper The Mapper object.
+	 * @var object
 	 */
 	public $mapper;
 
@@ -46,7 +46,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_ACF {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $hooks The Mapper object.
+	 * @var object
 	 */
 	public $hooks;
 
@@ -55,7 +55,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_ACF {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var array $date_mappings The CiviCRM to ACF date format mappings.
+	 * @var array
 	 */
 	public $date_mappings = [
 		'mm/dd/yy' => 'm/d/Y',
@@ -80,7 +80,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_ACF {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var array $time_mappings The CiviCRM to ACF time format mappings.
+	 * @var array
 	 */
 	public $time_mappings = [
 		'1' => 'g:i a',

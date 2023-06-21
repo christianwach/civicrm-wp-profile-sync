@@ -25,7 +25,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -34,7 +34,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $bp_loader The BuddyPress Loader object.
+	 * @var object
 	 */
 	public $bp_loader;
 
@@ -43,7 +43,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $civicrm The CiviCRM object.
+	 * @var object
 	 */
 	public $civicrm;
 
@@ -52,7 +52,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $contact The CiviCRM Contact object.
+	 * @var object
 	 */
 	public $contact;
 
@@ -61,7 +61,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $contact_field The CiviCRM Contact Field object.
+	 * @var object
 	 */
 	public $contact_field;
 
@@ -70,7 +70,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $custom_field The CiviCRM Custom Field object.
+	 * @var object
 	 */
 	public $custom_field;
 
@@ -79,7 +79,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $address The CiviCRM Address object.
+	 * @var object
 	 */
 	public $address;
 
@@ -88,7 +88,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $phone The CiviCRM Phone object.
+	 * @var object
 	 */
 	public $phone;
 
@@ -97,7 +97,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $website The CiviCRM Website object.
+	 * @var object
 	 */
 	public $website;
 
@@ -106,7 +106,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 *
 	 * @since 0.5.2
 	 * @access public
-	 * @var bool $mapper_hooks The Mapper hooks registered flag.
+	 * @var bool
 	 */
 	public $mapper_hooks = false;
 
@@ -115,7 +115,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var array $entity_types The array of Settings Field Entity Types.
+	 * @var string
 	 */
 	public $meta_key = 'cwps_mapping';
 
@@ -130,7 +130,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var array $entity_types The array of Settings Field Entity Types.
+	 * @var array
 	 */
 	public $entity_types = [];
 
@@ -139,7 +139,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var string $entity_type The Entity Type Settings Field name.
+	 * @var string
 	 */
 	public $entity_type = 'cwps_civicrm_entity_type';
 
@@ -148,7 +148,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var string $location_type_id The Location Type Settings Field name.
+	 * @var string
 	 */
 	public $location_type_id = 'cwps_civicrm_location_type';
 
@@ -157,7 +157,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var string $phone_type_id The Phone Type Settings Field name.
+	 * @var string
 	 */
 	public $phone_type_id = 'cwps_civicrm_phone_type';
 
@@ -166,7 +166,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var string $location_type_id The Website Type Settings Field name.
+	 * @var string
 	 */
 	public $website_type_id = 'cwps_civicrm_website_type';
 
@@ -175,7 +175,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var string $contact_type_id The Top Level Contact Type Settings Field name.
+	 * @var string
 	 */
 	public $contact_type_id = 'cwps_civicrm_contact_type';
 
@@ -184,7 +184,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var string $contact_subtype_id The Contact Sub-type Settings Field name.
+	 * @var string
 	 */
 	public $contact_subtype_id = 'cwps_civicrm_contact_subtype';
 
@@ -193,7 +193,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var string $name The CiviCRM Field Settings Field name.
+	 * @var string
 	 */
 	public $name = 'cwps_civicrm_field';
 

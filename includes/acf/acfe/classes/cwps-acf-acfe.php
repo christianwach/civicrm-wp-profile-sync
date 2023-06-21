@@ -25,7 +25,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -34,7 +34,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $acf_loader The ACF Loader object.
+	 * @var object
 	 */
 	public $acf_loader;
 
@@ -43,7 +43,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $form The ACF Form object.
+	 * @var object
 	 */
 	public $form;
 

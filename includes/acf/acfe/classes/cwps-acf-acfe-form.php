@@ -25,7 +25,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -34,7 +34,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $acf_loader The ACF Loader object.
+	 * @var object
 	 */
 	public $acf_loader;
 
@@ -43,7 +43,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $civicrm The CiviCRM object.
+	 * @var object
 	 */
 	public $civicrm;
 
@@ -52,16 +52,16 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $acf The ACF object.
+	 * @var object
 	 */
 	public $acf;
 
 	/**
-	 * Parent (calling) object.
+	 * ACF Extended object.
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $acfe The parent object.
+	 * @var object
 	 */
 	public $acfe;
 
@@ -70,7 +70,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var string $rule_name The supported Location Rule name.
+	 * @var string
 	 */
 	public $rule_name = 'form_civicrm';
 

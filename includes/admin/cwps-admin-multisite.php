@@ -25,7 +25,7 @@ class CiviCRM_WP_Profile_Sync_Admin_Multisite {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -34,7 +34,7 @@ class CiviCRM_WP_Profile_Sync_Admin_Multisite {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var string $admin The single site admin object.
+	 * @var object
 	 */
 	public $admin;
 
@@ -43,7 +43,7 @@ class CiviCRM_WP_Profile_Sync_Admin_Multisite {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var array $network_page The reference to the netowrk admin page.
+	 * @var array
 	 */
 	public $network_page;
 
@@ -52,7 +52,7 @@ class CiviCRM_WP_Profile_Sync_Admin_Multisite {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var string $network_page_slug The slug of the network Settings Page.
+	 * @var string
 	 */
 	public $network_page_slug = 'cwps_network';
 

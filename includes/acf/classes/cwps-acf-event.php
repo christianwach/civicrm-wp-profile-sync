@@ -25,7 +25,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -34,16 +34,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $acf_loader The ACF Loader object.
+	 * @var object
 	 */
 	public $acf_loader;
 
 	/**
-	 * Parent (calling) object.
+	 * CiviCRM object.
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $civicrm The parent object.
+	 * @var object
 	 */
 	public $civicrm;
 
@@ -54,7 +54,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var string $identifier The unique identifier for this "top level" Entity.
+	 * @var string
 	 */
 	public $identifier = 'event';
 
@@ -65,7 +65,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var string $event_field_prefix The prefix of the "CiviCRM Field" value.
+	 * @var string
 	 */
 	public $event_field_prefix = 'caievent_';
 

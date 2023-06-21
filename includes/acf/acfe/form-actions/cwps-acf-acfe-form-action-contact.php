@@ -25,7 +25,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -34,16 +34,16 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $acf_loader The ACF Loader object.
+	 * @var object
 	 */
 	public $acf_loader;
 
 	/**
-	 * Parent (calling) object.
+	 * ACF Extended object.
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $acf The parent object.
+	 * @var object
 	 */
 	public $acfe;
 
@@ -52,7 +52,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $form The ACFE Form object.
+	 * @var object
 	 */
 	public $form;
 
@@ -61,7 +61,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $civicrm The CiviCRM object.
+	 * @var object
 	 */
 	public $civicrm;
 
@@ -70,7 +70,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var string $action_name The unique name of the Form Action.
+	 * @var string
 	 */
 	public $action_name = 'cwps_contact';
 
@@ -79,7 +79,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var string $field_key The prefix for the Field Key.
+	 * @var string
 	 */
 	public $field_key = 'field_cwps_contact_action_';
 
@@ -88,7 +88,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var string $field_name The prefix for the Field Name.
+	 * @var string
 	 */
 	public $field_name = 'cwps_contact_action_';
 
@@ -99,7 +99,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 	 *
 	 * @since 0.5.1
 	 * @access public
-	 * @var array $fields_to_add The Public Contact Fields to add.
+	 * @var array
 	 */
 	public $fields_to_add = [
 		'display_name' => 'text',

@@ -25,7 +25,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -34,16 +34,16 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $acf_loader The ACF Loader object.
+	 * @var object
 	 */
 	public $acf_loader;
 
 	/**
-	 * Parent (calling) object.
+	 * ACF Extended object.
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $acf The parent object.
+	 * @var object
 	 */
 	public $acfe;
 
@@ -52,7 +52,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $form The ACFE Form object.
+	 * @var object
 	 */
 	public $form;
 
@@ -61,7 +61,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $civicrm The CiviCRM object.
+	 * @var object
 	 */
 	public $civicrm;
 
@@ -70,7 +70,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var string $action_name The unique name of the Form Action.
+	 * @var string
 	 */
 	public $action_name = 'cwps_participant';
 
@@ -79,7 +79,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var string $field_key The prefix for the Field Key.
+	 * @var string
 	 */
 	public $field_key = 'field_cwps_participant_action_';
 
@@ -88,7 +88,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var string $field_name The prefix for the Field Name.
+	 * @var string
 	 */
 	public $field_name = 'cwps_participant_action_';
 
@@ -99,7 +99,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var array $fields_to_add The Public Participant Fields to add.
+	 * @var array
 	 */
 	public $fields_to_add = [
 		//'must_wait' => 'select',
@@ -112,7 +112,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var array $fields_to_ignore The Public Participant Fields to ignore.
+	 * @var array
 	 */
 	public $fields_to_ignore = [
 		'contact_id' => 'civicrm_contact',
@@ -128,7 +128,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var array $contact_fields The Participant Contact Fields.
+	 * @var array
 	 */
 	public $contact_fields = [
 		'contact_id' => 'civicrm_contact',
@@ -141,7 +141,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var array $participant_fields The Participant Fields.
+	 * @var array
 	 */
 	public $participant_fields = [
 		'registered_by_id' => 'civicrm_participant',
@@ -154,7 +154,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var array $event_fields The Participant Event Fields.
+	 * @var array
 	 */
 	public $event_fields = [
 		'event_id' => 'civicrm_event',

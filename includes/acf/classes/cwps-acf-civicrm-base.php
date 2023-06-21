@@ -38,7 +38,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Base {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var array $fields_handled The array of Fields which must be handled separately.
+	 * @var array
 	 */
 	public $fields_handled = [];
 

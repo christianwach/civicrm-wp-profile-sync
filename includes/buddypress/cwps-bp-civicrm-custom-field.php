@@ -25,7 +25,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -34,7 +34,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $bp_loader The BuddyPress Loader object.
+	 * @var object
 	 */
 	public $bp_loader;
 
@@ -43,7 +43,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $civicrm The CiviCRM object.
+	 * @var object
 	 */
 	public $civicrm;
 
@@ -52,7 +52,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $xprofile The BuddyPress xProfile object.
+	 * @var object
 	 */
 	public $xprofile;
 
@@ -61,7 +61,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.5.2
 	 * @access public
-	 * @var bool $mapper_hooks The Mapper hooks registered flag.
+	 * @var bool
 	 */
 	public $mapper_hooks = false;
 
@@ -71,8 +71,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var array $data_types The data types that can have "Select", "Radio"
-	 *                        and "CheckBox" HTML subtypes.
+	 * @var array
 	 */
 	public $data_types = [
 		'String',
@@ -88,7 +87,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var array $data_types The Custom Fields that are of type "Select".
+	 * @var array
 	 */
 	public $select_types = [
 		'Select',
@@ -107,7 +106,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var string $custom_field_prefix The prefix of the "CiviCRM Field" value.
+	 * @var string
 	 */
 	public $custom_field_prefix = 'cwps_custom_';
 

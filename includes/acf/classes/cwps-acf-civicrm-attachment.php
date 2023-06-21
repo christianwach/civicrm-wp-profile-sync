@@ -25,7 +25,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 *
 	 * @since 0.5.2
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -34,16 +34,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 *
 	 * @since 0.5.2
 	 * @access public
-	 * @var object $acf_loader The ACF Loader object.
+	 * @var object
 	 */
 	public $acf_loader;
 
 	/**
-	 * Parent (calling) object.
+	 * CiviCRM object.
 	 *
 	 * @since 0.5.2
 	 * @access public
-	 * @var object $civicrm The parent object.
+	 * @var object
 	 */
 	public $civicrm;
 
@@ -52,7 +52,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 *
 	 * @since 0.5.2
 	 * @access public
-	 * @var bool $mapper_hooks The Mapper hooks registered flag.
+	 * @var bool
 	 */
 	public $mapper_hooks = false;
 
@@ -61,7 +61,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 *
 	 * @since 0.5.2
 	 * @access public
-	 * @var bool $civicrm_hooks The CiviCRM hooks registered flag.
+	 * @var bool
 	 */
 	public $civicrm_hooks = false;
 
@@ -70,7 +70,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 *
 	 * @since 0.5.2
 	 * @access public
-	 * @var bool $wordpress_hooks The WordPress hooks registered flag.
+	 * @var bool
 	 */
 	public $wordpress_hooks = false;
 
@@ -79,7 +79,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 *
 	 * @since 0.5.2
 	 * @access public
-	 * @var string $attachment_wp_key The Attachment meta key.
+	 * @var string
 	 */
 	public $attachment_wp_key = '_cwps_attachment_wordpress_file';
 
@@ -88,7 +88,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 *
 	 * @since 0.5.2
 	 * @access public
-	 * @var string $attachment_wp_key The Attachment meta key.
+	 * @var string
 	 */
 	public $attachment_civicrm_key = '_cwps_attachment_civicrm_file';
 
@@ -99,7 +99,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 *
 	 * @since 0.5.2
 	 * @access public
-	 * @var array $attachment_fields The array of public Attachment Fields.
+	 * @var array
 	 */
 	public $attachment_fields = [
 		'description' => 'text',

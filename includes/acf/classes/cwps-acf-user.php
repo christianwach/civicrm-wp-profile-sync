@@ -25,7 +25,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -34,7 +34,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $acf_loader The ACF Loader object.
+	 * @var object
 	 */
 	public $acf_loader;
 
@@ -43,7 +43,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $civicrm The CiviCRM Utilities object.
+	 * @var object
 	 */
 	public $civicrm;
 
@@ -52,7 +52,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 *
 	 * @since 0.5.2
 	 * @access public
-	 * @var bool $mapper_wp_hooks The WordPress Mapper hooks registered flag.
+	 * @var bool
 	 */
 	public $mapper_wp_hooks = false;
 
@@ -61,7 +61,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 *
 	 * @since 0.5.2
 	 * @access public
-	 * @var bool $mapper_civicrm_hooks The CiviCRM Mapper hooks registered flag.
+	 * @var bool
 	 */
 	public $mapper_civicrm_hooks = false;
 
@@ -70,7 +70,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var array $rule_names The supported Location Rule names.
+	 * @var array
 	 */
 	public $rule_names = [
 		'user_form',

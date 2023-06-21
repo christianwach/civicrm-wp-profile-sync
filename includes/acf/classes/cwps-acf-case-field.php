@@ -25,7 +25,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -34,16 +34,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $acf_loader The ACF Loader object.
+	 * @var object
 	 */
 	public $acf_loader;
 
 	/**
-	 * Parent (calling) object.
+	 * CiviCRM object.
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $civicrm The parent object.
+	 * @var object
 	 */
 	public $civicrm;
 
@@ -54,7 +54,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var array $case_fields The public Case Fields.
+	 * @var array
 	 */
 	public $case_fields = [
 		'id' => 'number',
@@ -76,7 +76,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var array $bypass_fields The Case Fields to add for the Bypass Location Rule.
+	 * @var array
 	 */
 	public $bypass_fields = [
 		'subject' => 'text',

@@ -25,7 +25,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -34,16 +34,16 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $acf_loader The ACF Loader object.
+	 * @var object
 	 */
 	public $acf_loader;
 
 	/**
-	 * Parent (calling) object.
+	 * ACF object.
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $acf The parent object.
+	 * @var object
 	 */
 	public $acf;
 
@@ -52,7 +52,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 *
 	 * @since 0.5.2
 	 * @access public
-	 * @var object $civicrm The CiviCRM Utilities object.
+	 * @var object
 	 */
 	public $civicrm;
 
@@ -61,7 +61,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var array $field_types The supported ACF Field Types.
+	 * @var array
 	 */
 	public $field_types = [
 		'select',

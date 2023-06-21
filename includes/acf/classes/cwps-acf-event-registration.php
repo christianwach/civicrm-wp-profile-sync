@@ -25,7 +25,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -34,16 +34,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var object $acf_loader The ACF Loader object.
+	 * @var object
 	 */
 	public $acf_loader;
 
 	/**
-	 * Parent (calling) object.
+	 * CiviCRM object.
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var object $civicrm The parent object.
+	 * @var object
 	 */
 	public $civicrm;
 
@@ -54,7 +54,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var array $settings_fields The Settings Fields.
+	 * @var array
 	 */
 	public $settings_fields = [
 		'is_online_registration' => 'true_false',
@@ -79,7 +79,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var array $registration_screen_fields The Registration Screen Fields.
+	 * @var array
 	 */
 	public $registration_screen_fields = [
 		'intro_text' => 'wysiwyg',
@@ -95,7 +95,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var array $registration_screen_profiles The Registration Screen Profile Fields.
+	 * @var array
 	 */
 	public $registration_screen_profiles = [
 		'custom_pre_id' => 'select',
@@ -111,7 +111,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var array $confirm_screen_fields The Confirmation Screen Fields.
+	 * @var array
 	 */
 	public $confirm_screen_fields = [
 		'is_confirm_enabled' => 'true_false',
@@ -127,7 +127,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var array $confirm_screen_fields The Thank You Screen Fields.
+	 * @var array
 	 */
 	public $thankyou_screen_fields = [
 		'thankyou_title' => 'text',
@@ -142,7 +142,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var array $registration_fields The Confirmation Email Fields.
+	 * @var array
 	 */
 	public $confirmation_email_fields = [
 		'is_email_confirm' => 'true_false',

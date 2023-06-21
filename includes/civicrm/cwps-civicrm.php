@@ -25,7 +25,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -34,7 +34,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $contact_type The CiviCRM Contact Type object.
+	 * @var object
 	 */
 	public $contact_type;
 
@@ -43,7 +43,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $contact The CiviCRM Contact object.
+	 * @var object
 	 */
 	public $contact;
 
@@ -52,7 +52,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $contact_field The CiviCRM Contact Field object.
+	 * @var object
 	 */
 	public $contact_field;
 
@@ -61,7 +61,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $custom_field The CiviCRM Custom Field object.
+	 * @var object
 	 */
 	public $custom_field;
 
@@ -70,7 +70,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $custom_group The CiviCRM Custom Group object.
+	 * @var object
 	 */
 	public $custom_group;
 
@@ -79,7 +79,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $email The CiviCRM Email object.
+	 * @var object
 	 */
 	public $email;
 
@@ -88,7 +88,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $website The CiviCRM Website object.
+	 * @var object
 	 */
 	public $website;
 
@@ -97,7 +97,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $address The CiviCRM Address object.
+	 * @var object
 	 */
 	public $address;
 
@@ -106,7 +106,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $phone The CiviCRM Phone object.
+	 * @var object
 	 */
 	public $phone;
 
@@ -115,7 +115,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $bulk The CiviCRM Bulk Operations object.
+	 * @var object
 	 */
 	public $bulk;
 
@@ -124,7 +124,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var bool $version The installed version of CiviCRM.
+	 * @var string|bool
 	 */
 	public $version = false;
 
@@ -133,7 +133,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	 *
 	 * @since 0.5.2
 	 * @access public
-	 * @var bool $mapper_hooks The Mapper hooks registered flag.
+	 * @var bool
 	 */
 	public $mapper_hooks = false;
 

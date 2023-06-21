@@ -25,7 +25,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -34,7 +34,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $multisite The Multisite Admin object.
+	 * @var object
 	 */
 	public $multisite;
 
@@ -43,7 +43,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var string $plugin_version The plugin version.
+	 * @var string
 	 */
 	public $plugin_version;
 
@@ -52,7 +52,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var array $settings The plugin settings data.
+	 * @var array
 	 */
 	public $settings = [];
 
@@ -61,7 +61,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var bool $is_upgrade An upgrade flag.
+	 * @var bool
 	 */
 	public $is_upgrade = false;
 
@@ -70,7 +70,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var bool $has_warning A warning flag.
+	 * @var bool
 	 */
 	public $has_warning = false;
 
@@ -79,7 +79,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var string $parent_page The reference to the parent page.
+	 * @var string
 	 */
 	public $parent_page;
 
@@ -88,7 +88,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var string $parent_page_slug The slug of the parent page.
+	 * @var string
 	 */
 	public $parent_page_slug = 'cwps_parent';
 
@@ -97,7 +97,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var string $settings_page The reference to the Settings Page.
+	 * @var string
 	 */
 	public $settings_page;
 
@@ -106,7 +106,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var string $settings_page_slug The slug of the Settings Page.
+	 * @var string
 	 */
 	public $settings_page_slug = 'cwps_settings';
 

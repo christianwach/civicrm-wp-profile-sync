@@ -25,7 +25,7 @@ class CiviCRM_WP_Profile_Sync_Mapper {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -34,7 +34,7 @@ class CiviCRM_WP_Profile_Sync_Mapper {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $hooks The Hooks utility object.
+	 * @var object
 	 */
 	public $hooks;
 
@@ -43,7 +43,7 @@ class CiviCRM_WP_Profile_Sync_Mapper {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $single The UFMatch utility object.
+	 * @var object
 	 */
 	public $ufmatch;
 
@@ -52,7 +52,7 @@ class CiviCRM_WP_Profile_Sync_Mapper {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var array $date_mappings The CiviCRM to PHP date format mappings.
+	 * @var array
 	 */
 	public $date_mappings = [
 		'mm/dd/yy' => 'm/d/Y',

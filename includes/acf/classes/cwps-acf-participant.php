@@ -25,7 +25,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -34,16 +34,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $acf_loader The ACF Loader object.
+	 * @var object
 	 */
 	public $acf_loader;
 
 	/**
-	 * Parent (calling) object.
+	 * CiviCRM object.
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $civicrm The parent object.
+	 * @var object
 	 */
 	public $civicrm;
 
@@ -52,7 +52,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $acf The ACF object.
+	 * @var object
 	 */
 	public $acf;
 
@@ -61,7 +61,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $cpt The Custom Post Type object.
+	 * @var object
 	 */
 	public $cpt;
 
@@ -70,7 +70,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 	 *
 	 * @since 0.5.2
 	 * @access public
-	 * @var bool $mapper_hooks The Mapper hooks registered flag.
+	 * @var bool
 	 */
 	public $mapper_hooks = false;
 
@@ -81,7 +81,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var string $identifier The unique identifier for this "top level" Entity.
+	 * @var string
 	 */
 	public $identifier = 'participant';
 
@@ -92,7 +92,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var string $participant_field_prefix The prefix of the "CiviCRM Field" value.
+	 * @var string
 	 */
 	public $participant_field_prefix = 'caiparticipant_';
 
@@ -101,7 +101,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var array $copy_params The Participant Fields that need duplicating.
+	 * @var array
 	 */
 	public $copy_params = [
 		'role_id',

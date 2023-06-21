@@ -25,7 +25,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -34,16 +34,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $acf_loader The ACF Loader object.
+	 * @var object
 	 */
 	public $acf_loader;
 
 	/**
-	 * Parent (calling) object.
+	 * CiviCRM object.
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $civicrm The parent object.
+	 * @var object
 	 */
 	public $civicrm;
 
@@ -57,7 +57,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var array $contact_fields_common The common public Contact Fields.
+	 * @var array
 	 */
 	public $contact_fields_common = [
 		'nick_name' => 'text',
@@ -84,7 +84,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var array $contact_fields_individual The public Contact Fields for Individuals.
+	 * @var array
 	 */
 	public $contact_fields_individual = [
 		'prefix_id' => 'select',
@@ -108,7 +108,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var array $contact_fields_organization The public Contact Fields for Organisations.
+	 * @var array
 	 */
 	public $contact_fields_organization = [
 		'legal_name' => 'text',
@@ -123,7 +123,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var array $contact_fields_household The public Contact Fields for Households.
+	 * @var array
 	 */
 	public $contact_fields_household = [
 		'household_name' => 'text',

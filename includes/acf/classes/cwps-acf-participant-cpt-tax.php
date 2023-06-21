@@ -27,7 +27,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -36,7 +36,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $acf_loader The ACF Loader object.
+	 * @var object
 	 */
 	public $acf_loader;
 
@@ -45,7 +45,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $civicrm The CiviCRM object.
+	 * @var object
 	 */
 	public $civicrm;
 
@@ -54,16 +54,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $participant The Participant object.
+	 * @var object
 	 */
 	public $participant;
 
 	/**
-	 * Parent (calling) object.
+	 * CiviCRM object.
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $cpt The parent object.
+	 * @var object
 	 */
 	public $cpt;
 
@@ -72,7 +72,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 *
 	 * @since 0.5.2
 	 * @access public
-	 * @var bool $mapper_hooks The Mapper hooks registered flag.
+	 * @var bool
 	 */
 	public $mapper_hooks = false;
 
@@ -81,7 +81,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var string $taxonomy_name The name of the Custom Taxonomy.
+	 * @var string
 	 */
 	public $taxonomy_name;
 
@@ -90,7 +90,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $term_meta_key The Term Meta key.
+	 * @var string
 	 */
 	public $term_meta_key = '_cwps_participant_role_id';
 
@@ -99,7 +99,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $term_active_meta_key The "Is Active" Term Meta key.
+	 * @var string
 	 */
 	public $term_active_meta_key = '_cwps_participant_role_active';
 
@@ -108,7 +108,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $term_counted_meta_key The "Counted" Term Meta key.
+	 * @var string
 	 */
 	public $term_counted_meta_key = '_cwps_participant_role_counted';
 

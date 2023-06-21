@@ -25,7 +25,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -34,7 +34,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $acf_loader The ACF Loader object.
+	 * @var object
 	 */
 	public $acf_loader;
 
@@ -43,7 +43,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $tax The Post Taxonomy object.
+	 * @var object
 	 */
 	public $tax;
 
@@ -52,7 +52,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	 *
 	 * @since 0.5.2
 	 * @access public
-	 * @var bool $mapper_hooks The Mapper hooks registered flag.
+	 * @var bool
 	 */
 	public $mapper_hooks = false;
 
@@ -61,7 +61,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var string $contact_id_key The Post meta Contact ID key.
+	 * @var string
 	 */
 	public $contact_id_key = '_civicrm_acf_integration_post_contact_id';
 
@@ -70,7 +70,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var string $activity_id_key The Post meta Activity ID key.
+	 * @var string
 	 */
 	public $activity_id_key = '_civicrm_acf_integration_post_activity_id';
 
@@ -79,7 +79,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var string $participant_id_key The Post meta Participant ID key.
+	 * @var string
 	 */
 	public $participant_id_key = '_civicrm_acf_integration_post_participant_id';
 

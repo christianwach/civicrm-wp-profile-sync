@@ -26,7 +26,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -35,7 +35,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $acf_loader The ACF Loader object.
+	 * @var object
 	 */
 	public $acf_loader;
 
@@ -44,7 +44,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var bool $civicrm_available True when CiviCRM is available, false otherwise.
+	 * @var bool
 	 */
 	public $civicrm_available = false;
 
@@ -53,7 +53,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var bool $civicrm_listeners The CiviCRM listeners registered flag.
+	 * @var bool
 	 */
 	public $civicrm_listeners = false;
 
@@ -62,7 +62,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var array $date_mappings The CiviCRM to ACF date format mappings.
+	 * @var array
 	 */
 	public $date_mappings = [
 		'mm/dd/yy' => 'm/d/Y',
@@ -87,7 +87,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var array $time_mappings The CiviCRM to ACF time format mappings.
+	 * @var array
 	 */
 	public $time_mappings = [
 		'1' => 'g:i a',
@@ -109,7 +109,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $entity The Entity that originally triggered the callbacks.
+	 * @var array
 	 */
 	public $entity = [
 		'entity' => false,

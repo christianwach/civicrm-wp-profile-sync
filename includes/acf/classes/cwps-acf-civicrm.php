@@ -25,7 +25,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -34,7 +34,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $acf_loader The ACF Loader object.
+	 * @var object
 	 */
 	public $acf_loader;
 
@@ -43,7 +43,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $contact_type The CiviCRM Contact Type object.
+	 * @var object
 	 */
 	public $contact_type;
 
@@ -52,7 +52,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $contact The CiviCRM Contact object.
+	 * @var object
 	 */
 	public $contact;
 
@@ -61,7 +61,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $group The CiviCRM Group object.
+	 * @var object
 	 */
 	public $group;
 
@@ -70,7 +70,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $membership The CiviCRM Membership object.
+	 * @var object
 	 */
 	public $membership;
 
@@ -79,7 +79,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $email The CiviCRM Email object.
+	 * @var object
 	 */
 	public $email;
 
@@ -88,7 +88,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $website The CiviCRM Website object.
+	 * @var object
 	 */
 	public $website;
 
@@ -97,7 +97,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $phone The CiviCRM Phone object.
+	 * @var object
 	 */
 	public $phone;
 
@@ -106,7 +106,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $phone The CiviCRM Instant Messenger object.
+	 * @var object
 	 */
 	public $im;
 
@@ -115,7 +115,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $note The CiviCRM Note object.
+	 * @var object
 	 */
 	public $note;
 
@@ -124,7 +124,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $tag The CiviCRM Tag object.
+	 * @var object
 	 */
 	public $tag;
 
@@ -133,7 +133,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $contact The CiviCRM Contact ID object.
+	 * @var object
 	 */
 	public $contact_id;
 
@@ -142,7 +142,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $contact_field The CiviCRM Contact Field object.
+	 * @var object
 	 */
 	public $contact_field;
 
@@ -151,7 +151,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $custom_field The CiviCRM Custom Field object.
+	 * @var object
 	 */
 	public $custom_field;
 
@@ -160,7 +160,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $relationship The CiviCRM Relationship object.
+	 * @var object
 	 */
 	public $relationship;
 
@@ -169,7 +169,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $address The CiviCRM Address object.
+	 * @var object
 	 */
 	public $address;
 
@@ -178,7 +178,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $addresses The CiviCRM Addresses object.
+	 * @var object
 	 */
 	public $addresses;
 
@@ -187,7 +187,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $address_city The CiviCRM Address City object.
+	 * @var object
 	 */
 	public $address_city;
 
@@ -196,7 +196,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $address_state The CiviCRM Address State object.
+	 * @var object
 	 */
 	public $address_state;
 
@@ -205,7 +205,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $google_map The CiviCRM Google Map object.
+	 * @var object
 	 */
 	public $google_map;
 
@@ -214,7 +214,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $activity_type The CiviCRM Activity Type object.
+	 * @var object
 	 */
 	public $activity_type;
 
@@ -223,7 +223,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $activity The CiviCRM Activity object.
+	 * @var object
 	 */
 	public $activity;
 
@@ -232,7 +232,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $activity_field The CiviCRM Activity Field object.
+	 * @var object
 	 */
 	public $activity_field;
 
@@ -241,7 +241,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var object $activity_attachments The CiviCRM Activity Attachment object.
+	 * @var object
 	 */
 	public $activity_attachments;
 
@@ -250,7 +250,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var object $event_type The CiviCRM Event Type object.
+	 * @var object
 	 */
 	public $event_type;
 
@@ -259,7 +259,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $event The CiviCRM Event object.
+	 * @var object
 	 */
 	public $event;
 
@@ -268,7 +268,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var object $event_field The CiviCRM Event Field object.
+	 * @var object
 	 */
 	public $event_field;
 
@@ -277,7 +277,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var object $event_location The CiviCRM Event Location object.
+	 * @var object
 	 */
 	public $event_location;
 
@@ -286,7 +286,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var object $event_registration The CiviCRM Event Registration object.
+	 * @var object
 	 */
 	public $event_registration;
 
@@ -295,7 +295,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $participant_role The CiviCRM Participant Role object.
+	 * @var object
 	 */
 	public $participant_role;
 
@@ -304,7 +304,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $participant The CiviCRM Participant object.
+	 * @var object
 	 */
 	public $participant;
 
@@ -313,7 +313,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $participant_field The CiviCRM Participant Field object.
+	 * @var object
 	 */
 	public $participant_field;
 
@@ -322,7 +322,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $campaign The CiviCRM Campaign object.
+	 * @var object
 	 */
 	public $campaign;
 
@@ -331,7 +331,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.5.2
 	 * @access public
-	 * @var object $attachment The CiviCRM Attachment object.
+	 * @var object
 	 */
 	public $attachment;
 
@@ -348,7 +348,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var string $acf_field_key The key of the "CiviCRM Field" in the ACF Field data.
+	 * @var string
 	 */
 	public $acf_field_key = 'field_cacf_civicrm_custom_field';
 

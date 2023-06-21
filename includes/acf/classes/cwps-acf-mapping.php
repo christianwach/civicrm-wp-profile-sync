@@ -32,7 +32,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -41,7 +41,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $acf_loader The ACF Loader object.
+	 * @var object
 	 */
 	public $acf_loader;
 
@@ -65,7 +65,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var array $mappings The sync mappings.
+	 * @var array
 	 */
 	public $mappings = [];
 
@@ -93,7 +93,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var array $settings The CPT sync settings.
+	 * @var array
 	 */
 	public $settings = [];
 
@@ -102,7 +102,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var string $mappings_key The Mappings option key.
+	 * @var string
 	 */
 	public $mappings_key = 'cwps_acf_mappings';
 
@@ -111,7 +111,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var string $settings_key The Settings option key.
+	 * @var string
 	 */
 	public $settings_key = 'cwps_acf_mapping_settings';
 

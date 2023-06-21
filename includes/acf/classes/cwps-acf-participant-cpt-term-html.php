@@ -32,7 +32,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -41,7 +41,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $acf_loader The ACF Loader object.
+	 * @var object
 	 */
 	public $acf_loader;
 
@@ -50,7 +50,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $civicrm The CiviCRM object.
+	 * @var object
 	 */
 	public $civicrm;
 
@@ -59,16 +59,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $participant The Participant object.
+	 * @var object
 	 */
 	public $participant;
 
 	/**
-	 * Parent (calling) object.
+	 * Custom Post Type object.
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $cpt The parent object.
+	 * @var object
 	 */
 	public $cpt;
 
@@ -77,7 +77,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var string $taxonomy_name The name of the Custom Taxonomy.
+	 * @var string
 	 */
 	public $taxonomy_name;
 

@@ -25,7 +25,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -34,16 +34,16 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var object $acf_loader The ACF Loader object.
+	 * @var object
 	 */
 	public $acf_loader;
 
 	/**
-	 * Parent (calling) object.
+	 * ACF Extended object.
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var object $acf The parent object.
+	 * @var object
 	 */
 	public $acfe;
 
@@ -52,7 +52,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var object $form The ACFE Form object.
+	 * @var object
 	 */
 	public $form;
 
@@ -61,7 +61,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var object $civicrm The CiviCRM object.
+	 * @var object
 	 */
 	public $civicrm;
 
@@ -70,7 +70,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var string $action_name The unique name of the Form Action.
+	 * @var string
 	 */
 	public $action_name = 'cwps_event';
 
@@ -79,7 +79,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var string $field_key The prefix for the Field Key.
+	 * @var string
 	 */
 	public $field_key = 'field_cwps_event_action_';
 
@@ -88,7 +88,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var string $field_name The prefix for the Field Name.
+	 * @var string
 	 */
 	public $field_name = 'cwps_event_action_';
 
@@ -99,7 +99,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var array $contact_fields The Event Contact Fields.
+	 * @var array
 	 */
 	public $contact_fields = [
 		'created_id' => 'civicrm_contact',
@@ -110,7 +110,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var array $event_fields_to_ignore The Public Event Fields to ignore.
+	 * @var array
 	 */
 	public $event_fields_to_ignore = [
 		'event_type_id' => 'select',
@@ -125,7 +125,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var array $location_fields_to_ignore The Location Fields to ignore.
+	 * @var array
 	 */
 	public $location_fields_to_ignore = [
 		'is_show_location' => 'true_false',
@@ -136,7 +136,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var array $phone_fields_to_ignore The Location Phone Fields to ignore.
+	 * @var array
 	 */
 	public $phone_fields_to_ignore = [
 		'phone_type_id' => 'select',
@@ -147,7 +147,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var array $registration_fields_to_ignore The Registration Fields to ignore.
+	 * @var array
 	 */
 	public $registration_fields_to_ignore = [
 		'is_online_registration' => 'true_false',
@@ -158,7 +158,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var array $registration_email_fields_to_ignore The Registration Confirmation Screen Fields to ignore.
+	 * @var array
 	 */
 	public $confirm_fields_to_ignore = [
 		'is_confirm_enabled' => 'true_false',
@@ -169,7 +169,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var array $registration_email_fields_to_ignore The Registration Confirmation Email Fields to ignore.
+	 * @var array
 	 */
 	public $registration_email_fields_to_ignore = [
 		'is_email_confirm' => 'true_false',

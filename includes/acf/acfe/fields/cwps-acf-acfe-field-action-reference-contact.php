@@ -23,7 +23,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Contact_Action_Ref extends acf_field {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -32,7 +32,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Contact_Action_Ref extends acf_field {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $acf_loader The ACF Loader object.
+	 * @var object
 	 */
 	public $acf_loader;
 
@@ -41,7 +41,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Contact_Action_Ref extends acf_field {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $acf The Advanced Custom Fields object.
+	 * @var object
 	 */
 	public $acf;
 
@@ -50,7 +50,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Contact_Action_Ref extends acf_field {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $acf The Advanced Custom Fields object.
+	 * @var object
 	 */
 	public $acfe;
 
@@ -59,7 +59,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Contact_Action_Ref extends acf_field {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $civicrm The CiviCRM Utilities object.
+	 * @var object
 	 */
 	public $civicrm;
 
@@ -70,7 +70,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Contact_Action_Ref extends acf_field {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var string $name The Field Type name.
+	 * @var string
 	 */
 	public $name = 'cwps_acfe_contact_action_ref';
 
@@ -83,7 +83,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Contact_Action_Ref extends acf_field {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var string $label The Field Type label.
+	 * @var string
 	 */
 	public $label = '';
 
@@ -96,7 +96,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Contact_Action_Ref extends acf_field {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var string $label The Field Type category.
+	 * @var string
 	 */
 	public $category = 'CiviCRM';
 
@@ -108,7 +108,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Contact_Action_Ref extends acf_field {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var array $defaults The Field Type defaults.
+	 * @var array
 	 */
 	public $defaults = [];
 
@@ -119,7 +119,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Contact_Action_Ref extends acf_field {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var array $settings The Field Type settings.
+	 * @var array
 	 */
 	public $settings = [
 		'version' => CIVICRM_WP_PROFILE_SYNC_VERSION,
@@ -139,7 +139,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Contact_Action_Ref extends acf_field {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var array $l10n The Field Type translations.
+	 * @var array
 	 */
 	public $l10n = [];
 

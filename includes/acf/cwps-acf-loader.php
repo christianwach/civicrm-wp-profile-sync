@@ -25,7 +25,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -34,7 +34,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $civicrm The Admin Utilities object.
+	 * @var object
 	 */
 	public $admin;
 
@@ -43,7 +43,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $civicrm The CiviCRM Utilities object.
+	 * @var object
 	 */
 	public $civicrm;
 
@@ -52,7 +52,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $post_type The Post Type Utilities object.
+	 * @var object
 	 */
 	public $post_type;
 
@@ -61,7 +61,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $post The Post Utilities object.
+	 * @var object
 	 */
 	public $post;
 
@@ -70,7 +70,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $user The User Utilities object.
+	 * @var object
 	 */
 	public $user;
 
@@ -79,7 +79,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $acf The Advanced Custom Fields object.
+	 * @var object
 	 */
 	public $acf;
 
@@ -88,7 +88,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $acfe The ACF Extended object.
+	 * @var object
 	 */
 	public $acfe;
 
@@ -97,7 +97,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $mapping The Mapping object.
+	 * @var object
 	 */
 	public $mapping;
 
@@ -106,25 +106,25 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $mapper The Mapper object.
+	 * @var object
 	 */
 	public $mapper;
 
 	/**
-	 * Loaded flag.
+	 * Loaded flag. True when conditions are met.
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var bool $loaded Loaded flag. True when conditions are met.
+	 * @var bool
 	 */
 	public $loaded = false;
 
 	/**
-	 * ACF Pro flag.
+	 * ACF Pro flag. True when ACF Pro is installed.
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var bool $acf_pro ACF Pro flag. True when ACF Pro is installed.
+	 * @var bool
 	 */
 	public $acf_pro = false;
 

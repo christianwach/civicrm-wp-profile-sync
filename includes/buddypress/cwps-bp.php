@@ -33,7 +33,7 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -42,16 +42,16 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $acf The BuddyPress plugin reference.
+	 * @var object
 	 */
 	public $bp = false;
 
 	/**
-	 * BuddyBoss flag.
+	 * BuddyBoss flag. True when BuddyBoss is installed.
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var bool $is_buddyboss BuddyBoss flag. True when BuddyBoss is installed.
+	 * @var bool
 	 */
 	public $is_buddyboss = false;
 
@@ -60,7 +60,7 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $buddyboss The BuddyBoss Compatibility object.
+	 * @var object
 	 */
 	public $buddyboss;
 
@@ -69,7 +69,7 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $xprofile The BuddyPress xProfile object.
+	 * @var object
 	 */
 	public $xprofile;
 
@@ -78,7 +78,7 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 	 *
 	 * @since 0.5.2
 	 * @access public
-	 * @var bool $mapper_hooks The Mapper hooks registered flag.
+	 * @var bool
 	 */
 	public $mapper_hooks = false;
 

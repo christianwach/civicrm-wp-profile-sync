@@ -25,16 +25,16 @@ class CiviCRM_WP_Profile_Sync_CAI {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
 	/**
-	 * CiviCRM ACF Integration reference.
+	 * CiviCRM ACF Integration plugin reference, or false if not present.
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object|bool $cai The CiviCRM ACF Integration plugin reference, or false if not present.
+	 * @var object|bool
 	 */
 	public $cai = false;
 

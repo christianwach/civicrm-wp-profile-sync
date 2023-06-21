@@ -25,7 +25,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -34,16 +34,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var object $acf_loader The ACF Loader object.
+	 * @var object
 	 */
 	public $acf_loader;
 
 	/**
-	 * Parent (calling) object.
+	 * CiviCRM object.
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var object $civicrm The parent object.
+	 * @var object
 	 */
 	public $civicrm;
 
@@ -54,7 +54,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var array $settings_fields The Settings Fields.
+	 * @var array
 	 */
 	public $settings_fields = [
 		'is_show_location' => 'true_false',
@@ -68,7 +68,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var array $address_fields The Address Fields.
+	 * @var array
 	 */
 	public $address_fields = [
 		'address_name' => 'text',
@@ -93,7 +93,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var array $email_fields The array of Email Fields.
+	 * @var array
 	 */
 	public $email_fields = [
 		'email' => 'email',
@@ -106,7 +106,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var array $phone_fields The array of Phone Fields.
+	 * @var array
 	 */
 	public $phone_fields = [
 		'phone' => 'text',

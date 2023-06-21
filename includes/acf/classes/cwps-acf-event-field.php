@@ -25,7 +25,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -34,16 +34,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var object $acf_loader The ACF Loader object.
+	 * @var object
 	 */
 	public $acf_loader;
 
 	/**
-	 * Parent (calling) object.
+	 * CiviCRM object.
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var object $civicrm The parent object.
+	 * @var object
 	 */
 	public $civicrm;
 
@@ -54,7 +54,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var array $event_fields The public Event Fields.
+	 * @var array
 	 */
 	public $event_fields = [
 		'event_type_id' => 'select',
@@ -83,7 +83,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var array $settings_fields The Event Settings Fields.
+	 * @var array
 	 */
 	public $settings_fields = [
 		'event_type_id' => 'select',
@@ -99,7 +99,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var array $fee_fields The Event Fee Fields.
+	 * @var array
 	 */
 	public $fee_fields = [
 		// phpcs:disable WordPress.Arrays.ArrayIndentation.ItemNotAligned
@@ -132,7 +132,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var array $event_fields_unused The unused Event Fields.
+	 * @var array
 	 */
 	public $event_fields_unused = [
 		// phpcs:disable Squiz.Commenting.InlineComment.InvalidEndChar

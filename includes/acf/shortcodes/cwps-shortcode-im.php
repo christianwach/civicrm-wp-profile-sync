@@ -25,7 +25,7 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Instant_Messenger {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -34,7 +34,7 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Instant_Messenger {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $acf_loader The ACF Loader object.
+	 * @var object
 	 */
 	public $acf_loader;
 
@@ -43,7 +43,7 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Instant_Messenger {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $civicrm The CiviCRM object.
+	 * @var object
 	 */
 	public $civicrm;
 
@@ -52,7 +52,7 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Instant_Messenger {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $im The Instant Messenger object.
+	 * @var object
 	 */
 	public $im;
 
@@ -61,7 +61,7 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Instant_Messenger {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var string $tag The Shortcode name.
+	 * @var string
 	 */
 	public $tag = 'cwps_im';
 
@@ -70,7 +70,7 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Instant_Messenger {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var string $tag The Shortcode name.
+	 * @var string
 	 */
 	public $cai_tag = 'cai_im';
 

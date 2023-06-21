@@ -25,7 +25,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var string $action_name The unique name of the Form Action.
+	 * @var string
 	 */
 	public $action_name = '';
 
@@ -34,7 +34,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var string $action_label The label of the Form Action.
+	 * @var string
 	 */
 	public $action_label = '';
 
@@ -43,7 +43,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var string $alias_placeholder The alias placeholder for the Form Action.
+	 * @var string
 	 */
 	public $alias_placeholder = '';
 
@@ -52,7 +52,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var string $field_key The prefix for the Field Key.
+	 * @var string
 	 */
 	public $field_key = '';
 
@@ -61,7 +61,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var string $field_name The prefix for the Field Name.
+	 * @var string
 	 */
 	public $field_name = '';
 

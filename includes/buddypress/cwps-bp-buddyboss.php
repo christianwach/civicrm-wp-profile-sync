@@ -25,7 +25,7 @@ class CiviCRM_Profile_Sync_BP_BuddyBoss {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -34,7 +34,7 @@ class CiviCRM_Profile_Sync_BP_BuddyBoss {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object $bp_loader The BuddyPress Loader object.
+	 * @var object
 	 */
 	public $bp_loader;
 

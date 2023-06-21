@@ -25,7 +25,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	 *
 	 * @since 0.5.2
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var object
 	 */
 	public $plugin;
 
@@ -34,16 +34,16 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	 *
 	 * @since 0.5.2
 	 * @access public
-	 * @var object $bp_loader The BuddyPress Loader object.
+	 * @var object
 	 */
 	public $bp_loader;
 
 	/**
-	 * Parent (calling) object.
+	 * CiviCRM object.
 	 *
 	 * @since 0.5.2
 	 * @access public
-	 * @var object $civicrm The parent object.
+	 * @var object
 	 */
 	public $civicrm;
 
@@ -52,7 +52,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	 *
 	 * @since 0.5.2
 	 * @access public
-	 * @var object $xprofile The BuddyPress xProfile object.
+	 * @var object
 	 */
 	public $xprofile;
 
@@ -61,7 +61,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	 *
 	 * @since 0.5.2
 	 * @access public
-	 * @var bool $mapper_hooks The Mapper hooks registered flag.
+	 * @var bool
 	 */
 	public $mapper_hooks = false;
 
@@ -72,7 +72,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	 *
 	 * @since 0.5.2
 	 * @access public
-	 * @var string $website_field_prefix The prefix of the "CiviCRM Field" value.
+	 * @var string
 	 */
 	public $website_field_prefix = 'cwps_website_';
 
@@ -83,7 +83,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	 *
 	 * @since 0.5.2
 	 * @access public
-	 * @var array $website_fields The array of public Website Fields.
+	 * @var array
 	 */
 	public $website_fields = [
 		'url' => [

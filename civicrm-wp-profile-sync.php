@@ -64,7 +64,7 @@ class CiviCRM_WP_Profile_Sync {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $admin The Admin object.
+	 * @var object
 	 */
 	public $admin;
 
@@ -73,7 +73,7 @@ class CiviCRM_WP_Profile_Sync {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $mapper The Mapper object.
+	 * @var object
 	 */
 	public $mapper;
 
@@ -82,7 +82,7 @@ class CiviCRM_WP_Profile_Sync {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $wp The WordPress compatibility object.
+	 * @var object
 	 */
 	public $wp;
 
@@ -91,7 +91,7 @@ class CiviCRM_WP_Profile_Sync {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $civicrm The CiviCRM compatibility object.
+	 * @var object
 	 */
 	public $civicrm;
 
@@ -100,7 +100,7 @@ class CiviCRM_WP_Profile_Sync {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $bp The BuddyPress compatibility object.
+	 * @var object
 	 */
 	public $bp;
 
@@ -109,7 +109,7 @@ class CiviCRM_WP_Profile_Sync {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $acf The ACF compatibility object.
+	 * @var object
 	 */
 	public $acf;
 
@@ -118,7 +118,7 @@ class CiviCRM_WP_Profile_Sync {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object $cai The CiviCRM ACF Integration compatibility object.
+	 * @var object
 	 */
 	public $cai;
 
