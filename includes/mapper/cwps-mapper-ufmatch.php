@@ -30,6 +30,15 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 	public $plugin;
 
 	/**
+	 * Mapper object.
+	 *
+	 * @since 0.4
+	 * @access public
+	 * @var object $mapper The Mapper object.
+	 */
+	public $mapper;
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 0.4
