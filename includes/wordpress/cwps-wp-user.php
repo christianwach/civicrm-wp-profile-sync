@@ -94,6 +94,14 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 		add_action( 'civicrm_pre_create_user', [ $this, 'unregister_mapper_hooks' ] );
 		add_action( 'civicrm_post_create_user', [ $this, 'register_mapper_hooks' ] );
 
+		// Skip sync when WooCommerce updates a Customer from a Contact.
+		add_action( 'wpcv_woo_civi/contact/address/sync_civicrm_to_woo/pre', [ $this, 'unregister_mapper_hooks' ] );
+		add_action( 'wpcv_woo_civi/contact/address/sync_civicrm_to_woo/post', [ $this, 'register_mapper_hooks' ] );
+		add_action( 'wpcv_woo_civi/contact/email/sync_civicrm_to_woo/pre', [ $this, 'unregister_mapper_hooks' ] );
+		add_action( 'wpcv_woo_civi/contact/email/sync_civicrm_to_woo/post', [ $this, 'register_mapper_hooks' ] );
+		add_action( 'wpcv_woo_civi/contact/phone/sync_civicrm_to_woo/pre', [ $this, 'unregister_mapper_hooks' ] );
+		add_action( 'wpcv_woo_civi/contact/phone/sync_civicrm_to_woo/post', [ $this, 'register_mapper_hooks' ] );
+
 		// Always register Mapper callbacks.
 		$this->register_mapper_hooks();
 
