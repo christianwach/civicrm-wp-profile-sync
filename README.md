@@ -6,7 +6,7 @@ CiviCRM Profile Sync
 **Tags:** civicrm, user, buddypress, acf, profile, xprofile, sync<br/>
 **Requires at least:** 4.9<br/>
 **Tested up to:** 6.3<br/>
-**Stable tag:** 0.6.4a<br/>
+**Stable tag:** 0.6.4<br/>
 **License:** GPLv2 or later<br/>
 **License URI:** https://www.gnu.org/licenses/gpl-2.0.html
 
