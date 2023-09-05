@@ -468,6 +468,11 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		// Get the current Website.
 		$existing = $this->get_by_type( $contact_id, $website_type_id );
 
+		// Bail if there are no existing Websites and there is no incoming value.
+		if ( empty( $existing ) && empty( $value ) ) {
+			return $website;
+		}
+
 		// Create a new Website if there are no results and there is an incoming value.
 		if ( empty( $existing ) && ! empty( $value ) ) {
 
