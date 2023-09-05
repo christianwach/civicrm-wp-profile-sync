@@ -86,6 +86,11 @@ I'll say it again: test early, test often and - above all - test on a developmen
 
 == Changelog ==
 
+= 0.6.3 =
+
+* Better compatibility with Integrate CiviCRM with WooCommerce
+* Fixes creation of empty Website records
+
 = 0.6.2 =
 
 * Fixes potential fatal error on CiviCRM 5.62.x.
