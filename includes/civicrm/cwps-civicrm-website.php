@@ -468,8 +468,8 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		// Get the current Website.
 		$existing = $this->get_by_type( $contact_id, $website_type_id );
 
-		// Create a new Website if there are no results.
-		if ( empty( $existing ) ) {
+		// Create a new Website if there are no results and there is an incoming value.
+		if ( empty( $existing ) && ! empty( $value ) ) {
 
 			// Define params to create new Website.
 			$params = [
@@ -484,7 +484,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		}
 
 		// Bail if it hasn't changed.
-		if ( ! empty( $existing['url'] ) && $existing['url'] == $value ) {
+		if ( ! empty( $existing['url'] ) && $existing['url'] === $value ) {
 			return $existing;
 		}
 
@@ -505,7 +505,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		}
 
 		// Delete it.
-		$success = $this->delete( $existing['id'] );
+		$this->delete( $existing['id'] );
 
 		// Always return false.
 		return false;
@@ -624,7 +624,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 				'message' => __( 'An ID must be present to delete a Website.', 'civicrm-wp-profile-sync' ),
 				'backtrace' => $trace,
 			], true ) );
-			return false;
+			return $success;
 		}
 
 		// Build params to delete Website.
