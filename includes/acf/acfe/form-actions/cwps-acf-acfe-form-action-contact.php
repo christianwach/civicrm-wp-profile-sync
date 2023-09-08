@@ -408,6 +408,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$contact_id = $this->form_contact_id_get_existing( $form, $current_post_id, $action );
 		}
 
+		// The Contact ID may already exist via an ACFE "magic method".
+		if ( ! $contact_id ) {
+			$contact_id = $this->form_contact_id_get_from_tag( $form, $current_post_id, $action );
+		}
+
 		// Parse Relationships.
 		$relationships = [];
 		if ( ! $this->action_is_submitter() ) {
@@ -4291,6 +4296,35 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				break;
 			}
 
+		}
+
+		// --<
+		return $contact_id;
+
+	}
+
+	/**
+	 * Gets the Contact ID if it exists in the Contact ID Field.
+	 *
+	 * @since 0.6.5
+	 *
+	 * @param array $form The array of Form data.
+	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
+	 * @param string $action The customised name of the action.
+	 * @return integer $offset The Relationship offset.
+	 */
+	public function form_contact_id_get_from_tag( $form, $current_post_id, $action ) {
+
+		// Init return.
+		$contact_id = false;
+
+		// On load, the Contact ID Field may already be populated.
+		$field = get_sub_field( $this->field_key . 'map_id' );
+		$contact_id = acfe_form_map_field_value_load( $field, $current_post_id, $form );
+
+		// Maybe cast as integer.
+		if ( ! empty( $contact_id ) ) {
+			$contact_id = (int) $contact_id;
 		}
 
 		// --<
