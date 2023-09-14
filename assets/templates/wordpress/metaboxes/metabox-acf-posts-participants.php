@@ -49,7 +49,7 @@
 	<?php else : ?>
 
 		<div class="notice notice-warning inline" style="background-color: #f7f7f7;">
-			<p><?php esc_html_e( 'No synced Activity Post Types found.', 'civicrm-wp-profile-sync' ); ?></p>
+			<p><?php esc_html_e( 'No synced Participant Post Types found.', 'civicrm-wp-profile-sync' ); ?></p>
 		</div>
 
 	<?php endif; ?>
