@@ -86,6 +86,10 @@ I'll say it again: test early, test often and - above all - test on a developmen
 
 == Changelog ==
 
+= 0.6.5 =
+
+* Enable template tags in the Contact ID field for ACFE forms
+
 = 0.6.4 =
 
 * Fixes spurious Website error log entries
