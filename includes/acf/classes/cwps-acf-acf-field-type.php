@@ -173,32 +173,48 @@ class CiviCRM_Profile_Sync_ACF_Field_Type {
 	public function setup_field_types( $version ) {
 
 		// Create Fields.
-		new CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_ID_Field( $this );
-		new CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field( $this );
-		new CiviCRM_Profile_Sync_Custom_CiviCRM_Relationship( $this );
+		$contact_id_field = new CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_ID_Field( $this );
+		acf_register_field_type( $contact_id_field );
+		$contact_field = new CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field( $this );
+		acf_register_field_type( $contact_field );
+		$relationship = new CiviCRM_Profile_Sync_Custom_CiviCRM_Relationship( $this );
+		acf_register_field_type( $relationship );
 
-		new CiviCRM_Profile_Sync_Custom_CiviCRM_Address_City_Field( $this );
-		new CiviCRM_Profile_Sync_Custom_CiviCRM_Address_State_Field( $this );
-		new CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Country_Field( $this );
+		$city = new CiviCRM_Profile_Sync_Custom_CiviCRM_Address_City_Field( $this );
+		acf_register_field_type( $city );
+		$state = new CiviCRM_Profile_Sync_Custom_CiviCRM_Address_State_Field( $this );
+		acf_register_field_type( $state );
+		$country = new CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Country_Field( $this );
 
 		if ( $this->acf->is_pro() ) {
-			new CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Field( $this );
-			new CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Field( $this );
-			new CiviCRM_Profile_Sync_Custom_CiviCRM_Instant_Messenger( $this );
-			new CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment( $this );
+			$address = new CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Field( $this );
+			acf_register_field_type( $address );
+			$phone = new CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Field( $this );
+			acf_register_field_type( $phone );
+			$im = new CiviCRM_Profile_Sync_Custom_CiviCRM_Instant_Messenger( $this );
+			acf_register_field_type( $im );
+			$attachment = new CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment( $this );
+			acf_register_field_type( $attachment );
 		}
 
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 		//new CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set( $this );
-		new CiviCRM_Profile_Sync_Custom_CiviCRM_Yes_No( $this );
+		$yes_no = new CiviCRM_Profile_Sync_Custom_CiviCRM_Yes_No( $this );
+		acf_register_field_type( $yes_no );
 
-		new CiviCRM_Profile_Sync_Custom_CiviCRM_Activity_Creator( $this );
-		new CiviCRM_Profile_Sync_Custom_CiviCRM_Activity_Target( $this );
-		new CiviCRM_Profile_Sync_Custom_CiviCRM_Activity_Assignee( $this );
+		$activity_creator = new CiviCRM_Profile_Sync_Custom_CiviCRM_Activity_Creator( $this );
+		acf_register_field_type( $activity_creator );
+		$activity_target = new CiviCRM_Profile_Sync_Custom_CiviCRM_Activity_Target( $this );
+		acf_register_field_type( $activity_target );
+		$activity_assignee = new CiviCRM_Profile_Sync_Custom_CiviCRM_Activity_Assignee( $this );
+		acf_register_field_type( $activity_assignee );
 
-		new CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Field( $this );
+		$event = new CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Field( $this );
+		acf_register_field_type( $event );
 		$this->event_group = new CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Group( $this );
+		acf_register_field_type( $this->event_group );
 		$this->contact_group = new CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New( $this );
+		acf_register_field_type( $this->contact_group );
 
 	}
 
