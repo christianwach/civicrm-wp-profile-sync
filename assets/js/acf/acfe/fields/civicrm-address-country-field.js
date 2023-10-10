@@ -14,4 +14,10 @@
 	// Register it.
 	acf.registerFieldType( Field );
 
+	// Add condition types.
+	acf.registerConditionForFieldType( 'hasValue', 'cwps_acfe_address_country' );
+	acf.registerConditionForFieldType( 'hasNoValue', 'cwps_acfe_address_country' );
+	acf.registerConditionForFieldType( 'SelectEqualTo', 'cwps_acfe_address_country' );
+	acf.registerConditionForFieldType( 'SelectNotEqualTo', 'cwps_acfe_address_country' );
+
 })(jQuery);

@@ -221,6 +221,28 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Yes_No extends acf_field {
 	}
 
 	/**
+	 * This method is called in the "admin_enqueue_scripts" action on the edit
+	 * screen where this Field is created.
+	 *
+	 * Use this action to add CSS and JavaScript to assist your render_field()
+	 * action.
+	 *
+	 * @since 0.6.6
+	 */
+	public function input_admin_enqueue_scripts() {
+
+		// Enqueue our JavaScript.
+		wp_enqueue_script(
+			'acf-input-' . $this->name,
+			plugins_url( 'assets/js/acf/fields/civicrm-yes-no-field.js', CIVICRM_WP_PROFILE_SYNC_FILE ),
+			[ 'acf-pro-input' ],
+			CIVICRM_WP_PROFILE_SYNC_VERSION, // Version.
+			true
+		);
+
+	}
+
+	/**
 	 * Creates the HTML interface for this Field Type.
 	 *
 	 * @since 0.4

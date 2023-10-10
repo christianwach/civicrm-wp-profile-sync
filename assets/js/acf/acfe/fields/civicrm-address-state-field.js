@@ -120,6 +120,12 @@
 	// Register it.
 	acf.registerFieldType( Field );
 
+	// Add condition types.
+	acf.registerConditionForFieldType( 'hasValue', 'cwps_acfe_address_state' );
+	acf.registerConditionForFieldType( 'hasNoValue', 'cwps_acfe_address_state' );
+	acf.registerConditionForFieldType( 'SelectEqualTo', 'cwps_acfe_address_state' );
+	acf.registerConditionForFieldType( 'SelectNotEqualTo', 'cwps_acfe_address_state' );
+
 	/**
 	 * Acts when CiviCRM ACFE State Fields are ready.
 	 *

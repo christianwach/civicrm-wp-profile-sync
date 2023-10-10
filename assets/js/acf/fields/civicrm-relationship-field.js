@@ -14,4 +14,10 @@
 	// Register it.
 	acf.registerFieldType( Field );
 
+	// Add basic condition types.
+	acf.registerConditionForFieldType( 'hasValue', 'civicrm_relationship' );
+	acf.registerConditionForFieldType( 'hasNoValue', 'civicrm_relationship' );
+	acf.registerConditionForFieldType( 'SelectEqualTo', 'civicrm_relationship' );
+	acf.registerConditionForFieldType( 'SelectNotEqualTo', 'civicrm_relationship' );
+
 })(jQuery);
