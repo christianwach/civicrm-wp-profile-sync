@@ -60,6 +60,8 @@
 			</div><!-- #post-body -->
 			<br class="clear">
 
-		</div><!-- #poststuff -->
+		</div><!-- #dashboard-widgets-wrap -->
+
+	</form>
 
 </div><!-- /.wrap -->
