@@ -93,6 +93,186 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 	public $field_name = 'cwps_contact_action_';
 
 	/**
+	 * Public Contact Fields.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $public_contact_fields;
+
+	/**
+	 * Custom Fields.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $custom_fields;
+
+	/**
+	 * Custom Field IDs.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $custom_field_ids;
+
+	/**
+	 * Location Types.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $location_types;
+
+	/**
+	 * Default Location Type.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var string
+	 */
+	public $location_type_default;
+
+	/**
+	 * Email Fields.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $email_fields;
+
+	/**
+	 * Website Types.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $website_types;
+
+	/**
+	 * Website Fields.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $website_fields;
+
+	/**
+	 * Address Fields.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $address_fields;
+
+	/**
+	 * Address Custom Fields.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $address_custom_fields;
+
+	/**
+	 * Phone Types.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $phone_types;
+
+	/**
+	 * Phone Fields.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $phone_fields;
+
+	/**
+	 * IM Providers.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $im_providers;
+
+	/**
+	 * IM Fields.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $im_fields;
+
+	/**
+	 * Membership Types.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $membership_types;
+
+	/**
+	 * Note Fields.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $note_fields;
+
+	/**
+	 * Attachment Fields.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $attachment_fields;
+
+	/**
+	 * Relationship Fields.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $relationship_fields;
+
+	/**
+	 * Relationship Choices.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $relationship_choices;
+
+	/**
+	 * Relationship Custom Fields.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $relationship_custom_fields;
+
+	/**
 	 * Public Contact Fields to add.
 	 *
 	 * These are not mapped for Post Type Sync, so need to be added.

@@ -66,6 +66,15 @@ class CiviCRM_Profile_Sync_ACF_User {
 	public $mapper_civicrm_hooks = false;
 
 	/**
+	 * Address data before it is edited.
+	 *
+	 * @since 0.4
+	 * @access public
+	 * @var bool
+	 */
+	public $map_address_pre;
+
+	/**
 	 * Supported Location Rule names.
 	 *
 	 * @since 0.5

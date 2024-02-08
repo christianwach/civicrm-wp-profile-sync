@@ -93,6 +93,24 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 	public $field_name = 'cwps_civicrm_email_action_';
 
 	/**
+	 * Mapped Fields.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $mapped_email_fields;
+
+	/**
+	 * Email Contact Fields.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $contact_fields;
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 0.5

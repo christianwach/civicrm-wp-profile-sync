@@ -93,6 +93,141 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	public $field_name = 'cwps_event_action_';
 
 	/**
+	 * Public Event Fields.
+	 *
+	 * @since 0.5.4
+	 * @access public
+	 * @var array
+	 */
+	public $public_event_fields;
+
+	/**
+	 * Settings Fields.
+	 *
+	 * @since 0.5.4
+	 * @access public
+	 * @var array
+	 */
+	public $settings_fields;
+
+	/**
+	 * Fields for Contacts.
+	 *
+	 * @since 0.5.4
+	 * @access public
+	 * @var array
+	 */
+	public $fields_for_contacts;
+
+	/**
+	 * Event Location Address Fields.
+	 *
+	 * @since 0.5.4
+	 * @access public
+	 * @var array
+	 */
+	public $event_location_address_fields;
+
+	/**
+	 * Address Custom Fields.
+	 *
+	 * @since 0.5.4
+	 * @access public
+	 * @var array
+	 */
+	public $address_custom_fields;
+
+	/**
+	 * Event Location Email Fields.
+	 *
+	 * @since 0.5.4
+	 * @access public
+	 * @var array
+	 */
+	public $event_location_email_fields;
+
+	/**
+	 * Event Location Phone Fields.
+	 *
+	 * @since 0.5.4
+	 * @access public
+	 * @var array
+	 */
+	public $event_location_phone_fields;
+
+	/**
+	 * Phone Types.
+	 *
+	 * @since 0.5.4
+	 * @access public
+	 * @var array
+	 */
+	public $phone_types;
+
+	/**
+	 * Event Registration Fields.
+	 *
+	 * @since 0.5.4
+	 * @access public
+	 * @var array
+	 */
+	public $event_registration_fields;
+
+	/**
+	 * Event Registration Screen Fields.
+	 *
+	 * @since 0.5.4
+	 * @access public
+	 * @var array
+	 */
+	public $event_registration_screen_fields;
+
+	/**
+	 * Event Confirm Screen Fields.
+	 *
+	 * @since 0.5.4
+	 * @access public
+	 * @var array
+	 */
+	public $event_confirm_screen_fields;
+
+	/**
+	 * Event Thank You Screen Fields.
+	 *
+	 * @since 0.5.4
+	 * @access public
+	 * @var array
+	 */
+	public $event_thankyou_screen_fields;
+
+	/**
+	 * Event Confirmation Email Fields.
+	 *
+	 * @since 0.5.4
+	 * @access public
+	 * @var array
+	 */
+	public $event_confirmation_email_fields;
+
+	/**
+	 * Custom Fields.
+	 *
+	 * @since 0.5.4
+	 * @access public
+	 * @var array
+	 */
+	public $custom_fields;
+
+	/**
+	 * Custom Field IDs.
+	 *
+	 * @since 0.5.4
+	 * @access public
+	 * @var array
+	 */
+	public $custom_field_ids;
+
+	/**
 	 * Event Contact Fields.
 	 *
 	 * These need special handling in ACFE Forms.

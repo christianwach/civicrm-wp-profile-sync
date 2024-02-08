@@ -97,6 +97,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 	public $participant_field_prefix = 'caiparticipant_';
 
 	/**
+	 * Post should not be synced flag.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var bool
+	 */
+	public $do_not_sync;
+
+	/**
 	 * Participant Fields that need duplicating without the "participant_" prefix.
 	 *
 	 * @since 0.5

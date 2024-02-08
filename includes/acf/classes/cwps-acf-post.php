@@ -652,8 +652,8 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	 */
 	public function get_by_contact_id( $contact_id, $post_type = 'any' ) {
 
-		// Init as failed.
-		$posts = false;
+		// Init as empty.
+		$posts = [];
 
 		/*
 		 * Define args for query.
@@ -702,6 +702,11 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Reset Post data just in case.
 		wp_reset_postdata();
+
+		// Format return.
+		if ( empty( $posts ) ) {
+			$posts = false;
+		}
 
 		// --<
 		return $posts;

@@ -120,6 +120,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	public $acf_slug = 'cwps_participant';
 
 	/**
+	 * Enabled flag.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var bool
+	 */
+	public $enabled = false;
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 0.5

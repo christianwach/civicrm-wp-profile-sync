@@ -111,6 +111,15 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 	public $mapper;
 
 	/**
+	 * Geo Mashup object.
+	 *
+	 * @since 0.5.8
+	 * @access public
+	 * @var object
+	 */
+	public $geo_mashup;
+
+	/**
 	 * Loaded flag. True when conditions are met.
 	 *
 	 * @since 0.4

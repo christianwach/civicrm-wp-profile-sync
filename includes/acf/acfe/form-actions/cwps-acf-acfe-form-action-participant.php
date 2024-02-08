@@ -93,6 +93,60 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 	public $field_name = 'cwps_participant_action_';
 
 	/**
+	 * Public Participant Fields.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $public_participant_fields;
+
+	/**
+	 * Fields for Contacts.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $fields_for_contacts;
+
+	/**
+	 * Fields for Participants.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $fields_for_participants;
+
+	/**
+	 * Fields for Events.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $fields_for_events;
+
+	/**
+	 * Custom Fields.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $custom_fields;
+
+	/**
+	 * Custom Field IDs.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $custom_field_ids;
+
+	/**
 	 * Public Participant Fields to add.
 	 *
 	 * These are not mapped for Post Type Sync, so need to be added.

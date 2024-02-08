@@ -93,6 +93,42 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 	public $field_name = 'cwps_case_action_';
 
 	/**
+	 * Public Case Fields.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $public_case_fields;
+
+	/**
+	 * Fields for Contacts.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $fields_for_contacts;
+
+	/**
+	 * Custom Fields.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $custom_fields;
+
+	/**
+	 * Custom Field IDs.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $custom_field_ids;
+
+	/**
 	 * Public Case Fields to add.
 	 *
 	 * These are not mapped for Post Type Sync, so need to be added.

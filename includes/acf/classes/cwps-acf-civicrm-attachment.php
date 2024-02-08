@@ -75,6 +75,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	public $wordpress_hooks = false;
 
 	/**
+	 * File Fields found in a Field Group.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var array
+	 */
+	public $file_fields;
+
+	/**
 	 * WordPress Attachment meta key.
 	 *
 	 * @since 0.5.2

@@ -79,6 +79,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 	public $activity_field_prefix = 'caiactivity_';
 
 	/**
+	 * Post should not be synced flag.
+	 *
+	 * @since 0.4
+	 * @access public
+	 * @var bool
+	 */
+	public $do_not_sync;
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 0.4

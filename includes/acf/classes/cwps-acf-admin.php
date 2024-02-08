@@ -57,6 +57,15 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	public $settings = [];
 
 	/**
+	 * Sync Page handle.
+	 *
+	 * @since 0.4
+	 * @access public
+	 * @var string
+	 */
+	public $sync_page;
+
+	/**
 	 * How many items to process per AJAX request.
 	 *
 	 * @since 0.4

@@ -57,6 +57,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	public $mapper_hooks = false;
 
 	/**
+	 * Address data before it is edited.
+	 *
+	 * @since 0.4
+	 * @access public
+	 * @var bool
+	 */
+	public $address_pre;
+
+	/**
 	 * "CiviCRM Google Map" Field key in the ACF Field data.
 	 *
 	 * Sorry that this key name is slightly misleading - it is a leftover from

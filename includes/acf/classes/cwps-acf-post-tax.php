@@ -66,6 +66,24 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	public $term_meta_key = '_cai_civicrm_group_id';
 
 	/**
+	 * Synced Taxonomies.
+	 *
+	 * @since 0.4
+	 * @access public
+	 * @var array
+	 */
+	public $taxonomies = [];
+
+	/**
+	 * Terms to compare before and after a Post is saved.
+	 *
+	 * @since 0.4
+	 * @access public
+	 * @var array
+	 */
+	public $terms_pre;
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 0.4
