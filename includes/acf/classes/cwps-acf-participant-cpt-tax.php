@@ -971,6 +971,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 		// Query Terms for the Term with the ID of the CiviCRM Participant Role in meta data.
 		$args = [
+			'taxonomy' => $this->taxonomy_name,
 			'hide_empty' => false,
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 			'meta_query' => [
@@ -983,7 +984,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		];
 
 		// Get what should only be a single Term.
-		$terms = get_terms( $this->taxonomy_name, $args );
+		$terms = get_terms( $args );
 		if ( empty( $terms ) ) {
 			return false;
 		}
