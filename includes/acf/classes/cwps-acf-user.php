@@ -66,13 +66,95 @@ class CiviCRM_Profile_Sync_ACF_User {
 	public $mapper_civicrm_hooks = false;
 
 	/**
-	 * Address data before it is edited.
+	 * An array of Website Records prior to edit.
+	 *
+	 * There are situations where nested updates take place (e.g. via CiviRules)
+	 * so we keep copies of the Website Records in an array and try and match
+	 * them up in the post edit hook.
 	 *
 	 * @since 0.4
-	 * @access public
-	 * @var bool
+	 * @access private
+	 * @var array
 	 */
-	public $map_address_pre;
+	private $website_bridging_array = [];
+
+	/**
+	 * An array of Phone Records prior to edit.
+	 *
+	 * There are situations where nested updates take place (e.g. via CiviRules)
+	 * so we keep copies of the Phone Records in an array and try and match
+	 * them up in the post edit hook.
+	 *
+	 * @since 0.4
+	 * @access private
+	 * @var array
+	 */
+	private $phone_bridging_array = [];
+
+	/**
+	 * An array of Instant Messenger Records prior to delete.
+	 *
+	 * There are situations where nested updates take place (e.g. via CiviRules)
+	 * so we keep copies of the Instant Messenger Records in an array and try
+	 * and match them up in the post delete hook.
+	 *
+	 * @since 0.4
+	 * @access private
+	 * @var array
+	 */
+	private $im_bridging_array = [];
+
+	/**
+	 * An array of Addresses prior to delete.
+	 *
+	 * There are situations where nested updates take place (e.g. via CiviRules)
+	 * so we keep copies of the Addresses in an array and try and match them up
+	 * in the post delete hook.
+	 *
+	 * @since 0.4
+	 * @access private
+	 * @var array
+	 */
+	private $address_bridging_array = [];
+
+	/**
+	 * An array of Map Addresses prior to delete.
+	 *
+	 * There are situations where nested updates take place (e.g. via CiviRules)
+	 * so we keep copies of the Map Addresses in an array and try and match them up
+	 * in the post delete hook.
+	 *
+	 * @since 0.4
+	 * @access private
+	 * @var array
+	 */
+	private $map_address_bridging_array = [];
+
+	/**
+	 * An array of City Addresses prior to delete.
+	 *
+	 * There are situations where nested updates take place (e.g. via CiviRules)
+	 * so we keep copies of the City Addresses in an array and try and match them up
+	 * in the post delete hook.
+	 *
+	 * @since 0.4
+	 * @access private
+	 * @var array
+	 */
+	private $city_address_bridging_array = [];
+
+	/**
+	 * An array of State Addresses prior to delete.
+	 *
+	 * There are situations where nested updates take place (e.g. via CiviRules)
+	 * so we keep copies of the State Addresses in an array and try and match them up
+	 * in the post delete hook.
+	 *
+	 * @since 0.4
+	 * @access private
+	 * @var array
+	 */
+	private $state_address_bridging_array = [];
 
 	/**
 	 * Supported Location Rule names.
@@ -601,13 +683,19 @@ class CiviCRM_Profile_Sync_ACF_User {
 			return;
 		}
 
-		// Always clear properties if set previously.
-		if ( isset( $this->website_pre ) ) {
-			unset( $this->website_pre );
-		}
+		// Cast ID as integer for array key.
+		$website_id = (int) $website->id;
 
 		// Grab the previous Website data from the database.
-		$this->website_pre = $this->civicrm->website->website_get_by_id( $website->id );
+		$website_pre = $this->civicrm->website->website_get_by_id( $website_id );
+
+		// Maybe cast previous Website Record data as object and stash in a property.
+		if ( ! is_object( $website_pre ) ) {
+			$website_pre = (object) $website_pre;
+		}
+
+		// Stash in property array.
+		$this->website_bridging_array[ $website_id ] = $website_pre;
 
 	}
 
@@ -635,13 +723,23 @@ class CiviCRM_Profile_Sync_ACF_User {
 		// Format the ACF "Post ID".
 		$post_id = 'user_' . $user_id;
 
+		// Cast ID as integer for array key.
+		$website_id = (int) $website->id;
+
+		// Populate "Previous Website" if we have it stored.
+		$website_pre = null;
+		if ( ! empty( $this->website_bridging_array[ $website_id ] ) ) {
+			$website_pre = $this->website_bridging_array[ $website_id ];
+			unset( $this->website_bridging_array[ $website_id ] );
+		}
+
 		// Check previous to see if its Website Type has changed.
 		$website_type_changed = false;
-		if ( ! empty( $this->website_pre ) ) {
-			if ( (int) $this->website_pre->website_type_id !== (int) $website->website_type_id ) {
+		if ( ! empty( $website_pre ) ) {
+			if ( (int) $website_pre->website_type_id !== (int) $website->website_type_id ) {
 				$website_type_changed = true;
 				// Make a clone so we don't overwrite the Website Pre object.
-				$previous = clone $this->website_pre;
+				$previous = clone $website_pre;
 				$previous->url = '';
 			}
 		}
@@ -770,11 +868,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 */
 	public function phone_pre_delete( $args ) {
 
-		// Always clear properties if set previously.
-		if ( isset( $this->phone_pre ) ) {
-			unset( $this->phone_pre );
-		}
-
 		// We just need the Phone ID.
 		$phone_id = (int) $args['objectId'];
 
@@ -783,10 +876,11 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 		// Maybe cast previous Phone Record data as object and stash in a property.
 		if ( ! is_object( $phone_pre ) ) {
-			$this->phone_pre = (object) $phone_pre;
-		} else {
-			$this->phone_pre = $phone_pre;
+			$phone_pre = (object) $phone_pre;
 		}
+
+		// Stash in property array.
+		$this->phone_bridging_array[ $phone_id ] = $phone_pre;
 
 	}
 
@@ -799,26 +893,28 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 */
 	public function phone_deleted( $args ) {
 
-		// Bail if we don't have a pre-delete Phone Record.
-		if ( ! isset( $this->phone_pre ) ) {
-			return;
-		}
-
 		// We just need the Phone ID.
 		$phone_id = (int) $args['objectId'];
 
-		// Sanity check.
-		if ( $phone_id != $this->phone_pre->id ) {
+		// Populate "Previous Phone" if we have it stored.
+		$phone_pre = null;
+		if ( ! empty( $this->phone_bridging_array[ $phone_id ] ) ) {
+			$phone_pre = $this->phone_bridging_array[ $phone_id ];
+			unset( $this->phone_bridging_array[ $phone_id ] );
+		}
+
+		// Bail if we can't find the previous Phone Record or it doesn't match.
+		if ( empty( $phone_pre ) || $phone_id !== (int) $phone_pre->id ) {
 			return;
 		}
 
 		// Bail if this is not a Contact's Phone Record.
-		if ( empty( $this->phone_pre->contact_id ) ) {
+		if ( empty( $phone_pre->contact_id ) ) {
 			return;
 		}
 
 		// Overwrite empty Phone Record with full Record.
-		$phone = $this->phone_pre;
+		$phone = $phone_pre;
 
 		// Bail if this Contact doesn't have a User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $phone->contact_id );
@@ -899,11 +995,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 */
 	public function im_pre_delete( $args ) {
 
-		// Always clear properties if set previously.
-		if ( isset( $this->im_pre ) ) {
-			unset( $this->im_pre );
-		}
-
 		// We just need the Instant Messenger ID.
 		$im_id = (int) $args['objectId'];
 
@@ -912,10 +1003,11 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 		// Maybe cast previous Instant Messenger Record data as object and stash in a property.
 		if ( ! is_object( $im_pre ) ) {
-			$this->im_pre = (object) $im_pre;
-		} else {
-			$this->im_pre = $im_pre;
+			$im_pre = (object) $im_pre;
 		}
+
+		// Stash in property array.
+		$this->im_bridging_array[ $im_id ] = $im_pre;
 
 	}
 
@@ -928,26 +1020,28 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 */
 	public function im_deleted( $args ) {
 
-		// Bail if we don't have a pre-delete Instant Messenger Record.
-		if ( ! isset( $this->im_pre ) ) {
-			return;
-		}
-
 		// We just need the Instant Messenger ID.
 		$im_id = (int) $args['objectId'];
 
-		// Sanity check.
-		if ( $im_id != $this->im_pre->id ) {
+		// Populate "Previous Instant Messenger" if we have it stored.
+		$im_pre = null;
+		if ( ! empty( $this->im_bridging_array[ $im_id ] ) ) {
+			$im_pre = $this->im_bridging_array[ $im_id ];
+			unset( $this->im_bridging_array[ $im_id ] );
+		}
+
+		// Bail if we can't find the previous Instant Messenger Record or it doesn't match.
+		if ( empty( $im_pre ) || $im_id !== (int) $im_pre->id ) {
 			return;
 		}
 
 		// Bail if this is not a Contact's Instant Messenger Record.
-		if ( empty( $this->im_pre->contact_id ) ) {
+		if ( empty( $im_pre->contact_id ) ) {
 			return;
 		}
 
 		// Overwrite empty Instant Messenger Record with full Record.
-		$im = $this->im_pre;
+		$im = $im_pre;
 
 		// Bail if this Contact doesn't have a User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $im->contact_id );
@@ -1084,11 +1178,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 */
 	public function address_pre_delete( $args ) {
 
-		// Always clear properties if set previously.
-		if ( isset( $this->address_pre ) ) {
-			unset( $this->address_pre );
-		}
-
 		// We just need the Address ID.
 		$address_id = (int) $args['objectId'];
 
@@ -1097,10 +1186,11 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 		// Maybe cast previous Address Record data as object and stash in a property.
 		if ( ! is_object( $address_pre ) ) {
-			$this->address_pre = (object) $address_pre;
-		} else {
-			$this->address_pre = $address_pre;
+			$address_pre = (object) $address_pre;
 		}
+
+		// Stash in property array.
+		$this->address_bridging_array[ $address_id ] = $address_pre;
 
 	}
 
@@ -1113,26 +1203,28 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 */
 	public function address_deleted( $args ) {
 
-		// Bail if we don't have a pre-delete Address Record.
-		if ( ! isset( $this->address_pre ) ) {
-			return;
-		}
-
 		// We just need the Address ID.
 		$address_id = (int) $args['objectId'];
 
-		// Sanity check.
-		if ( $address_id != $this->address_pre->id ) {
+		// Populate "Previous Address" if we have it stored.
+		$address_pre = null;
+		if ( ! empty( $this->address_bridging_array[ $address_id ] ) ) {
+			$address_pre = $this->address_bridging_array[ $address_id ];
+			unset( $this->address_bridging_array[ $address_id ] );
+		}
+
+		// Bail if we can't find the previous Address Record or it doesn't match.
+		if ( empty( $address_pre ) || $address_id !== (int) $address_pre->id ) {
 			return;
 		}
 
 		// Bail if this is not a Contact's Address Record.
-		if ( empty( $this->address_pre->contact_id ) ) {
+		if ( empty( $address_pre->contact_id ) ) {
 			return;
 		}
 
 		// Overwrite empty Address Record with full Record.
-		$address = $this->address_pre;
+		$address = $address_pre;
 
 		// Bail if this Contact doesn't have a User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $address->contact_id );
@@ -1174,11 +1266,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 */
 	public function map_pre_edit( $args ) {
 
-		// Always clear properties if set previously.
-		if ( isset( $this->map_address_pre ) ) {
-			unset( $this->map_address_pre );
-		}
-
 		// Grab the Address object.
 		$address = $args['objectRef'];
 
@@ -1188,7 +1275,16 @@ class CiviCRM_Profile_Sync_ACF_User {
 		}
 
 		// Grab the previous Address data from the database via API.
-		$this->map_address_pre = $this->plugin->civicrm->address->address_get_by_id( $address->id );
+		$address_pre = $this->plugin->civicrm->address->address_get_by_id( $address->id );
+
+		// Maybe cast previous Address Record data as object.
+		if ( ! is_object( $address_pre ) ) {
+			$address_pre = (object) $address_pre;
+		}
+
+		// Stash in property array.
+		$this->map_address_bridging_array[ (int) $address->id ] = $address_pre;
+
 
 	}
 
@@ -1276,8 +1372,28 @@ class CiviCRM_Profile_Sync_ACF_User {
 			return;
 		}
 
+		// Cast the Address ID as an integer.
+		$address_id = (int) $address->id;
+
+		// Populate "Previous Address" if we have it stored.
+		$address_pre = null;
+		if ( ! empty( $this->map_address_bridging_array[ $address_id ] ) ) {
+			$address_pre = $this->map_address_bridging_array[ $address_id ];
+			unset( $this->map_address_bridging_array[ $address_id ] );
+		}
+
+		// Bail if we can't find the previous Address Record or it doesn't match.
+		if ( empty( $address_pre ) || $address_id !== (int) $address_pre->id ) {
+			return;
+		}
+
+		// Bail if this is not a Contact's Address Record.
+		if ( empty( $address_pre->contact_id ) ) {
+			return;
+		}
+
 		// Check if the edited Address has had its properties toggled.
-		$address = $this->civicrm->google_map->address_properties_check( $address, $this->map_address_pre );
+		$address = $this->civicrm->google_map->address_properties_check( $address, $address_pre );
 
 		// Bail if this Contact doesn't have a User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $address->contact_id );
@@ -1292,7 +1408,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$this->unregister_mapper_wp_hooks();
 
 		// Update the ACF Fields for this Post.
-		$this->civicrm->google_map->fields_update( $post_id, $address, $this->map_address_pre );
+		$this->civicrm->google_map->fields_update( $post_id, $address, $address_pre );
 
 		// If this address has no "Master Address" then it might be one itself.
 		$addresses_shared = $this->plugin->civicrm->address->addresses_shared_get_by_id( $address->id );
@@ -1451,11 +1567,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 */
 	public function city_pre_delete( $args ) {
 
-		// Always clear properties if set previously.
-		if ( isset( $this->city_address_pre ) ) {
-			unset( $this->city_address_pre );
-		}
-
 		// We just need the Address ID.
 		$address_id = (int) $args['objectId'];
 
@@ -1464,10 +1575,11 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 		// Maybe cast previous Address Record data as object and stash in a property.
 		if ( ! is_object( $address_pre ) ) {
-			$this->city_address_pre = (object) $address_pre;
-		} else {
-			$this->city_address_pre = $address_pre;
+			$address_pre = (object) $address_pre;
 		}
+
+		// Stash in property array.
+		$this->city_address_bridging_array[ $address_id ] = $address_pre;
 
 	}
 
@@ -1480,26 +1592,28 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 */
 	public function city_deleted( $args ) {
 
-		// Bail if we don't have a pre-delete Address Record.
-		if ( ! isset( $this->city_address_pre ) ) {
-			return;
-		}
-
 		// We just need the Address ID.
 		$address_id = (int) $args['objectId'];
 
-		// Sanity check.
-		if ( $address_id != $this->city_address_pre->id ) {
+		// Populate "Previous Address" if we have it stored.
+		$address_pre = null;
+		if ( ! empty( $this->city_address_bridging_array[ $address_id ] ) ) {
+			$address_pre = $this->city_address_bridging_array[ $address_id ];
+			unset( $this->city_address_bridging_array[ $address_id ] );
+		}
+
+		// Bail if we can't find the previous Address Record or it doesn't match.
+		if ( empty( $address_pre ) || $address_id !== (int) $address_pre->id ) {
 			return;
 		}
 
 		// Bail if this is not a Contact's Address Record.
-		if ( empty( $this->city_address_pre->contact_id ) ) {
+		if ( empty( $address_pre->contact_id ) ) {
 			return;
 		}
 
 		// Overwrite empty Address Record with full Record.
-		$address = $this->city_address_pre;
+		$address = $address_pre;
 
 		// Bail if this Contact doesn't have a User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $address->contact_id );
@@ -1573,11 +1687,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 */
 	public function state_pre_delete( $args ) {
 
-		// Always clear properties if set previously.
-		if ( isset( $this->state_address_pre ) ) {
-			unset( $this->state_address_pre );
-		}
-
 		// We just need the Address ID.
 		$address_id = (int) $args['objectId'];
 
@@ -1586,10 +1695,11 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 		// Maybe cast previous Address Record data as object and stash in a property.
 		if ( ! is_object( $address_pre ) ) {
-			$this->state_address_pre = (object) $address_pre;
-		} else {
-			$this->state_address_pre = $address_pre;
+			$address_pre = (object) $address_pre;
 		}
+
+		// Stash in property array.
+		$this->state_address_bridging_array[ $address_id ] = $address_pre;
 
 	}
 
@@ -1602,26 +1712,28 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 */
 	public function state_deleted( $args ) {
 
-		// Bail if we don't have a pre-delete Address Record.
-		if ( ! isset( $this->state_address_pre ) ) {
-			return;
-		}
-
 		// We just need the Address ID.
 		$address_id = (int) $args['objectId'];
 
-		// Sanity check.
-		if ( $address_id != $this->state_address_pre->id ) {
+		// Populate "Previous Address" if we have it stored.
+		$address_pre = null;
+		if ( ! empty( $this->state_address_bridging_array[ $address_id ] ) ) {
+			$address_pre = $this->state_address_bridging_array[ $address_id ];
+			unset( $this->state_address_bridging_array[ $address_id ] );
+		}
+
+		// Bail if we can't find the previous Address Record or it doesn't match.
+		if ( empty( $address_pre ) || $address_id !== (int) $address_pre->id ) {
 			return;
 		}
 
 		// Bail if this is not a Contact's Address Record.
-		if ( empty( $this->state_address_pre->contact_id ) ) {
+		if ( empty( $address_pre->contact_id ) ) {
 			return;
 		}
 
 		// Overwrite empty Address Record with full Record.
-		$address = $this->state_address_pre;
+		$address = $address_pre;
 
 		// Bail if this Contact doesn't have a User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $address->contact_id );

@@ -57,6 +57,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 	public $mapper_hooks = false;
 
 	/**
+	 * An array of Instant Messenger Records prior to delete.
+	 *
+	 * There are situations where nested updates take place (e.g. via CiviRules)
+	 * so we keep copies of the Instant Messenger Records in an array and try
+	 * and match them up in the post delete hook.
+	 *
+	 * @since 0.4
+	 * @access private
+	 * @var array
+	 */
+	private $bridging_array = [];
+
+	/**
 	 * ACF Fields which must be handled separately.
 	 *
 	 * @since 0.4
@@ -760,12 +773,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 	 */
 	public function multiset_pre_delete( $args ) {
 
-		// Always clear properties if set previously.
-		if ( isset( $this->multiset_pre ) ) {
-			unset( $this->multiset_pre );
-		}
-
-		// We just need the PHone ID.
+		// We just need the Multiple Record Set ID.
 		$multiset_id = (int) $args['objectId'];
 
 		// Grab the Multiple Record Set data from the database.
@@ -773,10 +781,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 		// Maybe cast previous Multiple Record Set data as object and stash in a property.
 		if ( ! is_object( $multiset_pre ) ) {
-			$this->multiset_pre = (object) $multiset_pre;
-		} else {
-			$this->multiset_pre = $multiset_pre;
+			$multiset_pre = (object) $multiset_pre;
 		}
+
+		// Stash in property array.
+		$this->bridging_array[ $multiset_id ] = $multiset_pre;
 
 	}
 
@@ -789,26 +798,28 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 	 */
 	public function multiset_deleted( $args ) {
 
-		// Bail if we don't have a pre-delete Multiple Record Set.
-		if ( ! isset( $this->multiset_pre ) ) {
-			return;
-		}
-
 		// We just need the Multiple Record Set ID.
 		$multiset_id = (int) $args['objectId'];
 
-		// Sanity check.
-		if ( $multiset_id != $this->multiset_pre->id ) {
+		// Populate "Previous Multiple Record Set" if we have it stored.
+		$multiset_pre = null;
+		if ( ! empty( $this->bridging_array[ $multiset_id ] ) ) {
+			$multiset_pre = $this->bridging_array[ $multiset_id ];
+			unset( $this->bridging_array[ $multiset_id ] );
+		}
+
+		// Bail if we can't find the previous Multiple Record Set or it doesn't match.
+		if ( empty( $multiset_pre ) || $multiset_id !== (int) $multiset_pre->id ) {
 			return;
 		}
 
 		// Bail if this is not a Contact's Multiple Record Set.
-		if ( empty( $this->multiset_pre->contact_id ) ) {
+		if ( empty( $multiset_pre->contact_id ) ) {
 			return;
 		}
 
 		// Process the Multiple Record Set.
-		$this->multiset_process( $this->multiset_pre, $args );
+		$this->multiset_process( $multiset_pre, $args );
 
 	}
 

@@ -57,6 +57,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 	public $mapper_hooks = false;
 
 	/**
+	 * An array of Phone Records prior to delete.
+	 *
+	 * There are situations where nested updates take place (e.g. via CiviRules)
+	 * so we keep copies of the Phone Records in an array and try and match them
+	 * up in the post delete hook.
+	 *
+	 * @since 0.4
+	 * @access private
+	 * @var array
+	 */
+	private $bridging_array = [];
+
+	/**
 	 * ACF Fields which must be handled separately.
 	 *
 	 * @since 0.4
@@ -678,11 +691,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 	 */
 	public function phone_pre_delete( $args ) {
 
-		// Always clear properties if set previously.
-		if ( isset( $this->phone_pre ) ) {
-			unset( $this->phone_pre );
-		}
-
 		// We just need the Phone ID.
 		$phone_id = (int) $args['objectId'];
 
@@ -691,10 +699,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 		// Maybe cast previous Phone Record data as object and stash in a property.
 		if ( ! is_object( $phone_pre ) ) {
-			$this->phone_pre = (object) $phone_pre;
-		} else {
-			$this->phone_pre = $phone_pre;
+			$phone_pre = (object) $phone_pre;
 		}
+
+		// Stash in property array.
+		$this->bridging_array[ $phone_id ] = $phone_pre;
 
 	}
 
@@ -707,26 +716,28 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 	 */
 	public function phone_deleted( $args ) {
 
-		// Bail if we don't have a pre-delete Phone Record.
-		if ( ! isset( $this->phone_pre ) ) {
-			return;
-		}
-
 		// We just need the Phone ID.
 		$phone_id = (int) $args['objectId'];
 
-		// Sanity check.
-		if ( $phone_id != $this->phone_pre->id ) {
+		// Populate "Previous Phone" if we have it stored.
+		$phone_pre = null;
+		if ( ! empty( $this->bridging_array[ $phone_id ] ) ) {
+			$phone_pre = $this->bridging_array[ $phone_id ];
+			unset( $this->bridging_array[ $phone_id ] );
+		}
+
+		// Bail if we can't find the previous Phone Record or it doesn't match.
+		if ( empty( $phone_pre ) || $phone_id !== (int) $phone_pre->id ) {
 			return;
 		}
 
 		// Bail if this is not a Contact's Phone Record.
-		if ( empty( $this->phone_pre->contact_id ) ) {
+		if ( empty( $phone_pre->contact_id ) ) {
 			return;
 		}
 
 		// Process the Phone Record.
-		$this->phone_process( $this->phone_pre, $args );
+		$this->phone_process( $phone_pre, $args );
 
 	}
 

@@ -39,6 +39,60 @@ class CiviCRM_WP_Profile_Sync_CAI {
 	public $cai = false;
 
 	/**
+	 * Phone Record prior to edit.
+	 *
+	 * @since 0.4
+	 * @access private
+	 * @var array
+	 */
+	private $phone_pre = [];
+
+	/**
+	 * Instant Messenger Record prior to edit.
+	 *
+	 * @since 0.4
+	 * @access private
+	 * @var array
+	 */
+	private $im_pre = [];
+
+	/**
+	 * Address Record prior to edit.
+	 *
+	 * @since 0.4
+	 * @access private
+	 * @var array
+	 */
+	private $address_pre = [];
+
+	/**
+	 * Map Address Record prior to edit.
+	 *
+	 * @since 0.4
+	 * @access private
+	 * @var array
+	 */
+	private $map_address_pre = [];
+
+	/**
+	 * City Address Record prior to edit.
+	 *
+	 * @since 0.4
+	 * @access private
+	 * @var array
+	 */
+	private $city_address_pre = [];
+
+	/**
+	 * State Address Record prior to edit.
+	 *
+	 * @since 0.4
+	 * @access private
+	 * @var array
+	 */
+	private $state_address_pre = [];
+
+	/**
 	 * Initialises this object.
 	 *
 	 * @since 0.4

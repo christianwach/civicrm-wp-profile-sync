@@ -57,6 +57,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 	public $mapper_hooks = false;
 
 	/**
+	 * An array of Addresses prior to delete.
+	 *
+	 * There are situations where nested updates take place (e.g. via CiviRules)
+	 * so we keep copies of the Addresses in an array and try and match them up
+	 * in the post delete hook.
+	 *
+	 * @since 0.4
+	 * @access private
+	 * @var array
+	 */
+	private $bridging_array = [];
+
+	/**
 	 * Fields which must be handled separately.
 	 *
 	 * @since 0.4
@@ -292,23 +305,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 	 */
 	public function address_pre_delete( $args ) {
 
-		// Always clear properties if set previously.
-		if ( isset( $this->address_pre ) ) {
-			unset( $this->address_pre );
-		}
-
 		// We just need the Address ID.
 		$address_id = (int) $args['objectId'];
 
 		// Grab the Address Record data from the database.
 		$address_pre = $this->plugin->civicrm->address->address_get_by_id( $address_id );
 
-		// Maybe cast previous Address Record data as object and stash in a property.
+		// Maybe cast previous Address Record data as object.
 		if ( ! is_object( $address_pre ) ) {
-			$this->address_pre = (object) $address_pre;
-		} else {
-			$this->address_pre = $address_pre;
+			$address_pre = (object) $address_pre;
 		}
+
+		// Stash in property array.
+		$this->bridging_array[ $address_id ] = $address_pre;
 
 	}
 
@@ -324,21 +333,28 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 		// We just need the Address ID.
 		$address_id = (int) $args['objectId'];
 
-		// Sanity check.
-		if ( $address_id != $this->address_pre->id ) {
+		// Populate "Previous Address" if we have it stored.
+		$address_pre = null;
+		if ( ! empty( $this->bridging_array[ $address_id ] ) ) {
+			$address_pre = $this->bridging_array[ $address_id ];
+			unset( $this->bridging_array[ $address_id ] );
+		}
+
+		// Bail if we can't find the previous Address Record or it doesn't match.
+		if ( empty( $address_pre ) || $address_id !== (int) $address_pre->id ) {
 			return;
 		}
 
 		// Bail if this is not a Contact's Address Record.
-		if ( empty( $this->address_pre->contact_id ) ) {
+		if ( empty( $address_pre->contact_id ) ) {
 			return;
 		}
 
 		// Process the Address Record.
-		$this->address_process( $this->address_pre, $args );
+		$this->address_process( $address_pre, $args );
 
 		// If this address is a "Master Address" then it will return "Shared Addresses".
-		$addresses_shared = $this->plugin->civicrm->address->addresses_shared_get_by_id( $this->address_pre->id );
+		$addresses_shared = $this->plugin->civicrm->address->addresses_shared_get_by_id( $address_pre->id );
 
 		// Bail if there are none.
 		if ( empty( $addresses_shared ) ) {

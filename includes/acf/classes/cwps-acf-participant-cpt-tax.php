@@ -113,6 +113,32 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	public $term_counted_meta_key = '_cwps_participant_role_counted';
 
 	/**
+	 * An array of Term objects prior to edit.
+	 *
+	 * There are situations where nested updates take place (e.g. via CiviRules)
+	 * so we keep copies of the Terms in an array and try and match them up in
+	 * the post edit hook.
+	 *
+	 * @since 0.5
+	 * @access private
+	 * @var array
+	 */
+	private $term_edited = [];
+
+	/**
+	 * An array of Participant Roles prior to delete.
+	 *
+	 * There are situations where nested updates take place (e.g. via CiviRules)
+	 * so we keep copies of the Participant Roles in an array and try and match
+	 * them up in the post delete hook.
+	 *
+	 * @since 0.5
+	 * @access private
+	 * @var array
+	 */
+	private $bridging_array = [];
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 0.5
@@ -523,7 +549,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		}
 
 		// Store for reference in term_edited().
-		$this->term_edited = clone $term;
+		$this->term_edited[ $term->term_id ] = clone $term;
 
 	}
 
@@ -541,14 +567,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 			return;
 		}
 
-		// Use it if we have the Term stored.
-		$old_term = null;
-		if ( isset( $this->term_edited ) ) {
-			$old_term = $this->term_edited;
-		}
-
 		// Get current Term object.
 		$new_term = get_term_by( 'id', $args['term_id'], $this->taxonomy_name );
+
+		// Populate "Old Term" if we have it stored.
+		$old_term = null;
+		if ( ! empty( $this->term_edited[ $new_term->term_id ] ) ) {
+			$old_term = $this->term_edited[ $new_term->term_id ];
+			unset( $this->term_edited[ $new_term->term_id ] );
+		}
 
 		// Is this an Inline Edit?
 		// phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
@@ -1332,8 +1359,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 			return;
 		}
 
+		// Cast ID as integer for array key.
+		$participant_role_id = (int) $participant_role->id;
+
 		// Get the full CiviCRM Participant Role before it is updated.
-		$this->participant_role_pre = $this->civicrm->participant_role->get_by_id( $participant_role->id );
+		$participant_role_pre = $this->civicrm->participant_role->get_by_id( $participant_role_id );
+
+		// Maybe cast previous Participant Role data as object.
+		if ( ! is_object( $participant_role_pre ) ) {
+			$participant_role_pre = (object) $participant_role_pre;
+		}
+
+		// Stash in property array.
+		$this->bridging_array[ $participant_role_id ] = $participant_role_pre;
 
 	}
 
@@ -1357,7 +1395,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 		// Bail if it's not a CiviCRM Participant Role.
 		$opt_group_id = $this->civicrm->participant_role->option_group_id_get();
-		if ( $opt_group_id === false || $opt_group_id != $participant_role->option_group_id ) {
+		if ( $opt_group_id === false || (int) $opt_group_id !== (int) $participant_role->option_group_id ) {
 			return;
 		}
 

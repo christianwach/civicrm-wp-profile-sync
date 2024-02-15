@@ -57,13 +57,30 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	public $mapper_hooks = false;
 
 	/**
-	 * Address data before it is edited.
+	 * An array of Addresses prior to edit during sync process.
+	 *
+	 * There are situations where nested updates take place (e.g. via CiviRules)
+	 * so we keep copies of the Addresses in an array and try and match them up
+	 * in the post edit hook.
 	 *
 	 * @since 0.4
-	 * @access public
-	 * @var bool
+	 * @access private
+	 * @var array
 	 */
-	public $address_pre;
+	private $sync_bridging_array = [];
+
+	/**
+	 * An array of Addresses prior to edit.
+	 *
+	 * There are situations where nested updates take place (e.g. via CiviRules)
+	 * so we keep copies of the Addresses in an array and try and match them up
+	 * in the post edit hook.
+	 *
+	 * @since 0.4
+	 * @access private
+	 * @var array
+	 */
+	private $bridging_array = [];
 
 	/**
 	 * "CiviCRM Google Map" Field key in the ACF Field data.
@@ -490,16 +507,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 */
 	public function contact_sync_to_post_pre( $args ) {
 
-		// Always clear properties if set previously.
-		if ( isset( $this->contact_addresses_pre ) ) {
-			unset( $this->contact_addresses_pre );
-		}
-
 		// Grab Contact object.
 		$contact = $args['objectRef'];
 
-		// Init empty property.
-		$this->contact_addresses_pre = [];
+		// Reset array for this Contact ID.
+		$this->sync_bridging_array[ (int) $contact->contact_id ] = [];
 
 		// Override if the Contact has Address(es).
 		if ( ! empty( $contact->address ) && is_array( $contact->address ) ) {
@@ -508,7 +520,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 			$contact_addresses_pre = $this->plugin->civicrm->address->addresses_get_by_contact_id( $contact->contact_id );
 			foreach ( $contact_addresses_pre as $contact_address ) {
 				$key = $contact_address->id;
-				$this->contact_addresses_pre[ $key ] = $contact_address;
+				$this->sync_bridging_array[ (int) $contact->contact_id ][ $key ] = $contact_address;
 			}
 
 		}
@@ -534,21 +546,24 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 			return;
 		}
 
+		// Grab Contact ID.
+		$contact_id = (int) $args['objectId'];
+
 		// Get the current Contact Addresses.
 		$contact_addresses = [];
-		$current_addresses = $this->plugin->civicrm->address->addresses_get_by_contact_id( $args['objectId'] );
+		$current_addresses = $this->plugin->civicrm->address->addresses_get_by_contact_id( $contact_id );
 		foreach ( $current_addresses as $current_address ) {
 			$key = $current_address->id;
 			$contact_addresses[ $key ] = $current_address;
 		}
 
 		// Bail if there are neither previous Addresses nor current Addresses.
-		if ( empty( $this->contact_addresses_pre ) && empty( $contact_addresses ) ) {
+		if ( empty( $this->sync_bridging_array[ $contact_id ] ) && empty( $contact_addresses ) ) {
 			return;
 		}
 
 		// Clear them if there are previous Addresses.
-		if ( ! empty( $this->contact_addresses_pre ) ) {
+		if ( ! empty( $this->sync_bridging_array[ $contact_id ] ) ) {
 			foreach ( $acf_fields['google_map'] as $selector => $address_field ) {
 				$this->acf_loader->acf->field->value_update( $selector, [], $args['post_id'] );
 			}
@@ -562,8 +577,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 				// Find previous Address if it exists.
 				$previous = null;
-				if ( ! empty( $this->contact_addresses_pre[ $address->id ] ) ) {
-					$previous = $this->contact_addresses_pre[ $address->id ];
+				if ( ! empty( $this->sync_bridging_array[ $contact_id ][ $address->id ] ) ) {
+					$previous = $this->sync_bridging_array[ $contact_id ][ $address->id ];
+					unset( $this->sync_bridging_array[ $contact_id ][ $address->id ] );
 				}
 
 				// Skip if there are no ACF Fields to update for this Address.
@@ -591,8 +607,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 					// Find previous Address if it exists.
 					$previous_shared = null;
-					if ( ! empty( $this->contact_addresses_pre[$address_shared->id] ) ) {
-						$previous_shared = $this->contact_addresses_pre[$address_shared->id];
+					if ( ! empty( $this->sync_bridging_array[ $contact_id ][ $address_shared->id ] ) ) {
+						$previous_shared = $this->sync_bridging_array[ $contact_id ][ $address_shared->id ];
+						unset( $this->sync_bridging_array[ $contact_id ][ $address->id ] );
 					}
 
 					// Update it.
@@ -604,6 +621,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 			}
 
 		}
+
+		// Lastly clear the stash for this Contact ID.
+		unset( $this->sync_bridging_array[ $contact_id ] );
 
 	}
 
@@ -659,11 +679,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 */
 	public function address_pre_edit( $args ) {
 
-		// Always clear properties if set previously.
-		if ( isset( $this->address_pre ) ) {
-			unset( $this->address_pre );
-		}
-
 		// Grab the Address object.
 		$address = $args['objectRef'];
 
@@ -672,8 +687,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 			return;
 		}
 
+		// Cast ID as integer for array key.
+		$address_id = (int) $address->id;
+
 		// Grab the previous Address data from the database via API.
-		$this->address_pre = $this->plugin->civicrm->address->address_get_by_id( $address->id );
+		$address_pre = $this->plugin->civicrm->address->address_get_by_id( $address_id );
+
+		// Maybe cast previous Address Record data as object and stash in a property.
+		if ( ! is_object( $address_pre ) ) {
+			$address_pre = (object) $address_pre;
+		}
+
+		// Stash in property array.
+		$this->bridging_array[ $address_id ] = $address_pre;
 
 	}
 
@@ -694,11 +720,31 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 			return;
 		}
 
+		// Cast ID as integer for array key.
+		$address_id = (int) $address->id;
+
+		// Populate "Previous Address" if we have it stored.
+		$address_pre = null;
+		if ( ! empty( $this->bridging_array[ $address_id ] ) ) {
+			$address_pre = $this->bridging_array[ $address_id ];
+			unset( $this->bridging_array[ $address_id ] );
+		}
+
+		// Bail if we can't find the previous Address Record or it doesn't match.
+		if ( empty( $address_pre ) || $address_id !== (int) $address_pre->id ) {
+			return;
+		}
+
+		// Bail if this is not a Contact's Address Record.
+		if ( empty( $address_pre->contact_id ) ) {
+			return;
+		}
+
 		// Check if the edited Address has had its properties toggled.
-		$address = $this->address_properties_check( $address, $this->address_pre );
+		$address = $this->address_properties_check( $address, $address_pre );
 
 		// Do the Google Map update.
-		$this->address_fields_update( $address, $this->address_pre );
+		$this->address_fields_update( $address, $address_pre );
 
 		// If this address is a "Master Address" then it will return "Shared Addresses".
 		$addresses_shared = $this->plugin->civicrm->address->addresses_shared_get_by_id( $address->id );
@@ -710,7 +756,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 		// Update all of them.
 		foreach ( $addresses_shared as $address_shared ) {
-			$this->address_fields_update( $address_shared, $this->address_pre );
+			$this->address_fields_update( $address_shared, $address_pre );
 		}
 
 	}

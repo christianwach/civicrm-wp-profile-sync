@@ -77,6 +77,19 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	public $website_field_prefix = 'cwps_website_';
 
 	/**
+	 * An array of Website Records prior to edit.
+	 *
+	 * There are situations where nested updates take place (e.g. via CiviRules)
+	 * so we keep copies of the Website Records in an array and try and match
+	 * them up in the post edit hook.
+	 *
+	 * @since 0.4
+	 * @access private
+	 * @var array
+	 */
+	private $bridging_array = [];
+
+	/**
 	 * Public Website Fields.
 	 *
 	 * Mapped to their corresponding BuddyPress Field Types.
@@ -214,11 +227,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 			return;
 		}
 
-		// Always clear properties if set previously.
-		if ( isset( $this->website_pre ) ) {
-			unset( $this->website_pre );
-		}
-
 		// Grab Website object.
 		$website = $args['objectRef'];
 
@@ -228,7 +236,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 		}
 
 		// Grab the previous Website data from the database.
-		$this->website_pre = (object) $this->plugin->civicrm->website->get_by_id( $website->id );
+		$this->bridging_array[ (int) $website->id ] = (object) $this->plugin->civicrm->website->get_by_id( $website->id );
 
 	}
 
@@ -313,11 +321,21 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 		$was_user_type = false;
 		$now_user_type = false;
 
+		// Cast ID as integer for array key.
+		$website_id = (int) $website->id;
+
+		// Populate "Previous Website" if we have it stored.
+		$website_pre = null;
+		if ( ! empty( $this->bridging_array[ $website_id ] ) ) {
+			$website_pre = $this->bridging_array[ $website_id ];
+			unset( $this->bridging_array[ $website_id ] );
+		}
+
 		// Check previous Website Type if there is one.
-		if ( ! empty( $this->website_pre ) && (int) $this->website_pre->id === (int) $website->id ) {
+		if ( ! empty( $website_pre ) && (int) $website_pre->id === (int) $website->id ) {
 
 			// If it used to be the synced Website Type.
-			if ( (int) $website_type_id === (int) $this->website_pre->website_type_id ) {
+			if ( (int) $website_type_id === (int) $website_pre->website_type_id ) {
 
 				// Check if it no longer is.
 				if ( (int) $website_type_id !== (int) $website->website_type_id ) {
@@ -331,14 +349,14 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 				// Check if it now is.
 				if ( (int) $website_type_id === (int) $website->website_type_id ) {
 					$now_user_type = true;
-					$this->bp_was_user_type = clone $this->website_pre;
+					$this->bp_was_user_type = clone $website_pre;
 					$unchanged = false;
 				}
 
 			}
 
 			// Check if it is now a different non-synced Website Type.
-			if ( (int) $website->website_type_id !== (int) $this->website_pre->website_type_id ) {
+			if ( (int) $website->website_type_id !== (int) $website_pre->website_type_id ) {
 				$unchanged = false;
 			}
 
@@ -369,7 +387,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 		if ( $now_user_type || $was_user_type ) {
 
 			// Make a new object so we don't overwrite the Website Pre object.
-			$previous = clone $this->website_pre;
+			$previous = clone $website_pre;
 			$previous->url = '';
 
 			// Make a new object so we don't overwrite the Website object.
@@ -402,9 +420,9 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 			// For "used to be", just rebuild.
 			if ( $was_user_type === true ) {
 				// When only the Website Type has changed, current URL may be empty.
-				if ( empty( $current->url ) && ! empty( $this->website_pre->url ) ) {
+				if ( empty( $current->url ) && ! empty( $website_pre->url ) ) {
 					// Try and use the previous URL.
-					$current->url = $this->website_pre->url;
+					$current->url = $website_pre->url;
 				}
 			}
 
@@ -433,7 +451,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 		 */
 
 		// Make a new object so we don't overwrite the Website Pre object.
-		$previous = clone $this->website_pre;
+		$previous = clone $website_pre;
 		$previous->url = '';
 
 		// Make a new object so we don't overwrite the Website object.

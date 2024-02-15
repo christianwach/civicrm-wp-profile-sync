@@ -84,6 +84,19 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	public $participant_id_key = '_civicrm_acf_integration_post_participant_id';
 
 	/**
+	 * An array of Participant Records prior to edit.
+	 *
+	 * There are situations where nested updates take place (e.g. via CiviRules)
+	 * so we keep copies of the Participant Records in an array and try and match
+	 * them up in the post edit hook.
+	 *
+	 * @since 0.4
+	 * @access private
+	 * @var array
+	 */
+	private $bridging_array = [];
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 0.4
@@ -1999,24 +2012,19 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	}
 
 	/**
-	 * A CiviCRM Contact's Instant Messenger Record is about to be deleted.
+	 * A CiviCRM Contact's Participant Record is about to be deleted.
 	 *
-	 * Before an Instant Messenger Record is deleted, we need to retrieve the
-	 * Instant Messenger Record because the data passed via "civicrm_post" only
-	 *  contains the ID of the Instant Messenger Record.
+	 * Before an Participant Record is deleted, we need to retrieve the
+	 * Participant Record because the data passed via "civicrm_post" only
+	 *  contains the ID of the Participant Record.
 	 *
-	 * This is not required when creating or editing an Instant Messenger Record.
+	 * This is not required when creating or editing an Participant Record.
 	 *
 	 * @since 0.4
 	 *
 	 * @param array $args The array of CiviCRM params.
 	 */
 	public function participant_pre_delete( $args ) {
-
-		// Always clear properties if set previously.
-		if ( isset( $this->participant_pre ) ) {
-			unset( $this->participant_pre );
-		}
 
 		// We just need the Participant ID.
 		$participant_id = (int) $args['objectId'];
@@ -2026,10 +2034,11 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Maybe cast previous Participant data as object and stash in a property.
 		if ( ! is_object( $participant_pre ) ) {
-			$this->participant_pre = (object) $participant_pre;
-		} else {
-			$this->participant_pre = $participant_pre;
+			$participant_pre = (object) $participant_pre;
 		}
+
+		// Store for later use.
+		$this->bridging_array[ $participant_id ] = $participant_pre;
 
 	}
 
@@ -2052,21 +2061,23 @@ class CiviCRM_Profile_Sync_ACF_Post {
 			return;
 		}
 
-		// Bail if we don't have a pre-delete Participant record.
-		if ( ! isset( $this->participant_pre ) ) {
-			return;
-		}
-
 		// We just need the Participant ID.
 		$participant_id = (int) $args['objectId'];
 
-		// Sanity check.
-		if ( $participant_id != $this->participant_pre->id ) {
+		// Get the existing Participant Record.
+		$participant_pre = [];
+		if ( ! empty( $this->bridging_array[ $participant_id ] ) ) {
+			$participant_pre = $this->bridging_array[ $participant_id ];
+			unset( $this->bridging_array[ $participant_id ] );
+		}
+
+		// Bail if we don't have a pre-delete Participant record.
+		if ( empty( $participant_pre ) ||  $participant_id !== (int) $participant_pre->id ) {
 			return;
 		}
 
 		// Overwrite objectRef.
-		$args['objectRef'] = $this->participant_pre;
+		$args['objectRef'] = $participant_pre;
 
 		// Bail if this Participant is not mapped.
 		$post_types = $this->acf_loader->civicrm->participant->is_mapped( $args['objectRef'] );

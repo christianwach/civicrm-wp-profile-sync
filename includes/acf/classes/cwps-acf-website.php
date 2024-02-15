@@ -77,6 +77,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	public $website_field_prefix = 'caiwebsite_';
 
 	/**
+	 * An array of Website Records prior to edit.
+	 *
+	 * There are situations where nested updates take place (e.g. via CiviRules)
+	 * so we keep copies of the Website Records in an array and try and match
+	 * them up in the post edit hook.
+	 *
+	 * @since 0.4
+	 * @access private
+	 * @var array
+	 */
+	private $bridging_array = [];
+
+	/**
 	 * Contact Fields which must be handled separately.
 	 *
 	 * @since 0.4
@@ -475,11 +488,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	 */
 	public function website_pre_edit( $args ) {
 
-		// Always clear properties if set previously.
-		if ( isset( $this->website_pre ) ) {
-			unset( $this->website_pre );
-		}
-
 		// We need a Contact ID in the edited Website.
 		$website = $args['objectRef'];
 		if ( empty( $website->contact_id ) ) {
@@ -487,7 +495,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		}
 
 		// Grab the previous Website data from the database.
-		$this->website_pre = $this->website_get_by_id( $website->id );
+		$website_pre = $this->website_get_by_id( $website->id );
+
+		// Maybe cast previous Website data as object.
+		if ( ! is_object( $website_pre ) ) {
+			$website_pre = (object) $website_pre;
+		}
+
+		// Store for later use.
+		$this->bridging_array[ (int) $website->id ] = $website_pre;
 
 	}
 
@@ -506,13 +522,23 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 			return;
 		}
 
+		// Cast ID as integer for array key.
+		$website_id = (int) $website->id;
+
+		// Populate "Previous Website" if we have it stored.
+		$website_pre = null;
+		if ( ! empty( $this->bridging_array[ $website_id ] ) ) {
+			$website_pre = $this->bridging_array[ $website_id ];
+			unset( $this->bridging_array[ $website_id ] );
+		}
+
 		// Check previous to see if its Website Type has changed.
 		$website_type_changed = false;
-		if ( ! empty( $this->website_pre ) ) {
-			if ( (int) $this->website_pre->website_type_id !== (int) $website->website_type_id ) {
+		if ( ! empty( $website_pre ) ) {
+			if ( (int) $website_pre->website_type_id !== (int) $website->website_type_id ) {
 				$website_type_changed = true;
 				// Make a clone so we don't overwrite the Website Pre object.
-				$previous = clone $this->website_pre;
+				$previous = clone $website_pre;
 				$previous->url = '';
 			}
 		}

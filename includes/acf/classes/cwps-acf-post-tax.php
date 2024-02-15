@@ -84,6 +84,32 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	public $terms_pre;
 
 	/**
+	 * An array of Term objects prior to edit.
+	 *
+	 * There are situations where nested updates take place (e.g. via CiviRules)
+	 * so we keep copies of the Terms in an array and try and match them up in
+	 * the post edit hook.
+	 *
+	 * @since 0.4
+	 * @access private
+	 * @var array
+	 */
+	private $term_edited = [];
+
+	/**
+	 * An array of Terms prior to edit.
+	 *
+	 * There are situations where nested updates take place (e.g. via CiviRules)
+	 * so we keep copies of the Terms in an array and try and match them up in
+	 * the post edit hook.
+	 *
+	 * @since 0.4
+	 * @access private
+	 * @var array
+	 */
+	private $bridging_array = [];
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 0.4
@@ -382,7 +408,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		}
 
 		// Store for reference in term_edited().
-		$this->term_edited = clone $term;
+		$this->term_edited[ $term->term_id ] = clone $term;
 
 	}
 
@@ -403,16 +429,15 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		// Sanitise input.
 		$group_id = (int) sanitize_text_field( wp_unslash( $_POST['cwps-civicrm-group'] ) );
 
-		// Assume we have no edited term.
-		$old_term = null;
-
-		// Use it if we have the term stored.
-		if ( isset( $this->term_edited ) ) {
-			$old_term = $this->term_edited;
-		}
-
-		// Get current term object.
+		// Get current Term object.
 		$new_term = get_term_by( 'id', $args['term_id'], $args['taxonomy'] );
+
+		// Populate "Old Term" if we have it stored.
+		$old_term = null;
+		if ( ! empty( $this->term_edited[ $new_term->term_id ] ) ) {
+			$old_term = $this->term_edited[ $new_term->term_id ];
+			unset( $this->term_edited[ $new_term->term_id ] );
+		}
 
 		/*
 		 * If Group ID is zero, there are a couple of possibilities:
@@ -998,9 +1023,6 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	 */
 	public function post_saved_pre( $post_id, $data ) {
 
-		// Init property.
-		$this->terms_pre = [];
-
 		// Get the full Post.
 		$post = get_post( $post_id );
 
@@ -1017,14 +1039,12 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 		// Get the filtered terms.
 		$terms = $this->synced_terms_get_for_post( $post_id );
-
-		// Bail if there are no terms.
 		if ( empty( $terms ) ) {
 			return;
 		}
 
 		// Store for later use.
-		$this->terms_pre = $terms;
+		$this->bridging_array[ $post_id ] = $terms;
 
 	}
 
@@ -1037,12 +1057,19 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	 */
 	public function post_saved( $args ) {
 
+		// Get the Post ID.
+		$post_id = (int) $args['post_id'];
+
 		// Get the existing filtered term IDs.
-		$terms_pre = isset( $this->terms_pre ) ? $this->terms_pre : [];
+		$terms_pre = [];
+		if ( ! empty( $this->bridging_array[ $post_id ] ) ) {
+			$terms_pre = $this->bridging_array[ $post_id ];
+			unset( $this->bridging_array[ $post_id ] );
+		}
 		$term_ids_pre = wp_list_pluck( $terms_pre, 'term_id' );
 
 		// Get the new filtered term IDs.
-		$terms = $this->synced_terms_get_for_post( $args['post_id'] );
+		$terms = $this->synced_terms_get_for_post( $post_id );
 		$term_ids = wp_list_pluck( $terms, 'term_id' );
 
 		// Find the existing terms that are missing in the current terms.

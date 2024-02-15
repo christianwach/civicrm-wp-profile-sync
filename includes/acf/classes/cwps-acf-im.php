@@ -57,6 +57,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 	public $mapper_hooks = false;
 
 	/**
+	 * An array of Instant Messenger Records prior to delete.
+	 *
+	 * There are situations where nested updates take place (e.g. via CiviRules)
+	 * so we keep copies of the Instant Messenger Records in an array and try
+	 * and match them up in the post delete hook.
+	 *
+	 * @since 0.4
+	 * @access private
+	 * @var array
+	 */
+	private $bridging_array = [];
+
+	/**
 	 * ACF Fields which must be handled separately.
 	 *
 	 * @since 0.4
@@ -929,23 +942,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 	 */
 	public function im_pre_delete( $args ) {
 
-		// Always clear properties if set previously.
-		if ( isset( $this->im_pre ) ) {
-			unset( $this->im_pre );
-		}
-
 		// We just need the Instant Messenger ID.
 		$im_id = (int) $args['objectId'];
 
 		// Grab the Instant Messenger Record data from the database.
 		$im_pre = $this->im_get_by_id( $im_id );
 
-		// Maybe cast previous Instant Messenger Record data as object and stash in a property.
+		// Maybe cast previous Instant Messenger Record data as object.
 		if ( ! is_object( $im_pre ) ) {
-			$this->im_pre = (object) $im_pre;
-		} else {
-			$this->im_pre = $im_pre;
+			$im_pre = (object) $im_pre;
 		}
+
+		// Stash in property array.
+		$this->bridging_array[ $im_id ] = $im_pre;
 
 	}
 
@@ -958,26 +967,28 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 	 */
 	public function im_deleted( $args ) {
 
-		// Bail if we don't have a pre-delete Instant Messenger Record.
-		if ( ! isset( $this->im_pre ) ) {
-			return;
-		}
-
 		// We just need the Instant Messenger ID.
 		$im_id = (int) $args['objectId'];
 
-		// Sanity check.
-		if ( $im_id != $this->im_pre->id ) {
+		// Populate "Previous Instant Messenger" if we have it stored.
+		$im_pre = null;
+		if ( ! empty( $this->bridging_array[ $im_id ] ) ) {
+			$im_pre = $this->bridging_array[ $im_id ];
+			unset( $this->bridging_array[ $im_id ] );
+		}
+
+		// Bail if we can't find the previous Instant Messenger Record or it doesn't match.
+		if ( empty( $im_pre ) || $im_id !== (int) $im_pre->id ) {
 			return;
 		}
 
 		// Bail if this is not a Contact's Instant Messenger Record.
-		if ( empty( $this->im_pre->contact_id ) ) {
+		if ( empty( $im_pre->contact_id ) ) {
 			return;
 		}
 
 		// Process the Instant Messenger Record.
-		$this->im_process( $this->im_pre, $args );
+		$this->im_process( $im_pre, $args );
 
 	}
 
