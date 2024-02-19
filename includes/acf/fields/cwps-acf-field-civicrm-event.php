@@ -137,7 +137,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Field extends acf_field {
 		// Store references to objects.
 		$this->plugin = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->acf = $parent;
+		$this->acf = $parent->acf;
 
 		// Define label.
 		$this->label = __( 'CiviCRM Participant: Event Reference', 'civicrm-wp-profile-sync' );

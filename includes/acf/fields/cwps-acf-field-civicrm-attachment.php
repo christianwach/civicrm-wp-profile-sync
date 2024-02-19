@@ -148,7 +148,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 		// Store references to objects.
 		$this->plugin = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->acf = $parent;
+		$this->acf = $parent->acf;
 		$this->civicrm = $this->acf_loader->civicrm;
 
 		// Define label.
