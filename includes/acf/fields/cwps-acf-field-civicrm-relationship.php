@@ -148,7 +148,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Relationship extends acf_field {
 		// Store references to objects.
 		$this->plugin = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->acf = $parent;
+		$this->acf = $parent->acf;
 		$this->civicrm = $this->acf_loader->civicrm;
 
 		// Define label.
@@ -206,6 +206,34 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Relationship extends acf_field {
 
 		// Now add it.
 		acf_render_field_setting( $field, $setting );
+
+		// Only render Placeholder Setting Field here in ACF prior to version 6.
+		if ( version_compare( ACF_MAJOR_VERSION, '6', '>=' ) ) {
+			return;
+		}
+
+		// Get Placeholder Setting Field.
+		$placeholder = $this->acf->field->field_setting_placeholder_get();
+
+		// Now add it.
+		acf_render_field_setting( $field, $placeholder );
+
+	}
+
+	/**
+	 * Renders the Field Fettings used in the "Presentation" tab.
+	 *
+	 * @since 0.6.6
+	 *
+	 * @param array $field The field settings array.
+	 */
+	public function render_field_presentation_settings( $field ) {
+
+		// Get Placeholder Setting Field.
+		$placeholder = $this->acf->field->field_setting_placeholder_get();
+
+		// Now add it.
+		acf_render_field_setting( $field, $placeholder );
 
 	}
 

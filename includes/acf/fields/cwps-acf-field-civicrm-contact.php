@@ -180,6 +180,47 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 	}
 
 	/**
+	 * Create extra Settings for this Field Type.
+	 *
+	 * These extra Settings will be visible when editing a Field.
+	 *
+	 * @since 0.6.6
+	 *
+	 * @param array $field The Field being edited.
+	 */
+	public function render_field_settings( $field ) {
+
+		// Only render Placeholder Setting Field here in ACF prior to version 6.
+		if ( version_compare( ACF_MAJOR_VERSION, '6', '>=' ) ) {
+			return;
+		}
+
+		// Get Placeholder Setting Field.
+		$placeholder = $this->acf->field->field_setting_placeholder_get();
+
+		// Now add it.
+		acf_render_field_setting( $field, $placeholder );
+
+	}
+
+	/**
+	 * Renders the Field Fettings used in the "Presentation" tab.
+	 *
+	 * @since 0.6.6
+	 *
+	 * @param array $field The field settings array.
+	 */
+	public function render_field_presentation_settings( $field ) {
+
+		// Get Placeholder Setting Field.
+		$placeholder = $this->acf->field->field_setting_placeholder_get();
+
+		// Now add it.
+		acf_render_field_setting( $field, $placeholder );
+
+	}
+
+	/**
 	 * Filter the Custom Fields for the Setting of a "CiviCRM Contact" Field.
 	 *
 	 * @since 0.5

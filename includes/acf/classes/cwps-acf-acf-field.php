@@ -886,4 +886,33 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 	}
 
+	/**
+	 * Returns a default Placeholder Settings Field.
+	 *
+	 * @since 0.6.6
+	 *
+	 * @return array $field The Placeholder Settings Field data array.
+	 */
+	public function field_setting_placeholder_get() {
+
+		// Get Placeholder Setting Field.
+		$field = [
+			'label' => __( 'Placeholder Text', 'civicrm-wp-profile-sync' ),
+			'instructions' => __( 'Appears within the input', 'civicrm-wp-profile-sync' ),
+			'type' => 'text',
+			'name' => 'placeholder',
+			'placeholder' => _x( 'Select', 'verb', 'civicrm-wp-profile-sync' ),
+		];
+
+		/**
+		 * Filter the default Placeholder Settings Field.
+		 *
+		 * @since 0.6.6
+		 *
+		 * @param array $field The default Placeholder Settings Field array.
+		 */
+		return apply_filters( 'cwps/acf/field/setting/placeholder', $field );
+
+	}
+
 }
