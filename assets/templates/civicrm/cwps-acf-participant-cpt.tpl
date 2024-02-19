@@ -15,7 +15,7 @@
   {literal}
 
   // jQuery will not move an item unless it is wrapped.
-  cj('tr.cwps_acf_enable_cpt').insertAfter('.crm--form-block-show_events');
+  cj('tr.cwps_acf_enable_cpt').insertAfter('.crm-setting-form-block-show_events');
 
   {/literal}
 </script>
