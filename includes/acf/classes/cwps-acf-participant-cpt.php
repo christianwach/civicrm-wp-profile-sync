@@ -1237,8 +1237,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 			return $pseudocache[ $field_group['ID'] ];
 		}
 
-		// Assume not a Participant Field Group.
-		$is_participant_field_group = false;
+		// Init return.
+		$is_participant_field_group = [];
 
 		// If Location Rules exist.
 		if ( ! empty( $field_group['location'] ) ) {
@@ -1256,6 +1256,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 				$is_participant_field_group[] = $this->post_type_name;
 			}
 
+		}
+
+		// Cast as boolean on failure.
+		if ( empty( $is_participant_field_group ) ) {
+			$is_participant_field_group = false;
 		}
 
 		// Maybe add to pseudo-cache.

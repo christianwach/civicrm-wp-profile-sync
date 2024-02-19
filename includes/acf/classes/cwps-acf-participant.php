@@ -1681,8 +1681,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 			return $pseudocache[ $field_group['ID'] ];
 		}
 
-		// Assume not a Participant Field Group.
-		$is_participant_field_group = false;
+		// Init return.
+		$is_participant_field_group = [];
 
 		// If Location Rules exist.
 		if ( ! empty( $field_group['location'] ) ) {
@@ -1723,10 +1723,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		 * @param array|bool $is_participant_field_group The array of Post Types, false otherwise.
 		 * @param array $field_group The ACF Field Group data array.
 		 */
-		$is_participant_field_group = apply_filters(
-			'cwps/acf/civicrm/participant/is_field_group',
-			$is_participant_field_group, $field_group
-		);
+		$is_participant_field_group = apply_filters( 'cwps/acf/civicrm/participant/is_field_group', $is_participant_field_group, $field_group );
+
+		// Cast as boolean on failure.
+		if ( empty( $is_participant_field_group ) ) {
+			$is_participant_field_group = false;
+		}
 
 		// Maybe add to pseudo-cache.
 		if ( ! isset( $pseudocache[ $field_group['ID'] ] ) ) {

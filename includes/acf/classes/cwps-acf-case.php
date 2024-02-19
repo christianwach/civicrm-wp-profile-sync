@@ -1928,8 +1928,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 			return $pseudocache[ $field_group['ID'] ];
 		}
 
-		// Assume not a Case Field Group.
-		$is_case_field_group = false;
+		// Init return.
+		$is_case_field_group = [];
 
 		// If Location Rules exist.
 		if ( ! empty( $field_group['location'] ) ) {
@@ -1960,6 +1960,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 			}
 
+		}
+
+		// Cast as boolean on failure.
+		if ( empty( $is_case_field_group ) ) {
+			$is_case_field_group = false;
 		}
 
 		// Maybe add to pseudo-cache.

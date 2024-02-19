@@ -1765,8 +1765,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 			return $pseudocache[ $field_group['ID'] ];
 		}
 
-		// Assume not an Activity Field Group.
-		$is_activity_field_group = false;
+		// Init return.
+		$is_activity_field_group = [];
 
 		// If Location Rules exist.
 		if ( ! empty( $field_group['location'] ) ) {
@@ -1797,6 +1797,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 			}
 
+		}
+
+		// Cast as boolean on failure.
+		if ( empty( $is_activity_field_group ) ) {
+			$is_activity_field_group = false;
 		}
 
 		// Maybe add to pseudo-cache.
