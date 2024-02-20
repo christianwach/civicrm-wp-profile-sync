@@ -79,6 +79,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 	public $case_field_prefix = 'caicase_';
 
 	/**
+	 * Post should not be synced flag.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var bool
+	 */
+	public $do_not_sync;
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 0.5
