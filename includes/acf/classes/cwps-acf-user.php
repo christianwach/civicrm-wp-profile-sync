@@ -79,6 +79,16 @@ class CiviCRM_Profile_Sync_ACF_User {
 	private $website_bridging_array = [];
 
 	/**
+	 * An array of previously edited Website Records for tracking changes
+	 * during the edit process in CiviCRM admin.
+	 *
+	 * @since 0.5.2
+	 * @access private
+	 * @var array
+	 */
+	private $previously_edited = [];
+
+	/**
 	 * An array of Phone Records prior to edit.
 	 *
 	 * There are situations where nested updates take place (e.g. via CiviRules)
