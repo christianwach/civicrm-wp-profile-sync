@@ -147,6 +147,15 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 	public $custom_field_ids;
 
 	/**
+	 * Data transient key.
+	 *
+	 * @since 0.6.6
+	 * @access private
+	 * @var string
+	 */
+	public $transient_key = 'cwps_acf_acfe_form_action_participant';
+
+	/**
 	 * Public Participant Fields to add.
 	 *
 	 * These are not mapped for Post Type Sync, so need to be added.
@@ -260,15 +269,33 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 	 */
 	public function configure() {
 
-		// Get the public Participant Fields for all Participants.
-		$this->public_participant_fields = $this->civicrm->participant_field->get_public_fields();
+		// First check our transient for cached data.
+		$data = get_site_transient( $this->transient_key );
 
-		// Prepend the ones that are needed in ACFE Forms (i.e. Subject and Details).
-		if ( ! empty( $this->fields_to_add ) ) {
-			foreach ( $this->fields_to_add as $name => $field_type ) {
-				array_unshift( $this->public_participant_fields, $this->civicrm->participant_field->get_by_name( $name ) );
-			}
+		// Init transient data if none found.
+		if ( false === $data ) {
+			$transient = [];
 		}
+
+		// Get the public Participant Fields for all Participants from transient if possible.
+		if ( false !== $data && ! empty( $data['public_participant_fields'] ) ) {
+			$this->public_participant_fields = $data['public_participant_fields'];
+		} else {
+
+			// Get the public Participant Fields for all Participants.
+			$this->public_participant_fields = $this->civicrm->participant_field->get_public_fields();
+
+			// Prepend the ones that are needed in ACFE Forms (i.e. Subject and Details).
+			if ( ! empty( $this->fields_to_add ) ) {
+				foreach ( $this->fields_to_add as $name => $field_type ) {
+					array_unshift( $this->public_participant_fields, $this->civicrm->participant_field->get_by_name( $name ) );
+				}
+			}
+
+			$transient['public_participant_fields'] = $this->public_participant_fields;
+
+		}
+
 
 		// Populate public mapping Fields.
 		foreach ( $this->public_participant_fields as $field ) {
@@ -337,11 +364,16 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 
 		}
 
-		// Get the Custom Groups and Fields for all Participants.
-		$this->custom_fields = $this->plugin->civicrm->custom_group->get_for_participants();
-		$this->custom_field_ids = [];
+		// Get the Custom Groups and Fields for all Participants from transient if possible.
+		if ( false !== $data && ! empty( $data['custom_fields'] ) ) {
+			$this->custom_fields = $data['custom_fields'];
+		} else {
+			$this->custom_fields = $this->plugin->civicrm->custom_group->get_for_participants();
+			$transient['custom_fields'] = $this->custom_fields;
+		}
 
 		// Populate mapping Fields.
+		$this->custom_field_ids = [];
 		foreach ( $this->custom_fields as $key => $custom_group ) {
 			if ( ! empty( $custom_group['api.CustomField.get']['values'] ) ) {
 				foreach ( $custom_group['api.CustomField.get']['values'] as $custom_field ) {
@@ -354,6 +386,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 
 		// Participant Conditional Field.
 		$this->mapping_field_filters_add( 'participant_conditional' );
+
+		// Store Fields for a day given how infrequently they are modified.
+		if ( false === $data ) {
+			set_site_transient( $this->transient_key, $transient, DAY_IN_SECONDS );
+		}
 
 	}
 

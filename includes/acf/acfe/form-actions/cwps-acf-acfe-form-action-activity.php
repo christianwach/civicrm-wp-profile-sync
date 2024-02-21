@@ -138,6 +138,15 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 	public $attachment_fields;
 
 	/**
+	 * Data transient key.
+	 *
+	 * @since 0.6.6
+	 * @access private
+	 * @var string
+	 */
+	public $transient_key = 'cwps_acf_acfe_form_action_activity';
+
+	/**
 	 * Public Activity Fields to add.
 	 *
 	 * These are not mapped for Post Type Sync, so need to be added.
@@ -228,12 +237,29 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 	 */
 	public function configure() {
 
-		// Get the public Activity Fields for all top level Activity Types.
-		$this->public_activity_fields = $this->civicrm->activity_field->get_public_fields();
+		// First check our transient for cached data.
+		$data = get_site_transient( $this->transient_key );
 
-		// Prepend the ones that are needed in ACFE Forms (i.e. Subject and Details).
-		foreach ( $this->fields_to_add as $name => $field_type ) {
-			array_unshift( $this->public_activity_fields, $this->civicrm->activity_field->get_by_name( $name ) );
+		// Init transient data if none found.
+		if ( false === $data ) {
+			$transient = [];
+		}
+
+		// Get the public Activity Fields for all top level Activity Types from transient if possible.
+		if ( false !== $data && ! empty( $data['public_activity_fields'] ) ) {
+			$this->public_activity_fields = $data['public_activity_fields'];
+		} else {
+
+			// Get the public Activity Fields for all top level Activity Types.
+			$this->public_activity_fields = $this->civicrm->activity_field->get_public_fields();
+
+			// Prepend the ones that are needed in ACFE Forms (i.e. Subject and Details).
+			foreach ( $this->fields_to_add as $name => $field_type ) {
+				array_unshift( $this->public_activity_fields, $this->civicrm->activity_field->get_by_name( $name ) );
+			}
+
+			$transient['public_activity_fields'] = $this->public_activity_fields;
+
 		}
 
 		// Populate public mapping Fields.
@@ -264,11 +290,16 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 
 		}
 
-		// Get the Custom Groups and Fields for all Activity Types.
-		$this->custom_fields = $this->plugin->civicrm->custom_group->get_for_activities();
-		$this->custom_field_ids = [];
+		// Get the Custom Groups and Fields for all Activity Types from transient if possible.
+		if ( false !== $data && ! empty( $data['custom_fields'] ) ) {
+			$this->custom_fields = $data['custom_fields'];
+		} else {
+			$this->custom_fields = $this->plugin->civicrm->custom_group->get_for_activities();
+			$transient['custom_fields'] = $this->custom_fields;
+		}
 
 		// Populate mapping Fields.
+		$this->custom_field_ids = [];
 		foreach ( $this->custom_fields as $key => $custom_group ) {
 			if ( ! empty( $custom_group['api.CustomField.get']['values'] ) ) {
 				foreach ( $custom_group['api.CustomField.get']['values'] as $custom_field ) {
@@ -279,8 +310,13 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 			}
 		}
 
-		// Get the public Attachment Fields.
-		$this->attachment_fields = $this->civicrm->attachment->civicrm_fields_get( 'public' );
+		// Get the public Attachment Fields from transient if possible.
+		if ( false !== $data && ! empty( $data['attachment_fields'] ) ) {
+			$this->attachment_fields = $data['attachment_fields'];
+		} else {
+			$this->attachment_fields = $this->civicrm->attachment->civicrm_fields_get( 'public' );
+			$transient['attachment_fields'] = $this->attachment_fields;
+		}
 
 		// Populate public mapping Fields.
 		foreach ( $this->attachment_fields as $attachment_field ) {
@@ -299,6 +335,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 
 		// Activity Conditional Field.
 		$this->mapping_field_filters_add( 'activity_conditional' );
+
+		// Store Fields for a day given how infrequently they are modified.
+		if ( false === $data ) {
+			set_site_transient( $this->transient_key, $transient, DAY_IN_SECONDS );
+		}
 
 	}
 

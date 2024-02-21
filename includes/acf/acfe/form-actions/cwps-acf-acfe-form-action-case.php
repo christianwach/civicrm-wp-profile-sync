@@ -129,6 +129,15 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 	public $custom_field_ids;
 
 	/**
+	 * Data transient key.
+	 *
+	 * @since 0.6.6
+	 * @access private
+	 * @var string
+	 */
+	public $transient_key = 'cwps_acf_acfe_form_action_case';
+
+	/**
 	 * Public Case Fields to add.
 	 *
 	 * These are not mapped for Post Type Sync, so need to be added.
@@ -218,15 +227,32 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 	 */
 	public function configure() {
 
-		// Get the public Case Fields for all Case Types.
-		$this->public_case_fields = $this->civicrm->case_field->get_public_fields( 'create' );
+		// First check our transient for cached data.
+		$data = get_site_transient( $this->transient_key );
 
-		/*
-		// Prepend the ones that are needed in ACFE Forms (i.e. Subject and Details).
-		foreach ( $this->fields_to_add as $name => $field_type ) {
-			array_unshift( $this->public_case_fields, $this->civicrm->case_field->get_by_name( $name ) );
+		// Init transient data if none found.
+		if ( false === $data ) {
+			$transient = [];
 		}
-		*/
+
+		// Get the public Case Fields for all Case Types from transient if possible.
+		if ( false !== $data && ! empty( $data['public_case_fields'] ) ) {
+			$this->public_case_fields = $data['public_case_fields'];
+		} else {
+
+			// Get the public Case Fields for all Case Types.
+			$this->public_case_fields = $this->civicrm->case_field->get_public_fields( 'create' );
+
+			/*
+			// Prepend the ones that are needed in ACFE Forms (i.e. Subject and Details).
+			foreach ( $this->fields_to_add as $name => $field_type ) {
+				array_unshift( $this->public_case_fields, $this->civicrm->case_field->get_by_name( $name ) );
+			}
+			*/
+
+			$transient['public_case_fields'] = $this->public_case_fields;
+
+		}
 
 		// Populate public mapping Fields.
 		foreach ( $this->public_case_fields as $field ) {
@@ -266,11 +292,16 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 		$this->js_model_contact_reference_field_add( $this->field_name . 'ref_' . $field['name'] );
 		$this->fields_for_contacts[] = $field;
 
-		// Get the Custom Groups and Fields for all Case Types.
-		$this->custom_fields = $this->plugin->civicrm->custom_group->get_for_cases();
-		$this->custom_field_ids = [];
+		// Get the Custom Groups and Fields for all Case Types from transient if possible.
+		if ( false !== $data && ! empty( $data['custom_fields'] ) ) {
+			$this->custom_fields = $data['custom_fields'];
+		} else {
+			$this->custom_fields = $this->plugin->civicrm->custom_group->get_for_cases();
+			$transient['custom_fields'] = $this->custom_fields;
+		}
 
 		// Populate mapping Fields.
+		$this->custom_field_ids = [];
 		foreach ( $this->custom_fields as $key => $custom_group ) {
 			if ( ! empty( $custom_group['api.CustomField.get']['values'] ) ) {
 				foreach ( $custom_group['api.CustomField.get']['values'] as $custom_field ) {
@@ -283,6 +314,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 
 		// Case Conditional Field.
 		$this->mapping_field_filters_add( 'case_conditional' );
+
+		// Store Fields for a day given how infrequently they are modified.
+		if ( false === $data ) {
+			set_site_transient( $this->transient_key, $transient, DAY_IN_SECONDS );
+		}
 
 	}
 

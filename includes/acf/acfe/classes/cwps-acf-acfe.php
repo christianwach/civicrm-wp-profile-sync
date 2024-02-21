@@ -39,6 +39,15 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 	public $acf_loader;
 
 	/**
+	 * Admin object.
+	 *
+	 * @since 0.6.6
+	 * @access public
+	 * @var object
+	 */
+	public $admin;
+
+	/**
 	 * ACF Form object.
 	 *
 	 * @since 0.5
@@ -56,11 +65,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 	 */
 	public function __construct( $acf_loader ) {
 
-		// Bail if the "ACF Extended" plugin isn't found.
-		if ( ! function_exists( 'acfe' ) ) {
-			return;
-		}
-
 		// Store references to objects.
 		$this->plugin = $acf_loader->plugin;
 		$this->acf_loader = $acf_loader;
@@ -76,6 +80,32 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 	 * @since 0.5
 	 */
 	public function initialise() {
+
+		// Only do this once.
+		static $done;
+		if ( isset( $done ) && $done === true ) {
+			return;
+		}
+
+		// Bail if the "ACF Extended" plugin isn't found.
+		if ( ! function_exists( 'acfe' ) ) {
+			$done = true;
+			return;
+		}
+
+		// Return early if ACF Extended Integration has been disabled.
+		$acf_enabled = (int) $this->plugin->admin->setting_get( 'acfe_integration_enabled', 1 );
+		if ( 1 !== $acf_enabled ) {
+
+			// Include Admin class and init.
+			include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/classes/cwps-acf-acfe-admin.php';
+			$this->admin = new CiviCRM_Profile_Sync_ACF_ACFE_Admin( $this );
+			$this->admin->initialise();
+
+			$done = true;
+			return;
+
+		}
 
 		// Include files.
 		$this->include_files();
@@ -103,6 +133,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 	public function include_files() {
 
 		// Include class files.
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/classes/cwps-acf-acfe-admin.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/classes/cwps-acf-acfe-form.php';
 
 	}
@@ -114,7 +145,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 	 */
 	public function setup_objects() {
 
-		// Init Form object.
+		// Init objects.
+		$this->admin = new CiviCRM_Profile_Sync_ACF_ACFE_Admin( $this );
 		$this->form = new CiviCRM_Profile_Sync_ACF_ACFE_Form( $this );
 
 	}

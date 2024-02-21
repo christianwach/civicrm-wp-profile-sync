@@ -228,6 +228,15 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	public $custom_field_ids;
 
 	/**
+	 * Data transient key.
+	 *
+	 * @since 0.6.6
+	 * @access private
+	 * @var string
+	 */
+	public $transient_key = 'cwps_acf_acfe_form_action_event';
+
+	/**
 	 * Event Contact Fields.
 	 *
 	 * These need special handling in ACFE Forms.
@@ -356,18 +365,41 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 */
 	public function configure() {
 
-		// Get the public Event Fields.
-		$this->public_event_fields = $this->civicrm->event_field->get_public_fields( 'create' );
+		// First check our transient for cached data.
+		$data = get_site_transient( $this->transient_key );
 
-		// Populate public mapping Fields.
-		foreach ( $this->public_event_fields as $field ) {
-			if ( ! array_key_exists( $field['name'], $this->event_fields_to_ignore ) ) {
-				$this->mapping_field_filters_add( $field['name'] );
-			}
+		// Init transient data if none found.
+		if ( false === $data ) {
+			$transient = [];
 		}
 
-		// Get the Event Settings Fields.
-		$this->settings_fields = $this->civicrm->event_field->get_settings_fields( 'create' );
+		// Get the public Event Fields from transient if possible.
+		if ( false !== $data && ! empty( $data['public_event_fields'] ) ) {
+			$this->public_event_fields = $data['public_event_fields'];
+		} else {
+
+			// Get the public Event Fields.
+			$this->public_event_fields = $this->civicrm->event_field->get_public_fields( 'create' );
+
+			// Populate public mapping Fields.
+			foreach ( $this->public_event_fields as $field ) {
+				if ( ! array_key_exists( $field['name'], $this->event_fields_to_ignore ) ) {
+					$this->mapping_field_filters_add( $field['name'] );
+				}
+			}
+
+			$transient['public_event_fields'] = $this->public_event_fields;
+
+		}
+
+
+		// Get the Event Settings Fields from transient if possible.
+		if ( false !== $data && ! empty( $data['settings_fields'] ) ) {
+			$this->settings_fields = $data['settings_fields'];
+		} else {
+			$this->settings_fields = $this->civicrm->event_field->get_settings_fields( 'create' );
+			$transient['settings_fields'] = $this->settings_fields;
+		}
 
 		// Populate Event Settings mapping Fields.
 		foreach ( $this->settings_fields as $field ) {
@@ -401,8 +433,13 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		$this->mapping_field_filters_add( 'is_show_location' );
 		$this->mapping_field_filters_add( 'existing_location' );
 
-		// Get the Event Location Address Fields.
-		$this->event_location_address_fields = $this->civicrm->event_location->get_address_fields( 'create' );
+		// Get the Event Location Address Fields from transient if possible.
+		if ( false !== $data && ! empty( $data['event_location_address_fields'] ) ) {
+			$this->event_location_address_fields = $data['event_location_address_fields'];
+		} else {
+			$this->event_location_address_fields = $this->civicrm->event_location->get_address_fields( 'create' );
+			$transient['event_location_address_fields'] = $this->event_location_address_fields;
+		}
 
 		// Populate Event Location Address mapping Fields.
 		foreach ( $this->event_location_address_fields as $field ) {
@@ -411,8 +448,13 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 			}
 		}
 
-		// Get the Custom Fields for all Addresses.
-		$this->address_custom_fields = $this->plugin->civicrm->custom_group->get_for_addresses();
+		// Get the Custom Fields for all Addresses from transient if possible.
+		if ( false !== $data && ! empty( $data['address_custom_fields'] ) ) {
+			$this->address_custom_fields = $data['address_custom_fields'];
+		} else {
+			$this->address_custom_fields = $this->plugin->civicrm->custom_group->get_for_addresses();
+			$transient['address_custom_fields'] = $this->address_custom_fields;
+		}
 
 		// Populate Address mapping Fields.
 		foreach ( $this->address_custom_fields as $key => $custom_group ) {
@@ -426,8 +468,13 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		// Email Conditional Field.
 		$this->mapping_field_filters_add( 'address_conditional' );
 
-		// Get the Event Location Email Fields.
-		$this->event_location_email_fields = $this->civicrm->event_location->get_email_fields( 'create' );
+		// Get the Event Location Email Fields from transient if possible.
+		if ( false !== $data && ! empty( $data['event_location_email_fields'] ) ) {
+			$this->event_location_email_fields = $data['event_location_email_fields'];
+		} else {
+			$this->event_location_email_fields = $this->civicrm->event_location->get_email_fields( 'create' );
+			$transient['event_location_email_fields'] = $this->event_location_email_fields;
+		}
 
 		// Populate Event Location Email mapping Fields.
 		foreach ( $this->event_location_email_fields as $field ) {
@@ -437,8 +484,13 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		// Email Conditional Field.
 		$this->mapping_field_filters_add( 'email_fields_conditional' );
 
-		// Get the Event Location Phone Fields.
-		$this->event_location_phone_fields = $this->civicrm->event_location->get_phone_fields( 'create' );
+		// Get the Event Location Phone Fields from transient if possible.
+		if ( false !== $data && ! empty( $data['event_location_phone_fields'] ) ) {
+			$this->event_location_phone_fields = $data['event_location_phone_fields'];
+		} else {
+			$this->event_location_phone_fields = $this->civicrm->event_location->get_phone_fields( 'create' );
+			$transient['event_location_phone_fields'] = $this->event_location_phone_fields;
+		}
 
 		// Populate Event Location Phone mapping Fields.
 		foreach ( $this->event_location_phone_fields as $field ) {
@@ -447,16 +499,26 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 			}
 		}
 
-		// Get Phone Types.
-		$this->phone_types = $this->plugin->civicrm->phone->phone_types_get();
+		// Get Phone Types from transient if possible.
+		if ( false !== $data && ! empty( $data['phone_types'] ) ) {
+			$this->phone_types = $data['phone_types'];
+		} else {
+			$this->phone_types = $this->plugin->civicrm->phone->phone_types_get();
+			$transient['phone_types'] = $this->phone_types;
+		}
 
 		// Phone Conditional Field.
 		$this->mapping_field_filters_add( 'phone_fields_conditional' );
 
 		// ---------------------------------------------------------------------
 
-		// Get the Event Registration Fields.
-		$this->event_registration_fields = $this->civicrm->event_registration->get_settings_fields();
+		// Get the Event Registration Fields from transient if possible.
+		if ( false !== $data && ! empty( $data['event_registration_fields'] ) ) {
+			$this->event_registration_fields = $data['event_registration_fields'];
+		} else {
+			$this->event_registration_fields = $this->civicrm->event_registration->get_settings_fields();
+			$transient['event_registration_fields'] = $this->event_registration_fields;
+		}
 
 		// Populate Event Registration mapping Fields.
 		foreach ( $this->event_registration_fields as $field ) {
@@ -465,16 +527,26 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 			}
 		}
 
-		// Get the Event Registration Screen Fields.
-		$this->event_registration_screen_fields = $this->civicrm->event_registration->get_register_screen_fields();
+		// Get the Event Registration Screen Fields from transient if possible.
+		if ( false !== $data && ! empty( $data['event_registration_screen_fields'] ) ) {
+			$this->event_registration_screen_fields = $data['event_registration_screen_fields'];
+		} else {
+			$this->event_registration_screen_fields = $this->civicrm->event_registration->get_register_screen_fields();
+			$transient['event_registration_screen_fields'] = $this->event_registration_screen_fields;
+		}
 
 		// Populate Event Registration Screen mapping Fields.
 		foreach ( $this->event_registration_screen_fields as $field ) {
 			$this->mapping_field_filters_add( $field['name'] );
 		}
 
-		// Get the Event Registration Confirmation Screen Fields.
-		$this->event_confirm_screen_fields = $this->civicrm->event_registration->get_confirm_screen_fields();
+		// Get the Event Registration Confirmation Screen Fields from transient if possible.
+		if ( false !== $data && ! empty( $data['event_confirm_screen_fields'] ) ) {
+			$this->event_confirm_screen_fields = $data['event_confirm_screen_fields'];
+		} else {
+			$this->event_confirm_screen_fields = $this->civicrm->event_registration->get_confirm_screen_fields();
+			$transient['event_confirm_screen_fields'] = $this->event_confirm_screen_fields;
+		}
 
 		// Populate Event Registration Confirmation Screen mapping Fields.
 		foreach ( $this->event_confirm_screen_fields as $field ) {
@@ -483,16 +555,26 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 			}
 		}
 
-		// Get the Event Registration Thank You Screen Fields.
-		$this->event_thankyou_screen_fields = $this->civicrm->event_registration->get_thankyou_screen_fields();
+		// Get the Event Registration Thank You Screen Fields from transient if possible.
+		if ( false !== $data && ! empty( $data['event_thankyou_screen_fields'] ) ) {
+			$this->event_thankyou_screen_fields = $data['event_thankyou_screen_fields'];
+		} else {
+			$this->event_thankyou_screen_fields = $this->civicrm->event_registration->get_thankyou_screen_fields();
+			$transient['event_thankyou_screen_fields'] = $this->event_thankyou_screen_fields;
+		}
 
 		// Populate Event Registration Thank You Screen mapping Fields.
 		foreach ( $this->event_thankyou_screen_fields as $field ) {
 			$this->mapping_field_filters_add( $field['name'] );
 		}
 
-		// Get the Event Registration Confirmation Email Fields.
-		$this->event_confirmation_email_fields = $this->civicrm->event_registration->get_confirmation_email_fields();
+		// Get the Event Registration Confirmation Email Fields from transient if possible.
+		if ( false !== $data && ! empty( $data['event_confirmation_email_fields'] ) ) {
+			$this->event_confirmation_email_fields = $data['event_confirmation_email_fields'];
+		} else {
+			$this->event_confirmation_email_fields = $this->civicrm->event_registration->get_confirmation_email_fields();
+			$transient['event_confirmation_email_fields'] = $this->event_confirmation_email_fields;
+		}
 
 		// Populate Event Registration Confirmation Email mapping Fields.
 		foreach ( $this->event_confirmation_email_fields as $field ) {
@@ -510,11 +592,16 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 		// ---------------------------------------------------------------------
 
-		// Get the Custom Groups and Fields.
-		$this->custom_fields = $this->plugin->civicrm->custom_group->get_for_entity_type( 'Event', '', true );
-		$this->custom_field_ids = [];
+		// Get the Custom Groups and Fields from transient if possible.
+		if ( false !== $data && ! empty( $data['custom_fields'] ) ) {
+			$this->custom_fields = $data['custom_fields'];
+		} else {
+			$this->custom_fields = $this->plugin->civicrm->custom_group->get_for_entity_type( 'Event', '', true );
+			$transient['custom_fields'] = $this->custom_fields;
+		}
 
 		// Populate mapping Fields.
+		$this->custom_field_ids = [];
 		foreach ( $this->custom_fields as $key => $custom_group ) {
 			if ( ! empty( $custom_group['api.CustomField.get']['values'] ) ) {
 				foreach ( $custom_group['api.CustomField.get']['values'] as $custom_field ) {
@@ -527,6 +614,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 		// Event Conditional Field.
 		$this->mapping_field_filters_add( 'event_conditional' );
+
+		// Store Fields for a day given how infrequently they are modified.
+		if ( false === $data ) {
+			set_site_transient( $this->transient_key, $transient, DAY_IN_SECONDS );
+		}
 
 	}
 
