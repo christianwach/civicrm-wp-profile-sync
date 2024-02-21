@@ -130,7 +130,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// Add our ACF Settings.
-		add_filter( 'cwps/settings/defaults', [ $this, 'settings_meta_boxes_add' ], 10, 1 );
+		add_filter( 'cwps/settings/defaults', [ $this, 'settings_acf_defaults' ], 10, 1 );
 		add_action( 'cwps/admin/page/settings/meta_boxes/added', [ $this, 'settings_meta_boxes_add' ], 11, 1 );
 		add_action( 'cwps/admin/settings/update/pre', [ $this, 'settings_acf_update' ] );
 
