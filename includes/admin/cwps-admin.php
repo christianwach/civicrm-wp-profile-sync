@@ -495,6 +495,16 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		add_action( 'admin_print_scripts-' . $this->parent_page, [ $this, 'admin_js' ] );
 		*/
 
+		/**
+		 * Fires when the parent Settings Page has been added.
+		 *
+		 * @since 0.6.6
+		 *
+		 * @param string $parent_page The handle of the parent Settings Page.
+		 * @param string $parent_page_slug The slug of the parent Settings Page.
+		 */
+		do_action( 'cwps/admin/page/parent/admin_menu', $this->parent_page, $this->parent_page_slug );
+
 		// Add Settings Page.
 		$this->settings_page = add_submenu_page(
 			$this->parent_page_slug, // Parent slug.
@@ -519,6 +529,16 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		add_action( 'admin_print_styles-' . $this->settings_page, [ $this, 'admin_css' ] );
 		add_action( 'admin_print_scripts-' . $this->settings_page, [ $this, 'admin_js' ] );
 		*/
+
+		/**
+		 * Fires when the Settings Page has been added.
+		 *
+		 * @since 0.6.6
+		 *
+		 * @param string $settings_page The handle of the Settings Page.
+		 * @param string $settings_page_slug The slug of the Settings Page.
+		 */
+		do_action( 'cwps/admin/page/settings/admin_menu', $this->settings_page, $this->settings_page_slug );
 
 	}
 
