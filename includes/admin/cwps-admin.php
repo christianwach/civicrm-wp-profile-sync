@@ -111,6 +111,15 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	public $settings_page_slug = 'cwps_settings';
 
 	/**
+	 * Settings Page Tab URLs array.
+	 *
+	 * @since 0.4
+	 * @access public
+	 * @var array
+	 */
+	public $urls;
+
+	/**
 	 * Initialises this object.
 	 *
 	 * @since 0.4
