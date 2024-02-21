@@ -23,15 +23,37 @@
 	$(document).ready( function() {
 
 		// Define vars.
-		var acfe_enabled = $('#cwps_acfe_integration_checkbox'),
+		var acf_enabled = $('#cwps_acf_integration_checkbox'),
+			acfe_enabled = $('#cwps_acfe_integration_checkbox'),
+			metabox = $('#cwps_acfe_integration');
 			transients = $('table.cwps_acfe_transients');
 
-		// Initial visibility toggle.
+		// Initial visibility toggles.
+		if ( acf_enabled.prop( 'checked' ) ) {
+			metabox.show();
+		} else {
+			metabox.hide();
+		}
 		if ( acfe_enabled.prop( 'checked' ) ) {
 			transients.show();
 		} else {
 			transients.hide();
 		}
+
+		/**
+		 * Add a click event listener to the "ACF Integration Enabled" checkbox.
+		 *
+		 * @since 0.6.6
+		 *
+		 * @param {Object} event The event object.
+		 */
+		acf_enabled.on( 'click', function( event ) {
+			if ( acf_enabled.prop( 'checked' ) ) {
+				metabox.show();
+			} else {
+				metabox.hide();
+			}
+		} );
 
 		/**
 		 * Add a click event listener to the "ACF Extended Forms Integration Enabled" checkbox.
