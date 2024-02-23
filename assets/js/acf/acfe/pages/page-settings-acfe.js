@@ -24,7 +24,7 @@
 
 		// Define vars.
 		var acf_enabled = $('#cwps_acf_integration_checkbox'),
-			acfe_enabled = $('#cwps_acfe_integration_checkbox'),
+			acfe_enabled = $('#cwps_acfe_integration_enabled'),
 			metabox = $('#cwps_acfe_integration');
 			transients = $('table.cwps_acfe_transients');
 

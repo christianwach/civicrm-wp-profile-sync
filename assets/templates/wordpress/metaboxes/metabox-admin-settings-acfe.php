@@ -16,7 +16,7 @@
 		</th>
 		<td>
 			<p>
-				<input type="checkbox" id="cwps_acfe_integration_checkbox" name="cwps_acfe_integration_checkbox" value="1"<?php echo $acfe_enabled_checked; ?>> <label for="cwps_acfe_integration_checkbox"><?php esc_html_e( 'ACF Extended Forms Integration Enabled', 'civicrm-wp-profile-sync' ); ?></label>
+				<input type="checkbox" id="cwps_acfe_integration_enabled" name="cwps_acfe_integration_enabled" value="1"<?php checked( 1, $acfe_enabled ); ?>> <label for="cwps_acfe_integration_enabled"><?php esc_html_e( 'ACF Extended Forms Integration Enabled', 'civicrm-wp-profile-sync' ); ?></label>
 			</p>
 			<?php if ( 1 === $acfe_enabled ) : ?>
 				<p class="description"><?php esc_html_e( 'Uncheck this if you do not need ACF Extended Forms Integration and want to completely disable it.', 'civicrm-wp-profile-sync' ); ?></p>
@@ -34,9 +34,9 @@
 		</th>
 		<td>
 			<p>
-				<input type="checkbox" id="cwps_acfe_integration_transients" name="cwps_acfe_integration_transients" value="1"> <label for="cwps_acfe_integration_transients"><?php esc_html_e( 'Clear the Form Action cache', 'civicrm-wp-profile-sync' ); ?></label>
+				<input type="checkbox" id="cwps_acfe_integration_transients" name="cwps_acfe_integration_transients" value="1"<?php checked( 1, $acfe_transients ); ?>> <label for="cwps_acfe_integration_transients"><?php esc_html_e( 'Use a Form Action cache', 'civicrm-wp-profile-sync' ); ?></label>
 			</p>
-			<p class="description"><?php esc_html_e( 'The Form Actions that this plugin provides to integrate CiviCRM Entities in ACF Extended Forms make use of transients to cache the many queries that they need to make. This means that, for example, if you add or modify a Custom Field, then you should check this box to clear this cache so that the changes show up in the Form Actions.', 'civicrm-wp-profile-sync' ); ?></p>
+			<p class="description"><?php esc_html_e( 'The Form Actions that this plugin provides make a lot of database queries in order to expose the structure of CiviCRM Entities for use in ACF Extended Forms. When you are not actively changing the configuration of CiviCRM, you can enable this transient cache to minimise the number of database queries that are made.', 'civicrm-wp-profile-sync' ); ?></p>
 		</td>
 	</tr>
 </table>

@@ -269,8 +269,12 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 	 */
 	public function configure() {
 
-		// First check our transient for cached data.
-		$data = get_site_transient( $this->transient_key );
+		// Maybe check our transient for cached data.
+		$data = false;
+		$acfe_transients = (int) $this->plugin->admin->setting_get( 'acfe_integration_transients', 0 );
+		if ( 1 === $acfe_transients ) {
+			$data = get_site_transient( $this->transient_key );
+		}
 
 		// Init transient data if none found.
 		if ( false === $data ) {
@@ -387,9 +391,10 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 		// Participant Conditional Field.
 		$this->mapping_field_filters_add( 'participant_conditional' );
 
-		// Store Fields for a day given how infrequently they are modified.
-		if ( false === $data ) {
-			set_site_transient( $this->transient_key, $transient, DAY_IN_SECONDS );
+		// Maybe store Fields in transient.
+		if ( false === $data && 1 === $acfe_transients ) {
+			$duration = $this->acfe->admin->transient_duration_get();
+			set_site_transient( $this->transient_key, $transient, $duration );
 		}
 
 	}

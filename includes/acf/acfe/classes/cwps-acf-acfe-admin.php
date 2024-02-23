@@ -140,6 +140,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Admin {
 	/**
 	 * Adds the default ACF Extended Forms Integration settings.
 	 *
+	 * If you want to filter these values, use the `cwps/settings/defaults` filter
+	 * with a priority of 12 or greater.
+	 *
 	 * @since 0.6.6
 	 *
 	 * @param array $settings The existing default settings array.
@@ -147,8 +150,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Admin {
 	 */
 	public function settings_acfe_defaults( $settings ) {
 
-		// Default "ACF Extended Forms Integration Enabled" to "on".
+		// Default ACF Extended Forms Integration "Enabled" to "on".
 		$settings['acfe_integration_enabled'] = 1;
+
+		// Default ACF Extended Forms Integration "Transients Cache" to "off".
+		$settings['acfe_integration_transients'] = 0;
 
 		// --<
 		return $settings;
@@ -183,11 +189,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Admin {
 	 */
 	public function settings_meta_box_acfe_render() {
 
-		// Get ACF Extended Forms Integration Enabled setting.
+		// Get settings.
 		$acfe_enabled = (int) $this->plugin->admin->setting_get( 'acfe_integration_enabled', 1 );
-
-		// Init template vars.
-		$acfe_enabled_checked = $acfe_enabled === 1 ? ' checked="checked"' : '';
+		$acfe_transients = (int) $this->plugin->admin->setting_get( 'acfe_integration_transients', 0 );
 
 		// Include template file.
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/metaboxes/metabox-admin-settings-acfe.php';
@@ -201,26 +205,28 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Admin {
 	 */
 	public function settings_acfe_update() {
 
-		// Get ACF Extended Forms Integration Enabled setting. Nonce is checked in admin class.
+		// Get Enabled setting. Nonce is checked in admin class.
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		$acfe_enabled = ! empty( $_POST['cwps_acfe_integration_checkbox'] ) ? 1 : 0;
-
-		// Always set ACF Extended Forms Integration Enabled setting.
+		$acfe_enabled = ! empty( $_POST['cwps_acfe_integration_enabled'] ) ? 1 : 0;
 		$this->plugin->admin->setting_set( 'acfe_integration_enabled', $acfe_enabled );
 
-		// Should we clear the transients?
+		// Grab previous "Transient Cache" setting.
+		$acfe_transients_pre = (int) $this->plugin->admin->setting_get( 'acfe_integration_transients', 0 );
+
+		// Should we enable caching via transients? Nonce is checked in admin class.
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		$acfe_transients = ! empty( $_POST['cwps_acfe_integration_transients'] ) ? 1 : 0;
-		if ( 0 === $acfe_transients ) {
-			return;
+		$this->plugin->admin->setting_set( 'acfe_integration_transients', $acfe_transients );
+
+		// Clear the transients any time the setting changes.
+		if ( $acfe_transients_pre !== $acfe_transients ) {
+			delete_site_transient( 'cwps_acf_acfe_form_action_activity' );
+			delete_site_transient( 'cwps_acf_acfe_form_action_case' );
+			delete_site_transient( 'cwps_acf_acfe_form_action_contact' );
+			delete_site_transient( 'cwps_acf_acfe_form_action_event' );
+			delete_site_transient( 'cwps_acf_acfe_form_action_participant' );
 		}
 
-		// Delete transients.
-		delete_site_transient( 'cwps_acf_acfe_form_action_activity' );
-		delete_site_transient( 'cwps_acf_acfe_form_action_case' );
-		delete_site_transient( 'cwps_acf_acfe_form_action_contact' );
-		delete_site_transient( 'cwps_acf_acfe_form_action_event' );
-		delete_site_transient( 'cwps_acf_acfe_form_action_participant' );
 
 	}
 
@@ -275,6 +281,34 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Admin {
 			CIVICRM_WP_PROFILE_SYNC_VERSION, // Version.
 			true
 		);
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets the duration of the Form Action cache transient.
+	 *
+	 * @since 0.6.6
+	 *
+	 * @return int $duration The duration of the Form Action cache transient. Default is DAY_IN_SECONDS.
+	 */
+	public function transient_duration_get() {
+
+		/**
+		 * Filter the duration of the Form Action cache transient.
+		 *
+		 * @see https://codex.wordpress.org/Easier_Expression_of_Time_Constants
+		 * @see https://developer.wordpress.org/reference/functions/wp_initial_constants/
+		 *
+		 * @since 0.6.6
+		 *
+		 * @param int $duration The duration of the transient.
+		 */
+		$duration = apply_filters( 'cwps/acf/acfe/form/action/transient/duration', DAY_IN_SECONDS );
+
+		// --<
+		return $duration;
 
 	}
 
