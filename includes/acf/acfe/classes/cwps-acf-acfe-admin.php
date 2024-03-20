@@ -227,7 +227,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Admin {
 			delete_site_transient( 'cwps_acf_acfe_form_action_participant' );
 		}
 
-
 	}
 
 	// -------------------------------------------------------------------------

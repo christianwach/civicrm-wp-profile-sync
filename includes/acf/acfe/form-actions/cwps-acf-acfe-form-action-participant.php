@@ -300,7 +300,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 
 		}
 
-
 		// Populate public mapping Fields.
 		foreach ( $this->public_participant_fields as $field ) {
 			if ( ! array_key_exists( $field['name'], $this->fields_to_ignore ) ) {

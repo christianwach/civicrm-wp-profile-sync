@@ -396,7 +396,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 		}
 
-
 		// Get the Event Settings Fields from transient if possible.
 		if ( false !== $data && ! empty( $data['settings_fields'] ) ) {
 			$this->settings_fields = $data['settings_fields'];

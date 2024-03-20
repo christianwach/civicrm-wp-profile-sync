@@ -2072,7 +2072,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		}
 
 		// Bail if we don't have a pre-delete Participant record.
-		if ( empty( $participant_pre ) ||  $participant_id !== (int) $participant_pre->id ) {
+		if ( empty( $participant_pre ) || $participant_id !== (int) $participant_pre->id ) {
 			return;
 		}
 
