@@ -1024,10 +1024,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		// Data response.
 		$data = [ 'success' => false ];
 
+		// Since this is an AJAX request, check security.
+		$result = check_ajax_referer( 'cwps_acf_field_civicrm_event_group', false, false );
+		if ( false === $result ) {
+			wp_send_json( $data );
+		}
+
 		// Get Event ID from POST.
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-		$event_id = empty( $_POST['value'] ) ? false : (int) trim( wp_unslash( $_POST['value'] ) );
-		if ( $event_id === false ) {
+		$event_id = empty( $_POST['value'] ) ? false : (int) sanitize_text_field( wp_unslash( $_POST['value'] ) );
+		if ( false === $event_id ) {
 			wp_send_json( $data );
 		}
 

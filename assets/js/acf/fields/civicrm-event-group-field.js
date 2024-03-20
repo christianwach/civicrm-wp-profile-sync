@@ -173,14 +173,16 @@
 		this.send = function( value ) {
 
 			// Define vars.
-			var url, data;
+			var url, ajax_nonce, data;
 
 			// URL to post to.
 			url = CWPS_Event_Group_Settings.get_setting( 'ajax_url' );
+			ajax_nonce = CWPS_Event_Group_Settings.get_setting( 'ajax_nonce' );
 
 			// Data received by WordPress.
 			data = {
 				action: 'event_type_get_value',
+				_ajax_nonce: ajax_nonce,
 				value: value
 			};
 

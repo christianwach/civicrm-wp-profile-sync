@@ -516,6 +516,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Group extends acf_field {
 		$vars = [
 			'settings' => [
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
+				'ajax_nonce' => wp_create_nonce( 'cwps_acf_field_' . $this->name ),
 			],
 			'localisation' => [
 				//'saving' => __( 'Saving...', 'civicrm' ),
