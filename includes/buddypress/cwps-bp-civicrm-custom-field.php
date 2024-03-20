@@ -80,6 +80,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		'Money',
 		'Country',
 		'StateProvince',
+		'Boolean',
 	];
 
 	/**
@@ -160,10 +161,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		add_filter( 'cwps/bp/field/query_setting_choices', [ $this, 'query_setting_choices' ], 100, 4 );
 
 		// Filter the "CiviCRM Field" select to include only Custom Fields of the right type on the "Edit Field" sceen.
-		add_filter( 'cwps/bp/query_settings/custom_fields_filter', [ $this, 'checkbox_settings_filter' ], 10, 3 );
 		add_filter( 'cwps/bp/query_settings/custom_fields_filter', [ $this, 'select_settings_filter' ], 10, 3 );
 		add_filter( 'cwps/bp/query_settings/custom_fields_filter', [ $this, 'multiselect_settings_filter' ], 10, 3 );
-		add_filter( 'cwps/bp/query_settings/custom_fields_filter', [ $this, 'radio_settings_filter' ], 10, 3 );
 		add_filter( 'cwps/bp/query_settings/custom_fields_filter', [ $this, 'date_settings_filter' ], 10, 3 );
 		add_filter( 'cwps/bp/query_settings/custom_fields_filter', [ $this, 'text_settings_filter' ], 10, 3 );
 		add_filter( 'cwps/bp/query_settings/custom_fields_filter', [ $this, 'textarea_settings_filter' ], 10, 3 );
@@ -651,86 +650,13 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		}
 
 		// Get keyed array of settings.
-		$options = $this->checkbox_choices_get( $custom_field_id );
+		$options = $this->choices_get( $custom_field_id );
 
 		// --<
 		return $options;
 
 	}
 
-	/**
-	 * Get the choices for the Setting of a "Checkbox" Field.
-	 *
-	 * @since 0.5
-	 *
-	 * @param string $custom_field_id The numeric ID of the CiviCRM Custom Field.
-	 * @return array $choices The choices for the Field.
-	 */
-	public function checkbox_choices_get( $custom_field_id ) {
-
-		// Init return.
-		$choices = [];
-
-		// Get Custom Field data.
-		$field_data = $this->plugin->civicrm->custom_field->get_by_id( $custom_field_id );
-
-		// Bail if we don't get any.
-		if ( $field_data === false ) {
-			return $choices;
-		}
-
-		// Bail if it's not "String".
-		if ( $field_data['data_type'] !== 'String' ) {
-			return $choices;
-		}
-
-		// Bail if it's not "CheckBox".
-		if ( $field_data['html_type'] !== 'CheckBox' ) {
-			return $choices;
-		}
-
-		// Get options.
-		if ( ! empty( $field_data['option_group_id'] ) ) {
-			$choices = CRM_Core_OptionGroup::valuesByID( (int) $field_data['option_group_id'] );
-		}
-
-		// --<
-		return $choices;
-
-	}
-
-	/**
-	 * Filter the Custom Fields for the Setting of a "CheckBox" Field.
-	 *
-	 * @since 0.5
-	 *
-	 * @param array $filtered_fields The existing array of filtered Custom Fields.
-	 * @param array $custom_fields The array of Custom Fields.
-	 * @param string $field_type The BuddyPress Field Type.
-	 * @return array $filtered_fields The modified array of filtered Custom Fields.
-	 */
-	public function checkbox_settings_filter( $filtered_fields, $custom_fields, $field_type ) {
-
-		// Bail early if not our Field Type.
-		if ( 'checkbox' !== $field_type ) {
-			return $filtered_fields;
-		}
-
-		// Filter Fields to include only Boolean/Radio.
-		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
-			foreach ( $custom_group as $custom_field ) {
-				if ( ! empty( $custom_field['data_type'] ) && $custom_field['data_type'] == 'String' ) {
-					if ( ! empty( $custom_field['html_type'] ) && $custom_field['html_type'] == 'CheckBox' ) {
-						$filtered_fields[ $custom_group_name ][] = $custom_field;
-					}
-				}
-			}
-		}
-
-		// --<
-		return $filtered_fields;
-
-	}
 
 	/**
 	 * Modify the Options of a BuddyPress "Select" Field.
@@ -755,7 +681,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		}
 
 		// Get keyed array of settings.
-		$options = $this->select_choices_get( $custom_field_id );
+		$options = $this->choices_get( $custom_field_id );
 
 		// --<
 		return $options;
@@ -763,14 +689,14 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	}
 
 	/**
-	 * Get the choices for the Setting of a "Select" Field.
+	 * Get the choices for the Setting of a single-value Field.
 	 *
 	 * @since 0.5
 	 *
 	 * @param string $custom_field_id The numeric ID of the CiviCRM Custom Field.
 	 * @return array $choices The choices for the Field.
 	 */
-	public function select_choices_get( $custom_field_id ) {
+	public function choices_get( $custom_field_id ) {
 
 		// Init return.
 		$choices = [];
@@ -783,13 +709,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 			return $choices;
 		}
 
-		// Bail if it's not a data type that can have a "Select".
+		// Bail if it's not a data type that can have multiple choices.
 		if ( ! in_array( $field_data['data_type'], $this->data_types ) ) {
-			return $choices;
-		}
-
-		// Bail if it's not a type of "Select".
-		if ( ! in_array( $field_data['html_type'], $this->select_types ) ) {
 			return $choices;
 		}
 
@@ -799,15 +720,17 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		}
 
 		// "Country" selects require special handling.
-		$country_selects = [ 'Select Country', 'Multi-Select Country' ];
-		if ( in_array( $field_data['html_type'], $country_selects ) ) {
+		if ( $field_data['data_type'] === 'Country' ) {
 			$choices = CRM_Core_PseudoConstant::country();
 		}
 
 		// "State/Province" selects also require special handling.
-		$state_selects = [ 'Select State/Province', 'Multi-Select State/Province' ];
-		if ( in_array( $field_data['html_type'], $state_selects ) ) {
+		if ( $field_data['data_type'] === 'StateProvince' ) {
 			$choices = CRM_Core_PseudoConstant::stateProvince();
+		}
+
+		if ( $field_data['data_type'] === 'Boolean' ) {
+			$choices = [0 => 'No', 1 => 'Yes'];
 		}
 
 		// --<
@@ -816,7 +739,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	}
 
 	/**
-	 * Filter the Custom Fields for the Setting of a "Select" Field.
+	 * Filter the Custom Fields for the Setting of a single-value field.
 	 *
 	 * @since 0.5
 	 *
@@ -828,7 +751,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	public function select_settings_filter( $filtered_fields, $custom_fields, $field_type ) {
 
 		// Bail early if not our Field Type.
-		if ( 'selectbox' !== $field_type ) {
+		if ( !in_array($field_type, ['selectbox', 'radio'] )) {
 			return $filtered_fields;
 		}
 
@@ -842,17 +765,17 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		}
 		*/
 
-		// Filter Fields to include only "Select" types.
-		$select_types = [ 'Select', 'Select Country', 'Select State/Province' ];
+		// Filter Fields to include only single-value types.
+		$select_types = [ 'Select', 'Radio' ];
 
 		// Filter Fields to include only those which are compatible.
 		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			foreach ( $custom_group as $custom_field ) {
-				if ( ! empty( $custom_field['data_type'] ) && in_array( $custom_field['data_type'], $this->data_types ) ) {
-					if ( ! empty( $custom_field['html_type'] ) && in_array( $custom_field['html_type'], $select_types ) ) {
+				// if ( ! empty( $custom_field['html_type'] ) && in_array( $custom_field['html_type'], $select_types)) {
+					if (isset($custom_field['serialize']) && (int) $custom_field['serialize'] === 0) {
 						$filtered_fields[ $custom_group_name ][] = $custom_field;
 					}
-				}
+				// }
 			}
 		}
 
@@ -884,7 +807,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		}
 
 		// Get keyed array of settings.
-		$options = $this->select_choices_get( $custom_field_id );
+		$options = $this->choices_get( $custom_field_id );
 
 		// --<
 		return $options;
@@ -892,7 +815,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	}
 
 	/**
-	 * Filter the Custom Fields for the Setting of a "Multi Select Box" Field.
+	 * Filter the Custom Fields for the Setting of a multi-value field.
 	 *
 	 * @since 0.5
 	 *
@@ -904,20 +827,15 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	public function multiselect_settings_filter( $filtered_fields, $custom_fields, $field_type ) {
 
 		// Bail early if not our Field Type.
-		if ( 'multiselectbox' !== $field_type ) {
+		if ( !in_array($field_type, ['multiselectbox', 'checkbox'] )) {
 			return $filtered_fields;
 		}
-
-		// Filter Fields to include only "Multi-Select" types.
-		$select_types = [ 'Multi-Select', 'Multi-Select Country', 'Multi-Select State/Province' ];
 
 		// Filter Fields to include only those which are compatible.
 		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			foreach ( $custom_group as $custom_field ) {
-				if ( ! empty( $custom_field['data_type'] ) && in_array( $custom_field['data_type'], $this->data_types ) ) {
-					if ( ! empty( $custom_field['html_type'] ) && in_array( $custom_field['html_type'], $select_types ) ) {
-						$filtered_fields[ $custom_group_name ][] = $custom_field;
-					}
+				if (isset($custom_field['serialize']) && (int) $custom_field['serialize'] === 1) {
+					$filtered_fields[ $custom_group_name ][] = $custom_field;
 				}
 			}
 		}
@@ -950,84 +868,10 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		}
 
 		// Get keyed array of settings.
-		$options = $this->radio_choices_get( $custom_field_id );
+		$options = $this->choices_get( $custom_field_id );
 
 		// --<
 		return $options;
-
-	}
-
-	/**
-	 * Get the choices for the Setting of a "Radio" Field.
-	 *
-	 * @since 0.5
-	 *
-	 * @param string $custom_field_id The numeric ID of the CiviCRM Custom Field.
-	 * @return array $choices The choices for the Field.
-	 */
-	public function radio_choices_get( $custom_field_id ) {
-
-		// Init return.
-		$choices = [];
-
-		// Get Custom Field data.
-		$field_data = $this->plugin->civicrm->custom_field->get_by_id( $custom_field_id );
-
-		// Bail if we don't get any.
-		if ( $field_data === false ) {
-			return $choices;
-		}
-
-		// Bail if it's not a data type that can have a "Radio" sub-type.
-		if ( ! in_array( $field_data['data_type'], $this->data_types ) ) {
-			return $choices;
-		}
-
-		// Bail if it's not "Radio".
-		if ( $field_data['html_type'] !== 'Radio' ) {
-			return $choices;
-		}
-
-		// Get options.
-		if ( ! empty( $field_data['option_group_id'] ) ) {
-			$choices = CRM_Core_OptionGroup::valuesByID( (int) $field_data['option_group_id'] );
-		}
-
-		// --<
-		return $choices;
-
-	}
-
-	/**
-	 * Filter the Custom Fields for the Setting of a "Radio" Field.
-	 *
-	 * @since 0.5
-	 *
-	 * @param array $filtered_fields The existing array of filtered Custom Fields.
-	 * @param array $custom_fields The array of Custom Fields.
-	 * @param string $field_type The BuddyPress Field Type.
-	 * @return array $filtered_fields The modified array of filtered Custom Fields.
-	 */
-	public function radio_settings_filter( $filtered_fields, $custom_fields, $field_type ) {
-
-		// Bail early if not our Field Type.
-		if ( 'radio' !== $field_type ) {
-			return $filtered_fields;
-		}
-
-		// Filter Fields to include only "Radio" HTML types.
-		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
-			foreach ( $custom_group as $custom_field ) {
-				if ( ! empty( $custom_field['data_type'] ) && in_array( $custom_field['data_type'], $this->data_types ) ) {
-					if ( ! empty( $custom_field['html_type'] ) && $custom_field['html_type'] == 'Radio' ) {
-						$filtered_fields[ $custom_group_name ][] = $custom_field;
-					}
-				}
-			}
-		}
-
-		// --<
-		return $filtered_fields;
 
 	}
 
@@ -1089,7 +933,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 
 		/*
 		// Get keyed array of settings.
-		$options = $this->radio_choices_get( $custom_field_id );
+		$options = $this->choices_get( $custom_field_id );
 		*/
 
 		// --<
