@@ -371,6 +371,9 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 			return;
 		}
 
+		// Check authentication.
+		check_admin_referer( 'add-tag', '_wpnonce_add-tag' );
+
 		// Sanitise input.
 		$group_id = (int) sanitize_text_field( wp_unslash( $_POST['cwps-civicrm-group'] ) );
 
@@ -425,6 +428,9 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		if ( ! isset( $_POST['cwps-civicrm-group'] ) ) {
 			return;
 		}
+
+		// Check authentication.
+		check_admin_referer( 'update-tag_' . $args['term_id'] );
 
 		// Sanitise input.
 		$group_id = (int) sanitize_text_field( wp_unslash( $_POST['cwps-civicrm-group'] ) );
