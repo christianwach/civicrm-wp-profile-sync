@@ -237,6 +237,15 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 	public $membership_types;
 
 	/**
+	 * Membership Fields.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $membership_fields;
+
+	/**
 	 * Note Fields.
 	 *
 	 * @since 0.5
