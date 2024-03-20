@@ -1295,7 +1295,6 @@ class CiviCRM_Profile_Sync_ACF_User {
 		// Stash in property array.
 		$this->map_address_bridging_array[ (int) $address->id ] = $address_pre;
 
-
 	}
 
 	/**
