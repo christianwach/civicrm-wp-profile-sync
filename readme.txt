@@ -86,6 +86,11 @@ I'll say it again: test early, test often and - above all - test on a developmen
 
 == Changelog ==
 
+= 0.6.6 =
+
+* Implements a "Use cache" setting for Form Actions
+* Adds placeholder setting to fields
+
 = 0.6.5 =
 
 * Enable template tags in the Contact ID field for ACFE forms
