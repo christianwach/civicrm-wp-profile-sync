@@ -2376,7 +2376,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		}
 
 		// Test for this Location Rule.
-		if ( ! in_array( $rule['param'], $this->rule_names ) ) {
+		if ( ! in_array( $rule['param'], $this->rule_names, true ) ) {
 			return $supported;
 		}
 

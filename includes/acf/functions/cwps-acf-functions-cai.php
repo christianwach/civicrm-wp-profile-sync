@@ -45,7 +45,7 @@ function cacf_get_age_from_acf_field( $selector, $post_id = null ) {
 	}
 
 	// Bail if it's not a "Date" or "Date Time" ACF Field.
-	if ( ! in_array( $acf_settings['type'], [ 'date_picker', 'date_time_picker' ] ) ) {
+	if ( ! in_array( $acf_settings['type'], [ 'date_picker', 'date_time_picker' ], true ) ) {
 		return '';
 	}
 

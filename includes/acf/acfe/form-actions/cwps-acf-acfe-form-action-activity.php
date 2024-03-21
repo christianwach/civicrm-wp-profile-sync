@@ -1390,8 +1390,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		}
 
 		// Skip if CiviCRM does not allow it for this Activity Type.
-		$do_not_notify_for = $this->plugin->civicrm->get_setting( 'do_not_notify_assignees_for' );
-		if ( in_array( $activity['activity_type_id'], $do_not_notify_for ) ) {
+		$do_not_notify_setting = $this->plugin->civicrm->get_setting( 'do_not_notify_assignees_for' );
+		$do_not_notify         = array_map( 'intval', $do_not_notify_setting );
+		if ( in_array( (int) $activity['activity_type_id'], $do_not_notify, true ) ) {
 			return;
 		}
 

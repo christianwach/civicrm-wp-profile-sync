@@ -787,7 +787,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 		$date_fields = [ 'created_date', 'modified_date', 'activity_date_time' ];
 
 		// If it's one of our Fields.
-		if ( in_array( $name, $date_fields ) ) {
+		if ( in_array( $name, $date_fields, true ) ) {
 
 			// Get the "Activity Date Time" preference.
 			$format = CRM_Utils_Date::getDateFormat( 'activityDateTime' );

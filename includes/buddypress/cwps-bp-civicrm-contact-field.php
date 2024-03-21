@@ -403,7 +403,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		$birth_fields = [ 'birth_date', 'deceased_date' ];
 
 		// "Birth Date" and "Deceased Date" use the same preference.
-		if ( in_array( $name, $birth_fields ) ) {
+		if ( in_array( $name, $birth_fields, true ) ) {
 			$format = CRM_Utils_Date::getDateFormat( 'birth' );
 		}
 

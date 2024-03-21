@@ -957,7 +957,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 		$date_fields = [ 'created_date', 'start_date', 'end_date' ];
 
 		// If it's one of our Fields.
-		if ( in_array( $name, $date_fields ) ) {
+		if ( in_array( $name, $date_fields, true ) ) {
 
 			// Get the "Event Date Time" preference.
 			$format = CRM_Utils_Date::getDateFormat( 'eventDateTime' );

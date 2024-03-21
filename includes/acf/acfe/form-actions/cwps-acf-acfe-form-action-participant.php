@@ -1727,7 +1727,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 		$counted_role_ids = array_map( 'intval', array_keys( $counted ) );
 
 		// All's well if the Participant Role is not counted.
-		if ( ! in_array( (int) $participant['participant_role_id'], $counted_role_ids ) ) {
+		if ( ! in_array( (int) $participant['participant_role_id'], $counted_role_ids, true ) ) {
 			return true;
 		}
 
@@ -1828,7 +1828,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 		$counted_role_ids = array_map( 'intval', array_keys( $counted ) );
 
 		// If the Role is counted, perform the "Add anyway" check.
-		if ( in_array( (int) $participant_data['participant_role_id'], $counted_role_ids ) ) {
+		if ( in_array( (int) $participant_data['participant_role_id'], $counted_role_ids, true ) ) {
 
 			// If "Add anyway" is on, we can skip this check.
 			if ( empty( $participant_data['add_anyway'] ) ) {

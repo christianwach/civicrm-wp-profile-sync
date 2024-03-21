@@ -1770,13 +1770,13 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			}
 
 			// Get the Contact Type ID.
-			$contact_type_id = array_search( $custom_group['extends'], $contact_types );
+			$contact_type_id = array_search( $custom_group['extends'], $contact_types, true );
 
 			// Get the Contact Sub-type IDs.
 			$contact_sub_type_ids = [];
 			if ( ! empty( $custom_group['extends_entity_column_value'] ) ) {
 				foreach ( $custom_group['extends_entity_column_value'] as $sub_type ) {
-					$contact_sub_type_ids[] = array_search( $sub_type, $contact_sub_types[ $custom_group['extends'] ] );
+					$contact_sub_type_ids[] = array_search( $sub_type, $contact_sub_types[ $custom_group['extends'] ], true );
 				}
 			}
 
@@ -4310,7 +4310,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				if ( is_array( $existing_contact['contact_sub_type'] ) ) {
 
 					// Add incoming when it doesn't exist, otherwise retain existing.
-					if ( ! in_array( $contact_data['contact_sub_type'], $existing_contact['contact_sub_type'] ) ) {
+					if ( ! in_array( $contact_data['contact_sub_type'], $existing_contact['contact_sub_type'], true ) ) {
 						$existing_contact['contact_sub_type'][] = $contact_data['contact_sub_type'];
 						$contact_data['contact_sub_type']       = $existing_contact['contact_sub_type'];
 					} else {
@@ -6414,6 +6414,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			return $groups;
 		}
 
+		// Init array.
+		$groups = [];
+
 		// Handle each nested Action in turn.
 		foreach ( $group_data as $group ) {
 
@@ -6454,7 +6457,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				}
 
 				// Add Group ID to return.
-				$groups[] = $group['group_id'];
+				$groups[] = (int) $group['group_id'];
 
 			}
 
@@ -6476,7 +6479,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 				// Remove Group ID from return if present.
 				if ( is_array( $groups ) ) {
-					$key = array_search( $group['group_id'], $groups );
+					$key = array_search( (int) $group['group_id'], $groups, true );
 					if ( false !== $key ) {
 						unset( $groups[ $key ] );
 					}
@@ -6484,6 +6487,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 			}
 
+		}
+
+		// Cast as boolean if empty.
+		if ( empty( $groups ) ) {
+			$groups = false;
 		}
 
 		// --<

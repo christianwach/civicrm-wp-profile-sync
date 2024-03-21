@@ -399,7 +399,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Field extends acf_field {
 		);
 
 		// Check that we have a Primary Number.
-		if ( ! in_array( 1, $primary_values ) ) {
+		if ( ! in_array( 1, $primary_values, true ) ) {
 			$valid = __( 'Please select a Primary Number', 'civicrm-wp-profile-sync' );
 			return $valid;
 		}
@@ -416,7 +416,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Field extends acf_field {
 		);
 
 		// Check that all Number Fields are populated.
-		if ( in_array( '', $phones ) ) {
+		if ( in_array( '', $phones, true ) ) {
 			$valid = __( 'Please enter a Phone Number', 'civicrm-wp-profile-sync' );
 			return $valid;
 		}

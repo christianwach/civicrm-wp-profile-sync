@@ -392,7 +392,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 		$extensions = $this->extensions_get_enabled();
 
 		// Override if Extension is active.
-		if ( in_array( $extension, $extensions ) ) {
+		if ( in_array( $extension, $extensions, true ) ) {
 			$active = true;
 		}
 
@@ -530,6 +530,8 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 		);
 
 		// Filter out the inactive ones.
+		// TODO: check how this works.
+		// phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict
 		$autocomplete_options = array_keys( $autocomplete_values, '1' );
 
 		// --<

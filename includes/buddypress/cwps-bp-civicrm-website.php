@@ -874,7 +874,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 				// Skip all but those mapped to the type of xProfile Field.
 				foreach ( $public_fields as $key => $value ) {
 					if ( is_array( $this->website_fields[ $value['name'] ] ) ) {
-						if ( in_array( $field_type, $this->website_fields[ $value['name'] ] ) ) {
+						if ( in_array( $field_type, $this->website_fields[ $value['name'] ], true ) ) {
 							$fields[] = $value;
 						}
 					} else {

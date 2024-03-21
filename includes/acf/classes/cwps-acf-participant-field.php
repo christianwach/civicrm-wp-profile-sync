@@ -648,7 +648,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 				// Skip all but those mapped to the type of ACF Field.
 				foreach ( $public_fields as $key => $value ) {
 					if ( is_array( $this->participant_fields[ $value['name'] ] ) ) {
-						if ( in_array( $field_type, $this->participant_fields[ $value['name'] ] ) ) {
+						if ( in_array( $field_type, $this->participant_fields[ $value['name'] ], true ) ) {
 							$fields[] = $value;
 						}
 					} else {
@@ -907,7 +907,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 		$date_fields = [ 'register_date' ];
 
 		// If it's one of our Fields.
-		if ( in_array( $name, $date_fields ) ) {
+		if ( in_array( $name, $date_fields, true ) ) {
 
 			// Get the "Participant Date Time" preference.
 			$format = CRM_Utils_Date::getDateFormat( 'activityDateTime' );

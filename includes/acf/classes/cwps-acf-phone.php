@@ -319,7 +319,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 	public function field_handled_update( $field, $value, $contact_id, $settings, $args ) {
 
 		// Skip if it's not an ACF Field Type that this class handles.
-		if ( ! in_array( $settings['type'], $this->fields_handled ) ) {
+		if ( ! in_array( $settings['type'], $this->fields_handled, true ) ) {
 			return true;
 		}
 
@@ -488,7 +488,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 		// Records to delete are missing from the ACF data.
 		foreach ( $current as $current_phone ) {
-			if ( ! in_array( $current_phone['id'], $acf_phone_ids ) ) {
+			if ( ! in_array( (int) $current_phone['id'], $acf_phone_ids, true ) ) {
 				$actions['delete'][] = $current_phone['id'];
 				continue;
 			}
@@ -852,7 +852,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 					);
 
 					// If the ID is missing, treat as a 'create' op.
-					if ( ! in_array( $phone->id, $acf_phone_ids ) ) {
+					if ( ! in_array( (int) $phone->id, $acf_phone_ids, true ) ) {
 						$args['op'] = 'create';
 					}
 

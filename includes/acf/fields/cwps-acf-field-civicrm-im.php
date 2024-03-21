@@ -365,7 +365,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Instant_Messenger extends acf_field {
 		);
 
 		// Check that we have a Primary Number.
-		if ( ! in_array( 1, $primary_values ) ) {
+		if ( ! in_array( 1, $primary_values, true ) ) {
 			$valid = __( 'Please select a Primary Instant Messenger', 'civicrm-wp-profile-sync' );
 			return $valid;
 		}
@@ -382,7 +382,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Instant_Messenger extends acf_field {
 		);
 
 		// Check that all "Name" Fields are populated.
-		if ( in_array( '', $ims ) ) {
+		if ( in_array( '', $ims, true ) ) {
 			$valid = __( 'Please enter an Instant Messenger', 'civicrm-wp-profile-sync' );
 			return $valid;
 		}

@@ -604,7 +604,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Geo_Mashup {
 		// Check if the Post Types are mapped either here or in Geo Mashup.
 		$in_both = [];
 		foreach ( $is_contact_field_group as $post_type_name ) {
-			if ( in_array( $post_type_name, $located_post_types ) ) {
+			if ( in_array( $post_type_name, $located_post_types, true ) ) {
 				$in_both[] = $post_type_name;
 			}
 		}

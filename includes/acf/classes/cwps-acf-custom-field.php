@@ -854,12 +854,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 				foreach ( $acf_fields['custom'] as $selector => $custom_field_ref ) {
 
 					// Skip if it isn't mapped to a Custom Field.
-					if ( ! in_array( $custom_field_ref, $custom_fields ) ) {
+					if ( ! in_array( $custom_field_ref, $custom_fields, true ) ) {
 						continue;
 					}
 
 					// Get the corresponding Custom Field.
-					$args_key = array_search( $custom_field_ref, $custom_fields );
+					$args_key = array_search( $custom_field_ref, $custom_fields, true );
 					$field    = $args['custom_fields'][ $args_key ];
 
 					// Modify values for ACF prior to update.
@@ -1196,12 +1196,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		}
 
 		// Bail if it's not a data type that can have a "Select".
-		if ( ! in_array( $field_data['data_type'], $this->data_types ) ) {
+		if ( ! in_array( $field_data['data_type'], $this->data_types, true ) ) {
 			return $choices;
 		}
 
 		// Bail if it's not a type of "Select".
-		if ( ! in_array( $field_data['html_type'], $this->select_types ) ) {
+		if ( ! in_array( $field_data['html_type'], $this->select_types, true ) ) {
 			return $choices;
 		}
 
@@ -1212,13 +1212,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 		// "Country" selects require special handling.
 		$country_selects = [ 'Select Country', 'Multi-Select Country' ];
-		if ( in_array( $field_data['html_type'], $country_selects ) ) {
+		if ( in_array( $field_data['html_type'], $country_selects, true ) ) {
 			$choices = CRM_Core_PseudoConstant::country();
 		}
 
 		// "State/Province" selects also require special handling.
 		$state_selects = [ 'Select State/Province', 'Multi-Select State/Province' ];
-		if ( in_array( $field_data['html_type'], $state_selects ) ) {
+		if ( in_array( $field_data['html_type'], $state_selects, true ) ) {
 			$choices = CRM_Core_PseudoConstant::stateProvince();
 		}
 
@@ -1264,8 +1264,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		// Filter Fields to include only those which are compatible.
 		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			foreach ( $custom_group as $custom_field ) {
-				if ( ! empty( $custom_field['data_type'] ) && in_array( $custom_field['data_type'], $this->data_types ) ) {
-					if ( ! empty( $custom_field['html_type'] ) && in_array( $custom_field['html_type'], $select_types ) ) {
+				if ( ! empty( $custom_field['data_type'] ) && in_array( $custom_field['data_type'], $this->data_types, true ) ) {
+					if ( ! empty( $custom_field['html_type'] ) && in_array( $custom_field['html_type'], $select_types, true ) ) {
 						$filtered_fields[ $custom_group_name ][] = $custom_field;
 					}
 				}
@@ -1335,7 +1335,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		}
 
 		// Bail if it's not a data type that can have a "Radio" sub-type.
-		if ( ! in_array( $field_data['data_type'], $this->data_types ) ) {
+		if ( ! in_array( $field_data['data_type'], $this->data_types, true ) ) {
 			return $choices;
 		}
 
@@ -1374,7 +1374,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		// Filter Fields to include only "Radio" HTML types.
 		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			foreach ( $custom_group as $custom_field ) {
-				if ( ! empty( $custom_field['data_type'] ) && in_array( $custom_field['data_type'], $this->data_types ) ) {
+				if ( ! empty( $custom_field['data_type'] ) && in_array( $custom_field['data_type'], $this->data_types, true ) ) {
 					if ( ! empty( $custom_field['html_type'] ) && $custom_field['html_type'] == 'Radio' ) {
 						$filtered_fields[ $custom_group_name ][] = $custom_field;
 					}
@@ -1784,7 +1784,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		// Filter Fields to include only those of HTML type "Text".
 		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			foreach ( $custom_group as $custom_field ) {
-				if ( ! empty( $custom_field['data_type'] ) && in_array( $custom_field['data_type'], $this->data_types ) ) {
+				if ( ! empty( $custom_field['data_type'] ) && in_array( $custom_field['data_type'], $this->data_types, true ) ) {
 					if ( ! empty( $custom_field['html_type'] ) && $custom_field['html_type'] == 'Text' ) {
 						$filtered_fields[ $custom_group_name ][] = $custom_field;
 					}

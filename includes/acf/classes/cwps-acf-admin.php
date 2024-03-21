@@ -718,7 +718,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		];
 
 		// Bail if not the Screen ID we want.
-		if ( ! in_array( $screen_id, $screen_ids ) ) {
+		if ( ! in_array( $screen_id, $screen_ids, true ) ) {
 			return;
 		}
 
@@ -831,7 +831,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Add closed class.
 		if ( is_array( $classes ) ) {
-			if ( ! in_array( 'closed', $classes ) ) {
+			if ( ! in_array( 'closed', $classes, true ) ) {
 				$classes[] = 'closed';
 			}
 		}
@@ -1400,7 +1400,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// Sanity check input.
-		if ( ! in_array( $contact_post_type, $contact_post_types ) ) {
+		if ( ! in_array( $contact_post_type, $contact_post_types, true ) ) {
 
 			// Set finished flag.
 			$data['finished'] = 'true';
@@ -1707,7 +1707,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// Sanity check input.
-		if ( ! in_array( $activity_post_type, $activity_post_types ) ) {
+		if ( ! in_array( $activity_post_type, $activity_post_types, true ) ) {
 
 			// Set finished flag.
 			$data['finished'] = 'true';
@@ -2017,7 +2017,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// Sanity check input.
-		if ( ! in_array( $participant_post_type, $participant_post_types ) ) {
+		if ( ! in_array( $participant_post_type, $participant_post_types, true ) ) {
 
 			// Set finished flag.
 			$data['finished'] = 'true';

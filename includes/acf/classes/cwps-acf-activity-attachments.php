@@ -294,7 +294,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	public function field_handled_update( $field, $value, $activity_id, $settings, $args ) {
 
 		// Skip if it's not an ACF Field Type that this class handles.
-		if ( ! in_array( $settings['type'], $this->fields_handled ) ) {
+		if ( ! in_array( $settings['type'], $this->fields_handled, true ) ) {
 			return true;
 		}
 
@@ -604,7 +604,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 
 		// Records to delete are missing from the ACF data.
 		foreach ( $current as $current_attachment ) {
-			if ( ! in_array( $current_attachment['id'], $acf_attachment_ids ) ) {
+			if ( ! in_array( (int) $current_attachment['id'], $acf_attachment_ids, true ) ) {
 				$actions['delete'][] = $current_attachment['id'];
 				continue;
 			}
@@ -1029,7 +1029,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 					);
 
 					// If the ID is missing, treat as a 'create' op.
-					if ( ! in_array( $attachment->id, $acf_attachment_ids ) ) {
+					if ( ! in_array( (int) $attachment->id, $acf_attachment_ids, true ) ) {
 						$args['op'] = 'create';
 					}
 

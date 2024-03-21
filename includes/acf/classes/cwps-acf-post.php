@@ -741,7 +741,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Bail if this is not a Contact.
 		$top_level_types = $this->plugin->civicrm->contact_type->types_get_top_level();
-		if ( ! in_array( $args['objectName'], $top_level_types ) ) {
+		if ( ! in_array( $args['objectName'], $top_level_types, true ) ) {
 			return;
 		}
 

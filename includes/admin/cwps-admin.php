@@ -339,7 +339,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		$settings_screens = $this->page_settings_screens_get();
 
 		// Determine if we are on one of our Settings Pages.
-		$is_settings_screen = in_array( $screen->id, $settings_screens );
+		$is_settings_screen = in_array( $screen->id, $settings_screens, true );
 
 		// Set message if we are on one of our Settings Pages.
 		if ( $is_settings_screen === true ) {
@@ -573,7 +573,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		$subpages = apply_filters( 'cwps/admin/settings/subpages', $subpages );
 
 		// This tweaks the Settings subnav menu to show only one menu item.
-		if ( in_array( $plugin_page, $subpages ) ) {
+		if ( in_array( $plugin_page, $subpages, true ) ) {
 			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 			$plugin_page = $this->parent_page_slug;
 			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
@@ -802,7 +802,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		$settings_screens = $this->page_settings_screens_get();
 
 		// Bail if not the Screen ID we want.
-		if ( ! in_array( $screen_id, $settings_screens ) ) {
+		if ( ! in_array( $screen_id, $settings_screens, true ) ) {
 			return;
 		}
 

@@ -156,7 +156,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 		// Retain only those which are unused, plus the existing one.
 		if ( count( $post_types ) > 0 ) {
 			foreach ( $post_types as $post_type ) {
-				$used = in_array( $post_type->name, $used_post_types );
+				$used = in_array( $post_type->name, $used_post_types, true );
 				$mine = ( $post_type->name == $existing_post_type ) ? true : false;
 				if ( ! $used || $mine ) {
 					$filtered[] = $post_type;
@@ -214,7 +214,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 		// Retain only those which are unused, plus the existing one.
 		if ( count( $post_types ) > 0 ) {
 			foreach ( $post_types as $post_type ) {
-				$used = in_array( $post_type->name, $used_post_types );
+				$used = in_array( $post_type->name, $used_post_types, true );
 				$mine = ( $post_type->name == $existing_post_type ) ? true : false;
 				if ( ! $used || $mine ) {
 					$filtered[] = $post_type;
@@ -272,7 +272,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 		// Retain only those which are unused, plus the existing one.
 		if ( count( $post_types ) > 0 ) {
 			foreach ( $post_types as $post_type ) {
-				$used = in_array( $post_type->name, $used_post_types );
+				$used = in_array( $post_type->name, $used_post_types, true );
 				$mine = ( $post_type->name == $existing_post_type ) ? true : false;
 				if ( ! $used || $mine ) {
 					$filtered[] = $post_type;
@@ -373,7 +373,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 
 		// Loop through them and get the ones we want.
 		foreach ( $all_post_types as $post_type ) {
-			if ( in_array( $post_type->name, $synced_post_types ) ) {
+			if ( in_array( $post_type->name, $synced_post_types, true ) ) {
 				$post_types[] = $post_type;
 			}
 		}
@@ -415,7 +415,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 		}
 
 		// Override if this Post Type is mapped.
-		if ( in_array( $post_type, $mapped_post_types ) ) {
+		if ( in_array( $post_type, $mapped_post_types, true ) ) {
 			$is_linked = true;
 		}
 
@@ -446,7 +446,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 		}
 
 		// Override if this Post Type is mapped.
-		if ( in_array( $post_type, $mapped_post_types ) ) {
+		if ( in_array( $post_type, $mapped_post_types, true ) ) {
 			$is_linked = true;
 		}
 
@@ -477,7 +477,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 		}
 
 		// Override if this Post Type is mapped.
-		if ( in_array( $post_type, $mapped_post_types ) ) {
+		if ( in_array( $post_type, $mapped_post_types, true ) ) {
 			$is_linked = true;
 		}
 

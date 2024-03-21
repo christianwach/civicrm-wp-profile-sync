@@ -721,7 +721,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Bail if this is not a Contact.
 		$top_level_types = $this->plugin->civicrm->contact_type->types_get_top_level();
-		if ( ! in_array( $object_name, $top_level_types ) ) {
+		if ( ! in_array( $object_name, $top_level_types, true ) ) {
 			return;
 		}
 
@@ -774,7 +774,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Bail if this is not a Contact.
 		$top_level_types = $this->plugin->civicrm->contact_type->types_get_top_level();
-		if ( ! in_array( $object_name, $top_level_types ) ) {
+		if ( ! in_array( $object_name, $top_level_types, true ) ) {
 			return;
 		}
 
@@ -827,7 +827,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Bail if this is not a Contact.
 		$top_level_types = $this->plugin->civicrm->contact_type->types_get_top_level();
-		if ( ! in_array( $object_name, $top_level_types ) ) {
+		if ( ! in_array( $object_name, $top_level_types, true ) ) {
 			return;
 		}
 
@@ -880,7 +880,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Bail if this is not a Contact.
 		$top_level_types = $this->plugin->civicrm->contact_type->types_get_top_level();
-		if ( ! in_array( $object_name, $top_level_types ) ) {
+		if ( ! in_array( $object_name, $top_level_types, true ) ) {
 			return;
 		}
 

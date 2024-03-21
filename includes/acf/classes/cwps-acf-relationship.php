@@ -305,7 +305,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		}
 
 		// Skip if it's not a Relationship that requires special handling.
-		if ( ! in_array( $settings['type'], $this->fields_handled ) ) {
+		if ( ! in_array( $settings['type'], $this->fields_handled, true ) ) {
 			return true;
 		}
 
@@ -1166,14 +1166,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 			if ( $op == 'delete' ) {
 
 				// Deleting the Relationship, so remove Contact ID if it's there.
-				if ( in_array( $target_contact_id, $existing ) ) {
+				if ( in_array( $target_contact_id, $existing, true ) ) {
 					$existing = array_diff( $existing, [ $target_contact_id ] );
 				}
 
 			} elseif ( $op == 'create' ) {
 
 				// Creating the Relationship, so add Contact ID if it's not there.
-				if ( ! in_array( $target_contact_id, $existing ) ) {
+				if ( ! in_array( $target_contact_id, $existing, true ) ) {
 					$existing[] = $target_contact_id;
 				}
 
@@ -1183,14 +1183,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 				if ( $relationship->is_active == '1' ) {
 
 					// Add Contact ID if it's not there.
-					if ( ! in_array( $target_contact_id, $existing ) ) {
+					if ( ! in_array( $target_contact_id, $existing, true ) ) {
 						$existing[] = $target_contact_id;
 					}
 
 				} else {
 
 					// Remove Contact ID if it's there.
-					if ( in_array( $target_contact_id, $existing ) ) {
+					if ( in_array( $target_contact_id, $existing, true ) ) {
 						$existing = array_diff( $existing, [ $target_contact_id ] );
 					}
 

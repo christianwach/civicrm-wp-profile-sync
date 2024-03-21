@@ -345,7 +345,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		// Build Groups.
 		$groups = [];
 		foreach ( $groups_all as $group ) {
-			if ( in_array( $group['id'], $filtered ) ) {
+			if ( in_array( (int) $group['id'], $filtered, true ) ) {
 				$groups[] = $group;
 			}
 		}
@@ -1256,7 +1256,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 						// If the Post does not have the term(s), add them.
 						foreach ( $term_ids_for_post as $term_id_for_post ) {
-							if ( ! in_array( $term_id_for_post, $term_ids_in_post ) ) {
+							if ( ! in_array( (int) $term_id_for_post, $term_ids_in_post, true ) ) {
 								$terms_in_post[] = $terms_for_post[ $term_id_for_post ];
 							}
 						}

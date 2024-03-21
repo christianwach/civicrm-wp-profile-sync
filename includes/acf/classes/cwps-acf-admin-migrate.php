@@ -431,7 +431,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 		];
 
 		// Bail if not the Screen ID we want.
-		if ( ! in_array( $screen_id, $screen_ids ) ) {
+		if ( ! in_array( $screen_id, $screen_ids, true ) ) {
 			return;
 		}
 

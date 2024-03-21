@@ -318,7 +318,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 	public function field_handled_update( $field, $value, $contact_id, $settings, $args ) {
 
 		// Skip if it's not an ACF Field Type that this class handles.
-		if ( ! in_array( $settings['type'], $this->fields_handled ) ) {
+		if ( ! in_array( $settings['type'], $this->fields_handled, true ) ) {
 			return true;
 		}
 
@@ -641,7 +641,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 		// Records to delete are missing from the ACF data.
 		foreach ( $current as $current_im ) {
-			if ( ! in_array( $current_im['id'], $acf_im_ids ) ) {
+			if ( ! in_array( (int) $current_im['id'], $acf_im_ids, true ) ) {
 				$actions['delete'][] = $current_im['id'];
 				continue;
 			}
@@ -1104,7 +1104,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 					);
 
 					// If the ID is missing, treat as a 'create' op.
-					if ( ! in_array( $im->id, $acf_im_ids ) ) {
+					if ( ! in_array( (int) $im->id, $acf_im_ids, true ) ) {
 						$args['op'] = 'create';
 					}
 

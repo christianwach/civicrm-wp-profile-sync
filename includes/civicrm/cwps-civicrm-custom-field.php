@@ -501,7 +501,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 
 				// Skip adding if it extends a sibling Sub-type.
 				if ( ! empty( $subtype ) && ! empty( $value['extends_entity_column_value'] ) ) {
-					if ( ! in_array( $subtype, $value['extends_entity_column_value'] ) ) {
+					if ( ! in_array( $subtype, $value['extends_entity_column_value'], true ) ) {
 						continue;
 					}
 				}
@@ -571,7 +571,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 		}
 
 		// Start with the Custom Fields for all Contact Types.
-		if ( in_array( $type, $this->plugin->civicrm->contact_type->types_get_top_level() ) ) {
+		if ( in_array( $type, $this->plugin->civicrm->contact_type->types_get_top_level(), true ) ) {
 			$custom_fields = $this->get_for_contacts();
 		}
 
@@ -603,7 +603,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 
 				// Skip adding if it extends a sibling Sub-type.
 				if ( ! empty( $subtype ) && ! empty( $value['extends_entity_column_value'] ) ) {
-					if ( ! in_array( $subtype, $value['extends_entity_column_value'] ) ) {
+					if ( ! in_array( $subtype, $value['extends_entity_column_value'], true ) ) {
 						continue;
 					}
 				}

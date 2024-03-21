@@ -239,7 +239,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 	public function field_handled_update( $field, $value, $contact_id, $settings, $args ) {
 
 		// Skip if it's not an ACF Field Type that this class handles.
-		if ( ! in_array( $settings['type'], $this->fields_handled ) ) {
+		if ( ! in_array( $settings['type'], $this->fields_handled, true ) ) {
 			return true;
 		}
 
@@ -481,7 +481,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 		// Records to delete are missing from the ACF data.
 		foreach ( $current as $current_multiset ) {
-			if ( ! in_array( $current_multiset['id'], $acf_multiset_ids ) ) {
+			if ( ! in_array( (int) $current_multiset['id'], $acf_multiset_ids, true ) ) {
 				$actions['delete'][] = $current_multiset['id'];
 				continue;
 			}
@@ -897,7 +897,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 						);
 
 						// If the ID is missing, treat as a 'create' op.
-						if ( ! in_array( $multiset->id, $acf_multiset_ids ) ) {
+						if ( ! in_array( (int) $multiset->id, $acf_multiset_ids, true ) ) {
 							$args['op'] = 'create';
 						}
 

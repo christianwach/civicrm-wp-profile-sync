@@ -488,7 +488,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 		);
 
 		// Check that all "File" Fields are populated.
-		if ( in_array( '', $attachments ) ) {
+		if ( in_array( '', $attachments, true ) ) {
 			$valid = __( 'Please upload an Attachment', 'civicrm-wp-profile-sync' );
 			return $valid;
 		}

@@ -1341,7 +1341,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 					$code = $contact_field_name;
 
 					// Skip if it's a Field that requires special handling.
-					if ( in_array( $code, $fields_handled ) ) {
+					if ( in_array( $code, $fields_handled, true ) ) {
 						continue;
 					}
 

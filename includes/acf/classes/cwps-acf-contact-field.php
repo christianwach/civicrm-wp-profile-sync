@@ -396,7 +396,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		$birth_fields = [ 'birth_date', 'deceased_date' ];
 
 		// "Birth Date" and "Deceased Date" use the same preference.
-		if ( in_array( $name, $birth_fields ) ) {
+		if ( in_array( $name, $birth_field, true ) ) {
 			$format = CRM_Utils_Date::getDateFormat( 'birth' );
 		}
 
@@ -755,13 +755,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		$contact_fields = [];
 
 		// Check against different Field sets per type.
-		if ( in_array( 'Individual', $types ) ) {
+		if ( in_array( 'Individual', $types, true ) ) {
 			$contact_fields = $this->contact_fields_individual;
 		}
-		if ( in_array( 'Organization', $types ) ) {
+		if ( in_array( 'Organization', $types, true ) ) {
 			$contact_fields = $this->contact_fields_organization;
 		}
-		if ( in_array( 'Household', $types ) ) {
+		if ( in_array( 'Household', $types, true ) ) {
 			$contact_fields = $this->contact_fields_household;
 		}
 
@@ -1372,7 +1372,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 			if ( '_wp_attachment_metadata' === $row->meta_key ) {
 
 				$meta = maybe_unserialize( $row->meta_value );
-				if ( dirname( $meta['file'] ) === $dirname && in_array( $basename, wp_list_pluck( $meta['sizes'], 'file' ) ) ) {
+				if ( dirname( $meta['file'] ) === $dirname && in_array( $basename, wp_list_pluck( $meta['sizes'], 'file' ), true ) ) {
 					// URL is for a registered intermediate size.
 					$post_id = $row->post_id;
 					break;
@@ -1383,7 +1383,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 				// See if URL is for a "backup" of an edited image.
 				$backup_sizes = maybe_unserialize( $row->meta_value );
 
-				if ( in_array( $basename, wp_list_pluck( $backup_sizes, 'file' ) ) ) {
+				if ( in_array( $basename, wp_list_pluck( $backup_sizes, 'file' ), true ) ) {
 
 					/*
 					 * URL is possibly for a "backup" of an edited image.

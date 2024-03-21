@@ -366,7 +366,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Field extends acf_field {
 		);
 
 		// Check that we have a Primary Address.
-		if ( ! in_array( 1, $primary_values ) ) {
+		if ( ! in_array( 1, $primary_values, true ) ) {
 			$valid = __( 'Please select a Primary Address', 'civicrm-wp-profile-sync' );
 			return $valid;
 		}

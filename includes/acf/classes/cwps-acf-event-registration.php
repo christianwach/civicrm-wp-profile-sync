@@ -254,9 +254,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 
 		// Needs Participant Statuses 8, 9 and 11 to be enabled.
 		if (
-			in_array( 'Awaiting approval', $participant_statuses ) &&
-			in_array( 'Pending from approval', $participant_statuses ) &&
-			in_array( 'Rejected', $participant_statuses )
+			in_array( 'Awaiting approval', $participant_statuses, true ) &&
+			in_array( 'Pending from approval', $participant_statuses, true ) &&
+			in_array( 'Rejected', $participant_statuses, true )
 		) {
 
 			// Build array of all Fields.
