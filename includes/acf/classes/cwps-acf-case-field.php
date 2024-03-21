@@ -284,22 +284,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 			// Unused at present.
 			case 'select':
 			case 'checkbox':
-
 				// Convert if the value has the special CiviCRM array-like format.
 				if ( is_string( $value ) && false !== strpos( $value, CRM_Core_DAO::VALUE_SEPARATOR ) ) {
 					$value = CRM_Utils_Array::explodePadded( $value );
 				}
-
 				break;
 
 			// Used by "Birth Date" and "Deceased Date".
 			case 'date_picker':
 			case 'date_time_picker':
-
 				// Get Field setting.
 				$acf_setting = get_field_object( $selector, $post_id );
 
-				// Date Picker test.
+				// Test for Date Picker or Date & Time Picker.
 				if ( $acf_setting['type'] == 'date_picker' ) {
 
 					// Case edit passes a Y-m-d format, so test for that.
@@ -315,8 +312,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 				} elseif ( $acf_setting['type'] == 'date_time_picker' ) {
 
-					// Date & Time Picker test.
-
 					// Case edit passes a YmdHis format, so test for that.
 					$datetime = DateTime::createFromFormat( 'YmdHis', $value );
 
@@ -329,7 +324,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 					$value = $datetime->format( 'Y-m-d H:i:s' );
 
 				}
-
 				break;
 
 		}

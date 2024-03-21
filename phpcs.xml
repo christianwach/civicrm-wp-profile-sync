@@ -36,7 +36,6 @@
 		<exclude name="Squiz.PHP.CommentedOutCode.Found" />
 		<exclude name="Squiz.Commenting.InlineComment.SpacingAfterAtFunctionEnd" />
 		<exclude name="Squiz.Commenting.BlockComment.HasEmptyLineBefore" />
-		<exclude name="PSR2.ControlStructures.SwitchDeclaration.BodyOnNextLineCASE" />
 
 		<exclude name="Generic.Metrics.NestingLevel.MaxExceeded" />
 

@@ -986,7 +986,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 			switch ( $args['op'] ) {
 
 				case 'create':
-
 					// Make sure no other Address is Primary if this one is.
 					if ( $acf_address['field_address_primary'] == '1' && ! empty( $existing ) ) {
 						foreach ( $existing as $key => $record ) {
@@ -996,11 +995,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 
 					// Add array record.
 					$existing[] = $acf_address;
-
 					break;
 
 				case 'edit':
-
 					// Make sure no other Address is Primary if this one is.
 					if ( $acf_address['field_address_primary'] == '1' ) {
 						foreach ( $existing as $key => $record ) {
@@ -1015,11 +1012,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 							break;
 						}
 					}
-
 					break;
 
 				case 'delete':
-
 					// Remove array record.
 					foreach ( $existing as $key => $record ) {
 						if ( $address->id == $record['field_address_id'] ) {
@@ -1027,7 +1022,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 							break;
 						}
 					}
-
 					break;
 
 			}

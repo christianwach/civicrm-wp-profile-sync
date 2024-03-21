@@ -503,19 +503,16 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 			case 'String':
 			case 'Country':
 			case 'StateProvince':
-
 				// Convert if the value has the special CiviCRM array-like format.
 				if ( is_string( $value ) ) {
 					if ( false !== strpos( $value, CRM_Core_DAO::VALUE_SEPARATOR ) ) {
 						$value = CRM_Utils_Array::explodePadded( $value );
 					}
 				}
-
 				break;
 
 			// Contact Reference Fields may return the Contact's "sort_name".
 			case 'ContactReference':
-
 				// Test for a numeric value.
 				// phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
 				if ( ! is_numeric( $value ) ) {
@@ -544,12 +541,10 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 					*/
 
 				}
-
 				break;
 
 			// Used by "Date Select" and  "Date Time Select".
 			case 'Timestamp':
-
 				// Custom Fields use a YmdHis format, so try that.
 				$datetime = DateTime::createFromFormat( 'YmdHis', $value );
 
@@ -557,15 +552,12 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 				if ( $datetime !== false ) {
 					$value = $datetime->format( 'Y-m-d' ) . ' 00:00:00';
 				}
-
 				break;
 
 			// Used by "Note" and maybe others.
 			case 'Memo':
-
 				// At minimum needs an unautop.
 				$value = $this->plugin->wp->unautop( $value );
-
 				break;
 
 		}

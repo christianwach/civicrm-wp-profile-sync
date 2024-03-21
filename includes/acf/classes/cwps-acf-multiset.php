@@ -909,7 +909,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 				switch ( $args['op'] ) {
 
 					case 'create':
-
 						// Make sure no other Multiple Record Set is Primary if this one is.
 						if ( $acf_multiset['field_multiset_primary'] == '1' && ! empty( $existing ) ) {
 							foreach ( $existing as $key => $record ) {
@@ -919,11 +918,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 						// Add array record.
 						$existing[] = $acf_multiset;
-
 						break;
 
 					case 'edit':
-
 						// Overwrite array record.
 						foreach ( $existing as $key => $record ) {
 							if ( $multiset->id == $record['field_multiset_id'] ) {
@@ -931,11 +928,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 								break;
 							}
 						}
-
 						break;
 
 					case 'delete':
-
 						// Remove array record.
 						foreach ( $existing as $key => $record ) {
 							if ( $multiset->id == $record['field_multiset_id'] ) {
@@ -943,7 +938,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 								break;
 							}
 						}
-
 						break;
 
 				}

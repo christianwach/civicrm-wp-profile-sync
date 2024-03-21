@@ -918,19 +918,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 			case 'String':
 			case 'Country':
 			case 'StateProvince':
-
 				// Convert if the value has the special CiviCRM array-like format.
 				if ( is_string( $value ) ) {
 					if ( false !== strpos( $value, CRM_Core_DAO::VALUE_SEPARATOR ) ) {
 						$value = CRM_Utils_Array::explodePadded( $value );
 					}
 				}
-
 				break;
 
 			// Contact Reference Fields may return the Contact's "sort_name".
 			case 'ContactReference':
-
 				// Test for a numeric value.
 				// phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
 				if ( ! is_numeric( $value ) ) {
@@ -959,12 +956,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 					*/
 
 				}
-
 				break;
 
 			// Used by "Date Select" and "Date Time Select".
 			case 'Timestamp':
-
 				// Get Field setting.
 				$acf_setting = get_field_object( $selector, $post_id );
 
@@ -975,12 +970,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 				} elseif ( $acf_setting['type'] == 'date_time_picker' ) {
 					$value = $datetime->format( 'Y-m-d H:i:s' );
 				}
-
 				break;
 
 			// Handle CiviCRM "File" Custom Fields.
 			case 'File':
-
 				// Delegate to method, expect an Attachment ID.
 				$value = $this->civicrm->attachment->value_get_for_acf( $value, $field, $selector, $post_id );
 				break;

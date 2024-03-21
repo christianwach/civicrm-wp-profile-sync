@@ -381,26 +381,22 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 			// Used by "Primary" etc.
 			case 'true_false':
-
 				// Clear the value when empty.
 				if ( empty( $value ) ) {
 					$value = null;
 				} else {
 					$value = 1;
 				}
-
 				break;
 
 			// Used by "Country", "State/Province" and "County".
 			case 'selectbox':
-
 				// Convert if the value has the special CiviCRM array-like format.
 				if ( is_string( $value ) ) {
 					if ( false !== strpos( $value, CRM_Core_DAO::VALUE_SEPARATOR ) ) {
 						$value = CRM_Utils_Array::explodePadded( $value );
 					}
 				}
-
 				break;
 
 		}

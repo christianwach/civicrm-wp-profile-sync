@@ -413,7 +413,6 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		switch ( $field_data['data_type'] ) {
 
 			case 'String':
-
 				// If it's a Multi-select.
 				if ( $field_data['html_type'] == 'Multi-Select' && is_array( $value ) ) {
 
@@ -446,11 +445,9 @@ class CiviCRM_Profile_Sync_ACF_Field {
 					}
 
 				}
-
 				break;
 
 			case 'Int':
-
 				// If it's a Multi-select.
 				if ( $field_data['html_type'] == 'Multi-Select' && is_array( $value ) ) {
 
@@ -481,11 +478,9 @@ class CiviCRM_Profile_Sync_ACF_Field {
 					}
 
 				}
-
 				break;
 
 			case 'Float':
-
 				// If it's a Multi-select.
 				if ( $field_data['html_type'] == 'Multi-Select' && is_array( $value ) ) {
 
@@ -507,7 +502,6 @@ class CiviCRM_Profile_Sync_ACF_Field {
 				break;
 
 			case 'Money':
-
 				// If it's a Multi-select.
 				if ( $field_data['html_type'] == 'Multi-Select' && is_array( $value ) ) {
 
@@ -545,7 +539,6 @@ class CiviCRM_Profile_Sync_ACF_Field {
 					}
 
 				}
-
 				break;
 
 		}

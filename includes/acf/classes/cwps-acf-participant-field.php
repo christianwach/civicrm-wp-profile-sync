@@ -294,18 +294,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 			// Used by "Status ID".
 			case 'select':
 			case 'checkbox':
-
 				// Convert if the value has the special CiviCRM array-like format.
 				if ( is_string( $value ) && false !== strpos( $value, CRM_Core_DAO::VALUE_SEPARATOR ) ) {
 					$value = CRM_Utils_Array::explodePadded( $value );
 				}
-
 				break;
 
 			// Used by "Register Date".
 			case 'date_picker':
 			case 'date_time_picker':
-
 				// Get Field setting.
 				$acf_setting = get_field_object( $selector, $post_id );
 
@@ -337,23 +334,18 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 					$value = $datetime->format( 'Y-m-d H:i:s' );
 
 				}
-
 				break;
 
 			// Used by "Contact Existing/New".
 			case 'civicrm_contact_existing_new':
-
 				// Convert the value to the Field's array format.
 				$value = $this->acf_loader->acf->field_type->contact_group->prepare_input( $value );
-
 				break;
 
 			// Used by "Event Group".
 			case 'civicrm_event_group':
-
 				// Convert the value to the Field's array format.
 				$value = $this->acf_loader->acf->field_type->event_group->prepare_input( $value );
-
 				break;
 
 		}

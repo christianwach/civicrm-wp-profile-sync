@@ -1116,7 +1116,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 			switch ( $args['op'] ) {
 
 				case 'create':
-
 					// Make sure no other Instant Messenger is Primary if this one is.
 					if ( $acf_im['field_im_primary'] == '1' && ! empty( $existing ) ) {
 						foreach ( $existing as $key => $record ) {
@@ -1126,11 +1125,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 					// Add array record.
 					$existing[] = $acf_im;
-
 					break;
 
 				case 'edit':
-
 					// Make sure no other Instant Messenger is Primary if this one is.
 					if ( $acf_im['field_im_primary'] == '1' ) {
 						foreach ( $existing as $key => $record ) {
@@ -1145,11 +1142,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 							break;
 						}
 					}
-
 					break;
 
 				case 'delete':
-
 					// Remove array record.
 					foreach ( $existing as $key => $record ) {
 						if ( $im->id == $record['field_im_id'] ) {
@@ -1157,7 +1152,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 							break;
 						}
 					}
-
 					break;
 
 			}

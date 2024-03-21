@@ -309,18 +309,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 			// Unused at present.
 			case 'select':
 			case 'checkbox':
-
 				// Convert if the value has the special CiviCRM array-like format.
 				if ( is_string( $value ) && false !== strpos( $value, CRM_Core_DAO::VALUE_SEPARATOR ) ) {
 					$value = CRM_Utils_Array::explodePadded( $value );
 				}
-
 				break;
 
 			// Used by "Birth Date" and "Deceased Date".
 			case 'date_picker':
 			case 'date_time_picker':
-
 				// Get Field setting.
 				$acf_setting = get_field_object( $selector, $post_id );
 
@@ -344,15 +341,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 					$value = $datetime->format( 'Y-m-d H:i:s' );
 
 				}
-
 				break;
 
 			// Used by "Contact Image".
 			case 'image':
-
 				// Delegate to method, expect an Attachment ID.
 				$value = $this->image_value_get_for_acf( $value, $name, $selector, $post_id );
-
 				break;
 
 		}

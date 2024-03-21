@@ -361,14 +361,12 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 			// Used by "Primary" etc.
 			case 'true_false':
-
 				// Clear the value when empty.
 				if ( empty( $value ) ) {
 					$value = null;
 				} else {
 					$value = 1;
 				}
-
 				break;
 
 		}

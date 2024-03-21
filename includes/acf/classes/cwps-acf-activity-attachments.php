@@ -1044,7 +1044,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 			switch ( $args['op'] ) {
 
 				case 'create':
-
 					// If the WordPress Attachment ID is empty, create one.
 					if ( empty( $acf_attachment['field_attachment_file'] ) ) {
 						$filename = pathinfo( $attachment->path, PATHINFO_BASENAME );
@@ -1056,11 +1055,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 
 					// Add array record.
 					$existing[] = $acf_attachment;
-
 					break;
 
 				case 'edit':
-
 					// If the WordPress Attachment ID is empty, create one.
 					if ( empty( $acf_attachment['field_attachment_file'] ) ) {
 						$filename = pathinfo( $attachment->path, PATHINFO_BASENAME );
@@ -1077,11 +1074,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 							break;
 						}
 					}
-
 					break;
 
 				case 'delete':
-
 					// If the WordPress Attachment ID is not empty, delete it.
 					if ( ! empty( $acf_attachment['field_attachment_file'] ) ) {
 						wp_delete_attachment( $acf_attachment['field_attachment_file'], true );
@@ -1094,7 +1089,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 							break;
 						}
 					}
-
 					break;
 
 			}

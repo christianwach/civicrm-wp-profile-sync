@@ -864,7 +864,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 			switch ( $args['op'] ) {
 
 				case 'create':
-
 					// Make sure no other Phone is Primary if this one is.
 					if ( $acf_phone['field_phone_primary'] == '1' && ! empty( $existing ) ) {
 						foreach ( $existing as $key => $record ) {
@@ -874,11 +873,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 					// Add array record.
 					$existing[] = $acf_phone;
-
 					break;
 
 				case 'edit':
-
 					// Make sure no other Phone is Primary if this one is.
 					if ( $acf_phone['field_phone_primary'] == '1' ) {
 						foreach ( $existing as $key => $record ) {
@@ -893,11 +890,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 							break;
 						}
 					}
-
 					break;
 
 				case 'delete':
-
 					// Remove array record.
 					foreach ( $existing as $key => $record ) {
 						if ( $phone->id == $record['field_phone_id'] ) {
@@ -905,7 +900,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 							break;
 						}
 					}
-
 					break;
 
 			}

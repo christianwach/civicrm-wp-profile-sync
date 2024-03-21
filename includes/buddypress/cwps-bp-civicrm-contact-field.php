@@ -640,31 +640,26 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 			// Used by "Do not Sms" etc.
 			case 'true_false':
-
 				// Clear the value when empty.
 				if ( empty( $value ) ) {
 					$value = null;
 				} else {
 					$value = 1;
 				}
-
 				break;
 
 			// May not be used.
 			case 'checkbox':
-
 				// Convert if the value has the special CiviCRM array-like format.
 				if ( is_string( $value ) ) {
 					if ( false !== strpos( $value, CRM_Core_DAO::VALUE_SEPARATOR ) ) {
 						$value = CRM_Utils_Array::explodePadded( $value );
 					}
 				}
-
 				break;
 
 			// Used by "Birth Date" and "Deceased Date".
 			case 'datebox':
-
 				// Contact edit passes a Y-m-d format, so test for that.
 				$datetime = DateTime::createFromFormat( 'Y-m-d', $value );
 
@@ -677,7 +672,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 				if ( $datetime !== false ) {
 					$value = $datetime->format( 'Y-m-d' ) . ' 00:00:00';
 				}
-
 				break;
 
 		}
