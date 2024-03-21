@@ -303,7 +303,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 * @since 0.4
 	 *
 	 * @param integer $contact_id The numeric ID of the CiviCRM Contact.
-	 * @param string $post_type The WordPress Post Type.
+	 * @param string  $post_type The WordPress Post Type.
 	 * @return array $custom_field_ids The array of found Custom Field IDs.
 	 */
 	public function ids_get_by_contact_id( $contact_id, $post_type ) {
@@ -414,7 +414,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 * @since 0.4
 	 *
 	 * @param integer $activity_id The numeric ID of the CiviCRM Activity to query.
-	 * @param array $custom_field_ids The Custom Field IDs to query.
+	 * @param array   $custom_field_ids The Custom Field IDs to query.
 	 * @return array $activity_data An array of Activity data.
 	 */
 	public function values_get_by_activity_id( $activity_id, $custom_field_ids = [] ) {
@@ -487,7 +487,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 * @since 0.5.2
 	 *
 	 * @param integer $case_id The numeric ID of the CiviCRM Case to query.
-	 * @param array $custom_field_ids The Custom Field IDs to query.
+	 * @param array   $custom_field_ids The Custom Field IDs to query.
 	 * @return array $case_data An array of Case data.
 	 */
 	public function values_get_by_case_id( $case_id, $custom_field_ids = [] ) {
@@ -625,7 +625,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 * @since 0.5
 	 *
 	 * @param integer $participant_id The numeric ID of the CiviCRM Participant to query.
-	 * @param array $custom_field_ids The Custom Field IDs to query.
+	 * @param array   $custom_field_ids The Custom Field IDs to query.
 	 * @return array $participant_data An array of Participant data.
 	 */
 	public function values_get_by_participant_id( $participant_id, $custom_field_ids = [] ) {
@@ -898,9 +898,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param mixed $value The Custom Field value.
-	 * @param array $field The Custom Field data.
-	 * @param string $selector The ACF Field selector.
+	 * @param mixed          $value The Custom Field value.
+	 * @param array          $field The Custom Field data.
+	 * @param string         $selector The ACF Field selector.
 	 * @param integer|string $post_id The ACF "Post ID".
 	 * @return mixed $value The formatted Field value.
 	 */

@@ -267,7 +267,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Tag {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $contact_id The numeric ID of a CiviCRM Contact.
+	 * @param array   $contact_id The numeric ID of a CiviCRM Contact.
 	 * @param integer $tag_id The numeric ID of the Tag.
 	 * @return bool $has_tag True if the Contact has the Tag, or false otherwise.
 	 */
@@ -310,7 +310,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Tag {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $contact_id The numeric ID of a CiviCRM Contact.
+	 * @param array   $contact_id The numeric ID of a CiviCRM Contact.
 	 * @param integer $tag_id The numeric ID of the Tag.
 	 * @return array|bool $result The Group-Contact data, or false on failure.
 	 */

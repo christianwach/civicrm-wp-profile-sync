@@ -98,9 +98,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post in which the Form has been embedded.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 */
 	public function load( $form, $current_post_id, $action ) {
 		return $form;
@@ -112,7 +112,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	 * @since 0.5
 	 *
 	 * @param string $action The name of the Action.
-	 * @param array $data The result of the Action.
+	 * @param array  $data The result of the Action.
 	 */
 	public function load_action_save( $action, $data ) {
 
@@ -134,9 +134,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 */
 	public function make( $form, $current_post_id, $action ) {}
 
@@ -145,9 +145,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the Form Action.
+	 * @param string  $action The customised name of the Form Action.
 	 * @return bool $prepare The net result of the set of filters.
 	 */
 	public function make_skip( $form, $current_post_id, $action ) {
@@ -189,7 +189,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	 * @since 0.5
 	 *
 	 * @param string $action The name of the Action.
-	 * @param array $data The result of the Action.
+	 * @param array  $data The result of the Action.
 	 */
 	public function make_action_save( $action, $data ) {
 
@@ -477,7 +477,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @param string $code The unique code for the Field.
 	 * @param string $label The label for the Field.
-	 * @param array $conditional_logic The conditional logic for the Field.
+	 * @param array  $conditional_logic The conditional logic for the Field.
 	 * @return array $field The array of Field data.
 	 */
 	public function mapping_field_get( $code, $label, $conditional_logic = [] ) {
@@ -777,11 +777,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param string $field_name The name of the Field.
-	 * @param array $form The array of Form data.
+	 * @param string  $field_name The name of the Field.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
-	 * @param array $group The optional nested ACF Group array.
+	 * @param string  $action The customised name of the action.
+	 * @param array   $group The optional nested ACF Group array.
 	 * @return mixed $setting_value The setting value, or false if not found.
 	 */
 	public function form_setting_value_get( $field_name, $form, $current_post_id, $action, $group = '' ) {

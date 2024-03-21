@@ -234,10 +234,10 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $choices The existing array of choices for the Setting Field.
+	 * @param array  $choices The existing array of choices for the Setting Field.
 	 * @param string $field_type The BuddyPress Field Type.
 	 * @param string $entity_type The CiviCRM Entity Type.
-	 * @param array $entity_type_data The array of Entity Type data.
+	 * @param array  $entity_type_data The array of Entity Type data.
 	 * @return array $choices The modified array of choices for the Setting Field.
 	 */
 	public function query_setting_choices( $choices, $field_type, $entity_type, $entity_type_data ) {
@@ -283,7 +283,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 	 * @since 0.5
 	 *
 	 * @param string $field_type The BuddyPress Field Type.
-	 * @param array $contact_type The array of Contact Type data.
+	 * @param array  $contact_type The array of Contact Type data.
 	 * @return array $contact_fields The array of Contact Fields.
 	 */
 	public function get_for_bp_field_type( $field_type, $contact_type ) {
@@ -467,7 +467,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $contact_type The Contact Type to query.
+	 * @param array  $contact_type The Contact Type to query.
 	 * @param string $field_type The type of BuddyPress Field.
 	 * @param string $filter The token by which to filter the array of Fields.
 	 * @return array $fields The array of Field names.
@@ -809,7 +809,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 	 * @since 0.5
 	 *
 	 * @param object $field The xProfile Field object.
-	 * @param array $args The array of CiviCRM mapping data.
+	 * @param array  $args The array of CiviCRM mapping data.
 	 */
 	public function date_settings_modify( $field, $args ) {
 
@@ -847,7 +847,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 	 * @since 0.5
 	 *
 	 * @param object $field The xProfile Field object.
-	 * @param array $args The array of CiviCRM mapping data.
+	 * @param array  $args The array of CiviCRM mapping data.
 	 */
 	public function text_settings_modify( $field, $args ) {
 
@@ -931,7 +931,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $contact_fields The existing array of Contact Fields.
+	 * @param array  $contact_fields The existing array of Contact Fields.
 	 * @param string $field_type The BuddyPress Field Type.
 	 * @param string $name The name of the top-level Contact Type.
 	 * @return array $contact_fields The modified array of Contact Fields.
@@ -962,7 +962,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 	 *
 	 * @since 0.5
 	 *
-	 * @param bool $is_true_false True if "Checkbox" is a "True/False" Field. False by default.
+	 * @param bool  $is_true_false True if "Checkbox" is a "True/False" Field. False by default.
 	 * @param array $args The array of arguments.
 	 * @return bool $is_true_false True if "Checkbox" is a "True/False" Field. False by default.
 	 */

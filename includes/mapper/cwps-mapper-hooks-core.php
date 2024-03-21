@@ -507,10 +507,10 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 * @since 0.4
 	 *
 	 * @param integer $user_id The ID for the User whose Profile is being saved.
-	 * @param array $posted_field_ids The array of Field IDs that were edited.
-	 * @param bool $errors Whether or not any errors occurred.
-	 * @param array $old_values The array of original values before update.
-	 * @param array $new_values The array of newly saved values after update.
+	 * @param array   $posted_field_ids The array of Field IDs that were edited.
+	 * @param bool    $errors Whether or not any errors occurred.
+	 * @param array   $old_values The array of original values before update.
+	 * @param array   $new_values The array of newly saved values after update.
 	 */
 	public function bp_xprofile_edited( $user_id, $posted_field_ids, $errors, $old_values, $new_values ) {
 
@@ -564,10 +564,10 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 * @since 0.4
 	 *
 	 * @param bool|WP_Error $user_id THe WordPress User ID or WP_Error on failure.
-	 * @param string $user_login Login name requested by the user.
-	 * @param string $user_password Password requested by the user.
-	 * @param string $user_email Email address requested by the user.
-	 * @param array $usermeta Metadata about the user (blog-specific signup data, xprofile data, etc).
+	 * @param string        $user_login Login name requested by the user.
+	 * @param string        $user_password Password requested by the user.
+	 * @param string        $user_email Email address requested by the user.
+	 * @param array         $usermeta Metadata about the user (blog-specific signup data, xprofile data, etc).
 	 */
 	public function bp_signup_user( $user_id, $user_login, $user_password, $user_email, $usermeta ) {
 
@@ -620,8 +620,8 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 * @since 0.4
 	 *
 	 * @param integer $user_id The numeric ID of the WordPress User.
-	 * @param string $key The Activation key.
-	 * @param array $user The array of User data.
+	 * @param string  $key The Activation key.
+	 * @param array   $user The array of User data.
 	 */
 	public function bp_activated_user( $user_id, $key, $user ) {
 
@@ -707,10 +707,10 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function contact_pre_create( $op, $objectName, $objectId, $objectRef ) {
 
@@ -760,10 +760,10 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function contact_pre_edit( $op, $objectName, $objectId, $objectRef ) {
 
@@ -813,10 +813,10 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function contact_created( $op, $objectName, $objectId, $objectRef ) {
 
@@ -866,10 +866,10 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function contact_edited( $op, $objectName, $objectId, $objectRef ) {
 
@@ -948,10 +948,10 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function email_pre_edit( $op, $objectName, $objectId, $objectRef ) {
 
@@ -992,10 +992,10 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function email_edited( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1038,10 +1038,10 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function website_pre_edit( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1081,10 +1081,10 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 *
 	 * @since 0.5.2
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function website_pre_delete( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1124,10 +1124,10 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function website_created( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1167,10 +1167,10 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function website_edited( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1210,10 +1210,10 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function website_deleted( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1255,10 +1255,10 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function phone_pre_delete( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1298,10 +1298,10 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function phone_created( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1341,10 +1341,10 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function phone_edited( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1384,10 +1384,10 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function phone_deleted( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1429,10 +1429,10 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function address_pre_edit( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1472,10 +1472,10 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function address_pre_delete( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1515,10 +1515,10 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function address_created( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1558,10 +1558,10 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function address_edited( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1601,10 +1601,10 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function address_deleted( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1646,10 +1646,10 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The kind of operation.
+	 * @param string  $op The kind of operation.
 	 * @param integer $group_id The numeric ID of the Custom Group.
 	 * @param integer $entity_id The numeric ID of the Contact.
-	 * @param array $custom_fields The array of Custom Fields.
+	 * @param array   $custom_fields The array of Custom Fields.
 	 */
 	public function custom_edited( $op, $group_id, $entity_id, &$custom_fields ) {
 

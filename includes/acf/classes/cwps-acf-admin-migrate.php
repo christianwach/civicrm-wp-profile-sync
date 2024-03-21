@@ -368,7 +368,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $urls The array of subpage URLs.
+	 * @param array  $urls The array of subpage URLs.
 	 * @param string $active_tab The key of the active tab in the subpage URLs array.
 	 */
 	public function page_add_tab( $urls, $active_tab ) {
@@ -642,7 +642,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	 * @since 0.4
 	 *
 	 * @param string $option_name The name of the option.
-	 * @param mixed $value The value to set the option to.
+	 * @param mixed  $value The value to set the option to.
 	 * @return bool $success True if the value of the option was successfully updated.
 	 */
 	public function option_set( $option_name = '', $value = '' ) {

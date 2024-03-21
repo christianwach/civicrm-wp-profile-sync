@@ -349,9 +349,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 	 *
 	 * @since 0.5.2
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 */
 	public function validation( $form, $current_post_id, $action ) {
 
@@ -374,9 +374,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 */
 	public function make( $form, $current_post_id, $action ) {
 
@@ -987,9 +987,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 * @return array $data The array of Case data.
 	 */
 	public function form_case_data( $form, $current_post_id, $action ) {
@@ -1080,9 +1080,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 	 *
 	 * @since 0.5.2
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 * @return bool $valid True if the Case can be saved, false otherwise.
 	 */
 	public function form_case_validate( $form, $current_post_id, $action ) {
@@ -1286,9 +1286,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 * @return array $data The array of Custom Fields data.
 	 */
 	public function form_custom_data( $form, $current_post_id, $action ) {
@@ -1396,10 +1396,10 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 	 *
 	 * @since 0.5.2
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
-	 * @param array $case The array of Case data.
+	 * @param string  $action The customised name of the action.
+	 * @param array   $case The array of Case data.
 	 * @return array $data The array of Custom Fields data.
 	 */
 	public function form_custom_post_process( $form, $current_post_id, $action, $case ) {

@@ -284,11 +284,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param string $field The ACF Field selector.
-	 * @param mixed $value The ACF Field value.
+	 * @param string  $field The ACF Field selector.
+	 * @param mixed   $value The ACF Field value.
 	 * @param integer $activity_id The numeric ID of the Activity.
-	 * @param array $settings The ACF Field settings.
-	 * @param array $args The array of WordPress params.
+	 * @param array   $settings The ACF Field settings.
+	 * @param array   $args The array of WordPress params.
 	 * @return bool True if updates were successful, or false on failure.
 	 */
 	public function field_handled_update( $field, $value, $activity_id, $settings, $args ) {
@@ -362,7 +362,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param array $value The array of Attachment Record data in the ACF Field.
+	 * @param array   $value The array of Attachment Record data in the ACF Field.
 	 * @param integer $attachment_id The numeric ID of the Attachment Record (or null if new).
 	 * @return array $attachment_data The CiviCRM Attachment Record data.
 	 */
@@ -514,10 +514,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param array $values The array of Attachment Record arrays.
+	 * @param array   $values The array of Attachment Record arrays.
 	 * @param integer $activity_id The numeric ID of the Activity.
-	 * @param string $selector The ACF Field selector.
-	 * @param array $args The array of WordPress params.
+	 * @param string  $selector The ACF Field selector.
+	 * @param array   $args The array of WordPress params.
 	 * @return array|bool $attachments The array of Attachment Record data, or false on failure.
 	 */
 	public function attachments_update( $values, $activity_id, $selector, $args = [] ) {
@@ -848,8 +848,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	 *
 	 * @param integer $attachment_id The numeric ID of the CiviCRM Attachment.
 	 * @param integer $activity_id The numeric ID of the Activity.
-	 * @param string $selector The ACF Field selector.
-	 * @param array $args The array of WordPress params.
+	 * @param string  $selector The ACF Field selector.
+	 * @param array   $args The array of WordPress params.
 	 */
 	public function attachment_delete( $attachment_id, $activity_id, $selector, $args = [] ) {
 
@@ -938,7 +938,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	 * @since 0.5.4
 	 *
 	 * @param object $attachment The CiviCRM Attachment Record object.
-	 * @param array $args The array of CiviCRM params.
+	 * @param array  $args The array of CiviCRM params.
 	 */
 	public function attachment_process( $attachment, $args ) {
 
@@ -990,8 +990,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	 * @since 0.5.4
 	 *
 	 * @param integer|string $post_id The ACF "Post ID".
-	 * @param object $attachment The CiviCRM Attachment Record object.
-	 * @param array $args The array of CiviCRM params.
+	 * @param object         $attachment The CiviCRM Attachment Record object.
+	 * @param array          $args The array of CiviCRM params.
 	 */
 	public function fields_update( $post_id, $attachment, $args ) {
 
@@ -1127,8 +1127,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param array $acf_fields The existing ACF Fields array.
-	 * @param array $field The ACF Field.
+	 * @param array   $acf_fields The existing ACF Fields array.
+	 * @param array   $field The ACF Field.
 	 * @param integer $post_id The numeric ID of the WordPress Post.
 	 * @return array $acf_fields The modified ACF Fields array.
 	 */
@@ -1293,8 +1293,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param array $response The array of loaded Attachment data.
-	 * @param WP_Post $attachment The Attachment object.
+	 * @param array       $response The array of loaded Attachment data.
+	 * @param WP_Post     $attachment The Attachment object.
 	 * @param array|false $meta The array of Attachment metadata, or false if there is none.
 	 * @return mixed $response The modified array of Attachment data.
 	 */

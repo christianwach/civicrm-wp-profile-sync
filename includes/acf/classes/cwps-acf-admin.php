@@ -680,7 +680,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $urls The array of subpage URLs.
+	 * @param array  $urls The array of subpage URLs.
 	 * @param string $active_tab The key of the active tab in the subpage URLs array.
 	 */
 	public function page_add_tab( $urls, $active_tab ) {

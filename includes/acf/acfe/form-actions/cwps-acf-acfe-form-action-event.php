@@ -648,9 +648,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 */
 	public function validation( $form, $current_post_id, $action ) {
 
@@ -683,9 +683,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 */
 	public function make( $form, $current_post_id, $action ) {
 
@@ -2128,9 +2128,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 * @return array $data The array of Event data.
 	 */
 	public function form_event_data( $form, $current_post_id, $action ) {
@@ -2228,9 +2228,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @@since 0.5.4
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 * @return bool $valid True if the Event can be saved, false otherwise.
 	 */
 	public function form_event_validate( $form, $current_post_id, $action ) {
@@ -2421,9 +2421,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 * @return array $data The array of Custom Fields data.
 	 */
 	public function form_event_custom_data( $form, $current_post_id, $action ) {
@@ -2531,10 +2531,10 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @@since 0.5.4
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
-	 * @param array $event The array of Event data.
+	 * @param string  $action The customised name of the action.
+	 * @param array   $event The array of Event data.
 	 * @return array $data The array of Custom Fields data.
 	 */
 	public function form_event_custom_post_process( $form, $current_post_id, $action, $event ) {
@@ -2600,9 +2600,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 * @return array $locblock_data The array of LocBlock data.
 	 */
 	public function form_locblock_data( $form, $current_post_id, $action ) {
@@ -2672,9 +2672,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @@since 0.5.4
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 * @return bool $valid True if the LocBlock can be saved, false otherwise.
 	 */
 	public function form_locblock_validate( $form, $current_post_id, $action ) {
@@ -2801,9 +2801,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 * @return array $address_data The array of Address data.
 	 */
 	public function form_locblock_address_data( $form, $current_post_id, $action ) {
@@ -2849,7 +2849,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @@since 0.5.4
 	 *
-	 * @param array $data The array of Event LocBlock Address data.
+	 * @param array  $data The array of Event LocBlock Address data.
 	 * @param string $action The customised name of the action.
 	 * @return bool $valid True if the LocBlock Address can be saved, false otherwise.
 	 */
@@ -2968,9 +2968,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 * @return array $email_data The array of Email data.
 	 */
 	public function form_locblock_email_data( $form, $current_post_id, $action ) {
@@ -3033,7 +3033,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @@since 0.5.4
 	 *
-	 * @param array $data The array of Event LocBlock Email data.
+	 * @param array  $data The array of Event LocBlock Email data.
 	 * @param string $action The customised name of the action.
 	 * @return bool $valid True if the LocBlock Address can be saved, false otherwise.
 	 */
@@ -3128,9 +3128,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 * @return array $phone_data The array of Phone data.
 	 */
 	public function form_locblock_phone_data( $form, $current_post_id, $action ) {
@@ -3200,7 +3200,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @@since 0.5.4
 	 *
-	 * @param array $data The array of Event LocBlock Phone data.
+	 * @param array  $data The array of Event LocBlock Phone data.
 	 * @param string $action The customised name of the action.
 	 * @return bool $valid True if the LocBlock Address can be saved, false otherwise.
 	 */
@@ -3295,9 +3295,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 * @return array $data The array of Registration data.
 	 */
 	public function form_registration_data( $form, $current_post_id, $action ) {
@@ -3368,9 +3368,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @@since 0.5.4
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 * @return bool $valid True if the Event Registration can be enabled, false otherwise.
 	 */
 	public function form_registration_validate( $form, $current_post_id, $action ) {
@@ -3473,9 +3473,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 * @return array $data The array of Settings data.
 	 */
 	public function form_registration_settings_data( $form, $current_post_id, $action ) {
@@ -3507,9 +3507,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 * @return array $data The array of Registration Screen data.
 	 */
 	public function form_registration_screen_data( $form, $current_post_id, $action ) {
@@ -3554,9 +3554,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 * @return array $data The array of Confirmation Screen data.
 	 */
 	public function form_registration_confirmation_screen_data( $form, $current_post_id, $action ) {
@@ -3592,9 +3592,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 * @return array $data The array of Thank You Screen data.
 	 */
 	public function form_registration_thankyou_screen_data( $form, $current_post_id, $action ) {
@@ -3624,9 +3624,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 * @return array $data The array of Confirmation Email data.
 	 */
 	public function form_registration_confirmation_email_data( $form, $current_post_id, $action ) {
@@ -3662,7 +3662,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 *
 	 * @@since 0.5.4
 	 *
-	 * @param array $data The array of Event Registration Confirmation Email data.
+	 * @param array  $data The array of Event Registration Confirmation Email data.
 	 * @param string $action The customised name of the action.
 	 * @return bool $valid True if the Confirmation Email can be sent, false otherwise.
 	 */

@@ -282,10 +282,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param mixed $value The Contact Field value.
-	 * @param array $name The Contact Field name.
+	 * @param mixed  $value The Contact Field value.
+	 * @param array  $name The Contact Field name.
 	 * @param string $selector The ACF Field selector.
-	 * @param mixed $post_id The ACF "Post ID".
+	 * @param mixed  $post_id The ACF "Post ID".
 	 * @return mixed $value The formatted Field value.
 	 */
 	public function value_get_for_acf( $value, $name, $selector, $post_id ) {
@@ -572,7 +572,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $contact_type The Contact Type to query.
+	 * @param array  $contact_type The Contact Type to query.
 	 * @param string $field_type The type of ACF Field.
 	 * @param string $filter The token by which to filter the array of Fields.
 	 * @return array $fields The array of Field names.
@@ -807,7 +807,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $types The Contact Type(s) to query.
+	 * @param array  $types The Contact Type(s) to query.
 	 * @param string $type The type of ACF Field.
 	 * @return array $fields The array of Field names.
 	 */
@@ -1114,10 +1114,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param mixed $value The Contact Field value (the Image URL).
-	 * @param array $name The Contact Field name.
+	 * @param mixed  $value The Contact Field value (the Image URL).
+	 * @param array  $name The Contact Field name.
 	 * @param string $selector The ACF Field selector.
-	 * @param mixed $post_id The ACF "Post ID".
+	 * @param mixed  $post_id The ACF "Post ID".
 	 * @return mixed $value The WordPress Attachment ID, or empty on failure.
 	 */
 	public function image_value_get_for_acf( $value, $name, $selector, $post_id ) {
@@ -1332,7 +1332,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 * @since 0.4
 	 *
 	 * @param integer $post_id The numeric ID of the WordPress Post.
-	 * @param string $url The URL to resolve.
+	 * @param string  $url The URL to resolve.
 	 * @return integer The found Post ID, or 0 on failure.
 	 */
 	public function image_url_to_post_id_helper( $post_id, $url ) {

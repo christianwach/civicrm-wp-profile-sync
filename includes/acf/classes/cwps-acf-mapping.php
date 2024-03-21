@@ -1218,7 +1218,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 * @since 0.4
 	 *
 	 * @param integer $contact_type_id The numeric ID of the Contact Type.
-	 * @param string $cpt_name The name of the WordPress Post Type.
+	 * @param string  $cpt_name The name of the WordPress Post Type.
 	 */
 	public function mapping_for_contact_type_update( $contact_type_id, $cpt_name ) {
 
@@ -1300,7 +1300,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 * @since 0.4
 	 *
 	 * @param integer $activity_type_id The numeric ID of the Activity Type.
-	 * @param string $cpt_name The name of the WordPress Post Type.
+	 * @param string  $cpt_name The name of the WordPress Post Type.
 	 */
 	public function mapping_for_activity_type_update( $activity_type_id, $cpt_name ) {
 
@@ -1382,7 +1382,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 * @since 0.5
 	 *
 	 * @param integer $participant_role_id The numeric ID of the Participant Role.
-	 * @param string $cpt_name The name of the WordPress Post Type.
+	 * @param string  $cpt_name The name of the WordPress Post Type.
 	 */
 	public function mapping_for_participant_role_update( $participant_role_id, $cpt_name ) {
 
@@ -1476,7 +1476,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 * @since 0.4
 	 *
 	 * @param string $post_type The name of the Post Type.
-	 * @param array $data The settings data for the Post Type.
+	 * @param array  $data The settings data for the Post Type.
 	 */
 	public function setting_update( $post_type, $data ) {
 
@@ -1563,7 +1563,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 * @since 0.4
 	 *
 	 * @param string $option_name The name of the option.
-	 * @param mixed $value The value to set the option to.
+	 * @param mixed  $value The value to set the option to.
 	 * @return bool $success True if the value of the option was successfully updated.
 	 */
 	public function option_set( $option_name = '', $value = '' ) {

@@ -143,7 +143,7 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Instant_Messenger {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $attr The saved Shortcode attributes.
+	 * @param array  $attr The saved Shortcode attributes.
 	 * @param string $content The enclosed content of the Shortcode.
 	 * @param string $tag The Shortcode which invoked the callback.
 	 * @return string $content The HTML-formatted Shortcode content.

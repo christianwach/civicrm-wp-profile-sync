@@ -457,7 +457,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 	 * @since 0.4
 	 *
 	 * @param array|obj $activity The Activity data.
-	 * @param string $create_post Create a mapped Post if missing. Either 'create' or 'skip'.
+	 * @param string    $create_post Create a mapped Post if missing. Either 'create' or 'skip'.
 	 * @return string|bool $is_mapped The Post Type if the Activity is mapped, false otherwise.
 	 */
 	public function is_mapped( $activity, $create_post = 'skip' ) {
@@ -537,7 +537,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 	 * @since 0.4
 	 *
 	 * @param array|obj $activity The Activity data.
-	 * @param string $post_type The WordPress Post Type.
+	 * @param string    $post_type The WordPress Post Type.
 	 * @return integer|bool $is_mapped The ID of the WordPress Post if the Activity is mapped, false otherwise.
 	 */
 	public function is_mapped_to_post( $activity, $post_type = 'any' ) {
@@ -1068,7 +1068,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 	 * @since 0.4
 	 *
 	 * @param integer $activity_id The numeric ID of the Activity.
-	 * @param array $fields The ACF Field data.
+	 * @param array   $fields The ACF Field data.
 	 * @param integer $post_id The numeric ID of the WordPress Post.
 	 * @return array|bool $activity_data The CiviCRM Activity data.
 	 */
@@ -1162,7 +1162,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 	 * @since 0.4
 	 *
 	 * @param integer $activity_id The numeric ID of the Activity.
-	 * @param array $fields The ACF Field data.
+	 * @param array   $fields The ACF Field data.
 	 * @param integer $post_id The numeric ID of the WordPress Post.
 	 * @return array|bool $activity The CiviCRM Activity data, or false on failure.
 	 */
@@ -1293,7 +1293,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 	 * @param array $choices The existing array of choices for the Setting Field.
 	 * @param array $field The ACF Field data array.
 	 * @param array $field_group The ACF Field Group data array.
-	 * @param bool $skip_check True if the check for Field Group should be skipped. Default false.
+	 * @param bool  $skip_check True if the check for Field Group should be skipped. Default false.
 	 * @return array $choices The modified array of choices for the Setting Field.
 	 */
 	public function query_setting_choices( $choices, $field, $field_group, $skip_check = false ) {
@@ -1527,7 +1527,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 	 *
 	 * @since 0.4
 	 *
-	 * @param bool $mapped The existing mapping flag.
+	 * @param bool  $mapped The existing mapping flag.
 	 * @param array $field_group The array of ACF Field Group data.
 	 * @return bool $mapped True if the Field Group is mapped, or pass through if not mapped.
 	 */
@@ -1588,7 +1588,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 	 * @since 0.4
 	 *
 	 * @param array|bool $post_ids The existing "Post IDs".
-	 * @param array $args The array of CiviCRM Custom Fields params.
+	 * @param array      $args The array of CiviCRM Custom Fields params.
 	 * @return array|bool $post_id The mapped "Post IDs", or false if not mapped.
 	 */
 	public function query_post_id( $post_ids, $args ) {

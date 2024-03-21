@@ -274,7 +274,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	 * @since 0.4
 	 *
 	 * @param WP_Term $tag The current taxonomy term object.
-	 * @param string $taxonomy The current taxonomy slug.
+	 * @param string  $taxonomy The current taxonomy slug.
 	 */
 	public function form_element_edit_term_add( $tag, $taxonomy ) {
 
@@ -299,7 +299,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $taxonomy The current taxonomy slug.
+	 * @param string  $taxonomy The current taxonomy slug.
 	 * @param integer $group_id The chosen Group ID, if present.
 	 * @return array $groups The array of Groups to display.
 	 */
@@ -899,7 +899,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	 * @since 0.4
 	 *
 	 * @param integer|string $post_id The ACF "Post ID".
-	 * @param integer $group_id The ID of the CiviCRM Group.
+	 * @param integer        $group_id The ID of the CiviCRM Group.
 	 * @return array $terms The array of terms.
 	 */
 	public function synced_terms_get_for_post_and_group( $post_id, $group_id ) {
@@ -1031,7 +1031,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	 * @since 0.4
 	 *
 	 * @param integer|string $post_id The ACF "Post ID".
-	 * @param array $data The array of unslashed post data.
+	 * @param array          $data The array of unslashed post data.
 	 */
 	public function post_saved_pre( $post_id, $data ) {
 
@@ -1191,8 +1191,8 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	 * @since 0.4
 	 *
 	 * @param integer $group_id The ID of the CiviCRM Group.
-	 * @param array $contact_ids Array of CiviCRM Contact IDs.
-	 * @param string $op The kind of operation - 'add' or 'remove'.
+	 * @param array   $contact_ids Array of CiviCRM Contact IDs.
+	 * @param string  $op The kind of operation - 'add' or 'remove'.
 	 */
 	public function terms_update_for_group_contacts( $group_id, $contact_ids, $op ) {
 

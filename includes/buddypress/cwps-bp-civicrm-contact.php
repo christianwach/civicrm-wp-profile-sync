@@ -314,7 +314,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact {
 	 * @since 0.5
 	 *
 	 * @param array|bool $user_id The existing User ID.
-	 * @param array $args The array of CiviCRM Custom Fields params.
+	 * @param array      $args The array of CiviCRM Custom Fields params.
 	 * @return array|bool $user_id The User ID, or false if not mapped.
 	 */
 	public function query_user_id( $user_id, $args ) {

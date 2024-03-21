@@ -194,7 +194,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 	 * @since 0.4
 	 *
 	 * @param integer $contact_id The numeric ID of the CiviCRM Contact to query.
-	 * @param array $custom_field_ids The Custom Field IDs to query.
+	 * @param array   $custom_field_ids The Custom Field IDs to query.
 	 * @return array $contact_data An array of Contact data.
 	 */
 	public function values_get_by_contact_id( $contact_id, $custom_field_ids = [] ) {

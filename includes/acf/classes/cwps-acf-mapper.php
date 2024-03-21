@@ -171,9 +171,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $entity The name of the Entity.
+	 * @param string  $entity The name of the Entity.
 	 * @param integer $id The numeric ID of the Entity.
-	 * @param string $type For WordPress Entities, this is the Post Type.
+	 * @param string  $type For WordPress Entities, this is the Post Type.
 	 */
 	public function entity_set( $entity, $id, $type = '' ) {
 
@@ -1158,10 +1158,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function contact_pre_create( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1202,10 +1202,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function contact_pre_edit( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1250,10 +1250,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function contact_created( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1302,10 +1302,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function contact_edited( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1387,10 +1387,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function email_created( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1430,10 +1430,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function email_edited( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1473,10 +1473,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function email_deleted( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1518,10 +1518,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function website_pre_edit( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1561,10 +1561,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.5.2
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function website_pre_delete( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1604,10 +1604,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function website_created( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1647,10 +1647,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function website_edited( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1690,10 +1690,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function website_deleted( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1735,10 +1735,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function phone_pre_delete( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1778,10 +1778,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function phone_created( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1821,10 +1821,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function phone_edited( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1864,10 +1864,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function phone_deleted( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1909,10 +1909,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function im_pre_delete( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1952,10 +1952,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function im_created( $op, $objectName, $objectId, $objectRef ) {
 
@@ -1995,10 +1995,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function im_edited( $op, $objectName, $objectId, $objectRef ) {
 
@@ -2038,10 +2038,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function im_deleted( $op, $objectName, $objectId, $objectRef ) {
 
@@ -2083,10 +2083,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function relationship_pre_edit( $op, $objectName, $objectId, $objectRef ) {
 
@@ -2126,10 +2126,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function relationship_created( $op, $objectName, $objectId, $objectRef ) {
 
@@ -2169,10 +2169,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function relationship_edited( $op, $objectName, $objectId, $objectRef ) {
 
@@ -2212,10 +2212,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function relationship_deleted( $op, $objectName, $objectId, $objectRef ) {
 
@@ -2257,10 +2257,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function address_pre_edit( $op, $objectName, $objectId, $objectRef ) {
 
@@ -2300,10 +2300,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function address_pre_delete( $op, $objectName, $objectId, $objectRef ) {
 
@@ -2343,10 +2343,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function address_created( $op, $objectName, $objectId, $objectRef ) {
 
@@ -2386,10 +2386,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function address_edited( $op, $objectName, $objectId, $objectRef ) {
 
@@ -2429,10 +2429,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function address_deleted( $op, $objectName, $objectId, $objectRef ) {
 
@@ -2474,10 +2474,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.5.2
 	 *
-	 * @param string $op The kind of operation.
+	 * @param string  $op The kind of operation.
 	 * @param integer $group_id The numeric ID of the Custom Group.
 	 * @param integer $entity_id The numeric ID of the CiviCRM Entity.
-	 * @param array $custom_fields The array of Custom Fields.
+	 * @param array   $custom_fields The array of Custom Fields.
 	 */
 	public function custom_pre_edit( $op, $group_id, $entity_id, &$custom_fields ) {
 
@@ -2514,10 +2514,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The kind of operation.
+	 * @param string  $op The kind of operation.
 	 * @param integer $group_id The numeric ID of the Custom Group.
 	 * @param integer $entity_id The numeric ID of the CiviCRM Entity.
-	 * @param array $custom_fields The array of Custom Fields.
+	 * @param array   $custom_fields The array of Custom Fields.
 	 */
 	public function custom_edited( $op, $group_id, $entity_id, &$custom_fields ) {
 
@@ -2557,10 +2557,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the CiviCRM Group.
-	 * @param array $objectRef The array of CiviCRM Group data.
+	 * @param array   $objectRef The array of CiviCRM Group data.
 	 */
 	public function group_pre_delete( $op, $objectName, $objectId, &$objectRef ) {
 
@@ -2602,10 +2602,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the CiviCRM Group.
-	 * @param array $objectRef The array of CiviCRM Contact IDs.
+	 * @param array   $objectRef The array of CiviCRM Contact IDs.
 	 */
 	public function group_contacts_created( $op, $objectName, $objectId, &$objectRef ) {
 
@@ -2650,10 +2650,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the CiviCRM Group.
-	 * @param array $objectRef Array of CiviCRM Contact IDs.
+	 * @param array   $objectRef Array of CiviCRM Contact IDs.
 	 */
 	public function group_contacts_deleted( $op, $objectName, $objectId, &$objectRef ) {
 
@@ -2702,10 +2702,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the CiviCRM Group.
-	 * @param array $objectRef Array of CiviCRM Contact IDs.
+	 * @param array   $objectRef Array of CiviCRM Contact IDs.
 	 */
 	public function group_contacts_rejoined( $op, $objectName, $objectId, &$objectRef ) {
 
@@ -2752,10 +2752,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function activity_pre_create( $op, $objectName, $objectId, $objectRef ) {
 
@@ -2795,10 +2795,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function activity_pre_edit( $op, $objectName, $objectId, $objectRef ) {
 
@@ -2838,10 +2838,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function activity_created( $op, $objectName, $objectId, $objectRef ) {
 
@@ -2884,10 +2884,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function activity_edited( $op, $objectName, $objectId, $objectRef ) {
 
@@ -2939,10 +2939,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function activity_deleted( $op, $objectName, $objectId, $objectRef ) {
 
@@ -2987,10 +2987,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function participant_pre_create( $op, $objectName, $objectId, $objectRef ) {
 
@@ -3030,10 +3030,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function participant_pre_edit( $op, $objectName, $objectId, $objectRef ) {
 
@@ -3073,10 +3073,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function participant_pre_delete( $op, $objectName, $objectId, $objectRef ) {
 
@@ -3116,10 +3116,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function participant_created( $op, $objectName, $objectId, $objectRef ) {
 
@@ -3162,10 +3162,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function participant_edited( $op, $objectName, $objectId, $objectRef ) {
 
@@ -3217,10 +3217,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function participant_deleted( $op, $objectName, $objectId, $objectRef ) {
 
@@ -3341,10 +3341,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function file_pre_delete( $op, $objectName, $objectId, $objectRef ) {
 
@@ -3396,10 +3396,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function file_created( $op, $objectName, $objectId, $objectRef ) {
 
@@ -3451,10 +3451,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function file_edited( $op, $objectName, $objectId, $objectRef ) {
 
@@ -3508,10 +3508,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function file_deleted( $op, $objectName, $objectId, $objectRef ) {
 
@@ -3564,7 +3564,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @param integer $post_id The ID of the Post or revision.
 	 * @param integer $post The Post object.
-	 * @param bool $update True if the Post is being updated, false if new.
+	 * @param bool    $update True if the Post is being updated, false if new.
 	 */
 	public function post_saved( $post_id, $post, $update ) {
 
@@ -3666,7 +3666,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 * @since 0.4
 	 *
 	 * @param integer $term_id The numeric ID of the new term.
-	 * @param string $taxonomy The taxonomy containing the term.
+	 * @param string  $taxonomy The taxonomy containing the term.
 	 */
 	public function term_pre_edit( $term_id, $taxonomy = null ) {
 
@@ -3698,7 +3698,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 * @since 0.5
 	 *
 	 * @param integer $term_id The numeric ID of the Term.
-	 * @param string $taxonomy The Taxonomy containing the Term.
+	 * @param string  $taxonomy The Taxonomy containing the Term.
 	 */
 	public function term_pre_delete( $term_id, $taxonomy = null ) {
 
@@ -3729,8 +3729,8 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $term_id The numeric ID of the new term.
-	 * @param array $tt_id The numeric ID of the new term.
+	 * @param array  $term_id The numeric ID of the new term.
+	 * @param array  $tt_id The numeric ID of the new term.
 	 * @param string $taxonomy Should be (an array containing) taxonomy names.
 	 */
 	public function term_created( $term_id, $tt_id, $taxonomy ) {
@@ -3764,8 +3764,8 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 * @since 0.4
 	 *
 	 * @param integer $term_id The numeric ID of the edited term.
-	 * @param array $tt_id The numeric ID of the edited term taxonomy.
-	 * @param string $taxonomy Should be (an array containing) the taxonomy.
+	 * @param array   $tt_id The numeric ID of the edited term taxonomy.
+	 * @param string  $taxonomy Should be (an array containing) the taxonomy.
 	 */
 	public function term_edited( $term_id, $tt_id, $taxonomy ) {
 
@@ -3798,9 +3798,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 * @since 0.4
 	 *
 	 * @param integer $term_id The numeric ID of the deleted term.
-	 * @param array $tt_id The numeric ID of the deleted term taxonomy.
-	 * @param string $taxonomy Name of the taxonomy.
-	 * @param object $deleted_term The deleted term object.
+	 * @param array   $tt_id The numeric ID of the deleted term taxonomy.
+	 * @param string  $taxonomy Name of the taxonomy.
+	 * @param object  $deleted_term The deleted term object.
 	 */
 	public function term_deleted( $term_id, $tt_id, $taxonomy, $deleted_term ) {
 

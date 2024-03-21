@@ -236,10 +236,10 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $choices The existing array of choices for the Setting Field.
+	 * @param array  $choices The existing array of choices for the Setting Field.
 	 * @param string $field_type The BuddyPress Field Type.
 	 * @param string $entity_type The CiviCRM Entity Type.
-	 * @param array $entity_type_data The array of Entity Type data.
+	 * @param array  $entity_type_data The array of Entity Type data.
 	 * @return array $choices The modified array of choices for the Setting Field.
 	 */
 	public function query_setting_choices( $choices, $field_type, $entity_type, $entity_type_data ) {
@@ -705,8 +705,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $filtered_fields The existing array of filtered Custom Fields.
-	 * @param array $custom_fields The array of Custom Fields.
+	 * @param array  $filtered_fields The existing array of filtered Custom Fields.
+	 * @param array  $custom_fields The array of Custom Fields.
 	 * @param string $field_type The BuddyPress Field Type.
 	 * @return array $filtered_fields The modified array of filtered Custom Fields.
 	 */
@@ -821,8 +821,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $filtered_fields The existing array of filtered Custom Fields.
-	 * @param array $custom_fields The array of Custom Fields.
+	 * @param array  $filtered_fields The existing array of filtered Custom Fields.
+	 * @param array  $custom_fields The array of Custom Fields.
 	 * @param string $field_type The BuddyPress Field Type.
 	 * @return array $filtered_fields The modified array of filtered Custom Fields.
 	 */
@@ -897,8 +897,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $filtered_fields The existing array of filtered Custom Fields.
-	 * @param array $custom_fields The array of Custom Fields.
+	 * @param array  $filtered_fields The existing array of filtered Custom Fields.
+	 * @param array  $custom_fields The array of Custom Fields.
 	 * @param string $field_type The BuddyPress Field Type.
 	 * @return array $filtered_fields The modified array of filtered Custom Fields.
 	 */
@@ -1004,8 +1004,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $filtered_fields The existing array of filtered Custom Fields.
-	 * @param array $custom_fields The array of Custom Fields.
+	 * @param array  $filtered_fields The existing array of filtered Custom Fields.
+	 * @param array  $custom_fields The array of Custom Fields.
 	 * @param string $field_type The BuddyPress Field Type.
 	 * @return array $filtered_fields The modified array of filtered Custom Fields.
 	 */
@@ -1037,8 +1037,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $filtered_fields The existing array of filtered Custom Fields.
-	 * @param array $custom_fields The array of Custom Fields.
+	 * @param array  $filtered_fields The existing array of filtered Custom Fields.
+	 * @param array  $custom_fields The array of Custom Fields.
 	 * @param string $field_type The BuddyPress Field Type.
 	 * @return array $filtered_fields The modified array of filtered Custom Fields.
 	 */
@@ -1103,8 +1103,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $filtered_fields The existing array of filtered Custom Fields.
-	 * @param array $custom_fields The array of Custom Fields.
+	 * @param array  $filtered_fields The existing array of filtered Custom Fields.
+	 * @param array  $custom_fields The array of Custom Fields.
 	 * @param string $field_type The BuddyPress Field Type.
 	 * @return array $filtered_fields The modified array of filtered Custom Fields.
 	 */
@@ -1138,8 +1138,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $filtered_fields The existing array of filtered Custom Fields.
-	 * @param array $custom_fields The array of Custom Fields.
+	 * @param array  $filtered_fields The existing array of filtered Custom Fields.
+	 * @param array  $custom_fields The array of Custom Fields.
 	 * @param string $field_type The BuddyPress Field Type.
 	 * @return array $filtered_fields The modified array of filtered Custom Fields.
 	 */
@@ -1171,8 +1171,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $filtered_fields The existing array of filtered Custom Fields.
-	 * @param array $custom_fields The array of Custom Fields.
+	 * @param array  $filtered_fields The existing array of filtered Custom Fields.
+	 * @param array  $custom_fields The array of Custom Fields.
 	 * @param string $field_type The BuddyPress Field Type.
 	 * @return array $filtered_fields The modified array of filtered Custom Fields.
 	 */

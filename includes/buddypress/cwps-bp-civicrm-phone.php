@@ -243,7 +243,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 	 * @since 0.5
 	 *
 	 * @param object $phone The CiviCRM Phone Record object.
-	 * @param array $args The array of CiviCRM params.
+	 * @param array  $args The array of CiviCRM params.
 	 */
 	public function phone_process( $phone, $args ) {
 
@@ -540,10 +540,10 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $choices The existing array of choices for the Setting Field.
+	 * @param array  $choices The existing array of choices for the Setting Field.
 	 * @param string $field_type The BuddyPress Field Type.
 	 * @param string $entity_type The CiviCRM Entity Type.
-	 * @param array $entity_type_data The array of Entity Type data.
+	 * @param array  $entity_type_data The array of Entity Type data.
 	 * @return array $choices The modified array of choices for the Setting Field.
 	 */
 	public function query_setting_choices( $choices, $field_type, $entity_type, $entity_type_data ) {
@@ -803,7 +803,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $phone_fields The existing array of Phone Fields.
+	 * @param array  $phone_fields The existing array of Phone Fields.
 	 * @param string $field_type The BuddyPress Field Type.
 	 * @return array $phone_fields The modified array of Phone Fields.
 	 */
@@ -833,7 +833,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 	 *
 	 * @since 0.5
 	 *
-	 * @param bool $is_true_false True if "Checkbox" is a "True/False" Field. False by default.
+	 * @param bool  $is_true_false True if "Checkbox" is a "True/False" Field. False by default.
 	 * @param array $args The array of arguments.
 	 * @return bool $is_true_false True if "Checkbox" is a "True/False" Field. False by default.
 	 */

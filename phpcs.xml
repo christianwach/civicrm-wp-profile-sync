@@ -11,11 +11,8 @@
 
 	<rule ref="WordPress">
 
-		<!-- Allow slash-delimited Hooks. -->
+		<!-- Allow slash-delimited hook names. -->
 		<exclude name="WordPress.NamingConventions.ValidHookName.UseUnderscores" />
-
-		<!-- Ignore docblock formatting. -->
-		<exclude name="Squiz.Commenting.FunctionComment.SpacingAfterParamType" />
 
 		<!-- Yoda? Really? -->
 		<exclude name="WordPress.PHP.YodaConditions.NotYoda" />
@@ -27,7 +24,7 @@
 		<exclude name="WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned" />
 		<exclude name="Generic.Formatting.MultipleStatementAlignment.NotSameWarning" />
 
-		<!-- PSR4 -->
+		<!-- PSR4: Allow short file names. -->
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
 

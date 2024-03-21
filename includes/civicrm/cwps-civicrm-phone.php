@@ -252,7 +252,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 	 * @since 0.5 Moved to this class.
 	 *
 	 * @param integer $contact_id The numeric ID of the Contact.
-	 * @param string $data The Phone data to update the Contact with.
+	 * @param string  $data The Phone data to update the Contact with.
 	 * @return array|bool $phone The array of Phone Record data, or false on failure.
 	 */
 	public function update( $contact_id, $data ) {

@@ -530,8 +530,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 * @since 0.4
 	 *
 	 * @param string $search The search string to query.
-	 * @param array $args The array of search params to query.
-	 * @param array $advanced The array of "Advanced Filter" search params.
+	 * @param array  $args The array of search params to query.
+	 * @param array  $advanced The array of "Advanced Filter" search params.
 	 * @return array|bool $contact_data An array of Contact data, or false on failure.
 	 */
 	public function get_by_search_string( $search, $args = [], $advanced = [] ) {
@@ -693,7 +693,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $contact The array of CiviCRM Contact data.
+	 * @param array  $contact The array of CiviCRM Contact data.
 	 * @param string $contact_type The Contact Type.
 	 * @return integer|bool $contact_id The suggested Contact ID, or false on failure.
 	 */
@@ -732,8 +732,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $contact The array of Contact data.
-	 * @param string $contact_type The Contact Type.
+	 * @param array   $contact The array of Contact data.
+	 * @param string  $contact_type The Contact Type.
 	 * @param integer $dedupe_rule_id The Dedupe Rule ID.
 	 * @return integer|bool $contact_id The numeric Contact ID, or false on failure.
 	 */
@@ -919,7 +919,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 * @since 0.4
 	 *
 	 * @param array|obj $contact The Contact data.
-	 * @param string $create_post Create a mapped Post if missing. Either 'create' or 'skip'.
+	 * @param string    $create_post Create a mapped Post if missing. Either 'create' or 'skip'.
 	 * @return array|bool $is_mapped An array of Post Types if the Contact is mapped, false otherwise.
 	 */
 	public function is_mapped( $contact, $create_post = 'skip' ) {
@@ -1021,7 +1021,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 * @since 0.4
 	 *
 	 * @param array|obj $contact The Contact data.
-	 * @param string $post_type The WordPress Post Type.
+	 * @param string    $post_type The WordPress Post Type.
 	 * @return integer|bool $is_mapped The ID of the WordPress Post if the Contact is mapped, false otherwise.
 	 */
 	public function is_mapped_to_post( $contact, $post_type = 'any' ) {
@@ -1298,8 +1298,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 *
 	 * @since 0.4
 	 *
-	 * @param integer $contact_id The numeric ID of the Contact.
-	 * @param array $fields The ACF Field data.
+	 * @param integer        $contact_id The numeric ID of the Contact.
+	 * @param array          $fields The ACF Field data.
 	 * @param integer|string $post_id The ACF "Post ID".
 	 * @return array $contact_data The CiviCRM Contact data.
 	 */
@@ -1377,8 +1377,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 *
 	 * @since 0.4
 	 *
-	 * @param integer $contact_id The numeric ID of the Contact.
-	 * @param array $fields The ACF Field data.
+	 * @param integer        $contact_id The numeric ID of the Contact.
+	 * @param array          $fields The ACF Field data.
 	 * @param integer|string $post_id The ACF "Post ID".
 	 * @return array|bool $contact The CiviCRM Contact data, or false on failure.
 	 */
@@ -1546,7 +1546,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 * @param array $choices The existing array of choices for the Setting Field.
 	 * @param array $field The ACF Field data array.
 	 * @param array $field_group The ACF Field Group data array.
-	 * @param bool $skip_check True if the check for Field Group should be skipped. Default false.
+	 * @param bool  $skip_check True if the check for Field Group should be skipped. Default false.
 	 * @return array $choices The modified array of choices for the Setting Field.
 	 */
 	public function query_setting_choices( $choices, $field, $field_group, $skip_check = false ) {
@@ -1866,7 +1866,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 *
 	 * @since 0.4
 	 *
-	 * @param bool $mapped The existing mapping flag.
+	 * @param bool  $mapped The existing mapping flag.
 	 * @param array $field_group The array of ACF Field Group data.
 	 * @return bool $mapped True if the Field Group is mapped, or pass through if not mapped.
 	 */
@@ -1947,7 +1947,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 * @since 0.4
 	 *
 	 * @param array|bool $post_ids The existing "Post IDs".
-	 * @param array $args The array of CiviCRM Custom Fields params.
+	 * @param array      $args The array of CiviCRM Custom Fields params.
 	 * @return array|bool $post_id The mapped "Post IDs", or false if not mapped.
 	 */
 	public function query_post_id( $post_ids, $args ) {

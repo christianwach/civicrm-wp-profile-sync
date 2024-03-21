@@ -216,9 +216,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 */
 	public function validation( $form, $current_post_id, $action ) {
 
@@ -241,9 +241,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 */
 	public function make( $form, $current_post_id, $action ) {
 
@@ -730,9 +730,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 * @return array $data The array of Email data.
 	 */
 	public function form_email_data( $form, $current_post_id, $action ) {
@@ -817,9 +817,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 	 *
 	 * @since 0.5.2
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 * @return bool $valid True if the Email can be saved, false otherwise.
 	 */
 	public function form_email_validate( $form, $current_post_id, $action ) {

@@ -495,7 +495,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	 * @since 0.5.2
 	 *
 	 * @param object $website The CiviCRM Website Record object.
-	 * @param array $args The array of CiviCRM params.
+	 * @param array  $args The array of CiviCRM params.
 	 */
 	public function website_process( $website, $args ) {
 
@@ -740,10 +740,10 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	 *
 	 * @since 0.5.2
 	 *
-	 * @param array $choices The existing array of choices for the Setting Field.
+	 * @param array  $choices The existing array of choices for the Setting Field.
 	 * @param string $field_type The BuddyPress Field Type.
 	 * @param string $entity_type The CiviCRM Entity Type.
-	 * @param array $entity_type_data The array of Entity Type data.
+	 * @param array  $entity_type_data The array of Entity Type data.
 	 * @return array $choices The modified array of choices for the Setting Field.
 	 */
 	public function query_setting_choices( $choices, $field_type, $entity_type, $entity_type_data ) {

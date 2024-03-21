@@ -354,8 +354,8 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $selector The Field name or key.
-	 * @param mixed $value The value to save in the database.
+	 * @param string         $selector The Field name or key.
+	 * @param mixed          $value The value to save in the database.
 	 * @param integer|string $post_id The ACF "Post ID".
 	 */
 	public function value_update( $selector, $value, $post_id ) {
@@ -379,9 +379,9 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param bool $valid The existing valid status.
-	 * @param mixed $value The value of the Field.
-	 * @param array $field The Field data array.
+	 * @param bool   $valid The existing valid status.
+	 * @param mixed  $value The value of the Field.
+	 * @param array  $field The Field data array.
 	 * @param string $input The input element's name attribute.
 	 * @return string|bool $valid A string to display a custom error message, boolean otherwise.
 	 */
@@ -562,10 +562,10 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param mixed $value The ACF Field value.
+	 * @param mixed  $value The ACF Field value.
 	 * @param string $type The ACF Field Type.
-	 * @param array $settings The ACF Field settings.
-	 * @param array $args Any additional arguments.
+	 * @param array  $settings The ACF Field settings.
+	 * @param array  $args Any additional arguments.
 	 * @return mixed $value The Field value formatted for CiviCRM.
 	 */
 	public function value_get_for_civicrm( $value, $type, $settings, $args = [] ) {
@@ -698,7 +698,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 * @since 0.4
 	 *
 	 * @param string $value The existing Field value.
-	 * @param array $settings The ACF Field settings.
+	 * @param array  $settings The ACF Field settings.
 	 * @return string $value The modified value for CiviCRM.
 	 */
 	public function date_picker_value_get( $value, $settings ) {
@@ -719,7 +719,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 * @since 0.4
 	 *
 	 * @param string $value The existing Field value.
-	 * @param array $settings The ACF Field settings.
+	 * @param array  $settings The ACF Field settings.
 	 * @return string $value The modified value for CiviCRM.
 	 */
 	public function date_time_picker_value_get( $value, $settings ) {
@@ -740,7 +740,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 * @since 0.4
 	 *
 	 * @param string $value The existing Field value.
-	 * @param array $settings The ACF Field settings.
+	 * @param array  $settings The ACF Field settings.
 	 * @return string $value The modified value for CiviCRM.
 	 */
 	public function textarea_value_get( $value, $settings ) {

@@ -551,9 +551,9 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $field_id The numeric ID of the BuddyPress Field.
+	 * @param string  $field_id The numeric ID of the BuddyPress Field.
 	 * @param integer $user_id The numeric ID of the WordPress User.
-	 * @param mixed $value The value to save in the database.
+	 * @param mixed   $value The value to save in the database.
 	 * @return bool $result True if update is successful, false otherwise.
 	 */
 	public function value_update( $field_id, $user_id, $value ) {
@@ -582,9 +582,9 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 *
 	 * @since 0.5
 	 *
-	 * @param mixed $value The BuddyPress Field value.
+	 * @param mixed  $value The BuddyPress Field value.
 	 * @param string $field_type The BuddyPress Field type.
-	 * @param array $args Any additional arguments.
+	 * @param array  $args Any additional arguments.
 	 * @return mixed $value The value formatted for CiviCRM.
 	 */
 	public function value_get_for_civicrm( $value, $field_type, $args = [] ) {
@@ -630,7 +630,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 * @since 0.5
 	 *
 	 * @param string $value The existing Field value.
-	 * @param array $args Any additional arguments.
+	 * @param array  $args Any additional arguments.
 	 * @return string $value The modified value for CiviCRM.
 	 */
 	public function date_value_get_for_civicrm( $value, $args ) {
@@ -665,7 +665,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 * @since 0.5
 	 *
 	 * @param string $value The existing Field value.
-	 * @param array $args Any additional arguments.
+	 * @param array  $args Any additional arguments.
 	 * @return string $value The modified value for CiviCRM.
 	 */
 	public function textarea_value_get_for_civicrm( $value, $args ) {
@@ -690,7 +690,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 * @since 0.5
 	 *
 	 * @param string $value The existing Field value.
-	 * @param array $args Any additional arguments.
+	 * @param array  $args Any additional arguments.
 	 * @return string $value The modified value for CiviCRM.
 	 */
 	public function checkbox_value_get_for_civicrm( $value, $args ) {
@@ -727,11 +727,11 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $new_html Label and checkbox input Field.
-	 * @param object $value The current option being rendered for.
+	 * @param string  $new_html Label and checkbox input Field.
+	 * @param object  $value The current option being rendered for.
 	 * @param integer $id The ID of the Field object being rendered.
-	 * @param string $selected The current selected value.
-	 * @param string $k The current index in the foreach loop.
+	 * @param string  $selected The current selected value.
+	 * @param string  $k The current index in the foreach loop.
 	 */
 	public function options_checkbox( $new_html, $value, $id, $selected, $k ) {
 
@@ -760,11 +760,11 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $new_html Label and select input Field.
-	 * @param object $value The current option being rendered for.
+	 * @param string  $new_html Label and select input Field.
+	 * @param object  $value The current option being rendered for.
 	 * @param integer $id The ID of the Field object being rendered.
-	 * @param string $selected The current selected value.
-	 * @param string $k The current index in the foreach loop.
+	 * @param string  $selected The current selected value.
+	 * @param string  $k The current index in the foreach loop.
 	 */
 	public function options_select( $new_html, $value, $id, $selected, $k ) {
 
@@ -786,11 +786,11 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $new_html Label and multiselect input Field.
-	 * @param object $value The current option being rendered for.
+	 * @param string  $new_html Label and multiselect input Field.
+	 * @param object  $value The current option being rendered for.
 	 * @param integer $id The ID of the Field object being rendered.
-	 * @param string $selected The current selected value.
-	 * @param string $k The current index in the foreach loop.
+	 * @param string  $selected The current selected value.
+	 * @param string  $k The current index in the foreach loop.
 	 */
 	public function options_multiselect( $new_html, $value, $id, $selected, $k ) {
 
@@ -812,11 +812,11 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $new_html Label and radio input Field.
-	 * @param object $value The current option being rendered for.
+	 * @param string  $new_html Label and radio input Field.
+	 * @param object  $value The current option being rendered for.
 	 * @param integer $id The ID of the Field object being rendered.
-	 * @param string $selected The current selected value.
-	 * @param string $k The current index in the foreach loop.
+	 * @param string  $selected The current selected value.
+	 * @param string  $k The current index in the foreach loop.
 	 */
 	public function options_radio( $new_html, $value, $id, $selected, $k ) {
 
@@ -850,8 +850,8 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 *
 	 * @since 0.5
 	 *
-	 * @param mixed $value The value passed to xprofile_set_field_data().
-	 * @param BP_XProfile_Field $field The Field object.
+	 * @param mixed                  $value The value passed to xprofile_set_field_data().
+	 * @param BP_XProfile_Field      $field The Field object.
 	 * @param BP_XProfile_Field_Type $field_type_obj The Field Type object.
 	 * @return mixed $value The Field value.
 	 */
@@ -939,8 +939,8 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 *
 	 * @since 0.5
 	 *
-	 * @param object $children Found children for a Field.
-	 * @param bool $for_editing Whether or not the Field is for editing.
+	 * @param object            $children Found children for a Field.
+	 * @param bool              $for_editing Whether or not the Field is for editing.
 	 * @param BP_XProfile_Field $field The xProfile Field object.
 	 */
 	public function get_children( $children, $for_editing, $field ) {
@@ -1000,7 +1000,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $post_option The submitted options array. Need to check.
+	 * @param array  $post_option The submitted options array. Need to check.
 	 * @param string $field_type The type of xProfile Field.
 	 */
 	public function options_before_save( $post_option, $field_type ) {
@@ -1661,7 +1661,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 * @since 0.5
 	 *
 	 * @param object|integer $field The xProfile Field object or Field ID.
-	 * @param array $data The array of our Field metadata.
+	 * @param array          $data The array of our Field metadata.
 	 */
 	public function set_metadata_all( $field, $data ) {
 
@@ -1683,7 +1683,7 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 * @since 0.5
 	 *
 	 * @param object|integer $field The xProfile Field object or Field ID.
-	 * @param string $setting The xProfile Field setting.
+	 * @param string         $setting The xProfile Field setting.
 	 * @return mixed $value The value if the setting or false if not present.
 	 */
 	public function get_metadata( $field, $setting = 'value' ) {
@@ -1720,8 +1720,8 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 	 * @since 0.5
 	 *
 	 * @param object|integer $field The xProfile Field object or Field ID.
-	 * @param string $setting The xProfile Field setting.
-	 * @param mixed $value The value of the xProfile Field setting.
+	 * @param string         $setting The xProfile Field setting.
+	 * @param mixed          $value The value of the xProfile Field setting.
 	 */
 	public function set_metadata( $field, $setting, $value ) {
 

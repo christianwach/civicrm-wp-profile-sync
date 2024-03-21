@@ -134,9 +134,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 	 *
 	 * @since 0.5
 	 *
-	 * @param bool $valid The existing valid status.
-	 * @param mixed $value The value of the Field.
-	 * @param array $field The Field data array.
+	 * @param bool   $valid The existing valid status.
+	 * @param mixed  $value The value of the Field.
+	 * @param array  $field The Field data array.
 	 * @param string $input The input element's name attribute.
 	 * @return string|bool $valid A string to display a custom error message, boolean otherwise.
 	 */
@@ -244,9 +244,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 	 *
 	 * @since 0.5
 	 *
-	 * @param mixed $value The Participant Field value.
-	 * @param array $name The Participant Field name.
-	 * @param string $selector The ACF Field selector.
+	 * @param mixed          $value The Participant Field value.
+	 * @param array          $name The Participant Field name.
+	 * @param string         $selector The ACF Field selector.
 	 * @param integer|string $post_id The ACF "Post ID".
 	 * @return mixed $value The formatted Field value.
 	 */

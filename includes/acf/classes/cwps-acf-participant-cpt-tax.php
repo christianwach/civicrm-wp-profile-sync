@@ -903,7 +903,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 * @since 0.5
 	 *
 	 * @param string $output The existing output.
-	 * @param array $parsed_args The arguments used to build the drop-down.
+	 * @param array  $parsed_args The arguments used to build the drop-down.
 	 * @return string $output The modified output.
 	 */
 	public function terms_dropdown_clear( $output, $parsed_args ) {
@@ -927,7 +927,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $args An array of arguments.
+	 * @param array   $args An array of arguments.
 	 * @param integer $post_id The Post ID.
 	 */
 	public function term_default_checked( $args, $post_id ) {
@@ -1160,7 +1160,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 *
 	 * @since 0.5
 	 *
-	 * @param integer $term_id The numeric ID of the Term.
+	 * @param integer      $term_id The numeric ID of the Term.
 	 * @param integer|bool $active True if the Term is active, false otherwise.
 	 * @return integer|bool $meta_id The ID of the meta, or false on failure.
 	 */
@@ -1241,7 +1241,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 *
 	 * @since 0.5
 	 *
-	 * @param integer $term_id The numeric ID of the Term.
+	 * @param integer      $term_id The numeric ID of the Term.
 	 * @param integer|bool $counted True if the Term is counted, false otherwise.
 	 * @return integer|bool $meta_id The ID of the meta, or false on failure.
 	 */
@@ -1785,7 +1785,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 * @since 0.4
 	 *
 	 * @param WP_Term $tag The current taxonomy term object.
-	 * @param string $taxonomy The current taxonomy slug.
+	 * @param string  $taxonomy The current taxonomy slug.
 	 */
 	public function form_element_edit_term_add( $tag, $taxonomy ) {
 
@@ -1818,7 +1818,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	 * @since 0.4
 	 *
 	 * @param string $id The menu parent ID.
-	 * @param array $components The active CiviCRM Conponents.
+	 * @param array  $components The active CiviCRM Conponents.
 	 */
 	public function menu_item_add_to_cau( $id, $components ) {
 

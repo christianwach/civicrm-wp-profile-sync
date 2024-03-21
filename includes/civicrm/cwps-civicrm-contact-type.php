@@ -452,7 +452,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Type {
 	 * @since 0.4
 	 *
 	 * @param string|integer $contact_type The name or ID of the CiviCRM Contact Type to query.
-	 * @param string $mode The param to query by: 'name' or 'id'.
+	 * @param string         $mode The param to query by: 'name' or 'id'.
 	 * @return array|bool $contact_type_data An array of Contact Type data, or false on failure.
 	 */
 	public function get_data( $contact_type, $mode = 'name' ) {

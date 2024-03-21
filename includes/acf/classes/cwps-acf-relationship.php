@@ -288,10 +288,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $field The ACF Field data.
-	 * @param mixed $value The ACF Field value.
+	 * @param array   $field The ACF Field data.
+	 * @param mixed   $value The ACF Field value.
 	 * @param integer $contact_id The numeric ID of the Contact.
-	 * @param array $settings The ACF Field settings.
+	 * @param array   $settings The ACF Field settings.
 	 * @return bool True if updates were successful, or false on failure.
 	 */
 	public function field_handled_update( $field, $value, $contact_id, $settings ) {
@@ -331,8 +331,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	 * @since 0.4
 	 *
 	 * @param integer $contact_id The numeric ID of the Contact.
-	 * @param array $target_contact_ids The array of Contact IDs in the ACF Field.
-	 * @param string $code The code that identifies the Relationship and direction.
+	 * @param array   $target_contact_ids The array of Contact IDs in the ACF Field.
+	 * @param string  $code The code that identifies the Relationship and direction.
 	 * @return array|bool $relationships The array of Relationship data, or false on failure.
 	 */
 	public function relationships_update( $contact_id, $target_contact_ids, $code ) {
@@ -671,7 +671,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $relationship The updated Relationship.
+	 * @param array  $relationship The updated Relationship.
 	 * @param string $direction The Relationship direction.
 	 */
 	public function relationship_activate( $relationship, $direction ) {
@@ -702,7 +702,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $relationship The updated Relationship as return.
+	 * @param array  $relationship The updated Relationship as return.
 	 * @param string $direction The Relationship direction.
 	 */
 	public function relationship_deactivate( $relationship, $direction ) {
@@ -1072,9 +1072,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	 *
 	 * @since 0.4
 	 *
-	 * @param integer $contact_id The numeric ID of the Contact.
+	 * @param integer      $contact_id The numeric ID of the Contact.
 	 * @param array|object $relationship The Relationship data.
-	 * @param string $op The type of database operation.
+	 * @param string       $op The type of database operation.
 	 */
 	public function relationship_update( $contact_id, $relationship, $op ) {
 
@@ -1121,9 +1121,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	 *
 	 * @since 0.4
 	 *
-	 * @param integer $post_id The ACF "Post ID".
+	 * @param integer      $post_id The ACF "Post ID".
 	 * @param array|object $relationship The Relationship data.
-	 * @param string $op The type of database operation.
+	 * @param string       $op The type of database operation.
 	 */
 	public function fields_update( $post_id, $relationship, $op ) {
 
@@ -1619,7 +1619,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	 *
 	 * @param integer $contact_id The numeric ID of the Contact.
 	 * @param integer $type_id The numeric ID of the Relationship Type.
-	 * @param string $direction The direction of the Relationship. May be: 'ab', 'ba' or 'equal'.
+	 * @param string  $direction The direction of the Relationship. May be: 'ab', 'ba' or 'equal'.
 	 * @return array|bool $relationships The array of Relationship data.
 	 */
 	public function get_directional( $contact_id, $type_id = 0, $direction = 'ab' ) {
@@ -1908,8 +1908,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $acf_fields The existing ACF Fields array.
-	 * @param array $field The ACF Field.
+	 * @param array   $acf_fields The existing ACF Fields array.
+	 * @param array   $field The ACF Field.
 	 * @param integer $post_id The numeric ID of the WordPress Post.
 	 * @return array $acf_fields The modified ACF Fields array.
 	 */

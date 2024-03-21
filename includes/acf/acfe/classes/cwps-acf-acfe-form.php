@@ -172,7 +172,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $form The ACF Form data array.
+	 * @param array   $form The ACF Form data array.
 	 * @param integer $post_id The numeric ID of the WordPress Post.
 	 * @return array $form The modified ACF Form data array.
 	 */
@@ -353,7 +353,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 	 *
 	 * @since 0.5
 	 *
-	 * @param bool $mapped The existing mapping flag.
+	 * @param bool  $mapped The existing mapping flag.
 	 * @param array $field_group The array of ACF Field Group data.
 	 * @return bool $mapped True if the Field Group should bypass ACF, or pass through if not.
 	 */
@@ -427,7 +427,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 	 *
 	 * @since 0.5
 	 *
-	 * @param bool $supported The existing supported Location Rules status.
+	 * @param bool  $supported The existing supported Location Rules status.
 	 * @param array $rule The Location Rule.
 	 * @param array $params The query params array.
 	 * @param array $field_group The ACF Field Group data array.

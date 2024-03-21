@@ -365,7 +365,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_City extends CiviCRM_Profile_Sync
 	 * @since 0.4
 	 *
 	 * @param object $address The CiviCRM Address Record object.
-	 * @param array $args The array of CiviCRM params.
+	 * @param array  $args The array of CiviCRM params.
 	 */
 	public function address_process( $address, $args ) {
 
@@ -421,8 +421,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_City extends CiviCRM_Profile_Sync
 	 * @since 0.4
 	 *
 	 * @param integer|string $post_id The ACF "Post ID".
-	 * @param object $address The CiviCRM Address Record object.
-	 * @param array $args The array of CiviCRM params.
+	 * @param object         $address The CiviCRM Address Record object.
+	 * @param array          $args The array of CiviCRM params.
 	 */
 	public function fields_update( $post_id, $address, $args ) {
 
@@ -477,8 +477,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_City extends CiviCRM_Profile_Sync
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $acf_fields The existing ACF Fields array.
-	 * @param array $field The ACF Field.
+	 * @param array   $acf_fields The existing ACF Fields array.
+	 * @param array   $field The ACF Field.
 	 * @param integer $post_id The numeric ID of the WordPress Post.
 	 * @return array $acf_fields The modified ACF Fields array.
 	 */

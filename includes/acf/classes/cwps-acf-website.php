@@ -271,10 +271,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $field The ACF Field data.
-	 * @param mixed $value The ACF Field value.
+	 * @param array   $field The ACF Field data.
+	 * @param mixed   $value The ACF Field value.
 	 * @param integer $contact_id The numeric ID of the Contact.
-	 * @param array $settings The ACF Field settings.
+	 * @param array   $settings The ACF Field settings.
 	 * @return bool True if updates were successful, or false on failure.
 	 */
 	public function field_handled_update( $field, $value, $contact_id, $settings ) {
@@ -660,7 +660,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	 * @since 0.4
 	 *
 	 * @param integer|string $post_id The ACF "Post ID".
-	 * @param object $website The CiviCRM Website Record object.
+	 * @param object         $website The CiviCRM Website Record object.
 	 */
 	public function fields_update( $post_id, $website ) {
 
@@ -774,7 +774,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	 * @since 0.4
 	 *
 	 * @param integer $custom_field_id The existing Custom Field ID.
-	 * @param array $field The array of ACF Field data.
+	 * @param array   $field The array of ACF Field data.
 	 * @return integer $custom_field_id The modified Custom Field ID.
 	 */
 	public function custom_field_id_get( $custom_field_id, $field ) {
@@ -916,8 +916,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $acf_fields The existing ACF Fields array.
-	 * @param array $field The ACF Field.
+	 * @param array   $acf_fields The existing ACF Fields array.
+	 * @param array   $field The ACF Field.
 	 * @param integer $post_id The numeric ID of the WordPress Post.
 	 * @return array $acf_fields The modified ACF Fields array.
 	 */
@@ -948,7 +948,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	 * @param array $setting_field The existing Setting Field array.
 	 * @param array $field The ACF Field data array.
 	 * @param array $field_group The ACF Field Group data array.
-	 * @param bool $skip_check True if the check for Field Group should be skipped. Default false.
+	 * @param bool  $skip_check True if the check for Field Group should be skipped. Default false.
 	 * @return array|bool $setting_field The Setting Field array if populated, false if conflicting.
 	 */
 	public function query_settings_field( $setting_field, $field, $field_group, $skip_check = false ) {

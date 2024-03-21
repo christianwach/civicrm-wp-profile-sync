@@ -267,7 +267,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $post_type The WordPress Post Type.
+	 * @param string  $post_type The WordPress Post Type.
 	 * @param WP_Post $post The WordPress Post.
 	 */
 	public function meta_boxes_add( $post_type, $post ) {
@@ -347,7 +347,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $actions The array of actions from which the menu is rendered.
+	 * @param array   $actions The array of actions from which the menu is rendered.
 	 * @param integer $contact_id The numeric ID of the CiviCRM Contact.
 	 */
 	public function menu_item_add_to_civi_actions( &$actions, $contact_id ) {
@@ -449,7 +449,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	 * @since 0.4
 	 *
 	 * @param string $id The menu parent ID.
-	 * @param array $components The active CiviCRM Conponents.
+	 * @param array  $components The active CiviCRM Conponents.
 	 */
 	public function menu_item_add_to_cau( $id, $components ) {
 
@@ -524,7 +524,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $actions The array of row action links.
+	 * @param array   $actions The array of row action links.
 	 * @param WP_Post $post The WordPress Post object.
 	 */
 	public function menu_item_add_to_row_actions( $actions, $post ) {
@@ -663,7 +663,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	 * @since 0.4
 	 *
 	 * @param integer $contact_id The CiviCRM Contact ID.
-	 * @param string $post_type The WordPress Post Type.
+	 * @param string  $post_type The WordPress Post Type.
 	 * @return array|bool $posts An array of Post IDs, or false on failure.
 	 */
 	public function get_by_contact_id( $contact_id, $post_type = 'any' ) {
@@ -764,7 +764,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $args The array of CiviCRM Contact data.
+	 * @param array  $args The array of CiviCRM Contact data.
 	 * @param string $post_type The WordPress Post Type.
 	 */
 	public function contact_sync_to_post( $args, $post_type ) {
@@ -1055,7 +1055,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $contact The CiviCRM Contact data.
+	 * @param array  $contact The CiviCRM Contact data.
 	 * @param string $post_type The name of Post Type.
 	 * @return integer|bool $post_id The WordPress Post ID, or false on failure.
 	 */
@@ -1124,7 +1124,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $contact The CiviCRM Contact data.
+	 * @param array   $contact The CiviCRM Contact data.
 	 * @param integer $existing_id The numeric ID of the Post.
 	 * @param WP_Post $post The WordPress Post object if it exists.
 	 * @return integer|bool $post_id The WordPress Post ID, or false on failure.
@@ -1242,7 +1242,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	 * @since 0.4
 	 *
 	 * @param integer $activity_id The CiviCRM Activity ID.
-	 * @param string $post_type The WordPress Post Type.
+	 * @param string  $post_type The WordPress Post Type.
 	 * @return array|bool $posts An array of Post IDs, or false on failure.
 	 */
 	public function get_by_activity_id( $activity_id, $post_type = 'any' ) {
@@ -1327,7 +1327,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $args The array of CiviCRM Activity data.
+	 * @param array  $args The array of CiviCRM Activity data.
 	 * @param string $post_type The WordPress Post Type.
 	 */
 	public function activity_sync_to_post( $args, $post_type ) {
@@ -1531,7 +1531,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $activity The CiviCRM Activity data.
+	 * @param array  $activity The CiviCRM Activity data.
 	 * @param string $post_type The name of Post Type.
 	 * @return integer|bool $post_id The WordPress Post ID, or false on failure.
 	 */
@@ -1597,7 +1597,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $activity The CiviCRM Activity data.
+	 * @param array   $activity The CiviCRM Activity data.
 	 * @param integer $existing_id The numeric ID of the Post.
 	 * @param WP_Post $post The WordPress Post object if it exists.
 	 * @return integer|bool $post_id The WordPress Post ID, or false on failure.
@@ -1720,7 +1720,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	 * @since 0.5
 	 *
 	 * @param integer $participant_id The CiviCRM Participant ID.
-	 * @param string $post_type The WordPress Post Type.
+	 * @param string  $post_type The WordPress Post Type.
 	 * @return array|bool $posts An array of Post IDs, or false on failure.
 	 */
 	public function get_by_participant_id( $participant_id, $post_type = 'any' ) {
@@ -1807,7 +1807,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $args The array of CiviCRM Participant data.
+	 * @param array  $args The array of CiviCRM Participant data.
 	 * @param string $post_type The WordPress Post Type.
 	 */
 	public function participant_sync_to_post( $args, $post_type ) {
@@ -2134,7 +2134,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $participant The CiviCRM Participant data.
+	 * @param array  $participant The CiviCRM Participant data.
 	 * @param string $post_type The name of Post Type.
 	 * @return integer|bool $post_id The WordPress Post ID, or false on failure.
 	 */
@@ -2224,7 +2224,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $participant The CiviCRM Participant data.
+	 * @param array   $participant The CiviCRM Participant data.
 	 * @param integer $existing_id The numeric ID of the Post.
 	 * @param WP_Post $post The WordPress Post object if it exists.
 	 * @return integer|bool $post_id The WordPress Post ID, or false on failure.
@@ -2367,9 +2367,9 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	 *
 	 * @since 0.4
 	 *
-	 * @param bool $contact_id False, since we're asking for a Contact ID.
+	 * @param bool           $contact_id False, since we're asking for a Contact ID.
 	 * @param integer|string $post_id The ACF "Post ID".
-	 * @param string $entity The kind of WordPress Entity.
+	 * @param string         $entity The kind of WordPress Entity.
 	 * @return integer|bool $contact_id The mapped Contact ID, or false if not mapped.
 	 */
 	public function query_contact_id( $contact_id, $post_id, $entity ) {

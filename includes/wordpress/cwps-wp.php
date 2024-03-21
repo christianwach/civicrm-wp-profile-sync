@@ -187,7 +187,7 @@ class CiviCRM_WP_Profile_Sync_WordPress {
 	 * @since 0.5
 	 *
 	 * @param string $text The string to match paragraphs tags in.
-	 * @param bool $br (Optional) Whether to process line breaks.
+	 * @param bool   $br (Optional) Whether to process line breaks.
 	 * @return string
 	 */
 	public function unautop( $text, $br = true ) {

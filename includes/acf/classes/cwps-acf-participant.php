@@ -569,7 +569,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 	 * @since 0.5
 	 *
 	 * @param array|obj $participant The Participant data.
-	 * @param string $create_post Create a mapped Post if missing. Either 'create' or 'skip'.
+	 * @param string    $create_post Create a mapped Post if missing. Either 'create' or 'skip'.
 	 * @return string|bool $is_mapped The Post Type if the Participant is mapped, false otherwise.
 	 */
 	public function is_mapped( $participant, $create_post = 'skip' ) {
@@ -671,7 +671,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 	 * @since 0.5
 	 *
 	 * @param array|obj $participant The Participant data.
-	 * @param string $post_type The WordPress Post Type.
+	 * @param string    $post_type The WordPress Post Type.
 	 * @return integer|bool $is_mapped The ID of the WordPress Post if the Participant is mapped, false otherwise.
 	 */
 	public function is_mapped_to_post( $participant, $post_type = 'any' ) {
@@ -937,7 +937,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 	 * @since 0.5
 	 *
 	 * @param integer $participant_id The numeric ID of the Participant.
-	 * @param array $fields The ACF Field data.
+	 * @param array   $fields The ACF Field data.
 	 * @param WP_Post $post The WordPress Post object.
 	 * @param integer $post_id The numeric ID of the WordPress Post.
 	 * @return array|bool $participant_data The CiviCRM Participant data.
@@ -1052,9 +1052,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $selector The ACF Field selector.
-	 * @param array $value The ACF Field values.
-	 * @param array $settings The ACF Field settings.
+	 * @param string  $selector The ACF Field selector.
+	 * @param array   $value The ACF Field values.
+	 * @param array   $settings The ACF Field settings.
 	 * @param integer $post_id The numeric ID of the WordPress Post.
 	 * @return array|bool $contact The CiviCRM Contact data, or false on failure.
 	 */
@@ -1101,7 +1101,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $fields The ACF Field data.
+	 * @param array   $fields The ACF Field data.
 	 * @param WP_Post $post The WordPress Post object.
 	 * @param integer $post_id The numeric ID of the WordPress Post.
 	 * @return array|bool $participant The CiviCRM Participant data, or false on failure.
@@ -1125,7 +1125,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 	 * @since 0.5
 	 *
 	 * @param integer $participant_id The numeric ID of the Participant.
-	 * @param array $fields The ACF Field data.
+	 * @param array   $fields The ACF Field data.
 	 * @param WP_Post $post The WordPress Post object.
 	 * @param integer $post_id The numeric ID of the WordPress Post.
 	 * @return array|bool $participant The CiviCRM Participant data, or false on failure.
@@ -1257,7 +1257,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 	 * @param array $choices The existing array of choices for the Setting Field.
 	 * @param array $field The ACF Field data array.
 	 * @param array $field_group The ACF Field Group data array.
-	 * @param bool $skip_check True if the check for Field Group should be skipped. Default false.
+	 * @param bool  $skip_check True if the check for Field Group should be skipped. Default false.
 	 * @return array $choices The modified array of choices for the Setting Field.
 	 */
 	public function query_setting_choices( $choices, $field, $field_group, $skip_check = false ) {
@@ -1484,7 +1484,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 	 *
 	 * @since 0.5
 	 *
-	 * @param bool $mapped The existing mapping flag.
+	 * @param bool  $mapped The existing mapping flag.
 	 * @param array $field_group The array of ACF Field Group data.
 	 * @return bool $mapped True if the Field Group is mapped, or pass through if not mapped.
 	 */
@@ -1545,7 +1545,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 	 * @since 0.5
 	 *
 	 * @param array|bool $post_ids The existing "Post IDs".
-	 * @param array $args The array of CiviCRM Custom Fields params.
+	 * @param array      $args The array of CiviCRM Custom Fields params.
 	 * @return array|bool $post_id The mapped "Post IDs", or false if not mapped.
 	 */
 	public function query_post_id( $post_ids, $args ) {
@@ -1751,7 +1751,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $actions The array of row action links.
+	 * @param array   $actions The array of row action links.
 	 * @param WP_Post $post The WordPress Post object.
 	 */
 	public function menu_item_add_to_row_actions( $actions, $post ) {
@@ -1813,7 +1813,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 	 * @since 0.5
 	 *
 	 * @param string $id The menu parent ID.
-	 * @param array $components The active CiviCRM Conponents.
+	 * @param array  $components The active CiviCRM Conponents.
 	 */
 	public function menu_item_add_to_cau( $id, $components ) {
 

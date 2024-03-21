@@ -420,9 +420,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 */
 	public function validation( $form, $current_post_id, $action ) {
 
@@ -445,9 +445,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 */
 	public function make( $form, $current_post_id, $action ) {
 
@@ -1491,9 +1491,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 * @return array $data The array of Participant data.
 	 */
 	public function form_participant_data( $form, $current_post_id, $action ) {
@@ -1649,9 +1649,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 	 *
 	 * @since 0.5.2
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 * @return bool $valid True if the Participant can be saved, false otherwise.
 	 */
 	public function form_participant_validate( $form, $current_post_id, $action ) {
@@ -1976,9 +1976,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
+	 * @param string  $action The customised name of the action.
 	 * @return array $data The array of Custom Fields data.
 	 */
 	public function form_custom_data( $form, $current_post_id, $action ) {
@@ -2086,10 +2086,10 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 	 *
 	 * @since 0.5.2
 	 *
-	 * @param array $form The array of Form data.
+	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-	 * @param string $action The customised name of the action.
-	 * @param array $participant The array of Participant data.
+	 * @param string  $action The customised name of the action.
+	 * @param array   $participant The array of Participant data.
 	 * @return array $data The array of Custom Fields data.
 	 */
 	public function form_custom_post_process( $form, $current_post_id, $action, $participant ) {

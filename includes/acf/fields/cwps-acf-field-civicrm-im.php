@@ -287,9 +287,9 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Instant_Messenger extends acf_field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param mixed $value The value found in the database.
+	 * @param mixed   $value The value found in the database.
 	 * @param integer $post_id The Post ID from which the value was loaded.
-	 * @param array $field The Field array holding all the Field options.
+	 * @param array   $field The Field array holding all the Field options.
 	 * @return mixed $value The modified value.
 	 */
 	public function load_value( $value, $post_id, $field ) {
@@ -314,9 +314,9 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Instant_Messenger extends acf_field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param mixed $value The value found in the database.
+	 * @param mixed   $value The value found in the database.
 	 * @param integer $post_id The Post ID from which the value was loaded.
-	 * @param array $field The Field array holding all the Field options.
+	 * @param array   $field The Field array holding all the Field options.
 	 * @return mixed $value The modified value.
 	 */
 	public function update_value( $value, $post_id, $field ) {
@@ -340,9 +340,9 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Instant_Messenger extends acf_field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param bool $valid The validation status based on the value and the Field's required setting.
-	 * @param mixed $value The $_POST value.
-	 * @param array $field The Field array holding all the Field options.
+	 * @param bool   $valid The validation status based on the value and the Field's required setting.
+	 * @param mixed  $value The $_POST value.
+	 * @param array  $field The Field array holding all the Field options.
 	 * @param string $input The corresponding input name for $_POST value.
 	 * @return string|bool $valid False if not valid, or string for error message.
 	 */

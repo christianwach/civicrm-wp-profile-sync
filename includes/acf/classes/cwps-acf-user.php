@@ -1101,9 +1101,9 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 *
 	 * @since 0.4
 	 *
-	 * @param integer $contact_id The numeric ID of the Contact.
+	 * @param integer      $contact_id The numeric ID of the Contact.
 	 * @param array|object $relationship The Relationship data.
-	 * @param string $op The type of database operation.
+	 * @param string       $op The type of database operation.
 	 */
 	public function relationship_update( $contact_id, $relationship, $op ) {
 
@@ -1837,7 +1837,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 *
 	 * @since 0.4
 	 *
-	 * @param bool $mapped The existing mapping flag.
+	 * @param bool  $mapped The existing mapping flag.
 	 * @param array $field_group The array of ACF Field Group data.
 	 * @return bool $mapped True if the Field Group is mapped, or pass through if not mapped.
 	 */
@@ -1867,7 +1867,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 * @param array $choices The existing array of choices for the Setting Field.
 	 * @param array $field The ACF Field data array.
 	 * @param array $field_group The ACF Field Group data array.
-	 * @param bool $skip_check True if the check for Field Group should be skipped. Default false.
+	 * @param bool  $skip_check True if the check for Field Group should be skipped. Default false.
 	 * @return array $choices The modified array of choices for the Setting Field.
 	 */
 	public function query_setting_choices( $choices, $field, $field_group, $skip_check = false ) {
@@ -2245,7 +2245,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 * @since 0.4
 	 *
 	 * @param array|bool $post_ids The existing "Post IDs".
-	 * @param array $args The array of CiviCRM Custom Fields params.
+	 * @param array      $args The array of CiviCRM Custom Fields params.
 	 * @return array|bool $post_id The mapped User ID in ACF "user_N" format, or false if not mapped.
 	 */
 	public function query_post_id( $post_ids, $args ) {
@@ -2332,9 +2332,9 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 *
 	 * @since 0.4
 	 *
-	 * @param bool $contact_id False, since we're asking for a Contact ID.
+	 * @param bool           $contact_id False, since we're asking for a Contact ID.
 	 * @param integer|string $post_id The ACF "Post ID".
-	 * @param string $entity The kind of WordPress Entity.
+	 * @param string         $entity The kind of WordPress Entity.
 	 * @return integer|bool $contact_id The mapped Contact ID, or false if not mapped.
 	 */
 	public function query_contact_id( $contact_id, $post_id, $entity ) {
@@ -2362,7 +2362,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 *
 	 * @since 0.5
 	 *
-	 * @param bool $supported The existing supported Location Rules status.
+	 * @param bool  $supported The existing supported Location Rules status.
 	 * @param array $rule The Location Rule.
 	 * @param array $params The query params array.
 	 * @param array $field_group The ACF Field Group data array.
@@ -2404,7 +2404,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $contact_data The existing CiviCRM Contact data.
+	 * @param array   $contact_data The existing CiviCRM Contact data.
 	 * @param WP_Post $post The WordPress Post.
 	 * @return array $contact_data The modified CiviCRM Contact data.
 	 */

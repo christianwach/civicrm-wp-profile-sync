@@ -254,7 +254,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Existing_New extends CiviCRM_Prof
 	 * @since 0.5
 	 *
 	 * @param integer|string $post_id The ACF "Post ID".
-	 * @param array $args The array of CiviCRM params.
+	 * @param array          $args The array of CiviCRM params.
 	 */
 	public function fields_update( $post_id, $args ) {
 
@@ -280,8 +280,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Existing_New extends CiviCRM_Prof
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $acf_fields The existing ACF Fields array.
-	 * @param array $field The ACF Field.
+	 * @param array   $acf_fields The existing ACF Fields array.
+	 * @param array   $field The ACF Field.
 	 * @param integer $post_id The numeric ID of the WordPress Post.
 	 * @return array $acf_fields The modified ACF Fields array.
 	 */

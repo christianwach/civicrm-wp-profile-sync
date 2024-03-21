@@ -609,7 +609,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 * @since 0.5
 	 *
 	 * @param integer $participant_id The numeric ID of the Participant.
-	 * @param array $fields The ACF Field data.
+	 * @param array   $fields The ACF Field data.
 	 * @param WP_Post $post The WordPress Post object.
 	 * @param integer $post_id The numeric ID of the WordPress Post.
 	 * @return array|bool $participant_data The CiviCRM Participant data.
@@ -733,7 +733,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $fields The ACF Field data.
+	 * @param array   $fields The ACF Field data.
 	 * @param WP_Post $post The WordPress Post object.
 	 * @param integer $post_id The numeric ID of the WordPress Post.
 	 * @return array|bool $participant The CiviCRM Participant data, or false on failure.
@@ -757,7 +757,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 * @since 0.5
 	 *
 	 * @param integer $participant_id The numeric ID of the Participant.
-	 * @param array $fields The ACF Field data.
+	 * @param array   $fields The ACF Field data.
 	 * @param WP_Post $post The WordPress Post object.
 	 * @param integer $post_id The numeric ID of the WordPress Post.
 	 * @return array|bool $participant The CiviCRM Participant data, or false on failure.
@@ -1032,7 +1032,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 *
 	 * @since 0.5
 	 *
-	 * @param bool $mapped The existing mapping flag.
+	 * @param bool  $mapped The existing mapping flag.
 	 * @param array $field_group The array of ACF Field Group data.
 	 * @return bool $mapped True if the Field Group is mapped, or pass through if not mapped.
 	 */
@@ -1093,7 +1093,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 * @since 0.5
 	 *
 	 * @param array|bool $post_ids The existing "Post IDs".
-	 * @param array $args The array of CiviCRM Custom Fields params.
+	 * @param array      $args The array of CiviCRM Custom Fields params.
 	 * @return array|bool $post_id The mapped "Post IDs", or false if not mapped.
 	 */
 	public function query_post_id( $post_ids, $args ) {
@@ -1205,7 +1205,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 * @since 0.5
 	 *
 	 * @param array|bool $is_participant_field_group The array of Post Types, false otherwise.
-	 * @param array $field_group The ACF Field Group data array.
+	 * @param array      $field_group The ACF Field Group data array.
 	 * @return array|bool The array of Post Types if the Field Group has been mapped, or false otherwise.
 	 */
 	public function is_field_group( $is_participant_field_group, $field_group ) {
@@ -1289,7 +1289,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $actions The array of row action links.
+	 * @param array   $actions The array of row action links.
 	 * @param WP_Post $post The WordPress Post object.
 	 */
 	public function menu_item_add_to_row_actions( $actions, $post ) {
@@ -1357,7 +1357,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 * @since 0.5
 	 *
 	 * @param string $id The menu parent ID.
-	 * @param array $components The active CiviCRM Conponents.
+	 * @param array  $components The active CiviCRM Conponents.
 	 */
 	public function menu_item_add_to_cau( $id, $components ) {
 
@@ -1753,7 +1753,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $args The existing arguments.
+	 * @param array   $args The existing arguments.
 	 * @param integer $post_id The WordPress post ID.
 	 */
 	public function taxonomy_fix_metabox( $args, $post_id ) {

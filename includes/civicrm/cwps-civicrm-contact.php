@@ -256,10 +256,10 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 	 *
 	 * @since 0.1
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function contact_pre( $op, $objectName, $objectId, $objectRef ) {
 
@@ -420,7 +420,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 	 *
 	 * @since 0.3
 	 *
-	 * @param object $contact The CiviCRM Contact object.
+	 * @param object  $contact The CiviCRM Contact object.
 	 * @param integer $user_id The numeric ID of the WordPress User.
 	 * @return bool $should_be_synced Whether or not the Contact should be synced.
 	 */

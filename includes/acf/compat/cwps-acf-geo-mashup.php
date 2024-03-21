@@ -477,9 +477,9 @@ class CiviCRM_WP_Profile_Sync_ACF_Geo_Mashup {
 	 *
 	 * @since 0.5.8
 	 *
-	 * @param mixed $value The value being saved to the database.
+	 * @param mixed   $value The value being saved to the database.
 	 * @param integer $post_id The Post ID from which the value was loaded.
-	 * @param array $field The Field array holding all the Field options.
+	 * @param array   $field The Field array holding all the Field options.
 	 * @return mixed $value The modified value.
 	 */
 	public function field_modified( $value, $post_id, $field ) {
@@ -786,8 +786,8 @@ class CiviCRM_WP_Profile_Sync_ACF_Geo_Mashup {
 	 *
 	 * @since 0.5.8
 	 *
-	 * @param int $contact_type_id The updated Contact Type ID.
-	 * @param str $post_type The updated Post Type name.
+	 * @param int   $contact_type_id The updated Contact Type ID.
+	 * @param str   $post_type The updated Post Type name.
 	 * @param array $values The form values.
 	 */
 	public function mapping_edited( $contact_type_id, $post_type, $values ) {

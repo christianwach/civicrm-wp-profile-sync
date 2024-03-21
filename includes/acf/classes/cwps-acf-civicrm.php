@@ -824,10 +824,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function trace_pre( $op, $objectName, $objectId, $objectRef ) {
 
@@ -850,10 +850,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $op The type of database operation.
-	 * @param string $objectName The type of object.
+	 * @param string  $op The type of database operation.
+	 * @param string  $objectName The type of object.
 	 * @param integer $objectId The ID of the object.
-	 * @param object $objectRef The object.
+	 * @param object  $objectRef The object.
 	 */
 	public function trace_post( $op, $objectName, $objectId, $objectRef ) {
 

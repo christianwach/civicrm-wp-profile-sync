@@ -139,8 +139,8 @@ class CiviCRM_WP_Profile_Sync_Admin_Multisite {
 	 *
 	 * @since 0.4
 	 *
-	 * @param bool $show_notice The existing value. False by default.
-	 * @param bool $is_settings_screen True if on our Settings Page, or false otherwise.
+	 * @param bool   $show_notice The existing value. False by default.
+	 * @param bool   $is_settings_screen True if on our Settings Page, or false otherwise.
 	 * @param string $screen_id The ID of the current screen.
 	 * @return bool $show_notice True if the Admin Notice should be shown, false otherwise.
 	 */

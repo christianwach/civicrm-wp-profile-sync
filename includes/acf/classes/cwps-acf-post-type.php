@@ -521,7 +521,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 	 *
 	 * @since 0.5
 	 *
-	 * @param bool $supported The existing supported Location Rules status.
+	 * @param bool  $supported The existing supported Location Rules status.
 	 * @param array $rule The Location Rule.
 	 * @param array $params The query params array.
 	 * @param array $field_group The ACF Field Group data array.

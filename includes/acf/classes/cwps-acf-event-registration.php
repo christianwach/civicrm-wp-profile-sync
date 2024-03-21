@@ -285,9 +285,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param bool $valid The existing valid status.
-	 * @param mixed $value The value of the Field.
-	 * @param array $field The Field data array.
+	 * @param bool   $valid The existing valid status.
+	 * @param mixed  $value The value of the Field.
+	 * @param array  $field The Field data array.
 	 * @param string $input The input element's name attribute.
 	 * @return string|bool $valid A string to display a custom error message, boolean otherwise.
 	 */
@@ -328,9 +328,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param mixed $value The Field value.
-	 * @param array $name The Field name.
-	 * @param string $selector The ACF Field selector.
+	 * @param mixed          $value The Field value.
+	 * @param array          $name The Field name.
+	 * @param string         $selector The ACF Field selector.
 	 * @param integer|string $post_id The ACF "Post ID".
 	 * @return mixed $value The formatted Field value.
 	 */
@@ -1159,7 +1159,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param array $event The array of CiviCRM Event data.
+	 * @param array  $event The array of CiviCRM Event data.
 	 * @param string $position The position of the Profile. Pass "top", "bottom" or "any". Default "any".
 	 * @return array|bool $profile The CiviCRM UFJoin data, or false otherwise.
 	 */
@@ -1217,8 +1217,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 	 *
 	 * @since 0.5.4
 	 *
-	 * @param array $event The array of CiviCRM Event data.
-	 * @param int $profile_id The numeric ID of the CiviCRM Profile.
+	 * @param array  $event The array of CiviCRM Event data.
+	 * @param int    $profile_id The numeric ID of the CiviCRM Profile.
 	 * @param string $position The position of the Profile. Pass "top" or "bottom". Default "top".
 	 * @return array|bool $profile CiviCRM Profiles array, or false on failure.
 	 */

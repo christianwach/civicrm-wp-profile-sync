@@ -275,11 +275,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $field The ACF Field selector.
-	 * @param mixed $value The ACF Field value.
+	 * @param string  $field The ACF Field selector.
+	 * @param mixed   $value The ACF Field value.
 	 * @param integer $contact_id The numeric ID of the Contact.
-	 * @param array $settings The ACF Field settings.
-	 * @param array $args The array of WordPress params.
+	 * @param array   $settings The ACF Field settings.
+	 * @param array   $args The array of WordPress params.
 	 * @return bool True if updates were successful, or false on failure.
 	 */
 	public function field_handled_update( $field, $value, $contact_id, $settings, $args ) {
@@ -332,11 +332,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $field The ACF Field selector.
-	 * @param mixed $value The ACF Field value.
+	 * @param string  $field The ACF Field selector.
+	 * @param mixed   $value The ACF Field value.
 	 * @param integer $contact_id The numeric ID of the Contact.
-	 * @param array $settings The ACF Field settings.
-	 * @param array $args The array of WordPress params.
+	 * @param array   $settings The ACF Field settings.
+	 * @param array   $args The array of WordPress params.
 	 * @return bool True if updates were successful, or false on failure.
 	 */
 	public function address_update( $field, $value, $contact_id, $settings, $args ) {
@@ -882,7 +882,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 * @since 0.4
 	 *
 	 * @param array|object $address The current Address data.
-	 * @param object $previous The previous CiviCRM Address data.
+	 * @param object       $previous The previous CiviCRM Address data.
 	 */
 	public function address_fields_update( $address, $previous = null ) {
 
@@ -941,8 +941,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 * @since 0.4
 	 *
 	 * @param integer|string $post_id The ACF "Post ID".
-	 * @param object $address The current CiviCRM Address data.
-	 * @param object $previous The previous CiviCRM Address data.
+	 * @param object         $address The current CiviCRM Address data.
+	 * @param object         $previous The previous CiviCRM Address data.
 	 */
 	public function fields_update( $post_id, $address, $previous = null ) {
 
@@ -971,10 +971,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 *
 	 * @since 0.4
 	 *
-	 * @param object $address The Address data.
-	 * @param string $selector The ACF Field selector.
+	 * @param object  $address The Address data.
+	 * @param string  $selector The ACF Field selector.
 	 * @param integer $post_id The ACF "Post ID".
-	 * @param string $action The kind of action to perform on the ACF Field - 'update' or 'clear'.
+	 * @param string  $action The kind of action to perform on the ACF Field - 'update' or 'clear'.
 	 */
 	public function field_update( $address, $selector, $post_id, $action = '' ) {
 
@@ -1013,7 +1013,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 * @since 0.4
 	 *
 	 * @param array|object $address The CiviCRM Address data.
-	 * @param string $action The kind of action to perform on the ACF Field.
+	 * @param string       $action The kind of action to perform on the ACF Field.
 	 * @return array $field_data The Address data prepared for an ACF Google Map Field.
 	 */
 	public function field_map_prepare( $address, $action = '' ) {
@@ -1123,7 +1123,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $acf_fields The array of ACF Fields in the Post.
+	 * @param array  $acf_fields The array of ACF Fields in the Post.
 	 * @param object $address The current CiviCRM Address data.
 	 * @param object $previous The previous CiviCRM Address data.
 	 * @return array $fields_to_update The array of ACF Fields to update.
@@ -1303,7 +1303,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 *
 	 * @param array $custom_fields The Custom Fields to populate the ACF Field with.
 	 * @param array $location_types The Location Types to populate the ACF Field with.
-	 * @param bool $skip_specific True skips adding the  "Primary Address" and "Billing Address" choices.
+	 * @param bool  $skip_specific True skips adding the  "Primary Address" and "Billing Address" choices.
 	 * @return array $field The ACF Field data array.
 	 */
 	public function acf_field_get( $custom_fields = [], $location_types = [], $skip_specific = false ) {
@@ -1437,8 +1437,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $acf_fields The existing ACF Fields array.
-	 * @param array $field The ACF Field.
+	 * @param array   $acf_fields The existing ACF Fields array.
+	 * @param array   $field The ACF Field.
 	 * @param integer $post_id The numeric ID of the WordPress Post.
 	 * @return array $acf_fields The modified ACF Fields array.
 	 */
@@ -1473,7 +1473,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 * @param array $setting_field The existing Setting Field array.
 	 * @param array $field The ACF Field data array.
 	 * @param array $field_group The ACF Field Group data array.
-	 * @param bool $skip_check True if the check for Field Group should be skipped. Default false.
+	 * @param bool  $skip_check True if the check for Field Group should be skipped. Default false.
 	 * @return array|bool $setting_field The Setting Field array if populated, false if conflicting.
 	 */
 	public function query_settings_field( $setting_field, $field, $field_group, $skip_check = false ) {
@@ -1548,9 +1548,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 	 *
 	 * @since 0.4
 	 *
-	 * @param mixed $value The existing value.
+	 * @param mixed   $value The existing value.
 	 * @param integer $post_id The Post ID from which the value was loaded.
-	 * @param array $field The Field array holding all the Field options.
+	 * @param array   $field The Field array holding all the Field options.
 	 * @return mixed $value The modified value.
 	 */
 	public function google_map_value_modify( $value, $post_id, $field ) {

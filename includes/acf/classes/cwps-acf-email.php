@@ -253,10 +253,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $field The ACF Field data.
-	 * @param mixed $value The ACF Field value.
+	 * @param array   $field The ACF Field data.
+	 * @param mixed   $value The ACF Field value.
 	 * @param integer $contact_id The numeric ID of the Contact.
-	 * @param array $settings The ACF Field settings.
+	 * @param array   $settings The ACF Field settings.
 	 * @return bool True if updates were successful, or false on failure.
 	 */
 	public function field_handled_update( $field, $value, $contact_id, $settings ) {
@@ -446,7 +446,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 * @since 0.4
 	 *
 	 * @param integer $contact_id The numeric ID of the Contact.
-	 * @param string $value The email to update the Contact with.
+	 * @param string  $value The email to update the Contact with.
 	 * @return array|bool $email The array of Email data, or false on failure.
 	 */
 	public function primary_email_update( $contact_id, $value ) {
@@ -820,7 +820,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 *
 	 * @param integer $location_type_id The numeric ID of the Location Type.
 	 * @param integer $contact_id The numeric ID of the Contact.
-	 * @param string $value The Email to update the Contact with.
+	 * @param string  $value The Email to update the Contact with.
 	 * @return array|bool $email The array of Email data, or false on failure.
 	 */
 	public function email_update( $location_type_id, $contact_id, $value ) {
@@ -937,7 +937,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 * @since 0.5
 	 *
 	 * @param integer $contact_id The numeric ID of the Contact.
-	 * @param array $data The Email data to save.
+	 * @param array   $data The Email data to save.
 	 * @return array|bool $email The array of Email data, or false on failure.
 	 */
 	public function email_record_update( $contact_id, $data ) {
@@ -1094,7 +1094,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 * @since 0.4
 	 *
 	 * @param integer|string $post_id The ACF "Post ID".
-	 * @param object $email The CiviCRM email object.
+	 * @param object         $email The CiviCRM email object.
 	 */
 	public function fields_update( $post_id, $email ) {
 
@@ -1273,7 +1273,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 *
 	 * @param array $custom_fields The Custom Fields to populate the ACF Field with.
 	 * @param array $location_types The Location Types to populate the ACF Field with.
-	 * @param bool $skip_specific True skips adding the "Primary Email" choice.
+	 * @param bool  $skip_specific True skips adding the "Primary Email" choice.
 	 * @return array $field The ACF Field data array.
 	 */
 	public function acf_field_get( $custom_fields = [], $location_types = [], $skip_specific = false ) {
@@ -1340,8 +1340,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 *
 	 * @since 0.4
 	 *
-	 * @param array $acf_fields The existing ACF Fields array.
-	 * @param array $field The ACF Field.
+	 * @param array          $acf_fields The existing ACF Fields array.
+	 * @param array          $field The ACF Field.
 	 * @param integer|string $post_id The ACF "Post ID".
 	 * @return array $acf_fields The modified ACF Fields array.
 	 */
@@ -1378,7 +1378,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 * @param array $setting_field The existing Setting Field array.
 	 * @param array $field The ACF Field data array.
 	 * @param array $field_group The ACF Field Group data array.
-	 * @param bool $skip_check True if the check for Field Group should be skipped. Default false.
+	 * @param bool  $skip_check True if the check for Field Group should be skipped. Default false.
 	 * @return array|bool $setting_field The Setting Field array if populated, false if conflicting.
 	 */
 	public function query_settings_field( $setting_field, $field, $field_group, $skip_check = false ) {

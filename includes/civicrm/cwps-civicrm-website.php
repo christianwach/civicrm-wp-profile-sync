@@ -452,7 +452,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 	 *
 	 * @param integer $website_type_id The numeric ID of the Website Type.
 	 * @param integer $contact_id The numeric ID of the Contact.
-	 * @param string $value The Website URL to update the Contact with.
+	 * @param string  $value The Website URL to update the Contact with.
 	 * @return array|bool $website The array of Website data, or false on failure.
 	 */
 	public function update_for_contact( $website_type_id, $contact_id, $value ) {
@@ -719,7 +719,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 	 * @since 0.4
 	 *
 	 * @param object|array|integer $contact The CiviCRM Contact reference.
-	 * @param integer $website_type_id The numeric ID of the Website Type.
+	 * @param integer              $website_type_id The numeric ID of the Website Type.
 	 * @return object|bool $website The CiviCRM Website data, or false on failure.
 	 */
 	public function get_by_type( $contact, $website_type_id ) {

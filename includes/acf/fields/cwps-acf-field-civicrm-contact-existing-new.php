@@ -658,9 +658,9 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 	 *
 	 * @since 0.5
 	 *
-	 * @param bool $valid The validation status.
-	 * @param mixed $value The $_POST value.
-	 * @param array $field The Field array holding all the Field options.
+	 * @param bool   $valid The validation status.
+	 * @param mixed  $value The $_POST value.
+	 * @param array  $field The Field array holding all the Field options.
 	 * @param string $input The corresponding input name for $_POST value.
 	 * @return string|bool $valid False if not valid, or string for error message.
 	 */

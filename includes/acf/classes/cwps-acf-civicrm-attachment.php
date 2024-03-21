@@ -888,7 +888,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 *
 	 * @since 0.5.2
 	 *
-	 * @param string $selector The ACF Field selector.
+	 * @param string  $selector The ACF Field selector.
 	 * @param integer $post_id The numeric ID of the WordPress Post.
 	 * @return array|bool $file_field The data for the ACF Field, or false if not found.
 	 */
@@ -1072,8 +1072,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 *
 	 * @since 0.5.2
 	 *
-	 * @param array $response The array of loaded Attachment data.
-	 * @param WP_Post $attachment The Attachment object.
+	 * @param array       $response The array of loaded Attachment data.
+	 * @param WP_Post     $attachment The Attachment object.
 	 * @param array|false $meta The array of Attachment metadata, or false if there is none.
 	 * @return mixed $response The modified array of Attachment data.
 	 */
@@ -1103,8 +1103,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 * @since 0.5.2
 	 *
 	 * @param integer|null $value The Field value (the Attachment data).
-	 * @param array $settings The ACF Field settings.
-	 * @param array $args Any additional arguments.
+	 * @param array        $settings The ACF Field settings.
+	 * @param array        $args Any additional arguments.
 	 * @return array|string $value Array containing the path and mime type of the file, or empty string on failure.
 	 */
 	public function value_get_for_civicrm( $value, $settings, $args ) {
@@ -1240,10 +1240,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 *
 	 * @since 0.5.2
 	 *
-	 * @param mixed $value The Custom Field value - either the filename or the File ID.
-	 * @param array $field The Custom Field data.
+	 * @param mixed  $value The Custom Field value - either the filename or the File ID.
+	 * @param array  $field The Custom Field data.
 	 * @param string $selector The ACF Field selector.
-	 * @param mixed $post_id The ACF "Post ID".
+	 * @param mixed  $post_id The ACF "Post ID".
 	 * @return mixed $value The formatted Field value.
 	 */
 	public function value_get_for_acf( $value, $field, $selector, $post_id ) {
@@ -1487,8 +1487,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 * @since 0.5.2
 	 *
 	 * @param integer $file_id The numeric ID of the CiviCRM Attachment.
-	 * @param array $settings The ACF Field settings.
-	 * @param array $args Any additional arguments.
+	 * @param array   $settings The ACF Field settings.
+	 * @param array   $args Any additional arguments.
 	 */
 	public function fields_clear( $file_id, $settings, $args ) {
 
@@ -2090,7 +2090,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 * @since 0.5.2
 	 *
 	 * @param integer $attachment_id The numeric ID of the WordPress Attachment.
-	 * @param array $metadata The CiviCRM Attachment data.
+	 * @param array   $metadata The CiviCRM Attachment data.
 	 */
 	public function metadata_set( $attachment_id, $metadata ) {
 

@@ -1064,7 +1064,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 * @since 0.4
 	 *
 	 * @param string $setting_name The name of the setting.
-	 * @param mixed $default The default value if the setting does not exist.
+	 * @param mixed  $default The default value if the setting does not exist.
 	 * @return mixed The setting or the default.
 	 */
 	public function setting_get( $setting_name = '', $default = false ) {
@@ -1080,7 +1080,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 * @since 0.4
 	 *
 	 * @param string $setting_name The name of the setting.
-	 * @param mixed $value The value of the setting.
+	 * @param mixed  $value The value of the setting.
 	 */
 	public function setting_set( $setting_name = '', $value = '' ) {
 
@@ -1149,7 +1149,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 	 * @since 0.4
 	 *
 	 * @param string $option_name The name of the option.
-	 * @param mixed $value The value to set the option to.
+	 * @param mixed  $value The value to set the option to.
 	 * @return bool $success True if the value of the option was successfully updated.
 	 */
 	public function option_set( $option_name = '', $value = '' ) {
