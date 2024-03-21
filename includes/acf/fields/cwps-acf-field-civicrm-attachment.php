@@ -480,9 +480,12 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 		$attachments = wp_list_pluck( $value, 'field_attachment_file' );
 
 		// Sanitise array contents.
-		array_walk( $attachments, function( &$item ) {
-			$item = (string) trim( $item );
-		} );
+		array_walk(
+			$attachments,
+			function( &$item ) {
+				$item = (string) trim( $item );
+			}
+		);
 
 		// Check that all "File" Fields are populated.
 		if ( in_array( '', $attachments ) ) {

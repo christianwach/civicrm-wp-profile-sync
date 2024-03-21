@@ -549,9 +549,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		$acf_address_ids = wp_list_pluck( $values, 'field_address_id' );
 
 		// Sanitise array contents.
-		array_walk( $acf_address_ids, function( &$item ) {
-			$item = (int) trim( $item );
-		} );
+		array_walk(
+			$acf_address_ids,
+			function( &$item ) {
+				$item = (int) trim( $item );
+			}
+		);
 
 		// Records to delete are missing from the ACF data.
 		foreach ( $current as $current_address ) {
@@ -963,9 +966,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 					$acf_address_ids = wp_list_pluck( $existing, 'field_address_id' );
 
 					// Sanitise array contents.
-					array_walk( $acf_address_ids, function( &$item ) {
-						$item = (int) trim( $item );
-					} );
+					array_walk(
+						$acf_address_ids,
+						function( &$item ) {
+							$item = (int) trim( $item );
+						}
+					);
 
 					// If the ID is missing, treat as a 'create' op.
 					if ( ! in_array( $address->id, $acf_address_ids ) ) {
@@ -1072,10 +1078,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		 * @param array $types The retrieved array of Location Types.
 		 * @param array $field The ACF Field data array.
 		 */
-		$location_types = apply_filters(
-			'cwps/acf/addresses/location_types/get_for_acf_field',
-			$types, $field
-		);
+		$location_types = apply_filters( 'cwps/acf/addresses/location_types/get_for_acf_field', $types, $field );
 
 		// --<
 		return $location_types;

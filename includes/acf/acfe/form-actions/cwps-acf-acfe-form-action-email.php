@@ -861,11 +861,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 
 		// Reject the submission if the Template ID is missing.
 		if ( empty( $email['template_id'] ) ) {
-			acfe_add_validation_error( '', sprintf(
-				/* translators: %s The name of the Form Action */
-				__( 'A Template ID is required to send an Email in "%s".', 'civicrm-wp-profile-sync' ),
-				$action
-			) );
+			acfe_add_validation_error(
+				'',
+				sprintf(
+					/* translators: %s The name of the Form Action */
+					__( 'A Template ID is required to send an Email in "%s".', 'civicrm-wp-profile-sync' ),
+					$action
+				)
+			);
 			return false;
 		}
 

@@ -558,10 +558,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		 * @param array $field_group The ACF Field Group data array.
 		 * @param array $field The ACF Field data array.
 		 */
-		$contact_fields = apply_filters(
-			'cwps/acf/civicrm/contact_field/get_for_acf_field',
-			$contact_fields, $field_group, $field
-		);
+		$contact_fields = apply_filters( 'cwps/acf/civicrm/contact_field/get_for_acf_field', $contact_fields, $field_group, $field );
 
 		// --<
 		return $contact_fields;

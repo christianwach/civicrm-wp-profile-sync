@@ -43,11 +43,6 @@
 		<exclude name="PSR2.ControlStructures.SwitchDeclaration.BodyOnNextLineCASE" />
 		<exclude name="Generic.WhiteSpace.ScopeIndent.Incorrect" />
 
-		<!-- Remove when error logging has been moved to a function. -->
-		<exclude name="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket" />
-		<exclude name="PEAR.Functions.FunctionCallSignature.MultipleArguments" />
-		<exclude name="PEAR.Functions.FunctionCallSignature.CloseBracketLine" />
-
 	</rule>
 
 	<rule ref="WordPress.WP.I18n">

@@ -171,9 +171,7 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Address {
 		}
 
 		// Get content from theme function.
-		$content = cacf_get_address_by_type_id(
-			$atts['field'], $atts['location_type'], $atts['post_id']
-		);
+		$content = cacf_get_address_by_type_id( $atts['field'], $atts['location_type'], $atts['post_id'] );
 
 		// --<
 		return $content;

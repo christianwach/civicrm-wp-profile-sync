@@ -777,9 +777,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Geo_Mashup {
 		}
 
 		// Insert template block into the page.
-		CRM_Core_Region::instance( 'page-body' )->add( [
-			'template' => 'cwps-acf-geo-mashup-compat.tpl',
-		] );
+		CRM_Core_Region::instance( 'page-body' )->add( [ 'template' => 'cwps-acf-geo-mashup-compat.tpl' ] );
 
 	}
 

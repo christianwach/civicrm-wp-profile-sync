@@ -357,9 +357,12 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Instant_Messenger extends acf_field {
 		$primary_values = wp_list_pluck( $value, 'field_im_primary' );
 
 		// Sanitise array contents.
-		array_walk( $primary_values, function( &$item ) {
-			$item = (int) trim( $item );
-		} );
+		array_walk(
+			$primary_values,
+			function( &$item ) {
+				$item = (int) trim( $item );
+			}
+		);
 
 		// Check that we have a Primary Number.
 		if ( ! in_array( 1, $primary_values ) ) {
@@ -371,9 +374,12 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Instant_Messenger extends acf_field {
 		$ims = wp_list_pluck( $value, 'field_im_name' );
 
 		// Sanitise array contents.
-		array_walk( $ims, function( &$item ) {
-			$item = (string) trim( $item );
-		} );
+		array_walk(
+			$ims,
+			function( &$item ) {
+				$item = (string) trim( $item );
+			}
+		);
 
 		// Check that all "Name" Fields are populated.
 		if ( in_array( '', $ims ) ) {

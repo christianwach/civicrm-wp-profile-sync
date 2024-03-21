@@ -356,9 +356,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		}
 
 		// Insert template block into the page.
-		CRM_Core_Region::instance( 'page-body' )->add([
-			'template' => 'cwps-acf-contact-type-cpt.tpl',
-		]);
+		CRM_Core_Region::instance( 'page-body' )->add( [ 'template' => 'cwps-acf-contact-type-cpt.tpl' ] );
 
 	}
 
@@ -612,9 +610,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		}
 
 		// Insert template block into the page.
-		CRM_Core_Region::instance( 'page-body' )->add([
-			'template' => 'cwps-acf-activity-type-cpt.tpl',
-		]);
+		CRM_Core_Region::instance( 'page-body' )->add( [ 'template' => 'cwps-acf-activity-type-cpt.tpl' ] );
 
 	}
 
@@ -879,9 +875,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		}
 
 		// Insert template block into the page.
-		CRM_Core_Region::instance( 'page-body' )->add([
-			'template' => 'cwps-acf-participant-role-cpt.tpl',
-		]);
+		CRM_Core_Region::instance( 'page-body' )->add( [ 'template' => 'cwps-acf-participant-role-cpt.tpl' ] );
 
 	}
 
@@ -1076,9 +1070,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		}
 
 		// Insert template block into the page.
-		CRM_Core_Region::instance( 'page-body' )->add([
-			'template' => 'cwps-acf-participant-cpt.tpl',
-		]);
+		CRM_Core_Region::instance( 'page-body' )->add( [ 'template' => 'cwps-acf-participant-cpt.tpl' ] );
 
 	}
 

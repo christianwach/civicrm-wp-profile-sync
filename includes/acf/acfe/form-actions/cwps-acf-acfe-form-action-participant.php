@@ -1696,21 +1696,27 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 
 		// Reject the submission if the Event ID Field is missing.
 		if ( empty( $participant['event_id'] ) ) {
-			acfe_add_validation_error( '', sprintf(
-				/* translators: %s The name of the Form Action */
-				__( 'An Event ID is required to create a Participant in "%s".', 'civicrm-wp-profile-sync' ),
-				$action
-			) );
+			acfe_add_validation_error(
+				'',
+				sprintf(
+					/* translators: %s The name of the Form Action */
+					__( 'An Event ID is required to create a Participant in "%s".', 'civicrm-wp-profile-sync' ),
+					$action
+				)
+			);
 			return false;
 		}
 
 		// Reject the submission if the Role ID Field is missing.
 		if ( empty( $participant['participant_role_id'] ) ) {
-			acfe_add_validation_error( '', sprintf(
-				/* translators: %s The name of the Form Action */
-				__( 'A Participant Role ID is required to create a Participant in "%s".', 'civicrm-wp-profile-sync' ),
-				$action
-			) );
+			acfe_add_validation_error(
+				'',
+				sprintf(
+					/* translators: %s The name of the Form Action */
+					__( 'A Participant Role ID is required to create a Participant in "%s".', 'civicrm-wp-profile-sync' ),
+					$action
+				)
+			);
 			return false;
 		}
 
@@ -1735,11 +1741,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 
 		// Reject the submission if there's an error.
 		if ( $is_full === false ) {
-			acfe_add_validation_error( '', sprintf(
-				/* translators: %s The name of the Form Action */
-				__( 'Could not check if the Event is full in "%s".', 'civicrm-wp-profile-sync' ),
-				$action
-			) );
+			acfe_add_validation_error(
+				'',
+				sprintf(
+					/* translators: %s The name of the Form Action */
+					__( 'Could not check if the Event is full in "%s".', 'civicrm-wp-profile-sync' ),
+					$action
+				)
+			);
 			return false;
 		}
 
@@ -1880,10 +1889,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 			$values['params'] = $participant;
 
 			// Location data is needed, whether populated or not.
-			$values['location'] = CRM_Core_BAO_Location::getValues( [
+			$params = [
 				'entity_id' => $event['id'],
 				'entity_table' => 'civicrm_event',
-			] );
+			];
+			$values['location'] = CRM_Core_BAO_Location::getValues( $params );
 
 			// Okay, go ahead and send.
 			$sent = CRM_Event_BAO_Event::sendMail( $participant['contact_id'], $values, $participant['id'] );
@@ -2096,9 +2106,12 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 
 		// Get the array of Custom Field IDs.
 		$custom_field_ids = array_keys( $this->file_fields_empty );
-		array_walk( $custom_field_ids, function( &$item ) {
-			$item = (int) trim( str_replace( 'custom_', '', $item ) );
-		} );
+		array_walk(
+			$custom_field_ids,
+			function( &$item ) {
+				$item = (int) trim( str_replace( 'custom_', '', $item ) );
+			}
+		);
 
 		// Get the corresponding values.
 		$values = $this->civicrm->custom_field->values_get_by_participant_id( $participant['id'], $custom_field_ids );

@@ -472,9 +472,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		$acf_multiset_ids = wp_list_pluck( $values, 'field_multiset_id' );
 
 		// Sanitise array contents.
-		array_walk( $acf_multiset_ids, function( &$item ) {
-			$item = (int) trim( $item );
-		} );
+		array_walk(
+			$acf_multiset_ids,
+			function( &$item ) {
+				$item = (int) trim( $item );
+			}
+		);
 
 		// Records to delete are missing from the ACF data.
 		foreach ( $current as $current_multiset ) {
@@ -886,9 +889,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 						$acf_multiset_ids = wp_list_pluck( $existing, 'field_multiset_id' );
 
 						// Sanitise array contents.
-						array_walk( $acf_multiset_ids, function( &$item ) {
-							$item = (int) trim( $item );
-						} );
+						array_walk(
+							$acf_multiset_ids,
+							function( &$item ) {
+								$item = (int) trim( $item );
+							}
+						);
 
 						// If the ID is missing, treat as a 'create' op.
 						if ( ! in_array( $multiset->id, $acf_multiset_ids ) ) {

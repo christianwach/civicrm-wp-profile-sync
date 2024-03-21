@@ -550,10 +550,13 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	public function js_model_contact_reference_field_add( $field_name ) {
 
 		// Add to Javascript ACF Model.
-		add_filter( 'cwps/acf/acfe/form_actions/reference_fields/contact', function( $actions ) use ( $field_name ) {
-			$actions[ 'new_field/name=' . $field_name ] = 'newContactActionRefField';
-			return $actions;
-		} );
+		add_filter(
+			'cwps/acf/acfe/form_actions/reference_fields/contact',
+			function( $actions ) use ( $field_name ) {
+				$actions[ 'new_field/name=' . $field_name ] = 'newContactActionRefField';
+				return $actions;
+			}
+		);
 
 	}
 
@@ -567,10 +570,13 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	public function js_model_case_reference_field_add( $field_name ) {
 
 		// Add to Javascript ACF Model.
-		add_filter( 'cwps/acf/acfe/form_actions/reference_fields/case', function( $actions ) use ( $field_name ) {
-			$actions[ 'new_field/name=' . $field_name ] = 'newCaseActionRefField';
-			return $actions;
-		} );
+		add_filter(
+			'cwps/acf/acfe/form_actions/reference_fields/case',
+			function( $actions ) use ( $field_name ) {
+				$actions[ 'new_field/name=' . $field_name ] = 'newCaseActionRefField';
+				return $actions;
+			}
+		);
 
 	}
 
@@ -584,10 +590,13 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	public function js_model_participant_reference_field_add( $field_name ) {
 
 		// Add to Javascript ACF Model.
-		add_filter( 'cwps/acf/acfe/form_actions/reference_fields/participant', function( $actions ) use ( $field_name ) {
-			$actions[ 'new_field/name=' . $field_name ] = 'newParticipantActionRefField';
-			return $actions;
-		} );
+		add_filter(
+			'cwps/acf/acfe/form_actions/reference_fields/participant',
+			function( $actions ) use ( $field_name ) {
+				$actions[ 'new_field/name=' . $field_name ] = 'newParticipantActionRefField';
+				return $actions;
+			}
+		);
 
 	}
 
@@ -626,11 +635,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 
 			// Maybe decode entities in arrays.
 			if ( is_array( $value ) ) {
-				array_walk_recursive( $value, function( &$item ) {
-					if ( is_string( $item ) && ! is_numeric( $item ) ) {
-						$item = html_entity_decode( $item );
+				array_walk_recursive(
+					$value,
+					function( &$item ) {
+						if ( is_string( $item ) && ! is_numeric( $item ) ) {
+							$item = html_entity_decode( $item );
+						}
 					}
-				} );
+				);
 			}
 
 			// Finally add value to return array.

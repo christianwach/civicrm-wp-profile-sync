@@ -2272,31 +2272,40 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 		// Reject the submission if the Event Type ID is missing.
 		if ( empty( $event['event_type_id'] ) ) {
-			acfe_add_validation_error( '', sprintf(
-				/* translators: %s The name of the Form Action */
-				__( 'An Event Type ID is required to create an Event in "%s".', 'civicrm-wp-profile-sync' ),
-				$action
-			) );
+			acfe_add_validation_error(
+				'',
+				sprintf(
+					/* translators: %s The name of the Form Action */
+					__( 'An Event Type ID is required to create an Event in "%s".', 'civicrm-wp-profile-sync' ),
+					$action
+				)
+			);
 			return false;
 		}
 
 		// Reject the submission if the Event Title is missing.
 		if ( empty( $event['title'] ) ) {
-			acfe_add_validation_error( '', sprintf(
-				/* translators: %s The name of the Form Action */
-				__( 'A title is required to create an Event in "%s".', 'civicrm-wp-profile-sync' ),
-				$action
-			) );
+			acfe_add_validation_error(
+				'',
+				sprintf(
+					/* translators: %s The name of the Form Action */
+					__( 'A title is required to create an Event in "%s".', 'civicrm-wp-profile-sync' ),
+					$action
+				)
+			);
 			return false;
 		}
 
 		// Reject the submission if the Event Start Date is missing.
 		if ( empty( $event['start_date'] ) ) {
-			acfe_add_validation_error( '', sprintf(
-				/* translators: %s The name of the Form Action */
-				__( 'A start date is required to create an Event in "%s".', 'civicrm-wp-profile-sync' ),
-				$action
-			) );
+			acfe_add_validation_error(
+				'',
+				sprintf(
+					/* translators: %s The name of the Form Action */
+					__( 'A start date is required to create an Event in "%s".', 'civicrm-wp-profile-sync' ),
+					$action
+				)
+			);
 			return false;
 		}
 
@@ -2542,9 +2551,12 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 		// Get the array of Custom Field IDs.
 		$custom_field_ids = array_keys( $this->file_fields_empty );
-		array_walk( $custom_field_ids, function( &$item ) {
-			$item = (int) trim( str_replace( 'custom_', '', $item ) );
-		} );
+		array_walk(
+			$custom_field_ids,
+			function( &$item ) {
+				$item = (int) trim( str_replace( 'custom_', '', $item ) );
+			}
+		);
 
 		// Get the corresponding values.
 		$values = $this->civicrm->custom_field->values_get_by_event_id( $event['id'], $custom_field_ids );
@@ -2854,11 +2866,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		// CiviCRM Event Organiser requires a "Street Address".
 		if ( defined( 'CIVICRM_WP_EVENT_ORGANISER_VERSION' ) ) {
 			if ( empty( $data['street_address'] ) ) {
-				acfe_add_validation_error( '', sprintf(
-					/* translators: %s The name of the Form Action */
-					__( 'A Street Address is required in "%s".', 'civicrm-wp-profile-sync' ),
-					$action
-				) );
+				acfe_add_validation_error(
+					'',
+					sprintf(
+						/* translators: %s The name of the Form Action */
+						__( 'A Street Address is required in "%s".', 'civicrm-wp-profile-sync' ),
+						$action
+					)
+				);
 				return false;
 			}
 		}
@@ -3039,11 +3054,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 		// Reject if there's an invalid Email.
 		if ( ! empty( $data['email'] ) && ! is_email( $data['email'] ) ) {
-			acfe_add_validation_error( '', sprintf(
-				/* translators: %s The name of the Form Action */
-				__( 'An invalid Email was found in "%s".', 'civicrm-wp-profile-sync' ),
-				$action
-			) );
+			acfe_add_validation_error(
+				'',
+				sprintf(
+					/* translators: %s The name of the Form Action */
+					__( 'An invalid Email was found in "%s".', 'civicrm-wp-profile-sync' ),
+					$action
+				)
+			);
 			return false;
 		}
 
@@ -3203,11 +3221,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 		// Reject if there's no Phone Number.
 		if ( empty( $data['phone'] ) ) {
-			acfe_add_validation_error( '', sprintf(
-				/* translators: %s The name of the Form Action */
-				__( 'A valid Phone Number is required in "%s".', 'civicrm-wp-profile-sync' ),
-				$action
-			) );
+			acfe_add_validation_error(
+				'',
+				sprintf(
+					/* translators: %s The name of the Form Action */
+					__( 'A valid Phone Number is required in "%s".', 'civicrm-wp-profile-sync' ),
+					$action
+				)
+			);
 			return false;
 		}
 
@@ -3364,11 +3385,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 		// Reject the submission if no Profile has been selected.
 		if ( empty( $data['custom_pre_id'] ) && empty( $data['custom_post_id'] ) ) {
-			acfe_add_validation_error( '', sprintf(
-				/* translators: %s The name of the Form Action */
-				__( 'A Profile is required to enable Online Registration in "%s".', 'civicrm-wp-profile-sync' ),
-				$action
-			) );
+			acfe_add_validation_error(
+				'',
+				sprintf(
+					/* translators: %s The name of the Form Action */
+					__( 'A Profile is required to enable Online Registration in "%s".', 'civicrm-wp-profile-sync' ),
+					$action
+				)
+			);
 			return false;
 		}
 
@@ -3651,21 +3675,27 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 		// Reject the submission if no "Confirm From Name" has been selected.
 		if ( empty( $data['confirm_from_name'] ) ) {
-			acfe_add_validation_error( '', sprintf(
-				/* translators: %s The name of the Form Action */
-				__( 'A "From Name" is required to send a Confirmation Email in "%s".', 'civicrm-wp-profile-sync' ),
-				$action
-			) );
+			acfe_add_validation_error(
+				'',
+				sprintf(
+					/* translators: %s The name of the Form Action */
+					__( 'A "From Name" is required to send a Confirmation Email in "%s".', 'civicrm-wp-profile-sync' ),
+					$action
+				)
+			);
 			return false;
 		}
 
 		// Reject the submission if no "Confirm From Email" has been selected.
 		if ( empty( $data['confirm_from_email'] ) ) {
-			acfe_add_validation_error( '', sprintf(
-				/* translators: %s The name of the Form Action */
-				__( 'A "From Email" is required to send a Confirmation Email in "%s".', 'civicrm-wp-profile-sync' ),
-				$action
-			) );
+			acfe_add_validation_error(
+				'',
+				sprintf(
+					/* translators: %s The name of the Form Action */
+					__( 'A "From Email" is required to send a Confirmation Email in "%s".', 'civicrm-wp-profile-sync' ),
+					$action
+				)
+			);
 			return false;
 		}
 

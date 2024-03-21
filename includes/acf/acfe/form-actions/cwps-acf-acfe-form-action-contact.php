@@ -4157,11 +4157,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Reject the submission.
-		acfe_add_validation_error( '', sprintf(
-			/* translators: %s The name of the Form Action */
-			__( 'Not enough data to save a Contact in "%s".', 'civicrm-wp-profile-sync' ),
-			$action
-		) );
+		acfe_add_validation_error(
+			'',
+			sprintf(
+				/* translators: %s The name of the Form Action */
+				__( 'Not enough data to save a Contact in "%s".', 'civicrm-wp-profile-sync' ),
+				$action
+			)
+		);
 
 		// Not valid.
 		return false;
@@ -4781,9 +4784,12 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// Get the array of Custom Field IDs.
 		$custom_field_ids = array_keys( $this->file_fields_empty );
-		array_walk( $custom_field_ids, function( &$item ) {
-			$item = (int) trim( str_replace( 'custom_', '', $item ) );
-		} );
+		array_walk(
+			$custom_field_ids,
+			function( &$item ) {
+				$item = (int) trim( str_replace( 'custom_', '', $item ) );
+			}
+		);
 
 		// Get the corresponding values.
 		$values = $this->plugin->civicrm->custom_field->values_get_by_contact_id( $contact['id'], $custom_field_ids );

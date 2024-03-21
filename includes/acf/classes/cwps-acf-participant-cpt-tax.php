@@ -1847,12 +1847,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		$url = $this->plugin->civicrm->get_link( 'civicrm/admin/options/participant_role', 'reset=1' );
 
 		// Add item to CAU menu.
-		$wp_admin_bar->add_node( [
+		$args = [
 			'id' => 'cau-0',
 			'parent' => $id,
 			'title' => __( 'View in CiviCRM', 'civicrm-wp-profile-sync' ),
 			'href' => $url,
-		] );
+		];
+		$wp_admin_bar->add_node( $args );
 
 	}
 

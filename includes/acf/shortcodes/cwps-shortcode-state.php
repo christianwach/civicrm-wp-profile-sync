@@ -172,9 +172,7 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_State {
 		}
 
 		// Get content from theme function.
-		$content = cacf_get_state_by_type_id(
-			$atts['field'], $atts['location_type'], $atts['style'], $atts['post_id']
-		);
+		$content = cacf_get_state_by_type_id( $atts['field'], $atts['location_type'], $atts['style'], $atts['post_id'] );
 
 		// --<
 		return $content;

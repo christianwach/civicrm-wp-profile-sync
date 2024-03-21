@@ -1068,12 +1068,13 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		$link = $this->plugin->civicrm->get_link( 'civicrm/contact/view', 'reset=1&cid=' . $contact['id'] );
 
 		// Add menu item.
-		$wp_admin_bar->add_node( [
+		$args = [
 			'parent' => 'user-actions',
 			'id'     => 'civicrm-profile',
 			'title'  => __( 'CiviCRM Profile', 'civicrm-wp-profile-sync' ),
 			'href'   => $link,
-		] );
+		];
+		$wp_admin_bar->add_node( $args );
 
 	}
 

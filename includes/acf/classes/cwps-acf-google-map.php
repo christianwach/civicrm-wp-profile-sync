@@ -1283,10 +1283,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		 * @param array $types The retrieved array of Location Types.
 		 * @param array $field The ACF Field data array.
 		 */
-		$location_types = apply_filters(
-			'cwps/acf/google_map/location_types/get_for_acf_field',
-			$types, $field
-		);
+		$location_types = apply_filters( 'cwps/acf/google_map/location_types/get_for_acf_field', $types, $field );
 
 		// --<
 		return $location_types;

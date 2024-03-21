@@ -1584,10 +1584,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 				 * @param array $contact_types The array of Contact Types.
 				 * @param array $field The ACF Field data array.
 				 */
-				$relationships_for_type = apply_filters(
-					'cwps/acf/civicrm/relationships/get_for_acf_field_for_type',
-					$relationships_for_type, $contact_types, $field
-				);
+				$relationships_for_type = apply_filters( 'cwps/acf/civicrm/relationships/get_for_acf_field_for_type', $relationships_for_type, $contact_types, $field );
 
 				// Merge with return array.
 				$relationships = array_merge( $relationships, $relationships_for_type );
@@ -1605,10 +1602,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		 * @param array $field_group The ACF Field Group data array.
 		 * @param array $field The ACF Field data array.
 		 */
-		$relationships = apply_filters(
-			'cwps/acf/civicrm/relationships/get_for_acf_field',
-			$relationships, $field_group, $field
-		);
+		$relationships = apply_filters( 'cwps/acf/civicrm/relationships/get_for_acf_field', $relationships, $field_group, $field );
 
 		// --<
 		return $relationships;

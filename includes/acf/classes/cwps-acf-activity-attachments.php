@@ -595,9 +595,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 		$acf_attachment_ids = wp_list_pluck( $values, 'field_attachment_id' );
 
 		// Sanitise array contents.
-		array_walk( $acf_attachment_ids, function( &$item ) {
-			$item = (int) trim( $item );
-		} );
+		array_walk(
+			$acf_attachment_ids,
+			function( &$item ) {
+				$item = (int) trim( $item );
+			}
+		);
 
 		// Records to delete are missing from the ACF data.
 		foreach ( $current as $current_attachment ) {
@@ -1018,9 +1021,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 					$acf_attachment_ids = wp_list_pluck( $existing, 'field_attachment_id' );
 
 					// Sanitise array contents.
-					array_walk( $acf_attachment_ids, function( &$item ) {
-						$item = (int) trim( $item );
-					} );
+					array_walk(
+						$acf_attachment_ids,
+						function( &$item ) {
+							$item = (int) trim( $item );
+						}
+					);
 
 					// If the ID is missing, treat as a 'create' op.
 					if ( ! in_array( $attachment->id, $acf_attachment_ids ) ) {

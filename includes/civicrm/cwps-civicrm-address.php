@@ -879,7 +879,9 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		$settings = CRM_Core_BAO_Setting::valueOptions(
 			CRM_Core_BAO_Setting::SYSTEM_PREFERENCES_NAME,
 			'address_options',
-			true, null, true
+			true,
+			null,
+			true
 		);
 
 		// The items that are missing the "_id" suffix.

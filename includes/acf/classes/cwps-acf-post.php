@@ -491,28 +491,31 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		$url = $this->plugin->civicrm->get_link( 'civicrm/contact/view', 'reset=1&cid=' . $contact_id );
 
 		// Add item to Edit menu.
-		$wp_admin_bar->add_node( [
+		$args = [
 			'id' => 'cau-edit',
 			'parent' => 'edit',
 			'title' => __( 'Edit in CiviCRM', 'civicrm-wp-profile-sync' ),
 			'href' => $url,
-		] );
+		];
+		$wp_admin_bar->add_node( $args );
 
 		// Add item to View menu.
-		$wp_admin_bar->add_node( [
+		$args = [
 			'id' => 'cau-view',
 			'parent' => 'view',
 			'title' => __( 'View in CiviCRM', 'civicrm-wp-profile-sync' ),
 			'href' => $url,
-		] );
+		];
+		$wp_admin_bar->add_node( $args );
 
 		// Add item to CAU menu.
-		$wp_admin_bar->add_node( [
+		$args = [
 			'id' => 'cau-0',
 			'parent' => $id,
 			'title' => __( 'View in CiviCRM', 'civicrm-wp-profile-sync' ),
 			'href' => $url,
-		] );
+		];
+		$wp_admin_bar->add_node( $args );
 
 	}
 

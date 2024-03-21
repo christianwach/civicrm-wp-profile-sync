@@ -173,9 +173,7 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Instant_Messenger {
 		}
 
 		// Get content from theme function.
-		$content = cacf_get_ims_by_type_ids(
-			$atts['field'], $atts['location_type'], $atts['im_type'], $atts['style'], $atts['post_id']
-		);
+		$content = cacf_get_ims_by_type_ids( $atts['field'], $atts['location_type'], $atts['im_type'], $atts['style'], $atts['post_id'] );
 
 		// --<
 		return $content;

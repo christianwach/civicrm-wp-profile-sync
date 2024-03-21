@@ -1255,10 +1255,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		 * @param array $location_types The retrieved array of Location Types.
 		 * @param array $field The ACF Field data array.
 		 */
-		$location_types = apply_filters(
-			'cwps/acf/email/location_types/get_for_acf_field',
-			$result['values'], $field
-		);
+		$location_types = apply_filters( 'cwps/acf/email/location_types/get_for_acf_field', $result['values'], $field );
 
 		// --<
 		return $location_types;
