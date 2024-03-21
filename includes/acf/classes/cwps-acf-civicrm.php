@@ -839,7 +839,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 			'object_name' => $object_name,
 			'objectId'    => $object_id,
 			'objectRef'   => $object_ref,
-			//'backtrace' => $trace,
+			// 'backtrace' => $trace,
 		];
 		$this->plugin->log_error( $log );
 
@@ -865,7 +865,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 			'object_name' => $object_name,
 			'objectId'    => $object_id,
 			'objectRef'   => $object_ref,
-			//'backtrace' => $trace,
+			// 'backtrace' => $trace,
 		];
 		$this->plugin->log_error( $log );
 

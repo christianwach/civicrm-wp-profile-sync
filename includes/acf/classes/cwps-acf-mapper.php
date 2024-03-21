@@ -571,11 +571,11 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Intercept File updates in CiviCRM.
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//add_action( 'civicrm_pre', [ $this, 'file_pre_delete' ], 10, 4 );
+		// add_action( 'civicrm_pre', [ $this, 'file_pre_delete' ], 10, 4 );
 		add_action( 'civicrm_post', [ $this, 'file_created' ], 10, 4 );
 		add_action( 'civicrm_post', [ $this, 'file_edited' ], 10, 4 );
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//add_action( 'civicrm_post', [ $this, 'file_deleted' ], 10, 4 );
+		// add_action( 'civicrm_post', [ $this, 'file_deleted' ], 10, 4 );
 
 	}
 
@@ -819,11 +819,11 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Remove Instant Messenger update hooks.
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//remove_action( 'civicrm_pre', [ $this, 'file_pre_delete' ], 10 );
+		// remove_action( 'civicrm_pre', [ $this, 'file_pre_delete' ], 10 );
 		remove_action( 'civicrm_post', [ $this, 'file_created' ], 10 );
 		remove_action( 'civicrm_post', [ $this, 'file_edited' ], 10 );
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//remove_action( 'civicrm_post', [ $this, 'file_deleted' ], 10 );
+		// remove_action( 'civicrm_post', [ $this, 'file_deleted' ], 10 );
 
 	}
 

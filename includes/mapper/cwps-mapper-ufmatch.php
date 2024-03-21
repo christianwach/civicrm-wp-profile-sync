@@ -299,7 +299,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		// Build params to create a UFMatch record.
 		$params = [
 			'version' => 3,
-			//'debug' => 1,
+			// 'debug' => 1,
 		] + $ufmatch;
 
 		// Maybe add Domain ID.

@@ -196,7 +196,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		add_filter( 'cwps/bp/field/query_options', [ $this, 'true_false_settings_modify' ], 10, 3 );
 		add_filter( 'cwps/bp/field/query_options', [ $this, 'select_settings_modify' ], 10, 3 );
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//add_filter( 'cwps/bp/field/query_options', [ $this, 'multiselect_settings_modify' ], 10, 3 );
+		// add_filter( 'cwps/bp/field/query_options', [ $this, 'multiselect_settings_modify' ], 10, 3 );
 		add_filter( 'cwps/bp/field/query_options', [ $this, 'radio_settings_modify' ], 10, 3 );
 
 		// Append "True/False" mappings to the "Checkbox" xProfile Field Type.

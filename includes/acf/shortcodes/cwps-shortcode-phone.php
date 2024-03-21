@@ -260,7 +260,7 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Phone {
 
 			// Limit to synced CPTs only?
 			// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-			//'post_type' => array_values( $mapped_post_types ),
+			// 'post_type' => array_values( $mapped_post_types ),
 
 			// Window elements.
 			'attrs'         => [

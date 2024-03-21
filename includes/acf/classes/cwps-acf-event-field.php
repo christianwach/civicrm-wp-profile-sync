@@ -105,23 +105,23 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 		// phpcs:disable WordPress.Arrays.ArrayIndentation.ItemNotAligned
 		'is_monetary'             => 'true_false',
 		'currency'                => 'select',
-		//'payment_processor' => 'select',
+		// 'payment_processor' => 'select',
 			// Pay Later.
 			'is_pay_later'        => 'true_false',
 			'pay_later_text'      => 'textarea',
 			'pay_later_receipt'   => 'wysiwyg',
 			'is_billing_required' => 'true_false',
 		'fee_label'               => 'text',
-		//'financial_type_id' => 'select',
-		//'price_set_id' => 'select',
+		// 'financial_type_id' => 'select',
+		// 'price_set_id' => 'select',
 		// Internal "pseudo" Price Set.
-		//'default_fee_id' => 'select',
-		//'default_discount_fee_id' => 'select',
+		// 'default_fee_id' => 'select',
+		// 'default_discount_fee_id' => 'select',
 			// Partial Payment - CiviCRM admin only.
-			//'is_partial_payment' => 'true_false',
-			//'initial_amount_label' => 'text',
-			//'initial_amount_help_text' => 'textarea',
-			//'min_initial_amount' => 'number',
+			// 'is_partial_payment' => 'true_false',
+			// 'initial_amount_label' => 'text',
+			// 'initial_amount_help_text' => 'textarea',
+			// 'min_initial_amount' => 'number',
 		// phpcs:enable WordPress.Arrays.ArrayIndentation.ItemNotAligned
 	];
 
@@ -138,12 +138,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 		// phpcs:disable Squiz.Commenting.InlineComment.InvalidEndChar
 
 		// Template.
-		//'is_template' => 'true_false',
-		//'template_title' => 'text',
+		// 'is_template' => 'true_false',
+		// 'template_title' => 'text',
 
 		// Repeating Event.
-		//'parent_event_id' => 'select',
-		//'slot_label_id' => 'select',
+		// 'parent_event_id' => 'select',
+		// 'slot_label_id' => 'select',
 
 		// phpcs:enable Squiz.Commenting.InlineComment.InvalidEndChar
 	];
@@ -188,7 +188,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 
 		// Some Event "Text" Fields need their own validation.
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//add_filter( 'acf/validate_value/type=text', [ $this, 'value_validate' ], 10, 4 );
+		// add_filter( 'acf/validate_value/type=text', [ $this, 'value_validate' ], 10, 4 );
 
 		// Listen for queries from our ACF Field class.
 		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'select_settings_modify' ], 20, 2 );

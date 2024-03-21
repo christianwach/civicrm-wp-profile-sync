@@ -138,7 +138,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 
 		// Include Shortcode class files.
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/shortcodes/cwps-shortcode-attachment.php';
+		// include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/shortcodes/cwps-shortcode-attachment.php';
 
 	}
 
@@ -151,7 +151,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 
 		// Init Shortcode objects.
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//$this->shortcode_attachment = new CiviCRM_Profile_Sync_ACF_Shortcode_Attachment( $this );
+		// $this->shortcode_attachment = new CiviCRM_Profile_Sync_ACF_Shortcode_Attachment( $this );
 
 	}
 
@@ -170,7 +170,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 
 		// Intercept Post created from Activity events.
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//add_action( 'cwps/acf/post/activity/sync', [ $this, 'fields_handled_update' ], 10 );
+		// add_action( 'cwps/acf/post/activity/sync', [ $this, 'fields_handled_update' ], 10 );
 
 		/*
 		 * Intercept events that require CiviCRM Attachment updates.

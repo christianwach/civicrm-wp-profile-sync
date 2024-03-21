@@ -152,8 +152,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 			'alternative_receiver_address' => __( 'Alternative Receiver Address', 'civicrm-wp-profile-sync' ),
 			'cc'                           => __( 'Carbon Copy', 'civicrm-wp-profile-sync' ),
 			'bcc'                          => __( 'Blind Carbon Copy', 'civicrm-wp-profile-sync' ),
-			//'extra_data' => __( 'Extra Data', 'civicrm-wp-profile-sync' ),
-			//'from_email_option' => __( 'From Email Option', 'civicrm-wp-profile-sync' ),
+			// 'extra_data' => __( 'Extra Data', 'civicrm-wp-profile-sync' ),
+			// 'from_email_option' => __( 'From Email Option', 'civicrm-wp-profile-sync' ),
 		];
 
 		// Populate mapping Fields.

@@ -229,10 +229,10 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Intercept Contact updates in CiviCRM.
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//add_action( 'civicrm_pre', [ $this, 'contact_pre_create' ], 10, 4 );
+		// add_action( 'civicrm_pre', [ $this, 'contact_pre_create' ], 10, 4 );
 		add_action( 'civicrm_pre', [ $this, 'contact_pre_edit' ], 10, 4 );
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//add_action( 'civicrm_post', [ $this, 'contact_created' ], 10, 4 );
+		// add_action( 'civicrm_post', [ $this, 'contact_created' ], 10, 4 );
 		add_action( 'civicrm_post', [ $this, 'contact_edited' ], 10, 4 );
 
 	}
@@ -337,10 +337,10 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Remove all CiviCRM Contact callbacks.
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//remove_action( 'civicrm_pre', [ $this, 'contact_pre_create' ], 10 );
+		// remove_action( 'civicrm_pre', [ $this, 'contact_pre_create' ], 10 );
 		remove_action( 'civicrm_pre', [ $this, 'contact_pre_edit' ], 10 );
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//remove_action( 'civicrm_post', [ $this, 'contact_created' ], 10 );
+		// remove_action( 'civicrm_post', [ $this, 'contact_created' ], 10 );
 		remove_action( 'civicrm_post', [ $this, 'contact_edited' ], 10 );
 
 	}

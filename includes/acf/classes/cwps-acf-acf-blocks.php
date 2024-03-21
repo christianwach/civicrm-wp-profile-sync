@@ -162,7 +162,7 @@ class CiviCRM_Profile_Sync_ACF_Blocks {
 
 		// Load values and assign defaults.
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//$data = get_field( 'selector' );
+		// $data = get_field( 'selector' );
 
 		?>
 		<div id="<?php echo esc_attr( $id ); ?>" class="<?php echo esc_attr( $class_name ); ?>">

@@ -151,7 +151,7 @@ class CiviCRM_Profile_Sync_ACF_Field_Type {
 		}
 
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-multiset.php';
+		// include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-multiset.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-yes-no.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-activity-creator.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-activity-target.php';
@@ -198,7 +198,7 @@ class CiviCRM_Profile_Sync_ACF_Field_Type {
 		}
 
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//new CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set( $this );
+		// new CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set( $this );
 		$yes_no = new CiviCRM_Profile_Sync_Custom_CiviCRM_Yes_No( $this );
 		acf_register_field_type( $yes_no );
 

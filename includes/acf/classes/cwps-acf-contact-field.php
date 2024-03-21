@@ -175,7 +175,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Some Contact "Text" Fields need their own validation.
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//add_filter( 'acf/validate_value/type=text', [ $this, 'value_validate' ], 10, 4 );
+		// add_filter( 'acf/validate_value/type=text', [ $this, 'value_validate' ], 10, 4 );
 
 		// Intercept Contact Image delete.
 		add_action( 'civicrm_postSave_civicrm_contact', [ $this, 'image_deleted' ], 10 );
@@ -684,7 +684,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 			'version'    => 3,
 			'sequential' => 1,
 			'options'    => [
-				//'sort' => 'title',
+				// 'sort' => 'title',
 				'limit' => 0, // No limit.
 			],
 		];
@@ -1361,10 +1361,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		$sql = $wpdb->prepare(
 			"SELECT post_id, meta_key, meta_value FROM $wpdb->postmeta
 			 WHERE meta_key IN ( '_wp_attachment_metadata', '_wp_attachment_backup_sizes' ) AND meta_value LIKE %s",
+			 // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.serialize_serialize
 			'%' . serialize( $basename ) . '%'
 		);
 
-		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$results = $wpdb->get_results( $sql );
 		foreach ( $results as $row ) {
 
@@ -1395,7 +1396,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 						$row->post_id
 					);
 
-					// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+					// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 					$meta = maybe_unserialize( $wpdb->get_var( $sql ) );
 					if ( isset( $meta['file'] ) && dirname( $meta['file'] ) === $dirname ) {
 						// URL is for a "backup" of an edited image.

@@ -163,7 +163,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 	public $fields_to_ignore = [
 		'contact_id' => 'civicrm_contact',
 		'creator_id' => 'civicrm_contact',
-		//'manager_id' => 'civicrm_contact',
+		// 'manager_id' => 'civicrm_contact',
 	];
 
 	/**
@@ -178,7 +178,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 	public $contact_fields = [
 		'contact_id' => 'civicrm_contact',
 		'creator_id' => 'civicrm_contact',
-		//'manager_id' => 'civicrm_contact',
+		// 'manager_id' => 'civicrm_contact',
 	];
 
 	/**
@@ -547,7 +547,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 				[
 					[
 						'field'    => $this->field_key . 'dismiss_if_exists',
-						//'operator' => '!=empty',
+						// 'operator' => '!=empty',
 						'operator' => '==',
 						'value'    => '1',
 					],

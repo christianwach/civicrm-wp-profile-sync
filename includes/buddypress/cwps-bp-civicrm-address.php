@@ -100,7 +100,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 		'postal_code'            => 'textbox',
 		'geo_code_1'             => 'textbox',
 		'geo_code_2'             => 'textbox',
-		//'name' => 'textbox',
+		// 'name' => 'textbox',
 	];
 
 	/**
@@ -187,9 +187,9 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 		add_action( 'cwps/mapper/address/created', [ $this, 'address_edited' ], 10 );
 		add_action( 'cwps/mapper/address/edited', [ $this, 'address_edited' ], 10 );
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//add_action( 'cwps/mapper/address/delete/pre', [ $this, 'address_pre_delete' ], 10 );
+		// add_action( 'cwps/mapper/address/delete/pre', [ $this, 'address_pre_delete' ], 10 );
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//add_action( 'cwps/mapper/address/deleted', [ $this, 'address_deleted' ], 10 );
+		// add_action( 'cwps/mapper/address/deleted', [ $this, 'address_deleted' ], 10 );
 
 		// Declare registered.
 		$this->mapper_hooks = true;
@@ -212,9 +212,9 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 		remove_action( 'cwps/mapper/address/created', [ $this, 'address_edited' ], 10 );
 		remove_action( 'cwps/mapper/address/edited', [ $this, 'address_edited' ], 10 );
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//remove_action( 'cwps/mapper/address/delete/pre', [ $this, 'address_pre_delete' ], 10 );
+		// remove_action( 'cwps/mapper/address/delete/pre', [ $this, 'address_pre_delete' ], 10 );
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//remove_action( 'cwps/mapper/address/deleted', [ $this, 'address_deleted' ], 10 );
+		// remove_action( 'cwps/mapper/address/deleted', [ $this, 'address_deleted' ], 10 );
 
 		// Declare unregistered.
 		$this->mapper_hooks = false;

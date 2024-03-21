@@ -1444,7 +1444,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		// Define the Emails Repeater Field.
 		$email_fields_repeater = [
 			'key'                           => $this->field_key . 'email_fields_repeater',
-			//'label' => __( 'Email Addresses', 'civicrm-wp-profile-sync' ),
+			// 'label' => __( 'Email Addresses', 'civicrm-wp-profile-sync' ),
 			'name'                          => $this->field_name . 'email_fields_repeater',
 			'type'                          => 'repeater',
 			'instructions'                  => '',
@@ -1534,7 +1534,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		// Define the Phones Repeater Field.
 		$phone_fields_repeater = [
 			'key'                           => $this->field_key . 'phone_fields_repeater',
-			//'label' => __( 'Phone Numbers', 'civicrm-wp-profile-sync' ),
+			// 'label' => __( 'Phone Numbers', 'civicrm-wp-profile-sync' ),
 			'name'                          => $this->field_name . 'phone_fields_repeater',
 			'type'                          => 'repeater',
 			'instructions'                  => '',

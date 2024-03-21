@@ -57,8 +57,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Membership {
 	 * @var array
 	 */
 	public $membership_fields = [
-		//'status_id' => 'select',
-		//'campaign_id' => 'select',
+		// 'status_id' => 'select',
+		// 'campaign_id' => 'select',
 		'num_terms' => 'number',
 		'source'    => 'text',
 	];

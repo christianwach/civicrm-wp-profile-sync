@@ -128,7 +128,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		// Intercept Website updates in CiviCRM.
 		add_action( 'cwps/mapper/website/edit/pre', [ $this, 'website_pre_edit' ], 10 );
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//add_action( 'cwps/mapper/website/delete/pre', [ $this, 'website_pre_delete' ], 10 );
+		// add_action( 'cwps/mapper/website/delete/pre', [ $this, 'website_pre_delete' ], 10 );
 		add_action( 'cwps/mapper/website/created', [ $this, 'website_edited' ], 10 );
 		add_action( 'cwps/mapper/website/edited', [ $this, 'website_edited' ], 10 );
 		add_action( 'cwps/mapper/website/deleted', [ $this, 'website_deleted' ], 10 );
@@ -153,7 +153,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		// Remove all CiviCRM callbacks.
 		remove_action( 'cwps/mapper/website/edit/pre', [ $this, 'website_pre_edit' ], 10 );
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//remove_action( 'cwps/mapper/website/delete/pre', [ $this, 'website_pre_delete' ], 10 );
+		// remove_action( 'cwps/mapper/website/delete/pre', [ $this, 'website_pre_delete' ], 10 );
 		remove_action( 'cwps/mapper/website/created', [ $this, 'website_edited' ], 10 );
 		remove_action( 'cwps/mapper/website/edited', [ $this, 'website_edited' ], 10 );
 		remove_action( 'cwps/mapper/website/deleted', [ $this, 'website_deleted' ], 10 );

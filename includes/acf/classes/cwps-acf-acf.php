@@ -73,7 +73,7 @@ class CiviCRM_Profile_Sync_ACF {
 	 * @var object
 	 */
 	// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-	//public $blocks;
+	// public $blocks;
 
 	/**
 	 * Constructor.
@@ -135,7 +135,7 @@ class CiviCRM_Profile_Sync_ACF {
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-acf-field-group.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-acf-field.php';
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-acf-blocks.php';
+		// include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-acf-blocks.php';
 
 	}
 

@@ -134,7 +134,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 		// Intercept Contact updates in CiviCRM.
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//add_action( 'cwps/mapper/contact/edit/pre', [ $this, 'contact_pre' ], 10, 4 );
+		// add_action( 'cwps/mapper/contact/edit/pre', [ $this, 'contact_pre' ], 10, 4 );
 		add_action( 'cwps/mapper/contact/edited', [ $this, 'contact_edited' ], 10 );
 
 		// Declare registered.
@@ -156,7 +156,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 		// Remove all CiviCRM callbacks.
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//remove_action( 'cwps/mapper/contact/edit/pre', [ $this, 'contact_pre' ], 10 );
+		// remove_action( 'cwps/mapper/contact/edit/pre', [ $this, 'contact_pre' ], 10 );
 		remove_action( 'cwps/mapper/contact/edited', [ $this, 'contact_edited' ], 10 );
 
 		// Declare unregistered.

@@ -114,7 +114,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		'is_billing' => 'true_false',
 		'phone'      => 'text',
 		'phone_ext'  => 'text',
-		//'phone_type_id' => 'select',
+		// 'phone_type_id' => 'select',
 	];
 
 	/**

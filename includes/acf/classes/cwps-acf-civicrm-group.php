@@ -446,7 +446,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 
 		// Query via cache method.
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//$cache = CRM_Contact_BAO_GroupContactCache::contactGroup( $contact_id );
+		// $cache = CRM_Contact_BAO_GroupContactCache::contactGroup( $contact_id );
 
 		/*
 		$e = new \Exception();
@@ -519,7 +519,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 			'contact_id' => $contact_id,
 			'status'     => 'Removed',
 			'sequential' => 1,
-			//'is_hidden' => 0,
+			// 'is_hidden' => 0,
 			'is_active'  => 1,
 			'options'    => [
 				'limit' => 0,

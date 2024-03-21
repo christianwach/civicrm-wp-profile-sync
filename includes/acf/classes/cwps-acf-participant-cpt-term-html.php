@@ -195,7 +195,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML {
 			'textarea_name' => 'description',
 			'quicktags'     => true,
 			'tinymce'       => true,
-			//'editor_css' => '<style>#wp-html-tag-description-editor-container .wp-editor-area { height: 200px; }</style>',
+			// 'editor_css' => '<style>#wp-html-tag-description-editor-container .wp-editor-area { height: 200px; }</style>',
 		];
 
 		?>

@@ -298,7 +298,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 
 		// Filter the output of an xProfile Field.
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//add_action( 'xprofile_get_field_data', [ $this, 'data_get' ], 10, 3 );
+		// add_action( 'xprofile_get_field_data', [ $this, 'data_get' ], 10, 3 );
 
 		// Filter the xProfile Field options when displaying the Field.
 		add_action( 'bp_xprofile_field_get_children', [ $this, 'get_children' ], 10, 3 );
@@ -346,7 +346,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 		// Listen for events from our Mapper that require Contact updates.
 		add_action( 'cwps/mapper/bp_xprofile/edited', [ $this, 'fields_edited' ], 50 );
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//add_action( 'cwps/mapper/bp_field/edited', [ $this, 'field_edited' ], 50 );
+		// add_action( 'cwps/mapper/bp_field/edited', [ $this, 'field_edited' ], 50 );
 
 		// Declare registered.
 		$this->mapper_hooks = true;
@@ -368,7 +368,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 		// Remove all Mapper listeners.
 		remove_action( 'cwps/mapper/bp_xprofile/edited', [ $this, 'fields_edited' ], 50 );
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//remove_action( 'cwps/mapper/bp_field/edited', [ $this, 'field_edited' ], 50 );
+		// remove_action( 'cwps/mapper/bp_field/edited', [ $this, 'field_edited' ], 50 );
 
 		// Declare unregistered.
 		$this->mapper_hooks = false;

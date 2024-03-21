@@ -80,7 +80,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		'state_province_id'      => 'select',
 		'country_id'             => 'select',
 		'postal_code'            => 'text',
-		//'postal_code_suffix' => 'text',
+		// 'postal_code_suffix' => 'text',
 		'geo_code_1'             => 'text',
 		'geo_code_2'             => 'text',
 		'name'                   => 'text',

@@ -351,7 +351,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 
 		// Add feature image size.
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//add_action( 'after_setup_theme', [ $this, 'feature_image_create' ] );
+		// add_action( 'after_setup_theme', [ $this, 'feature_image_create' ] );
 
 	}
 
@@ -371,7 +371,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		remove_filter( 'wp_terms_checklist_args', [ $this, 'taxonomy_fix_metabox' ] );
 		remove_action( 'restrict_manage_posts', [ $this, 'taxonomy_filter_post_type' ] );
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//remove_action( 'after_setup_theme', [ $this, 'feature_image_create' ] );
+		// remove_action( 'after_setup_theme', [ $this, 'feature_image_create' ] );
 
 	}
 
@@ -547,7 +547,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		// TODO: Decide if we should get the ACF Field data without formatting.
 		// This also applies to any calls to get_field_object().
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//$fields = get_fields( $post->ID, false );
+		// $fields = get_fields( $post->ID, false );
 
 		// Get the Participant ID from Post meta.
 		$participant_id = $this->acf_loader->post->participant_id_get( $post->ID );
@@ -1510,10 +1510,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 			// Supports.
 			'supports'            => [
 				'title',
-				//'editor',
-				//'excerpt',
-				//'thumbnail',
-				//'revisions',
+				// 'editor',
+				// 'excerpt',
+				// 'thumbnail',
+				// 'revisions',
 			],
 
 		];
@@ -1522,7 +1522,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		register_post_type( $this->post_type_name, $args );
 
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//flush_rewrite_rules();
+		// flush_rewrite_rules();
 
 		// Flag done.
 		$registered = true;
@@ -1732,14 +1732,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 				],
 				// Show column in wp-admin.
 				// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-				//'show_admin_column' => true,
+				// 'show_admin_column' => true,
 				// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-				//'show_ui' => true,
+				// 'show_ui' => true,
 			]
 		);
 
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//flush_rewrite_rules();
+		// flush_rewrite_rules();
 
 		// Flag done.
 		$registered = true;
@@ -1881,7 +1881,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 			'position'              => 'acf_after_title',
 			'label_placement'       => 'left',
 			'instruction_placement' => 'field',
-			//'style' => 'seamless',
+			// 'style' => 'seamless',
 		];
 
 		// Now add the group.

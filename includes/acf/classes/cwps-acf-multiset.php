@@ -869,7 +869,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 			// TODO: Find the ACF Fields to update.
 			// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-			//$fields_to_update = $this->fields_to_update_get( $acf_fields, $multiset, $args['op'] );
+			// $fields_to_update = $this->fields_to_update_get( $acf_fields, $multiset, $args['op'] );
 
 			// Let's look at each ACF Field in turn.
 			foreach ( $acf_fields['multiset'] as $selector => $multiset_field ) {

@@ -100,8 +100,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 	public $registration_screen_profiles = [
 		'custom_pre_id'  => 'select',
 		'custom_post_id' => 'select',
-		//'additional_profile_pre_id' => 'select',
-		//'additional_profile_post_id' => 'select',
+		// 'additional_profile_pre_id' => 'select',
+		// 'additional_profile_post_id' => 'select',
 	];
 
 	/**
@@ -193,7 +193,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 
 		// Some "Text" Fields need their own validation.
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//add_filter( 'acf/validate_value/type=text', [ $this, 'value_validate' ], 10, 4 );
+		// add_filter( 'acf/validate_value/type=text', [ $this, 'value_validate' ], 10, 4 );
 
 		// Listen for queries from our ACF Field class.
 		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'select_settings_modify' ], 20, 2 );

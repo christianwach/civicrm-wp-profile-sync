@@ -1257,7 +1257,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		// Define args for query.
 		$args = [
 			'post_type'      => $post_type,
-			//'post_status' => 'publish',
+			// 'post_status' => 'publish',
 			'no_found_rows'  => true,
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 			'meta_key'       => $this->activity_id_key,
@@ -1734,7 +1734,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		// Define args for query.
 		$args = [
 			'post_type'      => $post_type,
-			//'post_status' => 'publish',
+			// 'post_status' => 'publish',
 			'no_found_rows'  => true,
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 			'meta_key'       => $this->participant_id_key,

@@ -100,7 +100,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 
 		// Listen for queries from the ACF Bypass class.
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//add_filter( 'cwps/acf/bypass/query_settings_field', [ $this, 'query_bypass_settings_field' ], 20, 4 );
+		// add_filter( 'cwps/acf/bypass/query_settings_field', [ $this, 'query_bypass_settings_field' ], 20, 4 );
 		add_filter( 'cwps/acf/bypass/query_settings_choices', [ $this, 'query_bypass_settings_choices' ], 20, 4 );
 
 		// Listen for queries from the ACF Bypass Location Rule class.

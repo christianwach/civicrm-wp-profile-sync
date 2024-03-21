@@ -169,7 +169,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'wysiwyg_settings_filter' ], 10, 3 );
 		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'textarea_settings_filter' ], 10, 3 );
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'true_false_settings_filter' ], 10, 3 );
+		// add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'true_false_settings_filter' ], 10, 3 );
 		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'url_settings_filter' ], 10, 3 );
 		add_filter( 'cwps/acf/query_settings/custom_fields_filter', [ $this, 'file_settings_filter' ], 10, 3 );
 
@@ -198,7 +198,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 		// Intercept when the content of a set of CiviCRM Custom Fields is updated.
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//add_action( 'cwps/acf/mapper/civicrm/custom/edit/pre', [ $this, 'custom_pre_edit' ], 10 );
+		// add_action( 'cwps/acf/mapper/civicrm/custom/edit/pre', [ $this, 'custom_pre_edit' ], 10 );
 		add_action( 'cwps/acf/mapper/civicrm/custom/edited', [ $this, 'custom_edited' ], 10 );
 
 		// Declare registered.
@@ -220,7 +220,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 		// Remove all Mapper listeners.
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//remove_action( 'cwps/acf/mapper/civicrm/custom/edit/pre', [ $this, 'custom_pre_edit' ], 10 );
+		// remove_action( 'cwps/acf/mapper/civicrm/custom/edit/pre', [ $this, 'custom_pre_edit' ], 10 );
 		remove_action( 'cwps/acf/mapper/civicrm/custom/edited', [ $this, 'custom_edited' ], 10 );
 
 		// Declare unregistered.

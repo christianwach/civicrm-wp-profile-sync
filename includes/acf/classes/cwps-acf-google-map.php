@@ -160,7 +160,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 		// Customise "Google Map" Fields.
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//add_action( 'acf/render_field_settings/type=google_map', [ $this, 'map_setting_add' ] );
+		// add_action( 'acf/render_field_settings/type=google_map', [ $this, 'map_setting_add' ] );
 
 		// Add any Google Map Fields attached to a Post.
 		add_filter( 'cwps/acf/fields_get_for_post', [ $this, 'acf_fields_get_for_post' ], 10, 3 );
@@ -318,7 +318,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 		// Update the Address.
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//$success = $this->address_update( $field, $value, $contact_id, $settings, $args );
+		// $success = $this->address_update( $field, $value, $contact_id, $settings, $args );
 
 		// --<
 		return $success;
@@ -1369,7 +1369,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 			'label'             => __( 'Make Read Only', 'civicrm-wp-profile-sync' ),
 			'name'              => $this->acf_field_key_edit_get(),
 			'type'              => 'true_false',
-			//'message' => __( 'More explaining.', 'civicrm-wp-profile-sync' ),
+			// 'message' => __( 'More explaining.', 'civicrm-wp-profile-sync' ),
 			'instructions'      => __( 'Only CiviCRM can set the Location in this Field.', 'civicrm-wp-profile-sync' ),
 			'ui'                => 1,
 			'default_value'     => 1,

@@ -116,7 +116,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 		// Add Setting Field to Fields.
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//add_action( 'acf/render_field_settings', [ $this, 'field_setting_add' ] );
+		// add_action( 'acf/render_field_settings', [ $this, 'field_setting_add' ] );
 
 		// For newly-added Fields, we need to specify our supported Fields.
 		foreach ( $this->field_types as $field_type ) {
@@ -270,9 +270,9 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 		// If it's a User, we support the Edit Form.
 		if ( $entity === 'user' ) {
-			//$tmp = explode( '_', $post_id );
+			// $tmp = explode( '_', $post_id );
 			$params = [
-				//'user_id' => $tmp[1],
+				// 'user_id' => $tmp[1],
 				'user_form' => 'edit',
 			];
 		}

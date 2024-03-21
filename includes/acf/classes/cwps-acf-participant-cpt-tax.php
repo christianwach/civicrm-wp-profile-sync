@@ -1505,7 +1505,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 			'version'         => 3,
 			'option_group_id' => $opt_group_id,
 			'label'           => $new_term->name,
-			//'name' => $new_term->name,
+			// 'name' => $new_term->name,
 		];
 
 		// If there is a description, apply content filters and add to params.

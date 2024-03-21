@@ -174,9 +174,9 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 		add_action( 'cwps/mapper/phone/created', [ $this, 'phone_edited' ], 10 );
 		add_action( 'cwps/mapper/phone/edited', [ $this, 'phone_edited' ], 10 );
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//add_action( 'cwps/mapper/phone/delete/pre', [ $this, 'phone_pre_delete' ], 10 );
+		// add_action( 'cwps/mapper/phone/delete/pre', [ $this, 'phone_pre_delete' ], 10 );
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//add_action( 'cwps/mapper/phone/deleted', [ $this, 'phone_deleted' ], 10 );
+		// add_action( 'cwps/mapper/phone/deleted', [ $this, 'phone_deleted' ], 10 );
 
 		// Declare registered.
 		$this->mapper_hooks = true;
@@ -199,9 +199,9 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 		remove_action( 'cwps/mapper/phone/created', [ $this, 'phone_edited' ], 10 );
 		remove_action( 'cwps/mapper/phone/edited', [ $this, 'phone_edited' ], 10 );
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//remove_action( 'cwps/mapper/phone/delete/pre', [ $this, 'phone_pre_delete' ], 10 );
+		// remove_action( 'cwps/mapper/phone/delete/pre', [ $this, 'phone_pre_delete' ], 10 );
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//remove_action( 'cwps/mapper/phone/deleted', [ $this, 'phone_deleted' ], 10 );
+		// remove_action( 'cwps/mapper/phone/deleted', [ $this, 'phone_deleted' ], 10 );
 
 		// Declare unregistered.
 		$this->mapper_hooks = false;

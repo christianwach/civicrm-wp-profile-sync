@@ -554,9 +554,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 					$tmp = explode( '-', $rule['value'] );
 
 					// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-					//$entity_map = [];
+					// $entity_map = [];
 					// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-					//$entity_map[] = [ 'entity' => $tmp[0], 'entity_id' => (int) $tmp[1] ];
+					// $entity_map[] = [ 'entity' => $tmp[0], 'entity_id' => (int) $tmp[1] ];
 
 					// Add to return.
 					$entity_mapping[ $tmp[0] ][] = (int) $tmp[1];

@@ -31,10 +31,11 @@
 		<exclude name="WordPress.PHP.StrictComparisons.LooseComparison" />
 		<exclude name="WordPress.PHP.StrictInArray.MissingTrueStrict" />
 		<exclude name="WordPress.Security.EscapeOutput.OutputNotEscaped" />
-		<exclude name="Squiz.Commenting.InlineComment.NoSpaceBefore" />
 		<exclude name="Squiz.Commenting.InlineComment.SpacingAfterAtFunctionEnd" />
-
 		<exclude name="Generic.Metrics.NestingLevel.MaxExceeded" />
+		<exclude name="WordPress.PHP.NoSilencedErrors.Discouraged" />
+		<exclude name="WordPress.Security.NonceVerification.Missing" />
+		<exclude name="WordPress.Security.NonceVerification.Recommended" />
 
 	</rule>
 

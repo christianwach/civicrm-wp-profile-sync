@@ -164,7 +164,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 		// Always register WordPress hooks.
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//$this->register_wordpress_hooks();
+		// $this->register_wordpress_hooks();
 
 		// Add CiviCRM listeners once CiviCRM is available.
 		add_action( 'civicrm_config', [ $this, 'civicrm_config' ], 10, 1 );

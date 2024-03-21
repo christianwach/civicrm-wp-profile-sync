@@ -3660,7 +3660,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			'acfe_permissions'              => '',
 			'acfe_repeater_stylised_button' => 0,
 			'collapsed'                     => $this->field_key . 'relationship_action_ref',
-			//'collapsed' => $this->field_key . 'relationship_type',
+			// 'collapsed' => $this->field_key . 'relationship_type',
 			'min'                           => 0,
 			'max'                           => 0,
 			'layout'                        => 'block',
