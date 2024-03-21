@@ -1163,18 +1163,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 				$target_contact_id = $relationship->contact_id_a;
 			}
 
-			// If deleting the Relationship.
 			if ( $op == 'delete' ) {
 
-				// Remove Contact ID if it's there.
+				// Deleting the Relationship, so remove Contact ID if it's there.
 				if ( in_array( $target_contact_id, $existing ) ) {
 					$existing = array_diff( $existing, [ $target_contact_id ] );
 				}
 
-			// If creating the Relationship.
 			} elseif ( $op == 'create' ) {
 
-				// Add Contact ID if it's not there.
+				// Creating the Relationship, so add Contact ID if it's not there.
 				if ( ! in_array( $target_contact_id, $existing ) ) {
 					$existing[] = $target_contact_id;
 				}
@@ -1247,13 +1245,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 		// Override return if we get some.
 		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
 
-			// Check for no filter.
 			if ( $filter == 'none' ) {
 
-				// Grab all of them.
+				// Grab all Fields.
 				$fields = $result['values'];
 
-			// Check public filter.
 			} elseif ( $filter == 'public' ) {
 
 				// Skip all but those defined in our public Relationship Fields array.

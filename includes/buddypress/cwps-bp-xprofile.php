@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 0.5
  */
-class CiviCRM_Profile_Sync_BP_xProfile {
+class CiviCRM_Profile_Sync_BP_XProfile {
 
 	/**
 	 * Plugin object.

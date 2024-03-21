@@ -186,7 +186,7 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 		}
 
 		// Init xProfile objects.
-		$this->xprofile = new CiviCRM_Profile_Sync_BP_xProfile( $this );
+		$this->xprofile = new CiviCRM_Profile_Sync_BP_XProfile( $this );
 
 	}
 

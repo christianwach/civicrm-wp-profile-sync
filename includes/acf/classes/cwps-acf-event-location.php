@@ -285,7 +285,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 				// Get Field setting.
 				$acf_setting = get_field_object( $selector, $post_id );
 
-				// Date Picker test.
+				// Test for Date Picker or Date & Time Picker.
 				if ( $acf_setting['type'] == 'date_picker' ) {
 
 					// Event edit passes a Y-m-d format, so test for that.
@@ -299,7 +299,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 					// Convert to ACF format.
 					$value = $datetime->format( 'Ymd' );
 
-				// Date & Time Picker test.
 				} elseif ( $acf_setting['type'] == 'date_time_picker' ) {
 
 					// Event edit passes a YmdHis format, so test for that.

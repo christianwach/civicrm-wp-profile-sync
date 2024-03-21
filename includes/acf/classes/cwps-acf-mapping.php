@@ -116,6 +116,15 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	public $settings_key = 'cwps_acf_mapping_settings';
 
 	/**
+	 * Mapped items Settings option key.
+	 *
+	 * @since 0.4
+	 * @access public
+	 * @var integer
+	 */
+	public $saved_participant_role_id;
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 0.4

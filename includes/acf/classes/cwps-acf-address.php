@@ -193,13 +193,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		// Override return if we get some.
 		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
 
-			// Check for no filter.
 			if ( $filter == 'none' ) {
 
-				// Grab all of them.
+				// Grab all Fields.
 				$fields = $result['values'];
 
-			// Check public filter.
 			} elseif ( $filter == 'public' ) {
 
 				// Get the CiviCRM Address Options.

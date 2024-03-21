@@ -370,7 +370,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 				// Get Field setting.
 				$acf_setting = get_field_object( $selector, $post_id );
 
-				// Date Picker test.
+				// Test for Date Picker or Date & Time Picker.
 				if ( $acf_setting['type'] == 'date_picker' ) {
 
 					// Event edit passes a Y-m-d format, so test for that.
@@ -384,7 +384,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 					// Convert to ACF format.
 					$value = $datetime->format( 'Ymd' );
 
-				// Date & Time Picker test.
 				} elseif ( $acf_setting['type'] == 'date_time_picker' ) {
 
 					// Event edit passes a YmdHis format, so test for that.
@@ -567,7 +566,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 		// Check for filter.
 		if ( $filter !== 'none' ) {
 
-			// Check public filter.
 			if ( $filter == 'public' ) {
 
 				// Get all public Fields.
@@ -589,7 +587,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 					}
 				}
 
-			// Check "settings" filter.
 			} elseif ( $filter == 'settings' ) {
 
 				// Get all settings Fields.
@@ -611,7 +608,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 					}
 				}
 
-			// Check "register" filter.
 			} elseif ( $filter == 'register' ) {
 
 				// Skip all but those defined in our Registration Screen Fields array.
@@ -630,7 +626,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 					}
 				}
 
-			// Check "confirm" filter.
 			} elseif ( $filter == 'confirm' ) {
 
 				// Skip all but those defined in our Comfirmation Screen Fields array.
@@ -649,7 +644,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 					}
 				}
 
-			// Check "thankyou" filter.
 			} elseif ( $filter == 'thankyou' ) {
 
 				// Skip all but those defined in our Thank You Screen Fields array.
@@ -668,7 +662,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 					}
 				}
 
-			// Check "email" filter.
 			} elseif ( $filter == 'email' ) {
 
 				// Skip all but those defined in our Thank You Screen Fields array.
@@ -730,7 +723,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 		// Check for filter.
 		if ( $filter !== 'none' ) {
 
-			// Check "public" filter.
 			if ( $filter == 'public' ) {
 
 				// Skip all but those defined in our public Fields array.
@@ -754,7 +746,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 					}
 				}
 
-			// Check "settings" filter.
 			} elseif ( $filter == 'settings' ) {
 
 				// Skip all but those defined in our Settings Fields array.
@@ -778,7 +769,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 					}
 				}
 
-			// Check "register" filter.
 			} elseif ( $filter == 'register' ) {
 
 				// Skip all but those defined in our Registration Screen Fields array.
@@ -802,7 +792,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 					}
 				}
 
-			// Check "confirm" filter.
 			} elseif ( $filter == 'confirm' ) {
 
 				// Skip all but those defined in our Confirmation Screen Fields array.
@@ -826,7 +815,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 					}
 				}
 
-			// Check "thankyou" filter.
 			} elseif ( $filter == 'thankyou' ) {
 
 				// Skip all but those defined in our Thank You Screen Fields array.
@@ -850,7 +838,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 					}
 				}
 
-			// Check "email" filter.
 			} elseif ( $filter == 'email' ) {
 
 				// Skip all but those defined in our Confirmation Email Fields array.

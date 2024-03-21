@@ -309,7 +309,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 				// Get Field setting.
 				$acf_setting = get_field_object( $selector, $post_id );
 
-				// Date Picker test.
+				// Test for Date Picker or Date & Time Picker.
 				if ( $acf_setting['type'] == 'date_picker' ) {
 
 					// Participant edit passes a Y-m-d format, so test for that.
@@ -323,7 +323,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 					// Convert to ACF format.
 					$value = $datetime->format( 'Ymd' );
 
-				// Date & Time Picker test.
 				} elseif ( $acf_setting['type'] == 'date_time_picker' ) {
 
 					// Participant edit passes a YmdHis format, so test for that.
@@ -639,13 +638,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 		// Override return if we get some.
 		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
 
-			// Check for no filter.
 			if ( $filter == 'none' ) {
 
-				// Grab all of them.
+				// Grab all Fields.
 				$fields = $result['values'];
 
-			// Check public filter.
 			} elseif ( $filter == 'public' ) {
 
 				// Skip all but those defined in our Participant Fields array.
@@ -721,13 +718,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 		// Override return if we get some.
 		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
 
-			// Check for no filter.
 			if ( $filter == 'none' ) {
 
-				// Grab all of them.
+				// Grab all Fields.
 				$fields = $result['values'];
 
-			// Check public filter.
 			} elseif ( $filter == 'public' ) {
 
 				// Skip all but those defined in our Participant Fields array.

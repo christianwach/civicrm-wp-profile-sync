@@ -6726,7 +6726,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			// Add necessary params.
 			$note['entity_table'] = 'civicrm_contact';
 			$note['entity_id'] = $contact['id'];
-			$note['modified_date'] = date( 'YmdHis', strtotime( 'now' ) );
+			$note['modified_date'] = gmdate( 'YmdHis', strtotime( 'now' ) );
 
 			// Create the Note.
 			$result = $this->civicrm->note->create( $note );

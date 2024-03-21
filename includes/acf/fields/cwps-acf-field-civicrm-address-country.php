@@ -336,7 +336,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Country_Field extends acf_fiel
 			// Init Country ID.
 			$country_id = false;
 
-			// Does this Field sync with the Primary Address?
 			if ( ! empty( $field['country_is_primary'] ) ) {
 
 				// Assign Country ID from the Primary Address.
@@ -347,10 +346,9 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Country_Field extends acf_fiel
 					}
 				}
 
-			// We need a Location Type.
 			} elseif ( ! empty( $field['country_location_type_id'] ) ) {
 
-				// Assign Country ID from the type of Address.
+				// Assign Country ID from the Address Location Type.
 				foreach ( $addresses as $address ) {
 					if ( $address->location_type_id == $field['country_location_type_id'] ) {
 						$country_id = (int) $address->country_id;

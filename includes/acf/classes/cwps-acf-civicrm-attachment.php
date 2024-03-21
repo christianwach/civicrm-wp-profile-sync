@@ -792,13 +792,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		// Override return if we get some.
 		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
 
-			// Check for no filter.
 			if ( $filter == 'none' ) {
 
-				// Grab all of them.
+				// Grab all Fields.
 				$fields = $result['values'];
 
-			// Check public filter.
 			} elseif ( $filter == 'public' ) {
 
 				// Skip all but those defined in our public Attachment Fields array.
@@ -1112,8 +1110,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		// Find the data from before the save operation.
 		$file_field = $this->acf_field_pre_save_get( $args['selector'], $args['post_id'] );
 
-		// When value is empty.
 		if ( empty( $value ) ) {
+
+			// When value is empty.
 
 			// Return early if it was previously empty.
 			if ( empty( $file_field['attachment_id'] ) ) {
@@ -1144,17 +1143,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 			// Okay, bail.
 			return '';
 
-		// If it's an array, the WordPress Attachment ID is in the array.
 		} elseif ( is_array( $value ) ) {
+
+			// If it's an array, the WordPress Attachment ID is in the array.
 			$attachment_id = $value['id'];
 
-		// When it's numeric, it's the ID of the Attachment.
 		} elseif ( is_numeric( $value ) ) {
+
+			// When it's numeric, it's the ID of the Attachment.
 			$attachment_id = $value;
 
-		// When it's a string, it must be the URL.
 		} elseif ( is_string( $value ) ) {
 
+			// When it's a string, it must be the URL.
 			// Try and get the existing Attachment ID.
 			$attachment_id = attachment_url_to_postid( $value );
 

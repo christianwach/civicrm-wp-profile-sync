@@ -321,7 +321,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 				// Get Field setting.
 				$acf_setting = get_field_object( $selector, $post_id );
 
-				// Date Picker test.
+				// Test for Date Picker or Date & Time Picker.
 				if ( $acf_setting['type'] == 'date_picker' ) {
 
 					// Event edit passes a Y-m-d format, so test for that.
@@ -335,7 +335,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 					// Convert to ACF format.
 					$value = $datetime->format( 'Ymd' );
 
-				// Date & Time Picker test.
 				} elseif ( $acf_setting['type'] == 'date_time_picker' ) {
 
 					// Event edit passes a YmdHis format, so test for that.
@@ -640,7 +639,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 		// Check for filter.
 		if ( $filter !== 'none' ) {
 
-			// Check "public" filter.
 			if ( $filter == 'public' ) {
 
 				// Grab the public Event Fields.
@@ -667,7 +665,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 					}
 				}
 
-			// Check "Settings" filter.
 			} elseif ( $filter == 'settings' ) {
 
 				// Skip all but those defined in our Event Settings Fields array.
@@ -691,7 +688,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 					}
 				}
 
-			// Check "Fee" filter.
 			} elseif ( $filter == 'fee' ) {
 
 				// Skip all but those defined in our Event Fields array.
@@ -715,7 +711,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 					}
 				}
 
-			// Check "Registration" filter.
 			} elseif ( $filter == 'registration' ) {
 
 				// Skip all but those defined in our Online Registration Fields array.

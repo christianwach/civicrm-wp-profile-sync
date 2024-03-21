@@ -213,7 +213,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_City extends CiviCRM_Profile_Sync
 			// Init Field value.
 			$value = '';
 
-			// Does this Field sync with the Primary Address?
 			if ( $address_field === 'primary' ) {
 
 				// Assign City from the Primary Address.
@@ -224,12 +223,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_City extends CiviCRM_Profile_Sync
 					}
 				}
 
-			// Must sync with a Location Type.
-			} elseif ( is_int( $address_field ) ) {
+			} elseif ( is_numeric( $address_field ) ) {
 
-				// Assign City from the type of Address.
+				// Assign City from the Address Location Type.
 				foreach ( $data as $address ) {
-					if ( $address->location_type_id == $address_field ) {
+					if ( (int) $address->location_type_id === (int) $address_field ) {
 						$value = $address->city;
 						break;
 					}
@@ -443,7 +441,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_City extends CiviCRM_Profile_Sync
 			// Process Address if not deleting it.
 			if ( $args['op'] !== 'delete' ) {
 
-				// Does this Field sync with the Primary Address?
 				if ( $address_field === 'primary' ) {
 
 					// Assign City from the Primary Address.
@@ -451,11 +448,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_City extends CiviCRM_Profile_Sync
 						$value = $address->city;
 					}
 
-				// Must sync with a Location Type.
-				} elseif ( is_int( $address_field ) ) {
+				} elseif ( is_numeric( $address_field ) ) {
 
-					// Assign City from the type of Address.
-					if ( $address->location_type_id == $address_field ) {
+					// Assign City from the Address Location Type.
+					if ( (int) $address->location_type_id === (int) $address_field ) {
 						$value = $address->city;
 					}
 

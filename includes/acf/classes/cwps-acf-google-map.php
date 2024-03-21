@@ -846,7 +846,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		}
 
 		// Check if "Primary" has been toggled.
-		if ( $address->is_primary != $previous->is_primary ) {
+		if ( $address->is_primary !== $previous->is_primary ) {
 
 			// Get direction of toggle.
 			$address->toggle_primary = 'off';
@@ -854,20 +854,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 				$address->toggle_primary = 'on';
 			}
 
-		} else {
-
 		}
 
 		// Check if "Billing" has been toggled.
-		if ( $address->is_billing != $previous->is_billing ) {
+		if ( $address->is_billing !== $previous->is_billing ) {
 
 			// Get direction of toggle.
 			$address->toggle_billing = 'off';
 			if ( $previous->is_billing == '0' ) {
 				$address->toggle_billing = 'on';
 			}
-
-		} else {
 
 		}
 
@@ -1578,10 +1574,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 			// Get this Contact's Addresses.
 			$addresses = $this->plugin->civicrm->address->addresses_get_by_contact_id( $contact_id );
 
-			// Init location.
+			// Try and find a location.
 			$location = false;
-
-			// Does this Field sync with the Primary Address?
 			if ( $field[ $key ] === 'primary' ) {
 
 				// Assign Location from the Primary Address.
@@ -1592,10 +1586,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 					}
 				}
 
-			// Does this Field sync with the Billing Address?
 			} elseif ( $field[ $key ] === 'billing' ) {
 
-				// Assign Location from the Primary Address.
+				// Assign Location from the Billing Address.
 				foreach ( $addresses as $address ) {
 					if ( ! empty( $address->is_billing ) ) {
 						$location = $address;
@@ -1603,10 +1596,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 					}
 				}
 
-			// We need a Location Type.
 			} elseif ( is_numeric( $field[ $key ] ) ) {
 
-				// Assign Location from the type of Address.
+				// We need a Location Type so assign Location from the type of Address.
 				foreach ( $addresses as $address ) {
 					if ( $address->location_type_id == $field[ $key ] ) {
 						$location = $address;

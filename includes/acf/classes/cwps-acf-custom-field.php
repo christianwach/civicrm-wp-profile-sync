@@ -1251,22 +1251,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 			return $filtered_fields;
 		}
 
-		// ACF "Multi-Select".
 		if ( $field['multiple'] == 1 ) {
 
 			// Filter Fields to include only Multi-Select types.
 			$select_types = [ 'Multi-Select', 'Multi-Select Country', 'Multi-Select State/Province' ];
 
-		// ACF "Autocomplete-Select". Sort of.
 		} elseif ( $field['ui'] == 1 && $field['ajax'] == 1 ) {
 
 			// Filter Fields to include only Autocomplete-Select.
 			$select_types = [ 'Autocomplete-Select' ];
 
-		// Otherwise, fall back.
 		} else {
 
-			// Filter Fields to include only "Select" types.
+			// Otherwise filter Fields to include only "Select" types.
 			$select_types = [ 'Select', 'Select Country', 'Select State/Province' ];
 
 		}

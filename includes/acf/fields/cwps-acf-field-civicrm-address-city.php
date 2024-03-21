@@ -336,7 +336,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_City_Field extends acf_field {
 			// Init City.
 			$city = false;
 
-			// Does this Field sync with the Primary Address?
 			if ( ! empty( $field['city_is_primary'] ) ) {
 
 				// Assign City from the Primary Address.
@@ -347,10 +346,9 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_City_Field extends acf_field {
 					}
 				}
 
-			// We need a Location Type.
 			} elseif ( ! empty( $field['city_location_type_id'] ) ) {
 
-				// Assign City from the type of Address.
+				// Assign City from the type of Address Location Type.
 				foreach ( $addresses as $address ) {
 					if ( $address->location_type_id == $field['city_location_type_id'] ) {
 						$city = $address->city;

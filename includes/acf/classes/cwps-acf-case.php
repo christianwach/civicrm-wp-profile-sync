@@ -1130,7 +1130,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 			'contact_id_b' => $case_data['manager_id'],
 			'relationship_type_id' => $relationship_type['id'],
 			'case_id' => $case['id'],
-			'start_date' => date( 'YmdHis', strtotime( 'now' ) ),
+			'start_date' => gmdate( 'YmdHis', strtotime( 'now' ) ),
 		];
 
 		// If there's an existing Relationship, update.

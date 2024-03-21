@@ -26,7 +26,6 @@
 
 		<!-- PSR4: Allow short file names. -->
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
-		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
 
 		<!-- Remove some checks to allow phpcbf to run in bulk mode. -->
 		<exclude name="WordPress.PHP.StrictComparisons.LooseComparison" />
@@ -38,7 +37,8 @@
 		<exclude name="Squiz.Commenting.InlineComment.SpacingAfterAtFunctionEnd" />
 		<exclude name="Squiz.Commenting.BlockComment.HasEmptyLineBefore" />
 		<exclude name="PSR2.ControlStructures.SwitchDeclaration.BodyOnNextLineCASE" />
-		<exclude name="Generic.WhiteSpace.ScopeIndent.Incorrect" />
+
+		<exclude name="Generic.Metrics.NestingLevel.MaxExceeded" />
 
 	</rule>
 

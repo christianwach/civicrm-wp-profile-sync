@@ -324,7 +324,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 				// Get Field setting.
 				$acf_setting = get_field_object( $selector, $post_id );
 
-				// Date Picker test.
+				// Test for Date Picker or Date Time Picker.
 				if ( $acf_setting['type'] == 'date_picker' ) {
 
 					// Contact edit passes a Y-m-d format, so test for that.
@@ -338,10 +338,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 					// Convert to ACF format.
 					$value = $datetime->format( 'Ymd' );
 
-				// Date & Time Picker test.
 				} elseif ( $acf_setting['type'] == 'date_time_picker' ) {
+
 					$datetime = DateTime::createFromFormat( 'YmdHis', $value );
 					$value = $datetime->format( 'Y-m-d H:i:s' );
+
 				}
 
 				break;
@@ -607,13 +608,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		// Override return if we get some.
 		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
 
-			// Check for no filter.
 			if ( $filter == 'none' ) {
 
-				// Grab all of them.
+				// Grab all Fields.
 				$fields = $result['values'];
 
-			// Check public filter.
 			} elseif ( $filter == 'public' ) {
 
 				// Init Fields array.
@@ -702,13 +701,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		// Override return if we get some.
 		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
 
-			// Check for no filter.
 			if ( $filter == 'none' ) {
 
-				// Grab all of them.
+				// Grab all Fields.
 				$fields = $result['values'];
 
-			// Check public filter.
 			} elseif ( $filter == 'public' ) {
 
 				// Get the top level Contact Types array.

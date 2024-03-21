@@ -213,7 +213,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 			// Init State/Province ID.
 			$state_id = false;
 
-			// Does this Field sync with the Primary Address?
 			if ( $address_field === 'primary' ) {
 
 				// Assign State from the Primary Address.
@@ -224,12 +223,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 					}
 				}
 
-			// Must sync with a Location Type.
 			} elseif ( is_int( $address_field ) ) {
 
-				// Assign State from the type of Address.
+				// Assign State from the Address Location Type.
 				foreach ( $data as $address ) {
-					if ( $address->location_type_id == $address_field ) {
+					if ( $address->location_type_id === $address_field ) {
 						$state_id = (int) $address->state_province_id;
 						break;
 					}
@@ -452,7 +450,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 			// Process Address if not deleting it.
 			if ( $args['op'] !== 'delete' ) {
 
-				// Does this Field sync with the Primary Address?
 				if ( $address_field === 'primary' ) {
 
 					// Assign State from the Primary Address.
@@ -460,10 +457,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 						$state_id = (int) $address->state_province_id;
 					}
 
-				// Must sync with a Location Type.
 				} elseif ( is_int( $address_field ) ) {
 
-					// Assign State from the type of Address.
+					// Assign State from the Address Location Type.
 					if ( $address->location_type_id == $address_field ) {
 						$state_id = (int) $address->state_province_id;
 					}

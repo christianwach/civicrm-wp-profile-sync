@@ -336,7 +336,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_State_Field extends acf_field 
 			// Init State/Province ID.
 			$state_id = false;
 
-			// Does this Field sync with the Primary Address?
 			if ( ! empty( $field['state_is_primary'] ) ) {
 
 				// Assign State/Province ID from the Primary Address.
@@ -347,10 +346,9 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_State_Field extends acf_field 
 					}
 				}
 
-			// We need a Location Type.
 			} elseif ( ! empty( $field['state_location_type_id'] ) ) {
 
-				// Assign State/Province ID from the type of Address.
+				// Assign State/Province ID from the Address Location Type.
 				foreach ( $addresses as $address ) {
 					if ( $address->location_type_id == $field['state_location_type_id'] ) {
 						$state_id = (int) $address->state_province_id;

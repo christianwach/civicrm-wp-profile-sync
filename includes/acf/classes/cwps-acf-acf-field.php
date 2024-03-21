@@ -664,21 +664,17 @@ class CiviCRM_Profile_Sync_ACF_Field {
 			return '';
 		}
 
-		// If it's an array, extract full image URL.
 		if ( is_array( $value ) ) {
 
-			// Discard all but the URL.
+			// If it's an array, discard all but the URL.
 			if ( ! empty( $value['url'] ) ) {
 				$value = $value['url'];
 			}
 
-		// When it's numeric, get full image URL from Attachment.
 		} elseif ( is_numeric( $value ) ) {
 
-			// Grab the the full size Image URL.
+			// When it's numeric, use full size Image URL from Attachment.
 			$url = wp_get_attachment_image_url( (int) $value, 'full' );
-
-			// Overwrite with the URL.
 			if ( ! empty( $url ) ) {
 				$value = $url;
 			}

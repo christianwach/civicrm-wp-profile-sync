@@ -703,12 +703,11 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		if ( $query->have_posts() ) {
 			foreach ( $query->get_posts() as $found ) {
 
-				// Add if we want *all* Posts.
 				if ( $post_type === 'any' ) {
+					// Add if we want *all* Posts.
 					$posts[] = $found->ID;
-
-				// Grab what should be the only Post.
-				} elseif ( $found->post_type == $post_type ) {
+				} elseif ( $found->post_type === $post_type ) {
+					// Grab what should be the only Post.
 					$posts[] = $found->ID;
 					break;
 				}
@@ -1274,12 +1273,11 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		if ( $query->have_posts() ) {
 			foreach ( $query->get_posts() as $found ) {
 
-				// Add if we want *all* Posts.
 				if ( $post_type === 'any' ) {
+					// Add if we want *all* Posts.
 					$posts[] = $found->ID;
-
-				// Grab what should be the only Post.
 				} elseif ( $found->post_type == $post_type ) {
+					// Grab what should be the only Post.
 					$posts[] = $found->ID;
 					break;
 				}
@@ -1752,12 +1750,11 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		if ( $query->have_posts() ) {
 			foreach ( $query->get_posts() as $found ) {
 
-				// Add if we want *all* Posts.
 				if ( $post_type === 'any' ) {
+					// Add if we want *all* Posts.
 					$posts[] = $found->ID;
-
-				// Grab what should be the only Post.
 				} elseif ( $found->post_type == $post_type ) {
+					// Grab what should be the only Post.
 					$posts[] = $found->ID;
 					break;
 				}
