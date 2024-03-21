@@ -553,8 +553,8 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		 *
 		 * @since 0.2.7
 		 *
-		 * @param integer $objectId The ID of the object.
-		 * @param object $objectRef The object.
+		 * @param integer $object_id The ID of the object.
+		 * @param object $object_ref The object.
 		 */
 		do_action( 'civicrm_wp_profile_sync_primary_email_pre_update', $args['objectId'], $args['objectRef'] );
 
@@ -619,8 +619,8 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		 * @since 0.4
 		 *
 		 * @param integer $user_id The ID of the WordPress User.
-		 * @param integer $objectId The ID of the CiviCRM Email.
-		 * @param object $objectRef The CiviCRM Email object.
+		 * @param integer $object_id The ID of the CiviCRM Email.
+		 * @param object $object_ref The CiviCRM Email object.
 		 */
 		do_action( 'civicrm_wp_profile_sync_primary_email_synced', $user_id, $args['objectId'], $args['objectRef'] );
 

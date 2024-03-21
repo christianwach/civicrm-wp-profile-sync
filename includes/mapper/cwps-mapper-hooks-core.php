@@ -708,11 +708,11 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 * @since 0.4
 	 *
 	 * @param string  $op The type of database operation.
-	 * @param string  $objectName The type of object.
-	 * @param integer $objectId The ID of the object.
-	 * @param object  $objectRef The object.
+	 * @param string  $object_name The type of object.
+	 * @param integer $object_id The ID of the object.
+	 * @param object  $object_ref The object.
 	 */
-	public function contact_pre_create( $op, $objectName, $objectId, $objectRef ) {
+	public function contact_pre_create( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
 		if ( $op != 'create' ) {
@@ -721,7 +721,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Bail if this is not a Contact.
 		$top_level_types = $this->plugin->civicrm->contact_type->types_get_top_level();
-		if ( ! in_array( $objectName, $top_level_types ) ) {
+		if ( ! in_array( $object_name, $top_level_types ) ) {
 			return;
 		}
 
@@ -732,12 +732,12 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		// Let's make an array of the CiviCRM params.
 		$args = [
 			'op'         => $op,
-			'objectName' => $objectName,
-			'objectId'   => $objectId,
+			'objectName' => $object_name,
+			'objectId'   => $object_id,
 		];
 
 		// Maybe cast objectRef as object.
-		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+		$args['objectRef'] = is_object( $object_ref ) ? $object_ref : (object) $object_ref;
 
 		/**
 		 * Broadcast that a Contact is about to be created.
@@ -761,11 +761,11 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 * @since 0.4
 	 *
 	 * @param string  $op The type of database operation.
-	 * @param string  $objectName The type of object.
-	 * @param integer $objectId The ID of the object.
-	 * @param object  $objectRef The object.
+	 * @param string  $object_name The type of object.
+	 * @param integer $object_id The ID of the object.
+	 * @param object  $object_ref The object.
 	 */
-	public function contact_pre_edit( $op, $objectName, $objectId, $objectRef ) {
+	public function contact_pre_edit( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
 		if ( $op != 'edit' ) {
@@ -774,7 +774,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Bail if this is not a Contact.
 		$top_level_types = $this->plugin->civicrm->contact_type->types_get_top_level();
-		if ( ! in_array( $objectName, $top_level_types ) ) {
+		if ( ! in_array( $object_name, $top_level_types ) ) {
 			return;
 		}
 
@@ -785,12 +785,12 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		// Let's make an array of the CiviCRM params.
 		$args = [
 			'op'         => $op,
-			'objectName' => $objectName,
-			'objectId'   => $objectId,
+			'objectName' => $object_name,
+			'objectId'   => $object_id,
 		];
 
 		// Maybe cast objectRef as object.
-		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+		$args['objectRef'] = is_object( $object_ref ) ? $object_ref : (object) $object_ref;
 
 		/**
 		 * Broadcast that a Contact is about to be edited.
@@ -814,11 +814,11 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 * @since 0.4
 	 *
 	 * @param string  $op The type of database operation.
-	 * @param string  $objectName The type of object.
-	 * @param integer $objectId The ID of the object.
-	 * @param object  $objectRef The object.
+	 * @param string  $object_name The type of object.
+	 * @param integer $object_id The ID of the object.
+	 * @param object  $object_ref The object.
 	 */
-	public function contact_created( $op, $objectName, $objectId, $objectRef ) {
+	public function contact_created( $op, $object_name, $object_id, $object_ref ) {
 
 		// Target our operation.
 		if ( $op != 'create' ) {
@@ -827,7 +827,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Bail if this is not a Contact.
 		$top_level_types = $this->plugin->civicrm->contact_type->types_get_top_level();
-		if ( ! in_array( $objectName, $top_level_types ) ) {
+		if ( ! in_array( $object_name, $top_level_types ) ) {
 			return;
 		}
 
@@ -838,12 +838,12 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		// Let's make an array of the CiviCRM params.
 		$args = [
 			'op'         => $op,
-			'objectName' => $objectName,
-			'objectId'   => $objectId,
+			'objectName' => $object_name,
+			'objectId'   => $object_id,
 		];
 
 		// Maybe cast objectRef as object.
-		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+		$args['objectRef'] = is_object( $object_ref ) ? $object_ref : (object) $object_ref;
 
 		/**
 		 * Broadcast that a Contact has been created.
@@ -867,11 +867,11 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 * @since 0.4
 	 *
 	 * @param string  $op The type of database operation.
-	 * @param string  $objectName The type of object.
-	 * @param integer $objectId The ID of the object.
-	 * @param object  $objectRef The object.
+	 * @param string  $object_name The type of object.
+	 * @param integer $object_id The ID of the object.
+	 * @param object  $object_ref The object.
 	 */
-	public function contact_edited( $op, $objectName, $objectId, $objectRef ) {
+	public function contact_edited( $op, $object_name, $object_id, $object_ref ) {
 
 		// Target our operation.
 		if ( $op != 'edit' ) {
@@ -880,12 +880,12 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Bail if this is not a Contact.
 		$top_level_types = $this->plugin->civicrm->contact_type->types_get_top_level();
-		if ( ! in_array( $objectName, $top_level_types ) ) {
+		if ( ! in_array( $object_name, $top_level_types ) ) {
 			return;
 		}
 
 		// Get the full Contact data.
-		$contact = $this->plugin->civicrm->contact->get_by_id( $objectId );
+		$contact = $this->plugin->civicrm->contact->get_by_id( $object_id );
 
 		// Bail if something went wrong.
 		if ( $contact === false ) {
@@ -899,8 +899,8 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		// Let's make an array of the CiviCRM params.
 		$args = [
 			'op'         => $op,
-			'objectName' => $objectName,
-			'objectId'   => $objectId,
+			'objectName' => $object_name,
+			'objectId'   => $object_id,
 		];
 
 		/*
@@ -917,8 +917,8 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Maybe save extra data.
 		foreach ( $extra_data as $property ) {
-			if ( isset( $objectRef->$property ) ) {
-				$contact[ $property ] = $objectRef->$property;
+			if ( isset( $object_ref->$property ) ) {
+				$contact[ $property ] = $object_ref->$property;
 			}
 		}
 
@@ -949,11 +949,11 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 * @since 0.4
 	 *
 	 * @param string  $op The type of database operation.
-	 * @param string  $objectName The type of object.
-	 * @param integer $objectId The ID of the object.
-	 * @param object  $objectRef The object.
+	 * @param string  $object_name The type of object.
+	 * @param integer $object_id The ID of the object.
+	 * @param object  $object_ref The object.
 	 */
-	public function email_pre_edit( $op, $objectName, $objectId, $objectRef ) {
+	public function email_pre_edit( $op, $object_name, $object_id, $object_ref ) {
 
 		// Target our operation.
 		if ( $op != 'edit' ) {
@@ -961,19 +961,19 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		}
 
 		// Target our object type.
-		if ( $objectName != 'Email' ) {
+		if ( $object_name != 'Email' ) {
 			return;
 		}
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
 			'op'         => $op,
-			'objectName' => $objectName,
-			'objectId'   => $objectId,
+			'objectName' => $object_name,
+			'objectId'   => $object_id,
 		];
 
 		// Maybe cast objectRef as object.
-		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+		$args['objectRef'] = is_object( $object_ref ) ? $object_ref : (object) $object_ref;
 
 		/**
 		 * Broadcast that a Contact's Email is about to be edited.
@@ -993,11 +993,11 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 * @since 0.4
 	 *
 	 * @param string  $op The type of database operation.
-	 * @param string  $objectName The type of object.
-	 * @param integer $objectId The ID of the object.
-	 * @param object  $objectRef The object.
+	 * @param string  $object_name The type of object.
+	 * @param integer $object_id The ID of the object.
+	 * @param object  $object_ref The object.
 	 */
-	public function email_edited( $op, $objectName, $objectId, $objectRef ) {
+	public function email_edited( $op, $object_name, $object_id, $object_ref ) {
 
 		// Target our operation.
 		if ( $op != 'edit' ) {
@@ -1005,19 +1005,19 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		}
 
 		// Target our object type.
-		if ( $objectName != 'Email' ) {
+		if ( $object_name != 'Email' ) {
 			return;
 		}
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
 			'op'         => $op,
-			'objectName' => $objectName,
-			'objectId'   => $objectId,
+			'objectName' => $object_name,
+			'objectId'   => $object_id,
 		];
 
 		// Maybe cast objectRef as object.
-		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+		$args['objectRef'] = is_object( $object_ref ) ? $object_ref : (object) $object_ref;
 
 		/**
 		 * Broadcast that a CiviCRM Email has been edited.
@@ -1039,11 +1039,11 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 * @since 0.4
 	 *
 	 * @param string  $op The type of database operation.
-	 * @param string  $objectName The type of object.
-	 * @param integer $objectId The ID of the object.
-	 * @param object  $objectRef The object.
+	 * @param string  $object_name The type of object.
+	 * @param integer $object_id The ID of the object.
+	 * @param object  $object_ref The object.
 	 */
-	public function website_pre_edit( $op, $objectName, $objectId, $objectRef ) {
+	public function website_pre_edit( $op, $object_name, $object_id, $object_ref ) {
 
 		// Target our operation.
 		if ( $op != 'edit' ) {
@@ -1051,19 +1051,19 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		}
 
 		// Bail if this is not a Website.
-		if ( $objectName != 'Website' ) {
+		if ( $object_name != 'Website' ) {
 			return;
 		}
 
 		// Let's make an array of the params.
 		$args = [
 			'op'         => $op,
-			'objectName' => $objectName,
-			'objectId'   => $objectId,
+			'objectName' => $object_name,
+			'objectId'   => $object_id,
 		];
 
 		// Maybe cast objectRef as object.
-		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+		$args['objectRef'] = is_object( $object_ref ) ? $object_ref : (object) $object_ref;
 
 		/**
 		 * Broadcast that a CiviCRM Website is about to be updated.
@@ -1082,11 +1082,11 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 * @since 0.5.2
 	 *
 	 * @param string  $op The type of database operation.
-	 * @param string  $objectName The type of object.
-	 * @param integer $objectId The ID of the object.
-	 * @param object  $objectRef The object.
+	 * @param string  $object_name The type of object.
+	 * @param integer $object_id The ID of the object.
+	 * @param object  $object_ref The object.
 	 */
-	public function website_pre_delete( $op, $objectName, $objectId, $objectRef ) {
+	public function website_pre_delete( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
 		if ( $op != 'delete' ) {
@@ -1094,19 +1094,19 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		}
 
 		// Bail if this is not a Website.
-		if ( $objectName != 'Website' ) {
+		if ( $object_name != 'Website' ) {
 			return;
 		}
 
 		// Let's make an array of the params.
 		$args = [
 			'op'         => $op,
-			'objectName' => $objectName,
-			'objectId'   => $objectId,
+			'objectName' => $object_name,
+			'objectId'   => $object_id,
 		];
 
 		// Maybe cast objectRef as object.
-		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+		$args['objectRef'] = is_object( $object_ref ) ? $object_ref : (object) $object_ref;
 
 		/**
 		 * Broadcast that a CiviCRM Website is about to be deleted.
@@ -1125,11 +1125,11 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 * @since 0.4
 	 *
 	 * @param string  $op The type of database operation.
-	 * @param string  $objectName The type of object.
-	 * @param integer $objectId The ID of the object.
-	 * @param object  $objectRef The object.
+	 * @param string  $object_name The type of object.
+	 * @param integer $object_id The ID of the object.
+	 * @param object  $object_ref The object.
 	 */
-	public function website_created( $op, $objectName, $objectId, $objectRef ) {
+	public function website_created( $op, $object_name, $object_id, $object_ref ) {
 
 		// Target our operation.
 		if ( $op != 'create' ) {
@@ -1137,19 +1137,19 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		}
 
 		// Bail if this is not a Website.
-		if ( $objectName != 'Website' ) {
+		if ( $object_name != 'Website' ) {
 			return;
 		}
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
 			'op'         => $op,
-			'objectName' => $objectName,
-			'objectId'   => $objectId,
+			'objectName' => $object_name,
+			'objectId'   => $object_id,
 		];
 
 		// Maybe cast objectRef as object.
-		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+		$args['objectRef'] = is_object( $object_ref ) ? $object_ref : (object) $object_ref;
 
 		/**
 		 * Broadcast that a CiviCRM Website has been created.
@@ -1168,11 +1168,11 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 * @since 0.4
 	 *
 	 * @param string  $op The type of database operation.
-	 * @param string  $objectName The type of object.
-	 * @param integer $objectId The ID of the object.
-	 * @param object  $objectRef The object.
+	 * @param string  $object_name The type of object.
+	 * @param integer $object_id The ID of the object.
+	 * @param object  $object_ref The object.
 	 */
-	public function website_edited( $op, $objectName, $objectId, $objectRef ) {
+	public function website_edited( $op, $object_name, $object_id, $object_ref ) {
 
 		// Target our operation.
 		if ( $op != 'edit' ) {
@@ -1180,19 +1180,19 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		}
 
 		// Bail if this is not a Website.
-		if ( $objectName != 'Website' ) {
+		if ( $object_name != 'Website' ) {
 			return;
 		}
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
 			'op'         => $op,
-			'objectName' => $objectName,
-			'objectId'   => $objectId,
+			'objectName' => $object_name,
+			'objectId'   => $object_id,
 		];
 
 		// Maybe cast objectRef as object.
-		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+		$args['objectRef'] = is_object( $object_ref ) ? $object_ref : (object) $object_ref;
 
 		/**
 		 * Broadcast that a CiviCRM Website has been updated.
@@ -1211,11 +1211,11 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 * @since 0.4
 	 *
 	 * @param string  $op The type of database operation.
-	 * @param string  $objectName The type of object.
-	 * @param integer $objectId The ID of the object.
-	 * @param object  $objectRef The object.
+	 * @param string  $object_name The type of object.
+	 * @param integer $object_id The ID of the object.
+	 * @param object  $object_ref The object.
 	 */
-	public function website_deleted( $op, $objectName, $objectId, $objectRef ) {
+	public function website_deleted( $op, $object_name, $object_id, $object_ref ) {
 
 		// Target our operation.
 		if ( $op != 'delete' ) {
@@ -1223,19 +1223,19 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		}
 
 		// Bail if this is not a Website.
-		if ( $objectName != 'Website' ) {
+		if ( $object_name != 'Website' ) {
 			return;
 		}
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
 			'op'         => $op,
-			'objectName' => $objectName,
-			'objectId'   => $objectId,
+			'objectName' => $object_name,
+			'objectId'   => $object_id,
 		];
 
 		// Maybe cast objectRef as object.
-		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+		$args['objectRef'] = is_object( $object_ref ) ? $object_ref : (object) $object_ref;
 
 		/**
 		 * Broadcast that a CiviCRM Website has been deleted.
@@ -1256,11 +1256,11 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 * @since 0.5
 	 *
 	 * @param string  $op The type of database operation.
-	 * @param string  $objectName The type of object.
-	 * @param integer $objectId The ID of the object.
-	 * @param object  $objectRef The object.
+	 * @param string  $object_name The type of object.
+	 * @param integer $object_id The ID of the object.
+	 * @param object  $object_ref The object.
 	 */
-	public function phone_pre_delete( $op, $objectName, $objectId, $objectRef ) {
+	public function phone_pre_delete( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
 		if ( $op != 'delete' ) {
@@ -1268,19 +1268,19 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		}
 
 		// Bail if this is not a Phone.
-		if ( $objectName != 'Phone' ) {
+		if ( $object_name != 'Phone' ) {
 			return;
 		}
 
 		// Let's make an array of the params.
 		$args = [
 			'op'         => $op,
-			'objectName' => $objectName,
-			'objectId'   => $objectId,
+			'objectName' => $object_name,
+			'objectId'   => $object_id,
 		];
 
 		// Maybe cast objectRef as object.
-		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+		$args['objectRef'] = is_object( $object_ref ) ? $object_ref : (object) $object_ref;
 
 		/**
 		 * Broadcast that a CiviCRM Phone is about to be deleted.
@@ -1299,11 +1299,11 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 * @since 0.5
 	 *
 	 * @param string  $op The type of database operation.
-	 * @param string  $objectName The type of object.
-	 * @param integer $objectId The ID of the object.
-	 * @param object  $objectRef The object.
+	 * @param string  $object_name The type of object.
+	 * @param integer $object_id The ID of the object.
+	 * @param object  $object_ref The object.
 	 */
-	public function phone_created( $op, $objectName, $objectId, $objectRef ) {
+	public function phone_created( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
 		if ( $op != 'create' ) {
@@ -1311,19 +1311,19 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		}
 
 		// Bail if this is not a Phone.
-		if ( $objectName != 'Phone' ) {
+		if ( $object_name != 'Phone' ) {
 			return;
 		}
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
 			'op'         => $op,
-			'objectName' => $objectName,
-			'objectId'   => $objectId,
+			'objectName' => $object_name,
+			'objectId'   => $object_id,
 		];
 
 		// Maybe cast objectRef as object.
-		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+		$args['objectRef'] = is_object( $object_ref ) ? $object_ref : (object) $object_ref;
 
 		/**
 		 * Broadcast that a CiviCRM Phone has been created.
@@ -1342,11 +1342,11 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 * @since 0.5
 	 *
 	 * @param string  $op The type of database operation.
-	 * @param string  $objectName The type of object.
-	 * @param integer $objectId The ID of the object.
-	 * @param object  $objectRef The object.
+	 * @param string  $object_name The type of object.
+	 * @param integer $object_id The ID of the object.
+	 * @param object  $object_ref The object.
 	 */
-	public function phone_edited( $op, $objectName, $objectId, $objectRef ) {
+	public function phone_edited( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
 		if ( $op != 'edit' ) {
@@ -1354,19 +1354,19 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		}
 
 		// Bail if this is not a Phone.
-		if ( $objectName != 'Phone' ) {
+		if ( $object_name != 'Phone' ) {
 			return;
 		}
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
 			'op'         => $op,
-			'objectName' => $objectName,
-			'objectId'   => $objectId,
+			'objectName' => $object_name,
+			'objectId'   => $object_id,
 		];
 
 		// Maybe cast objectRef as object.
-		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+		$args['objectRef'] = is_object( $object_ref ) ? $object_ref : (object) $object_ref;
 
 		/**
 		 * Broadcast that a CiviCRM Phone has been updated.
@@ -1385,11 +1385,11 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 * @since 0.5
 	 *
 	 * @param string  $op The type of database operation.
-	 * @param string  $objectName The type of object.
-	 * @param integer $objectId The ID of the object.
-	 * @param object  $objectRef The object.
+	 * @param string  $object_name The type of object.
+	 * @param integer $object_id The ID of the object.
+	 * @param object  $object_ref The object.
 	 */
-	public function phone_deleted( $op, $objectName, $objectId, $objectRef ) {
+	public function phone_deleted( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
 		if ( $op != 'delete' ) {
@@ -1397,19 +1397,19 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		}
 
 		// Bail if this is not a Phone.
-		if ( $objectName != 'Phone' ) {
+		if ( $object_name != 'Phone' ) {
 			return;
 		}
 
 		// Let's make an array of the params.
 		$args = [
 			'op'         => $op,
-			'objectName' => $objectName,
-			'objectId'   => $objectId,
+			'objectName' => $object_name,
+			'objectId'   => $object_id,
 		];
 
 		// Maybe cast objectRef as object.
-		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+		$args['objectRef'] = is_object( $object_ref ) ? $object_ref : (object) $object_ref;
 
 		/**
 		 * Broadcast that a CiviCRM Phone has been deleted.
@@ -1430,11 +1430,11 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 * @since 0.5
 	 *
 	 * @param string  $op The type of database operation.
-	 * @param string  $objectName The type of object.
-	 * @param integer $objectId The ID of the object.
-	 * @param object  $objectRef The object.
+	 * @param string  $object_name The type of object.
+	 * @param integer $object_id The ID of the object.
+	 * @param object  $object_ref The object.
 	 */
-	public function address_pre_edit( $op, $objectName, $objectId, $objectRef ) {
+	public function address_pre_edit( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
 		if ( $op != 'edit' ) {
@@ -1442,19 +1442,19 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		}
 
 		// Bail if this is not an Address.
-		if ( $objectName != 'Address' ) {
+		if ( $object_name != 'Address' ) {
 			return;
 		}
 
 		// Let's make an array of the params.
 		$args = [
 			'op'         => $op,
-			'objectName' => $objectName,
-			'objectId'   => $objectId,
+			'objectName' => $object_name,
+			'objectId'   => $object_id,
 		];
 
 		// Maybe cast objectRef as object.
-		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+		$args['objectRef'] = is_object( $object_ref ) ? $object_ref : (object) $object_ref;
 
 		/**
 		 * Broadcast that a CiviCRM Address is about to be updated.
@@ -1473,11 +1473,11 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 * @since 0.5
 	 *
 	 * @param string  $op The type of database operation.
-	 * @param string  $objectName The type of object.
-	 * @param integer $objectId The ID of the object.
-	 * @param object  $objectRef The object.
+	 * @param string  $object_name The type of object.
+	 * @param integer $object_id The ID of the object.
+	 * @param object  $object_ref The object.
 	 */
-	public function address_pre_delete( $op, $objectName, $objectId, $objectRef ) {
+	public function address_pre_delete( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
 		if ( $op != 'delete' ) {
@@ -1485,19 +1485,19 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		}
 
 		// Bail if this is not an Address.
-		if ( $objectName != 'Address' ) {
+		if ( $object_name != 'Address' ) {
 			return;
 		}
 
 		// Let's make an array of the params.
 		$args = [
 			'op'         => $op,
-			'objectName' => $objectName,
-			'objectId'   => $objectId,
+			'objectName' => $object_name,
+			'objectId'   => $object_id,
 		];
 
 		// Maybe cast objectRef as object.
-		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+		$args['objectRef'] = is_object( $object_ref ) ? $object_ref : (object) $object_ref;
 
 		/**
 		 * Broadcast that a CiviCRM Address is about to be deleted.
@@ -1516,11 +1516,11 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 * @since 0.5
 	 *
 	 * @param string  $op The type of database operation.
-	 * @param string  $objectName The type of object.
-	 * @param integer $objectId The ID of the object.
-	 * @param object  $objectRef The object.
+	 * @param string  $object_name The type of object.
+	 * @param integer $object_id The ID of the object.
+	 * @param object  $object_ref The object.
 	 */
-	public function address_created( $op, $objectName, $objectId, $objectRef ) {
+	public function address_created( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
 		if ( $op != 'create' ) {
@@ -1528,19 +1528,19 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		}
 
 		// Bail if this is not an Address.
-		if ( $objectName != 'Address' ) {
+		if ( $object_name != 'Address' ) {
 			return;
 		}
 
 		// Let's make an array of the params.
 		$args = [
 			'op'         => $op,
-			'objectName' => $objectName,
-			'objectId'   => $objectId,
+			'objectName' => $object_name,
+			'objectId'   => $object_id,
 		];
 
 		// Maybe cast objectRef as object.
-		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+		$args['objectRef'] = is_object( $object_ref ) ? $object_ref : (object) $object_ref;
 
 		/**
 		 * Broadcast that a CiviCRM Address has been created.
@@ -1559,11 +1559,11 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 * @since 0.5
 	 *
 	 * @param string  $op The type of database operation.
-	 * @param string  $objectName The type of object.
-	 * @param integer $objectId The ID of the object.
-	 * @param object  $objectRef The object.
+	 * @param string  $object_name The type of object.
+	 * @param integer $object_id The ID of the object.
+	 * @param object  $object_ref The object.
 	 */
-	public function address_edited( $op, $objectName, $objectId, $objectRef ) {
+	public function address_edited( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
 		if ( $op != 'edit' ) {
@@ -1571,19 +1571,19 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		}
 
 		// Bail if this is not an Address.
-		if ( $objectName != 'Address' ) {
+		if ( $object_name != 'Address' ) {
 			return;
 		}
 
 		// Let's make an array of the params.
 		$args = [
 			'op'         => $op,
-			'objectName' => $objectName,
-			'objectId'   => $objectId,
+			'objectName' => $object_name,
+			'objectId'   => $object_id,
 		];
 
 		// Maybe cast objectRef as object.
-		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+		$args['objectRef'] = is_object( $object_ref ) ? $object_ref : (object) $object_ref;
 
 		/**
 		 * Broadcast that a CiviCRM Address has been updated.
@@ -1602,11 +1602,11 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	 * @since 0.5
 	 *
 	 * @param string  $op The type of database operation.
-	 * @param string  $objectName The type of object.
-	 * @param integer $objectId The ID of the object.
-	 * @param object  $objectRef The object.
+	 * @param string  $object_name The type of object.
+	 * @param integer $object_id The ID of the object.
+	 * @param object  $object_ref The object.
 	 */
-	public function address_deleted( $op, $objectName, $objectId, $objectRef ) {
+	public function address_deleted( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
 		if ( $op != 'delete' ) {
@@ -1614,19 +1614,19 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		}
 
 		// Bail if this is not an Address.
-		if ( $objectName != 'Address' ) {
+		if ( $object_name != 'Address' ) {
 			return;
 		}
 
 		// Let's make an array of the params.
 		$args = [
 			'op'         => $op,
-			'objectName' => $objectName,
-			'objectId'   => $objectId,
+			'objectName' => $object_name,
+			'objectId'   => $object_id,
 		];
 
 		// Maybe cast objectRef as object.
-		$args['objectRef'] = is_object( $objectRef ) ? $objectRef : (object) $objectRef;
+		$args['objectRef'] = is_object( $object_ref ) ? $object_ref : (object) $object_ref;
 
 		/**
 		 * Broadcast that a CiviCRM Address has been deleted.

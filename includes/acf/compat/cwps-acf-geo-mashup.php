@@ -682,10 +682,10 @@ class CiviCRM_WP_Profile_Sync_ACF_Geo_Mashup {
 	 *
 	 * @since 0.5.8
 	 *
-	 * @param string $formName The CiviCRM form name.
+	 * @param string $form_name The CiviCRM form name.
 	 * @param object $form The CiviCRM form object.
 	 */
-	public function form_contact_type_build( $formName, &$form ) {
+	public function form_contact_type_build( $form_name, &$form ) {
 
 		global $geo_mashup_options;
 
@@ -696,7 +696,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Geo_Mashup {
 		}
 
 		// Is this the Contact Type edit form?
-		if ( $formName != 'CRM_Admin_Form_ContactType' ) {
+		if ( $form_name != 'CRM_Admin_Form_ContactType' ) {
 			return;
 		}
 

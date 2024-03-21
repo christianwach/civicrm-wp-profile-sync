@@ -705,12 +705,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param object $objectRef The DAO object.
+	 * @param object $object_ref The DAO object.
 	 */
-	public function custom_field_edited( $objectRef ) {
+	public function custom_field_edited( $object_ref ) {
 
 		// Bail if not Option Value save operation.
-		if ( ! ( $objectRef instanceof CRM_Core_DAO_CustomField ) ) {
+		if ( ! ( $object_ref instanceof CRM_Core_DAO_CustomField ) ) {
 			return;
 		}
 
@@ -737,17 +737,17 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param object $objectRef The DAO object.
+	 * @param object $object_ref The DAO object.
 	 */
-	public function option_value_edited( $objectRef ) {
+	public function option_value_edited( $object_ref ) {
 
 		// Bail if not Option Value save operation.
-		if ( ! ( $objectRef instanceof CRM_Core_DAO_OptionValue ) ) {
+		if ( ! ( $object_ref instanceof CRM_Core_DAO_OptionValue ) ) {
 			return;
 		}
 
 		// Get the Option Group to which this Option Value is attached.
-		$option_group = $this->plugin->civicrm->option_group_get_by_id( $objectRef->option_group_id );
+		$option_group = $this->plugin->civicrm->option_group_get_by_id( $object_ref->option_group_id );
 
 		// Bail if something went wrong.
 		if ( $option_group === false ) {

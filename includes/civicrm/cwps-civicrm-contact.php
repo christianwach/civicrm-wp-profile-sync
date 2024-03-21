@@ -257,11 +257,11 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 	 * @since 0.1
 	 *
 	 * @param string  $op The type of database operation.
-	 * @param string  $objectName The type of object.
-	 * @param integer $objectId The ID of the object.
-	 * @param object  $objectRef The object.
+	 * @param string  $object_name The type of object.
+	 * @param integer $object_id The ID of the object.
+	 * @param object  $object_ref The object.
 	 */
-	public function contact_pre( $op, $objectName, $objectId, $objectRef ) {
+	public function contact_pre( $op, $object_name, $object_id, $object_ref ) {
 
 		// Target our operation.
 		if ( $op != 'edit' ) {
@@ -269,7 +269,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		}
 
 		// Target our object type.
-		if ( $objectName != 'Individual' ) {
+		if ( $object_name != 'Individual' ) {
 			return;
 		}
 
@@ -332,7 +332,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		 *
 		 * @since 0.2.4
 		 *
-		 * @param integer $objectId The ID of the CiviCRM Contact.
+		 * @param integer $object_id The ID of the CiviCRM Contact.
 		 * @param object $contact The CiviCRM Contact object.
 		 * @param integer $user_id The ID of the WordPress User.
 		 */

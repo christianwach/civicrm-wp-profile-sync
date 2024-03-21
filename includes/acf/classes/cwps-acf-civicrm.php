@@ -825,20 +825,20 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 * @since 0.4
 	 *
 	 * @param string  $op The type of database operation.
-	 * @param string  $objectName The type of object.
-	 * @param integer $objectId The ID of the object.
-	 * @param object  $objectRef The object.
+	 * @param string  $object_name The type of object.
+	 * @param integer $object_id The ID of the object.
+	 * @param object  $object_ref The object.
 	 */
-	public function trace_pre( $op, $objectName, $objectId, $objectRef ) {
+	public function trace_pre( $op, $object_name, $object_id, $object_ref ) {
 
 		$e     = new \Exception();
 		$trace = $e->getTraceAsString();
 		$log   = [
-			'method'     => __METHOD__,
-			'op'         => $op,
-			'objectName' => $objectName,
-			'objectId'   => $objectId,
-			'objectRef'  => $objectRef,
+			'method'      => __METHOD__,
+			'op'          => $op,
+			'object_name' => $object_name,
+			'objectId'    => $object_id,
+			'objectRef'   => $object_ref,
 			//'backtrace' => $trace,
 		];
 		$this->plugin->log_error( $log );
@@ -851,20 +851,20 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 * @since 0.4
 	 *
 	 * @param string  $op The type of database operation.
-	 * @param string  $objectName The type of object.
-	 * @param integer $objectId The ID of the object.
-	 * @param object  $objectRef The object.
+	 * @param string  $object_name The type of object.
+	 * @param integer $object_id The ID of the object.
+	 * @param object  $object_ref The object.
 	 */
-	public function trace_post( $op, $objectName, $objectId, $objectRef ) {
+	public function trace_post( $op, $object_name, $object_id, $object_ref ) {
 
 		$e     = new \Exception();
 		$trace = $e->getTraceAsString();
 		$log   = [
-			'method'     => __METHOD__,
-			'op'         => $op,
-			'objectName' => $objectName,
-			'objectId'   => $objectId,
-			'objectRef'  => $objectRef,
+			'method'      => __METHOD__,
+			'op'          => $op,
+			'object_name' => $object_name,
+			'objectId'    => $object_id,
+			'objectRef'   => $object_ref,
 			//'backtrace' => $trace,
 		];
 		$this->plugin->log_error( $log );

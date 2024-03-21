@@ -256,13 +256,13 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $formName The CiviCRM form name.
+	 * @param string $form_name The CiviCRM form name.
 	 * @param object $form The CiviCRM form object.
 	 */
-	public function form_contact_type_build( $formName, &$form ) {
+	public function form_contact_type_build( $form_name, &$form ) {
 
 		// Is this the Contact Type edit form?
-		if ( $formName != 'CRM_Admin_Form_ContactType' ) {
+		if ( $form_name != 'CRM_Admin_Form_ContactType' ) {
 			return;
 		}
 
@@ -380,22 +380,22 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @since 0.4
 	 *
-	 * @param object $objectRef The DAO object.
+	 * @param object $object_ref The DAO object.
 	 */
-	public function form_contact_type_post_save( $objectRef ) {
+	public function form_contact_type_post_save( $object_ref ) {
 
 		// Bail if not Contact Type save operation.
-		if ( ! ( $objectRef instanceof CRM_Contact_DAO_ContactType ) ) {
+		if ( ! ( $object_ref instanceof CRM_Contact_DAO_ContactType ) ) {
 			return;
 		}
 
 		// Bail if no Contact Type ID.
-		if ( empty( $objectRef->id ) ) {
+		if ( empty( $object_ref->id ) ) {
 			return;
 		}
 
 		// Store locally for use in form_contact_type_process().
-		$this->saved_contact_type_id = $objectRef->id;
+		$this->saved_contact_type_id = $object_ref->id;
 
 	}
 
@@ -408,10 +408,10 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $formName The CiviCRM form name.
+	 * @param string $form_name The CiviCRM form name.
 	 * @param object $form The CiviCRM form object.
 	 */
-	public function form_contact_type_process( $formName, &$form ) {
+	public function form_contact_type_process( $form_name, &$form ) {
 
 		// Bail if not Contact Type edit form.
 		if ( ! ( $form instanceof CRM_Admin_Form_ContactType ) ) {
@@ -488,13 +488,13 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $formName The CiviCRM form name.
+	 * @param string $form_name The CiviCRM form name.
 	 * @param object $form The CiviCRM form object.
 	 */
-	public function form_activity_type_build( $formName, &$form ) {
+	public function form_activity_type_build( $form_name, &$form ) {
 
 		// Is this the Options edit form?
-		if ( $formName != 'CRM_Admin_Form_Options' ) {
+		if ( $form_name != 'CRM_Admin_Form_Options' ) {
 			return;
 		}
 
@@ -634,22 +634,22 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @since 0.4
 	 *
-	 * @param object $objectRef The DAO object.
+	 * @param object $object_ref The DAO object.
 	 */
-	public function form_activity_type_post_save( $objectRef ) {
+	public function form_activity_type_post_save( $object_ref ) {
 
 		// Bail if not Activity Type save operation.
-		if ( ! ( $objectRef instanceof CRM_Core_DAO_OptionValue ) ) {
+		if ( ! ( $object_ref instanceof CRM_Core_DAO_OptionValue ) ) {
 			return;
 		}
 
 		// Bail if no Activity Type ID.
-		if ( empty( $objectRef->id ) ) {
+		if ( empty( $object_ref->id ) ) {
 			return;
 		}
 
 		// Bail if no Option Group ID.
-		if ( empty( $objectRef->option_group_id ) ) {
+		if ( empty( $object_ref->option_group_id ) ) {
 			return;
 		}
 
@@ -657,12 +657,12 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		$activity_types_id = $this->acf_loader->civicrm->activity_type->option_group_id_get();
 
 		// Bail if not in Activity Types Option Group.
-		if ( $objectRef->option_group_id != $activity_types_id ) {
+		if ( $object_ref->option_group_id != $activity_types_id ) {
 			return;
 		}
 
 		// Get the data for the Activity Type.
-		$activity_type = $this->acf_loader->civicrm->activity_type->get_by_id( $objectRef->id );
+		$activity_type = $this->acf_loader->civicrm->activity_type->get_by_id( $object_ref->id );
 
 		// Bail on failure.
 		if ( $activity_type === false ) {
@@ -683,10 +683,10 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @since 0.4
 	 *
-	 * @param string $formName The CiviCRM form name.
+	 * @param string $form_name The CiviCRM form name.
 	 * @param object $form The CiviCRM form object.
 	 */
-	public function form_activity_type_process( $formName, &$form ) {
+	public function form_activity_type_process( $form_name, &$form ) {
 
 		// Bail if not Activity Type edit form.
 		if ( ! ( $form instanceof CRM_Admin_Form_Options ) ) {
@@ -770,13 +770,13 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $formName The CiviCRM form name.
+	 * @param string $form_name The CiviCRM form name.
 	 * @param object $form The CiviCRM form object.
 	 */
-	public function form_participant_role_build( $formName, &$form ) {
+	public function form_participant_role_build( $form_name, &$form ) {
 
 		// Is this the Options edit form?
-		if ( $formName != 'CRM_Admin_Form_Options' ) {
+		if ( $form_name != 'CRM_Admin_Form_Options' ) {
 			return;
 		}
 
@@ -899,22 +899,22 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @since 0.5
 	 *
-	 * @param object $objectRef The DAO object.
+	 * @param object $object_ref The DAO object.
 	 */
-	public function form_participant_role_post_save( $objectRef ) {
+	public function form_participant_role_post_save( $object_ref ) {
 
 		// Bail if not Participant Role save operation.
-		if ( ! ( $objectRef instanceof CRM_Core_DAO_OptionValue ) ) {
+		if ( ! ( $object_ref instanceof CRM_Core_DAO_OptionValue ) ) {
 			return;
 		}
 
 		// Bail if no Participant Role ID.
-		if ( empty( $objectRef->id ) ) {
+		if ( empty( $object_ref->id ) ) {
 			return;
 		}
 
 		// Bail if no Option Group ID.
-		if ( empty( $objectRef->option_group_id ) ) {
+		if ( empty( $object_ref->option_group_id ) ) {
 			return;
 		}
 
@@ -922,12 +922,12 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		$participant_roles_id = $this->acf_loader->civicrm->participant_role->option_group_id_get();
 
 		// Bail if not in Participant Roles Option Group.
-		if ( $objectRef->option_group_id != $participant_roles_id ) {
+		if ( $object_ref->option_group_id != $participant_roles_id ) {
 			return;
 		}
 
 		// Get the data for the Participant Role.
-		$participant_role = $this->acf_loader->civicrm->participant_role->get_by_id( $objectRef->id );
+		$participant_role = $this->acf_loader->civicrm->participant_role->get_by_id( $object_ref->id );
 
 		// Bail on failure.
 		if ( $participant_role === false ) {
@@ -948,10 +948,10 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $formName The CiviCRM form name.
+	 * @param string $form_name The CiviCRM form name.
 	 * @param object $form The CiviCRM form object.
 	 */
-	public function form_participant_role_process( $formName, &$form ) {
+	public function form_participant_role_process( $form_name, &$form ) {
 
 		// Bail if not Participant Role edit form.
 		if ( ! ( $form instanceof CRM_Admin_Form_Options ) ) {
@@ -1038,13 +1038,13 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $formName The CiviCRM form name.
+	 * @param string $form_name The CiviCRM form name.
 	 * @param object $form The CiviCRM form object.
 	 */
-	public function form_participant_build( $formName, &$form ) {
+	public function form_participant_build( $form_name, &$form ) {
 
 		// Is this the Event Component edit form?
-		if ( $formName != 'CRM_Admin_Form_Generic' ) {
+		if ( $form_name != 'CRM_Admin_Form_Generic' ) {
 			return;
 		}
 
@@ -1088,13 +1088,13 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @since 0.5
 	 *
-	 * @param string $formName The CiviCRM form name.
+	 * @param string $form_name The CiviCRM form name.
 	 * @param object $form The CiviCRM form object.
 	 */
-	public function form_participant_process( $formName, &$form ) {
+	public function form_participant_process( $form_name, &$form ) {
 
 		// Is this the Event Component edit form?
-		if ( $formName != 'CRM_Admin_Form_Generic' ) {
+		if ( $form_name != 'CRM_Admin_Form_Generic' ) {
 			return;
 		}
 

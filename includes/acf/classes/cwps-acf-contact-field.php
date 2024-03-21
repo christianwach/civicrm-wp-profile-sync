@@ -1423,23 +1423,23 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 *
 	 * @since 0.4
 	 *
-	 * @param object $objectRef The DAO object.
+	 * @param object $object_ref The DAO object.
 	 */
-	public function image_deleted( $objectRef ) {
+	public function image_deleted( $object_ref ) {
 
 		// Bail if not Contact save operation.
-		if ( ! ( $objectRef instanceof CRM_Contact_BAO_Contact ) ) {
+		if ( ! ( $object_ref instanceof CRM_Contact_BAO_Contact ) ) {
 			return;
 		}
 
 		// Bail if no Contact ID.
-		if ( empty( $objectRef->id ) ) {
+		if ( empty( $object_ref->id ) ) {
 			return;
 		}
 
 		// Bail if image_URL isn't the string 'null'.
 		// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
-		if ( $objectRef->image_URL !== 'null' ) {
+		if ( $object_ref->image_URL !== 'null' ) {
 			return;
 		}
 
@@ -1451,7 +1451,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Bail if GET doesn't contain the matching Contact ID.
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( empty( $_GET['cid'] ) || $_GET['cid'] !== $objectRef->id ) {
+		if ( empty( $_GET['cid'] ) || $_GET['cid'] !== $object_ref->id ) {
 			return;
 		}
 
@@ -1468,7 +1468,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		}
 
 		// Get the full Contact data.
-		$contact = $this->plugin->civicrm->contact->get_by_id( $objectRef->id );
+		$contact = $this->plugin->civicrm->contact->get_by_id( $object_ref->id );
 
 		// Bail if something went wrong.
 		if ( $contact === false ) {
@@ -1477,10 +1477,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// We need to pass an instance of CRM_Contact_DAO_Contact.
 		$object     = new CRM_Contact_DAO_Contact();
-		$object->id = $objectRef->id;
+		$object->id = $object_ref->id;
 
 		// Trigger the sync process via the Mapper.
-		$this->acf_loader->mapper->contact_edited( 'edit', $contact['contact_type'], $objectRef->id, $object );
+		$this->acf_loader->mapper->contact_edited( 'edit', $contact['contact_type'], $object_ref->id, $object );
 
 	}
 

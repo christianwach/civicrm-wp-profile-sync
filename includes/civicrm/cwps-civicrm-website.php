@@ -323,7 +323,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		 * @since 0.2.4
 		 *
 		 * @param integer $user_id The ID of the WordPress User.
-		 * @param integer $objectId The ID of the CiviCRM Website.
+		 * @param integer $object_id The ID of the CiviCRM Website.
 		 * @param object $website The CiviCRM Website object.
 		 */
 		do_action( 'civicrm_wp_profile_sync_website_synced', $user_id, $args['objectId'], $website );
