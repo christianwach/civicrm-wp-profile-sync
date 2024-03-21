@@ -108,12 +108,13 @@ class CiviCRM_Profile_Sync_ACF_Blocks {
 		/*
 		$e = new \Exception();
 		$trace = $e->getTraceAsString();
-		error_log( print_r( [
+		$log = [
 			'method' => __METHOD__,
 			'block' => $block,
 			'callable' => is_callable( $block['render_callback'] ),
 			//'backtrace' => $trace,
-		], true ) );
+		];
+		$this->plugin->log_error( $log );
 		*/
 
 		// Register it.
@@ -122,11 +123,12 @@ class CiviCRM_Profile_Sync_ACF_Blocks {
 		/*
 		$e = new \Exception();
 		$trace = $e->getTraceAsString();
-		error_log( print_r( [
+		$log = [
 			'method' => __METHOD__,
 			'result' => $result,
 			//'backtrace' => $trace,
-		], true ) );
+		];
+		$this->plugin->log_error( $log );
 		*/
 
 	}

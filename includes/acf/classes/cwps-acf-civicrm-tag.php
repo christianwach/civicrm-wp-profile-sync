@@ -110,12 +110,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Tag {
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			$e = new Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'params' => $params,
 				'result' => $result,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return $tag;
 		}
 
@@ -149,12 +150,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Tag {
 		if ( empty( $data['id'] ) ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'message' => __( 'A numeric ID must be present to update a Tag.', 'civicrm-wp-profile-sync' ),
 				'data' => $data,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return false;
 		}
 
@@ -286,14 +288,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Tag {
 		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'contact_id' => $contact_id,
 				'tag_id' => $tag_id,
 				'params' => $params,
 				'result' => $result,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return false;
 		}
 
@@ -328,14 +331,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Tag {
 		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'contact_id' => $contact_id,
 				'tag_id' => $tag_id,
 				'params' => $params,
 				'result' => $result,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return false;
 		}
 

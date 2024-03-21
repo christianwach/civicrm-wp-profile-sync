@@ -549,12 +549,13 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		if ( ! empty( $result['is_error'] ) ) {
 			$e = new Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'params' => $params,
 				'result' => $result,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return $website;
 		}
 
@@ -588,12 +589,13 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		if ( empty( $website['id'] ) ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'message' => __( 'An ID must be present to edit a Website.', 'civicrm-wp-profile-sync' ),
 				'website' => $website,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return false;
 		}
 
@@ -624,11 +626,12 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		if ( empty( $website_id ) ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'message' => __( 'An ID must be present to delete a Website.', 'civicrm-wp-profile-sync' ),
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return $success;
 		}
 
@@ -645,12 +648,13 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		if ( ! empty( $result['is_error'] ) ) {
 			$e = new Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'params' => $params,
 				'result' => $result,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return $success;
 		}
 

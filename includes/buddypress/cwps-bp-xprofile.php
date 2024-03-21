@@ -437,12 +437,13 @@ class CiviCRM_Profile_Sync_BP_xProfile {
 		/*
 		$e = new \Exception();
 		$trace = $e->getTraceAsString();
-		error_log( print_r( [
+		$log = [
 			'method' => __METHOD__,
 			'args' => $args,
 			'civicrm_ref' => $this->civicrm_ref,
 			//'backtrace' => $trace,
-		], true ) );
+		];
+		$this->plugin->log_error( $log );
 		*/
 
 	}

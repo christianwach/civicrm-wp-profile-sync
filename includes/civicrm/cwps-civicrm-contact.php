@@ -503,12 +503,13 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'message' => __( 'Could not update the name of the CiviCRM Contact.', 'civicrm-wp-profile-sync' ),
 				'result' => $result,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 		}
 
 	}
@@ -593,12 +594,13 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'message' => __( 'Could not update the nickname of the CiviCRM Contact.', 'civicrm-wp-profile-sync' ),
 				'result' => $result,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 		}
 
 	}
@@ -702,12 +704,13 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			$e = new Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'params' => $params,
 				'result' => $result,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return $contact_data;
 		}
 
@@ -742,12 +745,13 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		if ( empty( $contact['id'] ) ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'message' => __( 'A numeric ID must be present to update a Contact.', 'civicrm-wp-profile-sync' ),
 				'contact' => $contact,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return false;
 		}
 
@@ -779,12 +783,13 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		if ( empty( $contact['id'] ) ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'message' => __( 'A numeric ID must be present to delete a Contact.', 'civicrm-wp-profile-sync' ),
 				'contact' => $contact,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return false;
 		}
 

@@ -385,12 +385,13 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		if ( ! empty( $result['is_error'] ) ) {
 			$e = new Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'params' => $params,
 				'result' => $result,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return $email;
 		}
 
@@ -424,12 +425,13 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		if ( empty( $email['id'] ) ) {
 			$e = new Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'message' => __( 'An ID must be present to edit an Email.', 'civicrm-wp-profile-sync' ),
 				'email' => $email,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return false;
 		}
 
@@ -460,11 +462,12 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		if ( empty( $email_id ) ) {
 			$e = new Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'message' => __( 'An ID must be present to delete an Email.', 'civicrm-wp-profile-sync' ),
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return false;
 		}
 
@@ -481,12 +484,13 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		if ( ! empty( $result['is_error'] ) ) {
 			$e = new Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'params' => $params,
 				'result' => $result,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return $success;
 		}
 

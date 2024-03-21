@@ -333,12 +333,13 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'params' => $params,
 				'result' => $result,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return false;
 		}
 
@@ -372,12 +373,13 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		if ( empty( $ufmatch['id'] ) ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'message' => __( 'A numeric ID must be present to update a UFMatch record.', 'civicrm-wp-profile-sync' ),
 				'ufmatch' => $ufmatch,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return false;
 		}
 
@@ -419,12 +421,13 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'params' => $params,
 				'result' => $result,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return false;
 		}
 
@@ -500,13 +503,14 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'contact_id' => $contact_id,
 				'params' => $params,
 				'result' => $result,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return $entry;
 		}
 
@@ -594,13 +598,14 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'user_id' => $user_id,
 				'params' => $params,
 				'result' => $result,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return $entry;
 		}
 
@@ -678,13 +683,14 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'email' => $email,
 				'params' => $params,
 				'result' => $result,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return $entry;
 		}
 

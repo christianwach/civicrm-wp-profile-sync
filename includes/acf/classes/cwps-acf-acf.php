@@ -155,9 +155,10 @@ class CiviCRM_Profile_Sync_ACF {
 		// Init Field object.
 		$this->field = new CiviCRM_Profile_Sync_ACF_Field( $this );
 
+		/*
 		// Init Blocks object.
-		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		//$this->blocks = new CiviCRM_Profile_Sync_ACF_Blocks( $this );
+		$this->blocks = new CiviCRM_Profile_Sync_ACF_Blocks( $this );
+		*/
 
 	}
 

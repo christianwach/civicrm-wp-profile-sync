@@ -1600,11 +1600,12 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		/*
 		$e = new \Exception;
 		$trace = $e->getTraceAsString();
-		error_log( print_r( [
+		$log = [
 			'method' => __METHOD__,
 			'args' => $args,
 			//'backtrace' => $trace,
-		], true ) );
+		];
+		$this->plugin->log_error( $log );
 		*/
 
 	}

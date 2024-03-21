@@ -403,33 +403,12 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 	 */
 	public function website_update( $args ) {
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'args' => $args,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Grab User ID and Email.
 		$user_id = $args['user_id'];
 		$website = $args['objectRef'];
 
 		// Sometimes CiviCRM uses the string 'null' when the URL is empty.
 		$website->url = $this->plugin->civicrm->denullify( $website->url );
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'website' => $website,
-			'user_id' => $user_id,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Remove WordPress and BuddyPress callbacks to prevent recursion.
 		$this->plugin->hooks_wp_remove();

@@ -128,12 +128,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Note {
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			$e = new Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'params' => $params,
 				'result' => $result,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return $note;
 		}
 
@@ -167,12 +168,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Note {
 		if ( empty( $data['id'] ) ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'message' => __( 'A numeric ID must be present to update a Note.', 'civicrm-wp-profile-sync' ),
 				'data' => $data,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return false;
 		}
 

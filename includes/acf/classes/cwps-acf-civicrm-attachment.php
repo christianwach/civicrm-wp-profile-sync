@@ -353,12 +353,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			$e = new Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'params' => $params,
 				'result' => $result,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return $attachment;
 		}
 
@@ -392,12 +393,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		if ( empty( $data['id'] ) ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'message' => __( 'A numeric ID must be present to update an Attachment.', 'civicrm-wp-profile-sync' ),
 				'data' => $data,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return false;
 		}
 
@@ -474,14 +476,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		if ( ! copy( $file, $new_file ) ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'message' => __( 'Could not copy File.', 'civicrm-wp-profile-sync' ),
 				'file' => $file,
 				'new_name' => $new_name,
 				'new_file' => $new_file,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return false;
 		}
 
@@ -1667,16 +1670,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 * @param array $args The CiviCRM arguments.
 	 */
 	public function civicrm_attachment_pre_delete( $args ) {
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
-			'method' => __METHOD__,
-			'args' => $args,
-			//'backtrace' => $trace,
-		), true ) );
-		*/
 
 		// Make sure we have an Entity Table.
 		if ( empty( $args['attachment']->entity_table ) ) {

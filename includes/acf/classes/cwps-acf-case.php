@@ -426,7 +426,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'case_type_id' => $case_type_id,
 				'offset' => $offset,
@@ -434,7 +434,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 				'params' => $params,
 				'result' => $result,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return $result;
 		}
 
@@ -914,12 +915,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			$e = new Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'params' => $params,
 				'result' => $result,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return $case_data;
 		}
 
@@ -950,12 +952,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		if ( empty( $case['id'] ) ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'message' => __( 'A numeric ID must be present to update a Case.', 'civicrm-wp-profile-sync' ),
 				'case' => $case,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return false;
 		}
 
@@ -1026,12 +1029,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			$e = new Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'params' => $params,
 				'result' => $result,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return $case_contact_data;
 		}
 

@@ -110,12 +110,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Campaign {
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			$e = new Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'params' => $params,
 				'result' => $result,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return $campaign;
 		}
 
@@ -149,12 +150,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Campaign {
 		if ( empty( $data['id'] ) ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'message' => __( 'A numeric ID must be present to update a Campaign.', 'civicrm-wp-profile-sync' ),
 				'data' => $data,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return false;
 		}
 
@@ -250,12 +252,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Campaign {
 		if ( ! empty( $result['error'] ) ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'params' => $params,
 				'result' => $result,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return [];
 		}
 

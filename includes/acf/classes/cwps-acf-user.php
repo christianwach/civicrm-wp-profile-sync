@@ -1817,11 +1817,12 @@ class CiviCRM_Profile_Sync_ACF_User {
 		/*
 		$e = new \Exception;
 		$trace = $e->getTraceAsString();
-		error_log( print_r( [
+		$log = [
 			'method' => __METHOD__,
 			'args' => $args,
 			//'backtrace' => $trace,
-		], true ) );
+		];
+		$this->plugin->log_error( $log );
 		*/
 
 	}

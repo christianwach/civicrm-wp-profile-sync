@@ -486,11 +486,12 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		/*
 		$e = new \Exception();
 		$trace = $e->getTraceAsString();
-		error_log( print_r( [
+		$log = [
 			'method' => __METHOD__,
 			'args' => $args,
 			//'backtrace' => $trace,
-		], true ) );
+		];
+		$this->plugin->log_error( $log );
 		*/
 
 	}
@@ -546,13 +547,14 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 			/*
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'message' => __( 'Could not add term_meta', 'civicrm-wp-profile-sync' ),
 				'term_id' => $term_id,
 				'group_id' => $group_id,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			*/
 
 		}
@@ -563,13 +565,14 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 			// Log error message.
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'message' => $meta_id->get_error_message(),
 				'term' => $term,
 				'group_id' => $group_id,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 
 			// Also overwrite return.
 			$meta_id = false;
@@ -613,13 +616,14 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 			if ( $existing_id !== false && (int) $existing_id !== (int) $group_id ) {
 				$e = new \Exception();
 				$trace = $e->getTraceAsString();
-				error_log( print_r( [
+				$log = [
 					'method' => __METHOD__,
 					'message' => __( 'Could not update term_meta', 'civicrm-wp-profile-sync' ),
 					'term_id' => $term_id,
 					'group_id' => $group_id,
 					'backtrace' => $trace,
-				], true ) );
+				];
+				$this->plugin->log_error( $log );
 			}
 		}
 
@@ -629,13 +633,14 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 			// Log error message.
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'message' => $meta_id->get_error_message(),
 				'term_id' => $term_id,
 				'group_id' => $group_id,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 
 			// Also overwrite return.
 			$meta_id = false;
@@ -705,12 +710,13 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 			// Write error message.
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'message' => $terms->get_error_message(),
 				'group_id' => $group_id,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return false;
 
 		}

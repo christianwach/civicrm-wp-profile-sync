@@ -178,13 +178,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
 			$e = new \Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'contact_type_id' => $contact_type_id,
 				'params' => $params,
 				'result' => $result,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return false;
 		}
 

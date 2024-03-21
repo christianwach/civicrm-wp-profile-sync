@@ -1266,13 +1266,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 		if ( ! empty( $result['is_error'] ) ) {
 			$e = new Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'event' => $event,
 				'result' => $result,
 				'params' => $params,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return $profile;
 		}
 
@@ -1324,12 +1325,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
 			$e = new Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
+			$log = [
 				'method' => __METHOD__,
 				'result' => $result,
 				'params' => $params,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 			return $profiles;
 		}
 

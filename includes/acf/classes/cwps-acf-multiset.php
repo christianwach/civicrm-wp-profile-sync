@@ -963,16 +963,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 	 */
 	public function get_for_acf_field( $field ) {
 
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'field' => $field,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Init return.
 		$multisets = [];
 

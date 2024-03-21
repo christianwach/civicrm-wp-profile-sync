@@ -532,14 +532,15 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 					/*
 					$e = new \Exception();
 					$trace = $e->getTraceAsString();
-					error_log( print_r( [
+					$log = [
 						'method' => __METHOD__,
 						'value' => $value,
 						'field' => $field,
 						'selector' => $selector,
 						'post_id' => $post_id,
 						//'backtrace' => $trace,
-					], true ) );
+					];
+					$this->plugin->log_error( $log );
 					*/
 
 				}
