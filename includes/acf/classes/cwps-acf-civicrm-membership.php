@@ -60,7 +60,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Membership {
 		//'status_id' => 'select',
 		//'campaign_id' => 'select',
 		'num_terms' => 'number',
-		'source' => 'text',
+		'source'    => 'text',
 	];
 
 	/**
@@ -73,9 +73,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Membership {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->civicrm = $parent;
+		$this->civicrm    = $parent;
 
 	}
 
@@ -100,11 +100,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Membership {
 
 		// Params to get all free Memberships.
 		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'is_active' => 1,
+			'version'     => 3,
+			'sequential'  => 1,
+			'is_active'   => 1,
 			'minimum_fee' => 0,
-			'options' => [
+			'options'     => [
 				'limit' => 0,
 			],
 		];
@@ -114,12 +114,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Membership {
 
 		// Add log entry on failure.
 		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
-			$e = new \Exception();
+			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'params' => $params,
-				'result' => $result,
+			$log   = [
+				'method'    => __METHOD__,
+				'params'    => $params,
+				'result'    => $result,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -163,11 +163,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Membership {
 
 		// Params to query Memberships.
 		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'contact_id' => $contact_id,
+			'version'     => 3,
+			'sequential'  => 1,
+			'contact_id'  => $contact_id,
 			'active_only' => 1,
-			'options' => [
+			'options'     => [
 				'sort' => 'end_date ASC',
 			],
 		];
@@ -187,14 +187,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Membership {
 
 		// Add log entry on failure.
 		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
-			$e = new \Exception();
+			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
+			$log   = [
+				'method'     => __METHOD__,
 				'contact_id' => $contact_id,
-				'params' => $params,
-				'result' => $result,
-				'backtrace' => $trace,
+				'params'     => $params,
+				'result'     => $result,
+				'backtrace'  => $trace,
 			];
 			$this->plugin->log_error( $log );
 			return $membership_data;
@@ -266,12 +266,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Membership {
 
 		// Log and bail if there's an error.
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			$e = new Exception();
+			$e     = new Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'params' => $params,
-				'result' => $result,
+			$log   = [
+				'method'    => __METHOD__,
+				'params'    => $params,
+				'result'    => $result,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -306,12 +306,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Membership {
 
 		// Log and bail if there's no Membership ID.
 		if ( empty( $data['id'] ) ) {
-			$e = new \Exception();
+			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'message' => __( 'A numeric ID must be present to update a Membership.', 'civicrm-wp-profile-sync' ),
-				'data' => $data,
+			$log   = [
+				'method'    => __METHOD__,
+				'message'   => __( 'A numeric ID must be present to update a Membership.', 'civicrm-wp-profile-sync' ),
+				'data'      => $data,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -344,7 +344,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Membership {
 		// Construct API query.
 		$params = [
 			'version' => 3,
-			'id' => $membership_id,
+			'id'      => $membership_id,
 		];
 
 		// Get details via API.
@@ -396,9 +396,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Membership {
 
 		// Construct params.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'api_action' => 'create',
-			'options' => [
+			'options'    => [
 				'limit' => 0, // No limit.
 			],
 		];

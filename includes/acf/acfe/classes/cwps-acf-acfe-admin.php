@@ -84,11 +84,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Admin {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->civicrm = $this->acf_loader->civicrm;
-		$this->acf = $this->acf_loader->acf;
-		$this->acfe = $parent;
+		$this->civicrm    = $this->acf_loader->civicrm;
+		$this->acf        = $this->acf_loader->acf;
+		$this->acfe       = $parent;
 
 		// Init when the ACFE class is loaded.
 		add_action( 'cwps/acf/acfe/loaded', [ $this, 'initialise' ] );
@@ -190,7 +190,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Admin {
 	public function settings_meta_box_acfe_render() {
 
 		// Get settings.
-		$acfe_enabled = (int) $this->plugin->admin->setting_get( 'acfe_integration_enabled', 1 );
+		$acfe_enabled    = (int) $this->plugin->admin->setting_get( 'acfe_integration_enabled', 1 );
 		$acfe_transients = (int) $this->plugin->admin->setting_get( 'acfe_integration_transients', 0 );
 
 		// Include template file.

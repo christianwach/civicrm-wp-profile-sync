@@ -57,16 +57,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 	 * @var array
 	 */
 	public $activity_fields = [
-		'created_date' => 'date_time_picker',
-		'modified_date' => 'date_time_picker',
-		'activity_date_time' => 'date_time_picker',
-		'status_id' => 'select',
-		'priority_id' => 'select',
-		'engagement_level' => 'select',
-		'duration' => 'text',
-		'location' => 'text',
-		'source_contact_id' => 'civicrm_activity_creator',
-		'target_contact_id' => 'civicrm_activity_target',
+		'created_date'        => 'date_time_picker',
+		'modified_date'       => 'date_time_picker',
+		'activity_date_time'  => 'date_time_picker',
+		'status_id'           => 'select',
+		'priority_id'         => 'select',
+		'engagement_level'    => 'select',
+		'duration'            => 'text',
+		'location'            => 'text',
+		'source_contact_id'   => 'civicrm_activity_creator',
+		'target_contact_id'   => 'civicrm_activity_target',
 		'assignee_contact_id' => 'civicrm_activity_assignee',
 	];
 
@@ -95,9 +95,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->civicrm = $parent;
+		$this->civicrm    = $parent;
 
 		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
@@ -451,8 +451,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 		// Construct params.
 		$params = [
 			'version' => 3,
-			'name' => $name,
-			'action' => 'get',
+			'name'    => $name,
+			'action'  => 'get',
 		];
 
 		// Call the API.
@@ -844,10 +844,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 		// Let's make an array of params.
 		$params = [
-			'op' => 'edit',
+			'op'         => 'edit',
 			'objectName' => 'Activity',
-			'objectId' => $args['activity_id'],
-			'objectRef' => (object) $activity,
+			'objectId'   => $args['activity_id'],
+			'objectRef'  => (object) $activity,
 		];
 
 		// Remove WordPress callbacks to prevent recursion.

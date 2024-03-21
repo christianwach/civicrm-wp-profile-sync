@@ -75,9 +75,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->civicrm = $parent;
+		$this->civicrm    = $parent;
 
 		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'register_hooks' ] );
@@ -160,13 +160,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 
 		// Params to query Contacts.
 		$params = [
-			'version' => 3,
-			'contact_type' => $hierarchy['type'],
+			'version'          => 3,
+			'contact_type'     => $hierarchy['type'],
 			'contact_sub_type' => $hierarchy['subtype'],
-			'return' => [
+			'return'           => [
 				'id',
 			],
-			'options' => [
+			'options'          => [
 				'limit' => 0,
 			],
 		];
@@ -176,14 +176,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 
 		// Add log entry on failure.
 		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
-			$e = new \Exception();
+			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
+			$log   = [
+				'method'          => __METHOD__,
 				'contact_type_id' => $contact_type_id,
-				'params' => $params,
-				'result' => $result,
-				'backtrace' => $trace,
+				'params'          => $params,
+				'result'          => $result,
+				'backtrace'       => $trace,
 			];
 			$this->plugin->log_error( $log );
 			return false;
@@ -411,11 +411,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 
 		// Define params to get queried Contact Types.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
-			'id' => [ 'IN' => $contact_type_ids ],
-			'options' => [
-				'sort' => 'label',
+			'id'         => [ 'IN' => $contact_type_ids ],
+			'options'    => [
+				'sort'  => 'label',
 				'limit' => 0, // No limit.
 			],
 		];
@@ -477,7 +477,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 		if ( is_numeric( $contact_type ) ) {
 
 			// Assign the numeric ID.
-			$contact_type = (int) $contact_type;
+			$contact_type    = (int) $contact_type;
 			$contact_type_id = $contact_type;
 
 		}
@@ -558,7 +558,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 		}
 
 		// Make sure we have arrays of unique values.
-		$contact_pre['contact_sub_type'] = array_unique( $contact_pre['contact_sub_type'] );
+		$contact_pre['contact_sub_type']     = array_unique( $contact_pre['contact_sub_type'] );
 		$args['objectRef']->contact_sub_type = array_unique( $args['objectRef']->contact_sub_type );
 
 		// Find the Contact Types that are missing.
@@ -570,7 +570,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 		// Save the diffs in the Contact data.
 		$args['objectRef']->subtype_diffs = [
 			'removed' => $types_removed,
-			'added' => $types_added,
+			'added'   => $types_added,
 		];
 
 	}

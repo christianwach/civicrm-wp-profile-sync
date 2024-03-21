@@ -57,9 +57,9 @@ class CiviCRM_Profile_Sync_ACF_Blocks {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->acf = $parent;
+		$this->acf        = $parent;
 
 		// Init when the parent class is loaded.
 		add_action( 'cwps/acf/acf/loaded', [ $this, 'register_hooks' ] );
@@ -96,13 +96,13 @@ class CiviCRM_Profile_Sync_ACF_Blocks {
 
 		// Define Block.
 		$block = [
-			'name' => 'cwps-phone',
-			'title' => __( 'CiviCRM Phone', 'civicrm-wp-profile-sync' ),
-			'description' => __( 'A custom phone block.', 'civicrm-wp-profile-sync' ),
+			'name'            => 'cwps-phone',
+			'title'           => __( 'CiviCRM Phone', 'civicrm-wp-profile-sync' ),
+			'description'     => __( 'A custom phone block.', 'civicrm-wp-profile-sync' ),
 			'render_callback' => [ 'CiviCRM_Profile_Sync_ACF_Blocks', 'block_test_render' ],
-			'category' => 'common',
-			'keywords' => [ 'civicrm' ],
-			'post_types' => [ 'page' ],
+			'category'        => 'common',
+			'keywords'        => [ 'civicrm' ],
+			'post_types'      => [ 'page' ],
 		];
 
 		/*

@@ -125,8 +125,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_County extends acf_field {
 	 */
 	public $settings = [
 		'version' => CIVICRM_WP_PROFILE_SYNC_VERSION,
-		'url' => CIVICRM_WP_PROFILE_SYNC_URL,
-		'path' => CIVICRM_WP_PROFILE_SYNC_PATH,
+		'url'     => CIVICRM_WP_PROFILE_SYNC_URL,
+		'path'    => CIVICRM_WP_PROFILE_SYNC_PATH,
 	];
 
 	/**
@@ -155,11 +155,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_County extends acf_field {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->acf = $parent->acf_loader->acf;
-		$this->acfe = $parent;
-		$this->civicrm = $this->acf_loader->civicrm;
+		$this->acf        = $parent->acf_loader->acf;
+		$this->acfe       = $parent;
+		$this->civicrm    = $this->acf_loader->civicrm;
 
 		// Define label.
 		$this->label = __( 'CiviCRM Address: County', 'civicrm-wp-profile-sync' );
@@ -191,16 +191,16 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_County extends acf_field {
 
 		// Define "Source State/Province" setting Field.
 		$country_source = [
-			'label' => __( 'Source State/Province', 'civicrm-wp-profile-sync' ),
-			'name' => 'state_source',
-			'type' => 'radio',
-			'instructions' => __( 'The source for the Counties in this Field.', 'civicrm-wp-profile-sync' ),
-			'allow_null' => 0,
-			'required' => 0,
+			'label'         => __( 'Source State/Province', 'civicrm-wp-profile-sync' ),
+			'name'          => 'state_source',
+			'type'          => 'radio',
+			'instructions'  => __( 'The source for the Counties in this Field.', 'civicrm-wp-profile-sync' ),
+			'allow_null'    => 0,
+			'required'      => 0,
 			'default_value' => 1,
-			'layout' => 'vertical',
+			'layout'        => 'vertical',
 			'return_format' => 'value',
-			'choices' => [
+			'choices'       => [
 				1 => __( 'The default State/Province in CiviCRM', 'civicrm-wp-profile-sync' ),
 				2 => __( 'A CiviCRM State Field', 'civicrm-wp-profile-sync' ),
 				3 => __( 'A specific State/Province', 'civicrm-wp-profile-sync' ),
@@ -212,23 +212,23 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_County extends acf_field {
 
 		// Define "State Field Reference" setting Field.
 		$state_ref = [
-			'label' => __( 'State/Province Field', 'civicrm-wp-profile-sync' ),
-			'name' => 'county_state',
-			'type' => 'select',
-			'instructions' => __( 'Filter the visible Counties by the selected State/Province Field.', 'civicrm-wp-profile-sync' ),
-			'ui' => 1,
-			'ajax' => 1,
-			'allow_null' => 1,
-			'ajax_action' => 'cwps_get_state_field',
-			'placeholder' => __( 'Select the State/Province Field', 'civicrm-wp-profile-sync' ),
-			'default_value' => 0,
-			'required' => 0,
+			'label'             => __( 'State/Province Field', 'civicrm-wp-profile-sync' ),
+			'name'              => 'county_state',
+			'type'              => 'select',
+			'instructions'      => __( 'Filter the visible Counties by the selected State/Province Field.', 'civicrm-wp-profile-sync' ),
+			'ui'                => 1,
+			'ajax'              => 1,
+			'allow_null'        => 1,
+			'ajax_action'       => 'cwps_get_state_field',
+			'placeholder'       => __( 'Select the State/Province Field', 'civicrm-wp-profile-sync' ),
+			'default_value'     => 0,
+			'required'          => 0,
 			'conditional_logic' => [
 				[
 					[
-						'field' => 'state_source',
+						'field'    => 'state_source',
 						'operator' => '==contains',
-						'value' => 2,
+						'value'    => 2,
 					],
 				],
 			],
@@ -238,7 +238,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_County extends acf_field {
 		if ( ! empty( $field['county_state'] ) ) {
 			$state_field = acf_get_field( $field['county_state'] );
 			if ( ! empty( $state_field ) ) {
-				$label = acf_maybe_get( $state_field, 'label', $state_field['name'] );
+				$label                = acf_maybe_get( $state_field, 'label', $state_field['name'] );
 				$state_ref['choices'] = [ $field['county_state'] => "{$label} ({$state_field['key']})" ];
 			}
 		}
@@ -248,23 +248,23 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_County extends acf_field {
 
 		// Define "State ID" setting Field.
 		$state_id = [
-			'label' => __( 'State/Province', 'civicrm-wp-profile-sync' ),
-			'name' => 'state_id',
-			'type' => 'select',
-			'instructions' => __( 'Use the Counties in this State/Province.', 'civicrm-wp-profile-sync' ),
-			'allow_null' => 1,
-			'ui' => 1,
-			'ajax' => 0,
-			'placeholder' => __( 'Select the State/Province', 'civicrm-wp-profile-sync' ),
-			'default_value' => 0,
-			'required' => 0,
-			'choices' => CRM_Core_PseudoConstant::stateProvince(),
+			'label'             => __( 'State/Province', 'civicrm-wp-profile-sync' ),
+			'name'              => 'state_id',
+			'type'              => 'select',
+			'instructions'      => __( 'Use the Counties in this State/Province.', 'civicrm-wp-profile-sync' ),
+			'allow_null'        => 1,
+			'ui'                => 1,
+			'ajax'              => 0,
+			'placeholder'       => __( 'Select the State/Province', 'civicrm-wp-profile-sync' ),
+			'default_value'     => 0,
+			'required'          => 0,
+			'choices'           => CRM_Core_PseudoConstant::stateProvince(),
 			'conditional_logic' => [
 				[
 					[
-						'field' => 'state_source',
+						'field'    => 'state_source',
 						'operator' => '==contains',
-						'value' => 3,
+						'value'    => 3,
 					],
 				],
 			],
@@ -337,15 +337,15 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_County extends acf_field {
 		// Init response.
 		$response = [
 			'results' => [],
-			'limit' => 25,
+			'limit'   => 25,
 		];
 
 		// Init defaults.
 		$defaults = [
-			'post_id' => 0,
-			's' => '',
+			'post_id'   => 0,
+			's'         => '',
 			'field_key' => '',
-			'paged' => 1,
+			'paged'     => 1,
 		];
 
 		// Parse the incoming POST array.
@@ -363,7 +363,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_County extends acf_field {
 		$search = wp_unslash( (string) $options['s'] );
 
 		// Get the Fields in this Field Group.
-		$field_group = acf_get_field_group( $post_id );
+		$field_group     = acf_get_field_group( $post_id );
 		$fields_in_group = acf_get_fields( $field_group );
 
 		// Get the Fields as choices for the select.
@@ -373,7 +373,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_County extends acf_field {
 		$formatted = [];
 		foreach ( $choices as $title => $fields ) {
 			$title = (string) $title;
-			$data = [];
+			$data  = [];
 			foreach ( $fields as $key => $label ) {
 				$label = (string) $label;
 				if ( ! empty( $search ) ) {
@@ -383,7 +383,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_County extends acf_field {
 						stripos( strtolower( $title ), $search ) !== false
 					) {
 						$data[] = [
-							'id' => $key,
+							'id'   => $key,
 							'text' => $label,
 						];
 					}
@@ -391,7 +391,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_County extends acf_field {
 			}
 			if ( ! empty( $data ) ) {
 				$formatted[] = [
-					'text' => $title,
+					'text'     => $title,
 					'children' => $data,
 				];
 			}
@@ -513,12 +513,12 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_County extends acf_field {
 	 */
 	public function load_field( $field ) {
 
-		$field['allow_null'] = 1;
-		$field['multiple'] = 0;
-		$field['ui'] = 1;
-		$field['ajax'] = 0;
+		$field['allow_null']    = 1;
+		$field['multiple']      = 0;
+		$field['ui']            = 1;
+		$field['ajax']          = 0;
 		$field['return_format'] = 'value';
-		$field['choices'] = [];
+		$field['choices']       = [];
 		$field['default_value'] = 0;
 
 		// If there's a State Field.

@@ -55,9 +55,9 @@ class CiviCRM_WP_Profile_Sync_ACF_Geo_Mashup {
 	public function __construct( $acf_loader ) {
 
 		// Store references to objects.
-		$this->plugin = $acf_loader->plugin;
+		$this->plugin     = $acf_loader->plugin;
 		$this->acf_loader = $acf_loader;
-		$this->civicrm = $acf_loader->civicrm;
+		$this->civicrm    = $acf_loader->civicrm;
 
 		// Init when this plugin is loaded.
 		add_action( 'cwps/acf/loaded', [ $this, 'initialise' ] );
@@ -640,7 +640,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Geo_Mashup {
 		$choices = [];
 
 		// Build specific Locations.
-		$specific_label = esc_attr__( 'Specific Location', 'civicrm-wp-profile-sync' );
+		$specific_label                        = esc_attr__( 'Specific Location', 'civicrm-wp-profile-sync' );
 		$choices[ $specific_label ]['primary'] = esc_attr__( 'Primary', 'civicrm-wp-profile-sync' );
 		$choices[ $specific_label ]['billing'] = esc_attr__( 'Billing', 'civicrm-wp-profile-sync' );
 
@@ -653,21 +653,21 @@ class CiviCRM_WP_Profile_Sync_ACF_Geo_Mashup {
 
 		// Define Location Field.
 		$location = [
-			'label' => __( 'Geo Mashup sync', 'civicrm-wp-profile-sync' ),
-			'name' => 'geo_mashup_location_type',
-			'type' => 'select',
-			'instructions' => __( 'Choose the Location Type to sync to Geo Mashup. (Optional)', 'civicrm-wp-profile-sync' ),
-			'required' => 0,
+			'label'             => __( 'Geo Mashup sync', 'civicrm-wp-profile-sync' ),
+			'name'              => 'geo_mashup_location_type',
+			'type'              => 'select',
+			'instructions'      => __( 'Choose the Location Type to sync to Geo Mashup. (Optional)', 'civicrm-wp-profile-sync' ),
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'allow_null' => 1,
-			'multiple' => 0,
-			'ui' => 0,
-			'return_format' => 'value',
-			'ajax' => 0,
-			'placeholder' => '',
-			'prefix' => '',
-			'default_value' => false,
-			'choices' => $choices,
+			'allow_null'        => 1,
+			'multiple'          => 0,
+			'ui'                => 0,
+			'return_format'     => 'value',
+			'ajax'              => 0,
+			'placeholder'       => '',
+			'prefix'            => '',
+			'default_value'     => false,
+			'choices'           => $choices,
 		];
 
 		// Now add it.
@@ -808,7 +808,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Geo_Mashup {
 		$data = $this->acf_loader->mapping->setting_get( $post_type );
 
 		// Add/Update settings.
-		$data['geo_mashup'] = $geo_mashup;
+		$data['geo_mashup']         = $geo_mashup;
 		$data['geo_mashup_metabox'] = $geo_mashup_metabox;
 
 		// Override the "metabox" checkbox value when sync is off.

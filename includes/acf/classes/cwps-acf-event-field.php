@@ -57,25 +57,25 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 	 * @var array
 	 */
 	public $event_fields = [
-		'event_type_id' => 'select',
-		'default_role_id' => 'select',
+		'event_type_id'          => 'select',
+		'default_role_id'        => 'select',
 		'participant_listing_id' => 'select',
-		'campaign_id' => 'select',
-		'id' => 'number',
-		'title' => 'text',
-		'summary' => 'textarea',
-		'description' => 'wysiwyg',
-		'created_date' => 'date_time_picker',
-		'start_date' => 'date_time_picker',
-		'end_date' => 'date_time_picker',
-		'is_map' => 'true_false',
-		'is_public' => 'true_false',
-		'is_active' => 'true_false',
-		'is_share' => 'true_false',
-		'max_participants' => 'number',
-		'event_full_text' => 'textarea',
-		'has_waitlist' => 'true_false',
-		'waitlist_text' => 'textarea',
+		'campaign_id'            => 'select',
+		'id'                     => 'number',
+		'title'                  => 'text',
+		'summary'                => 'textarea',
+		'description'            => 'wysiwyg',
+		'created_date'           => 'date_time_picker',
+		'start_date'             => 'date_time_picker',
+		'end_date'               => 'date_time_picker',
+		'is_map'                 => 'true_false',
+		'is_public'              => 'true_false',
+		'is_active'              => 'true_false',
+		'is_share'               => 'true_false',
+		'max_participants'       => 'number',
+		'event_full_text'        => 'textarea',
+		'has_waitlist'           => 'true_false',
+		'waitlist_text'          => 'textarea',
 	];
 
 	/**
@@ -86,10 +86,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 	 * @var array
 	 */
 	public $settings_fields = [
-		'event_type_id' => 'select',
-		'default_role_id' => 'select',
+		'event_type_id'          => 'select',
+		'default_role_id'        => 'select',
 		'participant_listing_id' => 'select',
-		'campaign_id' => 'select',
+		'campaign_id'            => 'select',
 	];
 
 	/**
@@ -103,15 +103,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 	 */
 	public $fee_fields = [
 		// phpcs:disable WordPress.Arrays.ArrayIndentation.ItemNotAligned
-		'is_monetary' => 'true_false',
-		'currency' => 'select',
+		'is_monetary'             => 'true_false',
+		'currency'                => 'select',
 		//'payment_processor' => 'select',
 			// Pay Later.
-			'is_pay_later' => 'true_false',
-			'pay_later_text' => 'textarea',
-			'pay_later_receipt' => 'wysiwyg',
+			'is_pay_later'        => 'true_false',
+			'pay_later_text'      => 'textarea',
+			'pay_later_receipt'   => 'wysiwyg',
 			'is_billing_required' => 'true_false',
-		'fee_label' => 'text',
+		'fee_label'               => 'text',
 		//'financial_type_id' => 'select',
 		//'price_set_id' => 'select',
 		// Internal "pseudo" Price Set.
@@ -158,9 +158,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->civicrm = $parent;
+		$this->civicrm    = $parent;
 
 		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
@@ -579,7 +579,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 		// Construct params.
 		$params = [
 			'version' => 3,
-			'action' => $action,
+			'action'  => $action,
 			'options' => [
 				'limit' => 0, // No limit.
 			],
@@ -876,13 +876,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 
 		// Set a default for "Participant Listing".
 		if ( $event_field_name == 'participant_listing_id' ) {
-			$field['choices'] = [ '' => __( 'Disabled', 'civicrm-wp-profile-sync' ) ] + $field['choices'];
+			$field['choices']       = [ '' => __( 'Disabled', 'civicrm-wp-profile-sync' ) ] + $field['choices'];
 			$field['default_value'] = '';
 		}
 
 		// Set a default for "Campaign ID".
 		if ( $event_field_name == 'campaign_id' ) {
-			$field['choices'] = [ '' => __( 'None', 'civicrm-wp-profile-sync' ) ] + $field['choices'];
+			$field['choices']       = [ '' => __( 'None', 'civicrm-wp-profile-sync' ) ] + $field['choices'];
 			$field['default_value'] = '';
 		}
 

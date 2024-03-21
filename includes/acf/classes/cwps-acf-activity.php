@@ -97,9 +97,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->civicrm = $parent;
+		$this->civicrm    = $parent;
 
 		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
@@ -228,7 +228,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 		// Bail if this Post should not be synced now.
 		$this->do_not_sync = false;
-		$post = $this->acf_loader->post->should_be_synced( $args['post'] );
+		$post              = $this->acf_loader->post->should_be_synced( $args['post'] );
 		if ( false === $post ) {
 			$this->do_not_sync = true;
 			return;
@@ -270,7 +270,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		}
 
 		// Add our data to the params.
-		$args['activity'] = $activity;
+		$args['activity']    = $activity;
 		$args['activity_id'] = $activity['id'];
 
 		/**
@@ -365,9 +365,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 		// Add our data to the params.
 		$args['activity_id'] = $activity_id;
-		$args['activity'] = $activity;
-		$args['post'] = $post;
-		$args['fields'] = $fields;
+		$args['activity']    = $activity;
+		$args['post']        = $post;
+		$args['fields']      = $fields;
 
 		/**
 		 * Broadcast that an Activity has been updated when ACF Fields were saved.
@@ -411,10 +411,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 		// Params to query Activities.
 		$params = [
-			'version' => 3,
+			'version'          => 3,
 			'activity_type_id' => $activity_type_id,
-			'options' => [
-				'limit' => $limit,
+			'options'          => [
+				'limit'  => $limit,
 				'offset' => $offset,
 			],
 		];
@@ -424,16 +424,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 		// Add log entry on failure.
 		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
-			$e = new \Exception();
+			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
+			$log   = [
+				'method'           => __METHOD__,
 				'activity_type_id' => $activity_type_id,
-				'offset' => $offset,
-				'limit' => $limit,
-				'params' => $params,
-				'result' => $result,
-				'backtrace' => $trace,
+				'offset'           => $offset,
+				'limit'            => $limit,
+				'params'           => $params,
+				'result'           => $result,
+				'backtrace'        => $trace,
 			];
 			$this->plugin->log_error( $log );
 			return $result;
@@ -506,10 +506,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 				// Let's make an array of params.
 				$args = [
-					'op' => 'sync',
+					'op'         => 'sync',
 					'objectName' => 'Activity',
-					'objectId' => $activity_data['id'],
-					'objectRef' => (object) $activity_data,
+					'objectId'   => $activity_data['id'],
+					'objectRef'  => (object) $activity_data,
 				];
 
 				// Sync this Activity to the Post Type.
@@ -611,10 +611,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 		// Define params to get queried Activity.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
-			'id' => $activity_id,
-			'options' => [
+			'id'         => $activity_id,
+			'options'    => [
 				'limit' => 0, // No limit.
 			],
 		];
@@ -637,14 +637,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 		// Backfill Target IDs.
 		$activity_data['target_contact_id'] = [];
-		$targets = $this->get_target_contact_ids( $activity_id );
+		$targets                            = $this->get_target_contact_ids( $activity_id );
 		if ( ! empty( $targets ) ) {
 			$activity_data['target_contact_id'] = $targets;
 		}
 
 		// Backfill Assignee IDs.
 		$activity_data['assignee_contact_id'] = [];
-		$assignees = $this->get_assignee_contact_ids( $activity_id );
+		$assignees                            = $this->get_assignee_contact_ids( $activity_id );
 		if ( ! empty( $assignees ) ) {
 			$activity_data['assignee_contact_id'] = $assignees;
 		}
@@ -688,11 +688,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 		// Define params to get queried Activity Targets.
 		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'activity_id' => $activity_id,
+			'version'        => 3,
+			'sequential'     => 1,
+			'activity_id'    => $activity_id,
 			'record_type_id' => 3,
-			'options' => [
+			'options'        => [
 				'limit' => 0, // No limit.
 			],
 		];
@@ -750,11 +750,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 		// Define params to get queried Activity Targets.
 		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'activity_id' => $activity_id,
+			'version'        => 3,
+			'sequential'     => 1,
+			'activity_id'    => $activity_id,
 			'record_type_id' => 1,
-			'options' => [
+			'options'        => [
 				'limit' => 0, // No limit.
 			],
 		];
@@ -837,12 +837,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 		// Log and bail if there's an error.
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			$e = new Exception();
+			$e     = new Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'params' => $params,
-				'result' => $result,
+			$log   = [
+				'method'    => __METHOD__,
+				'params'    => $params,
+				'result'    => $result,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -874,12 +874,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 		// Log and bail if there's no Activity ID.
 		if ( empty( $activity['id'] ) ) {
-			$e = new \Exception();
+			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'message' => __( 'A numeric ID must be present to update an Activity.', 'civicrm-wp-profile-sync' ),
-				'activity' => $activity,
+			$log   = [
+				'method'    => __METHOD__,
+				'message'   => __( 'A numeric ID must be present to update an Activity.', 'civicrm-wp-profile-sync' ),
+				'activity'  => $activity,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -945,8 +945,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		// Assign Date Fields if creating Activity.
 		if ( empty( $activity_id ) ) {
 			$activity_data['activity_date_time'] = $post->post_date;
-			$activity_data['created_date'] = $post->post_date;
-			$activity_data['modified_date'] = $post->post_modified;
+			$activity_data['created_date']       = $post->post_date;
+			$activity_data['modified_date']      = $post->post_modified;
 		}
 
 		// Assign Creator if creating Activity.
@@ -1089,7 +1089,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 			$settings = get_field_object( $selector, $post_id );
 
 			// Get the CiviCRM Custom Field and Activity Field.
-			$custom_field_id = $this->civicrm->custom_field->custom_field_id_get( $settings );
+			$custom_field_id     = $this->civicrm->custom_field->custom_field_id_get( $settings );
 			$activity_field_name = $this->activity_field_name_get( $settings );
 
 			// Do we have a synced Custom Field or Activity Field?
@@ -1120,12 +1120,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 				// Build args for value conversion.
 				$args = [
-					'identifier' => $this->identifier,
-					'entity_id' => $activity_id,
+					'identifier'      => $this->identifier,
+					'entity_id'       => $activity_id,
 					'custom_field_id' => $custom_field_id,
-					'field_name' => $activity_field_name,
-					'selector' => $selector,
-					'post_id' => $post_id,
+					'field_name'      => $activity_field_name,
+					'selector'        => $selector,
+					'post_id'         => $post_id,
 				];
 
 				// Parse value by Field Type.
@@ -1224,20 +1224,20 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 		// Define Field.
 		$field = [
-			'key' => $this->civicrm->acf_field_key_get(),
-			'label' => __( 'CiviCRM Field', 'civicrm-wp-profile-sync' ),
-			'name' => $this->civicrm->acf_field_key_get(),
-			'type' => 'select',
-			'instructions' => __( 'Choose the CiviCRM Field that this ACF Field should sync with. (Optional)', 'civicrm-wp-profile-sync' ),
+			'key'           => $this->civicrm->acf_field_key_get(),
+			'label'         => __( 'CiviCRM Field', 'civicrm-wp-profile-sync' ),
+			'name'          => $this->civicrm->acf_field_key_get(),
+			'type'          => 'select',
+			'instructions'  => __( 'Choose the CiviCRM Field that this ACF Field should sync with. (Optional)', 'civicrm-wp-profile-sync' ),
 			'default_value' => '',
-			'placeholder' => '',
-			'allow_null' => 1,
-			'multiple' => 0,
-			'ui' => 0,
-			'required' => 0,
+			'placeholder'   => '',
+			'allow_null'    => 1,
+			'multiple'      => 0,
+			'ui'            => 0,
+			'required'      => 0,
 			'return_format' => 'value',
-			'parent' => $this->acf_loader->acf->field_group->placeholder_group_get(),
-			'choices' => $choices,
+			'parent'        => $this->acf_loader->acf->field_group->placeholder_group_get(),
+			'choices'       => $choices,
 		];
 
 		// --<
@@ -1508,7 +1508,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 		}
 
 		// Add Option Group and add entries for each Activity Type.
-		$activity_types_title = esc_attr( __( 'Activity Types', 'civicrm-wp-profile-sync' ) );
+		$activity_types_title              = esc_attr( __( 'Activity Types', 'civicrm-wp-profile-sync' ) );
 		$entities[ $activity_types_title ] = [];
 		foreach ( $activity_types as $activity_type ) {
 			$entities[ $activity_types_title ][ $this->identifier . '-' . $activity_type['value'] ] = $activity_type['label'];

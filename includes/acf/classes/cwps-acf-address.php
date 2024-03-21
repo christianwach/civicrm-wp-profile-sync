@@ -68,22 +68,22 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	 * @var array
 	 */
 	public $address_fields = [
-		'is_primary' => 'true_false',
-		'is_billing' => 'true_false',
-		'address_name' => 'text',
-		'street_address' => 'text',
+		'is_primary'             => 'true_false',
+		'is_billing'             => 'true_false',
+		'address_name'           => 'text',
+		'street_address'         => 'text',
 		'supplemental_address_1' => 'text',
 		'supplemental_address_2' => 'text',
 		'supplemental_address_3' => 'text',
-		'city' => 'text',
-		'county_id' => 'select',
-		'state_province_id' => 'select',
-		'country_id' => 'select',
-		'postal_code' => 'text',
+		'city'                   => 'text',
+		'county_id'              => 'select',
+		'state_province_id'      => 'select',
+		'country_id'             => 'select',
+		'postal_code'            => 'text',
 		//'postal_code_suffix' => 'text',
-		'geo_code_1' => 'text',
-		'geo_code_2' => 'text',
-		'name' => 'text',
+		'geo_code_1'             => 'text',
+		'geo_code_2'             => 'text',
+		'name'                   => 'text',
 	];
 
 	/**
@@ -97,9 +97,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	 * @var array
 	 */
 	public $bypass_fields_to_remove = [
-		'county_id' => 'select',
+		'county_id'         => 'select',
 		'state_province_id' => 'select',
-		'country_id' => 'select',
+		'country_id'        => 'select',
 	];
 
 	/**
@@ -112,9 +112,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->civicrm = $parent;
+		$this->civicrm    = $parent;
 
 		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
@@ -284,7 +284,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		}
 
 		// Get the public Fields on the Entity for this Field Type.
-		$public_fields = $this->civicrm_fields_get( 'public' );
+		$public_fields     = $this->civicrm_fields_get( 'public' );
 		$fields_for_entity = [];
 		foreach ( $public_fields as $key => $value ) {
 			if ( $field['type'] == $this->address_fields[ $value['name'] ] ) {

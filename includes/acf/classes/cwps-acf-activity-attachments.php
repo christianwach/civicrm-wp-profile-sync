@@ -95,9 +95,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->civicrm = $parent;
+		$this->civicrm    = $parent;
 
 		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
@@ -377,7 +377,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 		}
 
 		// Convert ACF data to CiviCRM data.
-		$attachment_data['file'] = (int) trim( $value['field_attachment_file'] );
+		$attachment_data['file']        = (int) trim( $value['field_attachment_file'] );
 		$attachment_data['description'] = trim( $value['field_attachment_description'] );
 
 		// --<
@@ -405,10 +405,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 
 		// Convert CiviCRM data to ACF data.
 		$attachment_data['field_attachment_description'] = empty( $value->description ) ? '' : trim( $value->description );
-		$attachment_data['field_attachment_id'] = (int) $value->id;
+		$attachment_data['field_attachment_id']          = (int) $value->id;
 
 		// Add existing Attachment ID if we find one.
-		$filename = pathinfo( $value->path, PATHINFO_BASENAME );
+		$filename    = pathinfo( $value->path, PATHINFO_BASENAME );
 		$possible_id = $this->civicrm->attachment->query_by_file( $filename, 'civicrm' );
 		if ( ! empty( $possible_id ) ) {
 			$attachment_data['field_attachment_file'] = (int) $possible_id;
@@ -464,11 +464,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 
 		// Create an array that mimics $_FILES.
 		$files = [
-			'name' => $name,
-			'type' => $mime_type,
+			'name'     => $name,
+			'type'     => $mime_type,
 			'tmp_name' => $tmp_name,
-			'error' => $error,
-			'size' => $size,
+			'error'    => $error,
+			'size'     => $size,
 		];
 
 		// Only assign to a Post if the ACF "Post ID" is numeric.
@@ -496,7 +496,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 		$data = [
 			'wordpress_file' => get_attached_file( $attachment_id, true ),
 			// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
-			'civicrm_file' => $config->customFileUploadDir . $value,
+			'civicrm_file'   => $config->customFileUploadDir . $value,
 		];
 
 		// Store some Attachment metadata.
@@ -544,11 +544,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 
 				// Build params for internal method.
 				$params = [
-					'key' => $key,
-					'value' => $value,
+					'key'             => $key,
+					'value'           => $value,
 					'attachment_data' => $attachment_data,
-					'activity_id' => $activity_id,
-					'selector' => $selector,
+					'activity_id'     => $activity_id,
+					'selector'        => $selector,
 				];
 
 				// Hand off to internal method.
@@ -618,11 +618,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 
 			// Build params for internal method.
 			$params = [
-				'key' => $key,
-				'value' => $value,
+				'key'             => $key,
+				'value'           => $value,
 				'attachment_data' => $attachment_data,
-				'activity_id' => $activity_id,
-				'selector' => $selector,
+				'activity_id'     => $activity_id,
+				'selector'        => $selector,
 			];
 
 			// Hand off to internal method.
@@ -664,14 +664,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 
 			// Has the WordPress File changed?
 			$wordpress_file_changed = false;
-			$file = get_attached_file( $attachment_id, true );
+			$file                   = get_attached_file( $attachment_id, true );
 			if ( $meta['wordpress_file'] !== $file ) {
 				$wordpress_file_changed = true;
 			}
 
 			// Has the File Description changed?
 			$description_changed = false;
-			$file = get_attached_file( $attachment_id, true );
+			$file                = get_attached_file( $attachment_id, true );
 			if ( $attachment_data['description'] !== $civicrm_attachment['description'] ) {
 				$description_changed = true;
 			}
@@ -686,7 +686,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 
 				// Build the API params.
 				$params = [
-					'id' => $civicrm_attachment['id'],
+					'id'          => $civicrm_attachment['id'],
 					'description' => $attachment_data['description'],
 				];
 
@@ -695,11 +695,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 
 				// Make an array of our params.
 				$params = [
-					'key' => $key,
-					'value' => $value,
-					'attachment' => $attachment,
+					'key'         => $key,
+					'value'       => $value,
+					'attachment'  => $attachment,
 					'activity_id' => $activity_id,
-					'selector' => $selector,
+					'selector'    => $selector,
 				];
 
 				/**
@@ -735,11 +735,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 
 			// Build params for internal method.
 			$params = [
-				'key' => $key,
-				'value' => $value,
+				'key'             => $key,
+				'value'           => $value,
 				'attachment_data' => $attachment_data,
-				'activity_id' => $activity_id,
-				'selector' => $selector,
+				'activity_id'     => $activity_id,
+				'selector'        => $selector,
 			];
 
 			// Hand off to internal method.
@@ -775,8 +775,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 		$attachment_id = (int) $data['attachment_data']['file'];
 
 		// Get the WordPress File, Filename and Mime Type.
-		$file = get_attached_file( $attachment_id, true );
-		$filename = pathinfo( $file, PATHINFO_BASENAME );
+		$file      = get_attached_file( $attachment_id, true );
+		$filename  = pathinfo( $file, PATHINFO_BASENAME );
 		$mime_type = get_post_mime_type( $attachment_id );
 
 		// Make a backup of the File.
@@ -784,12 +784,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 
 		// Build the API params.
 		$params = [
-			'entity_id' => $data['activity_id'],
+			'entity_id'    => $data['activity_id'],
 			'entity_table' => 'civicrm_activity',
-			'name' => $filename,
-			'description' => $data['attachment_data']['description'],
-			'mime_type' => $mime_type,
-			'options' => [
+			'name'         => $filename,
+			'description'  => $data['attachment_data']['description'],
+			'mime_type'    => $mime_type,
+			'options'      => [
 				'move-file' => $file,
 			],
 		];
@@ -809,7 +809,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 		// Save metadata.
 		$meta = [
 			'wordpress_file' => $file,
-			'civicrm_file' => $attachment['path'],
+			'civicrm_file'   => $attachment['path'],
 		];
 
 		// Store some Attachment metadata.
@@ -817,11 +817,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 
 		// Make an array of our params.
 		$params = [
-			'key' => $data['key'],
-			'value' => $data['value'],
-			'attachment' => $attachment,
+			'key'         => $data['key'],
+			'value'       => $data['value'],
+			'attachment'  => $attachment,
 			'activity_id' => $data['activity_id'],
-			'selector' => $data['selector'],
+			'selector'    => $data['selector'],
 		];
 
 		/**
@@ -859,9 +859,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 		// Make an array of our params.
 		$params = [
 			'attachment_id' => $attachment_id,
-			'attachment' => $attachment,
-			'activity_id' => $activity_id,
-			'selector' => $selector,
+			'attachment'    => $attachment,
+			'activity_id'   => $activity_id,
+			'selector'      => $selector,
 		];
 
 		/**
@@ -1046,7 +1046,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 				case 'create':
 					// If the WordPress Attachment ID is empty, create one.
 					if ( empty( $acf_attachment['field_attachment_file'] ) ) {
-						$filename = pathinfo( $attachment->path, PATHINFO_BASENAME );
+						$filename      = pathinfo( $attachment->path, PATHINFO_BASENAME );
 						$attachment_id = $this->attachment_wp_create( $filename, $post_id );
 						if ( ! empty( $attachment_id ) ) {
 							$acf_attachment['field_attachment_file'] = $attachment_id;
@@ -1060,7 +1060,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 				case 'edit':
 					// If the WordPress Attachment ID is empty, create one.
 					if ( empty( $acf_attachment['field_attachment_file'] ) ) {
-						$filename = pathinfo( $attachment->path, PATHINFO_BASENAME );
+						$filename      = pathinfo( $attachment->path, PATHINFO_BASENAME );
 						$attachment_id = $this->attachment_wp_create( $filename, $post_id );
 						if ( ! empty( $attachment_id ) ) {
 							$acf_attachment['field_attachment_file'] = $attachment_id;
@@ -1192,7 +1192,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 			}
 
 			// Try and find the CiviCRM File data.
-			$filename = pathinfo( $meta['civicrm_file'], PATHINFO_BASENAME );
+			$filename     = pathinfo( $meta['civicrm_file'], PATHINFO_BASENAME );
 			$civicrm_file = $this->civicrm->attachment->file_get_by_name( $filename );
 			if ( empty( $civicrm_file ) ) {
 				continue;
@@ -1263,7 +1263,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 			}
 
 			// Try and find the CiviCRM File data.
-			$filename = pathinfo( $meta['civicrm_file'], PATHINFO_BASENAME );
+			$filename     = pathinfo( $meta['civicrm_file'], PATHINFO_BASENAME );
 			$civicrm_file = $this->civicrm->attachment->file_get_by_name( $filename );
 			if ( empty( $civicrm_file ) ) {
 				continue;

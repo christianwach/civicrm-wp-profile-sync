@@ -213,13 +213,13 @@ class CiviCRM_WP_Profile_Sync {
 	public function setup_objects() {
 
 		// Initialise objects.
-		$this->admin = new CiviCRM_WP_Profile_Sync_Admin( $this );
-		$this->wp = new CiviCRM_WP_Profile_Sync_WordPress( $this );
+		$this->admin   = new CiviCRM_WP_Profile_Sync_Admin( $this );
+		$this->wp      = new CiviCRM_WP_Profile_Sync_WordPress( $this );
 		$this->civicrm = new CiviCRM_WP_Profile_Sync_CiviCRM( $this );
-		$this->bp = new CiviCRM_WP_Profile_Sync_BuddyPress( $this );
-		$this->cai = new CiviCRM_WP_Profile_Sync_CAI( $this );
-		$this->acf = new CiviCRM_WP_Profile_Sync_ACF_Loader( $this );
-		$this->mapper = new CiviCRM_WP_Profile_Sync_Mapper( $this );
+		$this->bp      = new CiviCRM_WP_Profile_Sync_BuddyPress( $this );
+		$this->cai     = new CiviCRM_WP_Profile_Sync_CAI( $this );
+		$this->acf     = new CiviCRM_WP_Profile_Sync_ACF_Loader( $this );
+		$this->mapper  = new CiviCRM_WP_Profile_Sync_Mapper( $this );
 
 	}
 

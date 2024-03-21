@@ -114,10 +114,10 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	public function __construct( $xprofile ) {
 
 		// Store references to objects.
-		$this->plugin = $xprofile->bp_loader->plugin;
+		$this->plugin    = $xprofile->bp_loader->plugin;
 		$this->bp_loader = $xprofile->bp_loader;
-		$this->civicrm = $this->plugin->civicrm;
-		$this->xprofile = $xprofile;
+		$this->civicrm   = $this->plugin->civicrm;
+		$this->xprofile  = $xprofile;
 
 		// Init when the BuddyPress Field object is loaded.
 		add_action( 'cwps/buddypress/field/loaded', [ $this, 'initialise' ] );
@@ -274,9 +274,9 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 		}
 
 		// Let's make a new object so we don't overwrite the Website object.
-		$deleted = new stdClass();
-		$deleted->id = $website->id;
-		$deleted->contact_id = $website->contact_id;
+		$deleted                  = new stdClass();
+		$deleted->id              = $website->id;
+		$deleted->contact_id      = $website->contact_id;
 		$deleted->website_type_id = $website->website_type_id;
 
 		// Clear the URL.
@@ -317,7 +317,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 		$website_type_id = $this->plugin->admin->setting_get( 'user_profile_website_type', 0 );
 
 		// Assume unchanged User Website Type.
-		$unchanged = true;
+		$unchanged     = true;
 		$was_user_type = false;
 		$now_user_type = false;
 
@@ -339,18 +339,18 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 
 				// Check if it no longer is.
 				if ( (int) $website_type_id !== (int) $website->website_type_id ) {
-					$was_user_type = true;
+					$was_user_type          = true;
 					$this->bp_now_user_type = clone $website;
-					$unchanged = false;
+					$unchanged              = false;
 				}
 
 			} else {
 
 				// Check if it now is.
 				if ( (int) $website_type_id === (int) $website->website_type_id ) {
-					$now_user_type = true;
+					$now_user_type          = true;
 					$this->bp_was_user_type = clone $website_pre;
-					$unchanged = false;
+					$unchanged              = false;
 				}
 
 			}
@@ -387,14 +387,14 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 		if ( $now_user_type || $was_user_type ) {
 
 			// Make a new object so we don't overwrite the Website Pre object.
-			$previous = clone $website_pre;
+			$previous      = clone $website_pre;
 			$previous->url = '';
 
 			// Make a new object so we don't overwrite the Website object.
-			$current = new stdClass();
-			$current->id = $website->id;
-			$current->contact_id = $website->contact_id;
-			$current->url = $website->url;
+			$current                  = new stdClass();
+			$current->id              = $website->id;
+			$current->contact_id      = $website->contact_id;
+			$current->url             = $website->url;
 			$current->website_type_id = $website->website_type_id;
 
 			// If we're updating "is now", skip if "used to be" has been updated.
@@ -451,14 +451,14 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 		 */
 
 		// Make a new object so we don't overwrite the Website Pre object.
-		$previous = clone $website_pre;
+		$previous      = clone $website_pre;
 		$previous->url = '';
 
 		// Make a new object so we don't overwrite the Website object.
-		$current = new stdClass();
-		$current->id = $website->id;
-		$current->contact_id = $website->contact_id;
-		$current->url = $website->url;
+		$current                  = new stdClass();
+		$current->id              = $website->id;
+		$current->contact_id      = $website->contact_id;
+		$current->url             = $website->url;
 		$current->website_type_id = $website->website_type_id;
 
 		// Assume we want to process the previous.
@@ -525,7 +525,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 
 			// Only "Website" Fields please.
 			$bp_field_mapping = $bp_field['field_meta']['value'];
-			$field_name = $this->name_get( $bp_field_mapping );
+			$field_name       = $this->name_get( $bp_field_mapping );
 			if ( empty( $field_name ) ) {
 				continue;
 			}
@@ -654,8 +654,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 
 			// Grab the parsed data.
 			$website_type_id = $website_data['website_type_id'];
-			$contact_id = $args['contact_id'];
-			$url = $website_data['url'];
+			$contact_id      = $args['contact_id'];
+			$url             = $website_data['url'];
 
 			// Okay, write the data to CiviCRM.
 			$website = $this->plugin->civicrm->website->update_for_contact( $website_type_id, $contact_id, $url );
@@ -691,7 +691,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 		}
 
 		// Get the CiviCRM Custom Field and Website Field.
-		$custom_field_id = $this->xprofile->custom_field->id_get( $meta['value'] );
+		$custom_field_id    = $this->xprofile->custom_field->id_get( $meta['value'] );
 		$website_field_name = $this->name_get( $meta['value'] );
 
 		// Do we have a synced Custom Field or Website Field?
@@ -712,8 +712,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 
 			// Build args for value conversion.
 			$args = [
-				'entity_type' => $meta['entity_type'],
-				'custom_field_id' => $custom_field_id,
+				'entity_type'        => $meta['entity_type'],
+				'custom_field_id'    => $custom_field_id,
 				'website_field_name' => $website_field_name,
 			];
 

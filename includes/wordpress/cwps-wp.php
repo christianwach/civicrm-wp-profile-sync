@@ -213,8 +213,8 @@ class CiviCRM_WP_Profile_Sync_WordPress {
 
 		// Maybe add breaks to replacements array.
 		if ( $br ) {
-			$replace['<br>'] = "\r\n";
-			$replace['<br/>'] = "\r\n";
+			$replace['<br>']   = "\r\n";
+			$replace['<br/>']  = "\r\n";
 			$replace['<br />'] = "\r\n";
 		}
 
@@ -253,7 +253,7 @@ class CiviCRM_WP_Profile_Sync_WordPress {
 		$timezone = false;
 
 		$tzstring = get_option( 'timezone_string' );
-		$offset = get_option( 'gmt_offset' );
+		$offset   = get_option( 'gmt_offset' );
 
 		/*
 		 * Setting manual offsets should be discouraged.
@@ -268,7 +268,7 @@ class CiviCRM_WP_Profile_Sync_WordPress {
 		 */
 		if ( empty( $tzstring ) && 0 != $offset && floor( $offset ) == $offset ) {
 			$offset_string = $offset > 0 ? "-$offset" : '+' . absint( $offset );
-			$tzstring = 'Etc/GMT' . $offset_string;
+			$tzstring      = 'Etc/GMT' . $offset_string;
 		}
 
 		// Default to 'UTC' if the timezone string is empty.

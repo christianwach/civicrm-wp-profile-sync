@@ -92,10 +92,10 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->acf = $parent;
-		$this->civicrm = $this->acf_loader->civicrm;
+		$this->acf        = $parent;
+		$this->civicrm    = $this->acf_loader->civicrm;
 
 		// Init when the parent class is loaded.
 		add_action( 'cwps/acf/acf/loaded', [ $this, 'register_hooks' ] );
@@ -836,20 +836,20 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 		// Define Setting Field.
 		$setting_field = [
-			'key' => $this->civicrm->acf_field_key_get(),
-			'label' => __( 'CiviCRM Field', 'civicrm-wp-profile-sync' ),
-			'name' => $this->civicrm->acf_field_key_get(),
-			'type' => 'select',
-			'instructions' => __( 'Choose the CiviCRM Field that this ACF Field should sync with. (Optional)', 'civicrm-wp-profile-sync' ),
+			'key'           => $this->civicrm->acf_field_key_get(),
+			'label'         => __( 'CiviCRM Field', 'civicrm-wp-profile-sync' ),
+			'name'          => $this->civicrm->acf_field_key_get(),
+			'type'          => 'select',
+			'instructions'  => __( 'Choose the CiviCRM Field that this ACF Field should sync with. (Optional)', 'civicrm-wp-profile-sync' ),
 			'default_value' => '',
-			'placeholder' => '',
-			'allow_null' => 1,
-			'multiple' => 0,
-			'ui' => 0,
-			'required' => 0,
+			'placeholder'   => '',
+			'allow_null'    => 1,
+			'multiple'      => 0,
+			'ui'            => 0,
+			'required'      => 0,
 			'return_format' => 'value',
-			'parent' => $this->acf->field_group->placeholder_group_get(),
-			'choices' => $choices,
+			'parent'        => $this->acf->field_group->placeholder_group_get(),
+			'choices'       => $choices,
 		];
 
 		// Now add it.
@@ -886,11 +886,11 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 		// Get Placeholder Setting Field.
 		$field = [
-			'label' => __( 'Placeholder Text', 'civicrm-wp-profile-sync' ),
+			'label'        => __( 'Placeholder Text', 'civicrm-wp-profile-sync' ),
 			'instructions' => __( 'Appears within the input', 'civicrm-wp-profile-sync' ),
-			'type' => 'text',
-			'name' => 'placeholder',
-			'placeholder' => _x( 'Select', 'verb', 'civicrm-wp-profile-sync' ),
+			'type'         => 'text',
+			'name'         => 'placeholder',
+			'placeholder'  => _x( 'Select', 'verb', 'civicrm-wp-profile-sync' ),
 		];
 
 		/**

@@ -20,12 +20,12 @@
 		<!-- I prefer my control structures. -->
 		<exclude name="WordPress.WhiteSpace.ControlStructureSpacing.BlankLineAfterEnd" />
 
-		<!-- Not a fan of arrow or equals alignment. -->
-		<exclude name="WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned" />
-		<exclude name="Generic.Formatting.MultipleStatementAlignment.NotSameWarning" />
-
 		<!-- PSR4: Allow short file names. -->
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
+
+		<!-- Allow example code blocks. -->
+		<exclude name="Squiz.PHP.CommentedOutCode.Found" />
+		<exclude name="Squiz.Commenting.BlockComment.HasEmptyLineBefore" />
 
 		<!-- Remove some checks to allow phpcbf to run in bulk mode. -->
 		<exclude name="WordPress.PHP.StrictComparisons.LooseComparison" />
@@ -33,9 +33,7 @@
 		<exclude name="WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase" />
 		<exclude name="WordPress.Security.EscapeOutput.OutputNotEscaped" />
 		<exclude name="Squiz.Commenting.InlineComment.NoSpaceBefore" />
-		<exclude name="Squiz.PHP.CommentedOutCode.Found" />
 		<exclude name="Squiz.Commenting.InlineComment.SpacingAfterAtFunctionEnd" />
-		<exclude name="Squiz.Commenting.BlockComment.HasEmptyLineBefore" />
 
 		<exclude name="Generic.Metrics.NestingLevel.MaxExceeded" />
 

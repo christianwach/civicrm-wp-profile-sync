@@ -57,7 +57,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 	public function __construct( $parent ) {
 
 		// Store references.
-		$this->plugin = $parent->plugin;
+		$this->plugin  = $parent->plugin;
 		$this->civicrm = $parent;
 
 		// Init when the CiviCRM object is loaded.
@@ -161,9 +161,9 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 
 		// Construct params.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
-			'options' => [
+			'options'    => [
 				'limit' => 0, // No limit.
 			],
 		];
@@ -210,9 +210,9 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 
 		// Construct params.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
-			'id' => $custom_group_id,
+			'id'         => $custom_group_id,
 		];
 
 		// Call the API.
@@ -256,8 +256,8 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 
 		// Construct params.
 		$params = [
-			'version' => 3,
-			'sequential' => 1,
+			'version'      => 3,
+			'sequential'   => 1,
 			'entity_table' => $entity_table,
 		];
 
@@ -315,17 +315,17 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 
 		// Construct params to get Groups for all Contacts.
 		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'is_active' => 1,
-			'extends' => 'Contact',
+			'version'             => 3,
+			'sequential'          => 1,
+			'is_active'           => 1,
+			'extends'             => 'Contact',
 			'api.CustomField.get' => [
 				'is_active' => 1,
-				'options' => [
+				'options'   => [
 					'limit' => 0, // No limit.
 				],
 			],
-			'options' => [
+			'options'             => [
 				'limit' => 0, // No limit.
 			],
 		];
@@ -381,19 +381,19 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 
 		// Construct params.
 		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'is_active' => 1,
-			'options' => [
+			'version'             => 3,
+			'sequential'          => 1,
+			'is_active'           => 1,
+			'options'             => [
 				'limit' => 0,
 			],
 			'api.CustomField.get' => [
 				'is_active' => 1,
-				'options' => [
+				'options'   => [
 					'limit' => 0,
 				],
 			],
-			'extends' => [
+			'extends'             => [
 				'IN' => $this->plugin->civicrm->contact_type->types_get_top_level(),
 			],
 		];
@@ -433,19 +433,19 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 
 		// Construct params.
 		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'is_active' => 1,
-			'options' => [
+			'version'             => 3,
+			'sequential'          => 1,
+			'is_active'           => 1,
+			'options'             => [
 				'limit' => 0,
 			],
 			'api.CustomField.get' => [
 				'is_active' => 1,
-				'options' => [
+				'options'   => [
 					'limit' => 0,
 				],
 			],
-			'extends' => 'Activity',
+			'extends'             => 'Activity',
 		];
 
 		// Call the API.
@@ -489,19 +489,19 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 
 		// Construct params.
 		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'is_active' => 1,
-			'options' => [
+			'version'             => 3,
+			'sequential'          => 1,
+			'is_active'           => 1,
+			'options'             => [
 				'limit' => 0,
 			],
 			'api.CustomField.get' => [
 				'is_active' => 1,
-				'options' => [
+				'options'   => [
 					'limit' => 0,
 				],
 			],
-			'extends' => 'Case',
+			'extends'             => 'Case',
 		];
 
 		// Call the API.
@@ -544,20 +544,20 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 
 		// Construct params.
 		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'is_active' => 1,
-			'options' => [
+			'version'             => 3,
+			'sequential'          => 1,
+			'is_active'           => 1,
+			'options'             => [
 				'limit' => 0,
-				'sort' => 'weight',
+				'sort'  => 'weight',
 			],
 			'api.CustomField.get' => [
 				'is_active' => 1,
-				'options' => [
+				'options'   => [
 					'limit' => 0,
 				],
 			],
-			'extends' => 'Participant',
+			'extends'             => 'Participant',
 		];
 
 		// Call the API.
@@ -606,19 +606,19 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 
 		// Construct params.
 		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'is_active' => 1,
-			'options' => [
+			'version'             => 3,
+			'sequential'          => 1,
+			'is_active'           => 1,
+			'options'             => [
 				'limit' => 0,
 			],
 			'api.CustomField.get' => [
 				'is_active' => 1,
-				'options' => [
+				'options'   => [
 					'limit' => 0,
 				],
 			],
-			'extends' => 'Relationship',
+			'extends'             => 'Relationship',
 		];
 
 		// Call the API.
@@ -673,19 +673,19 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 
 		// Construct params.
 		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'is_active' => 1,
-			'options' => [
+			'version'             => 3,
+			'sequential'          => 1,
+			'is_active'           => 1,
+			'options'             => [
 				'limit' => 0,
 			],
 			'api.CustomField.get' => [
 				'is_active' => 1,
-				'options' => [
+				'options'   => [
 					'limit' => 0,
 				],
 			],
-			'extends' => 'Address',
+			'extends'             => 'Address',
 		];
 
 		// Call the API.
@@ -758,11 +758,11 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 
 		// Construct params.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
-			'is_active' => 1,
-			'extends' => $type,
-			'options' => [
+			'is_active'  => 1,
+			'extends'    => $type,
+			'options'    => [
 				'limit' => 0, // No limit.
 			],
 		];
@@ -771,7 +771,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group {
 		if ( ! empty( $with_fields ) ) {
 			$params['api.CustomField.get'] = [
 				'is_active' => 1,
-				'options' => [
+				'options'   => [
 					'limit' => 0, // No limit.
 				],
 			];

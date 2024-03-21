@@ -71,7 +71,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		// Store references.
 		$this->plugin = $parent->mapper->plugin;
 		$this->mapper = $parent->mapper;
-		$this->hooks = $parent;
+		$this->hooks  = $parent;
 
 		// Initialise when parent is loaded.
 		add_action( 'cwps/mapper/hooks/loaded', [ $this, 'initialise' ] );
@@ -478,7 +478,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Let's make an array of the params.
 		$args = [
-			'user_id' => $user_id,
+			'user_id'       => $user_id,
 			'old_user_data' => $old_user_data,
 		];
 
@@ -535,11 +535,11 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Let's make an array of the params.
 		$args = [
-			'user_id' => $user_id,
+			'user_id'          => $user_id,
 			'posted_field_ids' => $posted_field_ids,
-			'errors' => $errors,
-			'old_values' => $old_values,
-			'new_values' => $new_values,
+			'errors'           => $errors,
+			'old_values'       => $old_values,
+			'new_values'       => $new_values,
 		];
 
 		/**
@@ -592,11 +592,11 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Let's make an array of the params.
 		$args = [
-			'user_id' => $user_id,
-			'user_login' => $user_login,
+			'user_id'       => $user_id,
+			'user_login'    => $user_login,
 			'user_password' => $user_password,
-			'user_email' => $user_email,
-			'usermeta' => $usermeta,
+			'user_email'    => $user_email,
+			'usermeta'      => $usermeta,
 		];
 
 		/**
@@ -647,8 +647,8 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		// Let's make an array of the params.
 		$args = [
 			'user_id' => $user_id,
-			'key' => $key,
-			'user' => $user,
+			'key'     => $key,
+			'user'    => $user,
 		];
 
 		/**
@@ -731,9 +731,9 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -784,9 +784,9 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -837,9 +837,9 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -898,9 +898,9 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		/*
@@ -967,9 +967,9 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1011,9 +1011,9 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1057,9 +1057,9 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1100,9 +1100,9 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1143,9 +1143,9 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1186,9 +1186,9 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1229,9 +1229,9 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1274,9 +1274,9 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1317,9 +1317,9 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1360,9 +1360,9 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1403,9 +1403,9 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1448,9 +1448,9 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1491,9 +1491,9 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1534,9 +1534,9 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1577,9 +1577,9 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1620,9 +1620,9 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1660,9 +1660,9 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
-			'group_id' => $group_id,
-			'entity_id' => $entity_id,
+			'op'            => $op,
+			'group_id'      => $group_id,
+			'entity_id'     => $entity_id,
 			'custom_fields' => $custom_fields,
 		];
 

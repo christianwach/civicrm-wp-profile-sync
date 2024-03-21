@@ -124,9 +124,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->civicrm = $parent;
+		$this->civicrm    = $parent;
 
 		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
@@ -351,12 +351,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 		// Log and bail if there's an error.
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			$e = new Exception();
+			$e     = new Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'params' => $params,
-				'result' => $result,
+			$log   = [
+				'method'    => __METHOD__,
+				'params'    => $params,
+				'result'    => $result,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -391,12 +391,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 		// Log and bail if there's no Attachment ID.
 		if ( empty( $data['id'] ) ) {
-			$e = new \Exception();
+			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'message' => __( 'A numeric ID must be present to update an Attachment.', 'civicrm-wp-profile-sync' ),
-				'data' => $data,
+			$log   = [
+				'method'    => __METHOD__,
+				'message'   => __( 'A numeric ID must be present to update an Attachment.', 'civicrm-wp-profile-sync' ),
+				'data'      => $data,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -429,7 +429,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		// Define params to delete this Phone Record.
 		$params = [
 			'version' => 3,
-			'id' => $attachment_id,
+			'id'      => $attachment_id,
 		];
 
 		// Call the API.
@@ -474,14 +474,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 		// Try and copy the File.
 		if ( ! copy( $file, $new_file ) ) {
-			$e = new \Exception();
+			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'message' => __( 'Could not copy File.', 'civicrm-wp-profile-sync' ),
-				'file' => $file,
-				'new_name' => $new_name,
-				'new_file' => $new_file,
+			$log   = [
+				'method'    => __METHOD__,
+				'message'   => __( 'Could not copy File.', 'civicrm-wp-profile-sync' ),
+				'file'      => $file,
+				'new_name'  => $new_name,
+				'new_file'  => $new_file,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -574,7 +574,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		// Construct API query.
 		$params = [
 			'version' => 3,
-			'id' => $attachment_id,
+			'id'      => $attachment_id,
 		];
 
 		// Get Attachment details via API.
@@ -624,11 +624,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 		// Define params to get queried Attachments.
 		$params = [
-			'version' => 3,
-			'sequential' => 1,
+			'version'      => 3,
+			'sequential'   => 1,
 			'entity_table' => 'civicrm_' . $entity,
-			'entity_id' => $entity_id,
-			'options' => [
+			'entity_id'    => $entity_id,
+			'options'      => [
 				'limit' => 0, // No limit.
 			],
 		];
@@ -679,7 +679,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		// Construct API query.
 		$params = [
 			'version' => 3,
-			'id' => $file_id,
+			'id'      => $file_id,
 		];
 
 		// Get File details via API.
@@ -728,7 +728,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		// Construct API query.
 		$params = [
 			'version' => 3,
-			'uri' => $filename,
+			'uri'     => $filename,
 		];
 
 		// Get File details via API.
@@ -872,8 +872,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 			$settings = get_field_object( $selector, $args['post_id'] );
 			if ( $settings['type'] === 'file' ) {
 				$this->file_fields[] = [
-					'post_id' => $args['post_id'],
-					'selector' => $selector,
+					'post_id'       => $args['post_id'],
+					'selector'      => $selector,
 					'attachment_id' => $value,
 				];
 			}
@@ -975,7 +975,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		}
 
 		// Try and find the CiviCRM File data.
-		$filename = pathinfo( $meta['civicrm_file'], PATHINFO_BASENAME );
+		$filename     = pathinfo( $meta['civicrm_file'], PATHINFO_BASENAME );
 		$civicrm_file = $this->file_get_by_name( $filename );
 		if ( empty( $civicrm_file ) ) {
 			return $value;
@@ -1048,7 +1048,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		}
 
 		// Try and find the CiviCRM File data.
-		$filename = pathinfo( $meta['civicrm_file'], PATHINFO_BASENAME );
+		$filename     = pathinfo( $meta['civicrm_file'], PATHINFO_BASENAME );
 		$civicrm_file = $this->file_get_by_name( $filename );
 		if ( empty( $civicrm_file ) ) {
 			return;
@@ -1128,7 +1128,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 			}
 
 			// Try and delete the previous CiviCRM Attachment.
-			$filename = pathinfo( $meta['civicrm_file'], PATHINFO_BASENAME );
+			$filename     = pathinfo( $meta['civicrm_file'], PATHINFO_BASENAME );
 			$civicrm_file = $this->file_get_by_name( $filename );
 			if ( ! empty( $civicrm_file ) ) {
 
@@ -1192,7 +1192,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 				// Try and delete the previous CiviCRM Attachment.
 				$previous_meta = $this->metadata_get( (int) $file_field['attachment_id'] );
 				if ( ! empty( $previous_meta['civicrm_file'] ) ) {
-					$filename = pathinfo( $previous_meta['civicrm_file'], PATHINFO_BASENAME );
+					$filename     = pathinfo( $previous_meta['civicrm_file'], PATHINFO_BASENAME );
 					$civicrm_file = $this->file_get_by_name( $filename );
 					if ( ! empty( $civicrm_file ) ) {
 
@@ -1217,7 +1217,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		// Save metadata.
 		$data = [
 			'wordpress_file' => $file,
-			'civicrm_file' => $new_file,
+			'civicrm_file'   => $new_file,
 		];
 
 		// Store some Attachment metadata.
@@ -1344,11 +1344,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 		// Create an array that mimics $_FILES.
 		$files = [
-			'name' => $name,
-			'type' => $mime_type,
+			'name'     => $name,
+			'type'     => $mime_type,
 			'tmp_name' => $tmp_name,
-			'error' => $error,
-			'size' => $size,
+			'error'    => $error,
+			'size'     => $size,
 		];
 
 		// Only assign to a Post if the ACF "Post ID" is numeric.
@@ -1376,7 +1376,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		$data = [
 			'wordpress_file' => get_attached_file( $attachment_id, true ),
 			// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
-			'civicrm_file' => $config->customFileUploadDir . $value,
+			'civicrm_file'   => $config->customFileUploadDir . $value,
 		];
 
 		// Store some Attachment metadata.
@@ -1439,22 +1439,22 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		foreach ( $entity_tables as $entity_table => $entity_name ) {
 
 			// Build Custom Field array.
-			$custom_fields = [];
+			$custom_fields   = [];
 			$custom_fields[] = [
-				'entity_table' => $entity_table,
-				'entity_id' => (int) $args['entity_id'],
-				'value' => '',
-				'type' => 'File',
+				'entity_table'    => $entity_table,
+				'entity_id'       => (int) $args['entity_id'],
+				'value'           => '',
+				'type'            => 'File',
 				'custom_field_id' => (int) $args['custom_field_id'],
 				'custom_group_id' => (int) $custom_field['custom_group_id'],
-				'is_multiple' => 0,
-				'serialize' => 0,
-				'file_id' => '',
+				'is_multiple'     => 0,
+				'serialize'       => 0,
+				'file_id'         => '',
 			];
 
 			// Mimic the CiviCRM params.
-			$op = 'edit';
-			$group_id = (int) $custom_field['custom_group_id'];
+			$op        = 'edit';
+			$group_id  = (int) $custom_field['custom_group_id'];
 			$entity_id = (int) $args['entity_id'];
 
 			/**
@@ -1547,16 +1547,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 		// Build arguments for query.
 		$args = [
-			'post_type' => 'attachment',
-			'post_status' => 'any',
-			'no_found_rows' => true,
+			'post_type'      => 'attachment',
+			'post_status'    => 'any',
+			'no_found_rows'  => true,
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-			'meta_key' => $meta_key,
+			'meta_key'       => $meta_key,
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
-			'meta_value' => $filename,
-			'meta_compare' => 'LIKE',
+			'meta_value'     => $filename,
+			'meta_compare'   => 'LIKE',
 			'posts_per_page' => -1,
-			'order' => 'ASC',
+			'order'          => 'ASC',
 		];
 
 		// Do the query.
@@ -1651,7 +1651,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		// Save metadata.
 		$data = [
 			'wordpress_file' => get_attached_file( $attachment_id, true ),
-			'civicrm_file' => '',
+			'civicrm_file'   => '',
 		];
 
 		// Force-delete the Attachment.
@@ -1684,10 +1684,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		}
 
 		$params = [
-			'version' => 3,
-			'sequential' => 1,
+			'version'         => 3,
+			'sequential'      => 1,
 			'custom_group_id' => $custom_group['id'],
-			'data_type' => 'File',
+			'data_type'       => 'File',
 		];
 
 		// This will return the Custom Fields of type "File" in that Group.
@@ -1738,7 +1738,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		}
 
 		// Try and delete the CiviCRM Attachment.
-		$filename = pathinfo( $meta['civicrm_file'], PATHINFO_BASENAME );
+		$filename     = pathinfo( $meta['civicrm_file'], PATHINFO_BASENAME );
 		$civicrm_file = $this->file_get_by_name( $filename );
 		if ( empty( $civicrm_file ) ) {
 			return;
@@ -1839,29 +1839,29 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 		// Define Setting Field.
 		$upload_setting_field = [
-			'key' => 'civicrm_file_no_wp',
-			'label' => __( 'CiviCRM Only', 'civicrm-wp-profile-sync' ),
-			'name' => 'civicrm_file_no_wp',
-			'type' => 'true_false',
-			'instructions' => __( 'Delete WordPress Attachment after upload.', 'civicrm-wp-profile-sync' ),
-			'required' => 0,
-			'wrapper' => [
+			'key'               => 'civicrm_file_no_wp',
+			'label'             => __( 'CiviCRM Only', 'civicrm-wp-profile-sync' ),
+			'name'              => 'civicrm_file_no_wp',
+			'type'              => 'true_false',
+			'instructions'      => __( 'Delete WordPress Attachment after upload.', 'civicrm-wp-profile-sync' ),
+			'required'          => 0,
+			'wrapper'           => [
 				'width' => '',
 				'class' => '',
-				'id' => '',
+				'id'    => '',
 			],
-			'acfe_permissions' => '',
-			'message' => '',
-			'default_value' => 0,
-			'ui' => 1,
-			'ui_on_text' => '',
-			'ui_off_text' => '',
+			'acfe_permissions'  => '',
+			'message'           => '',
+			'default_value'     => 0,
+			'ui'                => 1,
+			'ui_on_text'        => '',
+			'ui_off_text'       => '',
 			'conditional_logic' => [
 				[
 					[
-						'field' => $this->acf_loader->civicrm->acf_field_key_get(),
+						'field'    => $this->acf_loader->civicrm->acf_field_key_get(),
 						'operator' => '==contains',
-						'value' => 'caicustom_',
+						'value'    => 'caicustom_',
 					],
 				],
 			],
@@ -1891,29 +1891,29 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 		// Define Setting Field.
 		$usage_setting_field = [
-			'key' => 'civicrm_file_field_type',
-			'label' => __( 'File Link', 'civicrm-wp-profile-sync' ),
-			'name' => 'civicrm_file_field_type',
-			'type' => 'select',
-			'instructions' => __( 'Choose which File this ACF Field should link to.', 'civicrm-wp-profile-sync' ),
-			'default_value' => '',
-			'placeholder' => '',
-			'allow_null' => 0,
-			'multiple' => 0,
-			'ui' => 0,
-			'required' => 0,
-			'return_format' => 'value',
-			'parent' => $this->acf_loader->acf->field_group->placeholder_group_get(),
-			'choices' => [
+			'key'               => 'civicrm_file_field_type',
+			'label'             => __( 'File Link', 'civicrm-wp-profile-sync' ),
+			'name'              => 'civicrm_file_field_type',
+			'type'              => 'select',
+			'instructions'      => __( 'Choose which File this ACF Field should link to.', 'civicrm-wp-profile-sync' ),
+			'default_value'     => '',
+			'placeholder'       => '',
+			'allow_null'        => 0,
+			'multiple'          => 0,
+			'ui'                => 0,
+			'required'          => 0,
+			'return_format'     => 'value',
+			'parent'            => $this->acf_loader->acf->field_group->placeholder_group_get(),
+			'choices'           => [
 				1 => __( 'Use public WordPress File', 'civicrm-wp-profile-sync' ),
 				2 => __( 'Use permissioned CiviCRM File', 'civicrm-wp-profile-sync' ),
 			],
 			'conditional_logic' => [
 				[
 					[
-						'field' => $this->acf_loader->civicrm->acf_field_key_get(),
+						'field'    => $this->acf_loader->civicrm->acf_field_key_get(),
 						'operator' => '==contains',
-						'value' => 'caicustom_',
+						'value'    => 'caicustom_',
 					],
 				],
 			],
@@ -2065,7 +2065,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		// Init return.
 		$metadata = [
 			'wordpress_file' => '',
-			'civicrm_file' => '',
+			'civicrm_file'   => '',
 		];
 
 		// Get the WordPress File.

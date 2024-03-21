@@ -209,16 +209,16 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	public function setup_objects() {
 
 		// Initialise objects.
-		$this->contact_type = new CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Type( $this );
-		$this->contact = new CiviCRM_WP_Profile_Sync_CiviCRM_Contact( $this );
+		$this->contact_type  = new CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Type( $this );
+		$this->contact       = new CiviCRM_WP_Profile_Sync_CiviCRM_Contact( $this );
 		$this->contact_field = new CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Field( $this );
-		$this->custom_field = new CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field( $this );
-		$this->custom_group = new CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group( $this );
-		$this->email = new CiviCRM_WP_Profile_Sync_CiviCRM_Email( $this );
-		$this->website = new CiviCRM_WP_Profile_Sync_CiviCRM_Website( $this );
-		$this->address = new CiviCRM_WP_Profile_Sync_CiviCRM_Address( $this );
-		$this->phone = new CiviCRM_WP_Profile_Sync_CiviCRM_Phone( $this );
-		$this->bulk = new CiviCRM_WP_Profile_Sync_CiviCRM_Bulk( $this );
+		$this->custom_field  = new CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field( $this );
+		$this->custom_group  = new CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group( $this );
+		$this->email         = new CiviCRM_WP_Profile_Sync_CiviCRM_Email( $this );
+		$this->website       = new CiviCRM_WP_Profile_Sync_CiviCRM_Website( $this );
+		$this->address       = new CiviCRM_WP_Profile_Sync_CiviCRM_Address( $this );
+		$this->phone         = new CiviCRM_WP_Profile_Sync_CiviCRM_Phone( $this );
+		$this->bulk          = new CiviCRM_WP_Profile_Sync_CiviCRM_Bulk( $this );
 
 	}
 
@@ -428,11 +428,11 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 
 		// Define params to query for enabled Extensions.
 		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'status' => 'installed',
+			'version'     => 3,
+			'sequential'  => 1,
+			'status'      => 'installed',
 			'statusLabel' => 'Enabled',
-			'options' => [
+			'options'     => [
 				'limit' => 0,
 			],
 		];
@@ -487,9 +487,9 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 
 		// Construct params.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
-			'name' => $name,
+			'name'       => $name,
 		];
 
 		// Call the CiviCRM API.
@@ -623,7 +623,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 
 		// Define query params.
 		$params = [
-			'name' => $name,
+			'name'    => $name,
 			'version' => 3,
 		];
 
@@ -673,9 +673,9 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 
 		// Build params to get Option Group data.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
-			'id' => $option_group_id,
+			'id'         => $option_group_id,
 		];
 
 		// Call the CiviCRM API.

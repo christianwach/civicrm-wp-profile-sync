@@ -126,9 +126,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->civicrm = $parent;
+		$this->civicrm    = $parent;
 
 		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
@@ -186,8 +186,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 
 		// Init Shortcode objects.
 		$this->shortcode_address = new CiviCRM_Profile_Sync_ACF_Shortcode_Address( $this );
-		$this->shortcode_city = new CiviCRM_Profile_Sync_ACF_Shortcode_City( $this );
-		$this->shortcode_state = new CiviCRM_Profile_Sync_ACF_Shortcode_State( $this );
+		$this->shortcode_city    = new CiviCRM_Profile_Sync_ACF_Shortcode_City( $this );
+		$this->shortcode_state   = new CiviCRM_Profile_Sync_ACF_Shortcode_State( $this );
 
 	}
 
@@ -400,17 +400,17 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 
 		// Convert CiviCRM data to ACF data.
 		$address_data['field_address_location_type'] = (int) $value->location_type_id;
-		$address_data['field_address_primary'] = empty( $value->is_primary ) ? '0' : '1';
-		$address_data['field_address_billing'] = empty( $value->is_billing ) ? '0' : '1';
+		$address_data['field_address_primary']       = empty( $value->is_primary ) ? '0' : '1';
+		$address_data['field_address_billing']       = empty( $value->is_billing ) ? '0' : '1';
 
 		// Convert optional CiviCRM data.
 
 		// Address Name.
-		$address_name = empty( $value->name ) ? '' : trim( $value->name );
+		$address_name                       = empty( $value->name ) ? '' : trim( $value->name );
 		$address_data['field_address_name'] = $this->plugin->civicrm->denullify( $address_name );
 
 		// Street Address.
-		$street_address = empty( $value->street_address ) ? '' : trim( $value->street_address );
+		$street_address                               = empty( $value->street_address ) ? '' : trim( $value->street_address );
 		$address_data['field_address_street_address'] = $this->plugin->civicrm->denullify( $street_address );
 
 		// Supplementary Address Fields.
@@ -422,11 +422,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		$address_data['field_address_supplemental_address_3'] = $this->plugin->civicrm->denullify( $address_3 );
 
 		// City.
-		$city = empty( $value->city ) ? '' : trim( $value->city );
+		$city                               = empty( $value->city ) ? '' : trim( $value->city );
 		$address_data['field_address_city'] = $this->plugin->civicrm->denullify( $city );
 
 		// Post Code.
-		$postal_code = empty( $value->postal_code ) ? '' : trim( $value->postal_code );
+		$postal_code                               = empty( $value->postal_code ) ? '' : trim( $value->postal_code );
 		$address_data['field_address_postal_code'] = $this->plugin->civicrm->denullify( $postal_code );
 
 		/*
@@ -436,12 +436,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		*/
 
 		// Country and State/Province.
-		$address_data['field_address_country_id'] = empty( $value->country_id ) ? '' : (int) $value->country_id;
+		$address_data['field_address_country_id']        = empty( $value->country_id ) ? '' : (int) $value->country_id;
 		$address_data['field_address_state_province_id'] = empty( $value->state_province_id ) ? '' : (int) $value->state_province_id;
 
 		// Geolocation.
-		$address_data['field_address_geo_code_1'] = empty( $value->geo_code_1 ) ? '' : (float) $value->geo_code_1;
-		$address_data['field_address_geo_code_2'] = empty( $value->geo_code_2 ) ? '' : (float) $value->geo_code_2;
+		$address_data['field_address_geo_code_1']      = empty( $value->geo_code_1 ) ? '' : (float) $value->geo_code_1;
+		$address_data['field_address_geo_code_2']      = empty( $value->geo_code_2 ) ? '' : (float) $value->geo_code_2;
 		$address_data['field_address_manual_geo_code'] = empty( $value->manual_geo_code ) ? '0' : '1';
 
 		// Address ID.
@@ -495,11 +495,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 
 				// Make an array of our params.
 				$params = [
-					'key' => $key,
-					'value' => $value,
-					'address' => $address,
+					'key'        => $key,
+					'value'      => $value,
+					'address'    => $address,
 					'contact_id' => $contact_id,
-					'selector' => $selector,
+					'selector'   => $selector,
 				];
 
 				/**
@@ -578,11 +578,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 
 			// Make an array of our params.
 			$params = [
-				'key' => $key,
-				'value' => $value,
-				'address' => $address,
+				'key'        => $key,
+				'value'      => $value,
+				'address'    => $address,
 				'contact_id' => $contact_id,
-				'selector' => $selector,
+				'selector'   => $selector,
 			];
 
 			/**
@@ -613,11 +613,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 
 			// Make an array of our params.
 			$params = [
-				'key' => $key,
-				'value' => $value,
-				'address' => $address,
+				'key'        => $key,
+				'value'      => $value,
+				'address'    => $address,
 				'contact_id' => $contact_id,
-				'selector' => $selector,
+				'selector'   => $selector,
 			];
 
 			/**
@@ -641,9 +641,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 			// Make an array of our params.
 			$params = [
 				'address_id' => $address_id,
-				'address' => $address,
+				'address'    => $address,
 				'contact_id' => $contact_id,
-				'selector' => $selector,
+				'selector'   => $selector,
 			];
 
 			/**
@@ -681,33 +681,33 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 
 		// Convert ACF data to CiviCRM data.
 		$address_data['location_type_id'] = (int) $value['field_address_location_type'];
-		$address_data['is_primary'] = empty( $value['field_address_primary'] ) ? '0' : '1';
-		$address_data['is_billing'] = empty( $value['field_address_billing'] ) ? '0' : '1';
+		$address_data['is_primary']       = empty( $value['field_address_primary'] ) ? '0' : '1';
+		$address_data['is_billing']       = empty( $value['field_address_billing'] ) ? '0' : '1';
 
 		// Maybe add optional Address Fields.
 
 		// Address Name.
-		$address_name = empty( $value['field_address_name'] ) ? '' : trim( $value['field_address_name'] );
+		$address_name         = empty( $value['field_address_name'] ) ? '' : trim( $value['field_address_name'] );
 		$address_data['name'] = $address_name;
 
 		// Street Address.
-		$street_address = empty( $value['field_address_street_address'] ) ? '' : trim( $value['field_address_street_address'] );
+		$street_address                 = empty( $value['field_address_street_address'] ) ? '' : trim( $value['field_address_street_address'] );
 		$address_data['street_address'] = $street_address;
 
 		// Supplemental Address Fields.
-		$address_1 = empty( $value['field_address_supplemental_address_1'] ) ? '' : trim( $value['field_address_supplemental_address_1'] );
-		$address_2 = empty( $value['field_address_supplemental_address_2'] ) ? '' : trim( $value['field_address_supplemental_address_2'] );
-		$address_3 = empty( $value['field_address_supplemental_address_3'] ) ? '' : trim( $value['field_address_supplemental_address_3'] );
+		$address_1                              = empty( $value['field_address_supplemental_address_1'] ) ? '' : trim( $value['field_address_supplemental_address_1'] );
+		$address_2                              = empty( $value['field_address_supplemental_address_2'] ) ? '' : trim( $value['field_address_supplemental_address_2'] );
+		$address_3                              = empty( $value['field_address_supplemental_address_3'] ) ? '' : trim( $value['field_address_supplemental_address_3'] );
 		$address_data['supplemental_address_1'] = $address_1;
 		$address_data['supplemental_address_2'] = $address_2;
 		$address_data['supplemental_address_3'] = $address_3;
 
 		// City.
-		$city = empty( $value['field_address_city'] ) ? '' : trim( $value['field_address_city'] );
+		$city                 = empty( $value['field_address_city'] ) ? '' : trim( $value['field_address_city'] );
 		$address_data['city'] = $city;
 
 		// Post Code.
-		$postal_code = empty( $value['field_address_postal_code'] ) ? '' : trim( $value['field_address_postal_code'] );
+		$postal_code                 = empty( $value['field_address_postal_code'] ) ? '' : trim( $value['field_address_postal_code'] );
 		$address_data['postal_code'] = $postal_code;
 
 		/*
@@ -717,16 +717,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		*/
 
 		// Country and State/Province.
-		$country_id = empty( $value['field_address_country_id'] ) ? '' : (int) $value['field_address_country_id'];
-		$address_data['country_id'] = $country_id;
-		$state_province_id = empty( $value['field_address_state_province_id'] ) ? '' : (int) $value['field_address_state_province_id'];
+		$country_id                        = empty( $value['field_address_country_id'] ) ? '' : (int) $value['field_address_country_id'];
+		$address_data['country_id']        = $country_id;
+		$state_province_id                 = empty( $value['field_address_state_province_id'] ) ? '' : (int) $value['field_address_state_province_id'];
 		$address_data['state_province_id'] = $state_province_id;
 
 		// Geolocation.
-		$geo_code_1 = empty( $value['field_address_geo_code_1'] ) ? '' : (float) trim( $value['field_address_geo_code_1'] );
-		$geo_code_2 = empty( $value['field_address_geo_code_2'] ) ? '' : (float) trim( $value['field_address_geo_code_2'] );
-		$address_data['geo_code_1'] = $geo_code_1;
-		$address_data['geo_code_2'] = $geo_code_2;
+		$geo_code_1                      = empty( $value['field_address_geo_code_1'] ) ? '' : (float) trim( $value['field_address_geo_code_1'] );
+		$geo_code_2                      = empty( $value['field_address_geo_code_2'] ) ? '' : (float) trim( $value['field_address_geo_code_2'] );
+		$address_data['geo_code_1']      = $geo_code_1;
+		$address_data['geo_code_2']      = $geo_code_2;
 		$address_data['manual_geo_code'] = empty( $value['field_address_manual_geo_code'] ) ? '0' : '1';
 
 		// --<

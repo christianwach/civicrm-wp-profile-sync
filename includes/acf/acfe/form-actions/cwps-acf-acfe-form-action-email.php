@@ -120,11 +120,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->acfe = $parent->acfe;
-		$this->form = $parent;
-		$this->civicrm = $this->acf_loader->civicrm;
+		$this->acfe       = $parent->acfe;
+		$this->form       = $parent;
+		$this->civicrm    = $this->acf_loader->civicrm;
 
 		// Label this Form Action.
 		$this->action_label = __( 'CiviCRM Email action', 'civicrm-wp-profile-sync' );
@@ -146,12 +146,12 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 
 		// Declare the mapped Email Fields with translatable titles.
 		$this->mapped_email_fields = [
-			'subject' => __( 'Subject', 'civicrm-wp-profile-sync' ),
-			'from_name' => __( 'From Name', 'civicrm-wp-profile-sync' ),
-			'from_email' => __( 'From Email', 'civicrm-wp-profile-sync' ),
+			'subject'                      => __( 'Subject', 'civicrm-wp-profile-sync' ),
+			'from_name'                    => __( 'From Name', 'civicrm-wp-profile-sync' ),
+			'from_email'                   => __( 'From Email', 'civicrm-wp-profile-sync' ),
 			'alternative_receiver_address' => __( 'Alternative Receiver Address', 'civicrm-wp-profile-sync' ),
-			'cc' => __( 'Carbon Copy', 'civicrm-wp-profile-sync' ),
-			'bcc' => __( 'Blind Carbon Copy', 'civicrm-wp-profile-sync' ),
+			'cc'                           => __( 'Carbon Copy', 'civicrm-wp-profile-sync' ),
+			'bcc'                          => __( 'Blind Carbon Copy', 'civicrm-wp-profile-sync' ),
 			//'extra_data' => __( 'Extra Data', 'civicrm-wp-profile-sync' ),
 			//'from_email_option' => __( 'From Email Option', 'civicrm-wp-profile-sync' ),
 		];
@@ -224,7 +224,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 
 		// Get some Form details.
 		$form_name = acf_maybe_get( $form, 'name' );
-		$form_id = acf_maybe_get( $form, 'ID' );
+		$form_id   = acf_maybe_get( $form, 'ID' );
 
 		// Validate the Email data.
 		$valid = $this->form_email_validate( $form, $current_post_id, $action );
@@ -254,12 +254,12 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 
 		// Get some Form details.
 		$form_name = acf_maybe_get( $form, 'name' );
-		$form_id = acf_maybe_get( $form, 'ID' );
+		$form_id   = acf_maybe_get( $form, 'ID' );
 
 		// Init array to save for this Action.
 		$args = [
 			'form_action' => $this->action_name,
-			'id' => false,
+			'id'          => false,
 		];
 
 		// Populate Email data array.
@@ -296,108 +296,108 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 
 		// Define Template Field.
 		$template_field = [
-			'key' => $this->field_key . 'template',
-			'label' => __( 'Message Template', 'civicrm-wp-profile-sync' ),
-			'name' => $this->field_name . 'template',
-			'type' => 'select',
-			'instructions' => '',
-			'required' => 0,
+			'key'               => $this->field_key . 'template',
+			'label'             => __( 'Message Template', 'civicrm-wp-profile-sync' ),
+			'name'              => $this->field_name . 'template',
+			'type'              => 'select',
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'wrapper' => [
-				'width' => '',
-				'class' => '',
-				'id' => '',
+			'wrapper'           => [
+				'width'                      => '',
+				'class'                      => '',
+				'id'                         => '',
 				'data-instruction-placement' => 'field',
 			],
-			'acfe_permissions' => '',
-			'default_value' => '',
-			'placeholder' => '',
-			'allow_null' => 0,
-			'multiple' => 0,
-			'ui' => 0,
-			'return_format' => 'value',
-			'choices' => $this->civicrm->email->template_options_get(),
+			'acfe_permissions'  => '',
+			'default_value'     => '',
+			'placeholder'       => '',
+			'allow_null'        => 0,
+			'multiple'          => 0,
+			'ui'                => 0,
+			'return_format'     => 'value',
+			'choices'           => $this->civicrm->email->template_options_get(),
 		];
 
 		// Define "Disable Smarty" Field.
 		$smarty_field = [
-			'key' => $this->field_key . 'disable_smarty',
-			'label' => __( 'Disable Smarty', 'civicrm-wp-profile-sync' ),
-			'name' => $this->field_name . 'disable_smarty',
-			'type' => 'true_false',
-			'instructions' => __( 'Disable Smarty. Normal CiviMail tokens are still supported. By default Smarty is enabled if configured by CIVICRM_MAIL_SMARTY.', 'civicrm-wp-profile-sync' ),
-			'required' => 0,
+			'key'               => $this->field_key . 'disable_smarty',
+			'label'             => __( 'Disable Smarty', 'civicrm-wp-profile-sync' ),
+			'name'              => $this->field_name . 'disable_smarty',
+			'type'              => 'true_false',
+			'instructions'      => __( 'Disable Smarty. Normal CiviMail tokens are still supported. By default Smarty is enabled if configured by CIVICRM_MAIL_SMARTY.', 'civicrm-wp-profile-sync' ),
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'wrapper' => [
-				'width' => '',
-				'class' => '',
-				'id' => '',
+			'wrapper'           => [
+				'width'                      => '',
+				'class'                      => '',
+				'id'                         => '',
 				'data-instruction-placement' => 'field',
 			],
-			'acfe_permissions' => '',
-			'message' => '',
-			'default_value' => 0,
-			'ui' => 1,
-			'ui_on_text' => '',
-			'ui_off_text' => '',
+			'acfe_permissions'  => '',
+			'message'           => '',
+			'default_value'     => 0,
+			'ui'                => 1,
+			'ui_on_text'        => '',
+			'ui_off_text'       => '',
 		];
 
 		// Define "Create Activity" Field.
 		$create_activity_field = [
-			'key' => $this->field_key . 'create_activity',
-			'label' => __( 'Create Activity', 'civicrm-wp-profile-sync' ),
-			'name' => $this->field_name . 'create_activity',
-			'type' => 'true_false',
-			'instructions' => __( 'Usually an Email Activity is created when an Email is sent.', 'civicrm-wp-profile-sync' ),
-			'required' => 0,
+			'key'               => $this->field_key . 'create_activity',
+			'label'             => __( 'Create Activity', 'civicrm-wp-profile-sync' ),
+			'name'              => $this->field_name . 'create_activity',
+			'type'              => 'true_false',
+			'instructions'      => __( 'Usually an Email Activity is created when an Email is sent.', 'civicrm-wp-profile-sync' ),
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'wrapper' => [
-				'width' => '',
-				'class' => '',
-				'id' => '',
+			'wrapper'           => [
+				'width'                      => '',
+				'class'                      => '',
+				'id'                         => '',
 				'data-instruction-placement' => 'field',
 			],
-			'acfe_permissions' => '',
-			'message' => '',
-			'default_value' => 1,
-			'ui' => 1,
-			'ui_on_text' => '',
-			'ui_off_text' => '',
+			'acfe_permissions'  => '',
+			'message'           => '',
+			'default_value'     => 1,
+			'ui'                => 1,
+			'ui_on_text'        => '',
+			'ui_off_text'       => '',
 		];
 
 		// Define "Activity Details" Field.
 		$activity_details_field = [
-			'key' => $this->field_key . 'activity_details',
-			'label' => __( 'Activity Details', 'civicrm-wp-profile-sync' ),
-			'name' => $this->field_name . 'activity_details',
-			'type' => 'select',
-			'instructions' => '',
-			'required' => 0,
-			'wrapper' => [
-				'width' => '',
-				'class' => '',
-				'id' => '',
+			'key'               => $this->field_key . 'activity_details',
+			'label'             => __( 'Activity Details', 'civicrm-wp-profile-sync' ),
+			'name'              => $this->field_name . 'activity_details',
+			'type'              => 'select',
+			'instructions'      => '',
+			'required'          => 0,
+			'wrapper'           => [
+				'width'                      => '',
+				'class'                      => '',
+				'id'                         => '',
 				'data-instruction-placement' => 'field',
 			],
-			'acfe_permissions' => '',
-			'default_value' => 'html,text',
-			'placeholder' => '',
-			'allow_null' => 0,
-			'multiple' => 0,
-			'ui' => 0,
-			'return_format' => 'value',
-			'choices' => [
+			'acfe_permissions'  => '',
+			'default_value'     => 'html,text',
+			'placeholder'       => '',
+			'allow_null'        => 0,
+			'multiple'          => 0,
+			'ui'                => 0,
+			'return_format'     => 'value',
+			'choices'           => [
 				'html,text' => __( 'HTML and Text versions of the body', 'civicrm-wp-profile-sync' ),
-				'tplName' => __( 'Just the name of the message template', 'civicrm-wp-profile-sync' ),
-				'html' => __( 'Just the HTML version of the body', 'civicrm-wp-profile-sync' ),
-				'text' => __( 'Just the text version of the body', 'civicrm-wp-profile-sync' ),
+				'tplName'   => __( 'Just the name of the message template', 'civicrm-wp-profile-sync' ),
+				'html'      => __( 'Just the HTML version of the body', 'civicrm-wp-profile-sync' ),
+				'text'      => __( 'Just the text version of the body', 'civicrm-wp-profile-sync' ),
 			],
 			'conditional_logic' => [
 				[
 					[
-						'field' => $this->field_key . 'create_activity',
+						'field'    => $this->field_key . 'create_activity',
 						'operator' => '==',
-						'value' => 1,
+						'value'    => 1,
 					],
 				],
 			],
@@ -416,37 +416,37 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 		if ( $case_active ) {
 
 			$fields[] = [
-				'key' => $this->field_key . 'email_case_id',
-				'label' => __( 'Case', 'civicrm-wp-profile-sync' ),
-				'name' => $this->field_name . 'email_case_id',
-				'type' => 'cwps_acfe_case_action_ref',
-				'instructions' => __( 'Select a Case Action in this Form.', 'civicrm-wp-profile-sync' ),
-				'required' => 0,
-				'wrapper' => [
-					'width' => '',
-					'class' => '',
-					'id' => '',
+				'key'              => $this->field_key . 'email_case_id',
+				'label'            => __( 'Case', 'civicrm-wp-profile-sync' ),
+				'name'             => $this->field_name . 'email_case_id',
+				'type'             => 'cwps_acfe_case_action_ref',
+				'instructions'     => __( 'Select a Case Action in this Form.', 'civicrm-wp-profile-sync' ),
+				'required'         => 0,
+				'wrapper'          => [
+					'width'                      => '',
+					'class'                      => '',
+					'id'                         => '',
 					'data-instruction-placement' => 'field',
 				],
 				'acfe_permissions' => '',
-				'default_value' => '',
-				'placeholder' => __( 'None', 'civicrm-wp-profile-sync' ),
-				'allow_null' => 1,
-				'multiple' => 0,
-				'ui' => 0,
-				'return_format' => 'value',
-				'choices' => [],
+				'default_value'    => '',
+				'placeholder'      => __( 'None', 'civicrm-wp-profile-sync' ),
+				'allow_null'       => 1,
+				'multiple'         => 0,
+				'ui'               => 0,
+				'return_format'    => 'value',
+				'choices'          => [],
 			];
 
 		}
 
 		// Add Conditional Field.
-		$code = 'civicrm_email_conditional';
-		$label = __( 'Conditional On', 'civicrm-wp-profile-sync' );
-		$conditional = $this->mapping_field_get( $code, $label );
+		$code                       = 'civicrm_email_conditional';
+		$label                      = __( 'Conditional On', 'civicrm-wp-profile-sync' );
+		$conditional                = $this->mapping_field_get( $code, $label );
 		$conditional['placeholder'] = __( 'Always send', 'civicrm-wp-profile-sync' );
 		$conditional['wrapper']['data-instruction-placement'] = 'field';
-		$conditional['instructions'] = __( 'To send the Email only when a Form Field is populated (e.g. "First Name") link this to the Form Field. To send the Email only when more complex conditions are met, link this to a Hidden Field with value "1" where the conditional logic of that Field shows it when the conditions are met.', 'civicrm-wp-profile-sync' );
+		$conditional['instructions']                          = __( 'To send the Email only when a Form Field is populated (e.g. "First Name") link this to the Form Field. To send the Email only when more complex conditions are met, link this to a Hidden Field with value "1" where the conditional logic of that Field shows it when the conditions are met.', 'civicrm-wp-profile-sync' );
 		$fields[] = $conditional;
 
 		// --<
@@ -500,22 +500,22 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 
 		// "Recipient Contact Reference" Accordion wrapper open.
 		$fields[] = [
-			'key' => $this->field_key . 'mapping_accordion_contacts_open',
-			'label' => __( 'Recipient Contact Reference', 'civicrm-wp-profile-sync' ),
-			'name' => '',
-			'type' => 'accordion',
-			'instructions' => '',
-			'required' => 0,
+			'key'               => $this->field_key . 'mapping_accordion_contacts_open',
+			'label'             => __( 'Recipient Contact Reference', 'civicrm-wp-profile-sync' ),
+			'name'              => '',
+			'type'              => 'accordion',
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'wrapper' => [
+			'wrapper'           => [
 				'width' => '',
 				'class' => '',
-				'id' => '',
+				'id'    => '',
 			],
-			'acfe_permissions' => '',
-			'open' => 0,
-			'multi_expand' => 1,
-			'endpoint' => 0,
+			'acfe_permissions'  => '',
+			'open'              => 0,
+			'multi_expand'      => 1,
+			'endpoint'          => 0,
 		];
 
 		// Add Contact Reference Fields.
@@ -523,50 +523,50 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 
 			// Bundle them into a container group.
 			$contact_group_field = [
-				'key' => $this->field_key . 'contact_group_' . $name,
-				'label' => $title,
-				'name' => $this->field_name . 'contact_group_' . $name,
-				'type' => 'group',
+				'key'          => $this->field_key . 'contact_group_' . $name,
+				'label'        => $title,
+				'name'         => $this->field_name . 'contact_group_' . $name,
+				'type'         => 'group',
 				/* translators: %s: The name of the Field */
 				'instructions' => sprintf( __( 'Use one Field to identify the %s.', 'civicrm-wp-profile-sync' ), $title ),
-				'wrapper' => [
+				'wrapper'      => [
 					'width' => '',
 					'class' => '',
-					'id' => '',
+					'id'    => '',
 				],
-				'required' => 0,
-				'layout' => 'block',
+				'required'     => 0,
+				'layout'       => 'block',
 			];
 
 			// Define Contact Action Reference Field.
 			$contact_group_field['sub_fields'][] = [
-				'key' => $this->field_key . 'ref_' . $name,
-				'label' => __( 'CiviCRM Contact Action', 'civicrm-wp-profile-sync' ),
-				'name' => $this->field_name . 'ref_' . $name,
-				'type' => 'cwps_acfe_contact_action_ref',
-				'instructions' => __( 'Select a Contact Action in this Form.', 'civicrm-wp-profile-sync' ),
-				'required' => 0,
-				'wrapper' => [
+				'key'               => $this->field_key . 'ref_' . $name,
+				'label'             => __( 'CiviCRM Contact Action', 'civicrm-wp-profile-sync' ),
+				'name'              => $this->field_name . 'ref_' . $name,
+				'type'              => 'cwps_acfe_contact_action_ref',
+				'instructions'      => __( 'Select a Contact Action in this Form.', 'civicrm-wp-profile-sync' ),
+				'required'          => 0,
+				'wrapper'           => [
 					'width' => '',
 					'class' => '',
-					'id' => '',
+					'id'    => '',
 				],
-				'acfe_permissions' => '',
-				'default_value' => '',
-				'placeholder' => __( 'None', 'civicrm-wp-profile-sync' ),
-				'allow_null' => 0,
-				'multiple' => 0,
-				'ui' => 0,
-				'return_format' => 'value',
-				'choices' => [],
+				'acfe_permissions'  => '',
+				'default_value'     => '',
+				'placeholder'       => __( 'None', 'civicrm-wp-profile-sync' ),
+				'allow_null'        => 0,
+				'multiple'          => 0,
+				'ui'                => 0,
+				'return_format'     => 'value',
+				'choices'           => [],
 				'conditional_logic' => [
 					[
 						[
-							'field' => $this->field_key . 'map_' . $name,
+							'field'    => $this->field_key . 'map_' . $name,
 							'operator' => '==empty',
 						],
 						[
-							'field' => $this->field_key . 'cid_' . $name,
+							'field'    => $this->field_key . 'cid_' . $name,
 							'operator' => '==empty',
 						],
 					],
@@ -575,33 +575,33 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 
 			// Define Contact ID Field.
 			$cid_field = [
-				'key' => $this->field_key . 'cid_' . $name,
-				'label' => __( 'CiviCRM Contact ID', 'civicrm-wp-profile-sync' ),
-				'name' => $this->field_name . 'cid_' . $name,
-				'type' => 'civicrm_contact',
-				'instructions' => __( 'Select a CiviCRM Contact ID from the database.', 'civicrm-wp-profile-sync' ),
-				'required' => 0,
-				'wrapper' => [
+				'key'               => $this->field_key . 'cid_' . $name,
+				'label'             => __( 'CiviCRM Contact ID', 'civicrm-wp-profile-sync' ),
+				'name'              => $this->field_name . 'cid_' . $name,
+				'type'              => 'civicrm_contact',
+				'instructions'      => __( 'Select a CiviCRM Contact ID from the database.', 'civicrm-wp-profile-sync' ),
+				'required'          => 0,
+				'wrapper'           => [
 					'width' => '',
 					'class' => '',
-					'id' => '',
+					'id'    => '',
 				],
-				'acfe_permissions' => '',
-				'default_value' => '',
-				'placeholder' => __( 'None', 'civicrm-wp-profile-sync' ),
-				'allow_null' => 0,
-				'multiple' => 0,
-				'ui' => 0,
-				'return_format' => 'value',
-				'choices' => [],
+				'acfe_permissions'  => '',
+				'default_value'     => '',
+				'placeholder'       => __( 'None', 'civicrm-wp-profile-sync' ),
+				'allow_null'        => 0,
+				'multiple'          => 0,
+				'ui'                => 0,
+				'return_format'     => 'value',
+				'choices'           => [],
 				'conditional_logic' => [
 					[
 						[
-							'field' => $this->field_key . 'ref_' . $name,
+							'field'    => $this->field_key . 'ref_' . $name,
 							'operator' => '==empty',
 						],
 						[
-							'field' => $this->field_key . 'map_' . $name,
+							'field'    => $this->field_key . 'map_' . $name,
 							'operator' => '==empty',
 						],
 					],
@@ -612,17 +612,17 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 			$contact_group_field['sub_fields'][] = $cid_field;
 
 			// Define Custom Contact Reference Field.
-			$title = sprintf( __( 'Custom Contact Reference', 'civicrm-wp-profile-sync' ), $title );
-			$mapping_field = $this->mapping_field_get( $name, $title );
-			$mapping_field['instructions'] = __( 'Define a custom Contact Reference.', 'civicrm-wp-profile-sync' );
+			$title                              = sprintf( __( 'Custom Contact Reference', 'civicrm-wp-profile-sync' ), $title );
+			$mapping_field                      = $this->mapping_field_get( $name, $title );
+			$mapping_field['instructions']      = __( 'Define a custom Contact Reference.', 'civicrm-wp-profile-sync' );
 			$mapping_field['conditional_logic'] = [
 				[
 					[
-						'field' => $this->field_key . 'ref_' . $name,
+						'field'    => $this->field_key . 'ref_' . $name,
 						'operator' => '==empty',
 					],
 					[
-						'field' => $this->field_key . 'cid_' . $name,
+						'field'    => $this->field_key . 'cid_' . $name,
 						'operator' => '==empty',
 					],
 				],
@@ -638,22 +638,22 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 
 		// "Recipient Contact Reference" Accordion wrapper close.
 		$fields[] = [
-			'key' => $this->field_key . 'mapping_accordion_contacts_close',
-			'label' => __( 'Recipient Contact Reference', 'civicrm-wp-profile-sync' ),
-			'name' => '',
-			'type' => 'accordion',
-			'instructions' => '',
-			'required' => 0,
+			'key'               => $this->field_key . 'mapping_accordion_contacts_close',
+			'label'             => __( 'Recipient Contact Reference', 'civicrm-wp-profile-sync' ),
+			'name'              => '',
+			'type'              => 'accordion',
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'wrapper' => [
+			'wrapper'           => [
 				'width' => '',
 				'class' => '',
-				'id' => '',
+				'id'    => '',
 			],
-			'acfe_permissions' => '',
-			'open' => 0,
-			'multi_expand' => 1,
-			'endpoint' => 1,
+			'acfe_permissions'  => '',
+			'open'              => 0,
+			'multi_expand'      => 1,
+			'endpoint'          => 1,
 		];
 
 		// --<
@@ -675,22 +675,22 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 
 		// "Email Fields" Accordion wrapper open.
 		$fields[] = [
-			'key' => $this->field_key . 'mapping_accordion_email_open',
-			'label' => __( 'Email Fields', 'civicrm-wp-profile-sync' ),
-			'name' => '',
-			'type' => 'accordion',
-			'instructions' => '',
-			'required' => 0,
+			'key'               => $this->field_key . 'mapping_accordion_email_open',
+			'label'             => __( 'Email Fields', 'civicrm-wp-profile-sync' ),
+			'name'              => '',
+			'type'              => 'accordion',
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'wrapper' => [
+			'wrapper'           => [
 				'width' => '',
 				'class' => '',
-				'id' => '',
+				'id'    => '',
 			],
-			'acfe_permissions' => '',
-			'open' => 0,
-			'multi_expand' => 1,
-			'endpoint' => 0,
+			'acfe_permissions'  => '',
+			'open'              => 0,
+			'multi_expand'      => 1,
+			'endpoint'          => 0,
 		];
 
 		// Add "Mapping" Fields.
@@ -700,22 +700,22 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 
 		// "Email Fields" Accordion wrapper close.
 		$fields[] = [
-			'key' => $this->field_key . 'mapping_accordion_email_close',
-			'label' => __( 'Email Fields', 'civicrm-wp-profile-sync' ),
-			'name' => '',
-			'type' => 'accordion',
-			'instructions' => '',
-			'required' => 0,
+			'key'               => $this->field_key . 'mapping_accordion_email_close',
+			'label'             => __( 'Email Fields', 'civicrm-wp-profile-sync' ),
+			'name'              => '',
+			'type'              => 'accordion',
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'wrapper' => [
+			'wrapper'           => [
 				'width' => '',
 				'class' => '',
-				'id' => '',
+				'id'    => '',
 			],
-			'acfe_permissions' => '',
-			'open' => 0,
-			'multi_expand' => 1,
-			'endpoint' => 1,
+			'acfe_permissions'  => '',
+			'open'              => 0,
+			'multi_expand'      => 1,
+			'endpoint'          => 1,
 		];
 
 		// --<
@@ -747,9 +747,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 		$data = acfe_form_map_vs_fields( $fields, $fields, $current_post_id, $form );
 
 		// Get the Action variables.
-		$data['template_id'] = get_sub_field( $this->field_key . 'template' );
-		$data['disable_smarty'] = get_sub_field( $this->field_key . 'disable_smarty' );
-		$data['create_activity'] = get_sub_field( $this->field_key . 'create_activity' );
+		$data['template_id']      = get_sub_field( $this->field_key . 'template' );
+		$data['disable_smarty']   = get_sub_field( $this->field_key . 'disable_smarty' );
+		$data['create_activity']  = get_sub_field( $this->field_key . 'create_activity' );
 		$data['activity_details'] = get_sub_field( $this->field_key . 'activity_details' );
 
 		// Get the Email Contacts.
@@ -762,7 +762,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 			$contact_id = false;
 			if ( ! empty( $contact_group_field[ $this->field_name . 'ref_' . $name ] ) ) {
 				$action_name = $contact_group_field[ $this->field_name . 'ref_' . $name ];
-				$contact_id = $this->form_contact_id_get_mapped( $action_name );
+				$contact_id  = $this->form_contact_id_get_mapped( $action_name );
 			}
 
 			// Check Contact ID Field.
@@ -793,13 +793,13 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 		// Add the Case if the CiviCase component is active.
 		$case_active = $this->civicrm->is_component_enabled( 'CiviCase' );
 		if ( $case_active ) {
-			$action_name = get_sub_field( $this->field_key . 'activity_case_id' );
+			$action_name     = get_sub_field( $this->field_key . 'activity_case_id' );
 			$data['case_id'] = $this->form_case_id_get_mapped( $action_name );
 		}
 
 		// Get Email Conditional Reference.
 		$data['civicrm_email_conditional_ref'] = get_sub_field( $this->field_key . 'map_civicrm_email_conditional' );
-		$conditionals = [ $data['civicrm_email_conditional_ref'] ];
+		$conditionals                          = [ $data['civicrm_email_conditional_ref'] ];
 
 		// Populate array with mapped Conditional Field values.
 		$conditionals = acfe_form_map_vs_fields( $conditionals, $conditionals, $current_post_id, $form );

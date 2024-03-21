@@ -60,21 +60,21 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 * @var array
 	 */
 	public $contact_fields_common = [
-		'nick_name' => 'text',
-		'image_URL' => 'image',
-		'source' => 'text',
-		'do_not_email' => 'true_false',
-		'do_not_phone' => 'true_false',
-		'do_not_mail' => 'true_false',
-		'do_not_sms' => 'true_false',
-		'do_not_trade' => 'true_false',
-		'is_opt_out' => 'true_false',
+		'nick_name'                      => 'text',
+		'image_URL'                      => 'image',
+		'source'                         => 'text',
+		'do_not_email'                   => 'true_false',
+		'do_not_phone'                   => 'true_false',
+		'do_not_mail'                    => 'true_false',
+		'do_not_sms'                     => 'true_false',
+		'do_not_trade'                   => 'true_false',
+		'is_opt_out'                     => 'true_false',
 		'preferred_communication_method' => 'checkbox',
-		'preferred_language' => 'select',
-		'preferred_mail_format' => 'select',
-		'legal_identifier' => 'text',
-		'external_identifier' => 'text',
-		'communication_style_id' => 'select',
+		'preferred_language'             => 'select',
+		'preferred_mail_format'          => 'select',
+		'legal_identifier'               => 'text',
+		'external_identifier'            => 'text',
+		'communication_style_id'         => 'select',
 	];
 
 	/**
@@ -87,18 +87,18 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 * @var array
 	 */
 	public $contact_fields_individual = [
-		'prefix_id' => 'select',
-		'first_name' => 'text',
-		'last_name' => 'text',
-		'middle_name' => 'text',
-		'suffix_id' => 'select',
-		'job_title' => 'text',
-		'gender_id' => 'radio',
-		'birth_date' => 'date_picker',
-		'is_deceased' => 'true_false',
+		'prefix_id'     => 'select',
+		'first_name'    => 'text',
+		'last_name'     => 'text',
+		'middle_name'   => 'text',
+		'suffix_id'     => 'select',
+		'job_title'     => 'text',
+		'gender_id'     => 'radio',
+		'birth_date'    => 'date_picker',
+		'is_deceased'   => 'true_false',
 		'deceased_date' => 'date_picker',
-		'employer_id' => 'civicrm_contact',
-		'formal_title' => 'text',
+		'employer_id'   => 'civicrm_contact',
+		'formal_title'  => 'text',
 	];
 
 	/**
@@ -111,9 +111,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	 * @var array
 	 */
 	public $contact_fields_organization = [
-		'legal_name' => 'text',
+		'legal_name'        => 'text',
 		'organization_name' => 'text',
-		'sic_code' => 'text',
+		'sic_code'          => 'text',
 	];
 
 	/**
@@ -139,9 +139,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->civicrm = $parent;
+		$this->civicrm    = $parent;
 
 		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
@@ -338,7 +338,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 				} elseif ( $acf_setting['type'] == 'date_time_picker' ) {
 
 					$datetime = DateTime::createFromFormat( 'YmdHis', $value );
-					$value = $datetime->format( 'Y-m-d H:i:s' );
+					$value    = $datetime->format( 'Y-m-d H:i:s' );
 
 				}
 				break;
@@ -681,9 +681,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Construct params.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
-			'options' => [
+			'options'    => [
 				//'sort' => 'title',
 				'limit' => 0, // No limit.
 			],
@@ -703,7 +703,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 			} elseif ( $filter == 'public' ) {
 
 				// Get the top level Contact Types array.
-				$top_level = [];
+				$top_level     = [];
 				$contact_types = $this->plugin->civicrm->contact_type->types_get_all();
 				foreach ( $contact_types as $contact_type ) {
 					if ( empty( $contact_type['parent_id'] ) ) {
@@ -1011,7 +1011,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Set the date "format" attributes.
 		$field['display_format'] = $acf_format;
-		$field['return_format'] = $acf_format;
+		$field['return_format']  = $acf_format;
 
 		// --<
 		return $field;
@@ -1224,11 +1224,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Create an array that mimics $_FILES.
 		$files = [
-			'name' => $name,
-			'type' => $mime_type,
+			'name'     => $name,
+			'type'     => $mime_type,
 			'tmp_name' => $tmp_name,
-			'error' => $error,
-			'size' => $size,
+			'error'    => $error,
+			'size'     => $size,
 		];
 
 		// Only assign to a Post if the ACF "Post ID" is numeric.
@@ -1269,7 +1269,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Bare-bones data.
 		$contact_data = [
-			'id' => $contact_id,
+			'id'        => $contact_id,
 			'image_URL' => $url,
 		];
 
@@ -1336,10 +1336,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		}
 
 		// Start by setting up a few vars the same way attachment_url_to_postid() does.
-		$dir = wp_get_upload_dir();
+		$dir  = wp_get_upload_dir();
 		$path = $url;
 
-		$site_url = wp_parse_url( $dir['url'] );
+		$site_url   = wp_parse_url( $dir['url'] );
 		$image_path = wp_parse_url( $path );
 
 		// Force the protocols to match if needed.
@@ -1352,7 +1352,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		}
 
 		$basename = wp_basename( $path );
-		$dirname = dirname( $path );
+		$dirname  = dirname( $path );
 
 		/*
 		 * The "LIKE" we search for is the serialized form of $basename to reduce
@@ -1476,7 +1476,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 		}
 
 		// We need to pass an instance of CRM_Contact_DAO_Contact.
-		$object = new CRM_Contact_DAO_Contact();
+		$object     = new CRM_Contact_DAO_Contact();
 		$object->id = $objectRef->id;
 
 		// Trigger the sync process via the Mapper.
@@ -1523,7 +1523,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 			// Bare-bones data.
 			$contact_data = [
-				'id' => $contact['contact_id'],
+				'id'        => $contact['contact_id'],
 				'image_URL' => '',
 			];
 

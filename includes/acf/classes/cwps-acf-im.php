@@ -112,7 +112,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 	public $im_fields = [
 		'is_primary' => 'true_false',
 		'is_billing' => 'true_false',
-		'name' => 'text',
+		'name'       => 'text',
 		//'provider_id' => 'select',
 	];
 
@@ -126,9 +126,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->civicrm = $parent;
+		$this->civicrm    = $parent;
 
 		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
@@ -353,7 +353,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		// Construct API query.
 		$params = [
 			'version' => 3,
-			'id' => $im_id,
+			'id'      => $im_id,
 		];
 
 		// Get Instant Messenger Record details via API.
@@ -399,10 +399,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 		// Construct API query.
 		$params = [
-			'version' => 3,
-			'contact_id' => $contact_id,
+			'version'          => 3,
+			'contact_id'       => $contact_id,
 			'location_type_id' => $location_type_id,
-			'provider_id' => $provider_id,
+			'provider_id'      => $provider_id,
 		];
 
 		// Get Instant Messenger Record details via API.
@@ -455,10 +455,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 		// Define params to get queried Instant Messenger Records.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
 			'contact_id' => $contact_id,
-			'options' => [
+			'options'    => [
 				'limit' => 0, // No limit.
 			],
 		];
@@ -578,11 +578,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 				// Make an array of our params.
 				$params = [
-					'key' => $key,
-					'value' => $value,
-					'im' => $im,
+					'key'        => $key,
+					'value'      => $value,
+					'im'         => $im,
 					'contact_id' => $contact_id,
-					'selector' => $selector,
+					'selector'   => $selector,
 				];
 
 				/**
@@ -661,11 +661,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 			// Make an array of our params.
 			$params = [
-				'key' => $key,
-				'value' => $value,
-				'im' => $im,
+				'key'        => $key,
+				'value'      => $value,
+				'im'         => $im,
 				'contact_id' => $contact_id,
-				'selector' => $selector,
+				'selector'   => $selector,
 			];
 
 			/**
@@ -696,11 +696,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 			// Make an array of our params.
 			$params = [
-				'key' => $key,
-				'value' => $value,
-				'im' => $im,
+				'key'        => $key,
+				'value'      => $value,
+				'im'         => $im,
 				'contact_id' => $contact_id,
-				'selector' => $selector,
+				'selector'   => $selector,
 			];
 
 			/**
@@ -723,10 +723,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 			// Make an array of our params.
 			$params = [
-				'im_id' => $im_id,
-				'im' => $im,
+				'im_id'      => $im_id,
+				'im'         => $im,
 				'contact_id' => $contact_id,
-				'selector' => $selector,
+				'selector'   => $selector,
 			];
 
 			/**
@@ -763,10 +763,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		}
 
 		// Convert ACF data to CiviCRM data.
-		$im_data['is_primary'] = empty( $value['field_im_primary'] ) ? '0' : '1';
+		$im_data['is_primary']       = empty( $value['field_im_primary'] ) ? '0' : '1';
 		$im_data['location_type_id'] = (int) $value['field_im_location'];
-		$im_data['provider_id'] = (int) $value['field_im_provider'];
-		$im_data['name'] = trim( $value['field_im_name'] );
+		$im_data['provider_id']      = (int) $value['field_im_provider'];
+		$im_data['name']             = trim( $value['field_im_name'] );
 
 		// --<
 		return $im_data;
@@ -792,11 +792,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		}
 
 		// Convert CiviCRM data to ACF data.
-		$im_data['field_im_name'] = trim( $value->name );
+		$im_data['field_im_name']     = trim( $value->name );
 		$im_data['field_im_location'] = (int) $value->location_type_id;
 		$im_data['field_im_provider'] = (int) $value->provider_id;
-		$im_data['field_im_primary'] = empty( $value->is_primary ) ? '0' : '1';
-		$im_data['field_im_id'] = (int) $value->id;
+		$im_data['field_im_primary']  = empty( $value->is_primary ) ? '0' : '1';
+		$im_data['field_im_id']       = (int) $value->id;
 
 		// --<
 		return $im_data;
@@ -828,7 +828,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 		// Define params to create new Instant Messenger Record.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'contact_id' => $contact_id,
 		] + $data;
 
@@ -837,12 +837,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 		// Log and bail if there's an error.
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			$e = new Exception();
+			$e     = new Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'params' => $params,
-				'result' => $result,
+			$log   = [
+				'method'    => __METHOD__,
+				'params'    => $params,
+				'result'    => $result,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -883,7 +883,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		// Define params to delete this Instant Messenger Record.
 		$params = [
 			'version' => 3,
-			'id' => $im_id,
+			'id'      => $im_id,
 		];
 
 		// Call the API.
@@ -1347,7 +1347,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		// Add Instant Messenger ID and overwrite array element.
 		if ( ! empty( $existing[ $params['key'] ] ) ) {
 			$params['value']['field_im_id'] = $params['im']->id;
-			$existing[ $params['key'] ] = $params['value'];
+			$existing[ $params['key'] ]     = $params['value'];
 		}
 
 		// Now update Field.
@@ -1444,8 +1444,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		// Construct params.
 		$params = [
 			'version' => 3,
-			'name' => $name,
-			'action' => 'get',
+			'name'    => $name,
+			'action'  => 'get',
 		];
 
 		// Call the API.
@@ -1529,7 +1529,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		}
 
 		// Get the public Fields on the Entity for this Field Type.
-		$public_fields = $this->civicrm_fields_get( 'public' );
+		$public_fields     = $this->civicrm_fields_get( 'public' );
 		$fields_for_entity = [];
 		foreach ( $public_fields as $key => $value ) {
 			if ( $field['type'] == $this->im_fields[ $value['name'] ] ) {

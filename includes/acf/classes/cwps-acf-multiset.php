@@ -90,9 +90,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->civicrm = $parent;
+		$this->civicrm    = $parent;
 
 		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
@@ -295,10 +295,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 		// Define params to get queried Multiple Record Sets.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
 			'contact_id' => $contact_id,
-			'options' => [
+			'options'    => [
 				'limit' => 0, // No limit.
 			],
 		];
@@ -418,11 +418,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 				// Make an array of our params.
 				$params = [
-					'key' => $key,
-					'value' => $value,
-					'multiset' => $multiset,
+					'key'        => $key,
+					'value'      => $value,
+					'multiset'   => $multiset,
 					'contact_id' => $contact_id,
-					'selector' => $selector,
+					'selector'   => $selector,
 				];
 
 				/**
@@ -501,11 +501,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 			// Make an array of our params.
 			$params = [
-				'key' => $key,
-				'value' => $value,
-				'multiset' => $multiset,
+				'key'        => $key,
+				'value'      => $value,
+				'multiset'   => $multiset,
 				'contact_id' => $contact_id,
-				'selector' => $selector,
+				'selector'   => $selector,
 			];
 
 			/**
@@ -536,11 +536,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 			// Make an array of our params.
 			$params = [
-				'key' => $key,
-				'value' => $value,
-				'multiset' => $multiset,
+				'key'        => $key,
+				'value'      => $value,
+				'multiset'   => $multiset,
 				'contact_id' => $contact_id,
-				'selector' => $selector,
+				'selector'   => $selector,
 			];
 
 			/**
@@ -564,9 +564,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 			// Make an array of our params.
 			$params = [
 				'multiset_id' => $multiset_id,
-				'multiset' => $multiset,
-				'contact_id' => $contact_id,
-				'selector' => $selector,
+				'multiset'    => $multiset,
+				'contact_id'  => $contact_id,
+				'selector'    => $selector,
 			];
 
 			/**
@@ -603,10 +603,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		}
 
 		// Convert ACF data to CiviCRM data.
-		$multiset_data['is_primary'] = empty( $value['field_multiset_primary'] ) ? '0' : '1';
+		$multiset_data['is_primary']       = empty( $value['field_multiset_primary'] ) ? '0' : '1';
 		$multiset_data['location_type_id'] = (int) $value['field_multiset_location'];
-		$multiset_data['provider_id'] = (int) $value['field_multiset_provider'];
-		$multiset_data['name'] = trim( $value['field_multiset_name'] );
+		$multiset_data['provider_id']      = (int) $value['field_multiset_provider'];
+		$multiset_data['name']             = trim( $value['field_multiset_name'] );
 
 		// --<
 		return $multiset_data;
@@ -632,11 +632,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		}
 
 		// Convert CiviCRM data to ACF data.
-		$multiset_data['field_multiset_name'] = trim( $value->name );
+		$multiset_data['field_multiset_name']     = trim( $value->name );
 		$multiset_data['field_multiset_location'] = (int) $value->location_type_id;
 		$multiset_data['field_multiset_provider'] = (int) $value->provider_id;
-		$multiset_data['field_multiset_primary'] = empty( $value->is_primary ) ? '0' : '1';
-		$multiset_data['field_multiset_id'] = (int) $value->id;
+		$multiset_data['field_multiset_primary']  = empty( $value->is_primary ) ? '0' : '1';
+		$multiset_data['field_multiset_id']       = (int) $value->id;
 
 		// --<
 		return $multiset_data;
@@ -668,7 +668,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 		// Define params to create new Multiple Record Set.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'contact_id' => $contact_id,
 		] + $data;
 
@@ -714,7 +714,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		// Define params to delete this Multiple Record Set.
 		$params = [
 			'version' => 3,
-			'id' => $multiset_id,
+			'id'      => $multiset_id,
 		];
 
 		// Call the API.
@@ -1003,8 +1003,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 		// Get all Multiple Record Sets for this Entity Type.
 		// NOTE: "$extra" is not implemented. See the method for details.
-		$type = '';
-		$subtype = '';
+		$type          = '';
+		$subtype       = '';
 		$custom_groups = $this->plugin->civicrm->custom_group->get_for_entity_type( $type, $subtype, $extra );
 
 		// Filter groups to include only "Multiple".
@@ -1060,20 +1060,20 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 		// Define Field.
 		$field = [
-			'key' => $this->civicrm->acf_field_key_get(),
-			'label' => __( 'CiviCRM Field', 'civicrm-wp-profile-sync' ),
-			'name' => $this->civicrm->acf_field_key_get(),
-			'type' => 'select',
-			'instructions' => __( 'Choose the CiviCRM Field that this ACF Field should sync with. (Optional)', 'civicrm-wp-profile-sync' ),
+			'key'           => $this->civicrm->acf_field_key_get(),
+			'label'         => __( 'CiviCRM Field', 'civicrm-wp-profile-sync' ),
+			'name'          => $this->civicrm->acf_field_key_get(),
+			'type'          => 'select',
+			'instructions'  => __( 'Choose the CiviCRM Field that this ACF Field should sync with. (Optional)', 'civicrm-wp-profile-sync' ),
 			'default_value' => '',
-			'placeholder' => '',
-			'allow_null' => 1,
-			'multiple' => 0,
-			'ui' => 0,
-			'required' => 0,
+			'placeholder'   => '',
+			'allow_null'    => 1,
+			'multiple'      => 0,
+			'ui'            => 0,
+			'required'      => 0,
 			'return_format' => 'value',
-			'parent' => $this->acf_loader->acf->field_group->placeholder_group_get(),
-			'choices' => $choices,
+			'parent'        => $this->acf_loader->acf->field_group->placeholder_group_get(),
+			'choices'       => $choices,
 		];
 
 		// --<
@@ -1131,7 +1131,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		// Add Multiple Record Set ID and overwrite array element.
 		if ( ! empty( $existing[ $params['key'] ] ) ) {
 			$params['value']['field_multiset_id'] = $params['multiset']->id;
-			$existing[ $params['key'] ] = $params['value'];
+			$existing[ $params['key'] ]           = $params['value'];
 		}
 
 		// Now update Field.

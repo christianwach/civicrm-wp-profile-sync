@@ -48,7 +48,7 @@ class CiviCRM_Profile_Sync_BP_BuddyBoss {
 	public function __construct( $bp_loader ) {
 
 		// Store references to objects.
-		$this->plugin = $bp_loader->plugin;
+		$this->plugin    = $bp_loader->plugin;
 		$this->bp_loader = $bp_loader;
 
 		// Init when the CiviCRM object is loaded.

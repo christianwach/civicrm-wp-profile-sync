@@ -58,7 +58,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 	 */
 	public $settings_fields = [
 		'is_show_location' => 'true_false',
-		'loc_block_id' => 'select',
+		'loc_block_id'     => 'select',
 	];
 
 	/**
@@ -71,19 +71,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 	 * @var array
 	 */
 	public $address_fields = [
-		'address_name' => 'text',
-		'street_address' => 'text',
+		'address_name'           => 'text',
+		'street_address'         => 'text',
 		'supplemental_address_1' => 'text',
 		'supplemental_address_2' => 'text',
 		'supplemental_address_3' => 'text',
-		'city' => 'text',
-		'county_id' => 'select',
-		'state_province_id' => 'select',
-		'country_id' => 'select',
-		'postal_code' => 'text',
-		'geo_code_1' => 'text',
-		'geo_code_2' => 'text',
-		'name' => 'text',
+		'city'                   => 'text',
+		'county_id'              => 'select',
+		'state_province_id'      => 'select',
+		'country_id'             => 'select',
+		'postal_code'            => 'text',
+		'geo_code_1'             => 'text',
+		'geo_code_2'             => 'text',
+		'name'                   => 'text',
 	];
 
 	/**
@@ -109,8 +109,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 	 * @var array
 	 */
 	public $phone_fields = [
-		'phone' => 'text',
-		'phone_ext' => 'text',
+		'phone'         => 'text',
+		'phone_ext'     => 'text',
 		'phone_type_id' => 'select',
 	];
 
@@ -124,9 +124,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->civicrm = $parent;
+		$this->civicrm    = $parent;
 
 		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
@@ -181,7 +181,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 		}
 
 		// Build array of all Fields.
-		$done = $this->settings_fields;
+		$done  = $this->settings_fields;
 		$done += $this->address_fields;
 		$done += $this->email_fields;
 		$done += $this->phone_fields;
@@ -386,12 +386,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 		// Build params.
 		$params = [
-			'version' => 3,
-			'return' => $fields,
+			'version'                 => 3,
+			'return'                  => $fields,
 			'loc_block_id.address_id' => [
 				'IS NOT NULL' => 1,
 			],
-			'options' => [
+			'options'                 => [
 				'limit' => 0,
 			],
 		];
@@ -460,7 +460,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 		// Build params.
 		$params = [
 			'version' => 3,
-			'id' => $location_id,
+			'id'      => $location_id,
 			'options' => [
 				'limit' => 0,
 			],
@@ -531,12 +531,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 		// Log and bail if there's an error.
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			$e = new Exception();
+			$e     = new Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'params' => $params,
-				'result' => $result,
+			$log   = [
+				'method'    => __METHOD__,
+				'params'    => $params,
+				'result'    => $result,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -568,12 +568,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 		// Log and bail if there's no Event Location ID.
 		if ( empty( $location['id'] ) ) {
-			$e = new \Exception();
+			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'message' => __( 'A numeric ID must be present to update an Event Location.', 'civicrm-wp-profile-sync' ),
-				'location' => $location,
+			$log   = [
+				'method'    => __METHOD__,
+				'message'   => __( 'A numeric ID must be present to update an Event Location.', 'civicrm-wp-profile-sync' ),
+				'location'  => $location,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -656,8 +656,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 		// Construct params.
 		$params = [
 			'version' => 3,
-			'name' => $name,
-			'action' => $action,
+			'name'    => $name,
+			'action'  => $action,
 		];
 
 		// Call the API.
@@ -1218,10 +1218,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 		// Set a default for "Location Block ID".
 		if ( $event_field_name == 'loc_block_id' ) {
-			$field['choices'] = [ '' => __( 'None', 'civicrm-wp-profile-sync' ) ] + $field['choices'];
+			$field['choices']       = [ '' => __( 'None', 'civicrm-wp-profile-sync' ) ] + $field['choices'];
 			$field['default_value'] = '';
-			$field['ui'] = 1;
-			$field['ajax'] = 1;
+			$field['ui']            = 1;
+			$field['ajax']          = 1;
 		}
 
 		// --<

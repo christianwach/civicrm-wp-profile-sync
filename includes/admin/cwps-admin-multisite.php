@@ -67,7 +67,7 @@ class CiviCRM_WP_Profile_Sync_Admin_Multisite {
 
 		// Store references.
 		$this->plugin = $parent->plugin;
-		$this->admin = $parent;
+		$this->admin  = $parent;
 
 		// Boot when plugin is loaded.
 		add_action( 'cwps/admin/loaded', [ $this, 'initialise' ] );

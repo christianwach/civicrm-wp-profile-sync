@@ -394,7 +394,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		}
 
 		// Store references to objects.
-		$this->plugin = $acf_loader->plugin;
+		$this->plugin     = $acf_loader->plugin;
 		$this->acf_loader = $acf_loader;
 
 		// Init when this plugin is loaded.
@@ -487,52 +487,52 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	public function setup_objects() {
 
 		// Init Contact Type, Contact and Contact Field objects.
-		$this->contact_type = new CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type( $this );
-		$this->contact = new CiviCRM_Profile_Sync_ACF_CiviCRM_Contact( $this );
+		$this->contact_type  = new CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type( $this );
+		$this->contact       = new CiviCRM_Profile_Sync_ACF_CiviCRM_Contact( $this );
 		$this->contact_field = new CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field( $this );
 
 		// Init Activity Type, Activity, Activity Field and Activity Attachment objects.
-		$this->activity_type = new CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type( $this );
-		$this->activity = new CiviCRM_Profile_Sync_ACF_CiviCRM_Activity( $this );
-		$this->activity_field = new CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field( $this );
+		$this->activity_type        = new CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type( $this );
+		$this->activity             = new CiviCRM_Profile_Sync_ACF_CiviCRM_Activity( $this );
+		$this->activity_field       = new CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field( $this );
 		$this->activity_attachments = new CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments( $this );
 
 		// Init Case Type, Case and Case Field objects.
-		$this->case_type = new CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Type( $this );
-		$this->case = new CiviCRM_Profile_Sync_ACF_CiviCRM_Case( $this );
+		$this->case_type  = new CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Type( $this );
+		$this->case       = new CiviCRM_Profile_Sync_ACF_CiviCRM_Case( $this );
 		$this->case_field = new CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field( $this );
 
 		// Init Event, Participant Role, Participant and Participant Field objects.
-		$this->event_type = new CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Type( $this );
-		$this->event = new CiviCRM_Profile_Sync_ACF_CiviCRM_Event( $this );
-		$this->event_field = new CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field( $this );
-		$this->event_location = new CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location( $this );
+		$this->event_type         = new CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Type( $this );
+		$this->event              = new CiviCRM_Profile_Sync_ACF_CiviCRM_Event( $this );
+		$this->event_field        = new CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field( $this );
+		$this->event_location     = new CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location( $this );
 		$this->event_registration = new CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration( $this );
-		$this->participant = new CiviCRM_Profile_Sync_ACF_CiviCRM_Participant( $this );
-		$this->participant_field = new CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field( $this );
-		$this->participant_role = new CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role( $this );
+		$this->participant        = new CiviCRM_Profile_Sync_ACF_CiviCRM_Participant( $this );
+		$this->participant_field  = new CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field( $this );
+		$this->participant_role   = new CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role( $this );
 
 		// Init Standalone objects.
 		$this->custom_field = new CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field( $this );
-		$this->group = new CiviCRM_Profile_Sync_ACF_CiviCRM_Group( $this );
-		$this->membership = new CiviCRM_Profile_Sync_ACF_CiviCRM_Membership( $this );
-		$this->note = new CiviCRM_Profile_Sync_ACF_CiviCRM_Note( $this );
-		$this->attachment = new CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment( $this );
-		$this->tag = new CiviCRM_Profile_Sync_ACF_CiviCRM_Tag( $this );
-		$this->campaign = new CiviCRM_Profile_Sync_ACF_CiviCRM_Campaign( $this );
-		$this->address = new CiviCRM_Profile_Sync_ACF_CiviCRM_Address( $this );
+		$this->group        = new CiviCRM_Profile_Sync_ACF_CiviCRM_Group( $this );
+		$this->membership   = new CiviCRM_Profile_Sync_ACF_CiviCRM_Membership( $this );
+		$this->note         = new CiviCRM_Profile_Sync_ACF_CiviCRM_Note( $this );
+		$this->attachment   = new CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment( $this );
+		$this->tag          = new CiviCRM_Profile_Sync_ACF_CiviCRM_Tag( $this );
+		$this->campaign     = new CiviCRM_Profile_Sync_ACF_CiviCRM_Campaign( $this );
+		$this->address      = new CiviCRM_Profile_Sync_ACF_CiviCRM_Address( $this );
 
 		// Init Additional Entity objects.
-		$this->addresses = new CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses( $this );
-		$this->address_city = new CiviCRM_Profile_Sync_ACF_CiviCRM_Address_City( $this );
+		$this->addresses     = new CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses( $this );
+		$this->address_city  = new CiviCRM_Profile_Sync_ACF_CiviCRM_Address_City( $this );
 		$this->address_state = new CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State( $this );
-		$this->google_map = new CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map( $this );
-		$this->relationship = new CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship( $this );
-		$this->email = new CiviCRM_Profile_Sync_ACF_CiviCRM_Email( $this );
-		$this->website = new CiviCRM_Profile_Sync_ACF_CiviCRM_Website( $this );
-		$this->phone = new CiviCRM_Profile_Sync_ACF_CiviCRM_Phone( $this );
-		$this->im = new CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger( $this );
-		$this->contact_id = new CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_ID( $this );
+		$this->google_map    = new CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map( $this );
+		$this->relationship  = new CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship( $this );
+		$this->email         = new CiviCRM_Profile_Sync_ACF_CiviCRM_Email( $this );
+		$this->website       = new CiviCRM_Profile_Sync_ACF_CiviCRM_Website( $this );
+		$this->phone         = new CiviCRM_Profile_Sync_ACF_CiviCRM_Phone( $this );
+		$this->im            = new CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger( $this );
+		$this->contact_id    = new CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_ID( $this );
 
 	}
 
@@ -672,11 +672,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 
 		// Define params to get all Participant Roles.
 		$params = [
-			'version' => 3,
-			'sequential' => 1,
+			'version'         => 3,
+			'sequential'      => 1,
 			'option_group_id' => $option_group_id,
-			'options' => [
-				'sort' => 'weight',
+			'options'         => [
+				'sort'  => 'weight',
 				'limit' => 0, // No limit.
 			],
 		];
@@ -831,14 +831,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 */
 	public function trace_pre( $op, $objectName, $objectId, $objectRef ) {
 
-		$e = new \Exception();
+		$e     = new \Exception();
 		$trace = $e->getTraceAsString();
-		$log = [
-			'method' => __METHOD__,
-			'op' => $op,
+		$log   = [
+			'method'     => __METHOD__,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
-			'objectRef' => $objectRef,
+			'objectId'   => $objectId,
+			'objectRef'  => $objectRef,
 			//'backtrace' => $trace,
 		];
 		$this->plugin->log_error( $log );
@@ -857,14 +857,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 */
 	public function trace_post( $op, $objectName, $objectId, $objectRef ) {
 
-		$e = new \Exception();
+		$e     = new \Exception();
 		$trace = $e->getTraceAsString();
-		$log = [
-			'method' => __METHOD__,
-			'op' => $op,
+		$log   = [
+			'method'     => __METHOD__,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
-			'objectRef' => $objectRef,
+			'objectId'   => $objectId,
+			'objectRef'  => $objectRef,
 			//'backtrace' => $trace,
 		];
 		$this->plugin->log_error( $log );

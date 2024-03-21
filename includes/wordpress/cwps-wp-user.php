@@ -368,7 +368,7 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 
 		// Grab User ID and Email.
 		$user_id = $args['user_id'];
-		$email = $args['objectRef'];
+		$email   = $args['objectRef'];
 
 		// Never overwrite with an empty Email address.
 		if ( empty( $email->email ) ) {
@@ -381,7 +381,7 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 
 		// Build params.
 		$params = [
-			'ID' => $user_id,
+			'ID'         => $user_id,
 			'user_email' => $email->email,
 		];
 
@@ -416,7 +416,7 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 
 		// Build params.
 		$params = [
-			'ID' => $user_id,
+			'ID'       => $user_id,
 			'user_url' => $website->url,
 		];
 

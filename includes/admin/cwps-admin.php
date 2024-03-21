@@ -889,8 +889,8 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		$nickname_sync = (int) $this->setting_get( 'user_profile_nickname_sync', 1 );
 
 		// Init template vars.
-		$email_sync_yes = $email_sync === 1 ? ' selected="selected"' : '';
-		$email_sync_no = $email_sync === 0 ? ' selected="selected"' : '';
+		$email_sync_yes   = $email_sync === 1 ? ' selected="selected"' : '';
+		$email_sync_no    = $email_sync === 0 ? ' selected="selected"' : '';
 		$nickname_checked = $nickname_sync === 1 ? ' checked="checked"' : '';
 
 		// Include template file.

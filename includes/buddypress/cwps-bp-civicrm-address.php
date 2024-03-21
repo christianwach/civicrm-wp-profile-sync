@@ -86,20 +86,20 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 	 * @var array
 	 */
 	public $address_fields = [
-		'is_primary' => 'true_false',
-		'is_billing' => 'true_false',
-		'address_name' => 'textbox',
-		'street_address' => 'textbox',
+		'is_primary'             => 'true_false',
+		'is_billing'             => 'true_false',
+		'address_name'           => 'textbox',
+		'street_address'         => 'textbox',
 		'supplemental_address_1' => 'textbox',
 		'supplemental_address_2' => 'textbox',
 		'supplemental_address_3' => 'textbox',
-		'city' => 'textbox',
-		'county_id' => 'selectbox',
-		'state_province_id' => 'selectbox',
-		'country_id' => 'selectbox',
-		'postal_code' => 'textbox',
-		'geo_code_1' => 'textbox',
-		'geo_code_2' => 'textbox',
+		'city'                   => 'textbox',
+		'county_id'              => 'selectbox',
+		'state_province_id'      => 'selectbox',
+		'country_id'             => 'selectbox',
+		'postal_code'            => 'textbox',
+		'geo_code_1'             => 'textbox',
+		'geo_code_2'             => 'textbox',
 		//'name' => 'textbox',
 	];
 
@@ -113,10 +113,10 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 	public function __construct( $xprofile ) {
 
 		// Store references to objects.
-		$this->plugin = $xprofile->bp_loader->plugin;
+		$this->plugin    = $xprofile->bp_loader->plugin;
 		$this->bp_loader = $xprofile->bp_loader;
-		$this->civicrm = $this->plugin->civicrm;
-		$this->xprofile = $xprofile;
+		$this->civicrm   = $this->plugin->civicrm;
+		$this->xprofile  = $xprofile;
 
 		// Init when the BuddyPress Field object is loaded.
 		add_action( 'cwps/buddypress/field/loaded', [ $this, 'initialise' ] );
@@ -304,7 +304,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 			// Only "Address" Fields please.
 			$bp_field_mapping = $bp_field['field_meta']['value'];
-			$field_name = $this->name_get( $bp_field_mapping );
+			$field_name       = $this->name_get( $bp_field_mapping );
 			if ( empty( $field_name ) ) {
 				continue;
 			}
@@ -442,7 +442,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 			if ( empty( $field['meta']['entity_data']['location_type_id'] ) ) {
 				continue;
 			}
-			$location_type_id = $field['meta']['entity_data']['location_type_id'];
+			$location_type_id                      = $field['meta']['entity_data']['location_type_id'];
 			$address_groups[ $location_type_id ][] = $field;
 		}
 
@@ -505,7 +505,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 			}
 
 			// Get the CiviCRM Custom Field and Address Field.
-			$custom_field_id = $this->xprofile->custom_field->id_get( $meta['value'] );
+			$custom_field_id    = $this->xprofile->custom_field->id_get( $meta['value'] );
 			$address_field_name = $this->name_get( $meta['value'] );
 
 			// Do we have a synced Custom Field or Address Field?
@@ -526,8 +526,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 				// Build args for value conversion.
 				$args = [
-					'entity_type' => $meta['entity_type'],
-					'custom_field_id' => $custom_field_id,
+					'entity_type'        => $meta['entity_type'],
+					'custom_field_id'    => $custom_field_id,
 					'address_field_name' => $address_field_name,
 				];
 

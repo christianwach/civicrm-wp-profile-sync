@@ -97,9 +97,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->civicrm = $parent;
+		$this->civicrm    = $parent;
 
 		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
@@ -228,7 +228,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 		// Bail if this Post should not be synced now.
 		$this->do_not_sync = false;
-		$post = $this->acf_loader->post->should_be_synced( $args['post'] );
+		$post              = $this->acf_loader->post->should_be_synced( $args['post'] );
 		if ( false === $post ) {
 			$this->do_not_sync = true;
 			return;
@@ -270,7 +270,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		}
 
 		// Add our data to the params.
-		$args['case'] = $case;
+		$args['case']    = $case;
 		$args['case_id'] = $case['id'];
 
 		/**
@@ -365,9 +365,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 		// Add our data to the params.
 		$args['case_id'] = $case_id;
-		$args['case'] = $case;
-		$args['post'] = $post;
-		$args['fields'] = $fields;
+		$args['case']    = $case;
+		$args['post']    = $post;
+		$args['fields']  = $fields;
 
 		/**
 		 * Broadcast that a Case has been updated when ACF Fields were saved.
@@ -411,10 +411,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 		// Params to query Cases.
 		$params = [
-			'version' => 3,
+			'version'      => 3,
 			'case_type_id' => $case_type_id,
-			'options' => [
-				'limit' => $limit,
+			'options'      => [
+				'limit'  => $limit,
 				'offset' => $offset,
 			],
 		];
@@ -424,16 +424,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 		// Add log entry on failure.
 		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
-			$e = new \Exception();
+			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
+			$log   = [
+				'method'       => __METHOD__,
 				'case_type_id' => $case_type_id,
-				'offset' => $offset,
-				'limit' => $limit,
-				'params' => $params,
-				'result' => $result,
-				'backtrace' => $trace,
+				'offset'       => $offset,
+				'limit'        => $limit,
+				'params'       => $params,
+				'result'       => $result,
+				'backtrace'    => $trace,
 			];
 			$this->plugin->log_error( $log );
 			return $result;
@@ -506,10 +506,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 				// Let's make an array of params.
 				$args = [
-					'op' => 'sync',
+					'op'         => 'sync',
 					'objectName' => 'Case',
-					'objectId' => $case_data['id'],
-					'objectRef' => (object) $case_data,
+					'objectId'   => $case_data['id'],
+					'objectRef'  => (object) $case_data,
 				];
 
 				// Sync this Case to the Post Type.
@@ -611,10 +611,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 		// Define params to get queried Case.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
-			'id' => $case_id,
-			'options' => [
+			'id'         => $case_id,
+			'options'    => [
 				'limit' => 0, // No limit.
 			],
 		];
@@ -682,14 +682,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 		// Define params to get queried Case.
 		$params = [
-			'version' => 3,
-			'sequential' => 1,
+			'version'      => 3,
+			'sequential'   => 1,
 			'case_type_id' => $case_type_id,
-			'contact_id' => $contact_id,
-			'is_deleted' => 0,
-			'options' => [
+			'contact_id'   => $contact_id,
+			'is_deleted'   => 0,
+			'options'      => [
 				'limit' => 0, // No limit.
-				'sort' => 'id desc',
+				'sort'  => 'id desc',
 			],
 		];
 
@@ -764,11 +764,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 		// Define params to get queried Case Targets.
 		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'case_id' => $case_id,
+			'version'        => 3,
+			'sequential'     => 1,
+			'case_id'        => $case_id,
 			'record_type_id' => 3,
-			'options' => [
+			'options'        => [
 				'limit' => 0, // No limit.
 			],
 		];
@@ -826,11 +826,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 		// Define params to get queried Case Targets.
 		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'case_id' => $case_id,
+			'version'        => 3,
+			'sequential'     => 1,
+			'case_id'        => $case_id,
 			'record_type_id' => 1,
-			'options' => [
+			'options'        => [
 				'limit' => 0, // No limit.
 			],
 		];
@@ -913,12 +913,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 		// Log and bail if there's an error.
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			$e = new Exception();
+			$e     = new Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'params' => $params,
-				'result' => $result,
+			$log   = [
+				'method'    => __METHOD__,
+				'params'    => $params,
+				'result'    => $result,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -950,12 +950,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 		// Log and bail if there's no Case ID.
 		if ( empty( $case['id'] ) ) {
-			$e = new \Exception();
+			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'message' => __( 'A numeric ID must be present to update a Case.', 'civicrm-wp-profile-sync' ),
-				'case' => $case,
+			$log   = [
+				'method'    => __METHOD__,
+				'message'   => __( 'A numeric ID must be present to update a Case.', 'civicrm-wp-profile-sync' ),
+				'case'      => $case,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -1027,12 +1027,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 		// Log and bail if there's an error.
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			$e = new Exception();
+			$e     = new Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'params' => $params,
-				'result' => $result,
+			$log   = [
+				'method'    => __METHOD__,
+				'params'    => $params,
+				'result'    => $result,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -1117,8 +1117,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		// Query for the existing Relationship.
 		$query = [
 			'relationship_type_id' => $relationship_type['id'],
-			'case_id' => $case['id'],
-			'is_active' => 1,
+			'case_id'              => $case['id'],
+			'is_active'            => 1,
 		];
 
 		// Try and get the existing Relationship.
@@ -1126,18 +1126,18 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 		// Build params to create the Relationship.
 		$params = [
-			'contact_id_a' => $case_data['contact_id'],
-			'contact_id_b' => $case_data['manager_id'],
+			'contact_id_a'         => $case_data['contact_id'],
+			'contact_id_b'         => $case_data['manager_id'],
 			'relationship_type_id' => $relationship_type['id'],
-			'case_id' => $case['id'],
-			'start_date' => gmdate( 'YmdHis', strtotime( 'now' ) ),
+			'case_id'              => $case['id'],
+			'start_date'           => gmdate( 'YmdHis', strtotime( 'now' ) ),
 		];
 
 		// If there's an existing Relationship, update.
 		if ( count( $existing ) === 1 ) {
 			$relationship = array_pop( $existing );
 			$params['id'] = $relationship['id'];
-			$result = $this->civicrm->relationship->update( $params );
+			$result       = $this->civicrm->relationship->update( $params );
 		} else {
 			$result = $this->civicrm->relationship->create( $params );
 		}
@@ -1168,8 +1168,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		// Assign Date Fields if creating Case.
 		if ( empty( $case_id ) ) {
 			$case_data['case_date_time'] = $post->post_date;
-			$case_data['created_date'] = $post->post_date;
-			$case_data['modified_date'] = $post->post_modified;
+			$case_data['created_date']   = $post->post_date;
+			$case_data['modified_date']  = $post->post_modified;
 		}
 
 		// Assign Creator if creating Case.
@@ -1343,12 +1343,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 				// Build args for value conversion.
 				$args = [
-					'identifier' => $this->identifier,
-					'entity_id' => $case_id,
+					'identifier'      => $this->identifier,
+					'entity_id'       => $case_id,
 					'custom_field_id' => $custom_field_id,
-					'field_name' => $case_field_name,
-					'selector' => $selector,
-					'post_id' => $post_id,
+					'field_name'      => $case_field_name,
+					'selector'        => $selector,
+					'post_id'         => $post_id,
 				];
 
 				// Parse value by Field type.
@@ -1447,20 +1447,20 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 		// Define Field.
 		$field = [
-			'key' => $this->civicrm->acf_field_key_get(),
-			'label' => __( 'CiviCRM Field', 'civicrm-wp-profile-sync' ),
-			'name' => $this->civicrm->acf_field_key_get(),
-			'type' => 'select',
-			'instructions' => __( 'Choose the CiviCRM Field that this ACF Field should sync with. (Optional)', 'civicrm-wp-profile-sync' ),
+			'key'           => $this->civicrm->acf_field_key_get(),
+			'label'         => __( 'CiviCRM Field', 'civicrm-wp-profile-sync' ),
+			'name'          => $this->civicrm->acf_field_key_get(),
+			'type'          => 'select',
+			'instructions'  => __( 'Choose the CiviCRM Field that this ACF Field should sync with. (Optional)', 'civicrm-wp-profile-sync' ),
 			'default_value' => '',
-			'placeholder' => '',
-			'allow_null' => 1,
-			'multiple' => 0,
-			'ui' => 0,
-			'required' => 0,
+			'placeholder'   => '',
+			'allow_null'    => 1,
+			'multiple'      => 0,
+			'ui'            => 0,
+			'required'      => 0,
 			'return_format' => 'value',
-			'parent' => $this->acf_loader->acf->field_group->placeholder_group_get(),
-			'choices' => $choices,
+			'parent'        => $this->acf_loader->acf->field_group->placeholder_group_get(),
+			'choices'       => $choices,
 		];
 
 		// --<
@@ -1731,7 +1731,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		}
 
 		// Add Option Group and add entries for each Case Type.
-		$case_types_title = esc_attr( __( 'Case Types', 'civicrm-wp-profile-sync' ) );
+		$case_types_title              = esc_attr( __( 'Case Types', 'civicrm-wp-profile-sync' ) );
 		$entities[ $case_types_title ] = [];
 		foreach ( $case_types as $id => $label ) {
 			$entities[ $case_types_title ][ $this->identifier . '-' . $id ] = $label;

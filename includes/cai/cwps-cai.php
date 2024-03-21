@@ -387,7 +387,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		}
 
 		// Get the WordPress User ID.
-		$tmp = explode( '_', $args['post_id'] );
+		$tmp     = explode( '_', $args['post_id'] );
 		$user_id = (int) $tmp[1];
 
 		// We need the User object.
@@ -408,12 +408,12 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 		// Add our data to the params.
 		$args['contact_id'] = $contact['id'];
-		$args['contact'] = $contact;
+		$args['contact']    = $contact;
 
 		// We need the User not the Post.
 		$args['user_id'] = $user->ID;
-		$args['user'] = $user;
-		$args['post'] = '';
+		$args['user']    = $user;
+		$args['post']    = '';
 
 		/*
 		 * Get existing Field values.
@@ -490,7 +490,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		}
 
 		// Format the ACF "Post ID".
-		$args['post_id'] = 'user_' . $user_id;
+		$args['post_id']   = 'user_' . $user_id;
 		$args['post_type'] = '';
 
 		/**
@@ -1982,7 +1982,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		}
 
 		// Get the WordPress User ID.
-		$tmp = explode( '_', $post_id );
+		$tmp     = explode( '_', $post_id );
 		$user_id = (int) $tmp[1];
 
 		// We need the User itself.

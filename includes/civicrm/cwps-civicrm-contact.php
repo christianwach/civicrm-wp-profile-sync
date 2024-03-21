@@ -57,7 +57,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->plugin;
+		$this->plugin  = $parent->plugin;
 		$this->civicrm = $parent;
 
 		// Init when the CiviCRM object is loaded.
@@ -468,7 +468,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 	public function name_update( $args ) {
 
 		// Grab User and Contact.
-		$user = $args['user'];
+		$user    = $args['user'];
 		$contact = $args['ufmatch'];
 
 		// Should this Contact name be synced?
@@ -490,10 +490,10 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 		// Update the CiviCRM Contact "First Name" and "Last Name".
 		$params = [
-			'version' => 3,
-			'id' => $contact->contact_id,
+			'version'    => 3,
+			'id'         => $contact->contact_id,
 			'first_name' => $user->first_name,
-			'last_name' => $user->last_name,
+			'last_name'  => $user->last_name,
 		];
 
 		// Call the CiviCRM API.
@@ -501,12 +501,12 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 		// Log something on failure.
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			$e = new \Exception();
+			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'message' => __( 'Could not update the name of the CiviCRM Contact.', 'civicrm-wp-profile-sync' ),
-				'result' => $result,
+			$log   = [
+				'method'    => __METHOD__,
+				'message'   => __( 'Could not update the name of the CiviCRM Contact.', 'civicrm-wp-profile-sync' ),
+				'result'    => $result,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -567,7 +567,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 	public function nickname_update( $args ) {
 
 		// Grab User and Contact.
-		$user = $args['user'];
+		$user    = $args['user'];
 		$contact = $args['ufmatch'];
 
 		// Should this Contact nickname be synced?
@@ -582,8 +582,8 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 		// Update the CiviCRM Contact "First Name" and "Last Name".
 		$params = [
-			'version' => 3,
-			'id' => $contact->contact_id,
+			'version'   => 3,
+			'id'        => $contact->contact_id,
 			'nick_name' => $user->nickname,
 		];
 
@@ -592,12 +592,12 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 		// Log something on failure.
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			$e = new \Exception();
+			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'message' => __( 'Could not update the nickname of the CiviCRM Contact.', 'civicrm-wp-profile-sync' ),
-				'result' => $result,
+			$log   = [
+				'method'    => __METHOD__,
+				'message'   => __( 'Could not update the nickname of the CiviCRM Contact.', 'civicrm-wp-profile-sync' ),
+				'result'    => $result,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -662,7 +662,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		// Build params to create Contact.
 		$params = [
 			'version' => 3,
-			'debug' => 1,
+			'debug'   => 1,
 		] + $contact;
 
 		/*
@@ -702,12 +702,12 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 		// Log and bail if there's an error.
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			$e = new Exception();
+			$e     = new Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'params' => $params,
-				'result' => $result,
+			$log   = [
+				'method'    => __METHOD__,
+				'params'    => $params,
+				'result'    => $result,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -743,12 +743,12 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 		// Log and bail if there's no Contact ID.
 		if ( empty( $contact['id'] ) ) {
-			$e = new \Exception();
+			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'message' => __( 'A numeric ID must be present to update a Contact.', 'civicrm-wp-profile-sync' ),
-				'contact' => $contact,
+			$log   = [
+				'method'    => __METHOD__,
+				'message'   => __( 'A numeric ID must be present to update a Contact.', 'civicrm-wp-profile-sync' ),
+				'contact'   => $contact,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -781,12 +781,12 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 		// Log and bail if there's no Contact ID.
 		if ( empty( $contact['id'] ) ) {
-			$e = new \Exception();
+			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'message' => __( 'A numeric ID must be present to delete a Contact.', 'civicrm-wp-profile-sync' ),
-				'contact' => $contact,
+			$log   = [
+				'method'    => __METHOD__,
+				'message'   => __( 'A numeric ID must be present to delete a Contact.', 'civicrm-wp-profile-sync' ),
+				'contact'   => $contact,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -847,10 +847,10 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 		// Define params to get queried Contact.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
-			'id' => $contact_id,
-			'options' => [
+			'id'         => $contact_id,
+			'options'    => [
 				'limit' => 0, // No limit.
 			],
 		];
@@ -902,10 +902,10 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 		// Define params to get queried Contacts.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
-			'id' => [ 'IN' => $contact_ids ],
-			'options' => [
+			'id'         => [ 'IN' => $contact_ids ],
+			'options'    => [
 				'limit' => 0, // No limit.
 			],
 		];
@@ -955,10 +955,10 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 		// Define params to get all Contact Types.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
-			'is_active' => 1,
-			'options' => [
+			'is_active'  => 1,
+			'options'    => [
 				'limit' => 0, // No limit.
 			],
 		];
@@ -1001,11 +1001,11 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 		// Define params to get all Contact Types.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
-			'id' => $contact_type_id,
-			'is_active' => 1,
-			'options' => [
+			'id'         => $contact_type_id,
+			'is_active'  => 1,
+			'options'    => [
 				'limit' => 0, // No limit.
 			],
 		];

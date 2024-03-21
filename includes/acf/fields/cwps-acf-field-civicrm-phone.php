@@ -116,8 +116,8 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Field extends acf_field {
 	 */
 	public $settings = [
 		'version' => CIVICRM_WP_PROFILE_SYNC_VERSION,
-		'url' => CIVICRM_WP_PROFILE_SYNC_URL,
-		'path' => CIVICRM_WP_PROFILE_SYNC_PATH,
+		'url'     => CIVICRM_WP_PROFILE_SYNC_URL,
+		'path'    => CIVICRM_WP_PROFILE_SYNC_PATH,
 	];
 
 	/**
@@ -146,10 +146,10 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Field extends acf_field {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->acf = $parent->acf;
-		$this->civicrm = $this->acf_loader->civicrm;
+		$this->acf        = $parent->acf;
+		$this->civicrm    = $this->acf_loader->civicrm;
 
 		// Define label.
 		$this->label = __( 'CiviCRM Phone: Complete', 'civicrm-wp-profile-sync' );
@@ -182,14 +182,14 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Field extends acf_field {
 
 		// Define setting Field.
 		$setting = [
-			'label' => __( 'CiviCRM Phone ID', 'civicrm-wp-profile-sync' ),
-			'name' => 'show_phone_id',
-			'type' => 'true_false',
-			'ui' => 1,
-			'ui_on_text' => __( 'Show', 'civicrm-wp-profile-sync' ),
-			'ui_off_text' => __( 'Hide', 'civicrm-wp-profile-sync' ),
+			'label'         => __( 'CiviCRM Phone ID', 'civicrm-wp-profile-sync' ),
+			'name'          => 'show_phone_id',
+			'type'          => 'true_false',
+			'ui'            => 1,
+			'ui_on_text'    => __( 'Show', 'civicrm-wp-profile-sync' ),
+			'ui_off_text'   => __( 'Hide', 'civicrm-wp-profile-sync' ),
 			'default_value' => 0,
-			'required' => 0,
+			'required'      => 0,
 		];
 
 		// Now add it.
@@ -498,58 +498,58 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Field extends acf_field {
 		$field['min'] = 0;
 
 		// Set sensible defaults.
-		$field['layout'] = 'table';
+		$field['layout']       = 'table';
 		$field['button_label'] = __( 'Add Phone Number', 'civicrm-wp-profile-sync' );
-		$field['collapsed'] = '';
-		$field['prefix'] = '';
+		$field['collapsed']    = '';
+		$field['prefix']       = '';
 
 		// Set wrapper class.
 		$field['wrapper']['class'] = 'civicrm_phone';
 
 		// Define Phone Number subfield.
 		$number = [
-			'key' => 'field_phone_number',
-			'label' => __( 'Phone Number', 'civicrm-wp-profile-sync' ),
-			'name' => 'phone_number',
-			'type' => 'text',
-			'parent' => $field['key'],
-			'instructions' => '',
-			'required' => 0,
+			'key'               => 'field_phone_number',
+			'label'             => __( 'Phone Number', 'civicrm-wp-profile-sync' ),
+			'name'              => 'phone_number',
+			'type'              => 'text',
+			'parent'            => $field['key'],
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'wrapper' => [
+			'wrapper'           => [
 				'width' => '30',
 				'class' => 'civicrm_phone_number',
-				'id' => '',
+				'id'    => '',
 			],
-			'default_value' => '',
-			'placeholder' => '',
-			'prepend' => '',
-			'append' => '',
-			'maxlength' => '',
-			'prefix' => '',
+			'default_value'     => '',
+			'placeholder'       => '',
+			'prepend'           => '',
+			'append'            => '',
+			'maxlength'         => '',
+			'prefix'            => '',
 		];
 
 		// Define Extension Field.
 		$extension = [
-			'key' => 'field_phone_extension',
-			'label' => __( 'Extension', 'civicrm-wp-profile-sync' ),
-			'name' => 'extension',
-			'type' => 'text',
-			'parent' => $field['key'],
-			'instructions' => '',
-			'required' => 0,
+			'key'               => 'field_phone_extension',
+			'label'             => __( 'Extension', 'civicrm-wp-profile-sync' ),
+			'name'              => 'extension',
+			'type'              => 'text',
+			'parent'            => $field['key'],
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'wrapper' => [
+			'wrapper'           => [
 				'width' => '15',
 				'class' => 'civicrm_phone_ext',
-				'id' => '',
+				'id'    => '',
 			],
-			'default_value' => '',
-			'placeholder' => '',
-			'prepend' => '',
-			'append' => '',
-			'maxlength' => '',
-			'prefix' => '',
+			'default_value'     => '',
+			'placeholder'       => '',
+			'prepend'           => '',
+			'append'            => '',
+			'maxlength'         => '',
+			'prefix'            => '',
 		];
 
 		// Phone Locations are standard Location Types.
@@ -563,107 +563,107 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Field extends acf_field {
 
 		// Define Location Field.
 		$location = [
-			'key' => 'field_phone_location',
-			'label' => __( 'Location', 'civicrm-wp-profile-sync' ),
-			'name' => 'location',
-			'type' => 'select',
-			'parent' => $field['key'],
-			'instructions' => '',
-			'required' => 0,
+			'key'               => 'field_phone_location',
+			'label'             => __( 'Location', 'civicrm-wp-profile-sync' ),
+			'name'              => 'location',
+			'type'              => 'select',
+			'parent'            => $field['key'],
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'wrapper' => [
+			'wrapper'           => [
 				'width' => '',
 				'class' => '',
-				'id' => '',
+				'id'    => '',
 			],
-			'choices' => $locations,
-			'default_value' => false,
-			'allow_null' => 0,
-			'multiple' => 0,
-			'ui' => 0,
-			'return_format' => 'value',
-			'ajax' => 0,
-			'placeholder' => '',
-			'prefix' => '',
+			'choices'           => $locations,
+			'default_value'     => false,
+			'allow_null'        => 0,
+			'multiple'          => 0,
+			'ui'                => 0,
+			'return_format'     => 'value',
+			'ajax'              => 0,
+			'placeholder'       => '',
+			'prefix'            => '',
 		];
 
 		// Define Phone Type Field.
 		$type = [
-			'key' => 'field_phone_type',
-			'label' => __( 'Type', 'civicrm-wp-profile-sync' ),
-			'name' => 'type',
-			'type' => 'select',
-			'parent' => $field['key'],
-			'instructions' => '',
-			'required' => 0,
+			'key'               => 'field_phone_type',
+			'label'             => __( 'Type', 'civicrm-wp-profile-sync' ),
+			'name'              => 'type',
+			'type'              => 'select',
+			'parent'            => $field['key'],
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'wrapper' => [
+			'wrapper'           => [
 				'width' => '',
 				'class' => '',
-				'id' => '',
+				'id'    => '',
 			],
-			'choices' => $this->plugin->civicrm->phone->phone_types_get(),
-			'default_value' => false,
-			'allow_null' => 0,
-			'multiple' => 0,
-			'ui' => 0,
-			'return_format' => 'value',
-			'ajax' => 0,
-			'placeholder' => '',
-			'prefix' => '',
+			'choices'           => $this->plugin->civicrm->phone->phone_types_get(),
+			'default_value'     => false,
+			'allow_null'        => 0,
+			'multiple'          => 0,
+			'ui'                => 0,
+			'return_format'     => 'value',
+			'ajax'              => 0,
+			'placeholder'       => '',
+			'prefix'            => '',
 		];
 
 		// Define Is Primary Field.
 		$primary = [
-			'key' => 'field_phone_primary',
-			'label' => __( 'Is Primary', 'civicrm-wp-profile-sync' ),
-			'name' => 'is_primary',
-			'type' => 'radio',
-			'parent' => $field['key'],
-			'instructions' => '',
-			'required' => 0,
+			'key'               => 'field_phone_primary',
+			'label'             => __( 'Is Primary', 'civicrm-wp-profile-sync' ),
+			'name'              => 'is_primary',
+			'type'              => 'radio',
+			'parent'            => $field['key'],
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'wrapper' => [
+			'wrapper'           => [
 				'width' => '10',
 				'class' => 'civicrm_phone_primary',
-				'id' => '',
+				'id'    => '',
 			],
-			'choices' => [
+			'choices'           => [
 				1 => __( 'Primary', 'civicrm-wp-profile-sync' ),
 			],
-			'allow_null' => 1,
-			'other_choice' => 0,
-			'default_value' => '',
-			'layout' => 'vertical',
-			'return_format' => 'value',
+			'allow_null'        => 1,
+			'other_choice'      => 0,
+			'default_value'     => '',
+			'layout'            => 'vertical',
+			'return_format'     => 'value',
 			'save_other_choice' => 0,
-			'prefix' => '',
+			'prefix'            => '',
 		];
 
 		// Define hidden CiviCRM Phone ID Field.
 		$phone_id = [
-			'readonly' => true,
-			'key' => 'field_phone_id',
-			'label' => __( 'CiviCRM ID', 'civicrm-wp-profile-sync' ),
-			'name' => 'civicrm_phone_id',
-			'type' => 'number',
-			'parent' => $field['key'],
-			'instructions' => '',
-			'required' => 0,
+			'readonly'          => true,
+			'key'               => 'field_phone_id',
+			'label'             => __( 'CiviCRM ID', 'civicrm-wp-profile-sync' ),
+			'name'              => 'civicrm_phone_id',
+			'type'              => 'number',
+			'parent'            => $field['key'],
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'wrapper' => [
+			'wrapper'           => [
 				'width' => '10',
 				'class' => 'civicrm_phone_id',
-				'id' => '',
+				'id'    => '',
 			],
-			'default_value' => '',
-			'placeholder' => '',
-			'prepend' => '',
-			'append' => '',
-			'min' => '',
-			'max' => '',
-			'step' => '',
-			'prefix' => '',
+			'default_value'     => '',
+			'placeholder'       => '',
+			'prepend'           => '',
+			'append'            => '',
+			'min'               => '',
+			'max'               => '',
+			'step'              => '',
+			'prefix'            => '',
 		];
 
 		// Add Subfields.

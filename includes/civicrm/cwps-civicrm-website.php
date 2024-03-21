@@ -226,7 +226,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		}
 
 		// Assume unchanged.
-		$unchanged = true;
+		$unchanged     = true;
 		$was_user_type = false;
 		$now_user_type = false;
 
@@ -239,7 +239,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 				// Check if it no longer is.
 				if ( (int) $website_type_id !== (int) $website->website_type_id ) {
 					$was_user_type = true;
-					$unchanged = false;
+					$unchanged     = false;
 				}
 
 			} else {
@@ -247,7 +247,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 				// Check if it now is.
 				if ( (int) $website_type_id === (int) $website->website_type_id ) {
 					$now_user_type = true;
-					$unchanged = false;
+					$unchanged     = false;
 				}
 
 			}
@@ -282,19 +282,19 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 			if ( empty( $this->skip_updates ) ) {
 
 				// Let's make a new object so we don't overwrite the Website object.
-				$changed = new stdClass();
-				$changed->id = $website->id;
-				$changed->contact_id = $website->contact_id;
+				$changed                  = new stdClass();
+				$changed->id              = $website->id;
+				$changed->contact_id      = $website->contact_id;
 				$changed->website_type_id = $website->website_type_id;
-				$changed->url = '';
+				$changed->url             = '';
 
 				// Build new args.
 				$changed_args = [
-					'op' => $args['op'],
+					'op'         => $args['op'],
 					'objectName' => $args['objectName'],
-					'objectId' => $args['objectId'],
-					'objectRef' => $changed,
-					'user_id' => $user_id,
+					'objectId'   => $args['objectId'],
+					'objectRef'  => $changed,
+					'user_id'    => $user_id,
 				];
 
 				// Now update the WordPress User's Website.
@@ -397,11 +397,11 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 
 		// Build new args.
 		$changed_args = [
-			'op' => $args['op'],
+			'op'         => $args['op'],
 			'objectName' => $args['objectName'],
-			'objectId' => $args['objectId'],
-			'objectRef' => $website,
-			'user_id' => $user_id,
+			'objectId'   => $args['objectId'],
+			'objectRef'  => $website,
+			'user_id'    => $user_id,
 		];
 
 		// Update the WordPress User's Website.
@@ -479,8 +479,8 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 			// Define params to create new Website.
 			$params = [
 				'website_type_id' => $website_type_id,
-				'contact_id' => $contact_id,
-				'url' => $value,
+				'contact_id'      => $contact_id,
+				'url'             => $value,
 			];
 
 			// Create it.
@@ -498,10 +498,10 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 
 			// Define params to update this Website.
 			$params = [
-				'id' => $existing['id'],
+				'id'              => $existing['id'],
 				'website_type_id' => $website_type_id,
-				'contact_id' => $contact_id,
-				'url' => $value,
+				'contact_id'      => $contact_id,
+				'url'             => $value,
 			];
 
 			// Update it.
@@ -547,12 +547,12 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 
 		// Log and bail if there's an error.
 		if ( ! empty( $result['is_error'] ) ) {
-			$e = new Exception();
+			$e     = new Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'params' => $params,
-				'result' => $result,
+			$log   = [
+				'method'    => __METHOD__,
+				'params'    => $params,
+				'result'    => $result,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -587,12 +587,12 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 
 		// Log and bail if there's no ID.
 		if ( empty( $website['id'] ) ) {
-			$e = new \Exception();
+			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'message' => __( 'An ID must be present to edit a Website.', 'civicrm-wp-profile-sync' ),
-				'website' => $website,
+			$log   = [
+				'method'    => __METHOD__,
+				'message'   => __( 'An ID must be present to edit a Website.', 'civicrm-wp-profile-sync' ),
+				'website'   => $website,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -624,11 +624,11 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 
 		// Log and bail if there's no Website ID.
 		if ( empty( $website_id ) ) {
-			$e = new \Exception();
+			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'message' => __( 'An ID must be present to delete a Website.', 'civicrm-wp-profile-sync' ),
+			$log   = [
+				'method'    => __METHOD__,
+				'message'   => __( 'An ID must be present to delete a Website.', 'civicrm-wp-profile-sync' ),
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -638,7 +638,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		// Build params to delete Website.
 		$params = [
 			'version' => 3,
-			'id' => $website_id,
+			'id'      => $website_id,
 		];
 
 		// Call the CiviCRM API.
@@ -646,12 +646,12 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 
 		// Bail if there's an error.
 		if ( ! empty( $result['is_error'] ) ) {
-			$e = new Exception();
+			$e     = new Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'params' => $params,
-				'result' => $result,
+			$log   = [
+				'method'    => __METHOD__,
+				'params'    => $params,
+				'result'    => $result,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -689,7 +689,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		// Construct API query.
 		$params = [
 			'version' => 3,
-			'id' => $website_id,
+			'id'      => $website_id,
 		];
 
 		// Get Website details via API.
@@ -744,8 +744,8 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 
 		// Get the current Website.
 		$params = [
-			'version' => 3,
-			'contact_id' => $contact_id,
+			'version'         => 3,
+			'contact_id'      => $contact_id,
 			'website_type_id' => $website_type_id,
 		];
 
@@ -855,7 +855,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 
 		// Build CiviCRM "query" and get URL.
 		$query = 'gid=' . $option_group['id'] . 'reset=1';
-		$url = $this->plugin->civicrm->get_link( 'civicrm/admin/options', $query );
+		$url   = $this->plugin->civicrm->get_link( 'civicrm/admin/options', $query );
 
 		// --<
 		return $url;

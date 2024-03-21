@@ -48,7 +48,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 	public function __construct( $parent ) {
 
 		// Store references.
-		$this->plugin = $parent->plugin;
+		$this->plugin  = $parent->plugin;
 		$this->civicrm = $parent;
 
 		// Init when the CiviCRM object is loaded.
@@ -110,9 +110,9 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 
 		// Build params to get Custom Group data.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
-			'id' => $field_id,
+			'id'         => $field_id,
 		];
 
 		// Call the CiviCRM API.
@@ -157,10 +157,10 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 
 		// Build params to get Custom Group data.
 		$params = [
-			'version' => 3,
-			'sequential' => 1,
+			'version'         => 3,
+			'sequential'      => 1,
 			'custom_group_id' => $custom_group_id,
-			'options' => [
+			'options'         => [
 				'limit' => 0, // No limit.
 			],
 		];
@@ -220,11 +220,11 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 
 		// Define params to get queried Contact.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
-			'id' => $contact_id,
-			'return' => $codes,
-			'options' => [
+			'id'         => $contact_id,
+			'return'     => $codes,
+			'options'    => [
 				'limit' => 0, // No limit.
 			],
 		];
@@ -246,7 +246,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 		foreach ( $result['values'] as $item ) {
 			foreach ( $item as $key => $value ) {
 				if ( substr( $key, 0, 7 ) == 'custom_' ) {
-					$index = (int) str_replace( 'custom_', '', $key );
+					$index                  = (int) str_replace( 'custom_', '', $key );
 					$contact_data[ $index ] = $value;
 				}
 			}
@@ -331,17 +331,17 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 
 		// Construct params to get Fields for all Contacts.
 		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'is_active' => 1,
-			'extends' => 'Contact',
+			'version'             => 3,
+			'sequential'          => 1,
+			'is_active'           => 1,
+			'extends'             => 'Contact',
 			'api.CustomField.get' => [
 				'is_active' => 1,
-				'options' => [
+				'options'   => [
 					'limit' => 0, // No limit.
 				],
 			],
-			'options' => [
+			'options'             => [
 				'limit' => 0, // No limit.
 			],
 		];
@@ -395,19 +395,19 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 
 		// Construct params.
 		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'is_active' => 1,
-			'options' => [
+			'version'             => 3,
+			'sequential'          => 1,
+			'is_active'           => 1,
+			'options'             => [
 				'limit' => 0,
 			],
 			'api.CustomField.get' => [
 				'is_active' => 1,
-				'options' => [
+				'options'   => [
 					'limit' => 0,
 				],
 			],
-			'extends' => [
+			'extends'             => [
 				'IN' => $this->plugin->civicrm->contact_type->types_get_top_level(),
 			],
 		];
@@ -475,17 +475,17 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 
 		// Construct params.
 		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'is_active' => 1,
-			'extends' => $type,
+			'version'             => 3,
+			'sequential'          => 1,
+			'is_active'           => 1,
+			'extends'             => $type,
 			'api.CustomField.get' => [
 				'is_active' => 1,
-				'options' => [
+				'options'   => [
 					'limit' => 0, // No limit.
 				],
 			],
-			'options' => [
+			'options'             => [
 				'limit' => 0, // No limit.
 			],
 		];
@@ -577,17 +577,17 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 
 		// Construct params.
 		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'is_active' => 1,
-			'extends' => $type,
+			'version'             => 3,
+			'sequential'          => 1,
+			'is_active'           => 1,
+			'extends'             => $type,
 			'api.CustomField.get' => [
 				'is_active' => 1,
-				'options' => [
+				'options'   => [
 					'limit' => 0, // No limit.
 				],
 			],
-			'options' => [
+			'options'             => [
 				'limit' => 0, // No limit.
 			],
 		];

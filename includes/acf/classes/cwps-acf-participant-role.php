@@ -57,9 +57,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->civicrm = $parent;
+		$this->civicrm    = $parent;
 
 		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
@@ -114,9 +114,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 
 		// Define params to get Participant Roles Option Group.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
-			'name' => 'participant_role',
+			'name'       => 'participant_role',
 		];
 
 		// Call API.
@@ -170,10 +170,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 
 		// Define params to get queried Participant Role.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
-			'id' => $participant_role_id,
-			'options' => [
+			'id'         => $participant_role_id,
+			'options'    => [
 				'limit' => 0, // No limit.
 			],
 		];
@@ -224,11 +224,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 
 		// Define params to get queried Participant Role.
 		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'value' => $participant_role_value,
+			'version'         => 3,
+			'sequential'      => 1,
+			'value'           => $participant_role_value,
 			'option_group_id' => $this->option_group_id_get(),
-			'options' => [
+			'options'         => [
 				'limit' => 0, // No limit.
 			],
 		];
@@ -270,12 +270,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 
 		// Params to query Participants.
 		$params = [
-			'version' => 3,
+			'version'             => 3,
 			'participant_role_id' => $participant_role_id,
-			'return' => [
+			'return'              => [
 				'id',
 			],
-			'options' => [
+			'options'             => [
 				'limit' => 0,
 			],
 		];
@@ -285,14 +285,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 
 		// Add log entry on failure.
 		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
-			$e = new \Exception();
+			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
+			$log   = [
+				'method'              => __METHOD__,
 				'participant_role_id' => $participant_role_id,
-				'params' => $params,
-				'result' => $result,
-				'backtrace' => $trace,
+				'params'              => $params,
+				'result'              => $result,
+				'backtrace'           => $trace,
 			];
 			$this->plugin->log_error( $log );
 			return false;
@@ -390,11 +390,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 
 		// Define params to get all Participant Roles.
 		$params = [
-			'version' => 3,
-			'sequential' => 1,
+			'version'         => 3,
+			'sequential'      => 1,
 			'option_group_id' => $this->option_group_id_get(),
-			'options' => [
-				'sort' => 'label',
+			'options'         => [
+				'sort'  => 'label',
 				'limit' => 0, // No limit.
 			],
 		];
@@ -494,12 +494,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 
 		// Define params to get queried Participant Roles.
 		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'value' => [ 'IN' => $participant_role_ids ],
+			'version'         => 3,
+			'sequential'      => 1,
+			'value'           => [ 'IN' => $participant_role_ids ],
 			'option_group_id' => $this->option_group_id_get(),
-			'options' => [
-				'sort' => 'label',
+			'options'         => [
+				'sort'  => 'label',
 				'limit' => 0, // No limit.
 			],
 		];

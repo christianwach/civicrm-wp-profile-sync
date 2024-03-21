@@ -104,9 +104,9 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Yes_No extends acf_field {
 	 * @var array
 	 */
 	public $defaults = [
-		'choices' => [],
+		'choices'       => [],
 		'default_value' => '2', // '1' = Yes, '0' = No.
-		'allow_null' => 0,
+		'allow_null'    => 0,
 		'return_format' => 'value',
 	];
 
@@ -121,8 +121,8 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Yes_No extends acf_field {
 	 */
 	public $settings = [
 		'version' => CIVICRM_WP_PROFILE_SYNC_VERSION,
-		'url' => CIVICRM_WP_PROFILE_SYNC_URL,
-		'path' => CIVICRM_WP_PROFILE_SYNC_PATH,
+		'url'     => CIVICRM_WP_PROFILE_SYNC_URL,
+		'path'    => CIVICRM_WP_PROFILE_SYNC_PATH,
 	];
 
 	/**
@@ -151,10 +151,10 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Yes_No extends acf_field {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->acf = $parent->acf;
-		$this->civicrm = $this->acf_loader->civicrm;
+		$this->acf        = $parent->acf;
+		$this->civicrm    = $this->acf_loader->civicrm;
 
 		// Define label.
 		$this->label = __( 'CiviCRM Yes / No', 'civicrm-wp-profile-sync' );
@@ -252,7 +252,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Yes_No extends acf_field {
 	public function render_field( $field ) {
 
 		// Change Field into a checkbox.
-		$field['type'] = 'radio';
+		$field['type']       = 'radio';
 		$field['allow_null'] = 0;
 
 		// Define choices.
@@ -260,7 +260,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Yes_No extends acf_field {
 
 		// Init list definition.
 		$ul = [
-			'class' => 'acf-radio-list acf-hl',
+			'class'           => 'acf-radio-list acf-hl',
 			'data-allow_null' => $field['allow_null'],
 		];
 
@@ -293,9 +293,9 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Yes_No extends acf_field {
 
 			// Define input attributes.
 			$atts = [
-				'type' => 'radio',
-				'id' => $field['id'],
-				'name' => $field['name'],
+				'type'  => 'radio',
+				'id'    => $field['id'],
+				'name'  => $field['name'],
 				'value' => $value,
 			];
 
@@ -303,7 +303,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Yes_No extends acf_field {
 			$class = '';
 			if ( $value === $checked ) {
 				$atts['checked'] = 'checked';
-				$class = ' class="selected"';
+				$class           = ' class="selected"';
 			}
 
 			// Bump counter.

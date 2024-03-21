@@ -134,7 +134,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	public function __construct( $acf_loader ) {
 
 		// Store references to objects.
-		$this->plugin = $acf_loader->plugin;
+		$this->plugin     = $acf_loader->plugin;
 		$this->acf_loader = $acf_loader;
 
 		// Init when this plugin is loaded.
@@ -511,7 +511,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 		// Get list of allowed Activity Types.
 		$allowed_activity_types = [];
-		$option_group = $this->plugin->civicrm->option_group_get( 'activity_type' );
+		$option_group           = $this->plugin->civicrm->option_group_get( 'activity_type' );
 		if ( ! empty( $option_group ) ) {
 			$allowed_activity_types = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
 		}
@@ -1050,7 +1050,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 		// Grab "URL Path" from form.
 		$form_url_path = $form->getVar( 'urlPath' );
-		$url_path = [ 'civicrm', 'admin', 'setting', 'preferences', 'event' ];
+		$url_path      = [ 'civicrm', 'admin', 'setting', 'preferences', 'event' ];
 		if ( $form_url_path !== $url_path ) {
 			return;
 		}
@@ -1100,7 +1100,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 		// Grab "URL Path" from form.
 		$form_url_path = $form->getVar( 'urlPath' );
-		$url_path = [ 'civicrm', 'admin', 'setting', 'preferences', 'event' ];
+		$url_path      = [ 'civicrm', 'admin', 'setting', 'preferences', 'event' ];
 		if ( $form_url_path !== $url_path ) {
 			return;
 		}
@@ -1161,8 +1161,8 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	public function mappings_get_all() {
 
 		// Get existing mappings.
-		$for_contacts = $this->mappings_for_contact_types_get();
-		$for_activities = $this->mappings_for_activity_types_get();
+		$for_contacts     = $this->mappings_for_contact_types_get();
+		$for_activities   = $this->mappings_for_activity_types_get();
 		$for_participants = $this->mappings_for_participant_roles_get();
 
 		// --<

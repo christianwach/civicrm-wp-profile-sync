@@ -84,10 +84,10 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Phone {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->civicrm = $parent->civicrm;
-		$this->phone = $parent;
+		$this->civicrm    = $parent->civicrm;
+		$this->phone      = $parent;
 
 		// Init when the CiviCRM Phone object is loaded.
 		add_action( 'cwps/acf/civicrm/phone/loaded', [ $this, 'initialise' ] );
@@ -157,11 +157,11 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Phone {
 
 		// Default Shortcode attributes.
 		$defaults = [
-			'field' => '',
+			'field'         => '',
 			'location_type' => null,
-			'phone_type' => null,
-			'style' => 'list',
-			'post_id' => null,
+			'phone_type'    => null,
+			'style'         => 'list',
+			'post_id'       => null,
 		];
 
 		// Get parsed attributes.
@@ -201,37 +201,37 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Phone {
 
 		// ACF Field selector.
 		$field = [
-			'label' => __( 'ACF Field', 'civicrm-wp-profile-sync' ),
-			'attr'  => 'field',
-			'type'  => 'text',
+			'label'       => __( 'ACF Field', 'civicrm-wp-profile-sync' ),
+			'attr'        => 'field',
+			'type'        => 'text',
 			'description' => __( 'Please enter an ACF Field selector.', 'civicrm-wp-profile-sync' ),
 		];
 
 		// Location Types select.
 		$location_types = [
-			'label' => __( 'Location Type', 'civicrm-wp-profile-sync' ),
-			'attr'  => 'location_type',
-			'type'  => 'select',
-			'options' => $this->shortcake_select_location_types_get(),
+			'label'       => __( 'Location Type', 'civicrm-wp-profile-sync' ),
+			'attr'        => 'location_type',
+			'type'        => 'select',
+			'options'     => $this->shortcake_select_location_types_get(),
 			'description' => __( 'Please select a Location Type.', 'civicrm-wp-profile-sync' ),
 		];
 
 		// Phone Types select.
 		$phone_types = [
-			'label' => __( 'Phone Type (optional)', 'civicrm-wp-profile-sync' ),
-			'attr'  => 'phone_type',
-			'type'  => 'select',
-			'options' => $this->shortcake_select_phone_types_get(),
+			'label'       => __( 'Phone Type (optional)', 'civicrm-wp-profile-sync' ),
+			'attr'        => 'phone_type',
+			'type'        => 'select',
+			'options'     => $this->shortcake_select_phone_types_get(),
 			'description' => __( 'Please select a Phone Type.', 'civicrm-wp-profile-sync' ),
 		];
 
 		// Render style select.
 		$style = [
-			'label' => __( 'Style', 'civicrm-wp-profile-sync' ),
-			'attr'  => 'style',
-			'type'  => 'select',
-			'options' => [
-				'list' => __( 'List', 'civicrm-wp-profile-sync' ),
+			'label'       => __( 'Style', 'civicrm-wp-profile-sync' ),
+			'attr'        => 'style',
+			'type'        => 'select',
+			'options'     => [
+				'list'   => __( 'List', 'civicrm-wp-profile-sync' ),
 				'commas' => __( 'Comma-separated', 'civicrm-wp-profile-sync' ),
 			],
 			'description' => __( 'Please choose list or comma-separated output.', 'civicrm-wp-profile-sync' ),
@@ -242,10 +242,10 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Phone {
 
 		// WordPress Post ID.
 		$post_id = [
-			'label' => __( 'Post (optional)', 'civicrm-wp-profile-sync' ),
-			'attr'  => 'post_id',
-			'type'  => 'post_select',
-			'query'  => [ 'post_type' => array_values( $mapped_post_types ) ],
+			'label'       => __( 'Post (optional)', 'civicrm-wp-profile-sync' ),
+			'attr'        => 'post_id',
+			'type'        => 'post_select',
+			'query'       => [ 'post_type' => array_values( $mapped_post_types ) ],
 			'description' => __( 'Please select a Post.', 'civicrm-wp-profile-sync' ),
 		];
 
@@ -253,7 +253,7 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Phone {
 		$settings = [
 
 			// Window title.
-			'label' => esc_html__( 'CiviCRM Phone', 'civicrm-wp-profile-sync' ),
+			'label'         => esc_html__( 'CiviCRM Phone', 'civicrm-wp-profile-sync' ),
 
 			// Icon.
 			'listItemImage' => 'dashicons-phone',
@@ -263,7 +263,7 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Phone {
 			//'post_type' => array_values( $mapped_post_types ),
 
 			// Window elements.
-			'attrs' => [
+			'attrs'         => [
 				$field,
 				$location_types,
 				$phone_types,

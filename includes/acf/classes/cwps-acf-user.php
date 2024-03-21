@@ -187,7 +187,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 	public function __construct( $acf_loader ) {
 
 		// Store references.
-		$this->plugin = $acf_loader->plugin;
+		$this->plugin     = $acf_loader->plugin;
 		$this->acf_loader = $acf_loader;
 
 		// Init when this plugin is loaded.
@@ -508,7 +508,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		}
 
 		// Get the WordPress User ID.
-		$tmp = explode( '_', $args['post_id'] );
+		$tmp     = explode( '_', $args['post_id'] );
 		$user_id = (int) $tmp[1];
 
 		// Bail if this is not a WordPress User.
@@ -525,12 +525,12 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 		// Add our data to the params.
 		$args['contact_id'] = $contact['id'];
-		$args['contact'] = $contact;
+		$args['contact']    = $contact;
 
 		// We need the User not the Post.
 		$args['user_id'] = $user->ID;
-		$args['user'] = $user;
-		$args['post'] = '';
+		$args['user']    = $user;
+		$args['post']    = '';
 
 		/*
 		 * Get existing Field values.
@@ -607,7 +607,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		}
 
 		// Format the ACF "Post ID".
-		$args['post_id'] = 'user_' . $user_id;
+		$args['post_id']   = 'user_' . $user_id;
 		$args['post_type'] = '';
 
 		/**
@@ -749,7 +749,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 			if ( (int) $website_pre->website_type_id !== (int) $website->website_type_id ) {
 				$website_type_changed = true;
 				// Make a clone so we don't overwrite the Website Pre object.
-				$previous = clone $website_pre;
+				$previous      = clone $website_pre;
 				$previous->url = '';
 			}
 		}
@@ -2458,7 +2458,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		}
 
 		// Get the WordPress User ID.
-		$tmp = explode( '_', $post_id );
+		$tmp     = explode( '_', $post_id );
 		$user_id = (int) $tmp[1];
 
 		// We need the User itself.

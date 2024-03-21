@@ -131,10 +131,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->civicrm = $parent;
-		$this->acf = $this->acf_loader->acf;
+		$this->civicrm    = $parent;
+		$this->acf        = $this->acf_loader->acf;
 
 		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
@@ -304,7 +304,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 		// Bail if this Post should not be synced now.
 		$this->do_not_sync = false;
-		$post = $this->acf_loader->post->should_be_synced( $args['post'] );
+		$post              = $this->acf_loader->post->should_be_synced( $args['post'] );
 		if ( false === $post ) {
 			$this->do_not_sync = true;
 			return;
@@ -411,9 +411,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 		// Add our data to the params.
 		$args['participant_id'] = $participant_id;
-		$args['participant'] = $participant;
-		$args['post'] = $post;
-		$args['fields'] = $fields;
+		$args['participant']    = $participant;
+		$args['post']           = $post;
+		$args['fields']         = $fields;
 
 		/**
 		 * Broadcast that a Participant has been updated when ACF Fields were saved.
@@ -451,7 +451,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		$params = [
 			'version' => 3,
 			'options' => [
-				'limit' => $limit,
+				'limit'  => $limit,
 				'offset' => $offset,
 			],
 		];
@@ -461,14 +461,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 		// Add log entry on failure.
 		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
-			$e = new \Exception();
+			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'offset' => $offset,
-				'limit' => $limit,
-				'params' => $params,
-				'result' => $result,
+			$log   = [
+				'method'    => __METHOD__,
+				'offset'    => $offset,
+				'limit'     => $limit,
+				'params'    => $params,
+				'result'    => $result,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -512,10 +512,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 		// Params to query Participants.
 		$params = [
-			'version' => 3,
+			'version'             => 3,
 			'participant_role_id' => $participant_role_id,
-			'options' => [
-				'limit' => $limit,
+			'options'             => [
+				'limit'  => $limit,
 				'offset' => $offset,
 			],
 		];
@@ -525,16 +525,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 		// Add log entry on failure.
 		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
-			$e = new \Exception();
+			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
+			$log   = [
+				'method'              => __METHOD__,
 				'participant_role_id' => $participant_role_id,
-				'offset' => $offset,
-				'limit' => $limit,
-				'params' => $params,
-				'result' => $result,
-				'backtrace' => $trace,
+				'offset'              => $offset,
+				'limit'               => $limit,
+				'params'              => $params,
+				'result'              => $result,
+				'backtrace'           => $trace,
 			];
 			$this->plugin->log_error( $log );
 			return $result;
@@ -636,10 +636,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 					// Let's make an array of params.
 					$args = [
-						'op' => 'sync',
+						'op'         => 'sync',
 						'objectName' => 'Participant',
-						'objectId' => $participant_data['id'],
-						'objectRef' => (object) $participant_data,
+						'objectId'   => $participant_data['id'],
+						'objectRef'  => (object) $participant_data,
 					];
 
 					// Sync this Participant to the Post Type.
@@ -745,10 +745,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 		// Define params to get queried Participant.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
-			'id' => $participant_id,
-			'options' => [
+			'id'         => $participant_id,
+			'options'    => [
 				'limit' => 0, // No limit.
 			],
 		];
@@ -838,12 +838,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 		// Log and bail if there's an error.
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			$e = new Exception();
+			$e     = new Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'params' => $params,
-				'result' => $result,
+			$log   = [
+				'method'    => __METHOD__,
+				'params'    => $params,
+				'result'    => $result,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -875,13 +875,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 		// Log and bail if there's no Participant ID.
 		if ( empty( $participant['id'] ) ) {
-			$e = new \Exception();
+			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'message' => __( 'A numeric ID must be present to update a Participant.', 'civicrm-wp-profile-sync' ),
+			$log   = [
+				'method'      => __METHOD__,
+				'message'     => __( 'A numeric ID must be present to update a Participant.', 'civicrm-wp-profile-sync' ),
 				'participant' => $participant,
-				'backtrace' => $trace,
+				'backtrace'   => $trace,
 			];
 			$this->plugin->log_error( $log );
 			return false;
@@ -962,7 +962,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 			$settings = get_field_object( $selector, $post_id );
 
 			// Get the CiviCRM Custom Field and Participant Field.
-			$custom_field_id = $this->civicrm->custom_field->custom_field_id_get( $settings );
+			$custom_field_id        = $this->civicrm->custom_field->custom_field_id_get( $settings );
 			$participant_field_name = $this->participant_field_name_get( $settings );
 
 			// Do we have a synced Custom Field or Participant Field?
@@ -989,7 +989,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 						}
 
 						// Overwrite code and value.
-						$code = 'contact_id';
+						$code  = 'contact_id';
 						$value = (int) $contact_id;
 
 					}
@@ -1004,7 +1004,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 						}
 
 						// Overwrite code and value.
-						$code = 'event_id';
+						$code  = 'event_id';
 						$value = (int) $event_id;
 
 					}
@@ -1013,12 +1013,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 				// Build args for value conversion.
 				$args = [
-					'identifier' => $this->identifier,
-					'entity_id' => $participant_id,
+					'identifier'      => $this->identifier,
+					'entity_id'       => $participant_id,
 					'custom_field_id' => $custom_field_id,
-					'field_name' => $participant_field_name,
-					'selector' => $selector,
-					'post_id' => $post_id,
+					'field_name'      => $participant_field_name,
+					'selector'        => $selector,
+					'post_id'         => $post_id,
 				];
 
 				// Parse value by Field Type.
@@ -1188,20 +1188,20 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 		// Define Field.
 		$field = [
-			'key' => $this->civicrm->acf_field_key_get(),
-			'label' => __( 'CiviCRM Field', 'civicrm-wp-profile-sync' ),
-			'name' => $this->civicrm->acf_field_key_get(),
-			'type' => 'select',
-			'instructions' => __( 'Choose the CiviCRM Field that this ACF Field should sync with. (Optional)', 'civicrm-wp-profile-sync' ),
+			'key'           => $this->civicrm->acf_field_key_get(),
+			'label'         => __( 'CiviCRM Field', 'civicrm-wp-profile-sync' ),
+			'name'          => $this->civicrm->acf_field_key_get(),
+			'type'          => 'select',
+			'instructions'  => __( 'Choose the CiviCRM Field that this ACF Field should sync with. (Optional)', 'civicrm-wp-profile-sync' ),
 			'default_value' => '',
-			'placeholder' => '',
-			'allow_null' => 1,
-			'multiple' => 0,
-			'ui' => 0,
-			'required' => 0,
+			'placeholder'   => '',
+			'allow_null'    => 1,
+			'multiple'      => 0,
+			'ui'            => 0,
+			'required'      => 0,
 			'return_format' => 'value',
-			'parent' => $this->acf->field_group->placeholder_group_get(),
-			'choices' => $choices,
+			'parent'        => $this->acf->field_group->placeholder_group_get(),
+			'choices'       => $choices,
 		];
 
 		// --<
@@ -1465,7 +1465,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		}
 
 		// Add Option Group and add entries for each Participant Role.
-		$participant_roles_title = esc_attr( __( 'Participant Roles', 'civicrm-wp-profile-sync' ) );
+		$participant_roles_title              = esc_attr( __( 'Participant Roles', 'civicrm-wp-profile-sync' ) );
 		$entities[ $participant_roles_title ] = [];
 		foreach ( $participant_roles as $participant_role ) {
 			$entities[ $participant_roles_title ][ $this->identifier . '-' . $participant_role['value'] ] = $participant_role['label'];
@@ -1793,7 +1793,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		// Get the "View" URL for this Participant.
 		$query_base = 'reset=1&id=' . $participant_id . '&cid=' . $contact_id;
 		$view_query = $query_base . '&action=view&context=participant';
-		$view_url = $this->plugin->civicrm->get_link( 'civicrm/contact/view/participant', $view_query );
+		$view_url   = $this->plugin->civicrm->get_link( 'civicrm/contact/view/participant', $view_query );
 
 		// Add link to actions.
 		$actions['civicrm'] = sprintf(
@@ -1867,36 +1867,36 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		// Get the "View" URL for this Participant.
 		$query_base = 'reset=1&id=' . $participant_id . '&cid=' . $contact_id;
 		$view_query = $query_base . '&action=view&context=participant';
-		$view_url = $this->plugin->civicrm->get_link( 'civicrm/contact/view/participant', $view_query );
+		$view_url   = $this->plugin->civicrm->get_link( 'civicrm/contact/view/participant', $view_query );
 
 		// Get the "Edit" URL for this Participant.
 		$edit_query = $query_base . '&action=update&context=participant&selectedChild=event';
-		$edit_url = $this->plugin->civicrm->get_link( 'civicrm/contact/view/participant', $edit_query );
+		$edit_url   = $this->plugin->civicrm->get_link( 'civicrm/contact/view/participant', $edit_query );
 
 		// Add item to Edit menu.
 		$args = [
-			'id' => 'cau-edit',
+			'id'     => 'cau-edit',
 			'parent' => 'edit',
-			'title' => __( 'Edit in CiviCRM', 'civicrm-wp-profile-sync' ),
-			'href' => $edit_url,
+			'title'  => __( 'Edit in CiviCRM', 'civicrm-wp-profile-sync' ),
+			'href'   => $edit_url,
 		];
 		$wp_admin_bar->add_node( $args );
 
 		// Add item to View menu.
 		$args = [
-			'id' => 'cau-view',
+			'id'     => 'cau-view',
 			'parent' => 'view',
-			'title' => __( 'View in CiviCRM', 'civicrm-wp-profile-sync' ),
-			'href' => $view_url,
+			'title'  => __( 'View in CiviCRM', 'civicrm-wp-profile-sync' ),
+			'href'   => $view_url,
 		];
 		$wp_admin_bar->add_node( $args );
 
 		// Add item to CAU menu.
 		$args = [
-			'id' => 'cau-0',
+			'id'     => 'cau-0',
 			'parent' => $id,
-			'title' => __( 'Edit in CiviCRM', 'civicrm-wp-profile-sync' ),
-			'href' => $edit_url,
+			'title'  => __( 'Edit in CiviCRM', 'civicrm-wp-profile-sync' ),
+			'href'   => $edit_url,
 		];
 		$wp_admin_bar->add_node( $args );
 

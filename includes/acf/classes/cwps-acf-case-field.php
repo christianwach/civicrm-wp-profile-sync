@@ -57,15 +57,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 	 * @var array
 	 */
 	public $case_fields = [
-		'id' => 'number',
-		'details' => 'wysiwyg',
-		'subject' => 'text',
-		'start_date' => 'date_picker',
-		'end_date' => 'date_picker',
-		'created_date' => 'date_time_picker',
+		'id'            => 'number',
+		'details'       => 'wysiwyg',
+		'subject'       => 'text',
+		'start_date'    => 'date_picker',
+		'end_date'      => 'date_picker',
+		'created_date'  => 'date_time_picker',
 		'modified_date' => 'date_time_picker',
-		'status_id' => 'select',
-		'medium_id' => 'select',
+		'status_id'     => 'select',
+		'medium_id'     => 'select',
 	];
 
 	/**
@@ -93,9 +93,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->civicrm = $parent;
+		$this->civicrm    = $parent;
 
 		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
@@ -446,8 +446,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 		// Construct params.
 		$params = [
 			'version' => 3,
-			'name' => $name,
-			'action' => 'get',
+			'name'    => $name,
+			'action'  => 'get',
 		];
 
 		// Add action.
@@ -501,9 +501,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 		// Construct params.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'api_action' => 'create',
-			'options' => [
+			'options'    => [
 				'limit' => 0, // No limit.
 			],
 		];
@@ -869,10 +869,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 		// Let's make an array of params.
 		$params = [
-			'op' => 'edit',
+			'op'         => 'edit',
 			'objectName' => 'Case',
-			'objectId' => $args['case_id'],
-			'objectRef' => (object) $case,
+			'objectId'   => $args['case_id'],
+			'objectRef'  => (object) $case,
 		];
 
 		// Remove WordPress callbacks to prevent recursion.

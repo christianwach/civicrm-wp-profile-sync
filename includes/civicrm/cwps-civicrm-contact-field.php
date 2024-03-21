@@ -48,7 +48,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Field {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->plugin;
+		$this->plugin  = $parent->plugin;
 		$this->civicrm = $parent;
 
 		// Init when the CiviCRM object is loaded.
@@ -106,8 +106,8 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Field {
 		// Construct params.
 		$params = [
 			'version' => 3,
-			'name' => $name,
-			'action' => 'get',
+			'name'    => $name,
+			'action'  => 'get',
 		];
 
 		// Call the API.
@@ -148,9 +148,9 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Field {
 
 		// CiviCRM has handy methods for this.
 		$age_date = CRM_Utils_Date::customFormat( $date, '%Y%m%d' );
-		$age = CRM_Utils_Date::calculateAge( $age_date );
-		$years = CRM_Utils_Array::value( 'years', $age );
-		$months = CRM_Utils_Array::value( 'months', $age );
+		$age      = CRM_Utils_Date::calculateAge( $age_date );
+		$years    = CRM_Utils_Array::value( 'years', $age );
+		$months   = CRM_Utils_Array::value( 'months', $age );
 
 		// Maybe construct string from years.
 		if ( $years ) {

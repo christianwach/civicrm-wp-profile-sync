@@ -73,13 +73,13 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	 * @var array
 	 */
 	public $step_counts = [
-		'contact_post_types' => 5, // Number of Contact Posts per WordPress Post Type.
-		'contact_types' => 5, // Number of Contacts per CiviCRM Contact Type.
-		'groups' => 10, // Number of Group Members per CiviCRM Group.
-		'activity_post_types' => 10, // Number of Activity Posts per WordPress Post Type.
-		'activity_types' => 10, // Number of Activities per CiviCRM Activity Type.
+		'contact_post_types'          => 5, // Number of Contact Posts per WordPress Post Type.
+		'contact_types'               => 5, // Number of Contacts per CiviCRM Contact Type.
+		'groups'                      => 10, // Number of Group Members per CiviCRM Group.
+		'activity_post_types'         => 10, // Number of Activity Posts per WordPress Post Type.
+		'activity_types'              => 10, // Number of Activities per CiviCRM Activity Type.
 		'participant_role_post_types' => 10, // Number of Participant Role Posts per WordPress Post Type.
-		'participant_roles' => 10, // Number of Participants per CiviCRM Participant Role.
+		'participant_roles'           => 10, // Number of Participants per CiviCRM Participant Role.
 	];
 
 	/**
@@ -92,7 +92,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	public function __construct( $acf_loader ) {
 
 		// Store references to objects.
-		$this->plugin = $acf_loader->plugin;
+		$this->plugin     = $acf_loader->plugin;
 		$this->acf_loader = $acf_loader;
 
 		// Init when this plugin is loaded.
@@ -450,21 +450,21 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Init settings.
 		$settings = [
-			'ajax_url' => admin_url( 'admin-ajax.php' ),
-			'contact_post_types' => $contact_post_types,
-			'contact_types' => $contact_types,
-			'groups' => $groups,
-			'activity_post_types' => $activity_post_types,
-			'activity_types' => $activity_types,
-			'participant_post_types' => $participant_post_types,
-			'participant_roles' => $participant_roles,
-			'step_contact_post_types' => $this->step_count_get( 'contact_post_types' ),
-			'step_contact_types' => $this->step_count_get( 'contact_types' ),
-			'step_groups' => $this->step_count_get( 'groups' ),
-			'step_activity_post_types' => $this->step_count_get( 'activity_post_types' ),
-			'step_activity_types' => $this->step_count_get( 'activity_types' ),
+			'ajax_url'                         => admin_url( 'admin-ajax.php' ),
+			'contact_post_types'               => $contact_post_types,
+			'contact_types'                    => $contact_types,
+			'groups'                           => $groups,
+			'activity_post_types'              => $activity_post_types,
+			'activity_types'                   => $activity_types,
+			'participant_post_types'           => $participant_post_types,
+			'participant_roles'                => $participant_roles,
+			'step_contact_post_types'          => $this->step_count_get( 'contact_post_types' ),
+			'step_contact_types'               => $this->step_count_get( 'contact_types' ),
+			'step_groups'                      => $this->step_count_get( 'groups' ),
+			'step_activity_post_types'         => $this->step_count_get( 'activity_post_types' ),
+			'step_activity_types'              => $this->step_count_get( 'activity_types' ),
 			'step_participant_role_post_types' => $this->step_count_get( 'participant_role_post_types' ),
-			'step_participant_roles' => $this->step_count_get( 'participant_roles' ),
+			'step_participant_roles'           => $this->step_count_get( 'participant_roles' ),
 		];
 
 		// Init localisation.
@@ -472,58 +472,58 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Add Contact Post Types localisation.
 		$localisation['contact_post_types'] = [
-			'total' => __( 'Posts to sync: {{total}}', 'civicrm-wp-profile-sync' ),
-			'current' => __( 'Processing posts {{from}} to {{to}}', 'civicrm-wp-profile-sync' ),
+			'total'    => __( 'Posts to sync: {{total}}', 'civicrm-wp-profile-sync' ),
+			'current'  => __( 'Processing posts {{from}} to {{to}}', 'civicrm-wp-profile-sync' ),
 			'complete' => __( 'Processing posts {{from}} to {{to}} complete', 'civicrm-wp-profile-sync' ),
-			'count' => count( $contact_post_types ),
+			'count'    => count( $contact_post_types ),
 		];
 
 		// Add Contact Types localisation.
 		$localisation['contact_types'] = [
-			'total' => __( 'Contacts to sync: {{total}}', 'civicrm-wp-profile-sync' ),
-			'current' => __( 'Processing contacts {{from}} to {{to}}', 'civicrm-wp-profile-sync' ),
+			'total'    => __( 'Contacts to sync: {{total}}', 'civicrm-wp-profile-sync' ),
+			'current'  => __( 'Processing contacts {{from}} to {{to}}', 'civicrm-wp-profile-sync' ),
 			'complete' => __( 'Processing contacts {{from}} to {{to}} complete', 'civicrm-wp-profile-sync' ),
-			'count' => count( $contact_types ),
+			'count'    => count( $contact_types ),
 		];
 
 		// Add Groups localisation.
 		$localisation['groups'] = [
-			'total' => __( 'Group members to sync: {{total}}', 'civicrm-wp-profile-sync' ),
-			'current' => __( 'Processing group members {{from}} to {{to}}', 'civicrm-wp-profile-sync' ),
+			'total'    => __( 'Group members to sync: {{total}}', 'civicrm-wp-profile-sync' ),
+			'current'  => __( 'Processing group members {{from}} to {{to}}', 'civicrm-wp-profile-sync' ),
 			'complete' => __( 'Processing group members {{from}} to {{to}} complete', 'civicrm-wp-profile-sync' ),
-			'count' => count( $groups ),
+			'count'    => count( $groups ),
 		];
 
 		// Add Activity Post Types localisation.
 		$localisation['activity_post_types'] = [
-			'total' => __( 'Posts to sync: {{total}}', 'civicrm-wp-profile-sync' ),
-			'current' => __( 'Processing posts {{from}} to {{to}}', 'civicrm-wp-profile-sync' ),
+			'total'    => __( 'Posts to sync: {{total}}', 'civicrm-wp-profile-sync' ),
+			'current'  => __( 'Processing posts {{from}} to {{to}}', 'civicrm-wp-profile-sync' ),
 			'complete' => __( 'Processing posts {{from}} to {{to}} complete', 'civicrm-wp-profile-sync' ),
-			'count' => count( $activity_post_types ),
+			'count'    => count( $activity_post_types ),
 		];
 
 		// Add Activity Types localisation.
 		$localisation['activity_types'] = [
-			'total' => __( 'Activities to sync: {{total}}', 'civicrm-wp-profile-sync' ),
-			'current' => __( 'Processing activities {{from}} to {{to}}', 'civicrm-wp-profile-sync' ),
+			'total'    => __( 'Activities to sync: {{total}}', 'civicrm-wp-profile-sync' ),
+			'current'  => __( 'Processing activities {{from}} to {{to}}', 'civicrm-wp-profile-sync' ),
 			'complete' => __( 'Processing activities {{from}} to {{to}} complete', 'civicrm-wp-profile-sync' ),
-			'count' => count( $activity_types ),
+			'count'    => count( $activity_types ),
 		];
 
 		// Add Participant Role Post Types localisation.
 		$localisation['participant_post_types'] = [
-			'total' => __( 'Posts to sync: {{total}}', 'civicrm-wp-profile-sync' ),
-			'current' => __( 'Processing posts {{from}} to {{to}}', 'civicrm-wp-profile-sync' ),
+			'total'    => __( 'Posts to sync: {{total}}', 'civicrm-wp-profile-sync' ),
+			'current'  => __( 'Processing posts {{from}} to {{to}}', 'civicrm-wp-profile-sync' ),
 			'complete' => __( 'Processing posts {{from}} to {{to}} complete', 'civicrm-wp-profile-sync' ),
-			'count' => count( $participant_post_types ),
+			'count'    => count( $participant_post_types ),
 		];
 
 		// Add Participant Roles localisation.
 		$localisation['participant_roles'] = [
-			'total' => __( 'Participants to sync: {{total}}', 'civicrm-wp-profile-sync' ),
-			'current' => __( 'Processing participants {{from}} to {{to}}', 'civicrm-wp-profile-sync' ),
+			'total'    => __( 'Participants to sync: {{total}}', 'civicrm-wp-profile-sync' ),
+			'current'  => __( 'Processing participants {{from}} to {{to}}', 'civicrm-wp-profile-sync' ),
 			'complete' => __( 'Processing participants {{from}} to {{to}} complete', 'civicrm-wp-profile-sync' ),
-			'count' => count( $participant_roles ),
+			'count'    => count( $participant_roles ),
 		];
 
 		// Add common localisation.
@@ -533,7 +533,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Localisation array.
 		$vars = [
-			'settings' => $settings,
+			'settings'     => $settings,
 			'localisation' => $localisation,
 		];
 
@@ -625,7 +625,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		do_action( 'cwps/acf/admin/page/add_meta_boxes', $screen->id, null );
 
 		// Get the column CSS class.
-		$columns = (int) $screen->get_columns();
+		$columns     = (int) $screen->get_columns();
 		$columns_css = '';
 		if ( $columns ) {
 			$columns_css = " columns-$columns";
@@ -1103,8 +1103,8 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// Init stop, continue and sync flags.
-		$stop = false;
-		$continue = false;
+		$stop      = false;
+		$continue  = false;
 		$sync_type = false;
 		$entity_id = false;
 
@@ -1116,7 +1116,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 			// Was a "Stop Sync" button pressed?
 			if ( isset( $_POST[ $stop_code ] ) ) {
-				$stop = $stop_code;
+				$stop      = $stop_code;
 				$sync_type = 'contact_post_type';
 				$entity_id = str_replace( $replacements, '', $stop_code );
 				break;
@@ -1125,7 +1125,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			// Was a "Sync Now" or "Continue Sync" button pressed?
 			$button = str_replace( '_stop', '', $stop_code );
 			if ( isset( $_POST[ $button ] ) ) {
-				$continue = $button;
+				$continue  = $button;
 				$sync_type = 'contact_post_type';
 				$entity_id = str_replace( $replacements, '', $stop_code );
 				break;
@@ -1142,7 +1142,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 				// Was a "Stop Sync" button pressed?
 				if ( isset( $_POST[ $stop_code ] ) ) {
-					$stop = $stop_code;
+					$stop      = $stop_code;
 					$sync_type = 'contact_type';
 					$entity_id = str_replace( $replacements, '', $stop_code );
 					break;
@@ -1151,7 +1151,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 				// Was a "Sync Now" or "Continue Sync" button pressed?
 				$button = str_replace( '_stop', '', $stop_code );
 				if ( isset( $_POST[ $button ] ) ) {
-					$continue = $button;
+					$continue  = $button;
 					$sync_type = 'contact_type';
 					$entity_id = str_replace( $replacements, '', $stop_code );
 					break;
@@ -1169,7 +1169,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 				// Was a "Stop Sync" button pressed?
 				if ( isset( $_POST[ $stop_code ] ) ) {
-					$stop = $stop_code;
+					$stop      = $stop_code;
 					$sync_type = 'group';
 					$entity_id = str_replace( $replacements, '', $stop_code );
 					break;
@@ -1178,7 +1178,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 				// Was a "Sync Now" or "Continue Sync" button pressed?
 				$button = str_replace( '_stop', '', $stop_code );
 				if ( isset( $_POST[ $button ] ) ) {
-					$continue = $button;
+					$continue  = $button;
 					$sync_type = 'group';
 					$entity_id = str_replace( $replacements, '', $stop_code );
 					break;
@@ -1195,7 +1195,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 			// Was a "Stop Sync" button pressed?
 			if ( isset( $_POST[ $stop_code ] ) ) {
-				$stop = $stop_code;
+				$stop      = $stop_code;
 				$sync_type = 'activity_post_type';
 				$entity_id = str_replace( $replacements, '', $stop_code );
 				break;
@@ -1204,7 +1204,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			// Was a "Sync Now" or "Continue Sync" button pressed?
 			$button = str_replace( '_stop', '', $stop_code );
 			if ( isset( $_POST[ $button ] ) ) {
-				$continue = $button;
+				$continue  = $button;
 				$sync_type = 'activity_post_type';
 				$entity_id = str_replace( $replacements, '', $stop_code );
 				break;
@@ -1221,7 +1221,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 				// Was a "Stop Sync" button pressed?
 				if ( isset( $_POST[ $stop_code ] ) ) {
-					$stop = $stop_code;
+					$stop      = $stop_code;
 					$sync_type = 'activity_type';
 					$entity_id = str_replace( $replacements, '', $stop_code );
 					break;
@@ -1230,7 +1230,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 				// Was a "Sync Now" or "Continue Sync" button pressed?
 				$button = str_replace( '_stop', '', $stop_code );
 				if ( isset( $_POST[ $button ] ) ) {
-					$continue = $button;
+					$continue  = $button;
 					$sync_type = 'activity_type';
 					$entity_id = str_replace( $replacements, '', $stop_code );
 					break;
@@ -1247,7 +1247,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 			// Was a "Stop Sync" button pressed?
 			if ( isset( $_POST[ $stop_code ] ) ) {
-				$stop = $stop_code;
+				$stop      = $stop_code;
 				$sync_type = 'participant_role_post_type';
 				$entity_id = str_replace( $replacements, '', $stop_code );
 				break;
@@ -1256,7 +1256,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 			// Was a "Sync Now" or "Continue Sync" button pressed?
 			$button = str_replace( '_stop', '', $stop_code );
 			if ( isset( $_POST[ $button ] ) ) {
-				$continue = $button;
+				$continue  = $button;
 				$sync_type = 'participant_role_post_type';
 				$entity_id = str_replace( $replacements, '', $stop_code );
 				break;
@@ -1273,7 +1273,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 				// Was a "Stop Sync" button pressed?
 				if ( isset( $_POST[ $stop_code ] ) ) {
-					$stop = $stop_code;
+					$stop      = $stop_code;
 					$sync_type = 'participant_role';
 					$entity_id = str_replace( $replacements, '', $stop_code );
 					break;
@@ -1282,7 +1282,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 				// Was a "Sync Now" or "Continue Sync" button pressed?
 				$button = str_replace( '_stop', '', $stop_code );
 				if ( isset( $_POST[ $button ] ) ) {
-					$continue = $button;
+					$continue  = $button;
 					$sync_type = 'participant_role';
 					$entity_id = str_replace( $replacements, '', $stop_code );
 					break;
@@ -1304,13 +1304,13 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 			// Define slugs.
 			$slugs = [
-				'contact_post_type' => 'post_to_contact_',
-				'contact_type' => 'contact_to_post_',
-				'group' => 'group_to_term_',
-				'activity_post_type' => 'post_to_activity_',
-				'activity_type' => 'activity_to_post_',
+				'contact_post_type'          => 'post_to_contact_',
+				'contact_type'               => 'contact_to_post_',
+				'group'                      => 'group_to_term_',
+				'activity_post_type'         => 'post_to_activity_',
+				'activity_type'              => 'activity_to_post_',
 				'participant_role_post_type' => 'post_to_participant_role_',
-				'participant_role' => 'participant_role_to_post_',
+				'participant_role'           => 'participant_role_to_post_',
 			];
 
 			// Build key.
@@ -1441,10 +1441,10 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Construct args.
 		$args = [
-			'post_type' => $contact_post_type,
+			'post_type'     => $contact_post_type,
 			'no_found_rows' => true,
-			'numberposts' => $this->step_count_get( 'contact_post_types' ),
-			'offset' => $offset,
+			'numberposts'   => $this->step_count_get( 'contact_post_types' ),
+			'offset'        => $offset,
 		];
 
 		// Get all posts.
@@ -1465,7 +1465,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 			// Set from and to flags.
 			$data['from'] = (int) $offset;
-			$data['to'] = $data['from'] + $diff;
+			$data['to']   = $data['from'] + $diff;
 
 			// Remove CiviCRM callbacks to prevent recursion.
 			$this->acf_loader->mapper->hooks_civicrm_remove();
@@ -1476,8 +1476,8 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 				// Let's make an array of params.
 				$args = [
 					'post_id' => $post->ID,
-					'post' => $post,
-					'update' => true,
+					'post'    => $post,
+					'update'  => true,
 				];
 
 				/**
@@ -1632,7 +1632,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 			// Set "from" and "to" flags.
 			$data['from'] = (int) $offset;
-			$data['to'] = $data['from'] + $diff;
+			$data['to']   = $data['from'] + $diff;
 
 			// Remove WordPress callbacks to prevent recursion.
 			$this->acf_loader->mapper->hooks_wordpress_remove();
@@ -1642,10 +1642,10 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 				// Let's make an array of params.
 				$args = [
-					'op' => 'sync',
+					'op'         => 'sync',
 					'objectName' => $contact['contact_type'],
-					'objectId' => $contact['contact_id'],
-					'objectRef' => (object) $contact,
+					'objectId'   => $contact['contact_id'],
+					'objectRef'  => (object) $contact,
 				];
 
 				/**
@@ -1748,10 +1748,10 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Construct args.
 		$args = [
-			'post_type' => $activity_post_type,
+			'post_type'     => $activity_post_type,
 			'no_found_rows' => true,
-			'numberposts' => $this->step_count_get( 'activity_post_types' ),
-			'offset' => $offset,
+			'numberposts'   => $this->step_count_get( 'activity_post_types' ),
+			'offset'        => $offset,
 		];
 
 		// Get all posts.
@@ -1772,7 +1772,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 			// Set from and to flags.
 			$data['from'] = (int) $offset;
-			$data['to'] = $data['from'] + $diff;
+			$data['to']   = $data['from'] + $diff;
 
 			// Remove CiviCRM callbacks to prevent recursion.
 			$this->acf_loader->mapper->hooks_civicrm_remove();
@@ -1783,8 +1783,8 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 				// Let's make an array of params.
 				$args = [
 					'post_id' => $post->ID,
-					'post' => $post,
-					'update' => true,
+					'post'    => $post,
+					'update'  => true,
 				];
 
 				/**
@@ -1938,7 +1938,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 			// Set "from" and "to" flags.
 			$data['from'] = (int) $offset;
-			$data['to'] = $data['from'] + $diff;
+			$data['to']   = $data['from'] + $diff;
 
 			// Remove WordPress callbacks to prevent recursion.
 			$this->acf_loader->mapper->hooks_wordpress_remove();
@@ -1948,10 +1948,10 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 				// Let's make an array of params.
 				$args = [
-					'op' => 'sync',
+					'op'         => 'sync',
 					'objectName' => 'Activity',
-					'objectId' => $activity['id'],
-					'objectRef' => (object) $activity,
+					'objectId'   => $activity['id'],
+					'objectRef'  => (object) $activity,
 				];
 
 				/**
@@ -2058,10 +2058,10 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Construct args.
 		$args = [
-			'post_type' => $participant_post_type,
+			'post_type'     => $participant_post_type,
 			'no_found_rows' => true,
-			'numberposts' => $this->step_count_get( 'participant_role_post_types' ),
-			'offset' => $offset,
+			'numberposts'   => $this->step_count_get( 'participant_role_post_types' ),
+			'offset'        => $offset,
 		];
 
 		// Get all posts.
@@ -2082,7 +2082,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 			// Set from and to flags.
 			$data['from'] = (int) $offset;
-			$data['to'] = $data['from'] + $diff;
+			$data['to']   = $data['from'] + $diff;
 
 			// Remove CiviCRM callbacks to prevent recursion.
 			$this->acf_loader->mapper->hooks_civicrm_remove();
@@ -2093,8 +2093,8 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 				// Let's make an array of params.
 				$args = [
 					'post_id' => $post->ID,
-					'post' => $post,
-					'update' => true,
+					'post'    => $post,
+					'update'  => true,
 				];
 
 				/**
@@ -2253,7 +2253,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 			// Set "from" and "to" flags.
 			$data['from'] = (int) $offset;
-			$data['to'] = $data['from'] + $diff;
+			$data['to']   = $data['from'] + $diff;
 
 			// Remove WordPress callbacks to prevent recursion.
 			$this->acf_loader->mapper->hooks_wordpress_remove();
@@ -2263,10 +2263,10 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 				// Let's make an array of params.
 				$args = [
-					'op' => 'sync',
+					'op'         => 'sync',
 					'objectName' => 'Participant',
-					'objectId' => $participant['id'],
-					'objectRef' => (object) $participant,
+					'objectId'   => $participant['id'],
+					'objectRef'  => (object) $participant,
 				];
 
 				/**
@@ -2348,10 +2348,10 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Construct args.
 		$args = [
-			'post_type' => $entity_id,
+			'post_type'     => $entity_id,
 			'no_found_rows' => true,
-			'numberposts' => $this->step_count_get( 'participant_role_post_types' ),
-			'offset' => $offset,
+			'numberposts'   => $this->step_count_get( 'participant_role_post_types' ),
+			'offset'        => $offset,
 		];
 
 		// Get all posts.
@@ -2372,7 +2372,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 			// Set from and to flags.
 			$data['from'] = (int) $offset;
-			$data['to'] = $data['from'] + $diff;
+			$data['to']   = $data['from'] + $diff;
 
 			// Remove CiviCRM callbacks to prevent recursion.
 			$this->acf_loader->mapper->hooks_civicrm_remove();
@@ -2383,8 +2383,8 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 				// Let's make an array of params.
 				$args = [
 					'post_id' => $post->ID,
-					'post' => $post,
-					'update' => true,
+					'post'    => $post,
+					'update'  => true,
 				];
 
 				/**
@@ -2542,7 +2542,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 			// Set "from" and "to" flags.
 			$data['from'] = (int) $offset;
-			$data['to'] = $data['from'] + $diff;
+			$data['to']   = $data['from'] + $diff;
 
 			// Remove WordPress callbacks to prevent recursion.
 			$this->acf_loader->mapper->hooks_wordpress_remove();
@@ -2552,10 +2552,10 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 				// Let's make an array of params.
 				$args = [
-					'op' => 'sync',
+					'op'         => 'sync',
 					'objectName' => 'Participant',
-					'objectId' => $participant['id'],
-					'objectRef' => (object) $participant,
+					'objectId'   => $participant['id'],
+					'objectRef'  => (object) $participant,
 				];
 
 				/**
@@ -2682,17 +2682,17 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 			// Set "from" and "to" flags.
 			$data['from'] = (int) $offset;
-			$data['to'] = $data['from'] + $diff;
+			$data['to']   = $data['from'] + $diff;
 
 			// Remove WordPress callbacks to prevent recursion.
 			$this->acf_loader->mapper->hooks_wordpress_remove();
 
 			// Let's make an array of params.
 			$args = [
-				'op' => 'sync',
+				'op'         => 'sync',
 				'objectName' => 'GroupContact',
-				'objectId' => $group_id,
-				'objectRef' => $result['values'],
+				'objectId'   => $group_id,
+				'objectRef'  => $result['values'],
 			];
 
 			/**

@@ -57,17 +57,17 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 	 * @var array
 	 */
 	public $participant_fields = [
-		'contact_id' => [
+		'contact_id'    => [
 			'civicrm_contact',
 			'civicrm_contact_existing_new',
 		],
-		'event_id' => [
+		'event_id'      => [
 			'civicrm_event',
 			'civicrm_event_group',
 		],
-		'status_id' => 'select',
+		'status_id'     => 'select',
 		'register_date' => 'date_time_picker',
-		'source' => 'text',
+		'source'        => 'text',
 	];
 
 	/**
@@ -80,9 +80,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->civicrm = $parent;
+		$this->civicrm    = $parent;
 
 		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
@@ -419,11 +419,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 
 		// Define query params.
 		$params = [
-			'version' => 3,
+			'version'   => 3,
 			'is_active' => 1,
-			'options' => [
+			'options'   => [
 				'limit' => 0,
-				'sort' => 'weight ASC',
+				'sort'  => 'weight ASC',
 			],
 		];
 
@@ -469,7 +469,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 		// Define query params.
 		$params = [
 			'version' => 3,
-			'id' => $status_id,
+			'id'      => $status_id,
 			'options' => [
 				'limit' => 0,
 			],
@@ -566,8 +566,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 		// Construct params.
 		$params = [
 			'version' => 3,
-			'name' => $name,
-			'action' => 'get',
+			'name'    => $name,
+			'action'  => 'get',
 		];
 
 		// Call the API.
@@ -962,10 +962,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 
 		// Let's make an array of params.
 		$params = [
-			'op' => 'edit',
+			'op'         => 'edit',
 			'objectName' => 'Participant',
-			'objectId' => $args['participant_id'],
-			'objectRef' => (object) $participant,
+			'objectId'   => $args['participant_id'],
+			'objectRef'  => (object) $participant,
 		];
 
 		// Remove WordPress callbacks to prevent recursion.

@@ -57,7 +57,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 	public function __construct( $acf_loader ) {
 
 		// Store references to objects.
-		$this->plugin = $acf_loader->plugin;
+		$this->plugin     = $acf_loader->plugin;
 		$this->acf_loader = $acf_loader;
 
 		// Init when this plugin is loaded.
@@ -102,11 +102,11 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 
 		// Get CPTs with admin UI.
 		$args = [
-			'public'   => true,
+			'public'  => true,
 			'show_ui' => true,
 		];
 
-		$output = 'objects'; // Names or objects, note names is the default.
+		$output   = 'objects'; // Names or objects, note names is the default.
 		$operator = 'and'; // Operator may be 'and' or 'or'.
 
 		// Get Post Types.

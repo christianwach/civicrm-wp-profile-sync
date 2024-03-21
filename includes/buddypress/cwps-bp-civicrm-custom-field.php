@@ -120,10 +120,10 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	public function __construct( $xprofile ) {
 
 		// Store references to objects.
-		$this->plugin = $xprofile->bp_loader->plugin;
+		$this->plugin    = $xprofile->bp_loader->plugin;
 		$this->bp_loader = $xprofile->bp_loader;
-		$this->civicrm = $this->plugin->civicrm;
-		$this->xprofile = $xprofile;
+		$this->civicrm   = $this->plugin->civicrm;
+		$this->xprofile  = $xprofile;
 
 		// Init when the BuddyPress Field object is loaded.
 		add_action( 'cwps/buddypress/field/loaded', [ $this, 'initialise' ] );
@@ -258,13 +258,13 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 			}
 
 			// Get the "name" of the Contact Type.
-			$name = $entity_type_data['name'];
+			$name         = $entity_type_data['name'];
 			$subtype_name = '';
 
 			// Alter names if this is a Sub-type.
 			if ( ! empty( $entity_type_data['parent_id'] ) ) {
-				$parent_type = $this->civicrm->contact->type_get_by_id( $entity_type_data['parent_id'] );
-				$name = $parent_type['name'];
+				$parent_type  = $this->civicrm->contact->type_get_by_id( $entity_type_data['parent_id'] );
+				$name         = $parent_type['name'];
 				$subtype_name = $entity_type_data['name'];
 			}
 
@@ -426,12 +426,12 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		$bp_fields_mapped = [];
 		foreach ( $bp_fields as $bp_field ) {
 			$bp_field_mapping = $bp_field['field_meta']['value'];
-			$custom_field_id = $this->id_get( $bp_field_mapping );
+			$custom_field_id  = $this->id_get( $bp_field_mapping );
 			if ( $custom_field_id === false ) {
 				continue;
 			}
 			$bp_field['custom_field_id'] = $custom_field_id;
-			$bp_fields_mapped[] = $bp_field;
+			$bp_fields_mapped[]          = $bp_field;
 		}
 
 		// Bail if we don't have any left.
@@ -455,7 +455,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 
 			// Get the corresponding Custom Field.
 			$args_key = array_search( $bp_field['custom_field_id'], $custom_fields );
-			$field = $args['custom_fields'][ $args_key ];
+			$field    = $args['custom_fields'][ $args_key ];
 
 			// Modify values for BuddyPress prior to update.
 			$value = $this->value_get_for_bp( $field['value'], $field, $bp_field );

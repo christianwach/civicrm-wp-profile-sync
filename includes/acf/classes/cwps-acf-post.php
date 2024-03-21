@@ -106,7 +106,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	public function __construct( $acf_loader ) {
 
 		// Store references to objects.
-		$this->plugin = $acf_loader->plugin;
+		$this->plugin     = $acf_loader->plugin;
 		$this->acf_loader = $acf_loader;
 
 		// Init when this plugin is loaded.
@@ -399,14 +399,14 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 			// Build "view" link.
 			$actions['otherActions'][ 'wp-view-' . $post_type ] = [
-				'title' => $view_title,
-				'ref' => 'civicrm-wp-view-' . $post_type,
+				'title'  => $view_title,
+				'ref'    => 'civicrm-wp-view-' . $post_type,
 				'weight' => $weight,
-				'href' => get_permalink( $post_id ),
-				'tab' => 'wp-view-' . $post_type,
-				'class' => 'wp-view',
-				'icon' => 'crm-i fa-eye',
-				'key' => 'wp-view-' . $post_type,
+				'href'   => get_permalink( $post_id ),
+				'tab'    => 'wp-view-' . $post_type,
+				'class'  => 'wp-view',
+				'icon'   => 'crm-i fa-eye',
+				'key'    => 'wp-view-' . $post_type,
 			];
 
 			// Check User can edit.
@@ -424,14 +424,14 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 				// Build "edit" link.
 				$actions['otherActions'][ 'wp-edit-' . $post_type ] = [
-					'title' => $edit_title,
-					'ref' => 'civicrm-wp-edit-' . $post_type,
+					'title'  => $edit_title,
+					'ref'    => 'civicrm-wp-edit-' . $post_type,
 					'weight' => $weight,
-					'href' => get_edit_post_link( $post_id ),
-					'tab' => 'wp-edit-' . $post_type,
-					'class' => 'wp-edit',
-					'icon' => 'crm-i fa-edit',
-					'key' => 'wp-edit-' . $post_type,
+					'href'   => get_edit_post_link( $post_id ),
+					'tab'    => 'wp-edit-' . $post_type,
+					'class'  => 'wp-edit',
+					'icon'   => 'crm-i fa-edit',
+					'key'    => 'wp-edit-' . $post_type,
 				];
 
 			}
@@ -492,28 +492,28 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Add item to Edit menu.
 		$args = [
-			'id' => 'cau-edit',
+			'id'     => 'cau-edit',
 			'parent' => 'edit',
-			'title' => __( 'Edit in CiviCRM', 'civicrm-wp-profile-sync' ),
-			'href' => $url,
+			'title'  => __( 'Edit in CiviCRM', 'civicrm-wp-profile-sync' ),
+			'href'   => $url,
 		];
 		$wp_admin_bar->add_node( $args );
 
 		// Add item to View menu.
 		$args = [
-			'id' => 'cau-view',
+			'id'     => 'cau-view',
 			'parent' => 'view',
-			'title' => __( 'View in CiviCRM', 'civicrm-wp-profile-sync' ),
-			'href' => $url,
+			'title'  => __( 'View in CiviCRM', 'civicrm-wp-profile-sync' ),
+			'href'   => $url,
 		];
 		$wp_admin_bar->add_node( $args );
 
 		// Add item to CAU menu.
 		$args = [
-			'id' => 'cau-0',
+			'id'     => 'cau-0',
 			'parent' => $id,
-			'title' => __( 'View in CiviCRM', 'civicrm-wp-profile-sync' ),
-			'href' => $url,
+			'title'  => __( 'View in CiviCRM', 'civicrm-wp-profile-sync' ),
+			'href'   => $url,
 		];
 		$wp_admin_bar->add_node( $args );
 
@@ -685,15 +685,15 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		 * This may need to be revisited.
 		 */
 		$args = [
-			'post_type' => $post_type,
-			'post_status' => [ 'publish', 'trash', 'draft' ],
-			'no_found_rows' => true,
+			'post_type'      => $post_type,
+			'post_status'    => [ 'publish', 'trash', 'draft' ],
+			'no_found_rows'  => true,
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-			'meta_key' => $this->contact_id_key,
+			'meta_key'       => $this->contact_id_key,
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
-			'meta_value' => (string) $contact_id,
+			'meta_value'     => (string) $contact_id,
 			'posts_per_page' => -1,
-			'order' => 'ASC',
+			'order'          => 'ASC',
 		];
 
 		// Do query.
@@ -773,7 +773,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Add our data to the params.
 		$args['post_type'] = $post_type;
-		$args['post_id'] = $post_id;
+		$args['post_id']   = $post_id;
 
 		/**
 		 * Broadcast that a WordPress Post is about to be synced from Contact details.
@@ -892,7 +892,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 				// Add our data to the params.
 				$args['post_type'] = $post_type;
-				$args['post_id'] = $post_id;
+				$args['post_id']   = $post_id;
 
 				// TODO: Check if all Fields need sync - at the moment, it's just Contact Fields and Addresses.
 
@@ -960,7 +960,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 				// Add our data to the params.
 				$post_type_args['post_type'] = $post_type;
-				$post_type_args['post_id'] = $post_id;
+				$post_type_args['post_id']   = $post_id;
 
 				// TODO: Check if all Fields need sync - at the moment, it's just Contact Fields and Addresses.
 
@@ -1067,18 +1067,18 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Define basic Post data.
 		$args = [
-			'post_status' => 'publish',
-			'post_parent' => 0,
-			'comment_status' => 'closed',
-			'ping_status' => 'closed',
-			'to_ping' => '', // Quick fix for Windows.
-			'pinged' => '', // Quick fix for Windows.
+			'post_status'           => 'publish',
+			'post_parent'           => 0,
+			'comment_status'        => 'closed',
+			'ping_status'           => 'closed',
+			'to_ping'               => '', // Quick fix for Windows.
+			'pinged'                => '', // Quick fix for Windows.
 			'post_content_filtered' => '', // Quick fix for Windows.
-			'post_excerpt' => '', // Quick fix for Windows.
-			'menu_order' => 0,
-			'post_type' => $post_type,
-			'post_title' => $contact['display_name'],
-			'post_content' => '',
+			'post_excerpt'          => '', // Quick fix for Windows.
+			'menu_order'            => 0,
+			'post_type'             => $post_type,
+			'post_title'            => $contact['display_name'],
+			'post_content'          => '',
 		];
 
 		// Insert the Post into the database.
@@ -1137,7 +1137,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Define args to update the Post.
 		$args = [
-			'ID' => $existing_id,
+			'ID'         => $existing_id,
 			'post_title' => $contact['display_name'],
 		];
 
@@ -1256,13 +1256,13 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Define args for query.
 		$args = [
-			'post_type' => $post_type,
+			'post_type'      => $post_type,
 			//'post_status' => 'publish',
-			'no_found_rows' => true,
+			'no_found_rows'  => true,
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-			'meta_key' => $this->activity_id_key,
+			'meta_key'       => $this->activity_id_key,
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
-			'meta_value' => (string) $activity_id,
+			'meta_value'     => (string) $activity_id,
 			'posts_per_page' => -1,
 		];
 
@@ -1343,7 +1343,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Add our data to the params.
 		$args['post_type'] = $post_type;
-		$args['post_id'] = $post_id;
+		$args['post_id']   = $post_id;
 
 		/**
 		 * Broadcast that a WordPress Post is about to be synced from Activity details.
@@ -1439,7 +1439,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Add our data to the params.
 		$args['post_type'] = $post_type;
-		$args['post_id'] = $post_id;
+		$args['post_id']   = $post_id;
 
 		/**
 		 * Broadcast that a WordPress Post has been updated from Activity details.
@@ -1505,7 +1505,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Add our data to the params.
 		$args['post_type'] = $post_type;
-		$args['post_id'] = $post_id;
+		$args['post_id']   = $post_id;
 
 		/**
 		 * Broadcast that a WordPress Post has been updated from Activity details.
@@ -1546,18 +1546,18 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Define basic Post data.
 		$args = [
-			'post_status' => 'publish',
-			'post_parent' => 0,
-			'comment_status' => 'closed',
-			'ping_status' => 'closed',
-			'to_ping' => '', // Quick fix for Windows.
-			'pinged' => '', // Quick fix for Windows.
+			'post_status'           => 'publish',
+			'post_parent'           => 0,
+			'comment_status'        => 'closed',
+			'ping_status'           => 'closed',
+			'to_ping'               => '', // Quick fix for Windows.
+			'pinged'                => '', // Quick fix for Windows.
 			'post_content_filtered' => '', // Quick fix for Windows.
-			'post_excerpt' => '', // Quick fix for Windows.
-			'menu_order' => 0,
-			'post_type' => $post_type,
-			'post_title' => $activity->subject,
-			'post_content' => $activity->details,
+			'post_excerpt'          => '', // Quick fix for Windows.
+			'menu_order'            => 0,
+			'post_type'             => $post_type,
+			'post_title'            => $activity->subject,
+			'post_content'          => $activity->details,
 		];
 
 		// Insert the Post into the database.
@@ -1613,8 +1613,8 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Define args to update the Post.
 		$args = [
-			'ID' => $existing_id,
-			'post_title' => $activity->subject,
+			'ID'           => $existing_id,
+			'post_title'   => $activity->subject,
 			'post_content' => $activity->details,
 		];
 
@@ -1733,13 +1733,13 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Define args for query.
 		$args = [
-			'post_type' => $post_type,
+			'post_type'      => $post_type,
 			//'post_status' => 'publish',
-			'no_found_rows' => true,
+			'no_found_rows'  => true,
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-			'meta_key' => $this->participant_id_key,
+			'meta_key'       => $this->participant_id_key,
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
-			'meta_value' => (string) $participant_id,
+			'meta_value'     => (string) $participant_id,
 			'posts_per_page' => -1,
 		];
 
@@ -1822,7 +1822,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Add our data to the params.
 		$args['post_type'] = $post_type;
-		$args['post_id'] = $post_id;
+		$args['post_id']   = $post_id;
 
 		/**
 		 * Broadcast that a WordPress Post is about to be synced from Participant details.
@@ -1921,7 +1921,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 			// Add our data to the params.
 			$args['post_type'] = $post_type;
-			$args['post_id'] = $post_id;
+			$args['post_id']   = $post_id;
 
 			/**
 			 * Broadcast that a WordPress Post has been updated from Participant details.
@@ -1992,7 +1992,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 			// Add our data to the params.
 			$args['post_type'] = $post_type;
-			$args['post_id'] = $post_id;
+			$args['post_id']   = $post_id;
 
 			/**
 			 * Broadcast that a WordPress Post has been updated from Participant details.
@@ -2089,7 +2089,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		foreach ( $post_types as $post_type ) {
 
 			// Find the Post ID of this Post Type that this Participant is synced with.
-			$post_id = false;
+			$post_id  = false;
 			$post_ids = $this->get_by_participant_id( $args['objectId'], $post_type );
 			if ( ! empty( $post_ids ) ) {
 				$post_id = array_pop( $post_ids );
@@ -2109,7 +2109,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 			// Add our data to the params.
 			$args['post_type'] = $post_type;
-			$args['post_id'] = $post_id;
+			$args['post_id']   = $post_id;
 
 			/**
 			 * Broadcast that a WordPress Post has been deleted from Participant details.
@@ -2162,18 +2162,18 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Define basic Post data.
 		$args = [
-			'post_status' => 'publish',
-			'post_parent' => 0,
-			'comment_status' => 'closed',
-			'ping_status' => 'closed',
-			'to_ping' => '', // Quick fix for Windows.
-			'pinged' => '', // Quick fix for Windows.
+			'post_status'           => 'publish',
+			'post_parent'           => 0,
+			'comment_status'        => 'closed',
+			'ping_status'           => 'closed',
+			'to_ping'               => '', // Quick fix for Windows.
+			'pinged'                => '', // Quick fix for Windows.
 			'post_content_filtered' => '', // Quick fix for Windows.
-			'post_excerpt' => '', // Quick fix for Windows.
-			'menu_order' => 0,
-			'post_type' => $post_type,
-			'post_title' => $title,
-			'post_content' => '',
+			'post_excerpt'          => '', // Quick fix for Windows.
+			'menu_order'            => 0,
+			'post_type'             => $post_type,
+			'post_title'            => $title,
+			'post_content'          => '',
 		];
 
 		/**
@@ -2253,8 +2253,8 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Define args to update the Post.
 		$args = [
-			'ID' => $existing_id,
-			'post_title' => $title,
+			'ID'           => $existing_id,
+			'post_title'   => $title,
 			'post_content' => '',
 		];
 

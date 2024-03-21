@@ -111,9 +111,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->civicrm = $parent;
+		$this->civicrm    = $parent;
 
 		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
@@ -275,8 +275,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		$final = [];
 		foreach ( $filtered as $key => $custom_field ) {
 			$custom_field['value'] = $custom_field_values[ (int) $custom_field['id'] ];
-			$custom_field['type'] = $custom_field['data_type'];
-			$final[ $key ] = $custom_field;
+			$custom_field['type']  = $custom_field['data_type'];
+			$final[ $key ]         = $custom_field;
 		}
 
 		// Let's populate each ACF Field in turn.
@@ -386,8 +386,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		$final = [];
 		foreach ( $filtered as $key => $custom_field ) {
 			$custom_field['value'] = $custom_field_values[ (int) $custom_field['id'] ];
-			$custom_field['type'] = $custom_field['data_type'];
-			$final[ $key ] = $custom_field;
+			$custom_field['type']  = $custom_field['data_type'];
+			$final[ $key ]         = $custom_field;
 		}
 
 		// Let's populate each ACF Field in turn.
@@ -440,11 +440,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 		// Define params to get queried Activity.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
-			'id' => $activity_id,
-			'return' => $codes,
-			'options' => [
+			'id'         => $activity_id,
+			'return'     => $codes,
+			'options'    => [
 				'limit' => 0, // No limit.
 			],
 		];
@@ -466,7 +466,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		foreach ( $result['values'] as $item ) {
 			foreach ( $item as $key => $value ) {
 				if ( substr( $key, 0, 7 ) == 'custom_' ) {
-					$index = (int) str_replace( 'custom_', '', $key );
+					$index                   = (int) str_replace( 'custom_', '', $key );
 					$activity_data[ $index ] = $value;
 				}
 			}
@@ -513,11 +513,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 		// Define params to get queried Case.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
-			'id' => $case_id,
-			'return' => $codes,
-			'options' => [
+			'id'         => $case_id,
+			'return'     => $codes,
+			'options'    => [
 				'limit' => 0, // No limit.
 			],
 		];
@@ -539,7 +539,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		foreach ( $result['values'] as $item ) {
 			foreach ( $item as $key => $value ) {
 				if ( substr( $key, 0, 7 ) == 'custom_' ) {
-					$index = (int) str_replace( 'custom_', '', $key );
+					$index               = (int) str_replace( 'custom_', '', $key );
 					$case_data[ $index ] = $value;
 				}
 			}
@@ -597,8 +597,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		$final = [];
 		foreach ( $filtered as $key => $custom_field ) {
 			$custom_field['value'] = $custom_field_values[ (int) $custom_field['id'] ];
-			$custom_field['type'] = $custom_field['data_type'];
-			$final[ $key ] = $custom_field;
+			$custom_field['type']  = $custom_field['data_type'];
+			$final[ $key ]         = $custom_field;
 		}
 
 		// Let's populate each ACF Field in turn.
@@ -651,11 +651,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 		// Define params to get queried Participant.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
-			'id' => $participant_id,
-			'return' => $codes,
-			'options' => [
+			'id'         => $participant_id,
+			'return'     => $codes,
+			'options'    => [
 				'limit' => 0, // No limit.
 			],
 		];
@@ -677,7 +677,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		foreach ( $result['values'] as $item ) {
 			foreach ( $item as $key => $value ) {
 				if ( substr( $key, 0, 7 ) == 'custom_' ) {
-					$index = (int) str_replace( 'custom_', '', $key );
+					$index                      = (int) str_replace( 'custom_', '', $key );
 					$participant_data[ $index ] = $value;
 				}
 			}
@@ -860,7 +860,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 					// Get the corresponding Custom Field.
 					$args_key = array_search( $custom_field_ref, $custom_fields );
-					$field = $args['custom_fields'][ $args_key ];
+					$field    = $args['custom_fields'][ $args_key ];
 
 					// Modify values for ACF prior to update.
 					$value = $this->value_get_for_acf(
@@ -1115,20 +1115,20 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 		// Define Field.
 		$field = [
-			'key' => $this->civicrm->acf_field_key_get(),
-			'label' => __( 'CiviCRM Field', 'civicrm-wp-profile-sync' ),
-			'name' => $this->civicrm->acf_field_key_get(),
-			'type' => 'select',
-			'instructions' => __( 'Choose the CiviCRM Field that this ACF Field should sync with. (Optional)', 'civicrm-wp-profile-sync' ),
+			'key'           => $this->civicrm->acf_field_key_get(),
+			'label'         => __( 'CiviCRM Field', 'civicrm-wp-profile-sync' ),
+			'name'          => $this->civicrm->acf_field_key_get(),
+			'type'          => 'select',
+			'instructions'  => __( 'Choose the CiviCRM Field that this ACF Field should sync with. (Optional)', 'civicrm-wp-profile-sync' ),
 			'default_value' => '',
-			'placeholder' => '',
-			'allow_null' => 1,
-			'multiple' => 0,
-			'ui' => 0,
-			'required' => 0,
+			'placeholder'   => '',
+			'allow_null'    => 1,
+			'multiple'      => 0,
+			'ui'            => 0,
+			'required'      => 0,
 			'return_format' => 'value',
-			'parent' => $this->acf_loader->acf->field_group->placeholder_group_get(),
-			'choices' => $choices,
+			'parent'        => $this->acf_loader->acf->field_group->placeholder_group_get(),
+			'choices'       => $choices,
 		];
 
 		// --<
@@ -1556,7 +1556,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 		// Set the date "format" attributes.
 		$field['display_format'] = $acf_format;
-		$field['return_format'] = $acf_format;
+		$field['return_format']  = $acf_format;
 
 		// --<
 		return $field;
@@ -1663,7 +1663,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 		// Set the date "format" attributes.
 		$field['display_format'] = $acf_format;
-		$field['return_format'] = $acf_format;
+		$field['return_format']  = $acf_format;
 
 		// --<
 		return $field;

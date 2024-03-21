@@ -116,8 +116,8 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Field extends acf_field {
 	 */
 	public $settings = [
 		'version' => CIVICRM_WP_PROFILE_SYNC_VERSION,
-		'url' => CIVICRM_WP_PROFILE_SYNC_URL,
-		'path' => CIVICRM_WP_PROFILE_SYNC_PATH,
+		'url'     => CIVICRM_WP_PROFILE_SYNC_URL,
+		'path'    => CIVICRM_WP_PROFILE_SYNC_PATH,
 	];
 
 	/**
@@ -146,10 +146,10 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Field extends acf_field {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->acf = $parent->acf;
-		$this->civicrm = $this->acf_loader->civicrm;
+		$this->acf        = $parent->acf;
+		$this->civicrm    = $this->acf_loader->civicrm;
 
 		// Define label.
 		$this->label = __( 'CiviCRM Address: Complete', 'civicrm-wp-profile-sync' );
@@ -182,14 +182,14 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Field extends acf_field {
 
 		// Define setting Field.
 		$setting = [
-			'label' => __( 'CiviCRM Address ID', 'civicrm-wp-profile-sync' ),
-			'name' => 'show_address_id',
-			'type' => 'true_false',
-			'ui' => 1,
-			'ui_on_text' => __( 'Show', 'civicrm-wp-profile-sync' ),
-			'ui_off_text' => __( 'Hide', 'civicrm-wp-profile-sync' ),
+			'label'         => __( 'CiviCRM Address ID', 'civicrm-wp-profile-sync' ),
+			'name'          => 'show_address_id',
+			'type'          => 'true_false',
+			'ui'            => 1,
+			'ui_on_text'    => __( 'Show', 'civicrm-wp-profile-sync' ),
+			'ui_off_text'   => __( 'Hide', 'civicrm-wp-profile-sync' ),
 			'default_value' => 0,
-			'required' => 0,
+			'required'      => 0,
 		];
 
 		// Now add it.
@@ -465,10 +465,10 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Field extends acf_field {
 		$field['min'] = 0;
 
 		// Set sensible defaults.
-		$field['layout'] = 'block';
+		$field['layout']       = 'block';
 		$field['button_label'] = __( 'Add Address', 'civicrm-wp-profile-sync' );
-		$field['collapsed'] = 'field_address_location_type';
-		$field['prefix'] = '';
+		$field['collapsed']    = 'field_address_location_type';
+		$field['prefix']       = '';
 
 		// Set wrapper class.
 		$field['wrapper']['class'] = 'civicrm_address';
@@ -492,384 +492,384 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Field extends acf_field {
 
 		// Define Location Field.
 		$location = [
-			'key' => 'field_address_location_type',
-			'label' => __( 'Location Type', 'civicrm-wp-profile-sync' ),
-			'name' => 'location_type',
-			'type' => 'select',
-			'parent' => $field['key'],
-			'instructions' => '',
-			'required' => 1,
+			'key'               => 'field_address_location_type',
+			'label'             => __( 'Location Type', 'civicrm-wp-profile-sync' ),
+			'name'              => 'location_type',
+			'type'              => 'select',
+			'parent'            => $field['key'],
+			'instructions'      => '',
+			'required'          => 1,
 			'conditional_logic' => 0,
-			'wrapper' => [
+			'wrapper'           => [
 				'width' => '60',
 				'class' => 'civicrm_address_location_type',
-				'id' => '',
+				'id'    => '',
 			],
-			'choices' => $locations,
-			'default_value' => false,
-			'allow_null' => 0,
-			'multiple' => 0,
-			'ui' => 0,
-			'return_format' => 'value',
-			'ajax' => 0,
-			'placeholder' => '',
-			'prefix' => '',
+			'choices'           => $locations,
+			'default_value'     => false,
+			'allow_null'        => 0,
+			'multiple'          => 0,
+			'ui'                => 0,
+			'return_format'     => 'value',
+			'ajax'              => 0,
+			'placeholder'       => '',
+			'prefix'            => '',
 		];
 
 		// Define Is Primary Field.
 		$primary = [
-			'key' => 'field_address_primary',
-			'label' => __( 'Is Primary', 'civicrm-wp-profile-sync' ),
-			'name' => 'is_primary',
-			'type' => 'radio',
-			'parent' => $field['key'],
-			'instructions' => '',
-			'required' => 0,
+			'key'               => 'field_address_primary',
+			'label'             => __( 'Is Primary', 'civicrm-wp-profile-sync' ),
+			'name'              => 'is_primary',
+			'type'              => 'radio',
+			'parent'            => $field['key'],
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'wrapper' => [
+			'wrapper'           => [
 				'width' => '20',
 				'class' => 'civicrm_address_primary',
-				'id' => '',
+				'id'    => '',
 			],
-			'choices' => [
+			'choices'           => [
 				1 => __( 'Primary', 'civicrm-wp-profile-sync' ),
 			],
-			'allow_null' => 1,
-			'other_choice' => 0,
-			'default_value' => '',
-			'layout' => 'vertical',
-			'return_format' => 'value',
+			'allow_null'        => 1,
+			'other_choice'      => 0,
+			'default_value'     => '',
+			'layout'            => 'vertical',
+			'return_format'     => 'value',
 			'save_other_choice' => 0,
-			'prefix' => '',
+			'prefix'            => '',
 		];
 
 		// Define Is Billing Field.
 		$billing = [
-			'key' => 'field_address_billing',
-			'label' => __( 'Is Billing', 'civicrm-wp-profile-sync' ),
-			'name' => 'is_billing',
-			'type' => 'checkbox',
-			'parent' => $field['key'],
-			'instructions' => '',
-			'required' => 0,
+			'key'               => 'field_address_billing',
+			'label'             => __( 'Is Billing', 'civicrm-wp-profile-sync' ),
+			'name'              => 'is_billing',
+			'type'              => 'checkbox',
+			'parent'            => $field['key'],
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'wrapper' => [
+			'wrapper'           => [
 				'width' => '20',
 				'class' => 'civicrm_address_billing',
-				'id' => '',
+				'id'    => '',
 			],
-			'choices' => [
+			'choices'           => [
 				1 => __( 'Billing', 'civicrm-wp-profile-sync' ),
 			],
-			'allow_custom' => 0,
-			'default_value' => [],
-			'layout' => 'vertical',
-			'toggle' => 0,
-			'return_format' => 'value',
-			'save_custom' => 0,
+			'allow_custom'      => 0,
+			'default_value'     => [],
+			'layout'            => 'vertical',
+			'toggle'            => 0,
+			'return_format'     => 'value',
+			'save_custom'       => 0,
 		];
 
 		// Define Address Name Field.
 		$address_name = [
-			'key' => 'field_address_name',
-			'label' => __( 'Address Name', 'civicrm-wp-profile-sync' ),
-			'name' => 'address_name',
-			'type' => 'text',
-			'parent' => $field['key'],
-			'instructions' => '',
-			'required' => 0,
+			'key'               => 'field_address_name',
+			'label'             => __( 'Address Name', 'civicrm-wp-profile-sync' ),
+			'name'              => 'address_name',
+			'type'              => 'text',
+			'parent'            => $field['key'],
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'wrapper' => [
+			'wrapper'           => [
 				'width' => '',
 				'class' => '',
-				'id' => '',
+				'id'    => '',
 			],
-			'default_value' => '',
-			'placeholder' => '',
-			'prepend' => '',
-			'append' => '',
-			'maxlength' => '',
+			'default_value'     => '',
+			'placeholder'       => '',
+			'prepend'           => '',
+			'append'            => '',
+			'maxlength'         => '',
 		];
 
 		// Define Street Address Field.
 		$street_address = [
-			'key' => 'field_address_street_address',
-			'label' => __( 'Street Address', 'civicrm-wp-profile-sync' ),
-			'name' => 'street_address',
-			'type' => 'text',
-			'parent' => $field['key'],
-			'instructions' => '',
-			'required' => 0,
+			'key'               => 'field_address_street_address',
+			'label'             => __( 'Street Address', 'civicrm-wp-profile-sync' ),
+			'name'              => 'street_address',
+			'type'              => 'text',
+			'parent'            => $field['key'],
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'wrapper' => [
+			'wrapper'           => [
 				'width' => '',
 				'class' => '',
-				'id' => '',
+				'id'    => '',
 			],
-			'default_value' => '',
-			'placeholder' => '',
-			'prepend' => '',
-			'append' => '',
-			'maxlength' => '',
+			'default_value'     => '',
+			'placeholder'       => '',
+			'prepend'           => '',
+			'append'            => '',
+			'maxlength'         => '',
 		];
 
 		// Define Supplemental Address 1 Field.
 		$supplemental_address_1 = [
-			'key' => 'field_address_supplemental_address_1',
-			'label' => __( 'Supplemental Address 1', 'civicrm-wp-profile-sync' ),
-			'name' => 'supplemental_address_1',
-			'type' => 'text',
-			'parent' => $field['key'],
-			'instructions' => '',
-			'required' => 0,
+			'key'               => 'field_address_supplemental_address_1',
+			'label'             => __( 'Supplemental Address 1', 'civicrm-wp-profile-sync' ),
+			'name'              => 'supplemental_address_1',
+			'type'              => 'text',
+			'parent'            => $field['key'],
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'wrapper' => [
+			'wrapper'           => [
 				'width' => '',
 				'class' => '',
-				'id' => '',
+				'id'    => '',
 			],
-			'default_value' => '',
-			'placeholder' => '',
-			'prepend' => '',
-			'append' => '',
-			'maxlength' => '',
+			'default_value'     => '',
+			'placeholder'       => '',
+			'prepend'           => '',
+			'append'            => '',
+			'maxlength'         => '',
 		];
 
 		// Define Supplemental Address 2 Field.
 		$supplemental_address_2 = [
-			'key' => 'field_address_supplemental_address_2',
-			'label' => __( 'Supplemental Address 2', 'civicrm-wp-profile-sync' ),
-			'name' => 'supplemental_address_2',
-			'type' => 'text',
-			'parent' => $field['key'],
-			'instructions' => '',
-			'required' => 0,
+			'key'               => 'field_address_supplemental_address_2',
+			'label'             => __( 'Supplemental Address 2', 'civicrm-wp-profile-sync' ),
+			'name'              => 'supplemental_address_2',
+			'type'              => 'text',
+			'parent'            => $field['key'],
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'wrapper' => [
+			'wrapper'           => [
 				'width' => '',
 				'class' => '',
-				'id' => '',
+				'id'    => '',
 			],
-			'default_value' => '',
-			'placeholder' => '',
-			'prepend' => '',
-			'append' => '',
-			'maxlength' => '',
+			'default_value'     => '',
+			'placeholder'       => '',
+			'prepend'           => '',
+			'append'            => '',
+			'maxlength'         => '',
 		];
 
 		// Define Supplemental Address 3 Field.
 		$supplemental_address_3 = [
-			'key' => 'field_address_supplemental_address_3',
-			'label' => __( 'Supplemental Address 3', 'civicrm-wp-profile-sync' ),
-			'name' => 'supplemental_address_3',
-			'type' => 'text',
-			'parent' => $field['key'],
-			'instructions' => '',
-			'required' => 0,
+			'key'               => 'field_address_supplemental_address_3',
+			'label'             => __( 'Supplemental Address 3', 'civicrm-wp-profile-sync' ),
+			'name'              => 'supplemental_address_3',
+			'type'              => 'text',
+			'parent'            => $field['key'],
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'wrapper' => [
+			'wrapper'           => [
 				'width' => '',
 				'class' => '',
-				'id' => '',
+				'id'    => '',
 			],
-			'default_value' => '',
-			'placeholder' => '',
-			'prepend' => '',
-			'append' => '',
-			'maxlength' => '',
+			'default_value'     => '',
+			'placeholder'       => '',
+			'prepend'           => '',
+			'append'            => '',
+			'maxlength'         => '',
 		];
 
 		// Define City Field.
 		$city = [
-			'key' => 'field_address_city',
-			'label' => __( 'City', 'civicrm-wp-profile-sync' ),
-			'name' => 'city',
-			'type' => 'text',
-			'parent' => $field['key'],
-			'instructions' => '',
-			'required' => 0,
+			'key'               => 'field_address_city',
+			'label'             => __( 'City', 'civicrm-wp-profile-sync' ),
+			'name'              => 'city',
+			'type'              => 'text',
+			'parent'            => $field['key'],
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'wrapper' => [
+			'wrapper'           => [
 				'width' => '60',
 				'class' => '',
-				'id' => '',
+				'id'    => '',
 			],
-			'default_value' => '',
-			'placeholder' => '',
-			'prepend' => '',
-			'append' => '',
-			'maxlength' => '',
+			'default_value'     => '',
+			'placeholder'       => '',
+			'prepend'           => '',
+			'append'            => '',
+			'maxlength'         => '',
 		];
 
 		// Define Post Code Field.
 		$post_code = [
-			'key' => 'field_address_postal_code',
-			'label' => __( 'Post Code', 'civicrm-wp-profile-sync' ),
-			'name' => 'postal_code',
-			'type' => 'text',
-			'parent' => $field['key'],
-			'instructions' => '',
-			'required' => 0,
+			'key'               => 'field_address_postal_code',
+			'label'             => __( 'Post Code', 'civicrm-wp-profile-sync' ),
+			'name'              => 'postal_code',
+			'type'              => 'text',
+			'parent'            => $field['key'],
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'wrapper' => [
+			'wrapper'           => [
 				'width' => '40',
 				'class' => '',
-				'id' => '',
+				'id'    => '',
 			],
-			'default_value' => '',
-			'placeholder' => '',
-			'prepend' => '',
-			'append' => '',
-			'maxlength' => '',
+			'default_value'     => '',
+			'placeholder'       => '',
+			'prepend'           => '',
+			'append'            => '',
+			'maxlength'         => '',
 		];
 
 		// $params['country'] = CRM_Core_PseudoConstant::country($params['country_id']);
 
 		// Define Country Field.
 		$country_id = [
-			'key' => 'field_address_country_id',
-			'label' => __( 'Country', 'civicrm-wp-profile-sync' ),
-			'name' => 'country_id',
-			'type' => 'select',
-			'parent' => $field['key'],
-			'instructions' => '',
-			'required' => 0,
+			'key'               => 'field_address_country_id',
+			'label'             => __( 'Country', 'civicrm-wp-profile-sync' ),
+			'name'              => 'country_id',
+			'type'              => 'select',
+			'parent'            => $field['key'],
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'wrapper' => [
+			'wrapper'           => [
 				'width' => '50',
 				'class' => '',
-				'id' => '',
+				'id'    => '',
 			],
-			'choices' => CRM_Core_PseudoConstant::country(),
+			'choices'           => CRM_Core_PseudoConstant::country(),
 			// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
-			'default_value' => $config->defaultContactCountry,
-			'allow_null' => 1,
-			'multiple' => 0,
-			'ui' => 1,
-			'ajax' => 0,
-			'return_format' => 'value',
-			'placeholder' => '',
+			'default_value'     => $config->defaultContactCountry,
+			'allow_null'        => 1,
+			'multiple'          => 0,
+			'ui'                => 1,
+			'ajax'              => 0,
+			'return_format'     => 'value',
+			'placeholder'       => '',
 		];
 
 		// Define State/Province Field.
 		$state_province_id = [
-			'key' => 'field_address_state_province_id',
-			'label' => __( 'State/Province', 'civicrm-wp-profile-sync' ),
-			'name' => 'state_province_id',
-			'type' => 'select',
-			'parent' => $field['key'],
-			'instructions' => '',
-			'required' => 0,
+			'key'               => 'field_address_state_province_id',
+			'label'             => __( 'State/Province', 'civicrm-wp-profile-sync' ),
+			'name'              => 'state_province_id',
+			'type'              => 'select',
+			'parent'            => $field['key'],
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'wrapper' => [
+			'wrapper'           => [
 				'width' => '50',
 				'class' => '',
-				'id' => '',
+				'id'    => '',
 			],
-			'choices' => CRM_Core_PseudoConstant::stateProvince(),
-			'default_value' => false,
-			'allow_null' => 1,
-			'multiple' => 0,
-			'ui' => 1,
-			'ajax' => 0,
-			'return_format' => 'value',
-			'placeholder' => '',
+			'choices'           => CRM_Core_PseudoConstant::stateProvince(),
+			'default_value'     => false,
+			'allow_null'        => 1,
+			'multiple'          => 0,
+			'ui'                => 1,
+			'ajax'              => 0,
+			'return_format'     => 'value',
+			'placeholder'       => '',
 		];
 
 		// Define Latitude Field.
 		$geo_code_1 = [
-			'key' => 'field_address_geo_code_1',
-			'label' => __( 'Latitude', 'civicrm-wp-profile-sync' ),
-			'name' => 'geo_code_1',
-			'type' => 'text',
-			'parent' => $field['key'],
-			'instructions' => '',
-			'required' => 0,
+			'key'               => 'field_address_geo_code_1',
+			'label'             => __( 'Latitude', 'civicrm-wp-profile-sync' ),
+			'name'              => 'geo_code_1',
+			'type'              => 'text',
+			'parent'            => $field['key'],
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'wrapper' => [
+			'wrapper'           => [
 				'width' => '35',
 				'class' => '',
-				'id' => '',
+				'id'    => '',
 			],
-			'default_value' => '',
-			'placeholder' => '',
-			'prepend' => '',
-			'append' => '',
-			'maxlength' => '',
+			'default_value'     => '',
+			'placeholder'       => '',
+			'prepend'           => '',
+			'append'            => '',
+			'maxlength'         => '',
 		];
 
 		// Define Longitude Field.
 		$geo_code_2 = [
-			'key' => 'field_address_geo_code_2',
-			'label' => __( 'Longitude', 'civicrm-wp-profile-sync' ),
-			'name' => 'geo_code_2',
-			'type' => 'text',
-			'parent' => $field['key'],
-			'instructions' => '',
-			'required' => 0,
+			'key'               => 'field_address_geo_code_2',
+			'label'             => __( 'Longitude', 'civicrm-wp-profile-sync' ),
+			'name'              => 'geo_code_2',
+			'type'              => 'text',
+			'parent'            => $field['key'],
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'wrapper' => [
+			'wrapper'           => [
 				'width' => '35',
 				'class' => '',
-				'id' => '',
+				'id'    => '',
 			],
-			'default_value' => '',
-			'placeholder' => '',
-			'prepend' => '',
-			'append' => '',
-			'maxlength' => '',
+			'default_value'     => '',
+			'placeholder'       => '',
+			'prepend'           => '',
+			'append'            => '',
+			'maxlength'         => '',
 		];
 
 		// Define Override automatic geocoding Field.
 		$manual_geo_code = [
-			'key' => 'field_address_manual_geo_code',
-			'label' => __( 'Override automatic geocoding', 'civicrm-wp-profile-sync' ),
-			'name' => 'manual_geo_code',
-			'type' => 'checkbox',
-			'parent' => $field['key'],
-			'instructions' => '',
-			'required' => 0,
+			'key'               => 'field_address_manual_geo_code',
+			'label'             => __( 'Override automatic geocoding', 'civicrm-wp-profile-sync' ),
+			'name'              => 'manual_geo_code',
+			'type'              => 'checkbox',
+			'parent'            => $field['key'],
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'wrapper' => [
+			'wrapper'           => [
 				'width' => '30',
 				'class' => '',
-				'id' => '',
+				'id'    => '',
 			],
-			'choices' => [
+			'choices'           => [
 				1 => __( 'Override', 'civicrm-wp-profile-sync' ),
 			],
-			'allow_custom' => 0,
-			'default_value' => [],
-			'layout' => 'vertical',
-			'toggle' => 0,
-			'return_format' => 'value',
-			'save_custom' => 0,
+			'allow_custom'      => 0,
+			'default_value'     => [],
+			'layout'            => 'vertical',
+			'toggle'            => 0,
+			'return_format'     => 'value',
+			'save_custom'       => 0,
 		];
 
 		// Define hidden CiviCRM Address ID Field.
 		$address_id = [
-			'readonly' => true,
-			'key' => 'field_address_id',
-			'label' => __( 'CiviCRM ID', 'civicrm-wp-profile-sync' ),
-			'name' => 'civicrm_address_id',
-			'type' => 'number',
-			'parent' => $field['key'],
-			'instructions' => '',
-			'required' => 0,
+			'readonly'          => true,
+			'key'               => 'field_address_id',
+			'label'             => __( 'CiviCRM ID', 'civicrm-wp-profile-sync' ),
+			'name'              => 'civicrm_address_id',
+			'type'              => 'number',
+			'parent'            => $field['key'],
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'wrapper' => [
+			'wrapper'           => [
 				'width' => '',
 				'class' => 'civicrm_address_id',
-				'id' => '',
+				'id'    => '',
 			],
-			'default_value' => '',
-			'placeholder' => '',
-			'prepend' => '',
-			'append' => '',
-			'min' => '',
-			'max' => '',
-			'step' => '',
-			'prefix' => '',
+			'default_value'     => '',
+			'placeholder'       => '',
+			'prepend'           => '',
+			'append'            => '',
+			'min'               => '',
+			'max'               => '',
+			'step'              => '',
+			'prefix'            => '',
 		];
 
 		// Get the CiviCRM Address Options.

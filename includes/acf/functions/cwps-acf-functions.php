@@ -57,7 +57,7 @@ function cwps_get_age_from_acf_field( $selector, $post_id = null ) {
 
 	// Convert ACF Field value to CiviCRM "Ymdhis" format.
 	$datetime = DateTime::createFromFormat( $acf_settings['return_format'], $value );
-	$date = $datetime->format( 'Ymdhis' );
+	$date     = $datetime->format( 'Ymdhis' );
 
 	// Get "Age" as string.
 	$age = $cwps->civicrm->contact_field->date_age_get( $date );
@@ -981,26 +981,26 @@ function cwps_get_addresses( $selector, $post_id = null ) {
 		);
 
 		// Convert basic ACF data to template data.
-		$street_address = esc_html( trim( $record['field_address_street_address'] ) );
+		$street_address         = esc_html( trim( $record['field_address_street_address'] ) );
 		$supplemental_address_1 = esc_html( trim( $record['field_address_supplemental_address_1'] ) );
 		$supplemental_address_2 = esc_html( trim( $record['field_address_supplemental_address_2'] ) );
 		$supplemental_address_3 = esc_html( trim( $record['field_address_supplemental_address_3'] ) );
-		$city = esc_html( trim( $record['field_address_city'] ) );
-		$postal_code = esc_html( trim( $record['field_address_postal_code'] ) );
+		$city                   = esc_html( trim( $record['field_address_city'] ) );
+		$postal_code            = esc_html( trim( $record['field_address_postal_code'] ) );
 
 		// Convert Country ACF data to template data.
 		$state_province_id = empty( $record['field_address_state_province_id'] ) ? '' : (int) $record['field_address_state_province_id'];
-		$state_province = $cwps->plugin->civicrm->address->state_province_get_by_id( $state_province_id );
+		$state_province    = $cwps->plugin->civicrm->address->state_province_get_by_id( $state_province_id );
 		if ( ! empty( $state_province ) ) {
-			$state = esc_html( $state_province['name'] );
+			$state       = esc_html( $state_province['name'] );
 			$state_short = esc_html( $state_province['abbreviation'] );
 		}
 
 		// Convert Country ACF data to template data.
-		$country_id = empty( $record['field_address_country_id'] ) ? '' : (int) $record['field_address_country_id'];
+		$country_id   = empty( $record['field_address_country_id'] ) ? '' : (int) $record['field_address_country_id'];
 		$country_data = $cwps->plugin->civicrm->address->country_get_by_id( $country_id );
 		if ( ! empty( $country_data ) ) {
-			$country = esc_html( $country_data['name'] );
+			$country       = esc_html( $country_data['name'] );
 			$country_short = esc_html( $country_data['iso_code'] );
 		}
 
@@ -1087,26 +1087,26 @@ function cwps_get_address_by_type_id( $selector, $location_type_id, $post_id = n
 	foreach ( $records as $record ) {
 
 		// Convert basic ACF data to template data.
-		$street_address = esc_html( trim( $record['field_address_street_address'] ) );
+		$street_address         = esc_html( trim( $record['field_address_street_address'] ) );
 		$supplemental_address_1 = esc_html( trim( $record['field_address_supplemental_address_1'] ) );
 		$supplemental_address_2 = esc_html( trim( $record['field_address_supplemental_address_2'] ) );
 		$supplemental_address_3 = esc_html( trim( $record['field_address_supplemental_address_3'] ) );
-		$city = esc_html( trim( $record['field_address_city'] ) );
-		$postal_code = esc_html( trim( $record['field_address_postal_code'] ) );
+		$city                   = esc_html( trim( $record['field_address_city'] ) );
+		$postal_code            = esc_html( trim( $record['field_address_postal_code'] ) );
 
 		// Convert Country ACF data to template data.
 		$state_province_id = empty( $record['field_address_state_province_id'] ) ? '' : (int) $record['field_address_state_province_id'];
-		$state_province = $cwps->plugin->civicrm->address->state_province_get_by_id( $state_province_id );
+		$state_province    = $cwps->plugin->civicrm->address->state_province_get_by_id( $state_province_id );
 		if ( ! empty( $state_province ) ) {
-			$state = esc_html( $state_province['name'] );
+			$state       = esc_html( $state_province['name'] );
 			$state_short = esc_html( $state_province['abbreviation'] );
 		}
 
 		// Convert Country ACF data to template data.
-		$country_id = empty( $record['field_address_country_id'] ) ? '' : (int) $record['field_address_country_id'];
+		$country_id   = empty( $record['field_address_country_id'] ) ? '' : (int) $record['field_address_country_id'];
 		$country_data = $cwps->plugin->civicrm->address->country_get_by_id( $country_id );
 		if ( ! empty( $country_data ) ) {
-			$country = esc_html( $country_data['name'] );
+			$country       = esc_html( $country_data['name'] );
 			$country_short = esc_html( $country_data['iso_code'] );
 		}
 
@@ -1229,26 +1229,26 @@ function cwps_get_primary_address( $selector, $post_id = null ) {
 	$cwps = civicrm_wp_profile_sync()->acf;
 
 	// Convert basic ACF data to template data.
-	$street_address = esc_html( trim( $record['field_address_street_address'] ) );
+	$street_address         = esc_html( trim( $record['field_address_street_address'] ) );
 	$supplemental_address_1 = esc_html( trim( $record['field_address_supplemental_address_1'] ) );
 	$supplemental_address_2 = esc_html( trim( $record['field_address_supplemental_address_2'] ) );
 	$supplemental_address_3 = esc_html( trim( $record['field_address_supplemental_address_3'] ) );
-	$city = esc_html( trim( $record['field_address_city'] ) );
-	$postal_code = esc_html( trim( $record['field_address_postal_code'] ) );
+	$city                   = esc_html( trim( $record['field_address_city'] ) );
+	$postal_code            = esc_html( trim( $record['field_address_postal_code'] ) );
 
 	// Convert Country ACF data to template data.
 	$state_province_id = empty( $record['field_address_state_province_id'] ) ? '' : (int) $record['field_address_state_province_id'];
-	$state_province = $cwps->plugin->civicrm->address->state_province_get_by_id( $state_province_id );
+	$state_province    = $cwps->plugin->civicrm->address->state_province_get_by_id( $state_province_id );
 	if ( ! empty( $state_province ) ) {
-		$state = esc_html( $state_province['name'] );
+		$state       = esc_html( $state_province['name'] );
 		$state_short = esc_html( $state_province['abbreviation'] );
 	}
 
 	// Convert Country ACF data to template data.
-	$country_id = empty( $record['field_address_country_id'] ) ? '' : (int) $record['field_address_country_id'];
+	$country_id   = empty( $record['field_address_country_id'] ) ? '' : (int) $record['field_address_country_id'];
 	$country_data = $cwps->plugin->civicrm->address->country_get_by_id( $country_id );
 	if ( ! empty( $country_data ) ) {
-		$country = esc_html( $country_data['name'] );
+		$country       = esc_html( $country_data['name'] );
 		$country_short = esc_html( $country_data['iso_code'] );
 	}
 

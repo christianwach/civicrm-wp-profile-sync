@@ -84,7 +84,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	public function __construct( $acf_loader ) {
 
 		// Store references to objects.
-		$this->plugin = $acf_loader->plugin;
+		$this->plugin     = $acf_loader->plugin;
 		$this->acf_loader = $acf_loader;
 
 		// Init on admin init.
@@ -401,11 +401,11 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 		// Sanitise admin page url.
 		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		$target_url = isset( $_SERVER['REQUEST_URI'] ) ? wp_unslash( $_SERVER['REQUEST_URI'] ) : '';
-		$url_array = explode( '&', $target_url );
+		$url_array  = explode( '&', $target_url );
 
 		// Strip flag, if present, and rebuild.
 		if ( ! empty( $url_array ) ) {
-			$url_raw = str_replace( '&amp;updated=true', '', $url_array[0] );
+			$url_raw    = str_replace( '&amp;updated=true', '', $url_array[0] );
 			$target_url = htmlentities( $url_raw . '&updated=true' );
 		}
 
@@ -576,7 +576,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 
 		// Our array of arguments.
 		$args = [
-			'page' => 'cwps_acf_sync',
+			'page'             => 'cwps_acf_sync',
 			'settings-updated' => 'true',
 		];
 

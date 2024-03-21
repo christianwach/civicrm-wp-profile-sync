@@ -97,10 +97,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	 * @var array
 	 */
 	public $email_fields = [
-		'is_primary' => 'true_false',
-		'is_billing' => 'true_false',
-		'email' => 'email',
-		'on_hold' => 'true_false',
+		'is_primary'  => 'true_false',
+		'is_billing'  => 'true_false',
+		'email'       => 'email',
+		'on_hold'     => 'true_false',
 		'is_bulkmail' => 'true_false',
 	];
 
@@ -114,9 +114,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->civicrm = $parent;
+		$this->civicrm    = $parent;
 
 		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
@@ -317,7 +317,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		// Construct API query.
 		$params = [
 			'version' => 3,
-			'id' => $email_id,
+			'id'      => $email_id,
 		];
 
 		// Get Email details via API.
@@ -362,8 +362,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 		// Construct API query.
 		$params = [
-			'version' => 3,
-			'contact_id' => $contact_id,
+			'version'          => 3,
+			'contact_id'       => $contact_id,
 			'location_type_id' => $location_type_id,
 		];
 
@@ -413,7 +413,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 		// Define params to get queried Email.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
 			'is_primary' => 1,
 			'contact_id' => $contact_id,
@@ -461,7 +461,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 		// Get the current Primary Email.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'contact_id' => $contact_id,
 			'is_primary' => 1,
 		];
@@ -484,10 +484,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 			// Define params to create new Primary Email.
 			$params = [
-				'version' => 3,
+				'version'    => 3,
 				'contact_id' => $contact_id,
 				'is_primary' => 1,
-				'email' => $value,
+				'email'      => $value,
 			];
 
 			// Call the API.
@@ -508,10 +508,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 				// Define params to update this Email.
 				$params = [
-					'version' => 3,
-					'id' => $primary_email['id'],
+					'version'    => 3,
+					'id'         => $primary_email['id'],
 					'contact_id' => $contact_id,
-					'email' => $value,
+					'email'      => $value,
 				];
 
 				// Call the API.
@@ -522,7 +522,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 				// Define params to delete this Email.
 				$params = [
 					'version' => 3,
-					'id' => $primary_email['id'],
+					'id'      => $primary_email['id'],
 				];
 
 				// Call the API.
@@ -537,12 +537,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 		// Log and bail if there's an error.
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			$e = new Exception();
+			$e     = new Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'params' => $params,
-				'result' => $result,
+			$log   = [
+				'method'    => __METHOD__,
+				'params'    => $params,
+				'result'    => $result,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -584,10 +584,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 		// Define params to get queried Emails.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
 			'contact_id' => $contact_id,
-			'options' => [
+			'options'    => [
 				'limit' => 0, // No limit.
 			],
 		];
@@ -686,10 +686,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 		// Construct API query.
 		$params = [
-			'version' => 3,
-			'sequential' => 1,
-			'is_active' => 1,
-			'return' => [
+			'version'     => 3,
+			'sequential'  => 1,
+			'is_active'   => 1,
+			'return'      => [
 				'id',
 				'msg_title',
 				'msg_subject',
@@ -697,7 +697,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 			'workflow_id' => [
 				'IS NULL' => 1,
 			],
-			'options' => [
+			'options'     => [
 				'limit' => 0,
 			],
 		];
@@ -835,9 +835,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 		// Get the current Email for this Location Type.
 		$params = [
-			'version' => 3,
+			'version'          => 3,
 			'location_type_id' => $location_type_id,
-			'contact_id' => $contact_id,
+			'contact_id'       => $contact_id,
 		];
 
 		// Call the CiviCRM API.
@@ -858,10 +858,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 			// Define params to create new Email.
 			$params = [
-				'version' => 3,
+				'version'          => 3,
 				'location_type_id' => $location_type_id,
-				'contact_id' => $contact_id,
-				'email' => $value,
+				'contact_id'       => $contact_id,
+				'email'            => $value,
 			];
 
 			// Call the API.
@@ -882,10 +882,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 				// Define params to update this Email.
 				$params = [
-					'version' => 3,
-					'id' => $existing_email['id'],
+					'version'    => 3,
+					'id'         => $existing_email['id'],
 					'contact_id' => $contact_id,
-					'email' => $value,
+					'email'      => $value,
 				];
 
 				// Call the API.
@@ -896,7 +896,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 				// Define params to delete this Email.
 				$params = [
 					'version' => 3,
-					'id' => $existing_email['id'],
+					'id'      => $existing_email['id'],
 				];
 
 				// Call the API.
@@ -911,12 +911,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 		// Log and bail if there's an error.
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			$e = new Exception();
+			$e     = new Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'params' => $params,
-				'result' => $result,
+			$log   = [
+				'method'    => __METHOD__,
+				'params'    => $params,
+				'result'    => $result,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -952,8 +952,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 		// Get the current Email for this Location Type.
 		$params = [
-			'version' => 3,
-			'contact_id' => $contact_id,
+			'version'          => 3,
+			'contact_id'       => $contact_id,
 			'location_type_id' => $data['location_type_id'],
 		];
 
@@ -970,7 +970,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 			// Define params to create new Email.
 			$params = [
-				'version' => 3,
+				'version'    => 3,
 				'contact_id' => $contact_id,
 			] + $data;
 
@@ -991,8 +991,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 			// Define default params to update this Email.
 			$params = [
-				'version' => 3,
-				'id' => $existing_data['id'],
+				'version'    => 3,
+				'id'         => $existing_data['id'],
 				'contact_id' => $contact_id,
 			] + $data;
 
@@ -1003,12 +1003,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 		// Log and bail if there's an error.
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			$e = new Exception();
+			$e     = new Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'params' => $params,
-				'result' => $result,
+			$log   = [
+				'method'    => __METHOD__,
+				'params'    => $params,
+				'result'    => $result,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -1225,9 +1225,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 		// Params to get all Location Types.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
-			'options' => [
+			'options'    => [
 				'limit' => 0,
 			],
 		];
@@ -1286,7 +1286,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 		// Maybe prepend "Primary Email" choice for dropdown.
 		if ( $skip_specific === false ) {
-			$specific_email_label = esc_attr__( 'Specific Emails', 'civicrm-wp-profile-sync' );
+			$specific_email_label                        = esc_attr__( 'Specific Emails', 'civicrm-wp-profile-sync' );
 			$choices[ $specific_email_label ]['primary'] = esc_attr__( 'Primary Email', 'civicrm-wp-profile-sync' );
 		}
 
@@ -1298,20 +1298,20 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 		// Define Field.
 		$field = [
-			'key' => $this->acf_field_key_get(),
-			'label' => __( 'CiviCRM Email', 'civicrm-wp-profile-sync' ),
-			'name' => $this->acf_field_key_get(),
-			'type' => 'select',
-			'instructions' => __( 'Choose the CiviCRM Email that this ACF Field should sync with. (Optional)', 'civicrm-wp-profile-sync' ),
+			'key'           => $this->acf_field_key_get(),
+			'label'         => __( 'CiviCRM Email', 'civicrm-wp-profile-sync' ),
+			'name'          => $this->acf_field_key_get(),
+			'type'          => 'select',
+			'instructions'  => __( 'Choose the CiviCRM Email that this ACF Field should sync with. (Optional)', 'civicrm-wp-profile-sync' ),
 			'default_value' => '',
-			'placeholder' => '',
-			'allow_null' => 1,
-			'multiple' => 0,
-			'ui' => 0,
-			'required' => 0,
+			'placeholder'   => '',
+			'allow_null'    => 1,
+			'multiple'      => 0,
+			'ui'            => 0,
+			'required'      => 0,
 			'return_format' => 'value',
-			'parent' => $this->acf_loader->acf->field_group->placeholder_group_get(),
-			'choices' => $choices,
+			'parent'        => $this->acf_loader->acf->field_group->placeholder_group_get(),
+			'choices'       => $choices,
 		];
 
 		// --<
@@ -1388,7 +1388,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 		// Pass if this is not a Contact Field Group or a User Field Group.
 		$is_contact_field_group = $this->civicrm->contact->is_contact_field_group( $field_group );
-		$is_user_field_group = $this->acf_loader->user->is_user_field_group( $field_group );
+		$is_user_field_group    = $this->acf_loader->user->is_user_field_group( $field_group );
 		if ( empty( $is_contact_field_group ) && empty( $is_user_field_group ) ) {
 			return $setting_field;
 		}
@@ -1446,7 +1446,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		}
 
 		// Get the public Fields on the Entity for this Field Type.
-		$public_fields = $this->civicrm_fields_get( 'public' );
+		$public_fields     = $this->civicrm_fields_get( 'public' );
 		$fields_for_entity = [];
 		foreach ( $public_fields as $key => $value ) {
 			if ( $field['type'] == $this->email_fields[ $value['name'] ] ) {

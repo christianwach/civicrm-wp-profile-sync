@@ -116,8 +116,8 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Country_Field extends acf_fiel
 	 */
 	public $settings = [
 		'version' => CIVICRM_WP_PROFILE_SYNC_VERSION,
-		'url' => CIVICRM_WP_PROFILE_SYNC_URL,
-		'path' => CIVICRM_WP_PROFILE_SYNC_PATH,
+		'url'     => CIVICRM_WP_PROFILE_SYNC_URL,
+		'path'    => CIVICRM_WP_PROFILE_SYNC_PATH,
 	];
 
 	/**
@@ -146,10 +146,10 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Country_Field extends acf_fiel
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->acf = $parent->acf;
-		$this->civicrm = $this->acf_loader->civicrm;
+		$this->acf        = $parent->acf;
+		$this->civicrm    = $this->acf_loader->civicrm;
 
 		// Define label.
 		$this->label = __( 'CiviCRM Address: Country (Read Only)', 'civicrm-wp-profile-sync' );
@@ -193,13 +193,13 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Country_Field extends acf_fiel
 
 		// Define Primary setting Field.
 		$primary = [
-			'label' => __( 'CiviCRM Primary Address', 'civicrm-wp-profile-sync' ),
-			'name' => 'country_is_primary',
-			'type' => 'true_false',
-			'instructions' => __( 'Sync with the CiviCRM Primary Address.', 'civicrm-wp-profile-sync' ),
-			'ui' => 0,
+			'label'         => __( 'CiviCRM Primary Address', 'civicrm-wp-profile-sync' ),
+			'name'          => 'country_is_primary',
+			'type'          => 'true_false',
+			'instructions'  => __( 'Sync with the CiviCRM Primary Address.', 'civicrm-wp-profile-sync' ),
+			'ui'            => 0,
 			'default_value' => 0,
-			'required' => 0,
+			'required'      => 0,
 		];
 
 		// Now add it.
@@ -207,27 +207,27 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Country_Field extends acf_fiel
 
 		// Define Location Type setting Field.
 		$type = [
-			'label' => __( 'CiviCRM Location Type', 'civicrm-wp-profile-sync' ),
-			'name' => 'country_location_type_id',
-			'type' => 'select',
-			'instructions' => __( 'Choose the Location Type of the CiviCRM Address that this ACF Field should sync with.', 'civicrm-wp-profile-sync' ),
-			'default_value' => '',
-			'placeholder' => '',
-			'allow_null' => 0,
-			'multiple' => 0,
-			'ui' => 0,
-			'required' => 0,
-			'return_format' => 'value',
+			'label'             => __( 'CiviCRM Location Type', 'civicrm-wp-profile-sync' ),
+			'name'              => 'country_location_type_id',
+			'type'              => 'select',
+			'instructions'      => __( 'Choose the Location Type of the CiviCRM Address that this ACF Field should sync with.', 'civicrm-wp-profile-sync' ),
+			'default_value'     => '',
+			'placeholder'       => '',
+			'allow_null'        => 0,
+			'multiple'          => 0,
+			'ui'                => 0,
+			'required'          => 0,
+			'return_format'     => 'value',
 			'conditional_logic' => [
 				[
 					[
-						'field' => 'country_is_primary',
+						'field'    => 'country_is_primary',
 						'operator' => '==',
-						'value' => 0,
+						'value'    => 0,
 					],
 				],
 			],
-			'choices' => $choices,
+			'choices'           => $choices,
 		];
 
 		// Now add it.
@@ -245,12 +245,12 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Country_Field extends acf_fiel
 	public function render_field( $field ) {
 
 		// Change Field into a simple text Field.
-		$field['type'] = 'text';
-		$field['readonly'] = 1;
+		$field['type']       = 'text';
+		$field['readonly']   = 1;
 		$field['allow_null'] = 0;
-		$field['prepend'] = '';
-		$field['append'] = '';
-		$field['step'] = '';
+		$field['prepend']    = '';
+		$field['append']     = '';
+		$field['step']       = '';
 
 		// Populate Field.
 		if ( ! empty( $field['value'] ) ) {
@@ -361,7 +361,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Country_Field extends acf_fiel
 			// Overwrite if we get a value.
 			if ( $country_id !== false ) {
 				$country = $this->plugin->civicrm->address->country_get_by_id( $country_id );
-				$value = $country['name'];
+				$value   = $country['name'];
 			}
 
 		}

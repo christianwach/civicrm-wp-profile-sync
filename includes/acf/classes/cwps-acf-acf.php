@@ -90,7 +90,7 @@ class CiviCRM_Profile_Sync_ACF {
 		}
 
 		// Store references to objects.
-		$this->plugin = $acf_loader->plugin;
+		$this->plugin     = $acf_loader->plugin;
 		$this->acf_loader = $acf_loader;
 
 		// Init when this plugin is loaded.

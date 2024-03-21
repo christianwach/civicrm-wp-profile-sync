@@ -125,8 +125,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_Country extends acf_field {
 	 */
 	public $settings = [
 		'version' => CIVICRM_WP_PROFILE_SYNC_VERSION,
-		'url' => CIVICRM_WP_PROFILE_SYNC_URL,
-		'path' => CIVICRM_WP_PROFILE_SYNC_PATH,
+		'url'     => CIVICRM_WP_PROFILE_SYNC_URL,
+		'path'    => CIVICRM_WP_PROFILE_SYNC_PATH,
 	];
 
 	/**
@@ -155,11 +155,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_Country extends acf_field {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->acf = $parent->acf_loader->acf;
-		$this->acfe = $parent;
-		$this->civicrm = $this->acf_loader->civicrm;
+		$this->acf        = $parent->acf_loader->acf;
+		$this->acfe       = $parent;
+		$this->civicrm    = $this->acf_loader->civicrm;
 
 		// Define label.
 		$this->label = __( 'CiviCRM Address: Country', 'civicrm-wp-profile-sync' );
@@ -251,12 +251,12 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_Country extends acf_field {
 		// Get CiviCRM config.
 		$config = CRM_Core_Config::singleton();
 
-		$field['allow_null'] = 1;
-		$field['multiple'] = 0;
-		$field['ui'] = 1;
-		$field['ajax'] = 0;
+		$field['allow_null']    = 1;
+		$field['multiple']      = 0;
+		$field['ui']            = 1;
+		$field['ajax']          = 0;
 		$field['return_format'] = 'value';
-		$field['choices'] = CRM_Core_PseudoConstant::country();
+		$field['choices']       = CRM_Core_PseudoConstant::country();
 		// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 		$field['default_value'] = $config->defaultContactCountry;
 

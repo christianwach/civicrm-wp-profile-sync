@@ -84,11 +84,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->civicrm = $this->acf_loader->civicrm;
-		$this->acf = $this->acf_loader->acf;
-		$this->acfe = $parent;
+		$this->civicrm    = $this->acf_loader->civicrm;
+		$this->acf        = $this->acf_loader->acf;
+		$this->acfe       = $parent;
 
 		// Init when the ACFE class is loaded.
 		add_action( 'cwps/acf/acfe/loaded', [ $this, 'initialise' ] );
@@ -327,9 +327,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 		// Build data array.
 		$vars = [
 			'localisation' => [],
-			'settings' => [
-				'contact_actions_reference' => $contact_actions,
-				'case_actions_reference' => $case_actions,
+			'settings'     => [
+				'contact_actions_reference'     => $contact_actions,
+				'case_actions_reference'        => $case_actions,
 				'participant_actions_reference' => $participant_actions,
 			],
 		];
@@ -502,20 +502,20 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 
 		// Define Setting Field.
 		$setting_field = [
-			'key' => $this->civicrm->acf_field_key_get(),
-			'label' => __( 'CiviCRM Field', 'civicrm-wp-profile-sync' ),
-			'name' => $this->civicrm->acf_field_key_get(),
-			'type' => 'select',
-			'instructions' => __( 'Choose the CiviCRM Field that this ACF Field should sync with. (Optional)', 'civicrm-wp-profile-sync' ),
+			'key'           => $this->civicrm->acf_field_key_get(),
+			'label'         => __( 'CiviCRM Field', 'civicrm-wp-profile-sync' ),
+			'name'          => $this->civicrm->acf_field_key_get(),
+			'type'          => 'select',
+			'instructions'  => __( 'Choose the CiviCRM Field that this ACF Field should sync with. (Optional)', 'civicrm-wp-profile-sync' ),
 			'default_value' => '',
-			'placeholder' => '',
-			'allow_null' => 1,
-			'multiple' => 0,
-			'ui' => 0,
-			'required' => 0,
+			'placeholder'   => '',
+			'allow_null'    => 1,
+			'multiple'      => 0,
+			'ui'            => 0,
+			'required'      => 0,
 			'return_format' => 'value',
-			'parent' => $this->acf->field_group->placeholder_group_get(),
-			'choices' => $choices,
+			'parent'        => $this->acf->field_group->placeholder_group_get(),
+			'choices'       => $choices,
 		];
 
 		// Return populated array.

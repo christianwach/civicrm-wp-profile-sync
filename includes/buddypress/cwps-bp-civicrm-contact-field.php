@@ -69,21 +69,21 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 	 * @var array
 	 */
 	public $contact_fields_common = [
-		'nick_name' => 'textbox',
-		'image_URL' => 'image',
-		'source' => 'textbox',
-		'do_not_email' => 'true_false',
-		'do_not_phone' => 'true_false',
-		'do_not_mail' => 'true_false',
-		'do_not_sms' => 'true_false',
-		'do_not_trade' => 'true_false',
-		'is_opt_out' => 'true_false',
+		'nick_name'                      => 'textbox',
+		'image_URL'                      => 'image',
+		'source'                         => 'textbox',
+		'do_not_email'                   => 'true_false',
+		'do_not_phone'                   => 'true_false',
+		'do_not_mail'                    => 'true_false',
+		'do_not_sms'                     => 'true_false',
+		'do_not_trade'                   => 'true_false',
+		'is_opt_out'                     => 'true_false',
 		'preferred_communication_method' => 'checkbox',
-		'preferred_language' => 'selectbox',
-		'preferred_mail_format' => 'selectbox',
-		'legal_identifier' => 'textbox',
-		'external_identifier' => 'textbox',
-		'communication_style_id' => 'selectbox',
+		'preferred_language'             => 'selectbox',
+		'preferred_mail_format'          => 'selectbox',
+		'legal_identifier'               => 'textbox',
+		'external_identifier'            => 'textbox',
+		'communication_style_id'         => 'selectbox',
 	];
 
 	/**
@@ -96,18 +96,18 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 	 * @var array
 	 */
 	public $contact_fields_individual = [
-		'prefix_id' => 'selectbox',
-		'first_name' => 'textbox',
-		'last_name' => 'textbox',
-		'middle_name' => 'textbox',
-		'suffix_id' => 'selectbox',
-		'job_title' => 'textbox',
-		'gender_id' => 'radio',
-		'birth_date' => 'datebox',
-		'is_deceased' => 'true_false',
+		'prefix_id'     => 'selectbox',
+		'first_name'    => 'textbox',
+		'last_name'     => 'textbox',
+		'middle_name'   => 'textbox',
+		'suffix_id'     => 'selectbox',
+		'job_title'     => 'textbox',
+		'gender_id'     => 'radio',
+		'birth_date'    => 'datebox',
+		'is_deceased'   => 'true_false',
 		'deceased_date' => 'datebox',
-		'employer_id' => 'civicrm_contact',
-		'formal_title' => 'textbox',
+		'employer_id'   => 'civicrm_contact',
+		'formal_title'  => 'textbox',
 	];
 
 	/**
@@ -120,9 +120,9 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 	 * @var array
 	 */
 	public $contact_fields_organization = [
-		'legal_name' => 'textbox',
+		'legal_name'        => 'textbox',
 		'organization_name' => 'textbox',
-		'sic_code' => 'textbox',
+		'sic_code'          => 'textbox',
 	];
 
 	/**
@@ -159,10 +159,10 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 	public function __construct( $xprofile ) {
 
 		// Store references to objects.
-		$this->plugin = $xprofile->bp_loader->plugin;
+		$this->plugin    = $xprofile->bp_loader->plugin;
 		$this->bp_loader = $xprofile->bp_loader;
-		$this->civicrm = $this->plugin->civicrm;
-		$this->xprofile = $xprofile;
+		$this->civicrm   = $this->plugin->civicrm;
+		$this->xprofile  = $xprofile;
 
 		// Init when the BuddyPress Field object is loaded.
 		add_action( 'cwps/buddypress/field/loaded', [ $this, 'initialise' ] );
@@ -297,7 +297,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		// Get the "name" of the top-level Contact Type if this is a Sub-type.
 		if ( ! empty( $contact_type['parent_id'] ) ) {
 			$parent_type = $this->civicrm->contact->type_get_by_id( $contact_type['parent_id'] );
-			$name = $parent_type['name'];
+			$name        = $parent_type['name'];
 		}
 
 		// Get public Fields of this type.

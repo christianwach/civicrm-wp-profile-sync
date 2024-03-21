@@ -97,9 +97,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->civicrm = $parent;
+		$this->civicrm    = $parent;
 
 		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
@@ -226,7 +226,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 		// Bail if this Post should not be synced now.
 		$this->do_not_sync = false;
-		$post = $this->acf_loader->post->should_be_synced( $args['post'] );
+		$post              = $this->acf_loader->post->should_be_synced( $args['post'] );
 		if ( false === $post ) {
 			$this->do_not_sync = true;
 			return;
@@ -260,7 +260,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		}
 
 		// Add our data to the params.
-		$args['contact'] = $contact;
+		$args['contact']    = $contact;
 		$args['contact_id'] = $contact['id'];
 
 		/**
@@ -358,9 +358,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 		// Add our data to the params.
 		$args['contact_id'] = $contact_id;
-		$args['contact'] = $contact;
-		$args['post'] = $post;
-		$args['fields'] = $fields;
+		$args['contact']    = $contact;
+		$args['post']       = $post;
+		$args['fields']     = $fields;
 
 		/**
 		 * Broadcast that a Contact has been updated when ACF Fields were saved.
@@ -454,7 +454,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		}
 
 		// Assign checksum values.
-		$checksum['checksum'] = trim( wp_unslash( filter_input( INPUT_GET, 'cs' ) ) );
+		$checksum['checksum']   = trim( wp_unslash( filter_input( INPUT_GET, 'cs' ) ) );
 		$checksum['contact_id'] = (int) trim( wp_unslash( filter_input( INPUT_GET, 'cid' ) ) );
 
 		// --<
@@ -487,7 +487,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 		// Bail if no "Edit Contact" permission or not a valid checksum.
 		$allowed = CRM_Contact_BAO_Contact_Permission::allow( $checksum['contact_id'], CRM_Core_Permission::EDIT );
-		$valid = CRM_Contact_BAO_Contact_Utils::validChecksum( $checksum['contact_id'], $checksum['checksum'] );
+		$valid   = CRM_Contact_BAO_Contact_Utils::validChecksum( $checksum['contact_id'], $checksum['checksum'] );
 		if ( ! $allowed && ! $valid ) {
 			return $contact_id;
 		}
@@ -516,7 +516,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		}
 
 		// Get the logged-in Contact.
-		$user = wp_get_current_user();
+		$user       = wp_get_current_user();
 		$contact_id = $this->plugin->mapper->ufmatch->contact_id_get_by_user_id( $user->ID );
 
 		// --<
@@ -559,12 +559,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 		// Define params to get queried Contacts.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
-			'sort_name' => $search,
-			'sort' => 'sort_name',
-			'action' => $args['action'],
-			'rowCount' => $args['rowCount'],
+			'sort_name'  => $search,
+			'sort'       => 'sort_name',
+			'action'     => $args['action'],
+			'rowCount'   => $args['rowCount'],
 		];
 
 		// Define the returned values.
@@ -614,7 +614,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		// Format the return as per "getlist".
 		foreach ( $result['values'] as $value ) {
 			$data = [
-				'id' => $value['id'],
+				'id'    => $value['id'],
 				'label' => $value['sort_name'],
 			];
 			foreach ( $args['return'] as $return ) {
@@ -659,10 +659,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 		// Define params to get queried Contact.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
-			'image_URL' => $image_url,
-			'options' => [
+			'image_URL'  => $image_url,
+			'options'    => [
 				'limit' => 0, // No limit.
 			],
 		];
@@ -710,7 +710,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		}
 
 		// Get the Dedupe params.
-		$dedupe_params = CRM_Dedupe_Finder::formatParams( $contact, $contact_type );
+		$dedupe_params                     = CRM_Dedupe_Finder::formatParams( $contact, $contact_type );
 		$dedupe_params['check_permission'] = false;
 
 		// Use Dedupe Rules to find possible Contact IDs.
@@ -720,7 +720,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		$contact_id = false;
 		if ( ! empty( $contact_ids ) ) {
 			$contact_ids = array_reverse( $contact_ids );
-			$contact_id = array_pop( $contact_ids );
+			$contact_id  = array_pop( $contact_ids );
 		}
 
 		return $contact_id;
@@ -750,7 +750,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		}
 
 		// Build the Dedupe params.
-		$dedupe_params = CRM_Dedupe_Finder::formatParams( $contact, $contact_type );
+		$dedupe_params                     = CRM_Dedupe_Finder::formatParams( $contact, $contact_type );
 		$dedupe_params['check_permission'] = false;
 
 		// Check for duplicates.
@@ -760,7 +760,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		$contact_id = false;
 		if ( ! empty( $contact_ids ) ) {
 			$contact_ids = array_reverse( $contact_ids );
-			$contact_id = array_pop( $contact_ids );
+			$contact_id  = array_pop( $contact_ids );
 		}
 
 		// --<
@@ -800,7 +800,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 			// Build params to get Dedupe Rule Groups.
 			$params = [
-				'limit' => 0,
+				'limit'            => 0,
 				'checkPermissions' => false,
 			];
 
@@ -871,11 +871,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 		// Params to query Contacts.
 		$params = [
-			'version' => 3,
-			'contact_type' => $hierarchy['type'],
+			'version'          => 3,
+			'contact_type'     => $hierarchy['type'],
 			'contact_sub_type' => $hierarchy['subtype'],
-			'options' => [
-				'limit' => $limit,
+			'options'          => [
+				'limit'  => $limit,
 				'offset' => $offset,
 			],
 		];
@@ -885,16 +885,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 		// Add log entry on failure.
 		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
-			$e = new \Exception();
+			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
+			$log   = [
+				'method'          => __METHOD__,
 				'contact_type_id' => $contact_type_id,
-				'offset' => $offset,
-				'limit' => $limit,
-				'params' => $params,
-				'result' => $result,
-				'backtrace' => $trace,
+				'offset'          => $offset,
+				'limit'           => $limit,
+				'params'          => $params,
+				'result'          => $result,
+				'backtrace'       => $trace,
 			];
 			$this->plugin->log_error( $log );
 			return $result;
@@ -988,10 +988,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 				// Let's make an array of params.
 				$args = [
-					'op' => 'sync',
+					'op'         => 'sync',
 					'objectName' => $contact_data['contact_type'],
-					'objectId' => $contact_data['contact_id'],
-					'objectRef' => (object) $contact_data,
+					'objectId'   => $contact_data['contact_id'],
+					'objectRef'  => (object) $contact_data,
 				];
 
 				// Sync this Contact to the Post Type.
@@ -1108,7 +1108,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		if ( empty( $contact_id ) ) {
 
 			// Assign new Contact Type data.
-			$contact_data['contact_type'] = $contact_types['type'];
+			$contact_data['contact_type']     = $contact_types['type'];
 			$contact_data['contact_sub_type'] = $contact_types['subtype'];
 
 		} else {
@@ -1123,7 +1123,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 			$contact_data['contact_type'] = $hierarchy['type'];
 
 			// Merge existing and new Contact Subtype data.
-			$subtypes = array_unique( array_merge( $hierarchy['subtype'], $contact_types['subtype'] ) );
+			$subtypes                         = array_unique( array_merge( $hierarchy['subtype'], $contact_types['subtype'] ) );
 			$contact_data['contact_sub_type'] = $subtypes;
 
 		}
@@ -1323,7 +1323,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 			$settings = get_field_object( $selector, $post_id );
 
 			// Get the CiviCRM Custom Field and Contact Field.
-			$custom_field_id = $this->civicrm->custom_field->custom_field_id_get( $settings );
+			$custom_field_id    = $this->civicrm->custom_field->custom_field_id_get( $settings );
 			$contact_field_name = $this->contact_field_name_get( $settings );
 
 			// Do we have a synced Custom Field or Contact Field?
@@ -1349,12 +1349,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 				// Build args for value conversion.
 				$args = [
-					'identifier' => $this->identifier,
-					'entity_id' => $contact_id,
+					'identifier'      => $this->identifier,
+					'entity_id'       => $contact_id,
 					'custom_field_id' => $custom_field_id,
-					'field_name' => $contact_field_name,
-					'selector' => $selector,
-					'post_id' => $post_id,
+					'field_name'      => $contact_field_name,
+					'selector'        => $selector,
+					'post_id'         => $post_id,
 				];
 
 				// Parse value by Field Type.
@@ -1440,20 +1440,20 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 		// Define Field.
 		$field = [
-			'key' => $this->civicrm->acf_field_key_get(),
-			'label' => __( 'CiviCRM Field', 'civicrm-wp-profile-sync' ),
-			'name' => $this->civicrm->acf_field_key_get(),
-			'type' => 'select',
-			'instructions' => __( 'Choose the CiviCRM Field that this ACF Field should sync with. (Optional)', 'civicrm-wp-profile-sync' ),
+			'key'           => $this->civicrm->acf_field_key_get(),
+			'label'         => __( 'CiviCRM Field', 'civicrm-wp-profile-sync' ),
+			'name'          => $this->civicrm->acf_field_key_get(),
+			'type'          => 'select',
+			'instructions'  => __( 'Choose the CiviCRM Field that this ACF Field should sync with. (Optional)', 'civicrm-wp-profile-sync' ),
 			'default_value' => '',
-			'placeholder' => '',
-			'allow_null' => 1,
-			'multiple' => 0,
-			'ui' => 0,
-			'required' => 0,
+			'placeholder'   => '',
+			'allow_null'    => 1,
+			'multiple'      => 0,
+			'ui'            => 0,
+			'required'      => 0,
 			'return_format' => 'value',
-			'parent' => $this->acf_loader->acf->field_group->placeholder_group_get(),
-			'choices' => $choices,
+			'parent'        => $this->acf_loader->acf->field_group->placeholder_group_get(),
+			'choices'       => $choices,
 		];
 
 		// --<
@@ -1832,7 +1832,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		}
 
 		// Add Option Group.
-		$contact_types_title = esc_attr( __( 'Contact Types', 'civicrm-wp-profile-sync' ) );
+		$contact_types_title              = esc_attr( __( 'Contact Types', 'civicrm-wp-profile-sync' ) );
 		$entities[ $contact_types_title ] = [];
 
 		// Add entries for each CiviCRM Contact Type.

@@ -116,8 +116,8 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 	 */
 	public $settings = [
 		'version' => CIVICRM_WP_PROFILE_SYNC_VERSION,
-		'url' => CIVICRM_WP_PROFILE_SYNC_URL,
-		'path' => CIVICRM_WP_PROFILE_SYNC_PATH,
+		'url'     => CIVICRM_WP_PROFILE_SYNC_URL,
+		'path'    => CIVICRM_WP_PROFILE_SYNC_PATH,
 	];
 
 	/**
@@ -146,10 +146,10 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->acf = $parent->acf;
-		$this->civicrm = $this->acf_loader->civicrm;
+		$this->acf        = $parent->acf;
+		$this->civicrm    = $this->acf_loader->civicrm;
 
 		// Define label.
 		$this->label = __( 'CiviCRM Activity: Attachments', 'civicrm-wp-profile-sync' );
@@ -215,18 +215,18 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 
 		// Define "File Link" Field.
 		$usage = [
-			'label' => __( 'File Link', 'civicrm-wp-profile-sync' ),
-			'name' => 'file_link',
-			'type' => 'select',
-			'instructions' => __( 'Choose which File this ACF Field should link to.', 'civicrm-wp-profile-sync' ),
+			'label'         => __( 'File Link', 'civicrm-wp-profile-sync' ),
+			'name'          => 'file_link',
+			'type'          => 'select',
+			'instructions'  => __( 'Choose which File this ACF Field should link to.', 'civicrm-wp-profile-sync' ),
 			'default_value' => '',
-			'placeholder' => '',
-			'allow_null' => 0,
-			'multiple' => 0,
-			'ui' => 0,
-			'required' => 0,
+			'placeholder'   => '',
+			'allow_null'    => 0,
+			'multiple'      => 0,
+			'ui'            => 0,
+			'required'      => 0,
 			'return_format' => 'value',
-			'choices' => [
+			'choices'       => [
 				1 => __( 'Use public WordPress File', 'civicrm-wp-profile-sync' ),
 				2 => __( 'Use permissioned CiviCRM File', 'civicrm-wp-profile-sync' ),
 			],
@@ -237,14 +237,14 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 
 		// Define "Show Attachment ID" Field.
 		$show_attachment_id = [
-			'label' => __( 'CiviCRM Attachment ID', 'civicrm-wp-profile-sync' ),
-			'name' => 'show_attachment_id',
-			'type' => 'true_false',
-			'ui' => 1,
-			'ui_on_text' => __( 'Show', 'civicrm-wp-profile-sync' ),
-			'ui_off_text' => __( 'Hide', 'civicrm-wp-profile-sync' ),
+			'label'         => __( 'CiviCRM Attachment ID', 'civicrm-wp-profile-sync' ),
+			'name'          => 'show_attachment_id',
+			'type'          => 'true_false',
+			'ui'            => 1,
+			'ui_on_text'    => __( 'Show', 'civicrm-wp-profile-sync' ),
+			'ui_off_text'   => __( 'Hide', 'civicrm-wp-profile-sync' ),
 			'default_value' => 0,
-			'required' => 0,
+			'required'      => 0,
 		];
 
 		// Now add it.
@@ -252,9 +252,9 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 
 		// Define "Mime Types" Field.
 		$mime_types = [
-			'label' => __( 'Allowed file types', 'civicrm-wp-profile-sync' ),
-			'name' => 'mime_types',
-			'type' => 'text',
+			'label'        => __( 'Allowed file types', 'civicrm-wp-profile-sync' ),
+			'name'         => 'mime_types',
+			'type'         => 'text',
 			'instructions' => __( 'Comma separated list. Leave blank for all types', 'civicrm-wp-profile-sync' ),
 		];
 
@@ -595,84 +595,84 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Attachment extends acf_field {
 		$field['min'] = 0;
 
 		// Set sensible defaults.
-		$field['layout'] = 'table';
+		$field['layout']       = 'table';
 		$field['button_label'] = __( 'Add Attachment', 'civicrm-wp-profile-sync' );
-		$field['collapsed'] = '';
-		$field['prefix'] = '';
+		$field['collapsed']    = '';
+		$field['prefix']       = '';
 
 		// Set wrapper class.
 		$field['wrapper']['class'] = 'civicrm_attachment';
 
 		// Define Attachment "File" subfield.
 		$file = [
-			'key' => 'field_attachment_file',
-			'label' => __( 'File', 'civicrm-wp-profile-sync' ),
-			'name' => 'attachment_file',
-			'type' => 'file',
-			'parent' => $field['key'],
-			'instructions' => '',
-			'required' => 0,
+			'key'               => 'field_attachment_file',
+			'label'             => __( 'File', 'civicrm-wp-profile-sync' ),
+			'name'              => 'attachment_file',
+			'type'              => 'file',
+			'parent'            => $field['key'],
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'wrapper' => [
+			'wrapper'           => [
 				'width' => '30',
 				'class' => 'civicrm_attachment_name',
-				'id' => '',
+				'id'    => '',
 			],
-			'uploader' => 'basic',
-			'min_size' => 0,
-			'max_size' => $this->civicrm->attachment->field_max_size_get(),
-			'mime_types' => $field['mime_types'],
-			'library' => 'all',
-			'return_format' => 'array',
+			'uploader'          => 'basic',
+			'min_size'          => 0,
+			'max_size'          => $this->civicrm->attachment->field_max_size_get(),
+			'mime_types'        => $field['mime_types'],
+			'library'           => 'all',
+			'return_format'     => 'array',
 		];
 
 		// Define Attachment "Description" Field.
 		$description = [
-			'key' => 'field_attachment_description',
-			'label' => __( 'Description', 'civicrm-wp-profile-sync' ),
-			'name' => 'attachment_description',
-			'type' => 'text',
-			'type' => 'text',
-			'parent' => $field['key'],
-			'instructions' => '',
-			'required' => 0,
+			'key'               => 'field_attachment_description',
+			'label'             => __( 'Description', 'civicrm-wp-profile-sync' ),
+			'name'              => 'attachment_description',
+			'type'              => 'text',
+			'type'              => 'text',
+			'parent'            => $field['key'],
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'wrapper' => [
+			'wrapper'           => [
 				'width' => '60',
 				'class' => '',
-				'id' => '',
+				'id'    => '',
 			],
-			'default_value' => '',
-			'placeholder' => '',
-			'prepend' => '',
-			'append' => '',
-			'maxlength' => '255',
+			'default_value'     => '',
+			'placeholder'       => '',
+			'prepend'           => '',
+			'append'            => '',
+			'maxlength'         => '255',
 		];
 
 		// Define hidden CiviCRM Attachment ID Field.
 		$attachment_id = [
-			'readonly' => true,
-			'key' => 'field_attachment_id',
-			'label' => __( 'CiviCRM ID', 'civicrm-wp-profile-sync' ),
-			'name' => 'attachment_id',
-			'type' => 'number',
-			'parent' => $field['key'],
-			'instructions' => '',
-			'required' => 0,
+			'readonly'          => true,
+			'key'               => 'field_attachment_id',
+			'label'             => __( 'CiviCRM ID', 'civicrm-wp-profile-sync' ),
+			'name'              => 'attachment_id',
+			'type'              => 'number',
+			'parent'            => $field['key'],
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => 0,
-			'wrapper' => [
+			'wrapper'           => [
 				'width' => '10',
 				'class' => 'civicrm_attachment_id',
-				'id' => '',
+				'id'    => '',
 			],
-			'default_value' => '',
-			'placeholder' => '',
-			'prepend' => '',
-			'append' => '',
-			'min' => '',
-			'max' => '',
-			'step' => '',
-			'prefix' => '',
+			'default_value'     => '',
+			'placeholder'       => '',
+			'prepend'           => '',
+			'append'            => '',
+			'min'               => '',
+			'max'               => '',
+			'step'              => '',
+			'prefix'            => '',
 		];
 
 		// Add Subfields.

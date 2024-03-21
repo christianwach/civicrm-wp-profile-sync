@@ -112,8 +112,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 	public $phone_fields = [
 		'is_primary' => 'true_false',
 		'is_billing' => 'true_false',
-		'phone' => 'text',
-		'phone_ext' => 'text',
+		'phone'      => 'text',
+		'phone_ext'  => 'text',
 		//'phone_type_id' => 'select',
 	];
 
@@ -127,9 +127,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->civicrm = $parent;
+		$this->civicrm    = $parent;
 
 		// Init when the ACF CiviCRM object is loaded.
 		add_action( 'cwps/acf/civicrm/loaded', [ $this, 'initialise' ] );
@@ -425,11 +425,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 				// Make an array of our params.
 				$params = [
-					'key' => $key,
-					'value' => $value,
-					'phone' => $phone,
+					'key'        => $key,
+					'value'      => $value,
+					'phone'      => $phone,
 					'contact_id' => $contact_id,
-					'selector' => $selector,
+					'selector'   => $selector,
 				];
 
 				/**
@@ -508,11 +508,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 			// Make an array of our params.
 			$params = [
-				'key' => $key,
-				'value' => $value,
-				'phone' => $phone,
+				'key'        => $key,
+				'value'      => $value,
+				'phone'      => $phone,
 				'contact_id' => $contact_id,
-				'selector' => $selector,
+				'selector'   => $selector,
 			];
 
 			/**
@@ -543,11 +543,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 			// Make an array of our params.
 			$params = [
-				'key' => $key,
-				'value' => $value,
-				'phone' => $phone,
+				'key'        => $key,
+				'value'      => $value,
+				'phone'      => $phone,
 				'contact_id' => $contact_id,
-				'selector' => $selector,
+				'selector'   => $selector,
 			];
 
 			/**
@@ -570,10 +570,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 			// Make an array of our params.
 			$params = [
-				'phone_id' => $phone_id,
-				'phone' => $phone,
+				'phone_id'   => $phone_id,
+				'phone'      => $phone,
 				'contact_id' => $contact_id,
-				'selector' => $selector,
+				'selector'   => $selector,
 			];
 
 			/**
@@ -610,11 +610,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		}
 
 		// Convert ACF data to CiviCRM data.
-		$phone_data['is_primary'] = empty( $value['field_phone_primary'] ) ? '0' : '1';
+		$phone_data['is_primary']       = empty( $value['field_phone_primary'] ) ? '0' : '1';
 		$phone_data['location_type_id'] = (int) $value['field_phone_location'];
-		$phone_data['phone_type_id'] = (int) $value['field_phone_type'];
-		$phone_data['phone'] = trim( $value['field_phone_number'] );
-		$phone_data['phone_ext'] = trim( $value['field_phone_extension'] );
+		$phone_data['phone_type_id']    = (int) $value['field_phone_type'];
+		$phone_data['phone']            = trim( $value['field_phone_number'] );
+		$phone_data['phone_ext']        = trim( $value['field_phone_extension'] );
 
 		// --<
 		return $phone_data;
@@ -643,12 +643,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		$phone_ext = empty( $value->phone_ext ) ? '' : $value->phone_ext;
 
 		// Convert CiviCRM data to ACF data.
-		$phone_data['field_phone_number'] = trim( $value->phone );
+		$phone_data['field_phone_number']    = trim( $value->phone );
 		$phone_data['field_phone_extension'] = $this->plugin->civicrm->denullify( $phone_ext );
-		$phone_data['field_phone_location'] = (int) $value->location_type_id;
-		$phone_data['field_phone_type'] = (int) $value->phone_type_id;
-		$phone_data['field_phone_primary'] = empty( $value->is_primary ) ? '0' : '1';
-		$phone_data['field_phone_id'] = (int) $value->id;
+		$phone_data['field_phone_location']  = (int) $value->location_type_id;
+		$phone_data['field_phone_type']      = (int) $value->phone_type_id;
+		$phone_data['field_phone_primary']   = empty( $value->is_primary ) ? '0' : '1';
+		$phone_data['field_phone_id']        = (int) $value->id;
 
 		// --<
 		return $phone_data;
@@ -1051,7 +1051,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		// Add Phone ID and overwrite array element.
 		if ( ! empty( $existing[ $params['key'] ] ) ) {
 			$params['value']['field_phone_id'] = $params['phone']->id;
-			$existing[ $params['key'] ] = $params['value'];
+			$existing[ $params['key'] ]        = $params['value'];
 		}
 
 		// Now update Field.
@@ -1187,7 +1187,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		}
 
 		// Get the public Fields on the Entity for this Field Type.
-		$public_fields = $this->civicrm_fields_get( 'public' );
+		$public_fields     = $this->civicrm_fields_get( 'public' );
 		$fields_for_entity = [];
 		foreach ( $public_fields as $key => $value ) {
 			if ( $field['type'] == $this->phone_fields[ $value['name'] ] ) {

@@ -230,7 +230,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 		do_action( 'cwps/acf/loaded' );
 
 		// We're done and loaded.
-		$done = true;
+		$done         = true;
 		$this->loaded = true;
 
 	}

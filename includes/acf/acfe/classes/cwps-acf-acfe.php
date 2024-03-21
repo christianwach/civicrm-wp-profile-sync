@@ -66,7 +66,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 	public function __construct( $acf_loader ) {
 
 		// Store references to objects.
-		$this->plugin = $acf_loader->plugin;
+		$this->plugin     = $acf_loader->plugin;
 		$this->acf_loader = $acf_loader;
 
 		// Init when this plugin is loaded.
@@ -147,7 +147,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 
 		// Init objects.
 		$this->admin = new CiviCRM_Profile_Sync_ACF_ACFE_Admin( $this );
-		$this->form = new CiviCRM_Profile_Sync_ACF_ACFE_Form( $this );
+		$this->form  = new CiviCRM_Profile_Sync_ACF_ACFE_Form( $this );
 
 	}
 

@@ -66,9 +66,9 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->acf = $parent;
+		$this->acf        = $parent;
 
 		// Init when the parent class is loaded.
 		add_action( 'cwps/acf/acf/loaded', [ $this, 'register_hooks' ] );
@@ -251,8 +251,8 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 
 				// It has ancestors - get top-most Field's Field Group.
 				$topmost_field = array_pop( $field_ancestors );
-				$field_data = acf_get_field( $topmost_field );
-				$field_group = acf_get_field_group( $field_data['parent'] );
+				$field_data    = acf_get_field( $topmost_field );
+				$field_group   = acf_get_field_group( $field_data['parent'] );
 
 			}
 

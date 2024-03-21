@@ -88,11 +88,11 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 	public $phone_fields = [
 		'is_primary' => 'true_false',
 		'is_billing' => 'true_false',
-		'phone' => [
+		'phone'      => [
 			'textbox',
 			'telephone',
 		],
-		'phone_ext' => 'textbox',
+		'phone_ext'  => 'textbox',
 	];
 
 	/**
@@ -105,10 +105,10 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 	public function __construct( $xprofile ) {
 
 		// Store references to objects.
-		$this->plugin = $xprofile->bp_loader->plugin;
+		$this->plugin    = $xprofile->bp_loader->plugin;
 		$this->bp_loader = $xprofile->bp_loader;
-		$this->civicrm = $this->plugin->civicrm;
-		$this->xprofile = $xprofile;
+		$this->civicrm   = $this->plugin->civicrm;
+		$this->xprofile  = $xprofile;
 
 		// Init when the BuddyPress Field object is loaded.
 		add_action( 'cwps/buddypress/field/loaded', [ $this, 'initialise' ] );
@@ -279,7 +279,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 			// Only "Phone" Fields please.
 			$bp_field_mapping = $bp_field['field_meta']['value'];
-			$field_name = $this->name_get( $bp_field_mapping );
+			$field_name       = $this->name_get( $bp_field_mapping );
 			if ( empty( $field_name ) ) {
 				continue;
 			}
@@ -416,7 +416,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 				continue;
 			}
 			$location_type_id = $field['meta']['entity_data']['location_type_id'];
-			$phone_type_id = $field['meta']['entity_data']['phone_type_id'];
+			$phone_type_id    = $field['meta']['entity_data']['phone_type_id'];
 			$phone_groups[ $location_type_id ][ $phone_type_id ][] = $field;
 		}
 
@@ -450,7 +450,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 				// Add the Location Type and Phone Type.
 				$phone_data['location_type_id'] = $location_type_id;
-				$phone_data['phone_type_id'] = $phone_type_id;
+				$phone_data['phone_type_id']    = $phone_type_id;
 
 				// Okay, write the data to CiviCRM.
 				$phone = $this->plugin->civicrm->phone->update( $args['contact_id'], $phone_data );
@@ -490,7 +490,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 			}
 
 			// Get the CiviCRM Custom Field and Phone Field.
-			$custom_field_id = $this->xprofile->custom_field->id_get( $meta['value'] );
+			$custom_field_id  = $this->xprofile->custom_field->id_get( $meta['value'] );
 			$phone_field_name = $this->name_get( $meta['value'] );
 
 			// Do we have a synced Custom Field or Phone Field?
@@ -511,8 +511,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 				// Build args for value conversion.
 				$args = [
-					'entity_type' => $meta['entity_type'],
-					'custom_field_id' => $custom_field_id,
+					'entity_type'      => $meta['entity_type'],
+					'custom_field_id'  => $custom_field_id,
 					'phone_field_name' => $phone_field_name,
 				];
 

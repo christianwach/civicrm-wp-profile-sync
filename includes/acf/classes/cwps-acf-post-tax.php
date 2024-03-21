@@ -119,9 +119,9 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->post = $parent;
+		$this->post       = $parent;
 
 		// Init when the "mapping" class has loaded.
 		add_action( 'cwps/acf/post/loaded', [ $this, 'register_hooks' ] );
@@ -307,7 +307,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 		// Get all Groups from CiviCRM.
 		$groups_all = $this->acf_loader->civicrm->group->groups_get_all();
-		$group_ids = wp_list_pluck( $groups_all, 'id' );
+		$group_ids  = wp_list_pluck( $groups_all, 'id' );
 
 		// Get the full taxonomy data.
 		$tax_object = get_taxonomy( $taxonomy );
@@ -563,13 +563,13 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		if ( is_wp_error( $meta_id ) ) {
 
 			// Log error message.
-			$e = new \Exception();
+			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'message' => $meta_id->get_error_message(),
-				'term' => $term,
-				'group_id' => $group_id,
+			$log   = [
+				'method'    => __METHOD__,
+				'message'   => $meta_id->get_error_message(),
+				'term'      => $term,
+				'group_id'  => $group_id,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -614,13 +614,13 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		 */
 		if ( $meta_id === false ) {
 			if ( $existing_id !== false && (int) $existing_id !== (int) $group_id ) {
-				$e = new \Exception();
+				$e     = new \Exception();
 				$trace = $e->getTraceAsString();
-				$log = [
-					'method' => __METHOD__,
-					'message' => __( 'Could not update term_meta', 'civicrm-wp-profile-sync' ),
-					'term_id' => $term_id,
-					'group_id' => $group_id,
+				$log   = [
+					'method'    => __METHOD__,
+					'message'   => __( 'Could not update term_meta', 'civicrm-wp-profile-sync' ),
+					'term_id'   => $term_id,
+					'group_id'  => $group_id,
 					'backtrace' => $trace,
 				];
 				$this->plugin->log_error( $log );
@@ -631,13 +631,13 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		if ( is_wp_error( $meta_id ) ) {
 
 			// Log error message.
-			$e = new \Exception();
+			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'message' => $meta_id->get_error_message(),
-				'term_id' => $term_id,
-				'group_id' => $group_id,
+			$log   = [
+				'method'    => __METHOD__,
+				'message'   => $meta_id->get_error_message(),
+				'term_id'   => $term_id,
+				'group_id'  => $group_id,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -684,13 +684,13 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 		// Query terms for those with the ID of the Group in meta data.
 		$args = [
-			'taxonomy' => $this->taxonomies,
+			'taxonomy'   => $this->taxonomies,
 			'hide_empty' => false,
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 			'meta_query' => [
 				[
-					'key' => $this->term_meta_key,
-					'value' => $group_id,
+					'key'     => $this->term_meta_key,
+					'value'   => $group_id,
 					'compare' => '=',
 				],
 			],
@@ -708,12 +708,12 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		if ( is_wp_error( $terms ) ) {
 
 			// Write error message.
-			$e = new \Exception();
+			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'message' => $terms->get_error_message(),
-				'group_id' => $group_id,
+			$log   = [
+				'method'    => __METHOD__,
+				'message'   => $terms->get_error_message(),
+				'group_id'  => $group_id,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -748,7 +748,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 		// Query terms in those taxonomies.
 		$args = [
-			'taxonomy' => $taxonomies,
+			'taxonomy'   => $taxonomies,
 			'hide_empty' => false,
 		];
 
@@ -825,12 +825,12 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 		// Query terms in those taxonomies.
 		$args = [
-			'taxonomy' => $taxonomies,
+			'taxonomy'   => $taxonomies,
 			'hide_empty' => false,
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 			'meta_query' => [
 				[
-					'key' => $this->term_meta_key,
+					'key'     => $this->term_meta_key,
 					'compare' => 'EXISTS',
 				],
 			],
@@ -869,7 +869,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 			'meta_query' => [
 				[
-					'key' => $this->term_meta_key,
+					'key'     => $this->term_meta_key,
 					'compare' => 'EXISTS',
 				],
 			],
@@ -927,7 +927,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		$synced_terms_for_post_type = $this->synced_terms_get_for_post_type( $post->post_type );
 
 		// Filter synced terms for just this Group.
-		$args = [ 'group_id' => $group_id ];
+		$args           = [ 'group_id' => $group_id ];
 		$terms_for_post = wp_filter_object_list( $synced_terms_for_post_type, $args );
 
 		/*
@@ -954,12 +954,12 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 		// Query terms in those taxonomies.
 		$args = [
-			'taxonomy' => $taxonomy,
+			'taxonomy'   => $taxonomy,
 			'hide_empty' => false,
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 			'meta_query' => [
 				[
-					'key' => $this->term_meta_key,
+					'key'     => $this->term_meta_key,
 					'compare' => 'EXISTS',
 				],
 			],
@@ -994,12 +994,12 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 		// Query terms in those taxonomies.
 		$args = [
-			'taxonomy' => $this->taxonomies,
+			'taxonomy'   => $this->taxonomies,
 			'hide_empty' => false,
 			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 			'meta_query' => [
 				[
-					'key' => $this->term_meta_key,
+					'key'     => $this->term_meta_key,
 					'compare' => 'EXISTS',
 				],
 			],
@@ -1081,7 +1081,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		$term_ids_pre = wp_list_pluck( $terms_pre, 'term_id' );
 
 		// Get the new filtered term IDs.
-		$terms = $this->synced_terms_get_for_post( $post_id );
+		$terms    = $this->synced_terms_get_for_post( $post_id );
 		$term_ids = wp_list_pluck( $terms, 'term_id' );
 
 		// Find the existing terms that are missing in the current terms.
@@ -1165,11 +1165,11 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		}
 
 		// Add our data to the params.
-		$args['terms'] = $terms;
-		$args['term_ids'] = $term_ids;
-		$args['terms_added'] = $terms_added;
-		$args['terms_removed'] = $terms_removed;
-		$args['group_ids_added'] = $group_ids_added;
+		$args['terms']             = $terms;
+		$args['term_ids']          = $term_ids;
+		$args['terms_added']       = $terms_added;
+		$args['terms_removed']     = $terms_removed;
+		$args['group_ids_added']   = $group_ids_added;
 		$args['group_ids_removed'] = $group_ids_removed;
 
 		/**
@@ -1231,7 +1231,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 					$post = get_post( $post_id );
 
 					// Get all synced term IDs for the Post Type.
-					$synced_terms_for_post_type = $this->synced_terms_get_for_post_type( $post->post_type );
+					$synced_terms_for_post_type    = $this->synced_terms_get_for_post_type( $post->post_type );
 					$synced_term_ids_for_post_type = wp_list_pluck( $synced_terms_for_post_type, 'term_id' );
 
 					// Find the term ID(s) from those the Group syncs with.
@@ -1248,7 +1248,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 					}
 
 					// Get all the current terms for the Post.
-					$terms_in_post = $this->terms_get_for_post( $post_id );
+					$terms_in_post    = $this->terms_get_for_post( $post_id );
 					$term_ids_in_post = wp_list_pluck( $terms_in_post, 'term_id' );
 
 					// If the term(s) need to be added.
@@ -1293,7 +1293,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 					foreach ( $taxonomies as $taxonomy ) {
 
 						// Find the terms in this taxonomy.
-						$args = [ 'taxonomy' => $taxonomy ];
+						$args         = [ 'taxonomy' => $taxonomy ];
 						$terms_in_tax = wp_filter_object_list( $terms_in_post, $args );
 
 						// If there are none.

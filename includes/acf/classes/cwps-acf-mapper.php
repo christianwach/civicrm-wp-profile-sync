@@ -65,21 +65,21 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 * @var array
 	 */
 	public $date_mappings = [
-		'mm/dd/yy' => 'm/d/Y',
-		'dd/mm/yy' => 'd/m/Y',
-		'yy-mm-dd' => 'Y-m-d',
-		'dd-mm-yy' => 'd-m-Y',
-		'dd.mm.yy' => 'd.m.Y',
-		'M d, yy' => 'M d, Y',
-		'd M yy' => 'j M Y',
-		'MM d, yy' => 'F j, Y',
-		'd MM yy' => 'd F Y',
+		'mm/dd/yy'    => 'm/d/Y',
+		'dd/mm/yy'    => 'd/m/Y',
+		'yy-mm-dd'    => 'Y-m-d',
+		'dd-mm-yy'    => 'd-m-Y',
+		'dd.mm.yy'    => 'd.m.Y',
+		'M d, yy'     => 'M d, Y',
+		'd M yy'      => 'j M Y',
+		'MM d, yy'    => 'F j, Y',
+		'd MM yy'     => 'd F Y',
 		'DD, d MM yy' => 'l, d F Y',
-		'mm/dd' => 'm/d',
-		'dd-mm' => 'd-m',
-		'M yy' => 'm Y',
-		'M Y' => 'm Y',
-		'yy' => 'Y',
+		'mm/dd'       => 'm/d',
+		'dd-mm'       => 'd-m',
+		'M yy'        => 'm Y',
+		'M Y'         => 'm Y',
+		'yy'          => 'Y',
 	];
 
 	/**
@@ -113,7 +113,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 */
 	public $entity = [
 		'entity' => false,
-		'id' => false,
+		'id'     => false,
 	];
 
 	/**
@@ -126,7 +126,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function __construct( $acf_loader ) {
 
 		// Store references to objects.
-		$this->plugin = $acf_loader->plugin;
+		$this->plugin     = $acf_loader->plugin;
 		$this->acf_loader = $acf_loader;
 
 		// Init when this plugin is loaded.
@@ -184,8 +184,8 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Set it.
 		$this->entity['entity'] = $entity;
-		$this->entity['id'] = $id;
-		$this->entity['type'] = $type;
+		$this->entity['id']     = $id;
+		$this->entity['type']   = $type;
 
 	}
 
@@ -1178,9 +1178,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1222,10 +1222,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
-			'objectRef' => $objectRef,
+			'objectId'   => $objectId,
+			'objectRef'  => $objectRef,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1275,9 +1275,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1335,9 +1335,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		/*
@@ -1406,9 +1406,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1449,9 +1449,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1492,9 +1492,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1537,9 +1537,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1580,9 +1580,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1623,9 +1623,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1666,9 +1666,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1709,9 +1709,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1754,9 +1754,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1797,9 +1797,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1840,9 +1840,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1883,9 +1883,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1928,9 +1928,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -1971,9 +1971,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -2014,9 +2014,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -2057,9 +2057,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -2102,9 +2102,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -2145,9 +2145,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -2188,9 +2188,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -2231,9 +2231,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -2276,9 +2276,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -2319,9 +2319,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -2362,9 +2362,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -2405,9 +2405,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -2448,9 +2448,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -2488,9 +2488,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
-			'group_id' => $group_id,
-			'entity_id' => $entity_id,
+			'op'            => $op,
+			'group_id'      => $group_id,
+			'entity_id'     => $entity_id,
 			'custom_fields' => $custom_fields,
 		];
 
@@ -2528,9 +2528,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
-			'group_id' => $group_id,
-			'entity_id' => $entity_id,
+			'op'            => $op,
+			'group_id'      => $group_id,
+			'entity_id'     => $entity_id,
 			'custom_fields' => $custom_fields,
 		];
 
@@ -2576,9 +2576,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -2626,9 +2626,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -2674,9 +2674,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -2726,9 +2726,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -2771,9 +2771,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -2814,9 +2814,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -2857,9 +2857,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -2908,9 +2908,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -2958,9 +2958,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -3006,9 +3006,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -3049,9 +3049,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -3092,9 +3092,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -3135,9 +3135,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -3186,9 +3186,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -3236,9 +3236,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -3303,9 +3303,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => 'delete',
+			'op'         => 'delete',
 			'objectName' => 'File',
-			'objectId' => (int) $entity_tag->entity_id,
+			'objectId'   => (int) $entity_tag->entity_id,
 		];
 
 		// Maybe cast objectRef as object.
@@ -3360,9 +3360,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -3415,9 +3415,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -3470,9 +3470,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the CiviCRM params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -3527,9 +3527,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the params.
 		$args = [
-			'op' => $op,
+			'op'         => $op,
 			'objectName' => $objectName,
-			'objectId' => $objectId,
+			'objectId'   => $objectId,
 		];
 
 		// Maybe cast objectRef as object.
@@ -3576,8 +3576,8 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		// Let's make an array of the params.
 		$args = [
 			'post_id' => $post_id,
-			'post' => $post,
-			'update' => $update,
+			'post'    => $post,
+			'update'  => $update,
 		];
 
 		// Maybe set this as the originating Entity.
@@ -3677,7 +3677,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the params.
 		$args = [
-			'term_id' => $term_id,
+			'term_id'  => $term_id,
 			'taxonomy' => $taxonomy,
 		];
 
@@ -3709,7 +3709,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the params.
 		$args = [
-			'term_id' => $term_id,
+			'term_id'  => $term_id,
 			'taxonomy' => $taxonomy,
 		];
 
@@ -3742,8 +3742,8 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the params.
 		$args = [
-			'term_id' => $term_id,
-			'tt_id' => $tt_id,
+			'term_id'  => $term_id,
+			'tt_id'    => $tt_id,
 			'taxonomy' => $taxonomy,
 		];
 
@@ -3776,8 +3776,8 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the params.
 		$args = [
-			'term_id' => $term_id,
-			'tt_id' => $tt_id,
+			'term_id'  => $term_id,
+			'tt_id'    => $tt_id,
 			'taxonomy' => $taxonomy,
 		];
 
@@ -3811,9 +3811,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Let's make an array of the params.
 		$args = [
-			'term_id' => $term_id,
-			'tt_id' => $tt_id,
-			'taxonomy' => $taxonomy,
+			'term_id'      => $term_id,
+			'tt_id'        => $tt_id,
+			'taxonomy'     => $taxonomy,
 			'deleted_term' => $deleted_term,
 		];
 

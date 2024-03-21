@@ -105,8 +105,8 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Group extends acf_field {
 	 */
 	public $settings = [
 		'version' => CIVICRM_WP_PROFILE_SYNC_VERSION,
-		'url' => CIVICRM_WP_PROFILE_SYNC_URL,
-		'path' => CIVICRM_WP_PROFILE_SYNC_PATH,
+		'url'     => CIVICRM_WP_PROFILE_SYNC_URL,
+		'path'    => CIVICRM_WP_PROFILE_SYNC_PATH,
 	];
 
 	/**
@@ -144,10 +144,10 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Group extends acf_field {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->acf = $parent->acf;
-		$this->acf_type = $parent;
+		$this->acf        = $parent->acf;
+		$this->acf_type   = $parent;
 
 		// Define label.
 		$this->label = __( 'CiviCRM Participant: Event with Type', 'civicrm-wp-profile-sync' );
@@ -284,8 +284,8 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Group extends acf_field {
 
 		// Set sensible defaults.
 		$field['instruction_placement'] = 'field';
-		$field['required'] = 1;
-		$field['layout'] = 'block';
+		$field['required']              = 1;
+		$field['layout']                = 'block';
 
 		// Use for Participants only.
 		// TODO: make available elsewhere?
@@ -328,14 +328,14 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Group extends acf_field {
 
 		// Bundle the above Fields into a container group.
 		$field = [
-			'key' => 'field_' . $this->acf_slug . '_event_group',
-			'label' => __( 'CiviCRM Event', 'civicrm-wp-profile-sync' ),
-			'name' => $this->name,
-			'type' => 'group',
-			'instructions' => '',
-			'instruction_placement' => 'field',
-			'required' => 1,
-			'layout' => 'block',
+			'key'                             => 'field_' . $this->acf_slug . '_event_group',
+			'label'                           => __( 'CiviCRM Event', 'civicrm-wp-profile-sync' ),
+			'name'                            => $this->name,
+			'type'                            => 'group',
+			'instructions'                    => '',
+			'instruction_placement'           => 'field',
+			'required'                        => 1,
+			'layout'                          => 'block',
 			'field_cacf_civicrm_custom_field' => 'caiparticipant_event_id',
 		];
 
@@ -358,27 +358,27 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Group extends acf_field {
 
 		// Define "Event ID" Field.
 		$event_id = [
-			'key' => 'field_' . $this->acf_slug . '_event_id',
-			'label' => __( 'Event ID', 'civicrm-wp-profile-sync' ),
-			'name' => 'event_id',
-			'type' => 'civicrm_event',
+			'key'          => 'field_' . $this->acf_slug . '_event_id',
+			'label'        => __( 'Event ID', 'civicrm-wp-profile-sync' ),
+			'name'         => 'event_id',
+			'type'         => 'civicrm_event',
 			'instructions' => __( 'Select an Event in CiviCRM.', 'civicrm-wp-profile-sync' ),
-			'required' => 0,
+			'required'     => 0,
 		];
 
 		// Define "Event Type" Field.
 		$event_type = [
-			'key' => 'field_' . $this->acf_slug . '_event_type',
-			'label' => __( 'Event Type', 'civicrm-wp-profile-sync' ),
-			'name' => 'event_type',
-			'type' => 'select',
-			'instructions' => '',
-			'required' => 0,
-			'choices' => $this->acf_loader->civicrm->event->types_get_options(),
+			'key'           => 'field_' . $this->acf_slug . '_event_type',
+			'label'         => __( 'Event Type', 'civicrm-wp-profile-sync' ),
+			'name'          => 'event_type',
+			'type'          => 'select',
+			'instructions'  => '',
+			'required'      => 0,
+			'choices'       => $this->acf_loader->civicrm->event->types_get_options(),
 			'default_value' => '',
-			'allow_null' => 0,
-			'multiple' => 0,
-			'ui' => 0,
+			'allow_null'    => 0,
+			'multiple'      => 0,
+			'ui'            => 0,
 			'return_format' => 'value',
 
 			/*
@@ -456,7 +456,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Group extends acf_field {
 
 		// Rebuild Field.
 		$field = [
-			$prefix . '_event_id' => $event_id,
+			$prefix . '_event_id'   => $event_id,
 			$prefix . '_event_type' => $event_type,
 		];
 
@@ -514,8 +514,8 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Group extends acf_field {
 
 		// Init settings and localisation array.
 		$vars = [
-			'settings' => [
-				'ajax_url' => admin_url( 'admin-ajax.php' ),
+			'settings'     => [
+				'ajax_url'   => admin_url( 'admin-ajax.php' ),
 				'ajax_nonce' => wp_create_nonce( 'cwps_acf_field_' . $this->name ),
 			],
 			'localisation' => [

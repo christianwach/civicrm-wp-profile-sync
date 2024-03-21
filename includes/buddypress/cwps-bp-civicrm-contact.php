@@ -66,10 +66,10 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact {
 	public function __construct( $xprofile ) {
 
 		// Store references to objects.
-		$this->plugin = $xprofile->bp_loader->plugin;
+		$this->plugin    = $xprofile->bp_loader->plugin;
 		$this->bp_loader = $xprofile->bp_loader;
-		$this->civicrm = $this->plugin->civicrm;
-		$this->xprofile = $xprofile;
+		$this->civicrm   = $this->plugin->civicrm;
+		$this->xprofile  = $xprofile;
 
 		// Init when the BuddyPress Field object is loaded.
 		add_action( 'cwps/buddypress/field/loaded', [ $this, 'initialise' ] );
@@ -128,7 +128,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact {
 
 		// Overwrite the params with our data.
 		$args['contact_id'] = $contact['id'];
-		$args['contact'] = $contact;
+		$args['contact']    = $contact;
 
 		/**
 		 * Broadcast that a Contact has been updated when a set of BuddyPress Fields were saved.
@@ -182,7 +182,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact {
 			}
 
 			// Get the CiviCRM Custom Field and Contact Field.
-			$custom_field_id = $this->xprofile->custom_field->id_get( $meta['value'] );
+			$custom_field_id    = $this->xprofile->custom_field->id_get( $meta['value'] );
 			$contact_field_name = $this->xprofile->contact_field->name_get( $meta['value'] );
 
 			// Do we have a synced Custom Field or Contact Field?
@@ -203,8 +203,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact {
 
 				// Build args for value conversion.
 				$args = [
-					'entity_type' => $meta['entity_type'],
-					'custom_field_id' => $custom_field_id,
+					'entity_type'        => $meta['entity_type'],
+					'custom_field_id'    => $custom_field_id,
 					'contact_field_name' => $contact_field_name,
 				];
 
@@ -241,7 +241,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact {
 
 		// Build params by which to query xProfile.
 		$query = [
-			'user_id' => $args['user_id'],
+			'user_id'           => $args['user_id'],
 			'hide_empty_groups' => false,
 			'hide_empty_fields' => false,
 		];
@@ -278,8 +278,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact {
 
 				// Build an array of params.
 				$params = [
-					'field' => $field,
-					'field_id' => $field_id,
+					'field'      => $field,
+					'field_id'   => $field_id,
 					'field_meta' => $field_meta,
 				];
 

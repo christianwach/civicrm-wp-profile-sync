@@ -107,8 +107,8 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_ID_Field extends acf_field {
 	 */
 	public $settings = [
 		'version' => CIVICRM_WP_PROFILE_SYNC_VERSION,
-		'url' => CIVICRM_WP_PROFILE_SYNC_URL,
-		'path' => CIVICRM_WP_PROFILE_SYNC_PATH,
+		'url'     => CIVICRM_WP_PROFILE_SYNC_URL,
+		'path'    => CIVICRM_WP_PROFILE_SYNC_PATH,
 	];
 
 	/**
@@ -137,9 +137,9 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_ID_Field extends acf_field {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->acf = $parent->acf;
+		$this->acf        = $parent->acf;
 
 		// Define label.
 		$this->label = __( 'CiviCRM Contact: Contact ID (Read Only)', 'civicrm-wp-profile-sync' );
@@ -169,12 +169,12 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_ID_Field extends acf_field {
 	public function render_field( $field ) {
 
 		// Change Field into a simple "number" Field.
-		$field['type'] = 'number';
-		$field['readonly'] = 1;
+		$field['type']       = 'number';
+		$field['readonly']   = 1;
 		$field['allow_null'] = 0;
-		$field['prepend'] = '';
-		$field['append'] = '';
-		$field['step'] = '';
+		$field['prepend']    = '';
+		$field['append']     = '';
+		$field['step']       = '';
 
 		// Populate Field.
 		if ( ! empty( $field['value'] ) ) {

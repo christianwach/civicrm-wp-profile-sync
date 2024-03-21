@@ -125,8 +125,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 	 */
 	public $settings = [
 		'version' => CIVICRM_WP_PROFILE_SYNC_VERSION,
-		'url' => CIVICRM_WP_PROFILE_SYNC_URL,
-		'path' => CIVICRM_WP_PROFILE_SYNC_PATH,
+		'url'     => CIVICRM_WP_PROFILE_SYNC_URL,
+		'path'    => CIVICRM_WP_PROFILE_SYNC_PATH,
 	];
 
 	/**
@@ -155,11 +155,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->acf = $parent->acf_loader->acf;
-		$this->acfe = $parent;
-		$this->civicrm = $this->acf_loader->civicrm;
+		$this->acf        = $parent->acf_loader->acf;
+		$this->acfe       = $parent;
+		$this->civicrm    = $this->acf_loader->civicrm;
 
 		// Define label.
 		$this->label = __( 'CiviCRM Address: State', 'civicrm-wp-profile-sync' );
@@ -196,16 +196,16 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 
 		// Define "Source Country" setting Field.
 		$country_source = [
-			'label' => __( 'Source Country', 'civicrm-wp-profile-sync' ),
-			'name' => 'country_source',
-			'type' => 'radio',
-			'instructions' => __( 'The source for the States/Provinces in this Field.', 'civicrm-wp-profile-sync' ),
-			'allow_null' => 0,
-			'required' => 0,
+			'label'         => __( 'Source Country', 'civicrm-wp-profile-sync' ),
+			'name'          => 'country_source',
+			'type'          => 'radio',
+			'instructions'  => __( 'The source for the States/Provinces in this Field.', 'civicrm-wp-profile-sync' ),
+			'allow_null'    => 0,
+			'required'      => 0,
 			'default_value' => 1,
-			'layout' => 'vertical',
+			'layout'        => 'vertical',
 			'return_format' => 'value',
-			'choices' => [
+			'choices'       => [
 				1 => __( 'The default Country in CiviCRM', 'civicrm-wp-profile-sync' ),
 				2 => __( 'A CiviCRM Country Field', 'civicrm-wp-profile-sync' ),
 				3 => __( 'A specific Country', 'civicrm-wp-profile-sync' ),
@@ -217,23 +217,23 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 
 		// Define "Country Field Reference" setting Field.
 		$country_ref = [
-			'label' => __( 'Country Field', 'civicrm-wp-profile-sync' ),
-			'name' => 'state_country',
-			'type' => 'select',
-			'instructions' => __( 'Filter the visible States/Provinces by the selected Country Field.', 'civicrm-wp-profile-sync' ),
-			'allow_null' => 1,
-			'ui' => 1,
-			'ajax' => 1,
-			'ajax_action' => 'cwps_get_country_field',
-			'placeholder' => __( 'Select the Country Field', 'civicrm-wp-profile-sync' ),
-			'default_value' => 0,
-			'required' => 0,
+			'label'             => __( 'Country Field', 'civicrm-wp-profile-sync' ),
+			'name'              => 'state_country',
+			'type'              => 'select',
+			'instructions'      => __( 'Filter the visible States/Provinces by the selected Country Field.', 'civicrm-wp-profile-sync' ),
+			'allow_null'        => 1,
+			'ui'                => 1,
+			'ajax'              => 1,
+			'ajax_action'       => 'cwps_get_country_field',
+			'placeholder'       => __( 'Select the Country Field', 'civicrm-wp-profile-sync' ),
+			'default_value'     => 0,
+			'required'          => 0,
 			'conditional_logic' => [
 				[
 					[
-						'field' => 'country_source',
+						'field'    => 'country_source',
 						'operator' => '==contains',
-						'value' => 2,
+						'value'    => 2,
 					],
 				],
 			],
@@ -243,7 +243,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 		if ( ! empty( $field['state_country'] ) ) {
 			$country_field = acf_get_field( $field['state_country'] );
 			if ( ! empty( $country_field ) ) {
-				$label = acf_maybe_get( $country_field, 'label', $country_field['name'] );
+				$label                  = acf_maybe_get( $country_field, 'label', $country_field['name'] );
 				$country_ref['choices'] = [ $field['state_country'] => "{$label} ({$country_field['key']})" ];
 			}
 		}
@@ -253,23 +253,23 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 
 		// Define "Country ID" setting Field.
 		$country_id = [
-			'label' => __( 'Country', 'civicrm-wp-profile-sync' ),
-			'name' => 'country_id',
-			'type' => 'select',
-			'instructions' => __( 'Use the States/Provinces in this Country.', 'civicrm-wp-profile-sync' ),
-			'allow_null' => 1,
-			'ui' => 1,
-			'ajax' => 0,
-			'placeholder' => __( 'Select the Country', 'civicrm-wp-profile-sync' ),
-			'default_value' => 0,
-			'required' => 0,
-			'choices' => CRM_Core_PseudoConstant::country(),
+			'label'             => __( 'Country', 'civicrm-wp-profile-sync' ),
+			'name'              => 'country_id',
+			'type'              => 'select',
+			'instructions'      => __( 'Use the States/Provinces in this Country.', 'civicrm-wp-profile-sync' ),
+			'allow_null'        => 1,
+			'ui'                => 1,
+			'ajax'              => 0,
+			'placeholder'       => __( 'Select the Country', 'civicrm-wp-profile-sync' ),
+			'default_value'     => 0,
+			'required'          => 0,
+			'choices'           => CRM_Core_PseudoConstant::country(),
 			'conditional_logic' => [
 				[
 					[
-						'field' => 'country_source',
+						'field'    => 'country_source',
 						'operator' => '==contains',
-						'value' => 3,
+						'value'    => 3,
 					],
 				],
 			],
@@ -342,15 +342,15 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 		// Init response.
 		$response = [
 			'results' => [],
-			'limit' => 25,
+			'limit'   => 25,
 		];
 
 		// Init defaults.
 		$defaults = [
-			'post_id' => 0,
-			's' => '',
+			'post_id'   => 0,
+			's'         => '',
 			'field_key' => '',
-			'paged' => 1,
+			'paged'     => 1,
 		];
 
 		// Parse the incoming POST array.
@@ -368,7 +368,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 		$search = wp_unslash( (string) $options['s'] );
 
 		// Get the Fields in this Field Group.
-		$field_group = acf_get_field_group( $post_id );
+		$field_group     = acf_get_field_group( $post_id );
 		$fields_in_group = acf_get_fields( $field_group );
 
 		// Get the Fields as choices for the select.
@@ -378,7 +378,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 		$formatted = [];
 		foreach ( $choices as $title => $fields ) {
 			$title = (string) $title;
-			$data = [];
+			$data  = [];
 			foreach ( $fields as $key => $label ) {
 				$label = (string) $label;
 				if ( ! empty( $search ) ) {
@@ -388,7 +388,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 						stripos( strtolower( $title ), $search ) !== false
 					) {
 						$data[] = [
-							'id' => $key,
+							'id'   => $key,
 							'text' => $label,
 						];
 					}
@@ -396,7 +396,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 			}
 			if ( ! empty( $data ) ) {
 				$formatted[] = [
-					'text' => $title,
+					'text'     => $title,
 					'children' => $data,
 				];
 			}
@@ -505,7 +505,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 				// Also try and set the default value.
 				if ( ! empty( $config->defaultContactStateProvince ) ) {
 					$field['default_value'] = $config->defaultContactStateProvince;
-					$field['value'] = $config->defaultContactStateProvince;
+					$field['value']         = $config->defaultContactStateProvince;
 				}
 			}
 
@@ -533,11 +533,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 			return $field;
 		}
 
-		$field['allow_null'] = 1;
-		$field['multiple'] = 0;
-		$field['ui'] = 1;
-		$field['ajax'] = 0;
-		$field['choices'] = [];
+		$field['allow_null']    = 1;
+		$field['multiple']      = 0;
+		$field['ui']            = 1;
+		$field['ajax']          = 0;
+		$field['choices']       = [];
 		$field['default_value'] = 0;
 
 		// If there's a Country Field.

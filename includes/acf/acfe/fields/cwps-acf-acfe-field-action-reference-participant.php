@@ -123,8 +123,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Participant_Action_Ref extends acf_fiel
 	 */
 	public $settings = [
 		'version' => CIVICRM_WP_PROFILE_SYNC_VERSION,
-		'url' => CIVICRM_WP_PROFILE_SYNC_URL,
-		'path' => CIVICRM_WP_PROFILE_SYNC_PATH,
+		'url'     => CIVICRM_WP_PROFILE_SYNC_URL,
+		'path'    => CIVICRM_WP_PROFILE_SYNC_PATH,
 	];
 
 	/**
@@ -153,11 +153,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Participant_Action_Ref extends acf_fiel
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->civicrm = $this->acf_loader->civicrm;
-		$this->acf = $this->acf_loader->acf;
-		$this->acfe = $parent;
+		$this->civicrm    = $this->acf_loader->civicrm;
+		$this->acf        = $this->acf_loader->acf;
+		$this->acfe       = $parent;
 
 		// Define label.
 		$this->label = __( 'CiviCRM Form Action Reference: Participant', 'civicrm-wp-profile-sync' );
@@ -213,12 +213,12 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Participant_Action_Ref extends acf_fiel
 	public function render_field( $field ) {
 
 		// Change Field into a select.
-		$field['type'] = 'select';
-		$field['ui'] = 0;
-		$field['ajax'] = 0;
-		$field['allow_null'] = 1;
-		$field['multiple'] = 0;
-		$field['required'] = 0;
+		$field['type']              = 'select';
+		$field['ui']                = 0;
+		$field['ajax']              = 0;
+		$field['allow_null']        = 1;
+		$field['multiple']          = 0;
+		$field['required']          = 0;
 		$field['conditional_logic'] = 0;
 
 		// Init choices array.

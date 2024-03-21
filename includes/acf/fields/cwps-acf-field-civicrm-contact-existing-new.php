@@ -105,8 +105,8 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 	 */
 	public $settings = [
 		'version' => CIVICRM_WP_PROFILE_SYNC_VERSION,
-		'url' => CIVICRM_WP_PROFILE_SYNC_URL,
-		'path' => CIVICRM_WP_PROFILE_SYNC_PATH,
+		'url'     => CIVICRM_WP_PROFILE_SYNC_URL,
+		'path'    => CIVICRM_WP_PROFILE_SYNC_PATH,
 	];
 
 	/**
@@ -144,10 +144,10 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
+		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
-		$this->acf = $parent->acf;
-		$this->acf_type = $parent;
+		$this->acf        = $parent->acf;
+		$this->acf_type   = $parent;
 
 		// Define label.
 		$this->label = __( 'CiviCRM Contact: Existing/New', 'civicrm-wp-profile-sync' );
@@ -286,8 +286,8 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 
 		// Set sensible defaults.
 		$field['instruction_placement'] = 'field';
-		$field['required'] = 1;
-		$field['layout'] = 'block';
+		$field['required']              = 1;
+		$field['layout']                = 'block';
 
 		// Use for Participants only.
 		// TODO: make available elsewhere?
@@ -330,14 +330,14 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 
 		// Bundle the above Fields into a container group.
 		$field = [
-			'key' => 'field_' . $this->acf_slug . '_contact_group',
-			'label' => __( 'CiviCRM Contact', 'civicrm-wp-profile-sync' ),
-			'name' => $this->name,
-			'type' => 'group',
-			'instructions' => '',
-			'instruction_placement' => 'field',
-			'required' => 1,
-			'layout' => 'block',
+			'key'                             => 'field_' . $this->acf_slug . '_contact_group',
+			'label'                           => __( 'CiviCRM Contact', 'civicrm-wp-profile-sync' ),
+			'name'                            => $this->name,
+			'type'                            => 'group',
+			'instructions'                    => '',
+			'instruction_placement'           => 'field',
+			'required'                        => 1,
+			'layout'                          => 'block',
 			'field_cacf_civicrm_custom_field' => 'caiparticipant_contact_id',
 		];
 
@@ -360,173 +360,173 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 
 		// Define "Existing Contact" Field.
 		$contact_id = [
-			'key' => 'field_' . $this->acf_slug . '_contact_id',
-			'label' => __( 'Existing Contact', 'civicrm-wp-profile-sync' ),
-			'name' => 'contact_id',
-			'type' => 'civicrm_contact',
+			'key'          => 'field_' . $this->acf_slug . '_contact_id',
+			'label'        => __( 'Existing Contact', 'civicrm-wp-profile-sync' ),
+			'name'         => 'contact_id',
+			'type'         => 'civicrm_contact',
 			'instructions' => __( 'Select an existing Contact in CiviCRM.', 'civicrm-wp-profile-sync' ),
-			'required' => 0,
+			'required'     => 0,
 		];
 
 		// Define "Contact Type" Field.
 		$contact_type = [
-			'key' => 'field_' . $this->acf_slug . '_contact_type',
-			'label' => __( 'Contact Type', 'civicrm-wp-profile-sync' ),
-			'name' => 'contact_type',
-			'type' => 'select',
-			'instructions' => '',
-			'required' => 0,
-			'choices' => [
-				'Individual' => __( 'Individual', 'civicrm-wp-profile-sync' ),
-				'Household' => __( 'Household', 'civicrm-wp-profile-sync' ),
+			'key'           => 'field_' . $this->acf_slug . '_contact_type',
+			'label'         => __( 'Contact Type', 'civicrm-wp-profile-sync' ),
+			'name'          => 'contact_type',
+			'type'          => 'select',
+			'instructions'  => '',
+			'required'      => 0,
+			'choices'       => [
+				'Individual'   => __( 'Individual', 'civicrm-wp-profile-sync' ),
+				'Household'    => __( 'Household', 'civicrm-wp-profile-sync' ),
 				'Organization' => __( 'Organization', 'civicrm-wp-profile-sync' ),
 			],
 			'default_value' => 'Individual',
-			'allow_null' => 0,
-			'multiple' => 0,
-			'ui' => 0,
+			'allow_null'    => 0,
+			'multiple'      => 0,
+			'ui'            => 0,
 			'return_format' => 'value',
 		];
 
 		// Define "First Name" Field.
 		$first_name = [
-			'key' => 'field_' . $this->acf_slug . '_contact_first_name',
-			'label' => __( 'First Name', 'civicrm-wp-profile-sync' ),
-			'name' => 'first_name',
-			'type' => 'text',
-			'instructions' => '',
-			'required' => 0,
+			'key'               => 'field_' . $this->acf_slug . '_contact_first_name',
+			'label'             => __( 'First Name', 'civicrm-wp-profile-sync' ),
+			'name'              => 'first_name',
+			'type'              => 'text',
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => [
 				[
 					[
-						'field' => 'field_' . $this->acf_slug . '_contact_type',
+						'field'    => 'field_' . $this->acf_slug . '_contact_type',
 						'operator' => '==',
-						'value' => 'Individual',
+						'value'    => 'Individual',
 					],
 				],
 			],
-			'wrapper' => [
+			'wrapper'           => [
 				'width' => '50',
 				'class' => '',
-				'id' => '',
+				'id'    => '',
 			],
-			'default_value' => '',
-			'placeholder' => '',
-			'prepend' => '',
-			'append' => '',
-			'maxlength' => '',
+			'default_value'     => '',
+			'placeholder'       => '',
+			'prepend'           => '',
+			'append'            => '',
+			'maxlength'         => '',
 		];
 
 		// Define "Last Name" Field.
 		$last_name = [
-			'key' => 'field_' . $this->acf_slug . '_contact_last_name',
-			'label' => __( 'Last Name', 'civicrm-wp-profile-sync' ),
-			'name' => 'last_name',
-			'type' => 'text',
-			'instructions' => '',
-			'required' => 0,
+			'key'               => 'field_' . $this->acf_slug . '_contact_last_name',
+			'label'             => __( 'Last Name', 'civicrm-wp-profile-sync' ),
+			'name'              => 'last_name',
+			'type'              => 'text',
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => [
 				[
 					[
-						'field' => 'field_' . $this->acf_slug . '_contact_type',
+						'field'    => 'field_' . $this->acf_slug . '_contact_type',
 						'operator' => '==',
-						'value' => 'Individual',
+						'value'    => 'Individual',
 					],
 				],
 			],
-			'wrapper' => [
+			'wrapper'           => [
 				'width' => '50',
 				'class' => '',
-				'id' => '',
+				'id'    => '',
 			],
-			'default_value' => '',
-			'placeholder' => '',
-			'prepend' => '',
-			'append' => '',
-			'maxlength' => '',
+			'default_value'     => '',
+			'placeholder'       => '',
+			'prepend'           => '',
+			'append'            => '',
+			'maxlength'         => '',
 		];
 
 		// Define "Household Name" Field.
 		$household_name = [
-			'key' => 'field_' . $this->acf_slug . '_contact_household_name',
-			'label' => __( 'Household Name', 'civicrm-wp-profile-sync' ),
-			'name' => 'household_name',
-			'type' => 'text',
-			'instructions' => '',
-			'required' => 0,
+			'key'               => 'field_' . $this->acf_slug . '_contact_household_name',
+			'label'             => __( 'Household Name', 'civicrm-wp-profile-sync' ),
+			'name'              => 'household_name',
+			'type'              => 'text',
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => [
 				[
 					[
-						'field' => 'field_' . $this->acf_slug . '_contact_type',
+						'field'    => 'field_' . $this->acf_slug . '_contact_type',
 						'operator' => '==',
-						'value' => 'Household',
+						'value'    => 'Household',
 					],
 				],
 			],
-			'default_value' => '',
-			'placeholder' => '',
-			'prepend' => '',
-			'append' => '',
-			'maxlength' => '',
+			'default_value'     => '',
+			'placeholder'       => '',
+			'prepend'           => '',
+			'append'            => '',
+			'maxlength'         => '',
 		];
 
 		// Define "Organisation Name" Field.
 		$organization_name = [
-			'key' => 'field_' . $this->acf_slug . '_contact_organization_name',
-			'label' => __( 'Organization Name', 'civicrm-wp-profile-sync' ),
-			'name' => 'organization_name',
-			'type' => 'text',
-			'instructions' => '',
-			'required' => 0,
+			'key'               => 'field_' . $this->acf_slug . '_contact_organization_name',
+			'label'             => __( 'Organization Name', 'civicrm-wp-profile-sync' ),
+			'name'              => 'organization_name',
+			'type'              => 'text',
+			'instructions'      => '',
+			'required'          => 0,
 			'conditional_logic' => [
 				[
 					[
-						'field' => 'field_' . $this->acf_slug . '_contact_type',
+						'field'    => 'field_' . $this->acf_slug . '_contact_type',
 						'operator' => '==',
-						'value' => 'Organization',
+						'value'    => 'Organization',
 					],
 				],
 			],
-			'default_value' => '',
-			'placeholder' => '',
-			'prepend' => '',
-			'append' => '',
-			'maxlength' => '',
+			'default_value'     => '',
+			'placeholder'       => '',
+			'prepend'           => '',
+			'append'            => '',
+			'maxlength'         => '',
 		];
 
 		// Define "Email" Field.
 		$email = [
-			'key' => 'field_' . $this->acf_slug . '_contact_email',
-			'label' => __( 'Email Address', 'civicrm-wp-profile-sync' ),
-			'name' => 'email_address',
-			'type' => 'email',
-			'instructions' => '',
-			'required' => 0,
+			'key'           => 'field_' . $this->acf_slug . '_contact_email',
+			'label'         => __( 'Email Address', 'civicrm-wp-profile-sync' ),
+			'name'          => 'email_address',
+			'type'          => 'email',
+			'instructions'  => '',
+			'required'      => 0,
 			'default_value' => '',
-			'placeholder' => '',
-			'prepend' => '',
-			'append' => '',
+			'placeholder'   => '',
+			'prepend'       => '',
+			'append'        => '',
 		];
 
 		// Bundle the above Fields into a "New Contact" Group.
 		$new_contact = [
-			'key' => 'field_' . $this->acf_slug . '_contact_new',
-			'label' => __( 'New Contact', 'civicrm-wp-profile-sync' ),
-			'name' => 'new_contact',
-			'type' => 'group',
-			'instructions' => __( 'Create a new Contact in CiviCRM.', 'civicrm-wp-profile-sync' ),
+			'key'                   => 'field_' . $this->acf_slug . '_contact_new',
+			'label'                 => __( 'New Contact', 'civicrm-wp-profile-sync' ),
+			'name'                  => 'new_contact',
+			'type'                  => 'group',
+			'instructions'          => __( 'Create a new Contact in CiviCRM.', 'civicrm-wp-profile-sync' ),
 			'instruction_placement' => 'field',
-			'required' => 0,
-			'conditional_logic' => [
+			'required'              => 0,
+			'conditional_logic'     => [
 				[
 					[
-						'field' => 'field_' . $this->acf_slug . '_contact_id',
+						'field'    => 'field_' . $this->acf_slug . '_contact_id',
 						'operator' => '==empty',
 					],
 				],
 			],
-			'layout' => 'block',
-			'sub_fields' => [
+			'layout'                => 'block',
+			'sub_fields'            => [
 				$contact_type,
 				$first_name,
 				$last_name,
@@ -587,29 +587,29 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 		// Init Contact data.
 		$contact_data = [
 			'contact_type' => $contact_type,
-			'email' => $email,
+			'email'        => $email,
 		];
 
 		// Construct Contact Name.
 		switch ( $contact_type ) {
 
 			case 'Household':
-				$household_name = $new_contact[ $prefix . '_contact_household_name' ];
+				$household_name                 = $new_contact[ $prefix . '_contact_household_name' ];
 				$contact_data['household_name'] = $household_name;
-				$contact_data['display_name'] = $household_name;
+				$contact_data['display_name']   = $household_name;
 				break;
 
 			case 'Organization':
-				$organisation_name = $new_contact[ $prefix . '_contact_organization_name' ];
+				$organisation_name                 = $new_contact[ $prefix . '_contact_organization_name' ];
 				$contact_data['organization_name'] = $organisation_name;
-				$contact_data['display_name'] = $organisation_name;
+				$contact_data['display_name']      = $organisation_name;
 				break;
 
 			case 'Individual':
-				$first_name = $new_contact[ $prefix . '_contact_first_name' ];
+				$first_name                 = $new_contact[ $prefix . '_contact_first_name' ];
 				$contact_data['first_name'] = $first_name;
-				$last_name = $new_contact[ $prefix . '_contact_last_name' ];
-				$contact_data['last_name'] = $last_name;
+				$last_name                  = $new_contact[ $prefix . '_contact_last_name' ];
+				$contact_data['last_name']  = $last_name;
 				break;
 
 		}
@@ -634,17 +634,17 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 
 		// Clear the "New Contact" Sub-fields.
 		$sub_fields = [
-			$prefix . '_contact_type' => 'Individual',
-			$prefix . '_contact_first_name' => '',
-			$prefix . '_contact_last_name' => '',
-			$prefix . '_contact_household_name' => '',
+			$prefix . '_contact_type'              => 'Individual',
+			$prefix . '_contact_first_name'        => '',
+			$prefix . '_contact_last_name'         => '',
+			$prefix . '_contact_household_name'    => '',
 			$prefix . '_contact_organization_name' => '',
-			$prefix . '_contact_email' => '',
+			$prefix . '_contact_email'             => '',
 		];
 
 		// Rebuild Field.
 		$field = [
-			$prefix . '_contact_id' => $contact_id,
+			$prefix . '_contact_id'  => $contact_id,
 			$prefix . '_contact_new' => $sub_fields,
 		];
 
@@ -700,14 +700,14 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 		// Init Contact data.
 		$contact_data = [
 			'contact_type' => $contact_type,
-			'email' => $email,
+			'email'        => $email,
 		];
 
 		// Construct Contact Name.
 		switch ( $contact_type ) {
 
 			case 'Household':
-				$household_name = $new_contact[ 'field_' . $this->acf_slug . '_contact_household_name' ];
+				$household_name                 = $new_contact[ 'field_' . $this->acf_slug . '_contact_household_name' ];
 				$contact_data['household_name'] = $household_name;
 				if ( empty( $household_name ) ) {
 					$valid = __( 'Please enter a name for the New Household.', 'civicrm-wp-profile-sync' );
@@ -716,7 +716,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 				break;
 
 			case 'Organization':
-				$organisation_name = $new_contact[ 'field_' . $this->acf_slug . '_contact_organization_name' ];
+				$organisation_name                 = $new_contact[ 'field_' . $this->acf_slug . '_contact_organization_name' ];
 				$contact_data['organization_name'] = $organisation_name;
 				if ( empty( $household_name ) ) {
 					$valid = __( 'Please enter a name for the New Organization.', 'civicrm-wp-profile-sync' );
@@ -725,10 +725,10 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 				break;
 
 			case 'Individual':
-				$first_name = $new_contact[ 'field_' . $this->acf_slug . '_contact_first_name' ];
+				$first_name                 = $new_contact[ 'field_' . $this->acf_slug . '_contact_first_name' ];
 				$contact_data['first_name'] = $first_name;
-				$last_name = $new_contact[ 'field_' . $this->acf_slug . '_contact_last_name' ];
-				$contact_data['last_name'] = $last_name;
+				$last_name                  = $new_contact[ 'field_' . $this->acf_slug . '_contact_last_name' ];
+				$contact_data['last_name']  = $last_name;
 				if ( empty( $first_name ) && empty( $last_name ) ) {
 					$valid = __( 'Please enter a First Name and a Last Name for the New Contact.', 'civicrm-wp-profile-sync' );
 					return $valid;
@@ -752,8 +752,8 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 		// Did we get one?
 		if ( ! empty( $contact_id ) ) {
 			$contact = $this->plugin->civicrm->contact->get_by_id( $contact_id );
-			$url = $this->plugin->civicrm->get_link( 'civicrm/contact/view', 'reset=1&cid=' . $contact_id );
-			$valid = sprintf(
+			$url     = $this->plugin->civicrm->get_link( 'civicrm/contact/view', 'reset=1&cid=' . $contact_id );
+			$valid   = sprintf(
 				/* translators: 1: The Link to the Contact, 2: The Email Address of the Contact */
 				__( 'It looks like this Contact already exists: %1$s %2$s', 'civicrm-wp-profile-sync' ),
 				'<a href="' . $url . '" target="_blank">' . esc_html( $contact['display_name'] ) . '</a>',

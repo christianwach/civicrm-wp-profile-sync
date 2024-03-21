@@ -91,11 +91,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->acf_loader->plugin;
-		$this->acf_loader = $parent->acf_loader;
-		$this->civicrm = $parent->civicrm;
+		$this->plugin      = $parent->acf_loader->plugin;
+		$this->acf_loader  = $parent->acf_loader;
+		$this->civicrm     = $parent->civicrm;
 		$this->participant = $parent->participant;
-		$this->cpt = $parent;
+		$this->cpt         = $parent;
 
 		// Store Taxonomy name.
 		$this->taxonomy_name = $parent->taxonomy_name;
@@ -163,9 +163,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML {
 
 		$settings = [
 			'textarea_name' => 'description',
-			'quicktags' => true,
-			'tinymce' => true,
-			'editor_css' => '<style>#wp-html-description-editor-container .wp-editor-area { height: 200px; }</style>',
+			'quicktags'     => true,
+			'tinymce'       => true,
+			'editor_css'    => '<style>#wp-html-description-editor-container .wp-editor-area { height: 200px; }</style>',
 		];
 
 		?>
@@ -193,8 +193,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML {
 
 		$settings = [
 			'textarea_name' => 'description',
-			'quicktags' => true,
-			'tinymce' => true,
+			'quicktags'     => true,
+			'tinymce'       => true,
 			//'editor_css' => '<style>#wp-html-tag-description-editor-container .wp-editor-area { height: 200px; }</style>',
 		];
 

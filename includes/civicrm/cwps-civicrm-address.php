@@ -48,7 +48,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->plugin;
+		$this->plugin  = $parent->plugin;
 		$this->civicrm = $parent;
 
 		// Init when the CiviCRM object is loaded.
@@ -109,9 +109,9 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 		// Params to get the Address Type.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
-			'id' => $country_id,
+			'id'         => $country_id,
 		];
 
 		// Call the CiviCRM API.
@@ -156,9 +156,9 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 		// Params to get the Address Type.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
-			'iso_code' => $country_short,
+			'iso_code'   => $country_short,
 		];
 
 		// Call the CiviCRM API.
@@ -228,9 +228,9 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 		// Params to get the Address Type.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
-			'options' => [
+			'options'    => [
 				'limit' => 0,
 			],
 		];
@@ -251,7 +251,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		// Build the array.
 		foreach ( $result['values'] as $value ) {
 			$state_provinces[ $value['country_id'] ][] = [
-				'id' => $value['id'],
+				'id'   => $value['id'],
 				'text' => $value['name'],
 			];
 		}
@@ -282,8 +282,8 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 		// Params to get the State/Province.
 		$params = [
-			'version' => 3,
-			'sequential' => 1,
+			'version'           => 3,
+			'sequential'        => 1,
 			'state_province_id' => $state_province_id,
 		];
 
@@ -329,8 +329,8 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 		// Params to get the State/Province.
 		$params = [
-			'version' => 3,
-			'sequential' => 1,
+			'version'      => 3,
+			'sequential'   => 1,
 			'abbreviation' => $abbreviation,
 		];
 
@@ -381,14 +381,14 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 		// Build the query.
 		$query = 'SELECT name, id, state_province_id, abbreviation FROM civicrm_county';
-		$dao = CRM_Core_DAO::executeQuery( $query );
+		$dao   = CRM_Core_DAO::executeQuery( $query );
 
 		// Build the array.
 		while ( $dao->fetch() ) {
 			$counties[ $dao->id ] = [
-				'name' => $dao->name,
+				'name'              => $dao->name,
 				'state_province_id' => $dao->state_province_id,
-				'abbreviation' => $dao->abbreviation,
+				'abbreviation'      => $dao->abbreviation,
 			];
 		}
 
@@ -425,12 +425,12 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 		// Build the query.
 		$query = 'SELECT name, id, state_province_id, abbreviation FROM civicrm_county';
-		$dao = CRM_Core_DAO::executeQuery( $query );
+		$dao   = CRM_Core_DAO::executeQuery( $query );
 
 		// Build the array.
 		while ( $dao->fetch() ) {
 			$counties[ $dao->state_province_id ][] = [
-				'id' => $dao->id,
+				'id'   => $dao->id,
 				'text' => $dao->name,
 			];
 		}
@@ -466,7 +466,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		}
 
 		// Query directly.
-		$query = 'SELECT state_province_id FROM civicrm_county WHERE id = ' . (int) $county_id;
+		$query    = 'SELECT state_province_id FROM civicrm_county WHERE id = ' . (int) $county_id;
 		$state_id = CRM_Core_DAO::singleValueQuery( $query );
 
 		// Bail on failure.
@@ -507,10 +507,10 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 		// Construct params to find Shared Addresses.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
-			'master_id' => $address_id,
-			'options' => [
+			'master_id'  => $address_id,
+			'options'    => [
 				'limit' => 0,
 			],
 		];
@@ -560,7 +560,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		// Construct API query.
 		$params = [
 			'version' => 3,
-			'id' => $address_id,
+			'id'      => $address_id,
 		];
 
 		// Get Address details via API.
@@ -606,8 +606,8 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 		// Construct API query.
 		$params = [
-			'version' => 3,
-			'contact_id' => $contact_id,
+			'version'          => 3,
+			'contact_id'       => $contact_id,
 			'location_type_id' => $location_type_id,
 		];
 
@@ -653,7 +653,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 		// Construct API query.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'contact_id' => $contact_id,
 		];
 
@@ -701,7 +701,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 		// Construct API query.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'is_primary' => 1,
 			'contact_id' => $contact_id,
 		];
@@ -781,9 +781,9 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 		// Params to get the Address Type.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
-			'id' => $location_type_id,
+			'id'         => $location_type_id,
 		];
 
 		// Call the CiviCRM API.
@@ -827,10 +827,10 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 		// Params to get all Location Types.
 		$params = [
-			'version' => 3,
-			'is_active' => 1,
+			'version'    => 3,
+			'is_active'  => 1,
 			'sequential' => 1,
-			'options' => [
+			'options'    => [
 				'limit' => 0,
 			],
 		];
@@ -930,7 +930,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 		// Define params to create new Address Record.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'contact_id' => $contact_id,
 		] + $data;
 
@@ -939,12 +939,12 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 		// Log and bail if there's an error.
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			$e = new Exception();
+			$e     = new Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'params' => $params,
-				'result' => $result,
+			$log   = [
+				'method'    => __METHOD__,
+				'params'    => $params,
+				'result'    => $result,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -986,7 +986,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		// Define params to delete this Address Record.
 		$params = [
 			'version' => 3,
-			'id' => $address_id,
+			'id'      => $address_id,
 		];
 
 		// Call the API.
@@ -1032,8 +1032,8 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 		// Get the current Address for this Location Type.
 		$params = [
-			'version' => 3,
-			'contact_id' => $contact_id,
+			'version'          => 3,
+			'contact_id'       => $contact_id,
 			'location_type_id' => $data['location_type_id'],
 		];
 
@@ -1047,7 +1047,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 
 		// Update the Address if there is an existing one.
 		if ( ! empty( $existing_address['values'] ) ) {
-			$existing = array_pop( $existing_address['values'] );
+			$existing   = array_pop( $existing_address['values'] );
 			$data['id'] = $existing['id'];
 		}
 
@@ -1082,8 +1082,8 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		// Construct params.
 		$params = [
 			'version' => 3,
-			'name' => $name,
-			'action' => 'get',
+			'name'    => $name,
+			'action'  => 'get',
 		];
 
 		// Call the API.

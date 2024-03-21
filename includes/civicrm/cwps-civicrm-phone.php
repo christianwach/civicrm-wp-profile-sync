@@ -48,7 +48,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 	public function __construct( $parent ) {
 
 		// Store references to objects.
-		$this->plugin = $parent->plugin;
+		$this->plugin  = $parent->plugin;
 		$this->civicrm = $parent;
 
 		// Init when the CiviCRM object is loaded.
@@ -110,7 +110,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 		// Construct API query.
 		$params = [
 			'version' => 3,
-			'id' => $phone_id,
+			'id'      => $phone_id,
 		];
 
 		// Get Phone Record details via API.
@@ -156,10 +156,10 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 
 		// Construct API query.
 		$params = [
-			'version' => 3,
-			'contact_id' => $contact_id,
+			'version'          => 3,
+			'contact_id'       => $contact_id,
 			'location_type_id' => $location_type_id,
-			'phone_type_id' => $phone_type_id,
+			'phone_type_id'    => $phone_type_id,
 		];
 
 		// Get Phone Record details via API.
@@ -211,10 +211,10 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 
 		// Define params to get queried Phone Records.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'sequential' => 1,
 			'contact_id' => $contact_id,
-			'options' => [
+			'options'    => [
 				'limit' => 0, // No limit.
 			],
 		];
@@ -267,7 +267,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 
 		// Define params to create new Phone Record.
 		$params = [
-			'version' => 3,
+			'version'    => 3,
 			'contact_id' => $contact_id,
 		] + $data;
 
@@ -276,12 +276,12 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 
 		// Log and bail if there's an error.
 		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
-			$e = new Exception();
+			$e     = new Exception();
 			$trace = $e->getTraceAsString();
-			$log = [
-				'method' => __METHOD__,
-				'params' => $params,
-				'result' => $result,
+			$log   = [
+				'method'    => __METHOD__,
+				'params'    => $params,
+				'result'    => $result,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -323,7 +323,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 		// Define params to delete this Phone Record.
 		$params = [
 			'version' => 3,
-			'id' => $phone_id,
+			'id'      => $phone_id,
 		];
 
 		// Call the API.
@@ -417,8 +417,8 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 		// Construct params.
 		$params = [
 			'version' => 3,
-			'name' => $name,
-			'action' => 'get',
+			'name'    => $name,
+			'action'  => 'get',
 		];
 
 		// Call the API.
