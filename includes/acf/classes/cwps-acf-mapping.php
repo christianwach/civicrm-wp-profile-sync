@@ -1526,12 +1526,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 * @param string $option_name The name of the option.
 	 * @return bool $exists Whether or not the option exists.
 	 */
-	public function option_exists( $option_name = '' ) {
-
-		// Test for empty.
-		if ( $option_name == '' ) {
-			die( __( 'You must supply an option to option_exists()', 'civicrm-wp-profile-sync' ) );
-		}
+	public function option_exists( $option_name ) {
 
 		// Test by getting option with unlikely default.
 		if ( $this->option_get( $option_name, 'fenfgehgefdfdjgrkj' ) == 'fenfgehgefdfdjgrkj' ) {
@@ -1551,12 +1546,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 * @param string $default The default value of the option if it has no value.
 	 * @return mixed $value the value of the option.
 	 */
-	public function option_get( $option_name = '', $default = false ) {
-
-		// Test for empty.
-		if ( $option_name == '' ) {
-			die( __( 'You must supply an option to option_get()', 'civicrm-wp-profile-sync' ) );
-		}
+	public function option_get( $option_name, $default = false ) {
 
 		// Get option.
 		$value = get_option( $option_name, $default );
@@ -1575,12 +1565,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 * @param mixed  $value The value to set the option to.
 	 * @return bool $success True if the value of the option was successfully updated.
 	 */
-	public function option_set( $option_name = '', $value = '' ) {
-
-		// Test for empty.
-		if ( $option_name == '' ) {
-			die( __( 'You must supply an option to option_set()', 'civicrm-wp-profile-sync' ) );
-		}
+	public function option_set( $option_name, $value ) {
 
 		// Update option.
 		return update_option( $option_name, $value );
@@ -1595,12 +1580,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 * @param string $option_name The name of the option.
 	 * @return bool $success True if the option was successfully deleted.
 	 */
-	public function option_delete( $option_name = '' ) {
-
-		// Test for empty.
-		if ( $option_name == '' ) {
-			die( __( 'You must supply an option to option_delete()', 'civicrm-wp-profile-sync' ) );
-		}
+	public function option_delete( $option_name ) {
 
 		// Delete option.
 		return delete_option( $option_name );

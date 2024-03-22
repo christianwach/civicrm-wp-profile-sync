@@ -1532,7 +1532,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 			'#' . $field['id'] . '.acf-google-map .title { display: none; }' .
 		'</style>';
 
-		// Write to page.
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $style;
 
 	}

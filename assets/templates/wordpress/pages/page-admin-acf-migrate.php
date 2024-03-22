@@ -14,6 +14,7 @@
 	<h1><?php esc_html_e( 'CiviCRM Profile Sync', 'civicrm-wp-profile-sync' ); ?></h1>
 
 	<h2 class="nav-tab-wrapper">
+		<?php /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>
 		<a href="<?php echo $urls['settings']; ?>" class="nav-tab"><?php esc_html_e( 'Settings', 'civicrm-wp-profile-sync' ); ?></a>
 		<?php
 
@@ -30,6 +31,7 @@
 		?>
 	</h2>
 
+	<?php /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>
 	<form method="post" id="cwps_acf_migrate_form" action="<?php echo $this->page_submit_url_get(); ?>">
 
 		<?php wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false ); ?>
@@ -38,7 +40,7 @@
 
 		<div id="poststuff">
 
-			<div id="post-body" class="metabox-holder columns-<?php echo $columns; ?>">
+			<div id="post-body" class="metabox-holder columns-<?php echo esc_attr( $columns ); ?>">
 
 				<!--<div id="post-body-content">
 				</div>--><!-- #post-body-content -->

@@ -21,9 +21,9 @@
 			<?php if ( ! empty( $groups ) ) : ?>
 				<?php foreach ( $groups as $group ) : ?>
 					<?php if ( $group['id'] == $group_id ) : ?>
-						<option value="<?php echo $group['id']; ?>" selected="selected"><?php echo $group['title']; ?></option>
+						<option value="<?php echo esc_attr( $group['id'] ); ?>" selected="selected"><?php echo esc_html( $group['title'] ); ?></option>
 					<?php else : ?>
-						<option value="<?php echo $group['id']; ?>"><?php echo $group['title']; ?></option>
+						<option value="<?php echo esc_attr( $group['id'] ); ?>"><?php echo esc_html( $group['title'] ); ?></option>
 					<?php endif; ?>
 				<?php endforeach; ?>
 			<?php endif; ?>

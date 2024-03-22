@@ -8,7 +8,11 @@
  * @since 0.8.2
  */
 
-?><!-- assets/templates/wordpress/shortcode-address.php -->
+// All variables are escaped prior to template inclusion.
+// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+
+?>
+<!-- assets/templates/wordpress/shortcode-address.php -->
 <address>
 
 <?php if ( ! empty( $street_address ) ) : ?>

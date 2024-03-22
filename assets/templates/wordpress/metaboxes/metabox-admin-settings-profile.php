@@ -18,7 +18,7 @@
 			<p>
 				<select id="cwps_email_sync_select" name="cwps_email_sync_select">
 					<?php if ( $email_sync === 2 ) : ?>
-						<option value="2" selected ="selected"><?php esc_html_e( '- Select Primary Email sync method -', 'civicrm-wp-profile-sync' ); ?></option>
+						<option value="2" selected="selected"><?php esc_html_e( '- Select Primary Email sync method -', 'civicrm-wp-profile-sync' ); ?></option>
 					<?php endif; ?>
 					<option value="1"<?php echo $email_sync_yes; ?>><?php esc_html_e( 'Yes, handle Primary Email sync (recommended)', 'civicrm-wp-profile-sync' ); ?></option>
 					<option value="0"<?php echo $email_sync_no; ?>><?php esc_html_e( 'No, let CiviCRM handle Primary Email sync', 'civicrm-wp-profile-sync' ); ?></option>
@@ -66,9 +66,9 @@
 					<select id="cwps_website_type_select" name="cwps_website_type_select">
 						<?php foreach ( $website_types as $key => $option ) : ?>
 							<?php if ( $key === $website_type_selected ) : ?>
-								<option value="<?php echo $key; ?>" selected="selected"><?php echo $option; ?></option>
+								<option value="<?php echo esc_attr( $key ); ?>" selected="selected"><?php echo esc_html( $option ); ?></option>
 							<?php else : ?>
-								<option value="<?php echo $key; ?>"><?php echo $option; ?></option>
+								<option value="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $option ); ?></option>
 							<?php endif; ?>
 						<?php endforeach; ?>
 					</select>
@@ -78,8 +78,8 @@
 
 					echo sprintf(
 						/* translators: 1: Opening anchor tag, 2: Closing anchor tag */
-						__( 'The CiviCRM Website Type that the WordPress User Profile Website syncs with. Tip: you can manage your %1$sWebsite Types in CiviCRM%2$s.', 'civicrm-wp-profile-sync' ),
-						'<a href="' . $website_types_link . '">',
+						esc_html__( 'The CiviCRM Website Type that the WordPress User Profile Website syncs with. Tip: you can manage your %1$sWebsite Types in CiviCRM%2$s.', 'civicrm-wp-profile-sync' ),
+						'<a href="' . esc_url( $website_types_link ) . '">',
 						'</a>'
 					);
 

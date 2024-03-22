@@ -162,13 +162,14 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 		// Show general "Call to Action".
 		$message = sprintf(
 			/* translators: 1: Opening anchor tag, 2: Closing anchor tag */
-			__( 'CiviCRM ACF Integration has become part of CiviCRM Profile Sync. Please visit the %1$sMigration Page%2$s to switch over.', 'civicrm-wp-profile-sync' ),
+			esc_html__( 'CiviCRM ACF Integration has become part of CiviCRM Profile Sync. Please visit the %1$sMigration Page%2$s to switch over.', 'civicrm-wp-profile-sync' ),
 			'<a href="' . menu_page_url( 'cwps_acf_sync', false ) . '">',
 			'</a>'
 		);
 
 		// Show it.
 		echo '<div id="message" class="notice notice-warning">';
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '<p>' . $message . '</p>';
 		echo '</div>';
 
@@ -294,12 +295,12 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 
 		// We must be network admin in multisite.
 		if ( is_multisite() && ! is_super_admin() ) {
-			wp_die( __( 'You do not have permission to access this page.', 'civicrm-wp-profile-sync' ) );
+			wp_die( esc_html__( 'You do not have permission to access this page.', 'civicrm-wp-profile-sync' ) );
 		}
 
 		// Check user permissions.
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( __( 'You do not have permission to access this page.', 'civicrm-wp-profile-sync' ) );
+			wp_die( esc_html__( 'You do not have permission to access this page.', 'civicrm-wp-profile-sync' ) );
 		}
 
 		// Get current screen.
@@ -385,7 +386,8 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 		}
 
 		// Render tab.
-		echo '<a href="' . $urls['acf-migrate'] . '" class="nav-tab' . $active . '">' . $title . '</a>' . "\n";
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<a href="' . $urls['acf-migrate'] . '" class="nav-tab' . esc_attr( $active ) . '">' . esc_html( $title ) . '</a>' . "\n";
 
 	}
 
@@ -596,12 +598,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	 * @param string $option_name The name of the option.
 	 * @return bool $exists Whether or not the option exists.
 	 */
-	public function option_exists( $option_name = '' ) {
-
-		// Test for empty.
-		if ( $option_name == '' ) {
-			die( __( 'You must supply an option to option_exists()', 'civicrm-wp-profile-sync' ) );
-		}
+	public function option_exists( $option_name ) {
 
 		// Test by getting option with unlikely default.
 		if ( $this->option_get( $option_name, 'fenfgehgefdfdjgrkj' ) == 'fenfgehgefdfdjgrkj' ) {
@@ -621,12 +618,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	 * @param string $default The default value of the option if it has no value.
 	 * @return mixed $value the value of the option.
 	 */
-	public function option_get( $option_name = '', $default = false ) {
-
-		// Test for empty.
-		if ( $option_name == '' ) {
-			die( __( 'You must supply an option to option_get()', 'civicrm-wp-profile-sync' ) );
-		}
+	public function option_get( $option_name, $default = false ) {
 
 		// Get option.
 		$value = get_option( $option_name, $default );
@@ -645,12 +637,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	 * @param mixed  $value The value to set the option to.
 	 * @return bool $success True if the value of the option was successfully updated.
 	 */
-	public function option_set( $option_name = '', $value = '' ) {
-
-		// Test for empty.
-		if ( $option_name == '' ) {
-			die( __( 'You must supply an option to option_set()', 'civicrm-wp-profile-sync' ) );
-		}
+	public function option_set( $option_name, $value ) {
 
 		// Update option.
 		return update_option( $option_name, $value );
@@ -665,12 +652,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 	 * @param string $option_name The name of the option.
 	 * @return bool $success True if the option was successfully deleted.
 	 */
-	public function option_delete( $option_name = '' ) {
-
-		// Test for empty.
-		if ( $option_name == '' ) {
-			die( __( 'You must supply an option to option_delete()', 'civicrm-wp-profile-sync' ) );
-		}
+	public function option_delete( $option_name ) {
 
 		// Delete option.
 		return delete_option( $option_name );

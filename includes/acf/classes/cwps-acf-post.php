@@ -329,13 +329,12 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Construct link.
 		$link = sprintf(
-			/* translators: 1: The Link URL, 2: The Link text */
-			'<a href="%1$s">%2$s</a>',
+			'<a href="%s">%s</a>',
 			esc_url( $url ),
 			esc_html__( 'View this Contact in CiviCRM', 'civicrm-wp-profile-sync' )
 		);
 
-		// Show it.
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '<p>' . $link . '</p>';
 
 	}

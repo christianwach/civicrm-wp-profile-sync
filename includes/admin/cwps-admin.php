@@ -348,7 +348,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 			if ( $website_type_undefined === true ) {
 
 				echo '<div id="message" class="notice notice-warning">';
-				echo '<p>' . __( 'CiviCRM Profile Sync needs to know which Website Type to sync.', 'civicrm-wp-profile-sync' ) . '</p>';
+				echo '<p>' . esc_html__( 'CiviCRM Profile Sync needs to know which Website Type to sync.', 'civicrm-wp-profile-sync' ) . '</p>';
 				echo '</div>';
 
 			}
@@ -357,7 +357,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 			if ( $email_sync_undefined === true ) {
 
 				echo '<div id="message" class="notice notice-warning">';
-				echo '<p>' . __( 'CiviCRM Profile Sync needs to know how to sync the Primary Email.', 'civicrm-wp-profile-sync' ) . '</p>';
+				echo '<p>' . esc_html__( 'CiviCRM Profile Sync needs to know how to sync the Primary Email.', 'civicrm-wp-profile-sync' ) . '</p>';
 				echo '</div>';
 
 			}
@@ -396,13 +396,14 @@ class CiviCRM_WP_Profile_Sync_Admin {
 				// Show general "Call to Action".
 				$message = sprintf(
 					/* translators: 1: The Opening anchor tag, 2: The Closing anchor tag */
-					__( 'CiviCRM Profile Sync needs your attention. Please visit the %1$sSettings Page%2$s for details.', 'civicrm-wp-profile-sync' ),
+					esc_html__( 'CiviCRM Profile Sync needs your attention. Please visit the %1$sSettings Page%2$s for details.', 'civicrm-wp-profile-sync' ),
 					'<a href="' . $url . '">',
 					'</a>'
 				);
 
 				// Show it.
 				echo '<div id="message" class="notice notice-warning">';
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo '<p>' . $message . '</p>';
 				echo '</div>';
 

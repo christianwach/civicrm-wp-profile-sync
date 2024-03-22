@@ -15,7 +15,7 @@
 		<option value="0" selected="selected"><?php esc_html_e( 'None', 'civicrm-wp-profile-sync' ); ?></option>
 		<?php if ( ! empty( $groups ) ) : ?>
 			<?php foreach ( $groups as $group ) : ?>
-				<option value="<?php echo $group['id']; ?>"><?php echo $group['title']; ?></option>
+				<option value="<?php echo esc_attr( $group['id'] ); ?>"><?php echo esc_html( $group['title'] ); ?></option>
 			<?php endforeach; ?>
 		<?php endif; ?>
 	</select>

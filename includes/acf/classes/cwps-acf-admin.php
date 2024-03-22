@@ -577,6 +577,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 	public function admin_form_url_get() {
 
 		// Sanitise admin page url.
+		// TODO: switch to menu_page_url() for URL.
 		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		$target_url = isset( $_SERVER['REQUEST_URI'] ) ? wp_unslash( $_SERVER['REQUEST_URI'] ) : '';
 		if ( ! empty( $target_url ) ) {
@@ -602,12 +603,12 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// We must be network admin in multisite.
 		if ( is_multisite() && ! is_super_admin() ) {
-			wp_die( __( 'You do not have permission to access this page.', 'civicrm-wp-profile-sync' ) );
+			wp_die( esc_html__( 'You do not have permission to access this page.', 'civicrm-wp-profile-sync' ) );
 		}
 
 		// Check user permissions.
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( __( 'You do not have permission to access this page.', 'civicrm-wp-profile-sync' ) );
+			wp_die( esc_html__( 'You do not have permission to access this page.', 'civicrm-wp-profile-sync' ) );
 		}
 
 		// Get current screen.
@@ -697,7 +698,8 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// Render tab.
-		echo '<a href="' . $urls['manual-sync'] . '" class="nav-tab' . $active . '">' . $title . '</a>' . "\n";
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<a href="' . $urls['manual-sync'] . '" class="nav-tab' . esc_attr( $active ) . '">' . esc_html( $title ) . '</a>' . "\n";
 
 	}
 

@@ -320,7 +320,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Yes_No extends acf_field {
 		// Close list.
 		$html .= '</ul>';
 
-		// Print to screen.
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $html;
 
 	}
