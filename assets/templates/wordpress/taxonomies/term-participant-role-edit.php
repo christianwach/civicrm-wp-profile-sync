@@ -12,12 +12,12 @@
 <tr class="form-field term-participant-role-active-wrap">
 	<th scope="row"><label for="cwps-participant-role-active"><?php esc_html_e( 'Enabled?', 'civicrm-wp-profile-sync' ); ?></label></th>
 	<td>
-		<input type="checkbox" class="settings-checkbox" name="cwps-participant-role-active" id="cwps-participant-role-active" value="1"<?php echo $is_active; ?> />
+		<input type="checkbox" class="settings-checkbox" name="cwps-participant-role-active" id="cwps-participant-role-active" value="1" <?php checked( 1, $is_active ); ?> />
 	</td>
 </tr>
 <tr class="form-field term-participant-role-counted-wrap">
 	<th scope="row"><label for="cwps-participant-role-counted"><?php esc_html_e( 'Counted?', 'civicrm-wp-profile-sync' ); ?></label></th>
 	<td>
-		<input type="checkbox" class="settings-checkbox" name="cwps-participant-role-counted" id="cwps-participant-role-counted" value="1"<?php echo $is_counted; ?> />
+		<input type="checkbox" class="settings-checkbox" name="cwps-participant-role-counted" id="cwps-participant-role-counted" value="1"<?php checked( 1, $is_counted ); ?> />
 	</td>
 </tr>

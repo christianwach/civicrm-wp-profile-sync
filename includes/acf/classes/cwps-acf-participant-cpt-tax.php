@@ -1793,17 +1793,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		$active  = $this->term_active_get( $tag->term_id );
 		$counted = $this->term_counted_get( $tag->term_id );
 
-		// Assign value to "Is Active" checkbox.
-		$is_active = '';
-		if ( ! empty( $active ) ) {
-			$is_active = ' checked="checked"';
-		}
+		// Assign value for "Is Active" checkbox.
+		$is_active = ! empty( $active ) ? 1 : 0;
 
-		// Assign value to "Counted" checkbox.
-		$is_counted = '';
-		if ( ! empty( $counted ) ) {
-			$is_counted = ' checked="checked"';
-		}
+		// Assign value for "Counted" checkbox.
+		$is_counted = ! empty( $counted ) ? 1 : 0;
 
 		// Include template file.
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/taxonomies/term-participant-role-edit.php';

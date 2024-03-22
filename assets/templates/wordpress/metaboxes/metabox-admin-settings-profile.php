@@ -20,8 +20,8 @@
 					<?php if ( $email_sync === 2 ) : ?>
 						<option value="2" selected="selected"><?php esc_html_e( '- Select Primary Email sync method -', 'civicrm-wp-profile-sync' ); ?></option>
 					<?php endif; ?>
-					<option value="1"<?php echo $email_sync_yes; ?>><?php esc_html_e( 'Yes, handle Primary Email sync (recommended)', 'civicrm-wp-profile-sync' ); ?></option>
-					<option value="0"<?php echo $email_sync_no; ?>><?php esc_html_e( 'No, let CiviCRM handle Primary Email sync', 'civicrm-wp-profile-sync' ); ?></option>
+					<option value="1"<?php selected( 1, $email_sync_yes ); ?>><?php esc_html_e( 'Yes, handle Primary Email sync (recommended)', 'civicrm-wp-profile-sync' ); ?></option>
+					<option value="0"<?php selected( 1, $email_sync_no ); ?>><?php esc_html_e( 'No, let CiviCRM handle Primary Email sync', 'civicrm-wp-profile-sync' ); ?></option>
 				</select>
 			</p>
 			<p class="description"><?php esc_html_e( 'By default, CiviCRM is set to sync the Primary Email of a Contact to the email of a linked WordPress User. Unfortunately, CiviCRM is a bit clumsy in the way that it does this. Since you have CiviCRM Profile Sync installed, it is recommended that you let this plugin handle Primary Email sync for you.', 'civicrm-wp-profile-sync' ); ?></p>
@@ -94,7 +94,7 @@
 		</th>
 		<td>
 			<p>
-				<input type="checkbox" id="cwps_nickname_checkbox" name="cwps_nickname_checkbox" value="1"<?php echo $nickname_checked; ?>> <label for="cwps_nickname_checkbox"><?php esc_html_e( 'Sync Nickname', 'civicrm-wp-profile-sync' ); ?></label>
+				<input type="checkbox" id="cwps_nickname_checkbox" name="cwps_nickname_checkbox" value="1"<?php checked( 1, $nickname_checked ); ?>> <label for="cwps_nickname_checkbox"><?php esc_html_e( 'Sync Nickname', 'civicrm-wp-profile-sync' ); ?></label>
 			</p>
 			<p class="description"><?php esc_html_e( 'Check this if you want the WordPress User "Nickname" Field to sync with the CiviCRM Contact "Nickname" Field.', 'civicrm-wp-profile-sync' ); ?></p>
 		</td>

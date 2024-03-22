@@ -212,7 +212,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		$acf_enabled = (int) $this->plugin->admin->setting_get( 'acf_integration_enabled', 1 );
 
 		// Init template vars.
-		$acf_enabled_checked = $acf_enabled === 1 ? ' checked="checked"' : '';
+		$acf_enabled_checked = ( 1 === $acf_enabled ) ? 1 : 0;
 
 		// Include template file.
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/metaboxes/metabox-admin-settings-acf.php';
