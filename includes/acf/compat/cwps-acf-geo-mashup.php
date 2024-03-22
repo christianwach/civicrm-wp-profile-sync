@@ -518,13 +518,13 @@ class CiviCRM_WP_Profile_Sync_ACF_Geo_Mashup {
 
 			// Skip if the mapped Location Type is "primary" and this Address isn't.
 			$is_primary = isset( $address['field_address_primary'] ) ? $address['field_address_primary'] : '';
-			if ( $location_type === 'primary' && empty( $is_primary ) ) {
+			if ( 'primary' === $location_type && empty( $is_primary ) ) {
 				continue;
 			}
 
 			// Skip if the mapped Location Type is "billing" and this Address isn't.
 			$is_billing = isset( $address['field_address_billing'] ) ? $address['field_address_billing'] : '';
-			if ( $location_type === 'billing' && empty( $is_billing ) ) {
+			if ( 'billing' === $location_type && empty( $is_billing ) ) {
 				continue;
 			}
 
@@ -696,7 +696,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Geo_Mashup {
 		}
 
 		// Is this the Contact Type edit form?
-		if ( $form_name != 'CRM_Admin_Form_ContactType' ) {
+		if ( 'CRM_Admin_Form_ContactType' !== $form_name ) {
 			return;
 		}
 
@@ -746,19 +746,19 @@ class CiviCRM_WP_Profile_Sync_ACF_Geo_Mashup {
 		);
 
 		// Amend form in edit mode.
-		if ( $mode === 'edit' ) {
+		if ( 'edit' === $mode ) {
 
 			// Get existing CPT.
 			$cpt_name = $this->acf_loader->mapping->mapping_for_contact_type_get( $contact_type['id'] );
 
 			// If we have a mapped CPT.
-			if ( $cpt_name !== false ) {
+			if ( false !== $cpt_name ) {
 
 				// Get CPT settings.
 				$cpt_settings = $this->acf_loader->mapping->setting_get( $cpt_name );
 
 				// If we have some settings.
-				if ( $cpt_settings !== false ) {
+				if ( false !== $cpt_settings ) {
 
 					// Set status of checkbox based on setting.
 					if ( isset( $cpt_settings['geo_mashup'] ) && 1 === (int) $cpt_settings['geo_mashup'] ) {
@@ -812,7 +812,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Geo_Mashup {
 		$data['geo_mashup_metabox'] = $geo_mashup_metabox;
 
 		// Override the "metabox" checkbox value when sync is off.
-		if ( $geo_mashup === 0 ) {
+		if ( 0 === $geo_mashup ) {
 			$data['geo_mashup_metabox'] = 0;
 		}
 

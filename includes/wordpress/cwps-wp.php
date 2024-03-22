@@ -146,7 +146,7 @@ class CiviCRM_WP_Profile_Sync_WordPress {
 	public function register_mapper_hooks() {
 
 		// Bail if already registered.
-		if ( $this->mapper_hooks === true ) {
+		if ( true === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -163,7 +163,7 @@ class CiviCRM_WP_Profile_Sync_WordPress {
 	public function unregister_mapper_hooks() {
 
 		// Bail if already unregistered.
-		if ( $this->mapper_hooks === false ) {
+		if ( false === $this->mapper_hooks ) {
 			return;
 		}
 

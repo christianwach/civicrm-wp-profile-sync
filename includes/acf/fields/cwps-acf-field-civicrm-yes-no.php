@@ -207,8 +207,8 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Yes_No extends acf_field {
 		// Filter Fields to include only "Yes/No".
 		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			foreach ( $custom_group as $custom_field ) {
-				if ( ! empty( $custom_field['data_type'] ) && $custom_field['data_type'] == 'Boolean' ) {
-					if ( ! empty( $custom_field['html_type'] ) && $custom_field['html_type'] == 'Radio' ) {
+				if ( ! empty( $custom_field['data_type'] ) && 'Boolean' === $custom_field['data_type'] ) {
+					if ( ! empty( $custom_field['html_type'] ) && 'Radio' === $custom_field['html_type'] ) {
 						$filtered_fields[ $custom_group_name ][] = $custom_field;
 					}
 				}

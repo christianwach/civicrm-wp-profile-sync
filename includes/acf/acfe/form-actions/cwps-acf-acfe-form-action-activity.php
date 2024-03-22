@@ -425,7 +425,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		$args['activity'] = $this->form_activity_save( $activity, $custom_fields );
 
 		// If we get an Activity.
-		if ( $args['activity'] !== false ) {
+		if ( false !== $args['activity'] ) {
 
 			// Post-process Custom Fields now that we have an Activity.
 			$this->form_custom_post_process( $form, $current_post_id, $action, $args['activity'] );
@@ -1176,14 +1176,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 			}
 
 			// Check Contact ID Field.
-			if ( $contact_id === false ) {
+			if ( false === $contact_id ) {
 				if ( ! empty( $contact_group_field[ $this->field_name . 'cid_' . $field['name'] ] ) ) {
 					$contact_id = $contact_group_field[ $this->field_name . 'cid_' . $field['name'] ];
 				}
 			}
 
 			// Check mapped Field.
-			if ( $contact_id === false ) {
+			if ( false === $contact_id ) {
 				if ( ! empty( $contact_group_field[ $this->field_name . 'map_' . $field['name'] ] ) ) {
 					$reference = [ $field['name'] => $contact_group_field[ $this->field_name . 'map_' . $field['name'] ] ];
 					$reference = acfe_form_map_vs_fields( $reference, $reference, $current_post_id, $form );
@@ -1354,7 +1354,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		$result = $this->civicrm->activity->create( $activity_data );
 
 		// Bail on failure.
-		if ( $result === false ) {
+		if ( false === $result ) {
 			return $activity;
 		}
 
@@ -1531,7 +1531,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 					$fields[ $code ] = $custom_group_field[ $this->field_name . 'map_' . $code ];
 
 					// Track any "File" Custom Fields.
-					if ( $custom_field['data_type'] === 'File' ) {
+					if ( 'File' === $custom_field['data_type'] ) {
 						$file_fields[ $code ] = $custom_field['id'];
 					}
 
@@ -1792,7 +1792,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 
 			// Create the Attachment.
 			$result = $this->civicrm->attachment->create( $params );
-			if ( $result === false ) {
+			if ( false === $result ) {
 				continue;
 			}
 

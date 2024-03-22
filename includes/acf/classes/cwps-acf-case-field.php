@@ -158,13 +158,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 	public function value_validate( $valid, $value, $field, $input ) {
 
 		// Bail if it's not required and is empty.
-		if ( $field['required'] == '0' && empty( $value ) ) {
+		if ( 0 === (int) $field['required'] && empty( $value ) ) {
 			return $valid;
 		}
 
 		// Get the mapped Case Field name if present.
 		$case_field_name = $this->civicrm->case->case_field_name_get( $field );
-		if ( $case_field_name === false ) {
+		if ( false === $case_field_name ) {
 			return $valid;
 		}
 
@@ -271,7 +271,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 		}
 
 		// Bail if value is (string) 'null' which CiviCRM uses for some reason.
-		if ( $value == 'null' ) {
+		if ( 'null' === $value ) {
 			return '';
 		}
 
@@ -297,26 +297,26 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 				$acf_setting = get_field_object( $selector, $post_id );
 
 				// Test for Date Picker or Date & Time Picker.
-				if ( $acf_setting['type'] == 'date_picker' ) {
+				if ( 'date_picker' === $acf_setting['type'] ) {
 
 					// Case edit passes a Y-m-d format, so test for that.
 					$datetime = DateTime::createFromFormat( 'Y-m-d', $value );
 
 					// Case create passes a different format, so test for that.
-					if ( $datetime === false ) {
+					if ( false === $datetime ) {
 						$datetime = DateTime::createFromFormat( 'YmdHis', $value );
 					}
 
 					// Convert to ACF format.
 					$value = $datetime->format( 'Ymd' );
 
-				} elseif ( $acf_setting['type'] == 'date_time_picker' ) {
+				} elseif ( 'date_time_picker' === $acf_setting['type'] ) {
 
 					// Case edit passes a YmdHis format, so test for that.
 					$datetime = DateTime::createFromFormat( 'YmdHis', $value );
 
 					// Case API passes a different format, so test for that.
-					if ( $datetime === false ) {
+					if ( false === $datetime ) {
 						$datetime = DateTime::createFromFormat( 'Y-m-d H:i:s', $value );
 					}
 
@@ -353,12 +353,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 		// We only have a few to account for.
 
 		// Case Type ID.
-		if ( $name == 'case_type_id' ) {
+		if ( 'case_type_id' === $name ) {
 			$options = $this->civicrm->case_type->choices_get();
 		}
 
 		// Case Status ID.
-		if ( $name == 'case_status_id' || $name == 'status_id' ) {
+		if ( 'case_status_id' === $name || 'status_id' === $name ) {
 			$option_group = $this->plugin->civicrm->option_group_get( 'case_status' );
 			if ( ! empty( $option_group ) ) {
 				$options = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
@@ -366,7 +366,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 		}
 
 		// Medium ID.
-		if ( $name == 'case_medium_id' || $name == 'medium_id' ) {
+		if ( 'case_medium_id' === $name || 'medium_id' === $name ) {
 			$options = CRM_Case_PseudoConstant::encounterMedium();
 		}
 
@@ -400,7 +400,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 		// Bail if this is not a Case Field Group.
 		$is_case_field_group = $this->civicrm->case->is_case_field_group( $field_group );
-		if ( $is_case_field_group === false ) {
+		if ( false === $is_case_field_group ) {
 			return $case_fields;
 		}
 
@@ -457,7 +457,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 		$result = civicrm_api( 'Case', 'getfield', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $field;
 		}
 
@@ -512,14 +512,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 		$result = civicrm_api( 'Case', 'getfields', $params );
 
 		// Override return if we get some.
-		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
+		if ( empty( $result['is_error'] ) && ! empty( $result['values'] ) ) {
 
-			if ( $filter == 'none' ) {
+			if ( 'none' === $filter ) {
 
 				// Grab all Fields.
 				$fields = $result['values'];
 
-			} elseif ( $filter == 'public' ) {
+			} elseif ( 'public' === $filter ) {
 
 				// Skip all but those defined in our Case Fields array.
 				$public_fields = [];
@@ -598,14 +598,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 		$result = civicrm_api( 'Case', 'getfields', $params );
 
 		// Override return if we get some.
-		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
+		if ( empty( $result['is_error'] ) && ! empty( $result['values'] ) ) {
 
-			if ( $filter == 'none' ) {
+			if ( 'none' === $filter ) {
 
 				// Grab all Fields.
 				$fields = $result['values'];
 
-			} elseif ( $filter == 'public' ) {
+			} elseif ( 'public' === $filter ) {
 
 				// Skip all but those defined in our Case Fields array.
 				foreach ( $result['values'] as $key => $value ) {
@@ -723,7 +723,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 		// Get the mapped Case Field name if present.
 		$case_field_name = $this->civicrm->case->case_field_name_get( $field );
-		if ( $case_field_name === false ) {
+		if ( false === $case_field_name ) {
 			return $field;
 		}
 
@@ -731,17 +731,17 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 		$field['choices'] = $this->options_get( $case_field_name );
 
 		// Set a default for "Case Status".
-		if ( $case_field_name == 'status_id' || $case_field_name == 'case_status_id' ) {
+		if ( 'status_id' === $case_field_name || 'case_status_id' === $case_field_name ) {
 			$status_id_default = $this->civicrm->option_value_default_get( 'case_status' );
-			if ( $status_id_default !== false ) {
+			if ( false !== $status_id_default ) {
 				$field['default_value'] = $status_id_default;
 			}
 		}
 
 		// Set a default for "Activity Medium".
-		if ( $case_field_name == 'medium_id' || $case_field_name == 'case_medium_id' ) {
+		if ( 'medium_id' === $case_field_name || 'case_medium_id' === $case_field_name ) {
 			$medium_id_default = $this->civicrm->option_value_default_get( 'encounter_medium' );
-			if ( $medium_id_default !== false ) {
+			if ( false !== $medium_id_default ) {
 				$field['default_value'] = $medium_id_default;
 			}
 		}
@@ -775,7 +775,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 		// Get the mapped Case Field name if present.
 		$case_field_name = $this->civicrm->case->case_field_name_get( $field );
-		if ( $case_field_name === false ) {
+		if ( false === $case_field_name ) {
 			return $field;
 		}
 

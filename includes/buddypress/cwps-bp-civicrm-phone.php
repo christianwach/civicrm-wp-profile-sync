@@ -166,7 +166,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 	public function register_mapper_hooks() {
 
 		// Bail if already registered.
-		if ( $this->mapper_hooks === true ) {
+		if ( true === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -191,7 +191,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 	public function unregister_mapper_hooks() {
 
 		// Bail if already unregistered.
-		if ( $this->mapper_hooks === false ) {
+		if ( false === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -249,7 +249,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 		// Bail if we can't find a User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $phone->contact_id );
-		if ( $user_id === false ) {
+		if ( false === $user_id ) {
 			return $user_id;
 		}
 
@@ -261,7 +261,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 		foreach ( $bp_fields as $bp_field ) {
 
 			// Only Fields for this Entity please.
-			if ( $bp_field['field_meta']['entity_type'] !== 'Phone' ) {
+			if ( 'Phone' !== $bp_field['field_meta']['entity_type'] ) {
 				continue;
 			}
 
@@ -344,7 +344,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 	public function value_get_for_bp( $value, $name, $params ) {
 
 		// Bail if value is (string) 'null' which CiviCRM uses for some reason.
-		if ( $value == 'null' || $value == 'NULL' ) {
+		if ( 'null' === $value || 'NULL' === $value ) {
 			return '';
 		}
 
@@ -395,7 +395,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 		// Filter the Fields to include only Phone data.
 		$phone_fields = [];
 		foreach ( $args['field_data'] as $field ) {
-			if ( empty( $field['meta']['entity_type'] ) || $field['meta']['entity_type'] !== 'Phone' ) {
+			if ( empty( $field['meta']['entity_type'] ) || 'Phone' !== $field['meta']['entity_type'] ) {
 				continue;
 			}
 			$phone_fields[] = $field;
@@ -552,7 +552,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 		}
 
 		// Bail if not the "Phone" Entity Type.
-		if ( $entity_type !== 'Phone' ) {
+		if ( 'Phone' !== $entity_type ) {
 			return $choices;
 		}
 
@@ -651,14 +651,14 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 		$result = civicrm_api( 'Phone', 'getfields', $params );
 
 		// Override return if we get some.
-		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
+		if ( empty( $result['is_error'] ) && ! empty( $result['values'] ) ) {
 
-			if ( $filter == 'none' ) {
+			if ( 'none' === $filter ) {
 
 				// Grab all Fields.
 				$fields = $result['values'];
 
-			} elseif ( $filter == 'public' ) {
+			} elseif ( 'public' === $filter ) {
 
 				// Skip all but those defined in our Phone Fields array.
 				$public_fields = [];
@@ -776,7 +776,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 		// Bail if not a "True/False" Field Type.
 		$civicrm_field_type = $this->get_bp_type( $field_name );
-		if ( $civicrm_field_type !== 'true_false' ) {
+		if ( 'true_false' !== $civicrm_field_type ) {
 			return $options;
 		}
 
@@ -847,7 +847,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 		// Check if this is a "True/False" Field Type.
 		$civicrm_field_type = $this->get_bp_type( $args['phone_field_name'] );
-		if ( $civicrm_field_type === 'true_false' ) {
+		if ( 'true_false' === $civicrm_field_type ) {
 			$is_true_false = true;
 		}
 

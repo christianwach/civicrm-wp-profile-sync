@@ -667,7 +667,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 	public function validate_value( $valid, $value, $field, $input ) {
 
 		// Return early if this isn't our Field.
-		if ( $field['key'] !== 'field_' . $this->acf_slug . '_contact_group' ) {
+		if ( 'field_' . $this->acf_slug . '_contact_group' !== $field['key'] ) {
 			return $valid;
 		}
 

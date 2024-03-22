@@ -136,8 +136,8 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks {
 
 		// Maybe initialise legacy CAI object.
 		if ( $this->plugin->cai->is_loaded() ) {
-			$this->acf = new CiviCRM_WP_Profile_Sync_Mapper_Hooks_ACF( $this );
-			$this->acf_loaded === true;
+			$this->acf        = new CiviCRM_WP_Profile_Sync_Mapper_Hooks_ACF( $this );
+			$this->acf_loaded = true;
 		}
 
 	}
@@ -153,7 +153,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks {
 		$this->core->register_hooks();
 
 		// Maybe add ACF callbacks.
-		if ( $this->acf_loaded === true ) {
+		if ( true === $this->acf_loaded ) {
 			$this->acf->register_hooks();
 		}
 
@@ -170,7 +170,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks {
 		$this->core->unregister_hooks();
 
 		// Maybe add ACF callbacks.
-		if ( $this->acf_loaded === true ) {
+		if ( true === $this->acf_loaded ) {
 			$this->acf->unregister_hooks();
 		}
 

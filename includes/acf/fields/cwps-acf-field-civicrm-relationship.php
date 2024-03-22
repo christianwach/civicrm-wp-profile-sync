@@ -382,7 +382,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Relationship extends acf_field {
 			$relationship_type = $this->civicrm->relationship->type_get_by_id( $relationship_id );
 
 			// We need to find the target Contact Type.
-			if ( $relationship_direction == 'ab' ) {
+			if ( 'ab' === $relationship_direction ) {
 				if ( ! empty( $relationship_type['contact_type_b'] ) ) {
 					$args['contact_type'] = $relationship_type['contact_type_b'];
 					if ( ! empty( $relationship_type['contact_sub_type_b'] ) ) {

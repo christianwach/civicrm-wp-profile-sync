@@ -128,7 +128,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 	public function register_mapper_hooks() {
 
 		// Bail if already registered.
-		if ( $this->mapper_hooks === true ) {
+		if ( true === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -150,7 +150,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 	public function unregister_mapper_hooks() {
 
 		// Bail if already unregistered.
-		if ( $this->mapper_hooks === false ) {
+		if ( false === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -264,12 +264,12 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 	public function contact_pre( $op, $object_name, $object_id, $object_ref ) {
 
 		// Target our operation.
-		if ( $op != 'edit' ) {
+		if ( 'edit' !== $op ) {
 			return;
 		}
 
 		// Target our object type.
-		if ( $object_name != 'Individual' ) {
+		if ( 'Individual' !== $object_name ) {
 			return;
 		}
 
@@ -295,7 +295,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $args['objectId'] );
 
 		// Bail if we didn't get one.
-		if ( $user_id === false ) {
+		if ( false === $user_id ) {
 			return;
 		}
 
@@ -500,7 +500,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		$result = civicrm_api( 'Contact', 'create', $params );
 
 		// Log something on failure.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -591,7 +591,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		$result = civicrm_api( 'Contact', 'create', $params );
 
 		// Log something on failure.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -621,7 +621,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 
 		// Check if our setting allows Nickname sync.
 		$nickname_sync = $this->plugin->admin->setting_get( 'user_profile_nickname_sync', 1 );
-		if ( $nickname_sync !== 1 ) {
+		if ( 1 !== (int) $nickname_sync ) {
 			$should_be_synced = false;
 		}
 
@@ -701,7 +701,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		$result = civicrm_api( 'Contact', 'create', $params );
 
 		// Log and bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -802,7 +802,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		$result = civicrm_api( 'Contact', 'delete', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $contact_data;
 		}
 
@@ -859,7 +859,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		$result = civicrm_api( 'Contact', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $contact_data;
 		}
 
@@ -914,7 +914,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		$result = civicrm_api( 'Contact', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $contact_data;
 		}
 
@@ -967,7 +967,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		$result = civicrm_api( 'ContactType', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $all;
 		}
 
@@ -1014,7 +1014,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		$result = civicrm_api( 'ContactType', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $contact_type;
 		}
 
@@ -1055,7 +1055,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact {
 		$contact = $this->plugin->mapper->ufmatch->contact_get_by_user_id( $user->ID );
 
 		// Bail if there isn't one.
-		if ( $contact === false ) {
+		if ( false === $contact ) {
 			return;
 		}
 

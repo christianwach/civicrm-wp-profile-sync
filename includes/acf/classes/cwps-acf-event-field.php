@@ -245,13 +245,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 	public function value_validate( $valid, $value, $field, $input ) {
 
 		// Bail if it's not required and is empty.
-		if ( $field['required'] == '0' && empty( $value ) ) {
+		if ( 0 === (int) $field['required'] && empty( $value ) ) {
 			return $valid;
 		}
 
 		// Get the mapped Event Field name if present.
 		$event_field_name = $this->civicrm->event->event_field_name_get( $field );
-		if ( $event_field_name === false ) {
+		if ( false === $event_field_name ) {
 			return $valid;
 		}
 
@@ -293,7 +293,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 		}
 
 		// Bail if value is (string) 'null' which CiviCRM uses for some reason.
-		if ( $value == 'null' ) {
+		if ( 'null' === $value ) {
 			return '';
 		}
 
@@ -319,26 +319,26 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 				$acf_setting = get_field_object( $selector, $post_id );
 
 				// Test for Date Picker or Date & Time Picker.
-				if ( $acf_setting['type'] == 'date_picker' ) {
+				if ( 'date_picker' === $acf_setting['type'] ) {
 
 					// Event edit passes a Y-m-d format, so test for that.
 					$datetime = DateTime::createFromFormat( 'Y-m-d', $value );
 
 					// Event create passes a different format, so test for that.
-					if ( $datetime === false ) {
+					if ( false === $datetime ) {
 						$datetime = DateTime::createFromFormat( 'YmdHis', $value );
 					}
 
 					// Convert to ACF format.
 					$value = $datetime->format( 'Ymd' );
 
-				} elseif ( $acf_setting['type'] == 'date_time_picker' ) {
+				} elseif ( 'date_time_picker' === $acf_setting['type'] ) {
 
 					// Event edit passes a YmdHis format, so test for that.
 					$datetime = DateTime::createFromFormat( 'YmdHis', $value );
 
 					// Event API passes a different format, so test for that.
-					if ( $datetime === false ) {
+					if ( false === $datetime ) {
 						$datetime = DateTime::createFromFormat( 'Y-m-d H:i:s', $value );
 					}
 
@@ -375,12 +375,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 		// We only have a few to account for.
 
 		// Event Type ID.
-		if ( $name == 'event_type_id' ) {
+		if ( 'event_type_id' === $name ) {
 			$options = $this->civicrm->event_type->choices_get();
 		}
 
 		// Participant Role ID.
-		if ( $name == 'default_role_id' ) {
+		if ( 'default_role_id' === $name ) {
 			$option_group = $this->plugin->civicrm->option_group_get( 'participant_role' );
 			if ( ! empty( $option_group ) ) {
 				$options = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
@@ -388,7 +388,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 		}
 
 		// Participant Listing ID.
-		if ( $name == 'participant_listing_id' ) {
+		if ( 'participant_listing_id' === $name ) {
 			$option_group = $this->plugin->civicrm->option_group_get( 'participant_listing' );
 			if ( ! empty( $option_group ) ) {
 				$options = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
@@ -396,7 +396,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 		}
 
 		// Campaign ID.
-		if ( $name == 'campaign_id' ) {
+		if ( 'campaign_id' === $name ) {
 			$options = $this->civicrm->campaign->choices_get();
 		}
 
@@ -430,7 +430,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 
 		// Bail if this is not an Event Field Group.
 		$is_event_field_group = $this->civicrm->event->is_event_field_group( $field_group );
-		if ( $is_event_field_group === false ) {
+		if ( false === $is_event_field_group ) {
 			return $event_fields;
 		}
 
@@ -508,10 +508,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 		$fields = $this->data_get_by_action();
 
 		// Check for filter.
-		if ( $filter !== 'none' ) {
+		if ( 'none' !== $filter ) {
 
 			// Check public filter.
-			if ( $filter == 'public' ) {
+			if ( 'public' === $filter ) {
 
 				// Grab the public Event Fields.
 				$public_fields = $this->public_fields_get();
@@ -589,7 +589,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 		$result = civicrm_api( 'Event', 'getfields', $params );
 
 		// Don't cache if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $fields;
 		}
 
@@ -633,9 +633,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 		$fields = $this->data_get_by_action( $action );
 
 		// Check for filter.
-		if ( $filter !== 'none' ) {
+		if ( 'none' !== $filter ) {
 
-			if ( $filter == 'public' ) {
+			if ( 'public' === $filter ) {
 
 				// Grab the public Event Fields.
 				$public_fields = $this->public_fields_get();
@@ -661,7 +661,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 					}
 				}
 
-			} elseif ( $filter == 'settings' ) {
+			} elseif ( 'settings' === $filter ) {
 
 				// Skip all but those defined in our Event Settings Fields array.
 				$filtered = [];
@@ -684,7 +684,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 					}
 				}
 
-			} elseif ( $filter == 'fee' ) {
+			} elseif ( 'fee' === $filter ) {
 
 				// Skip all but those defined in our Event Fields array.
 				$filtered = [];
@@ -707,7 +707,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 					}
 				}
 
-			} elseif ( $filter == 'registration' ) {
+			} elseif ( 'registration' === $filter ) {
 
 				// Skip all but those defined in our Online Registration Fields array.
 				$filtered = [];
@@ -862,7 +862,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 
 		// Get the mapped Event Field name if present.
 		$event_field_name = $this->civicrm->event->event_field_name_get( $field );
-		if ( $event_field_name === false ) {
+		if ( false === $event_field_name ) {
 			return $field;
 		}
 
@@ -875,13 +875,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 		$field['choices'] = $this->options_get( $event_field_name );
 
 		// Set a default for "Participant Listing".
-		if ( $event_field_name == 'participant_listing_id' ) {
+		if ( 'participant_listing_id' === $event_field_name ) {
 			$field['choices']       = [ '' => __( 'Disabled', 'civicrm-wp-profile-sync' ) ] + $field['choices'];
 			$field['default_value'] = '';
 		}
 
 		// Set a default for "Campaign ID".
-		if ( $event_field_name == 'campaign_id' ) {
+		if ( 'campaign_id' === $event_field_name ) {
 			$field['choices']       = [ '' => __( 'None', 'civicrm-wp-profile-sync' ) ] + $field['choices'];
 			$field['default_value'] = '';
 		}
@@ -915,7 +915,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 
 		// Get the mapped Event Field name if present.
 		$event_field_name = $this->civicrm->event->event_field_name_get( $field );
-		if ( $event_field_name === false ) {
+		if ( false === $event_field_name ) {
 			return $field;
 		}
 

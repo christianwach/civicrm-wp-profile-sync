@@ -107,7 +107,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Campaign {
 		$result = civicrm_api( 'Campaign', 'create', $params );
 
 		// Log and bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -195,7 +195,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Campaign {
 		$result = civicrm_api( 'Campaign', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $campaign;
 		}
 

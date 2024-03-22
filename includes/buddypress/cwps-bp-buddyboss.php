@@ -102,7 +102,7 @@ class CiviCRM_Profile_Sync_BP_BuddyBoss {
 		$nickname_sync = $this->plugin->admin->setting_get( 'user_profile_nickname_sync', 1 );
 
 		// Prevent sync if not.
-		if ( $nickname_sync !== 1 ) {
+		if ( 1 !== (int) $nickname_sync ) {
 			add_filter( 'bp_xprofile_nickname_field_id', [ $this, 'nickname_sync_prevent' ] );
 		}
 
@@ -110,7 +110,7 @@ class CiviCRM_Profile_Sync_BP_BuddyBoss {
 		bp_xprofile_sync_bp_profile( $args['user_id'] );
 
 		// Reinstate normal operation.
-		if ( $nickname_sync !== 1 ) {
+		if ( 1 !== (int) $nickname_sync ) {
 			remove_filter( 'bp_xprofile_nickname_field_id', [ $this, 'nickname_sync_prevent' ] );
 		}
 

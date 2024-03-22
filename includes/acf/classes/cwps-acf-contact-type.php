@@ -104,7 +104,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 	public function register_mapper_hooks() {
 
 		// Bail if already registered.
-		if ( $this->mapper_hooks === true ) {
+		if ( true === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -125,7 +125,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 	public function unregister_mapper_hooks() {
 
 		// Bail if already unregistered.
-		if ( $this->mapper_hooks === false ) {
+		if ( false === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -154,7 +154,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 		$hierarchy = $this->plugin->civicrm->contact_type->hierarchy_get_by_id( $contact_type_id, 'id' );
 
 		// Bail if we didn't get any.
-		if ( $hierarchy === false ) {
+		if ( false === $hierarchy ) {
 			return 0;
 		}
 
@@ -175,7 +175,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 		$result = civicrm_api( 'Contact', 'get', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -213,7 +213,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 		$contact_type_id = $this->id_get_for_post_type( $post_type_name );
 
 		// Bail on failure.
-		if ( $contact_type_id === false ) {
+		if ( false === $contact_type_id ) {
 			return $types;
 		}
 
@@ -424,7 +424,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 		$result = civicrm_api( 'ContactType', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $contact_types;
 		}
 
@@ -489,7 +489,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 			$contact_type_data = $this->plugin->civicrm->contact_type->get_data( $contact_type, 'name' );
 
 			// Bail if we didn't get any.
-			if ( $contact_type_data === false ) {
+			if ( false === $contact_type_data ) {
 				return $is_mapped;
 			}
 

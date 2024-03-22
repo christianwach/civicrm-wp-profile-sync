@@ -178,7 +178,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		$this->upgrade_tasks();
 
 		// Store version for later reference if there has been a change.
-		if ( $this->plugin_version != CIVICRM_WP_PROFILE_SYNC_VERSION ) {
+		if ( CIVICRM_WP_PROFILE_SYNC_VERSION !== $this->plugin_version ) {
 			$this->option_set( 'cwps_version', CIVICRM_WP_PROFILE_SYNC_VERSION );
 		}
 
@@ -271,7 +271,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		*/
 
 		// If this is an upgrade.
-		if ( $this->plugin_version != CIVICRM_WP_PROFILE_SYNC_VERSION ) {
+		if ( CIVICRM_WP_PROFILE_SYNC_VERSION !== $this->plugin_version ) {
 			$this->is_upgrade = true;
 		}
 
@@ -342,10 +342,10 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		$is_settings_screen = in_array( $screen->id, $settings_screens, true );
 
 		// Set message if we are on one of our Settings Pages.
-		if ( $is_settings_screen === true ) {
+		if ( true === $is_settings_screen ) {
 
 			// If the website setting doesn't exist or has no value.
-			if ( $website_type_undefined === true ) {
+			if ( true === $website_type_undefined ) {
 
 				echo '<div id="message" class="notice notice-warning">';
 				echo '<p>' . esc_html__( 'CiviCRM Profile Sync needs to know which Website Type to sync.', 'civicrm-wp-profile-sync' ) . '</p>';
@@ -354,7 +354,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 			}
 
 			// If the email setting doesn't exist or has no valid value.
-			if ( $email_sync_undefined === true ) {
+			if ( true === $email_sync_undefined ) {
 
 				echo '<div id="message" class="notice notice-warning">';
 				echo '<p>' . esc_html__( 'CiviCRM Profile Sync needs to know how to sync the Primary Email.', 'civicrm-wp-profile-sync' ) . '</p>';
@@ -453,7 +453,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		*/
 
 		// Save settings if need be.
-		if ( $save === true ) {
+		if ( true === $save ) {
 			$this->settings_save();
 		}
 
@@ -890,9 +890,9 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		$nickname_sync = (int) $this->setting_get( 'user_profile_nickname_sync', 1 );
 
 		// Init template vars.
-		$email_sync_yes   = $email_sync === 1 ? 1 : 0;
-		$email_sync_no    = $email_sync === 0 ? 1 : 0;
-		$nickname_checked = $nickname_sync === 1 ? 1 : 0;
+		$email_sync_yes   = 1 === $email_sync ? 1 : 0;
+		$email_sync_no    = 0 === $email_sync ? 1 : 0;
+		$nickname_checked = 1 === $nickname_sync ? 1 : 0;
 
 		// Include template file.
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'assets/templates/wordpress/metaboxes/metabox-admin-settings-profile.php';
@@ -981,7 +981,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 			0;
 
 		// Did we set a CiviCRM Website Type?
-		if ( $website_type !== 0 ) {
+		if ( 0 !== $website_type ) {
 			$this->setting_set( 'user_profile_website_type', $website_type );
 		}
 
@@ -992,13 +992,13 @@ class CiviCRM_WP_Profile_Sync_Admin {
 			2;
 
 		// Did we choose an Email Sync setting?
-		if ( $email_sync !== 2 ) {
+		if ( 2 !== $email_sync ) {
 
 			// Assign the setting.
 			$this->setting_set( 'user_profile_email_sync', $email_sync );
 
 			// The setting in CiviCRM is the logical opposite of ours.
-			$civicrm_email_sync = $email_sync === 1 ? false : true;
+			$civicrm_email_sync = 1 === $email_sync ? false : true;
 			$this->plugin->civicrm->email->sync_setting_force( $civicrm_email_sync );
 
 		}

@@ -83,7 +83,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 
 		// Only do this once.
 		static $done;
-		if ( isset( $done ) && $done === true ) {
+		if ( isset( $done ) && true === $done ) {
 			return;
 		}
 

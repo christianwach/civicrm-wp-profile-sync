@@ -201,7 +201,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	public function register_mapper_hooks() {
 
 		// Bail if already registered.
-		if ( $this->mapper_hooks === true ) {
+		if ( true === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -223,7 +223,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	public function unregister_mapper_hooks() {
 
 		// Bail if already unregistered.
-		if ( $this->mapper_hooks === false ) {
+		if ( false === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -553,7 +553,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 
 				// Hand off to internal method.
 				$attachment = $this->attachment_create( $params, $args );
-				if ( $attachment === false ) {
+				if ( false === $attachment ) {
 					continue;
 				}
 
@@ -627,7 +627,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 
 			// Hand off to internal method.
 			$attachment = $this->attachment_create( $params, $args );
-			if ( $attachment === false ) {
+			if ( false === $attachment ) {
 				continue;
 			}
 
@@ -744,7 +744,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 
 			// Hand off to internal method.
 			$attachment = $this->attachment_create( $params, $args );
-			if ( $attachment === false ) {
+			if ( false === $attachment ) {
 				continue;
 			}
 
@@ -802,7 +802,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 		@unlink( $backup );
 
 		// Skip if we failed to create the Attachment.
-		if ( $attachment === false ) {
+		if ( false === $attachment ) {
 			return false;
 		}
 
@@ -896,7 +896,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 		}
 
 		// Bail if this is not an Activity Attachment.
-		if ( $attachment->entity_table !== 'civicrm_activity' ) {
+		if ( 'civicrm_activity' !== $attachment->entity_table ) {
 			return;
 		}
 
@@ -923,7 +923,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 		}
 
 		// Bail if this is not an Activity Attachment.
-		if ( $attachment->entity_table !== 'civicrm_activity' ) {
+		if ( 'civicrm_activity' !== $attachment->entity_table ) {
 			return;
 		}
 
@@ -953,16 +953,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 
 		// Bail if this Activity's Activity Type is not mapped.
 		$post_type = $this->civicrm->activity->is_mapped( $activity, 'create' );
-		if ( $post_type === false ) {
+		if ( false === $post_type ) {
 			return;
 		}
 
 		// Get the Post ID for this Activity.
 		$post_id = $this->civicrm->activity->is_mapped_to_post( $activity, $post_type );
-		if ( $post_id !== false ) {
+		if ( false !== $post_id ) {
 
 			// Exclude "reverse" edits when a Post is the originator.
-			if ( $entity['entity'] === 'post' && $post_id == $entity['id'] ) {
+			if ( 'post' === $entity['entity'] && $post_id == $entity['id'] ) {
 				return;
 			}
 
@@ -1010,7 +1010,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 			$existing = get_field( $selector, $post_id );
 
 			// Before applying edit, make some checks.
-			if ( $args['op'] == 'edit' ) {
+			if ( 'edit' === $args['op'] ) {
 
 				// If there is no existing Field value, treat as a 'create' op.
 				if ( empty( $existing ) ) {
@@ -1129,7 +1129,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	public function acf_fields_get_for_post( $acf_fields, $field, $post_id ) {
 
 		// Add if it has a reference to an Attachments Field.
-		if ( ! empty( $field['type'] ) && $field['type'] == 'civicrm_attachment' ) {
+		if ( ! empty( $field['type'] ) && 'civicrm_attachment' === $field['type'] ) {
 			$acf_fields['attachments'][ $field['name'] ] = $field['type'];
 		}
 
@@ -1165,7 +1165,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 		}
 
 		// Skip filter if using WordPress File.
-		if ( (int) $field['file_link'] === 1 ) {
+		if ( (int) 1 === $field['file_link'] ) {
 			return $value;
 		}
 
@@ -1231,7 +1231,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 		}
 
 		// Skip filter if using WordPress File.
-		if ( (int) $field['file_link'] === 1 ) {
+		if ( (int) 1 === $field['file_link'] ) {
 			return;
 		}
 
@@ -1326,7 +1326,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 		$entity = $this->acf_loader->acf->field->entity_type_get( $args['post_id'] );
 
 		// Check permissions if it's a Post.
-		if ( $entity === 'post' ) {
+		if ( 'post' === $entity ) {
 			if ( ! current_user_can( 'edit_post', $args['post_id'] ) ) {
 				return;
 			}

@@ -192,7 +192,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	public function register_mapper_hooks() {
 
 		// Bail if already registered.
-		if ( $this->mapper_hooks === true ) {
+		if ( true === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -212,7 +212,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	public function unregister_mapper_hooks() {
 
 		// Bail if already unregistered.
-		if ( $this->mapper_hooks === false ) {
+		if ( false === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -246,7 +246,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	public function register_civicrm_hooks() {
 
 		// Bail if already registered.
-		if ( $this->civicrm_hooks === true ) {
+		if ( true === $this->civicrm_hooks ) {
 			return;
 		}
 
@@ -266,7 +266,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	public function unregister_civicrm_hooks() {
 
 		// Bail if already unregistered.
-		if ( $this->civicrm_hooks === false ) {
+		if ( false === $this->civicrm_hooks ) {
 			return;
 		}
 
@@ -286,7 +286,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	public function register_wordpress_hooks() {
 
 		// Bail if already registered.
-		if ( $this->wordpress_hooks === true ) {
+		if ( true === $this->wordpress_hooks ) {
 			return;
 		}
 
@@ -306,7 +306,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	public function unregister_wordpress_hooks() {
 
 		// Bail if already unregistered.
-		if ( $this->wordpress_hooks === false ) {
+		if ( false === $this->wordpress_hooks ) {
 			return;
 		}
 
@@ -350,7 +350,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		$result = civicrm_api( 'Attachment', 'create', $params );
 
 		// Log and bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -436,7 +436,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		$result = civicrm_api( 'Attachment', 'delete', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $success;
 		}
 
@@ -446,7 +446,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		}
 
 		// The result set should contain only one item.
-		$success = ( $result['values'] == '1' ) ? true : false;
+		$success = ( 1 === (int) $result['values'] ) ? true : false;
 
 		// --<
 		return $success;
@@ -581,7 +581,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		$result = civicrm_api( 'Attachment', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $attachment;
 		}
 
@@ -637,7 +637,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		$result = civicrm_api( 'Attachment', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $attachment_data;
 		}
 
@@ -686,7 +686,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		$result = civicrm_api( 'File', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $file;
 		}
 
@@ -735,7 +735,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		$result = civicrm_api( 'File', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $file;
 		}
 
@@ -790,14 +790,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		$result = civicrm_api( 'Attachment', 'getfields', $params );
 
 		// Override return if we get some.
-		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
+		if ( empty( $result['is_error'] ) && ! empty( $result['values'] ) ) {
 
-			if ( $filter == 'none' ) {
+			if ( 'none' === $filter ) {
 
 				// Grab all Fields.
 				$fields = $result['values'];
 
-			} elseif ( $filter == 'public' ) {
+			} elseif ( 'public' === $filter ) {
 
 				// Skip all but those defined in our public Attachment Fields array.
 				foreach ( $result['values'] as $key => $value ) {
@@ -847,7 +847,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 			$post = get_post( $args['post_id'] );
 
 			// Bail if this is a revision.
-			if ( $post->post_type == 'revision' ) {
+			if ( 'revision' === $post->post_type ) {
 				return;
 			}
 
@@ -870,7 +870,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		$this->file_fields = [];
 		foreach ( $fields as $selector => $value ) {
 			$settings = get_field_object( $selector, $args['post_id'] );
-			if ( $settings['type'] === 'file' ) {
+			if ( 'file' === $settings['type'] ) {
 				$this->file_fields[] = [
 					'post_id'       => $args['post_id'],
 					'selector'      => $selector,
@@ -947,7 +947,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		}
 
 		// Skip filter if using WordPress File.
-		if ( (int) $field['civicrm_file_field_type'] === 1 ) {
+		if ( 1 === (int) $field['civicrm_file_field_type'] ) {
 			return $value;
 		}
 
@@ -964,7 +964,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 		// Skip if there is no mapped Custom Field ID.
 		$custom_field_id = $this->civicrm->custom_field->custom_field_id_get( $field );
-		if ( $custom_field_id === false ) {
+		if ( false === $custom_field_id ) {
 			return $value;
 		}
 
@@ -1012,7 +1012,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		}
 
 		// Skip filter if using WordPress File.
-		if ( (int) $field['civicrm_file_field_type'] === 1 ) {
+		if ( 1 === (int) $field['civicrm_file_field_type'] ) {
 			return;
 		}
 
@@ -1037,7 +1037,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 		// Skip if there is no mapped Custom Field ID.
 		$custom_field_id = $this->civicrm->custom_field->custom_field_id_get( $field );
-		if ( $custom_field_id === false ) {
+		if ( false === $custom_field_id ) {
 			return;
 		}
 
@@ -1210,7 +1210,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 		// Make a copy of the file for CiviCRM to move.
 		$new_file = $this->file_copy_for_civicrm( $file );
-		if ( $new_file === false ) {
+		if ( false === $new_file ) {
 			return '';
 		}
 
@@ -1302,7 +1302,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		}
 
 		// Bail if no sync is necessary.
-		if ( $sync === false ) {
+		if ( false === $sync ) {
 
 			// The Attachment ID is the existing value.
 			$value = (int) $existing;
@@ -1541,7 +1541,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 
 		// Choose meta key.
 		$meta_key = $this->attachment_civicrm_key;
-		if ( $source !== 'civicrm' ) {
+		if ( 'civicrm' !== $source ) {
 			$meta_key = $this->attachment_wp_key;
 		}
 

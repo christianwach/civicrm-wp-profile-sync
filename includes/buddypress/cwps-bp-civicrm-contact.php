@@ -177,7 +177,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact {
 			}
 
 			// Skip if it's not a "Contact" xProfile Field.
-			if ( empty( $meta['entity_type'] ) || $meta['entity_type'] !== 'Contact' ) {
+			if ( empty( $meta['entity_type'] ) || 'Contact' !== $meta['entity_type'] ) {
 				continue;
 			}
 
@@ -272,7 +272,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact {
 				}
 
 				// Only handle Contact data.
-				if ( $field_meta['entity_type'] !== 'Contact' ) {
+				if ( 'Contact' !== $field_meta['entity_type'] ) {
 					continue;
 				}
 
@@ -326,7 +326,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact {
 		foreach ( $args['custom_fields'] as $field ) {
 
 			// Skip if it is not attached to an Contact.
-			if ( $field['entity_table'] != 'civicrm_contact' ) {
+			if ( 'civicrm_contact' !== $field['entity_table'] ) {
 				continue;
 			}
 
@@ -339,13 +339,13 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact {
 		}
 
 		// Bail if there's no Contact ID.
-		if ( $contact_id === false ) {
+		if ( false === $contact_id ) {
 			return $user_id;
 		}
 
 		// Bail if this Contact doesn't have a User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $contact_id );
-		if ( $user_id === false ) {
+		if ( false === $user_id ) {
 			return $user_id;
 		}
 

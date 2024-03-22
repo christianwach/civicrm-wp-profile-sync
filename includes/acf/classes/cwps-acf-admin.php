@@ -437,7 +437,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		// Loop through them and get the data we want.
 		$participant_roles = [];
 		foreach ( $mapped_participant_roles as $participant_role ) {
-			if ( $participant_role['value'] == 'cpt' ) {
+			if ( 'cpt' === $participant_role['value'] ) {
 				$count = $this->acf_loader->civicrm->participant_role->participant_count();
 			} else {
 				$count = $this->acf_loader->civicrm->participant_role->participant_count( $participant_role['value'] );
@@ -693,7 +693,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		$active = '';
 
 		// Make active if it's our subpage.
-		if ( $active_tab === 'manual-sync' ) {
+		if ( 'manual-sync' === $active_tab ) {
 			$active = ' nav-tab-active';
 		}
 
@@ -1136,7 +1136,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// Find out if a Contact Type button has been pressed.
-		if ( $stop === false && $continue === false ) {
+		if ( false === $stop && false === $continue ) {
 			foreach ( $contact_types as $contact_type_id => $stop_code ) {
 
 				// Define replacements.
@@ -1163,7 +1163,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// Find out if a Group "Stop Sync" button has been pressed.
-		if ( $stop === false ) {
+		if ( false === $stop ) {
 			foreach ( $groups as $group_id => $stop_code ) {
 
 				// Define replacements.
@@ -1215,7 +1215,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// Find out if an Activity Type button has been pressed.
-		if ( $stop === false && $continue === false ) {
+		if ( false === $stop && false === $continue ) {
 			foreach ( $activity_types as $activity_type_id => $stop_code ) {
 
 				// Define replacements.
@@ -1267,7 +1267,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// Find out if a Participant Role button has been pressed.
-		if ( $stop === false && $continue === false ) {
+		if ( false === $stop && false === $continue ) {
 			foreach ( $participant_roles as $participant_role_id => $stop_code ) {
 
 				// Define replacements.
@@ -1330,33 +1330,33 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// Was a Contact Post Type "Sync Now" button pressed?
-		if ( $sync_type == 'contact_post_type' ) {
+		if ( 'contact_post_type' === $sync_type ) {
 			$this->stepped_sync_posts_to_contacts( $entity_id );
 		}
 
 		// Was a Contact Type "Sync Now" button pressed?
-		if ( $sync_type == 'contact_type' ) {
+		if ( 'contact_type' === $sync_type ) {
 			$this->stepped_sync_contacts_to_posts( $entity_id );
 		}
 
 		// Was a Group "Sync Now" button pressed?
-		if ( $sync_type == 'group' ) {
+		if ( 'group' === $sync_type ) {
 			$this->stepped_sync_groups_to_terms( $entity_id );
 		}
 
 		// Was an Activity Post Type "Sync Now" button pressed?
-		if ( $sync_type == 'activity_post_type' ) {
+		if ( 'activity_post_type' === $sync_type ) {
 			$this->stepped_sync_posts_to_activities( $entity_id );
 		}
 
 		// Was an Activity Type "Sync Now" button pressed?
-		if ( $sync_type == 'activity_type' ) {
+		if ( 'activity_type' === $sync_type ) {
 			$this->stepped_sync_activities_to_posts( $entity_id );
 		}
 
 		// Was a Participant Role Post Type "Sync Now" button pressed?
-		if ( $sync_type == 'participant_role_post_type' ) {
-			if ( $entity_id == 'participant' ) {
+		if ( 'participant_role_post_type' === $sync_type ) {
+			if ( 'participant' === $entity_id ) {
 				$this->stepped_sync_posts_to_participants( $entity_id );
 			} else {
 				$this->stepped_sync_posts_to_participant_roles( $entity_id );
@@ -1364,8 +1364,8 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// Was a Participant Role "Sync Now" button pressed?
-		if ( $sync_type == 'participant_role' ) {
-			if ( $entity_id == 'cpt' ) {
+		if ( 'participant_role' === $sync_type ) {
+			if ( 'cpt' === $entity_id ) {
 				$this->stepped_sync_participants_to_posts( $entity_id );
 			} else {
 				$this->stepped_sync_participant_roles_to_posts( $entity_id );
@@ -1425,7 +1425,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// If we get an error.
-		if ( $contact_post_type === '' || $result === false ) {
+		if ( '' === $contact_post_type || false === $result ) {
 
 			// Set finished flag.
 			$data['finished'] = 'true';
@@ -1569,7 +1569,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// If we get an error.
-		if ( $contact_type_id === 0 || $result === false ) {
+		if ( 0 === $contact_type_id || false === $result ) {
 
 			// Set finished flag.
 			$data['finished'] = 'true';
@@ -1607,7 +1607,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Did we get an error?
 		$error = false;
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$error = true;
 		}
 
@@ -1732,7 +1732,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// If we get an error.
-		if ( $activity_post_type === '' || $result === false ) {
+		if ( '' === $activity_post_type || false === $result ) {
 
 			// Set finished flag.
 			$data['finished'] = 'true';
@@ -1875,7 +1875,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// If we get an error.
-		if ( $activity_type_id === 0 || $result === false ) {
+		if ( 0 === $activity_type_id || false === $result ) {
 
 			// Set finished flag.
 			$data['finished'] = 'true';
@@ -1913,7 +1913,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Did we get an error?
 		$error = false;
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$error = true;
 		}
 
@@ -2014,7 +2014,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// If "participant", then bail.
-		if ( $participant_post_type == 'participant' ) {
+		if ( 'participant' === $participant_post_type ) {
 			return;
 		}
 
@@ -2042,7 +2042,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// If we get an error.
-		if ( $participant_post_type === '' || $result === false ) {
+		if ( '' === $participant_post_type || false === $result ) {
 
 			// Set finished flag.
 			$data['finished'] = 'true';
@@ -2176,7 +2176,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// If "cpt", then bail.
-		if ( $participant_role_id == 'cpt' ) {
+		if ( 'cpt' === $participant_role_id ) {
 			return;
 		}
 
@@ -2190,7 +2190,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// If we get an error.
-		if ( $participant_role_id === 0 || $result === false ) {
+		if ( 0 === $participant_role_id || false === $result ) {
 
 			// Set finished flag.
 			$data['finished'] = 'true';
@@ -2228,7 +2228,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Did we get an error?
 		$error = false;
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$error = true;
 		}
 
@@ -2318,7 +2318,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// If not "participant", then bail.
-		if ( $entity_id != 'participant' ) {
+		if ( 'participant' !== $entity_id ) {
 			return;
 		}
 
@@ -2332,7 +2332,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// If we get an error.
-		if ( $result === false ) {
+		if ( false === $result ) {
 
 			// Set finished flag.
 			$data['finished'] = 'true';
@@ -2460,13 +2460,13 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Sanitise input.
 		if ( ! wp_doing_ajax() ) {
-			$entity_id = $entity == 'cpt' ? $entity : 0;
+			$entity_id = 'cpt' === $entity ? $entity : 0;
 		} else {
 			$entity_id = isset( $_POST['entity_id'] ) ? sanitize_text_field( wp_unslash( $_POST['entity_id'] ) ) : 0;
 		}
 
 		// If not "cpt", then bail.
-		if ( $entity_id != 'cpt' ) {
+		if ( 'cpt' !== $entity_id ) {
 			return;
 		}
 
@@ -2480,7 +2480,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// If we get an error.
-		if ( $entity_id === 0 || $result === false ) {
+		if ( 0 === $entity_id || false === $result ) {
 
 			// Set finished flag.
 			$data['finished'] = 'true';
@@ -2517,7 +2517,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Did we get an error?
 		$error = false;
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$error = true;
 		}
 
@@ -2619,7 +2619,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		}
 
 		// If we get an error.
-		if ( $group_id === 0 || $result === false ) {
+		if ( 0 === $group_id || false === $result ) {
 
 			// Set finished flag.
 			$data['finished'] = 'true';
@@ -2657,7 +2657,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 
 		// Did we get an error?
 		$error = false;
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$error = true;
 		}
 

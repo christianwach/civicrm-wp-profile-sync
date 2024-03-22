@@ -624,7 +624,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 		foreach ( $form_data as $param => $value ) {
 
 			// Skip if empty but allow (string) "0" as valid data.
-			if ( empty( $value ) && $value !== '0' ) {
+			if ( empty( $value ) && '0' !== $value ) {
 				continue;
 			}
 
@@ -802,7 +802,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 		}
 
 		// Check mapped Field.
-		if ( $setting_value === '' ) {
+		if ( '' === $setting_value ) {
 			if ( ! empty( $group_field[ $this->field_name . 'map_' . $field_name ] ) ) {
 				$reference = [ $field_name => $group_field[ $this->field_name . 'map_' . $field_name ] ];
 				$reference = acfe_form_map_vs_fields( $reference, $reference, $current_post_id, $form );

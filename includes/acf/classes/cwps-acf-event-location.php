@@ -209,13 +209,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 	public function value_validate( $valid, $value, $field, $input ) {
 
 		// Bail if it's not required and is empty.
-		if ( $field['required'] == '0' && empty( $value ) ) {
+		if ( 0 === (int) $field['required'] && empty( $value ) ) {
 			return $valid;
 		}
 
 		// Get the mapped Field name if present.
 		$event_field_name = $this->civicrm->event->event_field_name_get( $field );
-		if ( $event_field_name === false ) {
+		if ( false === $event_field_name ) {
 			return $valid;
 		}
 
@@ -257,7 +257,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 		}
 
 		// Bail if value is (string) 'null' which CiviCRM uses for some reason.
-		if ( $value == 'null' ) {
+		if ( 'null' === $value ) {
 			return '';
 		}
 
@@ -283,26 +283,26 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 				$acf_setting = get_field_object( $selector, $post_id );
 
 				// Test for Date Picker or Date & Time Picker.
-				if ( $acf_setting['type'] == 'date_picker' ) {
+				if ( 'date_picker' === $acf_setting['type'] ) {
 
 					// Event edit passes a Y-m-d format, so test for that.
 					$datetime = DateTime::createFromFormat( 'Y-m-d', $value );
 
 					// Event create passes a different format, so test for that.
-					if ( $datetime === false ) {
+					if ( false === $datetime ) {
 						$datetime = DateTime::createFromFormat( 'YmdHis', $value );
 					}
 
 					// Convert to ACF format.
 					$value = $datetime->format( 'Ymd' );
 
-				} elseif ( $acf_setting['type'] == 'date_time_picker' ) {
+				} elseif ( 'date_time_picker' === $acf_setting['type'] ) {
 
 					// Event edit passes a YmdHis format, so test for that.
 					$datetime = DateTime::createFromFormat( 'YmdHis', $value );
 
 					// Event API passes a different format, so test for that.
-					if ( $datetime === false ) {
+					if ( false === $datetime ) {
 						$datetime = DateTime::createFromFormat( 'Y-m-d H:i:s', $value );
 					}
 
@@ -339,12 +339,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 		// We only have a few to account for.
 
 		// Location Block ID.
-		if ( $name == 'loc_block_id' ) {
+		if ( 'loc_block_id' === $name ) {
 			$options = $this->get_all();
 		}
 
 		// Phone Type ID.
-		if ( $name == 'phone_type_id' ) {
+		if ( 'phone_type_id' === $name ) {
 			$options = $this->plugin->civicrm->phone->phone_types_get();
 		}
 
@@ -400,7 +400,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 		$result = civicrm_api( 'Event', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $locations;
 		}
 
@@ -416,7 +416,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 			// Add Address elements.
 			foreach ( $fields as $field ) {
-				if ( $field !== 'loc_block_id' && ! empty( $location[ $field ] ) ) {
+				if ( 'loc_block_id' !== $field && ! empty( $location[ $field ] ) ) {
 					$address .= ( $address ? ' :: ' : '' ) . $location[ $field ];
 				}
 			}
@@ -470,7 +470,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 		$result = civicrm_api( 'LocBlock', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $location;
 		}
 
@@ -530,7 +530,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 		$result = civicrm_api( 'LocBlock', 'create', $params );
 
 		// Log and bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -610,7 +610,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 		// Bail if this is not an Event Field Group.
 		$is_event_field_group = $this->civicrm->event->is_event_field_group( $field_group );
-		if ( $is_event_field_group === false ) {
+		if ( false === $is_event_field_group ) {
 			return $event_fields;
 		}
 
@@ -664,7 +664,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 		$result = civicrm_api( 'Event', 'getfield', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $field;
 		}
 
@@ -702,10 +702,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 		$fields = $this->civicrm->event_field->data_get_by_action();
 
 		// Check for filter.
-		if ( $filter !== 'none' ) {
+		if ( 'none' !== $filter ) {
 
 			// Check settings filter.
-			if ( $filter == 'settings' ) {
+			if ( 'settings' === $filter ) {
 
 				// Skip all but those defined in our Settings Fields array.
 				$filtered = [];
@@ -758,10 +758,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 		$fields = $this->get_address_fields( 'create' );
 
 		// Check for filter.
-		if ( $filter !== 'none' ) {
+		if ( 'none' !== $filter ) {
 
 			// Check public filter.
-			if ( $filter == 'public' ) {
+			if ( 'public' === $filter ) {
 
 				// Skip all but those mapped to the type of ACF Field.
 				$filtered = [];
@@ -809,10 +809,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 		$fields = $this->get_email_fields( 'create' );
 
 		// Check for filter.
-		if ( $filter !== 'none' ) {
+		if ( 'none' !== $filter ) {
 
 			// Check public filter.
-			if ( $filter == 'public' ) {
+			if ( 'public' === $filter ) {
 
 				// Skip all but those mapped to the type of ACF Field.
 				$filtered = [];
@@ -860,10 +860,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 		$fields = $this->get_phone_fields( 'create' );
 
 		// Check for filter.
-		if ( $filter !== 'none' ) {
+		if ( 'none' !== $filter ) {
 
 			// Check public filter.
-			if ( $filter == 'public' ) {
+			if ( 'public' === $filter ) {
 
 				// Skip all but those mapped to the type of ACF Field.
 				$filtered = [];
@@ -917,10 +917,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 		$fields = $this->civicrm->event_field->data_get_by_action( $action );
 
 		// Check for filter.
-		if ( $filter !== 'none' ) {
+		if ( 'none' !== $filter ) {
 
 			// Check "public" filter.
-			if ( $filter == 'public' ) {
+			if ( 'public' === $filter ) {
 
 				// Get the CiviCRM Address Options.
 				$address_options = $this->plugin->civicrm->address->settings_get();
@@ -1204,7 +1204,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 		// Get the mapped Field name if present.
 		$event_field_name = $this->civicrm->event->event_field_name_get( $field );
-		if ( $event_field_name === false ) {
+		if ( false === $event_field_name ) {
 			return $field;
 		}
 
@@ -1217,7 +1217,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 		$field['choices'] = $this->options_get( $event_field_name );
 
 		// Set a default for "Location Block ID".
-		if ( $event_field_name == 'loc_block_id' ) {
+		if ( 'loc_block_id' === $event_field_name ) {
 			$field['choices']       = [ '' => __( 'None', 'civicrm-wp-profile-sync' ) ] + $field['choices'];
 			$field['default_value'] = '';
 			$field['ui']            = 1;
@@ -1253,7 +1253,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 		// Get the mapped Field name if present.
 		$event_field_name = $this->civicrm->event->event_field_name_get( $field );
-		if ( $event_field_name === false ) {
+		if ( false === $event_field_name ) {
 			return $field;
 		}
 

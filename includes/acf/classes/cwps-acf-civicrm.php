@@ -685,7 +685,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		$result = civicrm_api( 'OptionValue', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $values;
 		}
 

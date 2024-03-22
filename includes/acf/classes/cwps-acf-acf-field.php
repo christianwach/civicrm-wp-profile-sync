@@ -166,12 +166,12 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		}
 
 		// Does it refer to an ACF Options Page?
-		if ( $post_id === 'options' ) {
+		if ( 'options' === $post_id ) {
 			return 'options';
 		}
 
 		// Does it refer to an ACF Option?
-		if ( $post_id === 'option' ) {
+		if ( 'option' === $post_id ) {
 			return 'option';
 		}
 
@@ -262,14 +262,14 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		// TODO: Make this a filter...
 
 		// Easy if it's a Post.
-		if ( $entity === 'post' ) {
+		if ( 'post' === $entity ) {
 			$params = [
 				'post_id' => $post_id,
 			];
 		}
 
 		// If it's a User, we support the Edit Form.
-		if ( $entity === 'user' ) {
+		if ( 'user' === $entity ) {
 			// $tmp = explode( '_', $post_id );
 			$params = [
 				// 'user_id' => $tmp[1],
@@ -361,7 +361,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	public function value_update( $selector, $value, $post_id ) {
 
 		// Protect against (string) 'null' which CiviCRM uses for some reason.
-		if ( $value === 'null' || $value === 'NULL' ) {
+		if ( 'null' === $value || 'NULL' === $value ) {
 			$value = '';
 		}
 
@@ -393,19 +393,19 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		}
 
 		// Bail if it's not required and is empty.
-		if ( $field['required'] == '0' && empty( $value ) ) {
+		if ( 0 === (int) $field['required'] && empty( $value ) ) {
 			return $valid;
 		}
 
 		// Get the mapped Custom Field ID if present.
 		$custom_field_id = $this->civicrm->custom_field->custom_field_id_get( $field );
-		if ( $custom_field_id === false ) {
+		if ( false === $custom_field_id ) {
 			return $valid;
 		}
 
 		// Get Custom Field data.
 		$field_data = $this->plugin->civicrm->custom_field->get_by_id( $custom_field_id );
-		if ( $field_data === false ) {
+		if ( false === $field_data ) {
 			return $valid;
 		}
 
@@ -414,7 +414,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 			case 'String':
 				// If it's a Multi-select.
-				if ( $field_data['html_type'] == 'Multi-Select' && is_array( $value ) ) {
+				if ( 'Multi-Select' === $field_data['html_type'] && is_array( $value ) ) {
 
 					// Make sure values are all are varchar(255) or varchar(260).
 					foreach ( $value as $item ) {
@@ -449,7 +449,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 			case 'Int':
 				// If it's a Multi-select.
-				if ( $field_data['html_type'] == 'Multi-Select' && is_array( $value ) ) {
+				if ( 'Multi-Select' === $field_data['html_type'] && is_array( $value ) ) {
 
 					// Make sure values are all integers.
 					foreach ( $value as $item ) {
@@ -482,7 +482,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 			case 'Float':
 				// If it's a Multi-select.
-				if ( $field_data['html_type'] == 'Multi-Select' && is_array( $value ) ) {
+				if ( 'Multi-Select' === $field_data['html_type'] && is_array( $value ) ) {
 
 					// Make sure values are all numeric.
 					foreach ( $value as $item ) {
@@ -503,7 +503,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 			case 'Money':
 				// If it's a Multi-select.
-				if ( $field_data['html_type'] == 'Multi-Select' && is_array( $value ) ) {
+				if ( 'Multi-Select' === $field_data['html_type'] && is_array( $value ) ) {
 
 					// Make sure values are all numeric.
 					foreach ( $value as $item ) {
@@ -620,13 +620,13 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 */
 	public function true_false_value_get( $value = '0' ) {
 
-		// Convert 1 to string.
-		if ( $value == 1 ) {
+		// Convert numeric 1 to string.
+		if ( '1' === (string) $value ) {
 			$value = '1';
 		}
 
 		// Convert empty value.
-		if ( empty( $value ) || $value === 0 ) {
+		if ( empty( $value ) || 0 === $value ) {
 			$value = '0';
 		}
 
@@ -735,9 +735,9 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	public function textarea_value_get( $value, $settings ) {
 
 		// Undo ACF new lines.
-		if ( $settings['new_lines'] === 'wpautop' ) {
+		if ( 'wpautop' === $settings['new_lines'] ) {
 			$value = $this->plugin->wp->unautop( $value );
-		} elseif ( $settings['new_lines'] === 'br' ) {
+		} elseif ( 'br' === $settings['new_lines'] ) {
 			// @see https://stackoverflow.com/a/2494762
 			$value = str_replace( "\r\n", '', $value );
 			$value = preg_replace( '/<br[^>]*>/i', "\n", $value );
@@ -760,7 +760,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	public function field_setting_add( $field ) {
 
 		// Bail if this is the "clone" ACF Field.
-		if ( $field['key'] == 'acfcloneindex' ) {
+		if ( 'acfcloneindex' === $field['key'] ) {
 			return;
 		}
 

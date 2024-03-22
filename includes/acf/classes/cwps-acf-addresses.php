@@ -220,7 +220,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 	public function register_mapper_hooks() {
 
 		// Bail if already registered.
-		if ( $this->mapper_hooks === true ) {
+		if ( true === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -243,7 +243,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 	public function unregister_mapper_hooks() {
 
 		// Bail if already unregistered.
-		if ( $this->mapper_hooks === false ) {
+		if ( false === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -865,7 +865,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 
 		// Test if any of this Contact's Contact Types is mapped to a Post Type.
 		$post_types = $this->civicrm->contact->is_mapped( $contact, 'create' );
-		if ( $post_types !== false ) {
+		if ( false !== $post_types ) {
 
 			// Handle each Post Type in turn.
 			foreach ( $post_types as $post_type ) {
@@ -874,12 +874,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 				$post_id = $this->civicrm->contact->is_mapped_to_post( $contact, $post_type );
 
 				// Skip if not mapped or Post doesn't yet exist.
-				if ( $post_id === false ) {
+				if ( false === $post_id ) {
 					continue;
 				}
 
 				// Exclude "reverse" edits when a Post is the originator.
-				if ( $entity['entity'] === 'post' && $post_id == $entity['id'] ) {
+				if ( 'post' === $entity['entity'] && $post_id == $entity['id'] ) {
 
 					/**
 					 * Allow "reverse" edit to happen if another plugin has specifically
@@ -955,7 +955,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 			$existing = get_field( $selector, $post_id );
 
 			// Before applying edit, make some checks.
-			if ( $args['op'] == 'edit' ) {
+			if ( 'edit' === $args['op'] ) {
 
 				// If there is no existing Field value, treat as a 'create' op.
 				if ( empty( $existing ) ) {
@@ -987,7 +987,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 
 				case 'create':
 					// Make sure no other Address is Primary if this one is.
-					if ( $acf_address['field_address_primary'] == '1' && ! empty( $existing ) ) {
+					if ( 1 === (int) $acf_address['field_address_primary'] && ! empty( $existing ) ) {
 						foreach ( $existing as $key => $record ) {
 							$existing[ $key ]['field_address_primary'] = '0';
 						}
@@ -999,7 +999,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 
 				case 'edit':
 					// Make sure no other Address is Primary if this one is.
-					if ( $acf_address['field_address_primary'] == '1' ) {
+					if ( 1 === (int) $acf_address['field_address_primary'] ) {
 						foreach ( $existing as $key => $record ) {
 							$existing[ $key ]['field_address_primary'] = '0';
 						}
@@ -1108,7 +1108,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 	public function acf_fields_get_for_post( $acf_fields, $field, $post_id ) {
 
 		// Add if it has a reference to an Addresses Field.
-		if ( ! empty( $field['type'] ) && $field['type'] == 'civicrm_address' ) {
+		if ( ! empty( $field['type'] ) && 'civicrm_address' === $field['type'] ) {
 			$acf_fields['addresses'][ $field['name'] ] = $field['type'];
 		}
 
@@ -1137,14 +1137,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		$entity = $this->acf_loader->acf->field->entity_type_get( $args['post_id'] );
 
 		// Check permissions if it's a Post.
-		if ( $entity === 'post' ) {
+		if ( 'post' === $entity ) {
 			if ( ! current_user_can( 'edit_post', $args['post_id'] ) ) {
 				return;
 			}
 		}
 
 		// Check permissions if it's a User.
-		if ( $entity === 'user' ) {
+		if ( 'user' === $entity ) {
 			if ( ! current_user_can( 'edit_user', $args['user_id'] ) ) {
 				return;
 			}

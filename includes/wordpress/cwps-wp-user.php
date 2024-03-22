@@ -127,7 +127,7 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 	public function register_mapper_hooks() {
 
 		// Bail if already registered.
-		if ( $this->mapper_hooks === true ) {
+		if ( true === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -148,7 +148,7 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 	public function unregister_mapper_hooks() {
 
 		// Bail if already unregistered.
-		if ( $this->mapper_hooks === false ) {
+		if ( false === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -348,7 +348,7 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 
 		// Check if our setting allows Nickname sync.
 		$nickname_sync = $this->plugin->admin->setting_get( 'user_profile_nickname_sync', 1 );
-		if ( $nickname_sync !== 1 ) {
+		if ( 1 !== (int) $nickname_sync ) {
 			return;
 		}
 

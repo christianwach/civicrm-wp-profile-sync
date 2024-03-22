@@ -124,7 +124,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		}
 
 		// Bail if CiviCRM ACF Integration isn't detected.
-		if ( $this->cai === false ) {
+		if ( false === $this->cai ) {
 			return;
 		}
 
@@ -402,7 +402,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		$contact = $this->plugin->mapper->ufmatch->contact_get_by_user_id( $user->ID );
 
 		// Bail if there isn't one.
-		if ( $contact === false ) {
+		if ( false === $contact ) {
 			return;
 		}
 
@@ -485,7 +485,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 		// Bail if this Contact doesn't have a User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $args['objectRef']->contact_id );
-		if ( $user_id === false ) {
+		if ( false === $user_id ) {
 			return;
 		}
 
@@ -529,7 +529,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 		// Bail if this Contact doesn't have a User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $email->contact_id );
-		if ( $user_id === false ) {
+		if ( false === $user_id ) {
 			return;
 		}
 
@@ -573,7 +573,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 		// Bail if this Contact doesn't have a User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $website->contact_id );
-		if ( $user_id === false ) {
+		if ( false === $user_id ) {
 			return;
 		}
 
@@ -600,7 +600,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 		// Bail if this Contact doesn't have a User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $website->contact_id );
-		if ( $user_id === false ) {
+		if ( false === $user_id ) {
 			return;
 		}
 
@@ -639,7 +639,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 		// Bail if this Contact doesn't have a User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $phone->contact_id );
-		if ( $user_id === false ) {
+		if ( false === $user_id ) {
 			return;
 		}
 
@@ -726,7 +726,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 		// Bail if this Contact doesn't have a User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $phone->contact_id );
-		if ( $user_id === false ) {
+		if ( false === $user_id ) {
 			return;
 		}
 
@@ -768,7 +768,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 		// Bail if this Contact doesn't have a User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $im->contact_id );
-		if ( $user_id === false ) {
+		if ( false === $user_id ) {
 			return;
 		}
 
@@ -855,7 +855,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 		// Bail if this Contact doesn't have a User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $im->contact_id );
-		if ( $user_id === false ) {
+		if ( false === $user_id ) {
 			return;
 		}
 
@@ -914,7 +914,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 		// Bail if this Contact doesn't have a User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $contact_id );
-		if ( $user_id === false ) {
+		if ( false === $user_id ) {
 			return;
 		}
 
@@ -953,7 +953,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 		// Bail if this Contact doesn't have a User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $address->contact_id );
-		if ( $user_id === false ) {
+		if ( false === $user_id ) {
 			return;
 		}
 
@@ -1040,7 +1040,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 		// Bail if this Contact doesn't have a User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $address->contact_id );
-		if ( $user_id === false ) {
+		if ( false === $user_id ) {
 			return;
 		}
 
@@ -1115,7 +1115,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 		// Bail if this Contact doesn't have a User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $address->contact_id );
-		if ( $user_id === false ) {
+		if ( false === $user_id ) {
 			return;
 		}
 
@@ -1146,7 +1146,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 			// Bail if this Contact doesn't have a User ID.
 			$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $address_shared->contact_id );
-			if ( $user_id === false ) {
+			if ( false === $user_id ) {
 				continue;
 			}
 
@@ -1185,7 +1185,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 		// Bail if this Contact doesn't have a User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $address->contact_id );
-		if ( $user_id === false ) {
+		if ( false === $user_id ) {
 			return;
 		}
 
@@ -1216,7 +1216,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 			// Bail if this Contact doesn't have a User ID.
 			$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $address_shared->contact_id );
-			if ( $user_id === false ) {
+			if ( false === $user_id ) {
 				continue;
 			}
 
@@ -1252,7 +1252,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 		// Bail if this Contact doesn't have a User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $address->contact_id );
-		if ( $user_id === false ) {
+		if ( false === $user_id ) {
 			return;
 		}
 
@@ -1286,7 +1286,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 			// Bail if this Contact doesn't have a User ID.
 			$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $address_shared->contact_id );
-			if ( $user_id === false ) {
+			if ( false === $user_id ) {
 				continue;
 			}
 
@@ -1324,7 +1324,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 		// Bail if this Contact doesn't have a User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $address->contact_id );
-		if ( $user_id === false ) {
+		if ( false === $user_id ) {
 			return;
 		}
 
@@ -1407,7 +1407,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 		// Bail if this Contact doesn't have a User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $address->contact_id );
-		if ( $user_id === false ) {
+		if ( false === $user_id ) {
 			return;
 		}
 
@@ -1446,7 +1446,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 		// Bail if this Contact doesn't have a User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $address->contact_id );
-		if ( $user_id === false ) {
+		if ( false === $user_id ) {
 			return;
 		}
 
@@ -1529,7 +1529,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 		// Bail if this Contact doesn't have a User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $address->contact_id );
-		if ( $user_id === false ) {
+		if ( false === $user_id ) {
 			return;
 		}
 
@@ -1568,7 +1568,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 		// Bail if this Contact doesn't have a User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $contact_id );
-		if ( $user_id === false ) {
+		if ( false === $user_id ) {
 			return;
 		}
 
@@ -1627,13 +1627,13 @@ class CiviCRM_WP_Profile_Sync_CAI {
 	public function query_field_group_mapped( $mapped, $field_group ) {
 
 		// Bail if a Mapping has already been found.
-		if ( $mapped !== false ) {
+		if ( false !== $mapped ) {
 			return $mapped;
 		}
 
 		// Bail if this is not a User Field Group.
 		$is_user_field_group = $this->is_user_field_group( $field_group );
-		if ( $is_user_field_group === false ) {
+		if ( false === $is_user_field_group ) {
 			return $mapped;
 		}
 
@@ -1658,7 +1658,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 		// Bail if this is not a User Form Field Group.
 		$is_visible = $this->is_user_field_group( $field_group );
-		if ( $is_visible === false ) {
+		if ( false === $is_visible ) {
 			return $custom_fields;
 		}
 
@@ -1720,7 +1720,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 		// Bail if this is not a User Form Field Group.
 		$is_visible = $this->is_user_field_group( $field_group );
-		if ( $is_visible === false ) {
+		if ( false === $is_visible ) {
 			return $contact_fields;
 		}
 
@@ -1760,7 +1760,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 		// Bail if this is not a User Form Field Group.
 		$is_visible = $this->is_user_field_group( $field_group );
-		if ( $is_visible === false ) {
+		if ( false === $is_visible ) {
 			return $relationships;
 		}
 
@@ -1847,7 +1847,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		foreach ( $args['custom_fields'] as $field ) {
 
 			// Skip if it is not attached to a Contact.
-			if ( $field['entity_table'] != 'civicrm_contact' ) {
+			if ( 'civicrm_contact' !== $field['entity_table'] ) {
 				continue;
 			}
 
@@ -1860,7 +1860,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		}
 
 		// Bail if there's no Contact ID.
-		if ( $contact_id === false ) {
+		if ( false === $contact_id ) {
 			return $post_ids;
 		}
 
@@ -1868,7 +1868,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $contact_id );
 
 		// Bail if there isn't one.
-		if ( $user_id === false ) {
+		if ( false === $user_id ) {
 			return $post_ids;
 		}
 
@@ -1900,12 +1900,12 @@ class CiviCRM_WP_Profile_Sync_CAI {
 	public function query_contact_id( $contact_id, $post_id, $entity ) {
 
 		// Bail early if a Contact ID has been found.
-		if ( $contact_id !== false ) {
+		if ( false !== $contact_id ) {
 			return $contact_id;
 		}
 
 		// Bail early if not a User Entity.
-		if ( $entity !== 'user' ) {
+		if ( 'user' !== $entity ) {
 			return $contact_id;
 		}
 
@@ -1935,7 +1935,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 	public function contact_data( $contact_data, $post ) {
 
 		// Skip if the Post Status isn't 'trash'.
-		if ( $post->post_status !== 'trash' ) {
+		if ( 'trash' !== $post->post_status ) {
 			return $contact_data;
 		}
 
@@ -1946,7 +1946,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 
 		// Bail if this Contact doesn't have a User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $contact_data['id'] );
-		if ( $user_id === false ) {
+		if ( false === $user_id ) {
 			return $contact_data;
 		}
 
@@ -1997,7 +1997,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		$contact_id = $this->plugin->mapper->ufmatch->contact_id_get_by_user_id( $user->ID );
 
 		// Bail if there isn't one.
-		if ( $contact_id === false ) {
+		if ( false === $contact_id ) {
 			return $is_mapped;
 		}
 

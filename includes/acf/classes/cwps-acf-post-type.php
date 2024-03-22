@@ -149,7 +149,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 
 		// Get existing Post Type.
 		$existing_post_type = '';
-		if ( $contact_type_id !== 0 ) {
+		if ( 0 !== $contact_type_id ) {
 			$existing_post_type = $this->acf_loader->mapping->mapping_for_contact_type_get( $contact_type_id );
 		}
 
@@ -207,7 +207,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 
 		// Get existing Post Type.
 		$existing_post_type = '';
-		if ( $activity_type_id !== 0 ) {
+		if ( 0 !== $activity_type_id ) {
 			$existing_post_type = $this->acf_loader->mapping->mapping_for_activity_type_get( $activity_type_id );
 		}
 
@@ -265,7 +265,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 
 		// Get existing Post Type.
 		$existing_post_type = '';
-		if ( $participant_role_id !== 0 ) {
+		if ( 0 !== $participant_role_id ) {
 			$existing_post_type = $this->acf_loader->mapping->mapping_for_participant_role_get( $participant_role_id );
 		}
 
@@ -530,7 +530,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 	public function query_supported_rules( $supported, $rule, $params, $field_group ) {
 
 		// Bail if already supported.
-		if ( $supported === true ) {
+		if ( true === $supported ) {
 			return $supported;
 		}
 

@@ -215,7 +215,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	public function register_mapper_hooks() {
 
 		// Bail if already registered.
-		if ( $this->mapper_hooks === true ) {
+		if ( true === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -242,7 +242,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	public function unregister_mapper_hooks() {
 
 		// Bail if already unregistered.
-		if ( $this->mapper_hooks === false ) {
+		if ( false === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -286,7 +286,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		$contact_id = $this->contact_id_get( $post->ID );
 
 		// Bail if there's no corresponding Contact.
-		if ( $contact_id === false ) {
+		if ( false === $contact_id ) {
 			return;
 		}
 
@@ -320,7 +320,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		$contact_id = $this->contact_id_get( $post->ID );
 
 		// Bail if we don't get one for some reason.
-		if ( $contact_id === false ) {
+		if ( false === $contact_id ) {
 			return;
 		}
 
@@ -364,13 +364,13 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Grab Contact.
 		$contact = $this->plugin->civicrm->contact->get_by_id( $contact_id );
-		if ( $contact === false ) {
+		if ( false === $contact ) {
 			return;
 		}
 
 		// Bail if none of this Contact's Contact Types is mapped.
 		$post_types = $this->acf_loader->civicrm->contact->is_mapped( $contact );
-		if ( $post_types === false ) {
+		if ( false === $post_types ) {
 			return;
 		}
 
@@ -382,7 +382,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 			// Get the Post ID that this Contact is mapped to.
 			$post_id = $this->acf_loader->civicrm->contact->is_mapped_to_post( $contact, $post_type );
-			if ( $post_id === false ) {
+			if ( false === $post_id ) {
 				continue;
 			}
 
@@ -458,7 +458,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		// Bail if the current screen is not an Edit screen.
 		if ( is_admin() ) {
 			$screen = get_current_screen();
-			if ( $screen instanceof WP_Screen && $screen->base != 'post' ) {
+			if ( $screen instanceof WP_Screen && 'post' !== $screen->base ) {
 				return;
 			}
 		}
@@ -477,7 +477,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		$contact_id = $this->contact_id_get( $post->ID );
 
 		// Bail if we don't get one for some reason.
-		if ( $contact_id === false ) {
+		if ( false === $contact_id ) {
 			return;
 		}
 
@@ -543,7 +543,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		$contact_id = $this->contact_id_get( $post->ID );
 
 		// Bail if we don't get one for some reason.
-		if ( $contact_id === false ) {
+		if ( false === $contact_id ) {
 			return $actions;
 		}
 
@@ -584,7 +584,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		$entity = $this->acf_loader->acf->field->entity_type_get( $post_id );
 
 		// Bail if it's not a Post.
-		if ( $entity !== 'post' ) {
+		if ( 'post' !== $entity ) {
 			return false;
 		}
 
@@ -702,7 +702,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		if ( $query->have_posts() ) {
 			foreach ( $query->get_posts() as $found ) {
 
-				if ( $post_type === 'any' ) {
+				if ( 'any' === $post_type ) {
 					// Add if we want *all* Posts.
 					$posts[] = $found->ID;
 				} elseif ( $found->post_type === $post_type ) {
@@ -746,7 +746,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Bail if none of this Contact's Contact Types is mapped.
 		$post_types = $this->acf_loader->civicrm->contact->is_mapped( $args['objectRef'] );
-		if ( $post_types === false ) {
+		if ( false === $post_types ) {
 			return;
 		}
 
@@ -799,7 +799,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		$this->acf_loader->mapper->hooks_wordpress_remove();
 
 		// Create the WordPress Post if it doesn't exist, otherwise update.
-		if ( $post_id === false ) {
+		if ( false === $post_id ) {
 			$post_id = $this->create_from_contact( $args['objectRef'], $post_type );
 		} else {
 			$this->update_from_contact( $args['objectRef'], $post_id );
@@ -850,7 +850,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Test if any of this Contact's Contact Types is mapped.
 		$post_types = $this->acf_loader->civicrm->contact->is_mapped( $args['objectRef'] );
-		if ( $post_types !== false ) {
+		if ( false !== $post_types ) {
 
 			// Get originating Entity.
 			$entity = $this->acf_loader->mapper->entity_get();
@@ -870,7 +870,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 				 *
 				 * Instead, the Contact ID needs to be reverse synced to the Post.
 				 */
-				if ( $entity['entity'] === 'post' && $post_type == $entity['type'] ) {
+				if ( 'post' === $entity['entity'] && $post_type == $entity['type'] ) {
 
 					// Save correspondence and skip to next.
 					$this->contact_id_set( $entity['id'], $args['objectId'] );
@@ -882,7 +882,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 				$this->acf_loader->mapper->hooks_wordpress_post_remove();
 
 				// Create the WordPress Post.
-				if ( $post_id === false ) {
+				if ( false === $post_id ) {
 					$post_id = $this->create_from_contact( $args['objectRef'], $post_type );
 				}
 
@@ -925,7 +925,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Test if any of this Contact's Contact Types is mapped.
 		$post_types = $this->acf_loader->civicrm->contact->is_mapped( $args['objectRef'] );
-		if ( $post_types !== false ) {
+		if ( false !== $post_types ) {
 
 			// Init args for Post Types.
 			$post_type_args = $args;
@@ -940,7 +940,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 				$post_id = $this->acf_loader->civicrm->contact->is_mapped_to_post( $args['objectRef'], $post_type );
 
 				// Exclude "reverse" edits when a Post is the originator.
-				if ( $entity['entity'] === 'post' && $post_id == $entity['id'] ) {
+				if ( 'post' === $entity['entity'] && $post_id == $entity['id'] ) {
 					continue;
 				}
 
@@ -948,7 +948,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 				$this->acf_loader->mapper->hooks_wordpress_post_remove();
 
 				// Create the WordPress Post if it doesn't exist, otherwise update.
-				if ( $post_id === false ) {
+				if ( false === $post_id ) {
 					$post_id = $this->create_from_contact( $args['objectRef'], $post_type );
 				} else {
 					$this->update_from_contact( $args['objectRef'], $post_id );
@@ -993,7 +993,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 			$post_type = $this->acf_loader->civicrm->contact_type->is_mapped_to_post_type( $contact_type );
 
 			// Skip if this Contact Type is not mapped.
-			if ( $post_type === false ) {
+			if ( false === $post_type ) {
 				continue;
 			}
 
@@ -1001,7 +1001,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 			$post_ids = $this->get_by_contact_id( $args['objectId'], $post_type );
 
 			// Skip if there are no associated Post IDs.
-			if ( $post_type === false ) {
+			if ( false === $post_type ) {
 				continue;
 			}
 
@@ -1176,7 +1176,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		$entity = $this->acf_loader->acf->field->entity_type_get( $post_id );
 
 		// Bail if it's not a Post.
-		if ( $entity !== 'post' ) {
+		if ( 'post' !== $entity ) {
 			return;
 		}
 
@@ -1272,7 +1272,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		if ( $query->have_posts() ) {
 			foreach ( $query->get_posts() as $found ) {
 
-				if ( $post_type === 'any' ) {
+				if ( 'any' === $post_type ) {
 					// Add if we want *all* Posts.
 					$posts[] = $found->ID;
 				} elseif ( $found->post_type == $post_type ) {
@@ -1304,13 +1304,13 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	public function activity_sync( $args ) {
 
 		// Bail if this is not an Activity.
-		if ( $args['objectName'] != 'Activity' ) {
+		if ( 'Activity' !== $args['objectName'] ) {
 			return;
 		}
 
 		// Bail if this Activity's Activity Type is not mapped.
 		$post_type = $this->acf_loader->civicrm->activity->is_mapped( $args['objectRef'] );
-		if ( $post_type === false ) {
+		if ( false === $post_type ) {
 			return;
 		}
 
@@ -1330,7 +1330,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	public function activity_sync_to_post( $args, $post_type ) {
 
 		// Bail if this is not an Activity.
-		if ( $args['objectName'] != 'Activity' ) {
+		if ( 'Activity' !== $args['objectName'] ) {
 			return;
 		}
 
@@ -1354,7 +1354,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		do_action( 'cwps/acf/post/activity/sync/pre', $args );
 
 		// Create the WordPress Post if it doesn't exist, otherwise update.
-		if ( $post_id === false ) {
+		if ( false === $post_id ) {
 			$post_id = $this->create_from_activity( $args['objectRef'], $post_type );
 		} else {
 			$this->update_from_activity( $args['objectRef'], $post_id );
@@ -1389,7 +1389,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	public function activity_created( $args ) {
 
 		// Bail if this is not an Activity.
-		if ( $args['objectName'] != 'Activity' ) {
+		if ( 'Activity' !== $args['objectName'] ) {
 			return;
 		}
 
@@ -1398,7 +1398,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Bail if this Activity's Activity Type is not mapped.
 		$post_type = $this->acf_loader->civicrm->activity->is_mapped( $args['objectRef'] );
-		if ( $post_type === false ) {
+		if ( false === $post_type ) {
 			return;
 		}
 
@@ -1417,7 +1417,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		 *
 		 * Instead, the Activity ID needs to be reverse synced to the Post.
 		 */
-		if ( $entity['entity'] === 'post' && $post_type == $entity['type'] ) {
+		if ( 'post' === $entity['entity'] && $post_type == $entity['type'] ) {
 
 			// Save correspondence and bail.
 			$this->activity_id_set( $entity['id'], $args['objectId'] );
@@ -1429,7 +1429,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		$this->acf_loader->mapper->hooks_wordpress_post_remove();
 
 		// Create the WordPress Post.
-		if ( $post_id === false ) {
+		if ( false === $post_id ) {
 			$post_id = $this->create_from_activity( $args['objectRef'], $post_type );
 		}
 
@@ -1465,7 +1465,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	public function activity_edited( $args ) {
 
 		// Bail if this is not an Activity.
-		if ( $args['objectName'] != 'Activity' ) {
+		if ( 'Activity' !== $args['objectName'] ) {
 			return;
 		}
 
@@ -1474,7 +1474,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Bail if this Activity's Activity Type is not mapped.
 		$post_type = $this->acf_loader->civicrm->activity->is_mapped( $args['objectRef'] );
-		if ( $post_type === false ) {
+		if ( false === $post_type ) {
 			return;
 		}
 
@@ -1485,7 +1485,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		$post_id = $this->acf_loader->civicrm->activity->is_mapped_to_post( $args['objectRef'], $post_type );
 
 		// Exclude "reverse" edits when a Post is the originator.
-		if ( $entity['entity'] === 'post' && $post_id == $entity['id'] ) {
+		if ( 'post' === $entity['entity'] && $post_id == $entity['id'] ) {
 			return;
 		}
 
@@ -1493,7 +1493,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		$this->acf_loader->mapper->hooks_wordpress_post_remove();
 
 		// Create the WordPress Post if it doesn't exist, otherwise update.
-		if ( $post_id === false ) {
+		if ( false === $post_id ) {
 			$post_id = $this->create_from_activity( $args['objectRef'], $post_type );
 		} else {
 			$this->update_from_activity( $args['objectRef'], $post_id );
@@ -1653,7 +1653,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		$entity = $this->acf_loader->acf->field->entity_type_get( $post_id );
 
 		// Bail if it's not a Post.
-		if ( $entity !== 'post' ) {
+		if ( 'post' !== $entity ) {
 			return;
 		}
 
@@ -1749,7 +1749,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		if ( $query->have_posts() ) {
 			foreach ( $query->get_posts() as $found ) {
 
-				if ( $post_type === 'any' ) {
+				if ( 'any' === $post_type ) {
 					// Add if we want *all* Posts.
 					$posts[] = $found->ID;
 				} elseif ( $found->post_type == $post_type ) {
@@ -1781,13 +1781,13 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	public function participant_sync( $args ) {
 
 		// Bail if this is not a Participant.
-		if ( $args['objectName'] != 'Participant' ) {
+		if ( 'Participant' !== $args['objectName'] ) {
 			return;
 		}
 
 		// Bail if this Participant is not mapped.
 		$post_types = $this->acf_loader->civicrm->participant->is_mapped( $args['objectRef'] );
-		if ( $post_types === false ) {
+		if ( false === $post_types ) {
 			return;
 		}
 
@@ -1809,7 +1809,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	public function participant_sync_to_post( $args, $post_type ) {
 
 		// Bail if this is not a Participant.
-		if ( $args['objectName'] != 'Participant' ) {
+		if ( 'Participant' !== $args['objectName'] ) {
 			return;
 		}
 
@@ -1833,7 +1833,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		do_action( 'cwps/acf/post/participant/sync/pre', $args );
 
 		// Create the WordPress Post if it doesn't exist, otherwise update.
-		if ( $post_id === false ) {
+		if ( false === $post_id ) {
 			$post_id = $this->create_from_participant( $args['objectRef'], $post_type );
 		} else {
 			$this->update_from_participant( $args['objectRef'], $post_id );
@@ -1868,7 +1868,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	public function participant_created( $args ) {
 
 		// Bail if this is not a Participant.
-		if ( $args['objectName'] != 'Participant' ) {
+		if ( 'Participant' !== $args['objectName'] ) {
 			return;
 		}
 
@@ -1877,7 +1877,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Bail if this Participant is not mapped.
 		$post_types = $this->acf_loader->civicrm->participant->is_mapped( $args['objectRef'] );
-		if ( $post_types === false ) {
+		if ( false === $post_types ) {
 			return;
 		}
 
@@ -1899,7 +1899,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 			 *
 			 * Instead, the Participant ID needs to be reverse synced to the Post.
 			 */
-			if ( $entity['entity'] === 'post' && $post_type == $entity['type'] ) {
+			if ( 'post' === $entity['entity'] && $post_type == $entity['type'] ) {
 
 				// Save correspondence and skip.
 				$this->participant_id_set( $entity['id'], $args['objectId'] );
@@ -1911,7 +1911,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 			$this->acf_loader->mapper->hooks_wordpress_post_remove();
 
 			// Create the WordPress Post.
-			if ( $post_id === false ) {
+			if ( false === $post_id ) {
 				$post_id = $this->create_from_participant( $args['objectRef'], $post_type );
 			}
 
@@ -1949,7 +1949,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	public function participant_edited( $args ) {
 
 		// Bail if this is not a Participant.
-		if ( $args['objectName'] != 'Participant' ) {
+		if ( 'Participant' !== $args['objectName'] ) {
 			return;
 		}
 
@@ -1958,7 +1958,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Bail if this Participant is not mapped.
 		$post_types = $this->acf_loader->civicrm->participant->is_mapped( $args['objectRef'] );
-		if ( $post_types === false ) {
+		if ( false === $post_types ) {
 			return;
 		}
 
@@ -1972,7 +1972,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 			$post_id = $this->acf_loader->civicrm->participant->is_mapped_to_post( $args['objectRef'], $post_type );
 
 			// Exclude "reverse" edits when a Post is the originator.
-			if ( $entity['entity'] === 'post' && $post_id == $entity['id'] ) {
+			if ( 'post' === $entity['entity'] && $post_id == $entity['id'] ) {
 				continue;
 			}
 
@@ -1980,7 +1980,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 			$this->acf_loader->mapper->hooks_wordpress_post_remove();
 
 			// Create the WordPress Post if it doesn't exist, otherwise update.
-			if ( $post_id === false ) {
+			if ( false === $post_id ) {
 				$post_id = $this->create_from_participant( $args['objectRef'], $post_type );
 			} else {
 				$this->update_from_participant( $args['objectRef'], $post_id );
@@ -2056,7 +2056,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	public function participant_deleted( $args ) {
 
 		// Bail if this is not a Participant.
-		if ( $args['objectName'] != 'Participant' ) {
+		if ( 'Participant' !== $args['objectName'] ) {
 			return;
 		}
 
@@ -2080,7 +2080,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Bail if this Participant is not mapped.
 		$post_types = $this->acf_loader->civicrm->participant->is_mapped( $args['objectRef'] );
-		if ( $post_types === false ) {
+		if ( false === $post_types ) {
 			return;
 		}
 
@@ -2093,7 +2093,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 			if ( ! empty( $post_ids ) ) {
 				$post_id = array_pop( $post_ids );
 			}
-			if ( $post_id === false ) {
+			if ( false === $post_id ) {
 				continue;
 			}
 
@@ -2143,13 +2143,13 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Retrieve critical values.
 		$contact = $this->plugin->civicrm->contact->get_by_id( $participant->contact_id );
-		if ( $contact === false ) {
+		if ( false === $contact ) {
 			return false;
 		}
 
 		// Retrieve Event.
 		$event = $this->acf_loader->civicrm->event->get_by_id( $participant->event_id );
-		if ( $event === false ) {
+		if ( false === $event ) {
 			return false;
 		}
 
@@ -2234,13 +2234,13 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Retrieve Contact.
 		$contact = $this->plugin->civicrm->contact->get_by_id( $participant->contact_id );
-		if ( $contact === false ) {
+		if ( false === $contact ) {
 			return false;
 		}
 
 		// Retrieve Event.
 		$event = $this->acf_loader->civicrm->event->get_by_id( $participant->event_id );
-		if ( $event === false ) {
+		if ( false === $event ) {
 			return false;
 		}
 
@@ -2371,12 +2371,12 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	public function query_contact_id( $contact_id, $post_id, $entity ) {
 
 		// Bail early if a Contact ID has been found.
-		if ( $contact_id !== false ) {
+		if ( false !== $contact_id ) {
 			return $contact_id;
 		}
 
 		// Bail early if not a Post Entity.
-		if ( $entity !== 'post' ) {
+		if ( 'post' !== $entity ) {
 			return $contact_id;
 		}
 
@@ -2414,7 +2414,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		}
 
 		// Bail if this is a draft or an auto-draft.
-		if ( $post_obj->post_status == 'draft' || $post_obj->post_status == 'auto-draft' ) {
+		if ( 'draft' === $post_obj->post_status || 'auto-draft' === $post_obj->post_status ) {
 			return $post;
 		}
 

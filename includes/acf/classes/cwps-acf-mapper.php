@@ -178,7 +178,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function entity_set( $entity, $id, $type = '' ) {
 
 		// Bail if it has already been set.
-		if ( $this->entity['entity'] !== false ) {
+		if ( false !== $this->entity['entity'] ) {
 			return;
 		}
 
@@ -858,12 +858,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function listeners_civicrm_add() {
 
 		// Bail if CiviCRM unavailable.
-		if ( $this->civicrm_available === false ) {
+		if ( false === $this->civicrm_available ) {
 			return;
 		}
 
 		// Bail if already registered.
-		if ( $this->civicrm_listeners === true ) {
+		if ( true === $this->civicrm_listeners ) {
 			return;
 		}
 
@@ -931,12 +931,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function listeners_civicrm_remove() {
 
 		// Bail if CiviCRM unavailable.
-		if ( $this->civicrm_available === false ) {
+		if ( false === $this->civicrm_available ) {
 			return;
 		}
 
 		// Bail if already unregistered.
-		if ( $this->civicrm_listeners === false ) {
+		if ( false === $this->civicrm_listeners ) {
 			return;
 		}
 
@@ -1166,7 +1166,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function contact_pre_create( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'create' ) {
+		if ( 'create' !== $op ) {
 			return;
 		}
 
@@ -1210,7 +1210,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function contact_pre_edit( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'edit' ) {
+		if ( 'edit' !== $op ) {
 			return;
 		}
 
@@ -1258,7 +1258,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function contact_created( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if it's not the "create" operation.
-		if ( $op != 'create' ) {
+		if ( 'create' !== $op ) {
 			return;
 		}
 
@@ -1310,7 +1310,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function contact_edited( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if it's not an "edit" operation.
-		if ( $op != 'edit' ) {
+		if ( 'edit' !== $op ) {
 			return;
 		}
 
@@ -1329,7 +1329,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		$contact = $this->plugin->civicrm->contact->get_by_id( $object_id );
 
 		// Bail if something went wrong.
-		if ( $contact === false ) {
+		if ( false === $contact ) {
 			return;
 		}
 
@@ -1395,12 +1395,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function email_created( $op, $object_name, $object_id, $object_ref ) {
 
 		// Target our operation.
-		if ( $op != 'create' ) {
+		if ( 'create' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not an Email.
-		if ( $object_name != 'Email' ) {
+		if ( 'Email' !== $object_name ) {
 			return;
 		}
 
@@ -1438,12 +1438,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function email_edited( $op, $object_name, $object_id, $object_ref ) {
 
 		// Target our operation.
-		if ( $op != 'edit' ) {
+		if ( 'edit' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not an Email.
-		if ( $object_name != 'Email' ) {
+		if ( 'Email' !== $object_name ) {
 			return;
 		}
 
@@ -1481,12 +1481,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function email_deleted( $op, $object_name, $object_id, $object_ref ) {
 
 		// Target our operation.
-		if ( $op != 'delete' ) {
+		if ( 'delete' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not an Email.
-		if ( $object_name != 'Email' ) {
+		if ( 'Email' !== $object_name ) {
 			return;
 		}
 
@@ -1526,12 +1526,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function website_pre_edit( $op, $object_name, $object_id, $object_ref ) {
 
 		// Target our operation.
-		if ( $op != 'edit' ) {
+		if ( 'edit' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not a Website.
-		if ( $object_name != 'Website' ) {
+		if ( 'Website' !== $object_name ) {
 			return;
 		}
 
@@ -1569,12 +1569,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function website_pre_delete( $op, $object_name, $object_id, $object_ref ) {
 
 		// Target our operation.
-		if ( $op != 'delete' ) {
+		if ( 'delete' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not a Website.
-		if ( $object_name != 'Website' ) {
+		if ( 'Website' !== $object_name ) {
 			return;
 		}
 
@@ -1612,12 +1612,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function website_created( $op, $object_name, $object_id, $object_ref ) {
 
 		// Target our operation.
-		if ( $op != 'create' ) {
+		if ( 'create' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not a Website.
-		if ( $object_name != 'Website' ) {
+		if ( 'Website' !== $object_name ) {
 			return;
 		}
 
@@ -1655,12 +1655,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function website_edited( $op, $object_name, $object_id, $object_ref ) {
 
 		// Target our operation.
-		if ( $op != 'edit' ) {
+		if ( 'edit' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not a Website.
-		if ( $object_name != 'Website' ) {
+		if ( 'Website' !== $object_name ) {
 			return;
 		}
 
@@ -1698,12 +1698,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function website_deleted( $op, $object_name, $object_id, $object_ref ) {
 
 		// Target our operation.
-		if ( $op != 'delete' ) {
+		if ( 'delete' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not a Website.
-		if ( $object_name != 'Website' ) {
+		if ( 'Website' !== $object_name ) {
 			return;
 		}
 
@@ -1743,12 +1743,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function phone_pre_delete( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'delete' ) {
+		if ( 'delete' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not a Phone.
-		if ( $object_name != 'Phone' ) {
+		if ( 'Phone' !== $object_name ) {
 			return;
 		}
 
@@ -1786,12 +1786,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function phone_created( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'create' ) {
+		if ( 'create' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not a Phone.
-		if ( $object_name != 'Phone' ) {
+		if ( 'Phone' !== $object_name ) {
 			return;
 		}
 
@@ -1829,12 +1829,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function phone_edited( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'edit' ) {
+		if ( 'edit' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not a Phone.
-		if ( $object_name != 'Phone' ) {
+		if ( 'Phone' !== $object_name ) {
 			return;
 		}
 
@@ -1872,12 +1872,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function phone_deleted( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'delete' ) {
+		if ( 'delete' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not a Phone.
-		if ( $object_name != 'Phone' ) {
+		if ( 'Phone' !== $object_name ) {
 			return;
 		}
 
@@ -1917,12 +1917,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function im_pre_delete( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'delete' ) {
+		if ( 'delete' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not an Instant Messenger.
-		if ( $object_name != 'IM' ) {
+		if ( 'IM' !== $object_name ) {
 			return;
 		}
 
@@ -1960,12 +1960,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function im_created( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'create' ) {
+		if ( 'create' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not an Instant Messenger.
-		if ( $object_name != 'IM' ) {
+		if ( 'IM' !== $object_name ) {
 			return;
 		}
 
@@ -2003,12 +2003,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function im_edited( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'edit' ) {
+		if ( 'edit' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not an Instant Messenger.
-		if ( $object_name != 'IM' ) {
+		if ( 'IM' !== $object_name ) {
 			return;
 		}
 
@@ -2046,12 +2046,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function im_deleted( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'delete' ) {
+		if ( 'delete' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not an Instant Messenger.
-		if ( $object_name != 'IM' ) {
+		if ( 'IM' !== $object_name ) {
 			return;
 		}
 
@@ -2091,12 +2091,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function relationship_pre_edit( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'edit' ) {
+		if ( 'edit' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not a Relationship.
-		if ( $object_name != 'Relationship' ) {
+		if ( 'Relationship' !== $object_name ) {
 			return;
 		}
 
@@ -2134,12 +2134,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function relationship_created( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'create' ) {
+		if ( 'create' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not a Relationship.
-		if ( $object_name != 'Relationship' ) {
+		if ( 'Relationship' !== $object_name ) {
 			return;
 		}
 
@@ -2177,12 +2177,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function relationship_edited( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'edit' ) {
+		if ( 'edit' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not a Relationship.
-		if ( $object_name != 'Relationship' ) {
+		if ( 'Relationship' !== $object_name ) {
 			return;
 		}
 
@@ -2220,12 +2220,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function relationship_deleted( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'delete' ) {
+		if ( 'delete' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not a Relationship.
-		if ( $object_name != 'Relationship' ) {
+		if ( 'Relationship' !== $object_name ) {
 			return;
 		}
 
@@ -2265,12 +2265,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function address_pre_edit( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'edit' ) {
+		if ( 'edit' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not an Address.
-		if ( $object_name != 'Address' ) {
+		if ( 'Address' !== $object_name ) {
 			return;
 		}
 
@@ -2308,12 +2308,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function address_pre_delete( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'delete' ) {
+		if ( 'delete' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not an Address.
-		if ( $object_name != 'Address' ) {
+		if ( 'Address' !== $object_name ) {
 			return;
 		}
 
@@ -2351,12 +2351,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function address_created( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'create' ) {
+		if ( 'create' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not an Address.
-		if ( $object_name != 'Address' ) {
+		if ( 'Address' !== $object_name ) {
 			return;
 		}
 
@@ -2394,12 +2394,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function address_edited( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'edit' ) {
+		if ( 'edit' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not an Address.
-		if ( $object_name != 'Address' ) {
+		if ( 'Address' !== $object_name ) {
 			return;
 		}
 
@@ -2437,12 +2437,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function address_deleted( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'delete' ) {
+		if ( 'delete' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not an Address.
-		if ( $object_name != 'Address' ) {
+		if ( 'Address' !== $object_name ) {
 			return;
 		}
 
@@ -2565,12 +2565,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function group_pre_delete( $op, $object_name, $object_id, &$object_ref ) {
 
 		// Target our operation.
-		if ( $op != 'delete' ) {
+		if ( 'delete' !== $op ) {
 			return;
 		}
 
 		// Target our object type.
-		if ( $object_name != 'Group' ) {
+		if ( 'Group' !== $object_name ) {
 			return;
 		}
 
@@ -2610,12 +2610,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function group_contacts_created( $op, $object_name, $object_id, &$object_ref ) {
 
 		// Target our operation.
-		if ( $op != 'create' ) {
+		if ( 'create' !== $op ) {
 			return;
 		}
 
 		// Target our object type.
-		if ( $object_name != 'GroupContact' ) {
+		if ( 'GroupContact' !== $object_name ) {
 			return;
 		}
 
@@ -2658,12 +2658,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function group_contacts_deleted( $op, $object_name, $object_id, &$object_ref ) {
 
 		// Target our operation.
-		if ( $op != 'delete' ) {
+		if ( 'delete' !== $op ) {
 			return;
 		}
 
 		// Target our object type.
-		if ( $object_name != 'GroupContact' ) {
+		if ( 'GroupContact' !== $object_name ) {
 			return;
 		}
 
@@ -2698,7 +2698,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 *
 	 * The issue here is that CiviCRM fires 'civicrm_pre' with $op = 'delete' regardless
 	 * of whether the Contact is being removed or deleted. If a Contact is later re-added
-	 * to the Group, then $op != 'create', so we need to intercept $op = 'edit'.
+	 * to the Group, then 'create' !== $op, so we need to intercept $op = 'edit'.
 	 *
 	 * @since 0.4
 	 *
@@ -2710,12 +2710,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function group_contacts_rejoined( $op, $object_name, $object_id, &$object_ref ) {
 
 		// Target our operation.
-		if ( $op != 'edit' ) {
+		if ( 'edit' !== $op ) {
 			return;
 		}
 
 		// Target our object type.
-		if ( $object_name != 'GroupContact' ) {
+		if ( 'GroupContact' !== $object_name ) {
 			return;
 		}
 
@@ -2760,12 +2760,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function activity_pre_create( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'create' ) {
+		if ( 'create' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not an Activity.
-		if ( $object_name != 'Activity' ) {
+		if ( 'Activity' !== $object_name ) {
 			return;
 		}
 
@@ -2803,12 +2803,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function activity_pre_edit( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'edit' ) {
+		if ( 'edit' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not an Activity.
-		if ( $object_name != 'Activity' ) {
+		if ( 'Activity' !== $object_name ) {
 			return;
 		}
 
@@ -2846,12 +2846,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function activity_created( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if it's not the "create" operation.
-		if ( $op != 'create' ) {
+		if ( 'create' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not an Activity.
-		if ( $object_name != 'Activity' ) {
+		if ( 'Activity' !== $object_name ) {
 			return;
 		}
 
@@ -2892,12 +2892,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function activity_edited( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if it's not an "edit" operation.
-		if ( $op != 'edit' ) {
+		if ( 'edit' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not an Activity.
-		if ( $object_name != 'Activity' ) {
+		if ( 'Activity' !== $object_name ) {
 			return;
 		}
 
@@ -2947,12 +2947,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function activity_deleted( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'delete' ) {
+		if ( 'delete' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not an Activity.
-		if ( $object_name != 'Activity' ) {
+		if ( 'Activity' !== $object_name ) {
 			return;
 		}
 
@@ -2995,12 +2995,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function participant_pre_create( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'create' ) {
+		if ( 'create' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not a Participant.
-		if ( $object_name != 'Participant' ) {
+		if ( 'Participant' !== $object_name ) {
 			return;
 		}
 
@@ -3038,12 +3038,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function participant_pre_edit( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'edit' ) {
+		if ( 'edit' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not a Participant.
-		if ( $object_name != 'Participant' ) {
+		if ( 'Participant' !== $object_name ) {
 			return;
 		}
 
@@ -3081,12 +3081,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function participant_pre_delete( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'delete' ) {
+		if ( 'delete' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not a Participant.
-		if ( $object_name != 'Participant' ) {
+		if ( 'Participant' !== $object_name ) {
 			return;
 		}
 
@@ -3124,12 +3124,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function participant_created( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if it's not the "create" operation.
-		if ( $op != 'create' ) {
+		if ( 'create' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not a Participant.
-		if ( $object_name != 'Participant' ) {
+		if ( 'Participant' !== $object_name ) {
 			return;
 		}
 
@@ -3170,12 +3170,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function participant_edited( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if it's not an "edit" operation.
-		if ( $op != 'edit' ) {
+		if ( 'edit' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not a Participant.
-		if ( $object_name != 'Participant' ) {
+		if ( 'Participant' !== $object_name ) {
 			return;
 		}
 
@@ -3225,12 +3225,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function participant_deleted( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'delete' ) {
+		if ( 'delete' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not a Participant.
-		if ( $object_name != 'Participant' ) {
+		if ( 'Participant' !== $object_name ) {
 			return;
 		}
 
@@ -3284,7 +3284,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		}
 
 		// Bail if this doesn't refer to a "File".
-		if ( $entity_tag->entity_table !== 'civicrm_file' ) {
+		if ( 'civicrm_file' !== $entity_tag->entity_table ) {
 			return;
 		}
 
@@ -3297,7 +3297,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 
 		// Get the CiviCRM File being deleted.
 		$civicrm_file = $this->acf_loader->civicrm->attachment->file_get_by_id( $entity_tag->entity_id );
-		if ( $civicrm_file === false ) {
+		if ( false === $civicrm_file ) {
 			return;
 		}
 
@@ -3349,12 +3349,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function file_pre_delete( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'delete' ) {
+		if ( 'delete' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not an File.
-		if ( $object_name != 'File' ) {
+		if ( 'File' !== $object_name ) {
 			return;
 		}
 
@@ -3404,12 +3404,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function file_created( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'create' ) {
+		if ( 'create' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not an File.
-		if ( $object_name != 'File' ) {
+		if ( 'File' !== $object_name ) {
 			return;
 		}
 
@@ -3459,12 +3459,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function file_edited( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'edit' ) {
+		if ( 'edit' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not an File.
-		if ( $object_name != 'File' ) {
+		if ( 'File' !== $object_name ) {
 			return;
 		}
 
@@ -3516,12 +3516,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function file_deleted( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'delete' ) {
+		if ( 'delete' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not an File.
-		if ( $object_name != 'File' ) {
+		if ( 'File' !== $object_name ) {
 			return;
 		}
 

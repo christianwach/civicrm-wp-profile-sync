@@ -130,7 +130,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 	public function register_mapper_hooks() {
 
 		// Bail if already registered.
-		if ( $this->mapper_hooks === true ) {
+		if ( true === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -151,7 +151,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 	public function unregister_mapper_hooks() {
 
 		// Bail if already unregistered.
-		if ( $this->mapper_hooks === false ) {
+		if ( false === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -194,7 +194,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		$result = civicrm_api( 'Setting', 'getvalue', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $value;
 		}
 
@@ -269,18 +269,18 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		}
 
 		// Bail if not the "Sync CMS Email" setting.
-		if ( ! isset( $dao->name ) && $dao->name != 'syncCMSEmail' ) {
+		if ( ! isset( $dao->name ) && 'syncCMSEmail' !== $dao->name ) {
 			return;
 		}
 
 		// Bail if setting is already "off".
-		if ( isset( $dao->value ) && '1' != maybe_unserialize( $dao->value ) ) {
+		if ( isset( $dao->value ) && 1 !== (int) maybe_unserialize( $dao->value ) ) {
 			return;
 		}
 
 		// Bail if our setting allows CiviCRM to handle Primary Email sync.
 		$email_sync = $this->plugin->admin->setting_get( 'user_profile_email_sync', 2 );
-		if ( $email_sync !== 1 ) {
+		if ( 1 !== $email_sync ) {
 			return;
 		}
 
@@ -298,7 +298,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 
 		// Bail if our setting allows CiviCRM to handle Primary Email sync.
 		$email_sync = $this->plugin->admin->setting_get( 'user_profile_email_sync', 2 );
-		if ( $email_sync !== 1 ) {
+		if ( 1 !== $email_sync ) {
 			return;
 		}
 
@@ -318,7 +318,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 
 		// Bail if our setting allows CiviCRM to handle Primary Email sync.
 		$email_sync = $this->plugin->admin->setting_get( 'user_profile_email_sync', 2 );
-		if ( $email_sync !== 1 ) {
+		if ( 1 !== $email_sync ) {
 			return;
 		}
 
@@ -341,7 +341,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 
 		// Bail if our setting allows CiviCRM to handle Primary Email sync.
 		$email_sync = $this->plugin->admin->setting_get( 'user_profile_email_sync', 2 );
-		if ( $email_sync !== 1 ) {
+		if ( 1 !== $email_sync ) {
 			return $options;
 		}
 
@@ -519,12 +519,12 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		$primary_email = $this->primary_record_get_by_id( $args['objectId'] );
 
 		// Sanity check.
-		if ( $primary_email === false ) {
+		if ( false === $primary_email ) {
 			return;
 		}
 
 		// Bail if it isn't the Primary Email.
-		if ( $primary_email->is_primary != 1 ) {
+		if ( 1 !== (int) $primary_email->is_primary ) {
 			return;
 		}
 
@@ -535,7 +535,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 
 		// If our setting allows CiviCRM to handle Primary Email sync.
 		$email_sync = $this->plugin->admin->setting_get( 'user_profile_email_sync', 2 );
-		if ( $email_sync !== 1 ) {
+		if ( 1 !== $email_sync ) {
 
 			// Remove WordPress and BuddyPress callbacks to prevent recursion.
 			$this->plugin->hooks_wp_remove();
@@ -573,7 +573,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 
 		// Bail if our setting allows CiviCRM to handle Primary Email sync.
 		$email_sync = $this->plugin->admin->setting_get( 'user_profile_email_sync', 2 );
-		if ( $email_sync !== 1 ) {
+		if ( 1 !== $email_sync ) {
 			return;
 		}
 
@@ -581,12 +581,12 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		$primary_email = $this->primary_record_get_by_id( $args['objectId'] );
 
 		// Sanity check.
-		if ( $primary_email === false ) {
+		if ( false === $primary_email ) {
 			return;
 		}
 
 		// Bail if it isn't the Primary Email.
-		if ( empty( $primary_email->is_primary ) || $primary_email->is_primary != 1 ) {
+		if ( empty( $primary_email->is_primary ) || 1 !== (int) $primary_email->is_primary ) {
 			return;
 		}
 
@@ -647,7 +647,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		$primary_email = $this->primary_record_get_by_contact_id( $contact->contact_id );
 
 		// If there isn't a current Primary Email.
-		if ( $primary_email === false ) {
+		if ( false === $primary_email ) {
 
 			/*
 			 * Construct params to create a Primary Email record.
@@ -751,7 +751,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		$result = civicrm_api( 'Email', 'get', $params );
 
 		// Bail on failure.
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $email;
 		}
 
@@ -797,7 +797,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		$result = civicrm_api( 'Email', 'get', $params );
 
 		// Bail on failure.
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $email;
 		}
 

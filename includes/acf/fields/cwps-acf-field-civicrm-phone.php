@@ -383,7 +383,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Field extends acf_field {
 	public function validate_value( $valid, $value, $field, $input ) {
 
 		// Bail if it's not required and is empty.
-		if ( $field['required'] == '0' && empty( $value ) ) {
+		if ( 0 === (int) $field['required'] && empty( $value ) ) {
 			return $valid;
 		}
 

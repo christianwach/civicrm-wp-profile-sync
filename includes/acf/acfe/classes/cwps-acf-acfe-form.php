@@ -179,7 +179,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 	public function form_wrapper( $form, $post_id ) {
 
 		// Alter the default "Success Wrapper".
-		if ( $form['html_updated_message'] === '<div id="message" class="updated">%s</div>' ) {
+		if ( '<div id="message" class="updated">%s</div>' === $form['html_updated_message'] ) {
 			$form['html_updated_message'] = '<div id="message" class="acfe-success">%s</div>';
 		}
 
@@ -263,7 +263,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 		if ( ! ( $screen instanceof WP_Screen ) ) {
 			return;
 		}
-		if ( $screen->base != 'post' || $screen->id != 'acfe-form' ) {
+		if ( 'post' !== $screen->base || 'acfe-form' !== $screen->id ) {
 			return;
 		}
 
@@ -360,13 +360,13 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 	public function query_field_group_mapped( $mapped, $field_group ) {
 
 		// Bail if a Mapping has already been found.
-		if ( $mapped !== false ) {
+		if ( false !== $mapped ) {
 			return $mapped;
 		}
 
 		// Bail if this is not a Bypass Field Group.
 		$is_bypass_field_group = $this->is_bypass_field_group( $field_group );
-		if ( $is_bypass_field_group === false ) {
+		if ( false === $is_bypass_field_group ) {
 			return $mapped;
 		}
 
@@ -436,7 +436,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 	public function query_supported_rules( $supported, $rule, $params, $field_group ) {
 
 		// Bail if already supported.
-		if ( $supported === true ) {
+		if ( true === $supported ) {
 			return $supported;
 		}
 
@@ -465,13 +465,13 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 	public function query_settings_field( $setting_field, $field, $field_group ) {
 
 		// Pass if conflicting Fields have been found.
-		if ( $setting_field === false ) {
+		if ( false === $setting_field ) {
 			return false;
 		}
 
 		// Pass if this is not a Bypass Field Group.
 		$is_visible = $this->is_bypass_field_group( $field_group );
-		if ( $is_visible === false ) {
+		if ( false === $is_visible ) {
 			return $setting_field;
 		}
 

@@ -232,7 +232,7 @@ function cwps_get_phone_numbers_by_type_ids( $selector, $location_type_id, $phon
 	}
 
 	// Format the return.
-	if ( $return === 'list' ) {
+	if ( 'list' === $return ) {
 
 		// Open the list.
 		$phones .= '<ul><li>';
@@ -430,7 +430,7 @@ function cwps_get_primary_phone_record( $selector, $post_id = null ) {
 
 	// Now try and find the Primary Phone Record.
 	foreach ( $records as $record ) {
-		if ( $record['field_phone_primary'] == '1' ) {
+		if ( 1 === (int) $record['field_phone_primary'] ) {
 			$phone = $record;
 			break;
 		}
@@ -486,7 +486,7 @@ function cwps_get_phone_records( $selector, $post_id = null ) {
 	}
 
 	// Bail if it's not a CiviCRM Phone Field.
-	if ( $acf_settings['type'] != 'civicrm_phone' ) {
+	if ( 'civicrm_phone' !== $acf_settings['type'] ) {
 		return $records;
 	}
 
@@ -654,7 +654,7 @@ function cwps_get_ims_by_type_ids( $selector, $location_type_id, $im_provider_id
 	}
 
 	// Format the return.
-	if ( $return === 'list' ) {
+	if ( 'list' === $return ) {
 
 		// Open the list.
 		$ims .= '<ul><li>';
@@ -853,7 +853,7 @@ function cwps_get_primary_im_record( $selector, $post_id = null ) {
 
 	// Now try and find the Primary Instant Messenger Record.
 	foreach ( $records as $record ) {
-		if ( $record['field_im_primary'] == '1' ) {
+		if ( 1 === (int) $record['field_im_primary'] ) {
 			$im = $record;
 			break;
 		}
@@ -909,7 +909,7 @@ function cwps_get_im_records( $selector, $post_id = null ) {
 	}
 
 	// Bail if it's not a CiviCRM Instant Messenger Field.
-	if ( $acf_settings['type'] != 'civicrm_im' ) {
+	if ( 'civicrm_im' !== $acf_settings['type'] ) {
 		return $records;
 	}
 
@@ -1295,7 +1295,7 @@ function cwps_get_primary_address_record( $selector, $post_id = null ) {
 
 	// Now try and find the Primary Address Record.
 	foreach ( $records as $record ) {
-		if ( $record['field_address_primary'] == '1' ) {
+		if ( 1 === (int) $record['field_address_primary'] ) {
 			$address = $record;
 			break;
 		}
@@ -1351,7 +1351,7 @@ function cwps_get_address_records( $selector, $post_id = null ) {
 	}
 
 	// Bail if it's not a CiviCRM Address Field.
-	if ( $acf_settings['type'] != 'civicrm_address' ) {
+	if ( 'civicrm_address' !== $acf_settings['type'] ) {
 		return $records;
 	}
 

@@ -127,7 +127,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Type {
 		$result = civicrm_api( 'CaseType', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $case_type;
 		}
 
@@ -177,7 +177,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Type {
 		$result = civicrm_api( 'Case', 'get', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -267,7 +267,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Type {
 		$result = civicrm_api( 'Case', 'getoptions', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $choices;
 		}
 
@@ -329,7 +329,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Type {
 		$result = civicrm_api( 'CaseType', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $case_types;
 		}
 
@@ -404,7 +404,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Type {
 		$result = civicrm_api( 'CaseType', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $case_types;
 		}
 

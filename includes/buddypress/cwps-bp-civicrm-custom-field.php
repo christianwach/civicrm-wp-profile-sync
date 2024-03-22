@@ -195,7 +195,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	public function register_mapper_hooks() {
 
 		// Bail if already registered.
-		if ( $this->mapper_hooks === true ) {
+		if ( true === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -215,7 +215,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 	public function unregister_mapper_hooks() {
 
 		// Bail if already unregistered.
-		if ( $this->mapper_hooks === false ) {
+		if ( false === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -250,7 +250,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		}
 
 		// Get Custom Fields for the "Contact" Entity Type.
-		if ( $entity_type === 'Contact' ) {
+		if ( 'Contact' === $entity_type ) {
 
 			// We need Contact Type data.
 			if ( empty( $entity_type_data ) ) {
@@ -410,7 +410,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		$user_id = apply_filters( 'cwps/bp/query_user_id', $user_id, $args );
 
 		// Bail if we can't find a User ID.
-		if ( $user_id === false ) {
+		if ( false === $user_id ) {
 			return;
 		}
 
@@ -427,7 +427,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		foreach ( $bp_fields as $bp_field ) {
 			$bp_field_mapping = $bp_field['field_meta']['value'];
 			$custom_field_id  = $this->id_get( $bp_field_mapping );
-			if ( $custom_field_id === false ) {
+			if ( false === $custom_field_id ) {
 				continue;
 			}
 			$bp_field['custom_field_id'] = $custom_field_id;
@@ -549,7 +549,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 				$datetime = DateTime::createFromFormat( 'YmdHis', $value );
 
 				// Convert to BuddyPress format which cannot have "H:m:s".
-				if ( $datetime !== false ) {
+				if ( false !== $datetime ) {
 					$value = $datetime->format( 'Y-m-d' ) . ' 00:00:00';
 				}
 				break;
@@ -589,17 +589,17 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		$field_data = $this->plugin->civicrm->custom_field->get_by_id( $custom_field_id );
 
 		// Bail if we don't get any.
-		if ( $field_data === false ) {
+		if ( false === $field_data ) {
 			return $format;
 		}
 
 		// Bail if it's not Date.
-		if ( $field_data['data_type'] !== 'Date' ) {
+		if ( 'Date' !== $field_data['data_type'] ) {
 			return $format;
 		}
 
 		// Bail if it's not "Select Date".
-		if ( $field_data['html_type'] !== 'Select Date' ) {
+		if ( 'Select Date' !== $field_data['html_type'] ) {
 			return $format;
 		}
 
@@ -668,17 +668,17 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		$field_data = $this->plugin->civicrm->custom_field->get_by_id( $custom_field_id );
 
 		// Bail if we don't get any.
-		if ( $field_data === false ) {
+		if ( false === $field_data ) {
 			return $choices;
 		}
 
 		// Bail if it's not "String".
-		if ( $field_data['data_type'] !== 'String' ) {
+		if ( 'String' !== $field_data['data_type'] ) {
 			return $choices;
 		}
 
 		// Bail if it's not "CheckBox".
-		if ( $field_data['html_type'] !== 'CheckBox' ) {
+		if ( 'CheckBox' !== $field_data['html_type'] ) {
 			return $choices;
 		}
 
@@ -712,8 +712,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		// Filter Fields to include only Boolean/Radio.
 		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			foreach ( $custom_group as $custom_field ) {
-				if ( ! empty( $custom_field['data_type'] ) && $custom_field['data_type'] == 'String' ) {
-					if ( ! empty( $custom_field['html_type'] ) && $custom_field['html_type'] == 'CheckBox' ) {
+				if ( ! empty( $custom_field['data_type'] ) && 'String' === $custom_field['data_type'] ) {
+					if ( ! empty( $custom_field['html_type'] ) && 'CheckBox' === $custom_field['html_type'] ) {
 						$filtered_fields[ $custom_group_name ][] = $custom_field;
 					}
 				}
@@ -772,7 +772,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		$field_data = $this->plugin->civicrm->custom_field->get_by_id( $custom_field_id );
 
 		// Bail if we don't get any.
-		if ( $field_data === false ) {
+		if ( false === $field_data ) {
 			return $choices;
 		}
 
@@ -827,7 +827,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 
 		/*
 		// BuddyPress has no "Autocomplete-Select".
-		if ( $field['ui'] == 1 && $field['ajax'] == 1 ) {
+		if ( 1 === (int) $field['ui'] && 1 === (int) $field['ajax'] ) {
 
 			// Filter Fields to include only Autocomplete-Select.
 			$select_types = [ 'Autocomplete-Select' ];
@@ -967,7 +967,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		$field_data = $this->plugin->civicrm->custom_field->get_by_id( $custom_field_id );
 
 		// Bail if we don't get any.
-		if ( $field_data === false ) {
+		if ( false === $field_data ) {
 			return $choices;
 		}
 
@@ -977,7 +977,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		}
 
 		// Bail if it's not "Radio".
-		if ( $field_data['html_type'] !== 'Radio' ) {
+		if ( 'Radio' !== $field_data['html_type'] ) {
 			return $choices;
 		}
 
@@ -1012,7 +1012,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			foreach ( $custom_group as $custom_field ) {
 				if ( ! empty( $custom_field['data_type'] ) && in_array( $custom_field['data_type'], $this->data_types, true ) ) {
-					if ( ! empty( $custom_field['html_type'] ) && $custom_field['html_type'] == 'Radio' ) {
+					if ( ! empty( $custom_field['html_type'] ) && 'Radio' === $custom_field['html_type'] ) {
 						$filtered_fields[ $custom_group_name ][] = $custom_field;
 					}
 				}
@@ -1044,9 +1044,9 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		// Filter Fields to include only Date/Select Date.
 		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			foreach ( $custom_group as $custom_field ) {
-				if ( ! empty( $custom_field['data_type'] ) && $custom_field['data_type'] == 'Date' ) {
-					if ( ! empty( $custom_field['html_type'] ) && $custom_field['html_type'] == 'Select Date' ) {
-						if ( ! isset( $custom_field['time_format'] ) || $custom_field['time_format'] == '0' ) {
+				if ( ! empty( $custom_field['data_type'] ) && 'Date' === $custom_field['data_type'] ) {
+					if ( ! empty( $custom_field['html_type'] ) && 'Select Date' === $custom_field['html_type'] ) {
+						if ( ! isset( $custom_field['time_format'] ) || 0 === (int) $custom_field['time_format'] ) {
 							$filtered_fields[ $custom_group_name ][] = $custom_field;
 						}
 					}
@@ -1111,7 +1111,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			foreach ( $custom_group as $custom_field ) {
 				if ( ! empty( $custom_field['data_type'] ) && in_array( $custom_field['data_type'], $this->data_types, true ) ) {
-					if ( ! empty( $custom_field['html_type'] ) && $custom_field['html_type'] == 'Text' ) {
+					if ( ! empty( $custom_field['html_type'] ) && 'Text' === $custom_field['html_type'] ) {
 						$filtered_fields[ $custom_group_name ][] = $custom_field;
 					}
 				}
@@ -1145,8 +1145,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		// Filter Fields to include only Memo/RichTextEditor.
 		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			foreach ( $custom_group as $custom_field ) {
-				if ( ! empty( $custom_field['data_type'] ) && $custom_field['data_type'] == 'Memo' ) {
-					if ( ! empty( $custom_field['html_type'] ) && $custom_field['html_type'] == 'RichTextEditor' ) {
+				if ( ! empty( $custom_field['data_type'] ) && 'Memo' === $custom_field['data_type'] ) {
+					if ( ! empty( $custom_field['html_type'] ) && 'RichTextEditor' === $custom_field['html_type'] ) {
 						$filtered_fields[ $custom_group_name ][] = $custom_field;
 					}
 				}
@@ -1178,8 +1178,8 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		// Filter Fields to include only "Link".
 		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			foreach ( $custom_group as $custom_field ) {
-				if ( ! empty( $custom_field['data_type'] ) && $custom_field['data_type'] == 'Link' ) {
-					if ( ! empty( $custom_field['html_type'] ) && $custom_field['html_type'] == 'Link' ) {
+				if ( ! empty( $custom_field['data_type'] ) && 'Link' === $custom_field['data_type'] ) {
+					if ( ! empty( $custom_field['html_type'] ) && 'Link' === $custom_field['html_type'] ) {
 						$filtered_fields[ $custom_group_name ][] = $custom_field;
 					}
 				}

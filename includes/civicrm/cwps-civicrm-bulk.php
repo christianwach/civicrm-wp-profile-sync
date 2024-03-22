@@ -156,7 +156,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Bulk {
 	public function bulk_operations( $object_name, &$tasks ) {
 
 		// Only handle Contacts.
-		if ( $object_name != 'contact' ) {
+		if ( 'contact' !== $object_name ) {
 			return;
 		}
 

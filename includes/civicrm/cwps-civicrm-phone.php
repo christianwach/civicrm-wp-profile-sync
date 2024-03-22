@@ -117,7 +117,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 		$result = civicrm_api( 'Phone', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $phone;
 		}
 
@@ -166,7 +166,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 		$result = civicrm_api( 'Phone', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $phones;
 		}
 
@@ -223,7 +223,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 		$result = civicrm_api( 'Phone', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $phone_data;
 		}
 
@@ -275,7 +275,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 		$result = civicrm_api( 'Phone', 'create', $params );
 
 		// Log and bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -330,7 +330,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 		$result = civicrm_api( 'Phone', 'delete', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $success;
 		}
 
@@ -340,7 +340,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 		}
 
 		// The result set should contain only one item.
-		$success = ( $result['values'] == '1' ) ? true : false;
+		$success = ( 1 === (int) $result['values'] ) ? true : false;
 
 		// --<
 		return $success;
@@ -425,7 +425,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 		$result = civicrm_api( 'Phone', 'getfield', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $field;
 		}
 

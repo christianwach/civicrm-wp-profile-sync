@@ -145,7 +145,7 @@ class CiviCRM_WP_Profile_Sync {
 
 		// Only do this once.
 		static $done;
-		if ( isset( $done ) && $done === true ) {
+		if ( isset( $done ) && true === $done ) {
 			return;
 		}
 

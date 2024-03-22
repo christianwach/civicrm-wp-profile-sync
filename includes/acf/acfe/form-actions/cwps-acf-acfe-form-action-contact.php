@@ -789,7 +789,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				if ( acf_is_field_key( $field ) ) {
 
 					// Allow (string) "0" as valid data.
-					if ( empty( $contact[ $code ] ) && $contact[ $code ] !== '0' ) {
+					if ( empty( $contact[ $code ] ) && '0' !== $contact[ $code ] ) {
 						continue;
 					}
 
@@ -797,7 +797,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 					$form['map'][ $field ]['value'] = $contact[ $code ];
 
 					// Convert any "File" Custom Fields to WordPress Attachment IDs.
-					if ( $custom_field['data_type'] === 'File' && ! empty( $contact[ $code ] ) ) {
+					if ( 'File' === $custom_field['data_type'] && ! empty( $contact[ $code ] ) ) {
 						$civicrm_file = $this->civicrm->attachment->file_get_by_id( $contact[ $code ] );
 						if ( ! empty( $civicrm_file ) ) {
 							$attachment_id = $this->civicrm->attachment->query_by_file( $civicrm_file->uri, 'civicrm' );
@@ -921,7 +921,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 							$field = acfe_form_map_field_value_load( $field, $current_post_id, $form );
 							if ( acf_is_field_key( $field ) ) {
 								// Allow (string) "0" as valid data.
-								if ( empty( $relationship[ $code ] ) && $relationship[ $code ] !== '0' ) {
+								if ( empty( $relationship[ $code ] ) && '0' !== $relationship[ $code ] ) {
 									continue;
 								}
 								$form['map'][ $field ]['value'] = $relationship[ $code ];
@@ -1002,7 +1002,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 						$field = acfe_form_map_field_value_load( $field, $current_post_id, $form );
 						if ( acf_is_field_key( $field ) ) {
 							// Allow (string) "0" as valid data.
-							if ( empty( $address[ $code ] ) && $address[ $code ] !== '0' ) {
+							if ( empty( $address[ $code ] ) && '0' !== $address[ $code ] ) {
 								continue;
 							}
 							$form['map'][ $field ]['value'] = $address[ $code ];
@@ -1197,7 +1197,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		$args['contact'] = $this->form_contact_save( $contact, $emails, $contact_custom_fields );
 
 		// If we get a Contact.
-		if ( $args['contact'] !== false ) {
+		if ( false !== $args['contact'] ) {
 
 			// Post-process Custom Fields now that we have a Contact.
 			$this->form_custom_post_process( $form, $current_post_id, $action, $args['contact'] );
@@ -1677,7 +1677,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 				// Common Fields do not need extra conditional logic.
 				$conditional_logic = [];
-				if ( $contact_type !== 'common' ) {
+				if ( 'common' !== $contact_type ) {
 
 					// Custom conditional logic.
 					$conditional_logic = [
@@ -4131,15 +4131,15 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// Determine Contact Type and check name accordingly.
 		$full_name = false;
-		if ( $contact['contact_type'] === 'Individual' ) {
+		if ( 'Individual' === $contact['contact_type'] ) {
 			if ( ! empty( $contact['first_name'] ) && ! empty( $contact['last_name'] ) ) {
 				$full_name = true;
 			}
-		} elseif ( $contact['contact_type'] === 'Organization' ) {
+		} elseif ( 'Organization' === $contact['contact_type'] ) {
 			if ( ! empty( $contact['organization_name'] ) ) {
 				$full_name = true;
 			}
-		} elseif ( $contact['contact_type'] === 'Household' ) {
+		} elseif ( 'Household' === $contact['contact_type'] ) {
 			if ( ! empty( $contact['household_name'] ) ) {
 				$full_name = true;
 			}
@@ -4249,15 +4249,15 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			 * @see self::validation()
 			 */
 			$full_name = false;
-			if ( $contact_data['contact_type'] === 'Individual' ) {
+			if ( 'Individual' === $contact_data['contact_type'] ) {
 				if ( ! empty( $contact_data['first_name'] ) && ! empty( $contact_data['last_name'] ) ) {
 					$full_name = true;
 				}
-			} elseif ( $contact_data['contact_type'] === 'Organization' ) {
+			} elseif ( 'Organization' === $contact_data['contact_type'] ) {
 				if ( ! empty( $contact_data['organization_name'] ) ) {
 					$full_name = true;
 				}
-			} elseif ( $contact_data['contact_type'] === 'Household' ) {
+			} elseif ( 'Household' === $contact_data['contact_type'] ) {
 				if ( ! empty( $contact_data['household_name'] ) ) {
 					$full_name = true;
 				}
@@ -4343,7 +4343,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Bail on failure.
-		if ( $result === false ) {
+		if ( false === $result ) {
 			return $contact;
 		}
 
@@ -4688,7 +4688,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 					$fields[ $code ] = $custom_group_field[ $this->field_name . 'map_' . $code ];
 
 					// Track any "File" Custom Fields.
-					if ( $custom_field['data_type'] === 'File' ) {
+					if ( 'File' === $custom_field['data_type'] ) {
 						$file_fields[ $code ] = $fields[ $code ];
 					}
 
@@ -4933,7 +4933,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$result = $this->civicrm->email->email_record_update( $contact['id'], $email );
 
 			// Skip on failure.
-			if ( $result === false ) {
+			if ( false === $result ) {
 				continue;
 			}
 
@@ -5162,7 +5162,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			if ( empty( $relationships['relationships'] ) ) {
 
 				// Set the related Contact ID.
-				if ( $inverse === 'ab' ) {
+				if ( 'ab' === $inverse ) {
 					$field['contact_id_a'] = $related_contact_id;
 				} else {
 					$field['contact_id_b'] = $related_contact_id;
@@ -5192,7 +5192,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 					$current = [];
 					foreach ( $relationships_reset as $employer_employee ) {
 						$is_current = $this->civicrm->relationship->is_employer_employee( $employer_employee );
-						if ( $is_current === true ) {
+						if ( true === $is_current ) {
 							$current = $employer_employee;
 							break;
 						}
@@ -5215,7 +5215,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			if ( ! array_key_exists( $offset, $relationships_reset ) ) {
 
 				// Set the related Contact ID.
-				if ( $inverse === 'ab' ) {
+				if ( 'ab' === $inverse ) {
 					$field['contact_id_a'] = $related_contact_id;
 				} else {
 					$field['contact_id_b'] = $related_contact_id;
@@ -5303,10 +5303,10 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// Get the inverse direction.
 		$inverse = 'equal';
-		if ( $direction === 'ab' ) {
+		if ( 'ab' === $direction ) {
 			$inverse = 'ba';
 		}
-		if ( $direction === 'ba' ) {
+		if ( 'ba' === $direction ) {
 			$inverse = 'ab';
 		}
 
@@ -5413,7 +5413,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$result = $this->civicrm->relationship->relationship_record_update( $relationship );
 
 			// Skip on failure.
-			if ( $result === false ) {
+			if ( false === $result ) {
 				continue;
 			}
 
@@ -5486,7 +5486,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				}
 
 				// Skip when neither Contact ID is the related Contact for "equal" Relationships.
-				if ( $direction === 'equal' ) {
+				if ( 'equal' === $direction ) {
 					if ( $relationship['contact_id_b'] != $related_contact_id ) {
 						if ( $relationship['contact_id_a'] != $related_contact_id ) {
 							continue;
@@ -5495,14 +5495,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				}
 
 				// Get the related Contact ID for "directional" Relationships.
-				if ( $direction === 'ab' ) {
+				if ( 'ab' === $direction ) {
 					$contact_id = $relationship['contact_id_a'];
 				} else {
 					$contact_id = $relationship['contact_id_b'];
 				}
 
 				// Skip those that don't relate to the same Contact.
-				if ( $direction !== 'equal' && (int) $contact_id !== (int) $related_contact_id ) {
+				if ( 'equal' !== $direction && (int) $contact_id !== (int) $related_contact_id ) {
 					continue;
 				}
 
@@ -5591,7 +5591,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			if ( empty( $relationships['relationships'] ) ) {
 
 				// Set the Contact IDs.
-				if ( $inverse === 'ab' ) {
+				if ( 'ab' === $inverse ) {
 					$field['contact_id_a'] = $related_contact_id;
 					$field['contact_id_b'] = $contact_id;
 				} else {
@@ -5705,7 +5705,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			if ( empty( $existing_relationship ) ) {
 
 				// Set the related Contact ID.
-				if ( $inverse === 'ab' ) {
+				if ( 'ab' === $inverse ) {
 					$field['contact_id_a'] = $related_contact_id;
 					$field['contact_id_b'] = $contact['id'];
 				} else {
@@ -5873,7 +5873,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 			// Update the Website.
 			$result = $this->plugin->civicrm->website->update_for_contact( $website['website_type_id'], $contact['id'], $website['url'] );
-			if ( $result === false ) {
+			if ( false === $result ) {
 				continue;
 			}
 
@@ -6034,7 +6034,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$result = $this->plugin->civicrm->address->address_record_update( $contact['id'], $address );
 
 			// Skip on failure.
-			if ( $result === false ) {
+			if ( false === $result ) {
 				continue;
 			}
 
@@ -6172,7 +6172,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$result = $this->plugin->civicrm->phone->update( $contact['id'], $phone );
 
 			// Skip on failure.
-			if ( $result === false ) {
+			if ( false === $result ) {
 				continue;
 			}
 
@@ -6312,7 +6312,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$result = $this->civicrm->im->update( $contact['id'], $im );
 
 			// Skip on failure.
-			if ( $result === false ) {
+			if ( false === $result ) {
 				continue;
 			}
 
@@ -6440,7 +6440,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			if ( 'add' === $group['group_add_remove'] ) {
 
 				// Skip if already a Group Member.
-				if ( $is_member === true ) {
+				if ( true === $is_member ) {
 					continue;
 				}
 
@@ -6452,7 +6452,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				}
 
 				// Skip adding Group ID on failure.
-				if ( $result === false ) {
+				if ( false === $result ) {
 					continue;
 				}
 
@@ -6465,7 +6465,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			if ( 'remove' === $group['group_add_remove'] ) {
 
 				// Skip if not a Group Member.
-				if ( $is_member === false ) {
+				if ( false === $is_member ) {
 					continue;
 				}
 
@@ -6473,7 +6473,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				$result = $this->civicrm->group->group_contact_delete( $group['group_id'], $contact['id'] );
 
 				// Skip removing Group ID on failure.
-				if ( $result === false ) {
+				if ( false === $result ) {
 					continue;
 				}
 
@@ -6602,7 +6602,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 			// Skip if Contact already has a current Membership.
 			$is_member = $this->civicrm->membership->has_current( $contact['id'], $membership['membership_type_id'] );
-			if ( $is_member === true ) {
+			if ( true === $is_member ) {
 				continue;
 			}
 
@@ -6613,7 +6613,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$result = $this->civicrm->membership->create( $membership );
 
 			// Skip adding Membership data on failure.
-			if ( $result === false ) {
+			if ( false === $result ) {
 				continue;
 			}
 
@@ -6740,7 +6740,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$result = $this->civicrm->note->create( $note );
 
 			// Skip on failure.
-			if ( $result === false ) {
+			if ( false === $result ) {
 				continue;
 			}
 
@@ -6882,7 +6882,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 			// Create the Attachment.
 			$result = $this->civicrm->attachment->create( $params );
-			if ( $result === false ) {
+			if ( false === $result ) {
 				continue;
 			}
 
@@ -6999,7 +6999,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 				// Skip if Contact already has the Tag.
 				$has_tag = $this->civicrm->tag->contact_has_tag( $contact['id'], $tag_id );
-				if ( $has_tag === true ) {
+				if ( true === $has_tag ) {
 					$tags[] = $tag_id;
 					continue;
 				}
@@ -7008,7 +7008,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				$result = $this->civicrm->tag->contact_tag_add( $contact['id'], $tag_id );
 
 				// Skip adding Tag ID on failure.
-				if ( $result === false ) {
+				if ( false === $result ) {
 					continue;
 				}
 

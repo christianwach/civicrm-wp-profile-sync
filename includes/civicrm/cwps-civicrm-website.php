@@ -121,7 +121,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 	public function register_mapper_hooks() {
 
 		// Bail if already registered.
-		if ( $this->mapper_hooks === true ) {
+		if ( true === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -146,7 +146,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 	public function unregister_mapper_hooks() {
 
 		// Bail if already unregistered.
-		if ( $this->mapper_hooks === false ) {
+		if ( false === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -276,7 +276,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		 *
 		 * If it is no longer the synced Website Type, clear the URL.
 		 */
-		if ( $unchanged === false && $was_user_type === true ) {
+		if ( false === $unchanged && true === $was_user_type ) {
 
 			// Only apply "used to be" if an "is now" has not happened.
 			if ( empty( $this->skip_updates ) ) {
@@ -311,7 +311,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 			 * If this is an "is now" change, save it because we never want to
 			 * override with an empty "used to be" value.
 			 */
-			if ( $now_user_type === true ) {
+			if ( true === $now_user_type ) {
 				$this->skip_updates = true;
 			}
 
@@ -696,7 +696,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		$result = civicrm_api( 'Website', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $website;
 		}
 

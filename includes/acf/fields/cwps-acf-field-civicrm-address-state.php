@@ -328,7 +328,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_State_Field extends acf_field 
 		$contact_id = $this->acf->field->query_contact_id( $post_id );
 
 		// Overwrite if we get a value.
-		if ( $contact_id !== false ) {
+		if ( false !== $contact_id ) {
 
 			// Get this Contact's Addresses.
 			$addresses = $this->plugin->civicrm->address->addresses_get_by_contact_id( $contact_id );
@@ -359,7 +359,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_State_Field extends acf_field 
 			}
 
 			// Overwrite if we get a value.
-			if ( $state_id !== false ) {
+			if ( false !== $state_id ) {
 				$state = $this->plugin->civicrm->address->state_province_get_by_id( $state_id );
 				$value = $state['name'];
 			}

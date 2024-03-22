@@ -9,7 +9,7 @@
  */
 
 ?><!-- assets/templates/wordpress/metaboxes/metabox-acf-migrate-info.php -->
-<?php if ( $metabox['args']['migrated'] === false ) : ?>
+<?php if ( false === $metabox['args']['migrated'] ) : ?>
 
 	<h3><?php esc_html_e( 'Why migrate?', 'civicrm-wp-profile-sync' ); ?></h3>
 

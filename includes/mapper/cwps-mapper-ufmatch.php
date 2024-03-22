@@ -130,7 +130,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 			$entry = $this->entry_get_by_user_id( $user_id, $domain_id );
 
 			// If we get one.
-			if ( $entry !== false ) {
+			if ( false !== $entry ) {
 
 				// Get the Contact ID if present.
 				if ( ! empty( $entry->contact_id ) ) {
@@ -176,7 +176,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		$contact_id = $this->contact_id_get_by_user_id( $user_id, $domain_id );
 
 		// Bail if we didn't get one.
-		if ( $contact_id === false ) {
+		if ( false === $contact_id ) {
 			return false;
 		}
 
@@ -216,7 +216,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		$entry = $this->entry_get_by_contact_id( $contact_id, $domain_id );
 
 		// If we get a UFMatch entry.
-		if ( $entry !== false ) {
+		if ( false !== $entry ) {
 
 			// Get the User ID if a single UFMatch item is returned.
 			if ( ! empty( $entry->uf_id ) ) {
@@ -260,7 +260,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		$user_id = $this->user_id_get_by_contact_id( $contact_id, $domain_id );
 
 		// Bail if we didn't get one.
-		if ( $user_id === false ) {
+		if ( false === $user_id ) {
 			return false;
 		}
 
@@ -330,7 +330,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		$result = civicrm_api( 'UFMatch', 'create', $params );
 
 		// Log and bail on failure.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -418,7 +418,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		$result = civicrm_api( 'UFMatch', 'delete', $params );
 
 		// Log and bail on failure.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -500,7 +500,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		$result = civicrm_api( 'UFMatch', 'get', $params );
 
 		// Log and bail on failure.
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -595,7 +595,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		$result = civicrm_api( 'UFMatch', 'get', $params );
 
 		// Log and bail on failure.
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -680,7 +680,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		$result = civicrm_api( 'UFMatch', 'get', $params );
 
 		// Log and bail on failure.
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -753,7 +753,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		}
 
 		// Must be the Primary Email.
-		if ( empty( $email->is_primary ) || $email->is_primary != 1 ) {
+		if ( empty( $email->is_primary ) || 1 !== (int) $email->is_primary ) {
 			return;
 		}
 
@@ -761,7 +761,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_UFMatch {
 		$entry = $this->entry_get_by_contact_id( $email->contact_id );
 
 		// Bail if there's no UFMatch entry.
-		if ( $entry === false ) {
+		if ( false === $entry ) {
 			return;
 		}
 

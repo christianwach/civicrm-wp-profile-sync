@@ -113,7 +113,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Term_HTML {
 	public function initialise() {
 
 		// Bail if CPT not enabled.
-		if ( $this->cpt->enabled === false ) {
+		if ( false === $this->cpt->enabled ) {
 			return;
 		}
 

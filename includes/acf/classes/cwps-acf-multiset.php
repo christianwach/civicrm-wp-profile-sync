@@ -145,7 +145,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 	public function register_mapper_hooks() {
 
 		// Bail if already registered.
-		if ( $this->mapper_hooks === true ) {
+		if ( true === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -170,7 +170,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 	public function unregister_mapper_hooks() {
 
 		// Bail if already unregistered.
-		if ( $this->mapper_hooks === false ) {
+		if ( false === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -307,7 +307,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		$result = civicrm_api( 'Im', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $multiset_data;
 		}
 
@@ -676,7 +676,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		$result = civicrm_api( 'Im', 'create', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $multiset;
 		}
 
@@ -721,7 +721,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		$result = civicrm_api( 'Im', 'delete', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $success;
 		}
 
@@ -731,7 +731,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		}
 
 		// The result set should contain only one item.
-		$success = ( $result['values'] == '1' ) ? true : false;
+		$success = ( 1 === (int) $result['values'] ) ? true : false;
 
 		// --<
 		return $success;
@@ -844,7 +844,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 		// Bail if none of this Contact's Contact Types is mapped.
 		$post_types = $this->civicrm->contact->is_mapped( $contact, 'create' );
-		if ( $post_types === false ) {
+		if ( false === $post_types ) {
 			return;
 		}
 
@@ -855,7 +855,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 			$post_id = $this->civicrm->contact->is_mapped_to_post( $contact, $post_type );
 
 			// Skip if not mapped or Post doesn't yet exist.
-			if ( $post_id === false ) {
+			if ( false === $post_id ) {
 				continue;
 			}
 
@@ -878,7 +878,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 				$existing = get_field( $selector, $post_id );
 
 				// Before applying edit, make some checks.
-				if ( $args['op'] == 'edit' ) {
+				if ( 'edit' === $args['op'] ) {
 
 					// If there is no existing Field value, treat as a 'create' op.
 					if ( empty( $existing ) ) {
@@ -910,7 +910,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 
 					case 'create':
 						// Make sure no other Multiple Record Set is Primary if this one is.
-						if ( $acf_multiset['field_multiset_primary'] == '1' && ! empty( $existing ) ) {
+						if ( 1 === (int) $acf_multiset['field_multiset_primary'] && ! empty( $existing ) ) {
 							foreach ( $existing as $key => $record ) {
 								$existing[ $key ]['field_multiset_id'] = '0';
 							}
@@ -997,7 +997,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		$mapped = apply_filters( 'cwps/acf/query_field_group_mapped', $mapped, $field_group );
 
 		// Bail if this Field Group is not mapped.
-		if ( $mapped === false ) {
+		if ( false === $mapped ) {
 			return $field_group;
 		}
 
@@ -1094,7 +1094,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 	public function acf_fields_get_for_post( $acf_fields, $field, $post_id ) {
 
 		// Add if it has a reference to a Multiple Record Set Field.
-		if ( ! empty( $field['type'] == 'civicrm_multiset' ) ) {
+		if ( ! empty( $field['type'] ) && 'civicrm_multiset' === $field['type'] ) {
 			$acf_fields['multiset'][ $field['name'] ] = $field['type'];
 		}
 

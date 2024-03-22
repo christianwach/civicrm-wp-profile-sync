@@ -191,14 +191,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 		$result = civicrm_api( 'Address', 'getfields', $params );
 
 		// Override return if we get some.
-		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
+		if ( empty( $result['is_error'] ) && ! empty( $result['values'] ) ) {
 
-			if ( $filter == 'none' ) {
+			if ( 'none' === $filter ) {
 
 				// Grab all Fields.
 				$fields = $result['values'];
 
-			} elseif ( $filter == 'public' ) {
+			} elseif ( 'public' === $filter ) {
 
 				// Get the CiviCRM Address Options.
 				$address_options = $this->plugin->civicrm->address->settings_get();
@@ -371,7 +371,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 
 		// Get the mapped Address Field name if present.
 		$address_field_name = $this->address_field_name_get( $field );
-		if ( $address_field_name === false ) {
+		if ( false === $address_field_name ) {
 			return $field;
 		}
 
@@ -404,13 +404,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address {
 	public function value_validate( $valid, $value, $field, $input ) {
 
 		// Bail if it's not required and is empty.
-		if ( $field['required'] == '0' && empty( $value ) ) {
+		if ( 0 === (int) $field['required'] && empty( $value ) ) {
 			return $valid;
 		}
 
 		// Get the mapped Address Field name if present.
 		$address_field_name = $this->address_field_name_get( $field );
-		if ( $address_field_name === false ) {
+		if ( false === $address_field_name ) {
 			return $valid;
 		}
 

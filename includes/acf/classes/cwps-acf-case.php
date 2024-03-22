@@ -167,7 +167,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 	public function register_mapper_hooks() {
 
 		// Bail if already registered.
-		if ( $this->mapper_hooks === true ) {
+		if ( true === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -188,7 +188,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 	public function unregister_mapper_hooks() {
 
 		// Bail if already unregistered.
-		if ( $this->mapper_hooks === false ) {
+		if ( false === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -252,13 +252,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		*/
 
 		// Does this Post have a Case ID?
-		if ( $case_id === false ) {
+		if ( false === $case_id ) {
 
 			// No - create a Case.
 			$case = $this->create_from_post( $post );
 
 			// Store Case ID if successful.
-			if ( $case !== false ) {
+			if ( false !== $case ) {
 				$this->acf_loader->post->case_id_set( $post->ID, $case['id'] );
 			}
 
@@ -321,13 +321,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		 * Bail early if this Post Type shouldn't be synced.
 		 * @see self::post_saved()
 		 */
-		if ( $this->do_not_sync === true ) {
+		if ( true === $this->do_not_sync ) {
 			return;
 		}
 
 		// Bail if it's not a Post.
 		$entity = $this->acf_loader->acf->field->entity_type_get( $args['post_id'] );
-		if ( $entity !== 'post' ) {
+		if ( 'post' !== $entity ) {
 			return;
 		}
 
@@ -335,7 +335,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$post = get_post( $args['post_id'] );
 
 		// Bail if this is a revision.
-		if ( $post->post_type == 'revision' ) {
+		if ( 'revision' === $post->post_type ) {
 			return;
 		}
 
@@ -343,7 +343,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$case_id = $this->acf_loader->post->case_id_get( $post->ID );
 
 		// Bail if there isn't one.
-		if ( $case_id === false ) {
+		if ( false === $case_id ) {
 			return;
 		}
 
@@ -423,7 +423,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$result = civicrm_api( 'Case', 'get', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -479,7 +479,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$post_type = $this->civicrm->case_type->is_mapped_to_post_type( $case->case_type_id );
 
 		// Skip if this Case Type is not mapped.
-		if ( $post_type === false ) {
+		if ( false === $post_type ) {
 			return $is_mapped;
 		}
 
@@ -492,7 +492,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$post_id = $this->acf_loader->post->get_by_case_id( $case->id, $post_type );
 
 		// Create the Post if it's missing.
-		if ( $post_id === false && $create_post === 'create' ) {
+		if ( false === $post_id && 'create' === $create_post ) {
 
 			// Prevent recursion and the resulting unexpected Post creation.
 			if ( ! doing_action( 'cwps/acf/post/case/sync' ) ) {
@@ -554,7 +554,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 		// Bail if this Case's Case Type is not mapped.
 		$post_type = $this->is_mapped( $case );
-		if ( $post_type === false ) {
+		if ( false === $post_type ) {
 			return false;
 		}
 
@@ -623,7 +623,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$result = civicrm_api( 'Case', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $case_data;
 		}
 
@@ -697,7 +697,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$result = civicrm_api( 'Case', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $case_data;
 		}
 
@@ -777,7 +777,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$result = civicrm_api( 'CaseContact', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $contact_ids;
 		}
 
@@ -839,7 +839,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$result = civicrm_api( 'CaseContact', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $contact_ids;
 		}
 
@@ -912,7 +912,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$result = civicrm_api( 'Case', 'create', $params );
 
 		// Log and bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -981,7 +981,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$case_full = $this->get_by_id( $case->id );
 
 		// Bail on failure.
-		if ( $case_full === false ) {
+		if ( false === $case_full ) {
 			return $case;
 		}
 
@@ -1026,7 +1026,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$result = civicrm_api( 'CaseContact', 'create', $params );
 
 		// Log and bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -1078,7 +1078,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$case_type = $this->civicrm->case_type->get_by_id( $case['case_type_id'] );
 
 		// Bail if we don't get a Case Type.
-		if ( $case_type === false ) {
+		if ( false === $case_type ) {
 			return;
 		}
 
@@ -1202,7 +1202,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 		/*
 		// Set a status for the Case depending on the Post status.
-		if ( $post->post_status == 'trash' ) {
+		if ( 'trash' === $post->post_status ) {
 			$case_data['is_deleted'] = 1;
 		} else {
 			$case_data['is_deleted'] = 0;
@@ -1330,12 +1330,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 					$code = $case_field_name;
 
 					// Unless it's the "target" Field.
-					if ( $code == 'target_contact_id' ) {
+					if ( 'target_contact_id' === $code ) {
 						$code = 'target_id';
 					}
 
 					// Or it's the "assignee" Field, FFS.
-					if ( $code == 'assignee_contact_id' ) {
+					if ( 'assignee_contact_id' === $code ) {
 						$code = 'assignee_id';
 					}
 
@@ -1523,7 +1523,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 		// Pass if this is not a Case Field Group.
 		$is_visible = $this->is_case_field_group( $field_group );
-		if ( $is_visible === false ) {
+		if ( false === $is_visible ) {
 			return $choices;
 		}
 
@@ -1757,13 +1757,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 	public function query_field_group_mapped( $mapped, $field_group ) {
 
 		// Bail if a Mapping has already been found.
-		if ( $mapped !== false ) {
+		if ( false !== $mapped ) {
 			return $mapped;
 		}
 
 		// Bail if this is not a Case Field Group.
 		$is_case_field_group = $this->is_case_field_group( $field_group );
-		if ( $is_case_field_group === false ) {
+		if ( false === $is_case_field_group ) {
 			return $mapped;
 		}
 
@@ -1785,7 +1785,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 		// Bail if this is not a Case Field Group.
 		$is_visible = $this->is_case_field_group( $field_group );
-		if ( $is_visible === false ) {
+		if ( false === $is_visible ) {
 			return $custom_fields;
 		}
 
@@ -1823,7 +1823,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		foreach ( $args['custom_fields'] as $field ) {
 
 			// Skip if it is not attached to a Case.
-			if ( $field['entity_table'] != 'civicrm_case' ) {
+			if ( 'civicrm_case' !== $field['entity_table'] ) {
 				continue;
 			}
 
@@ -1836,19 +1836,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		}
 
 		// Bail if there's no Case ID.
-		if ( $case_id === false ) {
+		if ( false === $case_id ) {
 			return $post_ids;
 		}
 
 		// Grab Case.
 		$case = $this->get_by_id( $case_id );
-		if ( $case === false ) {
+		if ( false === $case ) {
 			return $post_ids;
 		}
 
 		// Bail if this Case's Case Type is not mapped.
 		$post_type = $this->is_mapped( $case, 'create' );
-		if ( $post_type === false ) {
+		if ( false === $post_type ) {
 			return $post_ids;
 		}
 
@@ -1865,7 +1865,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		foreach ( $ids as $id ) {
 
 			// Exclude "reverse" edits when a Post is the originator.
-			if ( $entity['entity'] !== 'post' || $id != $entity['id'] ) {
+			if ( 'post' !== $entity['entity'] || (int) $id !== (int) $entity['id'] ) {
 				$case_post_ids[] = $id;
 			}
 
@@ -1904,7 +1904,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 
 		// Bail if this is not a Case Field Group.
 		$is_visible = $this->is_case_field_group( $field_group );
-		if ( $is_visible === false ) {
+		if ( false === $is_visible ) {
 			return $entity_tables;
 		}
 

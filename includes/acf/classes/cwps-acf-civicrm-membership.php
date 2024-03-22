@@ -113,7 +113,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Membership {
 		$result = civicrm_api( 'MembershipType', 'get', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -173,12 +173,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Membership {
 		];
 
 		// Add the Membership Type ID if supplied.
-		if ( $type_id !== 0 ) {
+		if ( 0 !== $type_id ) {
 			$params['membership_type_id'] = $type_id;
 		}
 
 		// Add the Membership Status ID if supplied.
-		if ( $status_id !== 0 ) {
+		if ( 0 !== $status_id ) {
 			$params['status_id'] = $status_id;
 		}
 
@@ -186,7 +186,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Membership {
 		$result = civicrm_api( 'Membership', 'get', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -265,7 +265,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Membership {
 		$result = civicrm_api( 'Membership', 'create', $params );
 
 		// Log and bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -351,7 +351,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Membership {
 		$result = civicrm_api( 'Membership', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $membership;
 		}
 
@@ -407,14 +407,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Membership {
 		$result = civicrm_api( 'Membership', 'getfields', $params );
 
 		// Override return if we get some.
-		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
+		if ( empty( $result['is_error'] ) && ! empty( $result['values'] ) ) {
 
-			if ( $filter == 'none' ) {
+			if ( 'none' === $filter ) {
 
 				// Grab all Fields.
 				$fields = $result['values'];
 
-			} elseif ( $filter == 'public' ) {
+			} elseif ( 'public' === $filter ) {
 
 				// Skip all but those defined in our public Membership Fields array.
 				foreach ( $result['values'] as $key => $value ) {

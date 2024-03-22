@@ -123,7 +123,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 		$result = civicrm_api( 'OptionGroup', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $option_group_id;
 		}
 
@@ -182,7 +182,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 		$result = civicrm_api( 'OptionValue', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $activity_type;
 		}
 
@@ -237,7 +237,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 		$result = civicrm_api( 'OptionValue', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $activity_type;
 		}
 
@@ -287,7 +287,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 		$result = civicrm_api( 'Activity', 'get', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -374,7 +374,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 		$result = civicrm_api( 'Activity', 'getoptions', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $choices;
 		}
 
@@ -438,7 +438,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 		$result = civicrm_api( 'OptionValue', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $activity_types;
 		}
 
@@ -512,7 +512,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 		$result = civicrm_api( 'OptionValue', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $activity_types;
 		}
 

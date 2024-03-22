@@ -437,7 +437,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 			}
 
 			// Filter all but Fields of type "CiviCRM Country".
-			if ( $field['type'] !== 'cwps_acfe_address_country' ) {
+			if ( 'cwps_acfe_address_country' !== $field['type'] ) {
 				continue;
 			}
 

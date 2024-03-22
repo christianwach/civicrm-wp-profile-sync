@@ -166,7 +166,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	public function register_mapper_hooks() {
 
 		// Bail if already registered.
-		if ( $this->mapper_hooks === true ) {
+		if ( true === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -191,7 +191,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	public function unregister_mapper_hooks() {
 
 		// Bail if already unregistered.
-		if ( $this->mapper_hooks === false ) {
+		if ( false === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -368,7 +368,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 		}
 
 		// Process the Website Record if Website Type is unchanged.
-		if ( $unchanged === true ) {
+		if ( true === $unchanged ) {
 			$this->website_process( $website, $args );
 			return;
 		}
@@ -398,7 +398,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 			$current->website_type_id = $website->website_type_id;
 
 			// If we're updating "is now", skip if "used to be" has been updated.
-			if ( $now_user_type === true ) {
+			if ( true === $now_user_type ) {
 				if ( ! empty( $this->bp_now_user_type ) ) {
 					if ( (int) $previous->website_type_id === (int) $this->bp_now_user_type->website_type_id ) {
 						return;
@@ -413,12 +413,12 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 			}
 
 			// For "is now", clear the *previous* xProfile Field's URL.
-			if ( $now_user_type === true ) {
+			if ( true === $now_user_type ) {
 				$previous->url = '';
 			}
 
 			// For "used to be", just rebuild.
-			if ( $was_user_type === true ) {
+			if ( true === $was_user_type ) {
 				// When only the Website Type has changed, current URL may be empty.
 				if ( empty( $current->url ) && ! empty( $website_pre->url ) ) {
 					// Try and use the previous URL.
@@ -477,7 +477,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 		}
 
 		// Maybe process previous.
-		if ( $process_previous === true ) {
+		if ( true === $process_previous ) {
 			$this->website_process( $previous, $args );
 		}
 
@@ -501,7 +501,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 
 		// Bail if we can't find a User ID.
 		$user_id = $this->plugin->mapper->ufmatch->user_id_get_by_contact_id( $website->contact_id );
-		if ( $user_id === false ) {
+		if ( false === $user_id ) {
 			return $user_id;
 		}
 
@@ -513,7 +513,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 		foreach ( $bp_fields as $bp_field ) {
 
 			// Only Fields for this Entity please.
-			if ( $bp_field['field_meta']['entity_type'] !== 'Website' ) {
+			if ( 'Website' !== $bp_field['field_meta']['entity_type'] ) {
 				continue;
 			}
 
@@ -590,7 +590,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 	public function value_get_for_bp( $value, $name, $params ) {
 
 		// Bail if value is (string) 'null' which CiviCRM uses for some reason.
-		if ( $value == 'null' || $value == 'NULL' ) {
+		if ( 'null' === $value || 'NULL' === $value ) {
 			return '';
 		}
 
@@ -635,7 +635,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 		// Filter the Fields to include only Website data.
 		$website_fields = [];
 		foreach ( $args['field_data'] as $field ) {
-			if ( empty( $field['meta']['entity_type'] ) || $field['meta']['entity_type'] !== 'Website' ) {
+			if ( empty( $field['meta']['entity_type'] ) || 'Website' !== $field['meta']['entity_type'] ) {
 				continue;
 			}
 			$website_fields[] = $field;
@@ -754,7 +754,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 		}
 
 		// Bail if not the "Website" Entity Type.
-		if ( $entity_type !== 'Website' ) {
+		if ( 'Website' !== $entity_type ) {
 			return $choices;
 		}
 
@@ -854,14 +854,14 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 		$result = civicrm_api( 'Website', 'getfields', $params );
 
 		// Override return if we get some.
-		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
+		if ( empty( $result['is_error'] ) && ! empty( $result['values'] ) ) {
 
-			if ( $filter == 'none' ) {
+			if ( 'none' === $filter ) {
 
 				// Grab all Fields.
 				$fields = $result['values'];
 
-			} elseif ( $filter == 'public' ) {
+			} elseif ( 'public' === $filter ) {
 
 				// Skip all but those defined in our Website Fields array.
 				$public_fields = [];

@@ -170,7 +170,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	public function register_mapper_hooks() {
 
 		// Bail if already registered.
-		if ( $this->mapper_hooks === true ) {
+		if ( true === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -192,7 +192,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 	public function unregister_mapper_hooks() {
 
 		// Bail if already unregistered.
-		if ( $this->mapper_hooks === false ) {
+		if ( false === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -278,7 +278,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		$value = $this->acf_loader->acf->field->value_get_for_civicrm( $value, $settings['type'], $settings );
 
 		// Is this mapped to the Primary Email?
-		if ( $settings[ $email_key ] == 'primary' ) {
+		if ( 'primary' === $settings[ $email_key ] ) {
 
 			// Update and return early.
 			$this->primary_email_update( $contact_id, $value );
@@ -324,7 +324,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		$result = civicrm_api( 'Email', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $email;
 		}
 
@@ -371,7 +371,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		$result = civicrm_api( 'Email', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $email;
 		}
 
@@ -423,7 +423,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		$result = civicrm_api( 'Email', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $email;
 		}
 
@@ -470,7 +470,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		$primary_email = civicrm_api( 'Email', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $primary_email['is_error'] ) && $primary_email['is_error'] == 1 ) {
+		if ( ! empty( $primary_email['is_error'] ) && 1 === (int) $primary_email['is_error'] ) {
 			return $email;
 		}
 
@@ -536,7 +536,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		}
 
 		// Log and bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -596,7 +596,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		$result = civicrm_api( 'Email', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $email_data;
 		}
 
@@ -648,7 +648,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		$result = civicrm_api( 'Email', 'send', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $email;
 		}
 
@@ -706,7 +706,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		$result = civicrm_api( 'MessageTemplate', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $templates;
 		}
 
@@ -794,7 +794,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 				$email = (object) $email;
 
 				// If this is mapped to the Primary Email.
-				if ( $email_field == 'primary' && ! empty( $email->is_primary ) && $email->is_primary == '1' ) {
+				if ( 'primary' === $email_field && ! empty( $email->is_primary ) && 1 === (int) $email->is_primary ) {
 					$this->acf_loader->acf->field->value_update( $selector, $email->email, $args['post_id'] );
 					continue;
 				}
@@ -844,7 +844,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		$existing_email = civicrm_api( 'Email', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $existing_email['is_error'] ) && $existing_email['is_error'] == 1 ) {
+		if ( ! empty( $existing_email['is_error'] ) && 1 === (int) $existing_email['is_error'] ) {
 			return $email;
 		}
 
@@ -910,7 +910,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		}
 
 		// Log and bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -961,7 +961,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		$existing_email = civicrm_api( 'Email', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $existing_email['is_error'] ) && $existing_email['is_error'] == 1 ) {
+		if ( ! empty( $existing_email['is_error'] ) && 1 === (int) $existing_email['is_error'] ) {
 			return $email;
 		}
 
@@ -1002,7 +1002,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		}
 
 		// Log and bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -1044,7 +1044,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 		// Get the Contact data.
 		$contact = $this->plugin->civicrm->contact->get_by_id( $email_data->contact_id );
-		if ( $contact === false ) {
+		if ( false === $contact ) {
 			return;
 		}
 
@@ -1056,7 +1056,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 
 		// Test if any of this Contact's Contact Types is mapped to a Post Type.
 		$post_types = $this->civicrm->contact->is_mapped( $contact, 'create' );
-		if ( $post_types !== false ) {
+		if ( false !== $post_types ) {
 
 			// Handle each Post Type in turn.
 			foreach ( $post_types as $post_type ) {
@@ -1065,7 +1065,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 				$post_id = $this->civicrm->contact->is_mapped_to_post( $contact, $post_type );
 
 				// Skip if not mapped or Post doesn't yet exist.
-				if ( $post_id === false ) {
+				if ( false === $post_id ) {
 					continue;
 				}
 
@@ -1110,7 +1110,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		foreach ( $acf_fields['email'] as $selector => $email_field ) {
 
 			// If this is mapped to the Primary Email.
-			if ( $email_field == 'primary' && ! empty( $email->is_primary ) ) {
+			if ( 'primary' === $email_field && ! empty( $email->is_primary ) ) {
 				$this->acf_loader->acf->field->value_update( $selector, $email->email, $post_id );
 				continue;
 			}
@@ -1165,14 +1165,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		$result = civicrm_api( 'Email', 'getfields', $params );
 
 		// Override return if we get some.
-		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
+		if ( empty( $result['is_error'] ) && ! empty( $result['values'] ) ) {
 
-			if ( $filter == 'none' ) {
+			if ( 'none' === $filter ) {
 
 				// Grab all Fields.
 				$fields = $result['values'];
 
-			} elseif ( $filter == 'public' ) {
+			} elseif ( 'public' === $filter ) {
 
 				// Skip all but those defined in our public Email Fields array.
 				foreach ( $result['values'] as $key => $value ) {
@@ -1236,7 +1236,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		$result = civicrm_api( 'LocationType', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $location_types;
 		}
 
@@ -1285,7 +1285,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Email extends CiviCRM_Profile_Sync_ACF_Ci
 		$choices = [];
 
 		// Maybe prepend "Primary Email" choice for dropdown.
-		if ( $skip_specific === false ) {
+		if ( false === $skip_specific ) {
 			$specific_email_label                        = esc_attr__( 'Specific Emails', 'civicrm-wp-profile-sync' );
 			$choices[ $specific_email_label ]['primary'] = esc_attr__( 'Primary Email', 'civicrm-wp-profile-sync' );
 		}

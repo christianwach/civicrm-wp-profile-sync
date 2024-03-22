@@ -109,7 +109,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 	public function register_mapper_hooks() {
 
 		// Bail if already registered.
-		if ( $this->mapper_hooks === true ) {
+		if ( true === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -138,7 +138,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 	public function unregister_mapper_hooks() {
 
 		// Bail if already unregistered.
-		if ( $this->mapper_hooks === false ) {
+		if ( false === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -289,7 +289,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 		$result = civicrm_api( 'Group', 'get', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -343,7 +343,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 		$result = civicrm_api( 'Group', 'get', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -463,7 +463,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 		*/
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -530,7 +530,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 		$result = civicrm_api( 'GroupContact', 'get', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -587,7 +587,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 		$result = civicrm_api( 'GroupContact', 'get', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -633,7 +633,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 		$result = civicrm_api( 'GroupContact', 'get', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -681,7 +681,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 		$result = civicrm_api( 'GroupContact', 'create', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -729,7 +729,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 		$result = civicrm_api( 'GroupContact', 'create', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -774,7 +774,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 		$primary_email = $this->civicrm->email->primary_email_get( $contact['id'] );
 
 		// Skip if we can't find it.
-		if ( $primary_email === false ) {
+		if ( false === $primary_email ) {
 			return $result;
 		}
 
@@ -791,7 +791,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 		$result = civicrm_api( 'MailingEventSubscribe', 'create', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -851,7 +851,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 		$result = civicrm_api( 'GroupContact', 'get', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -933,7 +933,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Group {
 	 *
 	 * The issue here is that CiviCRM fires 'civicrm_pre' with $op = 'delete' regardless
 	 * of whether the Contact is being removed or deleted. If a Contact is later re-added
-	 * to the Group, then $op != 'create', so we need to intercept $op = 'edit'.
+	 * to the Group, then 'create' !== $op, so we need to intercept $op = 'edit'.
 	 *
 	 * @since 0.4
 	 *

@@ -240,8 +240,8 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 		// Filter Fields to include only "Contact Reference".
 		foreach ( $custom_fields as $custom_group_name => $custom_group ) {
 			foreach ( $custom_group as $custom_field ) {
-				if ( ! empty( $custom_field['data_type'] ) && $custom_field['data_type'] == 'ContactReference' ) {
-					if ( ! empty( $custom_field['html_type'] ) && $custom_field['html_type'] == 'Autocomplete-Select' ) {
+				if ( ! empty( $custom_field['data_type'] ) && 'ContactReference' === $custom_field['data_type'] ) {
+					if ( ! empty( $custom_field['html_type'] ) && 'Autocomplete-Select' === $custom_field['html_type'] ) {
 						$filtered_fields[ $custom_group_name ][] = $custom_field;
 					}
 				}
@@ -422,7 +422,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 
 				// Get the Custom Field data.
 				$custom_field = $this->plugin->civicrm->custom_field->get_by_id( $custom_field_id );
-				if ( $custom_field !== false && ! empty( $custom_field['filter'] ) ) {
+				if ( false !== $custom_field && ! empty( $custom_field['filter'] ) ) {
 
 					// Extract the Filter array.
 					$filter_params = [];

@@ -140,7 +140,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_City extends CiviCRM_Profile_Sync
 	public function register_mapper_hooks() {
 
 		// Bail if already registered.
-		if ( $this->mapper_hooks === true ) {
+		if ( true === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -163,7 +163,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_City extends CiviCRM_Profile_Sync
 	public function unregister_mapper_hooks() {
 
 		// Bail if already unregistered.
-		if ( $this->mapper_hooks === false ) {
+		if ( false === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -213,7 +213,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_City extends CiviCRM_Profile_Sync
 			// Init Field value.
 			$value = '';
 
-			if ( $address_field === 'primary' ) {
+			if ( 'primary' === $address_field ) {
 
 				// Assign City from the Primary Address.
 				foreach ( $data as $address ) {
@@ -375,7 +375,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_City extends CiviCRM_Profile_Sync
 
 		// Test if any of this Contact's Contact Types is mapped to a Post Type.
 		$post_types = $this->civicrm->contact->is_mapped( $contact, 'create' );
-		if ( $post_types !== false ) {
+		if ( false !== $post_types ) {
 
 			// Handle each Post Type in turn.
 			foreach ( $post_types as $post_type ) {
@@ -384,12 +384,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_City extends CiviCRM_Profile_Sync
 				$post_id = $this->civicrm->contact->is_mapped_to_post( $contact, $post_type );
 
 				// Skip if not mapped or Post doesn't yet exist.
-				if ( $post_id === false ) {
+				if ( false === $post_id ) {
 					continue;
 				}
 
 				// Exclude "reverse" edits when a Post is the originator.
-				if ( $entity['entity'] === 'post' && $post_id == $entity['id'] ) {
+				if ( 'post' === $entity['entity'] && $post_id == $entity['id'] ) {
 					continue;
 				}
 
@@ -439,9 +439,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_City extends CiviCRM_Profile_Sync
 			$value = '';
 
 			// Process Address if not deleting it.
-			if ( $args['op'] !== 'delete' ) {
+			if ( 'delete' !== $args['op'] ) {
 
-				if ( $address_field === 'primary' ) {
+				if ( 'primary' === $address_field ) {
 
 					// Assign City from the Primary Address.
 					if ( ! empty( $address->is_primary ) ) {
@@ -481,8 +481,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_City extends CiviCRM_Profile_Sync
 	public function acf_fields_get_for_post( $acf_fields, $field, $post_id ) {
 
 		// Add if it has a reference to a City Field.
-		if ( ! empty( $field['type'] ) && $field['type'] == 'civicrm_address_city' ) {
-			if ( $field['city_is_primary'] === 1 ) {
+		if ( ! empty( $field['type'] ) && 'civicrm_address_city' === $field['type'] ) {
+			if ( 1 === $field['city_is_primary'] ) {
 				$acf_fields['city'][ $field['name'] ] = 'primary';
 			} else {
 				$acf_fields['city'][ $field['name'] ] = $field['city_location_type_id'];

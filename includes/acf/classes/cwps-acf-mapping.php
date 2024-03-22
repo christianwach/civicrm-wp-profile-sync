@@ -262,7 +262,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	public function form_contact_type_build( $form_name, &$form ) {
 
 		// Is this the Contact Type edit form?
-		if ( $form_name != 'CRM_Admin_Form_ContactType' ) {
+		if ( 'CRM_Admin_Form_ContactType' !== $form_name ) {
 			return;
 		}
 
@@ -289,7 +289,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 		// Maybe assign Contact Type ID.
 		$contact_type_id = 0;
-		if ( $mode === 'edit' ) {
+		if ( 'edit' === $mode ) {
 			$contact_type_id = (int) $contact_type['id'];
 		}
 
@@ -315,7 +315,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 				}
 
 				// ACF does not support the built-in WordPress Media Post Type.
-				if ( $post_type->name == 'attachment' ) {
+				if ( 'attachment' === $post_type->name ) {
 					continue;
 				}
 
@@ -341,13 +341,13 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		*/
 
 		// Amend form in edit mode.
-		if ( $mode === 'edit' ) {
+		if ( 'edit' === $mode ) {
 
 			// Get existing CPT.
 			$cpt_name = $this->mapping_for_contact_type_get( $contact_type['id'] );
 
 			// If we have a mapped CPT.
-			if ( $cpt_name !== false ) {
+			if ( false !== $cpt_name ) {
 
 				// Set selected value of our dropdown.
 				$cpt_select->setSelected( $cpt_name );
@@ -494,12 +494,12 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	public function form_activity_type_build( $form_name, &$form ) {
 
 		// Is this the Options edit form?
-		if ( $form_name != 'CRM_Admin_Form_Options' ) {
+		if ( 'CRM_Admin_Form_Options' !== $form_name ) {
 			return;
 		}
 
 		// Is this the Activity Type edit form?
-		if ( $form->get( 'gName' ) != 'activity_type' ) {
+		if ( 'activity_type' !== $form->get( 'gName' ) ) {
 			return;
 		}
 
@@ -532,7 +532,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		}
 
 		// Bail if not an allowed Activity Type.
-		if ( $mode == 'edit' && ! array_key_exists( $activity_type['value'], $allowed_activity_types ) ) {
+		if ( 'edit' === $mode && ! array_key_exists( $activity_type['value'], $allowed_activity_types ) ) {
 			return;
 		}
 
@@ -543,7 +543,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 		// Maybe assign Activity Type ID.
 		$activity_type_id = 0;
-		if ( $mode === 'edit' ) {
+		if ( 'edit' === $mode ) {
 			$activity_type_id = (int) $activity_type['value'];
 		}
 
@@ -569,7 +569,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 				}
 
 				// ACF does not support the built-in WordPress Media Post Type.
-				if ( $post_type->name == 'attachment' ) {
+				if ( 'attachment' === $post_type->name ) {
 					continue;
 				}
 
@@ -595,13 +595,13 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		*/
 
 		// Amend form in edit mode.
-		if ( $mode === 'edit' ) {
+		if ( 'edit' === $mode ) {
 
 			// Get existing CPT.
 			$cpt_name = $this->mapping_for_activity_type_get( $activity_type['value'] );
 
 			// If we have a mapped CPT.
-			if ( $cpt_name !== false ) {
+			if ( false !== $cpt_name ) {
 
 				// Set selected value of our dropdown.
 				$cpt_select->setSelected( $cpt_name );
@@ -665,7 +665,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		$activity_type = $this->acf_loader->civicrm->activity_type->get_by_id( $object_ref->id );
 
 		// Bail on failure.
-		if ( $activity_type === false ) {
+		if ( false === $activity_type ) {
 			return;
 		}
 
@@ -697,7 +697,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		$group_name = $form->getVar( '_gName' );
 
 		// Bail if not Activity Type.
-		if ( $group_name != 'activity_type' ) {
+		if ( 'activity_type' !== $group_name ) {
 			return;
 		}
 
@@ -776,7 +776,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	public function form_participant_role_build( $form_name, &$form ) {
 
 		// Is this the Options edit form?
-		if ( $form_name != 'CRM_Admin_Form_Options' ) {
+		if ( 'CRM_Admin_Form_Options' !== $form_name ) {
 			return;
 		}
 
@@ -808,7 +808,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 		// Maybe assign Participant Role ID.
 		$participant_role_id = 0;
-		if ( $mode === 'edit' ) {
+		if ( 'edit' === $mode ) {
 			$participant_role_id = (int) $participant_role['value'];
 		}
 
@@ -834,7 +834,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 				}
 
 				// ACF does not support the built-in WordPress Media Post Type.
-				if ( $post_type->name == 'attachment' ) {
+				if ( 'attachment' === $post_type->name ) {
 					continue;
 				}
 
@@ -860,13 +860,13 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		*/
 
 		// Amend form in edit mode.
-		if ( $mode === 'edit' ) {
+		if ( 'edit' === $mode ) {
 
 			// Get existing CPT.
 			$cpt_name = $this->mapping_for_participant_role_get( $participant_role['value'] );
 
 			// If we have a mapped CPT.
-			if ( $cpt_name !== false ) {
+			if ( false !== $cpt_name ) {
 
 				// Set selected value of our dropdown.
 				$cpt_select->setSelected( $cpt_name );
@@ -930,7 +930,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		$participant_role = $this->acf_loader->civicrm->participant_role->get_by_id( $object_ref->id );
 
 		// Bail on failure.
-		if ( $participant_role === false ) {
+		if ( false === $participant_role ) {
 			return;
 		}
 
@@ -962,7 +962,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		$group_name = $form->getVar( '_gName' );
 
 		// Bail if not Participant Role.
-		if ( $group_name != 'participant_role' ) {
+		if ( 'participant_role' !== $group_name ) {
 			return;
 		}
 
@@ -1044,7 +1044,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	public function form_participant_build( $form_name, &$form ) {
 
 		// Is this the Event Component edit form?
-		if ( $form_name != 'CRM_Admin_Form_Generic' ) {
+		if ( 'CRM_Admin_Form_Generic' !== $form_name ) {
 			return;
 		}
 
@@ -1072,8 +1072,8 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		$settings = $this->setting_get( 'participant' );
 
 		// Set status of checkbox based on setting.
-		if ( $settings !== false ) {
-			if ( isset( $settings['enabled'] ) && $settings['enabled'] === 1 ) {
+		if ( false !== $settings ) {
+			if ( isset( $settings['enabled'] ) && 1 === $settings['enabled'] ) {
 				$checkbox->setChecked( true );
 			}
 		}
@@ -1094,7 +1094,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	public function form_participant_process( $form_name, &$form ) {
 
 		// Is this the Event Component edit form?
-		if ( $form_name != 'CRM_Admin_Form_Generic' ) {
+		if ( 'CRM_Admin_Form_Generic' !== $form_name ) {
 			return;
 		}
 
@@ -1110,7 +1110,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 		// Assume the "Enable CPT" checkbox is not checked, but override if it is.
 		$current = 0;
-		if ( isset( $values['cwps_acf_enable_cpt'] ) && $values['cwps_acf_enable_cpt'] == '1' ) {
+		if ( isset( $values['cwps_acf_enable_cpt'] ) && 1 === (int) $values['cwps_acf_enable_cpt'] ) {
 			$current = 1;
 		}
 
@@ -1133,7 +1133,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 		// Fire one of two actions depending on what has happened.
 		$action = 'enabled';
-		if ( $previous === 1 && $current === 0 ) {
+		if ( 1 === $previous && 0 === $current ) {
 			$action = 'disabled';
 		}
 

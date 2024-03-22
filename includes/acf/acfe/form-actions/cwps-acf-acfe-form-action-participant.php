@@ -474,7 +474,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 		$args['participant'] = $this->form_participant_save( $participant, $custom_fields );
 
 		// If we get a Participant.
-		if ( $args['participant'] !== false ) {
+		if ( false !== $args['participant'] ) {
 
 			// Post-process Custom Fields now that we have a Participant.
 			$this->form_custom_post_process( $form, $current_post_id, $action, $args['participant'] );
@@ -1343,7 +1343,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 			if ( ! empty( $custom_group['extends_entity_column_id'] ) ) {
 
 				// Set conditions for Fields that only show for Participant Roles.
-				if ( $custom_group['extends_entity_column_id'] == 1 ) {
+				if ( 1 === (int) $custom_group['extends_entity_column_id'] ) {
 
 					// Get the Participant Role IDs.
 					$participant_role_ids = $custom_group['extends_entity_column_value'];
@@ -1368,7 +1368,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 				}
 
 				// Set conditions for Fields that only show for specific Events.
-				if ( $custom_group['extends_entity_column_id'] == 2 ) {
+				if ( 2 === (int) $custom_group['extends_entity_column_id'] ) {
 
 					// Get the Event IDs.
 					$event_ids = $custom_group['extends_entity_column_value'];
@@ -1403,7 +1403,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 				}
 
 				// Set conditions for Fields that only show for specific Event Types.
-				if ( $custom_group['extends_entity_column_id'] == 3 ) {
+				if ( 3 === (int) $custom_group['extends_entity_column_id'] ) {
 
 					// Get the Event Type IDs.
 					$event_type_ids = $custom_group['extends_entity_column_value'];
@@ -1529,14 +1529,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 			}
 
 			// Check Contact ID Field.
-			if ( $contact_id === false ) {
+			if ( false === $contact_id ) {
 				if ( ! empty( $contact_group_field[ $this->field_name . 'cid_' . $field['name'] ] ) ) {
 					$contact_id = $contact_group_field[ $this->field_name . 'cid_' . $field['name'] ];
 				}
 			}
 
 			// Check mapped Field.
-			if ( $contact_id === false ) {
+			if ( false === $contact_id ) {
 				if ( ! empty( $contact_group_field[ $this->field_name . 'map_' . $field['name'] ] ) ) {
 					$reference = [ $field['name'] => $contact_group_field[ $this->field_name . 'map_' . $field['name'] ] ];
 					$reference = acfe_form_map_vs_fields( $reference, $reference, $current_post_id, $form );
@@ -1568,7 +1568,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 
 			/*
 			// Check Participant ID Field.
-			if ( $participant_id === false ) {
+			if ( false === $participant_id ) {
 				if ( ! empty( $participant_group_field[ $this->field_name . 'cid_' . $field['name'] ] ) ) {
 					$participant_id = $participant_group_field[ $this->field_name . 'cid_' . $field['name'] ];
 				}
@@ -1576,7 +1576,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 			*/
 
 			// Check mapped Field.
-			if ( $participant_id === false ) {
+			if ( false === $participant_id ) {
 				if ( ! empty( $participant_group_field[ $this->field_name . 'map_' . $field['name'] ] ) ) {
 					$reference = [ $field['name'] => $participant_group_field[ $this->field_name . 'map_' . $field['name'] ] ];
 					$reference = acfe_form_map_vs_fields( $reference, $reference, $current_post_id, $form );
@@ -1606,7 +1606,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 			}
 
 			// Check mapped Field.
-			if ( $event_id === false ) {
+			if ( false === $event_id ) {
 				if ( ! empty( $event_group_field[ $this->field_name . 'map_' . $field['name'] ] ) ) {
 					$reference = [ $field['name'] => $event_group_field[ $this->field_name . 'map_' . $field['name'] ] ];
 					$reference = acfe_form_map_vs_fields( $reference, $reference, $current_post_id, $form );
@@ -1740,7 +1740,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 		$is_full = $this->civicrm->event->is_full( $participant['event_id'] );
 
 		// Reject the submission if there's an error.
-		if ( $is_full === false ) {
+		if ( false === $is_full ) {
 			acfe_add_validation_error(
 				'',
 				sprintf(
@@ -1753,7 +1753,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 		}
 
 		// All's well if the Event is not full.
-		if ( $is_full === 0 ) {
+		if ( 0 === $is_full ) {
 			return true;
 		}
 
@@ -1837,12 +1837,12 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 				$is_full = $this->civicrm->event->is_full( $participant_data['event_id'] );
 
 				// Bail if there's an error.
-				if ( $is_full === false ) {
+				if ( false === $is_full ) {
 					return $participant;
 				}
 
 				// Bail if the Event is full.
-				if ( $is_full === 1 ) {
+				if ( 1 === $is_full ) {
 					return $participant;
 				}
 
@@ -1866,7 +1866,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 		$result = $this->civicrm->participant->create( $participant_data );
 
 		// Bail on failure.
-		if ( $result === false ) {
+		if ( false === $result ) {
 			return $participant;
 		}
 
@@ -2010,7 +2010,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 					$fields[ $code ] = $custom_group_field[ $this->field_name . 'map_' . $code ];
 
 					// Track any "File" Custom Fields.
-					if ( $custom_field['data_type'] === 'File' ) {
+					if ( 'File' === $custom_field['data_type'] ) {
 						$file_fields[ $code ] = $custom_field['id'];
 					}
 

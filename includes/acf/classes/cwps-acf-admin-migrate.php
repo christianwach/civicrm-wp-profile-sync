@@ -150,12 +150,12 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 		}
 
 		// Bail if we are on our "ACF Integration" page.
-		if ( $screen->id == 'admin_page_cwps_acf_sync' ) {
+		if ( 'admin_page_cwps_acf_sync' === $screen->id ) {
 			return;
 		}
 
 		// Bail if there is already a warning.
-		if ( $this->plugin->admin->has_warning === true ) {
+		if ( true === $this->plugin->admin->has_warning ) {
 			return;
 		}
 
@@ -381,7 +381,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 		$active = '';
 
 		// Make active if it's our subpage.
-		if ( $active_tab === 'acf-migrate' ) {
+		if ( 'acf-migrate' === $active_tab ) {
 			$active = ' nav-tab-active';
 		}
 
@@ -452,7 +452,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 		}
 
 		// Only show submit if not migrated.
-		if ( $data['migrated'] === false ) {
+		if ( false === $data['migrated'] ) {
 
 			// Create Submit metabox.
 			add_meta_box(
@@ -469,7 +469,7 @@ class CiviCRM_Profile_Sync_ACF_Admin_Migrate {
 
 		// Init meta box title.
 		$title = __( 'Migration Tasks', 'civicrm-wp-profile-sync' );
-		if ( $data['migrated'] === true ) {
+		if ( true === $data['migrated'] ) {
 			$title = __( 'Migration Complete', 'civicrm-wp-profile-sync' );
 		}
 

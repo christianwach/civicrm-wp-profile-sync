@@ -17,7 +17,7 @@
 		<td>
 			<p>
 				<select id="cwps_email_sync_select" name="cwps_email_sync_select">
-					<?php if ( $email_sync === 2 ) : ?>
+					<?php if ( 2 === $email_sync ) : ?>
 						<option value="2" selected="selected"><?php esc_html_e( '- Select Primary Email sync method -', 'civicrm-wp-profile-sync' ); ?></option>
 					<?php endif; ?>
 					<option value="1"<?php selected( 1, $email_sync_yes ); ?>><?php esc_html_e( 'Yes, handle Primary Email sync (recommended)', 'civicrm-wp-profile-sync' ); ?></option>

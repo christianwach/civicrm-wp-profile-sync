@@ -339,7 +339,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 	public function register_mapper_hooks() {
 
 		// Bail if already registered.
-		if ( $this->mapper_hooks === true ) {
+		if ( true === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -361,7 +361,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 	public function unregister_mapper_hooks() {
 
 		// Bail if already unregistered.
-		if ( $this->mapper_hooks === false ) {
+		if ( false === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -401,7 +401,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 
 		// Bail if this User doesn't have a Contact.
 		$contact = $this->plugin->mapper->ufmatch->contact_get_by_user_id( $args['user_id'] );
-		if ( $contact === false ) {
+		if ( false === $contact ) {
 			return;
 		}
 
@@ -559,7 +559,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 	public function value_update( $field_id, $user_id, $value ) {
 
 		// Protect against (string) 'null' which CiviCRM uses for some reason.
-		if ( $value === 'null' || $value === 'NULL' ) {
+		if ( 'null' === $value || 'NULL' === $value ) {
 			$value = '';
 		}
 
@@ -711,7 +711,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 		$true_false = apply_filters( 'cwps/bp/xprofile/value/checkbox/query_type', false, $args );
 
 		// Overwrite if this is a "True/False" Field.
-		if ( $true_false === true ) {
+		if ( true === $true_false ) {
 			$value = 1;
 		}
 
@@ -1019,7 +1019,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 		}
 
 		// Get data for the "Website" Entity Type.
-		if ( $entity_type === 'Website' ) {
+		if ( 'Website' === $entity_type ) {
 
 			// Extract the Website Type ID from our metabox.
 			$website_type_id = '';
@@ -1037,7 +1037,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 		}
 
 		// Get data for the "Address" and "Phone" Entity Types.
-		if ( $entity_type === 'Address' || $entity_type === 'Phone' ) {
+		if ( 'Address' === $entity_type || 'Phone' === $entity_type ) {
 
 			// Extract the Location Type ID from our metabox.
 			$location_type_id = '';
@@ -1055,7 +1055,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 		}
 
 		// Get data for the "Contact" Entity Type.
-		if ( $entity_type === 'Contact' ) {
+		if ( 'Contact' === $entity_type ) {
 
 			// Extract the Contact Type ID from our metabox.
 			$contact_type_id = '';
@@ -1148,7 +1148,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 		$entity_data = [];
 
 		// Get data for the "Contact" Entity Type.
-		if ( $entity_type === 'Contact' ) {
+		if ( 'Contact' === $entity_type ) {
 
 			// Extract the Contact Type ID from our metabox.
 			$contact_type_id = '';
@@ -1175,7 +1175,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 		}
 
 		// Get data for the "Address" and "Phone" Entity Types.
-		if ( $entity_type === 'Address' || $entity_type === 'Phone' ) {
+		if ( 'Address' === $entity_type || 'Phone' === $entity_type ) {
 
 			// Extract the Location Type ID from our metabox.
 			$location_type_id = '';
@@ -1191,7 +1191,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 			];
 
 			// Get data for the "Phone" Entity Type.
-			if ( $entity_type === 'Phone' ) {
+			if ( 'Phone' === $entity_type ) {
 
 				// Extract the Phone Type ID from our metabox.
 				$phone_type_id = '';
@@ -1209,7 +1209,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 		}
 
 		// Get data for the "Website" Entity Type.
-		if ( $entity_type === 'Website' ) {
+		if ( 'Website' === $entity_type ) {
 
 			// Extract the Website Type ID from our metabox.
 			$website_type_id = '';
@@ -1277,7 +1277,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 
 		// Get data for the "Address" and "Phone" Entity Types.
 		$location_type_id = '';
-		if ( $entity_type === 'Address' || $entity_type === 'Phone' ) {
+		if ( 'Address' === $entity_type || 'Phone' === $entity_type ) {
 			$location_type_id = isset( $entity_data['location_type_id'] ) ? $entity_data['location_type_id'] : '';
 		}
 
@@ -1292,7 +1292,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 
 		// Get data for the "Phone" Entity Type.
 		$phone_type_id = '';
-		if ( $entity_type === 'Phone' ) {
+		if ( 'Phone' === $entity_type ) {
 			$phone_type_id = isset( $entity_data['phone_type_id'] ) ? $entity_data['phone_type_id'] : '';
 		}
 
@@ -1307,7 +1307,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 
 		// Get data for the "Website" Entity Type.
 		$website_type_id = '';
-		if ( $entity_type === 'Website' ) {
+		if ( 'Website' === $entity_type ) {
 			$website_type_id = isset( $entity_data['website_type_id'] ) ? $entity_data['website_type_id'] : '';
 		}
 
@@ -1335,7 +1335,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 		// Get data for the "Contact" Entity.
 		$top_level_type = '';
 		$sub_type       = '';
-		if ( $entity_type === 'Contact' ) {
+		if ( 'Contact' === $entity_type ) {
 			$top_level_type = isset( $entity_data['contact_type_id'] ) ? $entity_data['contact_type_id'] : '';
 			$sub_type       = isset( $entity_data['contact_subtype_id'] ) ? $entity_data['contact_subtype_id'] : '';
 		}
@@ -1369,7 +1369,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 		$entity_type_data = [];
 
 		// Get data based on Entity.
-		if ( $entity_type === 'Contact' ) {
+		if ( 'Contact' === $entity_type ) {
 
 			// Set the lowest-level Contact Type ID that we can.
 			$contact_type_id = 0;
@@ -1407,7 +1407,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 		}
 
 		// Assign Location Type data for the "Address" and "Phone" Entity Types.
-		if ( $entity_type === 'Address' || $entity_type === 'Phone' ) {
+		if ( 'Address' === $entity_type || 'Phone' === $entity_type ) {
 			if ( ! empty( $location_types ) ) {
 				foreach ( $location_types as $location ) {
 					if ( $location['id'] == $location_type_id ) {
@@ -1418,7 +1418,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 		}
 
 		// Assign Phone Type data if we got some.
-		if ( $entity_type === 'Phone' ) {
+		if ( 'Phone' === $entity_type ) {
 			if ( ! empty( $phone_types ) ) {
 				foreach ( $phone_types as $id => $label ) {
 					if ( $id == $phone_type_id ) {
@@ -1432,7 +1432,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 		}
 
 		// Assign Website Type data if we got some.
-		if ( $entity_type === 'Website' ) {
+		if ( 'Website' === $entity_type ) {
 			if ( ! empty( $website_types ) ) {
 				foreach ( $website_types as $id => $label ) {
 					if ( $id == $website_type_id ) {
@@ -1578,7 +1578,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 
 			// Is this the default "Name" Field?
 			$is_fullname_field = false;
-			if ( ! empty( $_GET['field_id'] ) && (int) $_GET['field_id'] === (int) bp_xprofile_fullname_field_id() ) {
+			if ( ! empty( $_GET['field_id'] ) && (int) bp_xprofile_fullname_field_id() === (int) $_GET['field_id'] ) {
 				$is_fullname_field = true;
 			}
 

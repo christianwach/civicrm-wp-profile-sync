@@ -147,7 +147,7 @@ class CiviCRM_WP_Profile_Sync_Admin_Multisite {
 	public function upgrade_warning_filter( $show_notice, $is_settings_screen, $screen_id ) {
 
 		// True if this is our Network Settings Page.
-		if ( $screen_id === 'settings_page_' . $this->network_page_slug . '-network' ) {
+		if ( 'settings_page_' . $this->network_page_slug . '-network' === $screen_id ) {
 			return false;
 		}
 
@@ -237,7 +237,7 @@ class CiviCRM_WP_Profile_Sync_Admin_Multisite {
 	public function meta_boxes_add( $screen_id ) {
 
 		// Bail if not the Screen ID we want.
-		if ( $screen_id != 'settings_page_' . $this->network_page_slug . '-network' ) {
+		if ( 'settings_page_' . $this->network_page_slug . '-network' !== $screen_id ) {
 			return;
 		}
 

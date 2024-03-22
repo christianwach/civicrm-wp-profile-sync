@@ -114,7 +114,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Field {
 		$result = civicrm_api( 'Contact', 'getfield', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $field;
 		}
 
@@ -171,7 +171,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Field {
 		}
 
 		// Maybe construct string for less than a month.
-		if ( empty( $years ) && $months === 0 ) {
+		if ( empty( $years ) && 0 === $months ) {
 			$age_string = __( 'Under a month', 'civicrm-wp-profile-sync' );
 		}
 

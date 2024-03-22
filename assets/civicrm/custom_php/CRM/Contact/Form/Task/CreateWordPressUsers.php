@@ -98,7 +98,7 @@ class CRM_Contact_Form_Task_CreateWordPressUsers extends CRM_Contact_Form_Task {
     ]);
 
     // Bail on failure.
-    if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+    if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
       return $rows;
     }
 

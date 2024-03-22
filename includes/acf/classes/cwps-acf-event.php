@@ -147,7 +147,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		$result = civicrm_api( 'Event', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $event_data;
 		}
 
@@ -198,7 +198,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		$result = civicrm_api( 'Event', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $event_data;
 		}
 
@@ -276,7 +276,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		$result = civicrm_api( 'Event', 'create', $params );
 
 		// Log and bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -371,7 +371,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		$result = civicrm_api( 'Event', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $is_full;
 		}
 
@@ -435,7 +435,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		$result = civicrm_api( 'Event', 'getlist', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $event_data;
 		}
 
@@ -467,7 +467,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 
 		// Get Option Group ID.
 		$option_group_id = $this->type_option_group_id_get();
-		if ( $option_group_id === false ) {
+		if ( false === $option_group_id ) {
 			return false;
 		}
 
@@ -484,7 +484,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		$result = civicrm_api( 'OptionValue', 'get', $params );
 
 		// Bail if we get an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -522,7 +522,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 
 		// Get all the Event Types.
 		$event_types = $this->types_get();
-		if ( $event_types === false ) {
+		if ( false === $event_types ) {
 			return [];
 		}
 
@@ -573,7 +573,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		$result = civicrm_api( 'OptionGroup', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $option_group_id;
 		}
 
@@ -632,7 +632,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		$result = civicrm_api( 'OptionValue', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $event_type;
 		}
 
@@ -687,7 +687,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		$result = civicrm_api( 'OptionValue', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $event_type;
 		}
 
@@ -830,7 +830,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 
 		// Parse the Event Type.
 		$event_type = reset( $entity_array[ $this->identifier ] );
-		if ( $event_type == '0' ) {
+		if ( empty( $event_type ) ) {
 			$event_type = '';
 		} else {
 			$event_type = (int) $event_type;
@@ -932,7 +932,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 		}
 
 		// Maybe add Profile Fields to Event Registration Screen Field choices array.
-		if ( $field['type'] === 'select' ) {
+		if ( 'select' === $field['type'] ) {
 			$label = esc_attr__( 'Event Registration Screen Fields', 'civicrm-wp-profile-sync' );
 			$title = __( 'Include Profile (top of page)', 'civicrm-wp-profile-sync' );
 			$choices[ $label ][ $this->event_field_prefix . 'custom_pre_id' ] = $title;
@@ -1041,7 +1041,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 
 		// Get the Event data.
 		$event = $this->get_by_id( $event_id );
-		if ( $event === false ) {
+		if ( false === $event ) {
 			wp_send_json( $data );
 		}
 

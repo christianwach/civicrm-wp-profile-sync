@@ -112,7 +112,7 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 		}
 
 		// Bail if BuddyPress isn't detected.
-		if ( $this->bp === false ) {
+		if ( false === $this->bp ) {
 			return;
 		}
 
@@ -154,7 +154,7 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 	public function include_files() {
 
 		// Maybe include BuddyBoss class.
-		if ( $this->is_buddyboss === true ) {
+		if ( true === $this->is_buddyboss ) {
 			include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/buddypress/cwps-bp-buddyboss.php';
 		}
 
@@ -176,7 +176,7 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 	public function setup_objects() {
 
 		// Maybe init BuddyBoss object.
-		if ( $this->is_buddyboss === true ) {
+		if ( true === $this->is_buddyboss ) {
 			$this->buddyboss = new CiviCRM_Profile_Sync_BP_BuddyBoss( $this );
 		}
 
@@ -228,7 +228,7 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 	public function register_mapper_hooks() {
 
 		// Bail if already registered.
-		if ( $this->mapper_hooks === true ) {
+		if ( true === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -250,7 +250,7 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 	public function unregister_mapper_hooks() {
 
 		// Bail if already unregistered.
-		if ( $this->mapper_hooks === false ) {
+		if ( false === $this->mapper_hooks ) {
 			return;
 		}
 

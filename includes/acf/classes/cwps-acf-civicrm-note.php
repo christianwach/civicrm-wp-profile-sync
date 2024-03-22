@@ -125,7 +125,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Note {
 		$result = civicrm_api( 'Note', 'create', $params );
 
 		// Log and bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -213,7 +213,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Note {
 		$result = civicrm_api( 'Note', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $note;
 		}
 
@@ -267,7 +267,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Note {
 		$result = civicrm_api( 'Note', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $note_data;
 		}
 
@@ -322,14 +322,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Note {
 		$result = civicrm_api( 'Note', 'getfields', $params );
 
 		// Override return if we get some.
-		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
+		if ( empty( $result['is_error'] ) && ! empty( $result['values'] ) ) {
 
-			if ( $filter == 'none' ) {
+			if ( 'none' === $filter ) {
 
 				// Grab all Fields.
 				$fields = $result['values'];
 
-			} elseif ( $filter == 'public' ) {
+			} elseif ( 'public' === $filter ) {
 
 				// Skip all but those defined in our public Note Fields array.
 				foreach ( $result['values'] as $key => $value ) {

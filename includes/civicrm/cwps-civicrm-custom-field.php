@@ -119,7 +119,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 		$result = civicrm_api( 'CustomField', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $field;
 		}
 
@@ -169,7 +169,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 		$result = civicrm_api( 'CustomField', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $fields;
 		}
 
@@ -233,7 +233,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 		$result = civicrm_api( 'Contact', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $contact_data;
 		}
 
@@ -350,7 +350,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 		$result = civicrm_api( 'CustomGroup', 'get', $params );
 
 		// Override return if we get some.
-		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
+		if ( empty( $result['is_error'] ) && ! empty( $result['values'] ) ) {
 
 			// Add the Custom Fields from the chained API data.
 			foreach ( $result['values'] as $key => $value ) {
@@ -416,7 +416,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 		$result = civicrm_api( 'CustomGroup', 'get', $params );
 
 		// Override return if we get some.
-		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
+		if ( empty( $result['is_error'] ) && ! empty( $result['values'] ) ) {
 
 			// Add the Custom Fields from the chained API data.
 			foreach ( $result['values'] as $key => $value ) {
@@ -494,7 +494,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 		$result = civicrm_api( 'CustomGroup', 'get', $params );
 
 		// Append to return if we get some.
-		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
+		if ( empty( $result['is_error'] ) && ! empty( $result['values'] ) ) {
 
 			// We only need the results from the chained API data.
 			foreach ( $result['values'] as $key => $value ) {
@@ -596,7 +596,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 		$result = civicrm_api( 'CustomGroup', 'get', $params );
 
 		// Append to return if we get some.
-		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
+		if ( empty( $result['is_error'] ) && ! empty( $result['values'] ) ) {
 
 			// We only need the results from the chained API data.
 			foreach ( $result['values'] as $key => $value ) {

@@ -260,7 +260,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	public function register_mapper_hooks() {
 
 		// Bail if already registered.
-		if ( $this->mapper_hooks === true ) {
+		if ( true === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -277,7 +277,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	public function unregister_mapper_hooks() {
 
 		// Bail if already unregistered.
-		if ( $this->mapper_hooks === false ) {
+		if ( false === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -330,7 +330,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 		}
 
 		// Return if already calculated.
-		if ( $this->version !== false ) {
+		if ( false !== $this->version ) {
 			return $this->version;
 		}
 
@@ -441,7 +441,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 		$result = civicrm_api( 'Extension', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $enabled_extensions;
 		}
 
@@ -588,7 +588,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	public function denullify( $value ) {
 
 		// Catch inconsistent CiviCRM "empty-ish" values.
-		if ( empty( $value ) || $value == 'null' || $value == 'NULL' ) {
+		if ( empty( $value ) || 'null' === $value || 'NULL' === $value ) {
 			$value = '';
 		}
 
@@ -633,7 +633,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 		$result = civicrm_api( 'OptionGroup', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $options;
 		}
 
@@ -684,7 +684,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 		$result = civicrm_api( 'OptionGroup', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $option_group;
 		}
 

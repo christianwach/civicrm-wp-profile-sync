@@ -13,7 +13,7 @@
 	<th scope="row"><label for="cwps-civicrm-group"><?php esc_html_e( 'CiviCRM Group for ACF Integration', 'civicrm-wp-profile-sync' ); ?></label></th>
 	<td>
 		<select name="cwps-civicrm-group" id="cwps-civicrm-group" class="postform">
-			<?php if ( $group_id !== 0 ) : ?>
+			<?php if ( 0 !== $group_id ) : ?>
 				<option value="0"><?php esc_html_e( 'None', 'civicrm-wp-profile-sync' ); ?></option>
 			<?php else : ?>
 				<option value="0" selected="selected"><?php esc_html_e( 'None', 'civicrm-wp-profile-sync' ); ?></option>

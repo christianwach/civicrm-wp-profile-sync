@@ -248,7 +248,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		}
 
 		// Bail if not the "Contact" Entity Type.
-		if ( $entity_type !== 'Contact' ) {
+		if ( 'Contact' !== $entity_type ) {
 			return $choices;
 		}
 
@@ -335,7 +335,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		// We only have a few to account for.
 
 		// Individual Prefix.
-		if ( $name == 'prefix_id' ) {
+		if ( 'prefix_id' === $name ) {
 			$option_group = $this->civicrm->option_group_get( 'individual_prefix' );
 			if ( ! empty( $option_group ) ) {
 				$options = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
@@ -343,7 +343,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		}
 
 		// Individual Suffix.
-		if ( $name == 'suffix_id' ) {
+		if ( 'suffix_id' === $name ) {
 			$option_group = $this->civicrm->option_group_get( 'individual_suffix' );
 			if ( ! empty( $option_group ) ) {
 				$options = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
@@ -351,7 +351,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		}
 
 		// Gender.
-		if ( $name == 'gender_id' ) {
+		if ( 'gender_id' === $name ) {
 			$option_group = $this->civicrm->option_group_get( 'gender' );
 			if ( ! empty( $option_group ) ) {
 				$options = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
@@ -359,22 +359,22 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		}
 
 		// Preferred Communication Method.
-		if ( $name == 'preferred_communication_method' ) {
+		if ( 'preferred_communication_method' === $name ) {
 			$options = CRM_Contact_BAO_Contact::buildOptions( 'preferred_communication_method' );
 		}
 
 		// Preferred Language.
-		if ( $name == 'preferred_language' ) {
+		if ( 'preferred_language' === $name ) {
 			$options = CRM_Contact_BAO_Contact::buildOptions( 'preferred_language' );
 		}
 
 		// Preferred Mail Format.
-		if ( $name == 'preferred_mail_format' ) {
+		if ( 'preferred_mail_format' === $name ) {
 			$options = CRM_Core_SelectValues::pmf();
 		}
 
 		// Communication Style.
-		if ( $name == 'communication_style_id' ) {
+		if ( 'communication_style_id' === $name ) {
 			$option_group = $this->civicrm->option_group_get( 'communication_style' );
 			if ( ! empty( $option_group ) ) {
 				$options = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
@@ -500,26 +500,26 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		$result = civicrm_api( 'Contact', 'getfields', $params );
 
 		// Override return if we get some.
-		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
+		if ( empty( $result['is_error'] ) && ! empty( $result['values'] ) ) {
 
-			if ( $filter == 'none' ) {
+			if ( 'none' === $filter ) {
 
 				// Grab all Fields.
 				$fields = $result['values'];
 
-			} elseif ( $filter == 'public' ) {
+			} elseif ( 'public' === $filter ) {
 
 				// Init Fields array.
 				$contact_fields = [];
 
 				// Check against different Field sets per type.
-				if ( $contact_type == 'Individual' ) {
+				if ( 'Individual' === $contact_type ) {
 					$contact_fields = $this->contact_fields_individual;
 				}
-				if ( $contact_type == 'Organization' ) {
+				if ( 'Organization' === $contact_type ) {
 					$contact_fields = $this->contact_fields_organization;
 				}
-				if ( $contact_type == 'Household' ) {
+				if ( 'Household' === $contact_type ) {
 					$contact_fields = $this->contact_fields_household;
 				}
 
@@ -628,7 +628,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 	public function value_get_for_bp( $value, $name, $params ) {
 
 		// Bail if value is (string) 'null' which CiviCRM uses for some reason.
-		if ( $value == 'null' || $value == 'NULL' ) {
+		if ( 'null' === $value || 'NULL' === $value ) {
 			return '';
 		}
 
@@ -664,12 +664,12 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 				$datetime = DateTime::createFromFormat( 'Y-m-d', $value );
 
 				// Contact create passes a different format, so test for that.
-				if ( $datetime === false ) {
+				if ( false === $datetime ) {
 					$datetime = DateTime::createFromFormat( 'YmdHis', $value );
 				}
 
 				// Convert to BuddyPress format which cannot have "H:m:s".
-				if ( $datetime !== false ) {
+				if ( false !== $datetime ) {
 					$value = $datetime->format( 'Y-m-d' ) . ' 00:00:00';
 				}
 				break;
@@ -681,12 +681,12 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 		 * email address is appended as an array. At other times, it is a string.
 		 * We find the first "primary" email entry and use that.
 		 */
-		if ( $name == 'email' ) {
+		if ( 'email' === $name ) {
 
 			// Maybe grab the email from the array.
 			if ( is_array( $value ) ) {
 				foreach ( $value as $email ) {
-					if ( $email->is_primary == '1' ) {
+					if ( 1 === (int) $email->is_primary ) {
 						$value = $email->email;
 						break;
 					}
@@ -900,7 +900,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 		// Bail if not a "True/False" Field Type.
 		$civicrm_field_type = $this->get_bp_type( $contact_field_name );
-		if ( $civicrm_field_type !== 'true_false' ) {
+		if ( 'true_false' !== $civicrm_field_type ) {
 			return $options;
 		}
 
@@ -972,7 +972,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 		// Check if this is a "True/False" Field Type.
 		$civicrm_field_type = $this->get_bp_type( $args['contact_field_name'] );
-		if ( $civicrm_field_type === 'true_false' ) {
+		if ( 'true_false' === $civicrm_field_type ) {
 			$is_true_false = true;
 		}
 

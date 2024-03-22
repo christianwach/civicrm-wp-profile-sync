@@ -715,7 +715,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	public function contact_pre_create( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'create' ) {
+		if ( 'create' !== $op ) {
 			return;
 		}
 
@@ -768,7 +768,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	public function contact_pre_edit( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'edit' ) {
+		if ( 'edit' !== $op ) {
 			return;
 		}
 
@@ -821,7 +821,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	public function contact_created( $op, $object_name, $object_id, $object_ref ) {
 
 		// Target our operation.
-		if ( $op != 'create' ) {
+		if ( 'create' !== $op ) {
 			return;
 		}
 
@@ -874,7 +874,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	public function contact_edited( $op, $object_name, $object_id, $object_ref ) {
 
 		// Target our operation.
-		if ( $op != 'edit' ) {
+		if ( 'edit' !== $op ) {
 			return;
 		}
 
@@ -888,7 +888,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 		$contact = $this->plugin->civicrm->contact->get_by_id( $object_id );
 
 		// Bail if something went wrong.
-		if ( $contact === false ) {
+		if ( false === $contact ) {
 			return;
 		}
 
@@ -956,12 +956,12 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	public function email_pre_edit( $op, $object_name, $object_id, $object_ref ) {
 
 		// Target our operation.
-		if ( $op != 'edit' ) {
+		if ( 'edit' !== $op ) {
 			return;
 		}
 
 		// Target our object type.
-		if ( $object_name != 'Email' ) {
+		if ( 'Email' !== $object_name ) {
 			return;
 		}
 
@@ -1000,12 +1000,12 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	public function email_edited( $op, $object_name, $object_id, $object_ref ) {
 
 		// Target our operation.
-		if ( $op != 'edit' ) {
+		if ( 'edit' !== $op ) {
 			return;
 		}
 
 		// Target our object type.
-		if ( $object_name != 'Email' ) {
+		if ( 'Email' !== $object_name ) {
 			return;
 		}
 
@@ -1046,12 +1046,12 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	public function website_pre_edit( $op, $object_name, $object_id, $object_ref ) {
 
 		// Target our operation.
-		if ( $op != 'edit' ) {
+		if ( 'edit' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not a Website.
-		if ( $object_name != 'Website' ) {
+		if ( 'Website' !== $object_name ) {
 			return;
 		}
 
@@ -1089,12 +1089,12 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	public function website_pre_delete( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'delete' ) {
+		if ( 'delete' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not a Website.
-		if ( $object_name != 'Website' ) {
+		if ( 'Website' !== $object_name ) {
 			return;
 		}
 
@@ -1132,12 +1132,12 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	public function website_created( $op, $object_name, $object_id, $object_ref ) {
 
 		// Target our operation.
-		if ( $op != 'create' ) {
+		if ( 'create' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not a Website.
-		if ( $object_name != 'Website' ) {
+		if ( 'Website' !== $object_name ) {
 			return;
 		}
 
@@ -1175,12 +1175,12 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	public function website_edited( $op, $object_name, $object_id, $object_ref ) {
 
 		// Target our operation.
-		if ( $op != 'edit' ) {
+		if ( 'edit' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not a Website.
-		if ( $object_name != 'Website' ) {
+		if ( 'Website' !== $object_name ) {
 			return;
 		}
 
@@ -1218,12 +1218,12 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	public function website_deleted( $op, $object_name, $object_id, $object_ref ) {
 
 		// Target our operation.
-		if ( $op != 'delete' ) {
+		if ( 'delete' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not a Website.
-		if ( $object_name != 'Website' ) {
+		if ( 'Website' !== $object_name ) {
 			return;
 		}
 
@@ -1263,12 +1263,12 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	public function phone_pre_delete( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'delete' ) {
+		if ( 'delete' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not a Phone.
-		if ( $object_name != 'Phone' ) {
+		if ( 'Phone' !== $object_name ) {
 			return;
 		}
 
@@ -1306,12 +1306,12 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	public function phone_created( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'create' ) {
+		if ( 'create' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not a Phone.
-		if ( $object_name != 'Phone' ) {
+		if ( 'Phone' !== $object_name ) {
 			return;
 		}
 
@@ -1349,12 +1349,12 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	public function phone_edited( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'edit' ) {
+		if ( 'edit' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not a Phone.
-		if ( $object_name != 'Phone' ) {
+		if ( 'Phone' !== $object_name ) {
 			return;
 		}
 
@@ -1392,12 +1392,12 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	public function phone_deleted( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'delete' ) {
+		if ( 'delete' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not a Phone.
-		if ( $object_name != 'Phone' ) {
+		if ( 'Phone' !== $object_name ) {
 			return;
 		}
 
@@ -1437,12 +1437,12 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	public function address_pre_edit( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'edit' ) {
+		if ( 'edit' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not an Address.
-		if ( $object_name != 'Address' ) {
+		if ( 'Address' !== $object_name ) {
 			return;
 		}
 
@@ -1480,12 +1480,12 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	public function address_pre_delete( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'delete' ) {
+		if ( 'delete' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not an Address.
-		if ( $object_name != 'Address' ) {
+		if ( 'Address' !== $object_name ) {
 			return;
 		}
 
@@ -1523,12 +1523,12 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	public function address_created( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'create' ) {
+		if ( 'create' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not an Address.
-		if ( $object_name != 'Address' ) {
+		if ( 'Address' !== $object_name ) {
 			return;
 		}
 
@@ -1566,12 +1566,12 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	public function address_edited( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'edit' ) {
+		if ( 'edit' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not an Address.
-		if ( $object_name != 'Address' ) {
+		if ( 'Address' !== $object_name ) {
 			return;
 		}
 
@@ -1609,12 +1609,12 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_Core {
 	public function address_deleted( $op, $object_name, $object_id, $object_ref ) {
 
 		// Bail if not the context we want.
-		if ( $op != 'delete' ) {
+		if ( 'delete' !== $op ) {
 			return;
 		}
 
 		// Bail if this is not an Address.
-		if ( $object_name != 'Address' ) {
+		if ( 'Address' !== $object_name ) {
 			return;
 		}
 

@@ -211,7 +211,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_ID_Field extends acf_field {
 			$contact_id = $this->acf->field->query_contact_id( $post_id );
 
 			// Overwrite if we get a value.
-			if ( $contact_id !== false ) {
+			if ( false !== $contact_id ) {
 				$value = $contact_id;
 			}
 
@@ -241,7 +241,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_ID_Field extends acf_field {
 			$contact_id = $this->acf->field->query_contact_id( $post_id );
 
 			// Overwrite if we get a value.
-			if ( $contact_id !== false ) {
+			if ( false !== $contact_id ) {
 				$value = $contact_id;
 			}
 

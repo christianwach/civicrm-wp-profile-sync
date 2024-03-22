@@ -243,7 +243,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 	public function register_mapper_hooks() {
 
 		// Bail if already registered.
-		if ( $this->mapper_hooks === true ) {
+		if ( true === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -264,7 +264,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 	public function unregister_mapper_hooks() {
 
 		// Bail if already unregistered.
-		if ( $this->mapper_hooks === false ) {
+		if ( false === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -356,13 +356,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		 * Bail early if this Post Type shouldn't be synced.
 		 * @see self::post_saved()
 		 */
-		if ( $this->do_not_sync === true ) {
+		if ( true === $this->do_not_sync ) {
 			return;
 		}
 
 		// Bail if it's not a Post.
 		$entity = $this->acf->field->entity_type_get( $args['post_id'] );
-		if ( $entity !== 'post' ) {
+		if ( 'post' !== $entity ) {
 			return;
 		}
 
@@ -370,7 +370,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		$post = get_post( $args['post_id'] );
 
 		// Bail if this is a revision.
-		if ( $post->post_type == 'revision' ) {
+		if ( 'revision' === $post->post_type ) {
 			return;
 		}
 
@@ -391,13 +391,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		$participant_id = $this->acf_loader->post->participant_id_get( $post->ID );
 
 		// Does this Post have a Participant ID?
-		if ( $participant_id === false ) {
+		if ( false === $participant_id ) {
 
 			// No - create a Participant.
 			$participant = $this->create_from_fields( $fields, $post, $post->ID );
 
 			// Store Participant ID if successful.
-			if ( $participant !== false ) {
+			if ( false !== $participant ) {
 				$this->acf_loader->post->participant_id_set( $post->ID, $participant['id'] );
 				$participant_id = $participant['id'];
 			}
@@ -460,7 +460,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		$result = civicrm_api( 'Participant', 'get', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -524,7 +524,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		$result = civicrm_api( 'Participant', 'get', $params );
 
 		// Add log entry on failure.
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -606,7 +606,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 			$post_type = $this->civicrm->participant_role->is_mapped_to_post_type( $participant_role_id );
 
 			// Skip if this Participant Role is not mapped.
-			if ( $post_type === false ) {
+			if ( false === $post_type ) {
 				continue;
 			}
 
@@ -622,7 +622,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 			$post_id = $this->acf_loader->post->get_by_participant_id( $participant->id, $post_type );
 
 			// Create the Post if it's missing.
-			if ( $post_id === false && $create_post === 'create' ) {
+			if ( false === $post_id && 'create' === $create_post ) {
 
 				// Prevent recursion and the resulting unexpected Post creation.
 				if ( ! doing_action( 'cwps/acf/post/participant/sync' ) ) {
@@ -688,7 +688,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 		// Bail if this Participant's Participant Role is not mapped.
 		$post_types = $this->is_mapped( $participant );
-		if ( $post_types === false ) {
+		if ( false === $post_types ) {
 			return false;
 		}
 
@@ -757,7 +757,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		$result = civicrm_api( 'Participant', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $participant_data;
 		}
 
@@ -837,7 +837,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		$result = civicrm_api( 'Participant', 'create', $params );
 
 		// Log and bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -904,7 +904,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 		// Get the full Participant data.
 		$participant_full = $this->get_by_id( $participant->id );
-		if ( $participant_full === false ) {
+		if ( false === $participant_full ) {
 			return $participant;
 		}
 
@@ -980,11 +980,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 					$code = $participant_field_name;
 
 					// "Contact Existing/New" Field has to be handled differently.
-					if ( $code == 'contact_id' ) {
+					if ( 'contact_id' === $code ) {
 
 						// Maybe create a Contact.
 						$contact_id = $this->prepare_contact_from_field( $selector, $value, $settings, $post_id );
-						if ( $contact_id === false ) {
+						if ( false === $contact_id ) {
 							continue;
 						}
 
@@ -995,7 +995,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 					}
 
 					// "Event Group" Field has to be handled differently.
-					if ( $code == 'event_id' ) {
+					if ( 'event_id' === $code ) {
 
 						// Get Event ID from Field.
 						$event_id = $this->acf->field_type->event_group->prepare_output( $value );
@@ -1062,7 +1062,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 		// Collate Contact data from Field value.
 		$contact_data = $this->acf->field_type->contact_group->prepare_output( $value );
-		if ( $contact_data === false ) {
+		if ( false === $contact_data ) {
 			return false;
 		}
 
@@ -1081,7 +1081,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		$this->acf_loader->mapper->hooks_civicrm_add();
 
 		// Bail if something went wrong.
-		if ( $contact === false ) {
+		if ( false === $contact ) {
 			return false;
 		}
 
@@ -1264,7 +1264,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 		// Pass if this is not a Participant Field Group.
 		$is_visible = $this->is_participant_field_group( $field_group );
-		if ( $is_visible === false ) {
+		if ( false === $is_visible ) {
 			return $choices;
 		}
 
@@ -1491,13 +1491,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 	public function query_field_group_mapped( $mapped, $field_group ) {
 
 		// Bail if a Mapping has already been found.
-		if ( $mapped !== false ) {
+		if ( false !== $mapped ) {
 			return $mapped;
 		}
 
 		// Bail if this is not a Participant Field Group.
 		$is_participant_field_group = $this->is_participant_field_group( $field_group );
-		if ( $is_participant_field_group === false ) {
+		if ( false === $is_participant_field_group ) {
 			return $mapped;
 		}
 
@@ -1519,7 +1519,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 		// Bail if this is not a Participant Field Group.
 		$is_visible = $this->is_participant_field_group( $field_group );
-		if ( $is_visible === false ) {
+		if ( false === $is_visible ) {
 			return $custom_fields;
 		}
 
@@ -1557,7 +1557,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		foreach ( $args['custom_fields'] as $field ) {
 
 			// Skip if it is not attached to a Participant.
-			if ( $field['entity_table'] != 'civicrm_participant' ) {
+			if ( 'civicrm_participant' !== $field['entity_table'] ) {
 				continue;
 			}
 
@@ -1570,19 +1570,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		}
 
 		// Bail if there's no Participant ID.
-		if ( $participant_id === false ) {
+		if ( false === $participant_id ) {
 			return $post_ids;
 		}
 
 		// Grab Participant.
 		$participant = $this->get_by_id( $participant_id );
-		if ( $participant === false ) {
+		if ( false === $participant ) {
 			return $post_ids;
 		}
 
 		// Bail if this Participant's Participant Role is not mapped.
 		$post_types = $this->is_mapped( $participant, 'create' );
-		if ( $post_types === false ) {
+		if ( false === $post_types ) {
 			return $post_ids;
 		}
 
@@ -1607,7 +1607,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 			foreach ( $ids as $id ) {
 
 				// Exclude "reverse" edits when a Post is the originator.
-				if ( $entity['entity'] !== 'post' || $id != $entity['id'] ) {
+				if ( 'post' !== $entity['entity'] || (int) $id !== (int) $entity['id'] ) {
 					$participant_post_ids[] = $id;
 				}
 
@@ -1648,7 +1648,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 		// Bail if this is not a Participant Field Group.
 		$is_visible = $this->is_participant_field_group( $field_group );
-		if ( $is_visible === false ) {
+		if ( false === $is_visible ) {
 			return $entity_tables;
 		}
 
@@ -1769,19 +1769,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 		// Get Participant ID.
 		$participant_id = $this->acf_loader->post->participant_id_get( $post->ID );
-		if ( $participant_id === false ) {
+		if ( false === $participant_id ) {
 			return $actions;
 		}
 
 		// Get Participant.
 		$participant = $this->get_by_id( $participant_id );
-		if ( $participant === false ) {
+		if ( false === $participant ) {
 			return $actions;
 		}
 
 		// Get Contact ID.
 		$contact_id = $participant['contact_id'];
-		if ( $contact_id === false ) {
+		if ( false === $contact_id ) {
 			return $actions;
 		}
 
@@ -1823,10 +1823,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 		// Bail if the current screen is not an Edit Participant screen.
 		if ( is_admin() ) {
 			$screen = get_current_screen();
-			if ( $screen instanceof WP_Screen && $screen->base != 'post' ) {
+			if ( $screen instanceof WP_Screen && 'post' !== $screen->base ) {
 				return;
 			}
-			if ( $screen->id == 'add' ) {
+			if ( 'add' === $screen->id ) {
 				return;
 			}
 		}
@@ -1843,19 +1843,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 		// Get Participant ID.
 		$participant_id = $this->acf_loader->post->participant_id_get( $post->ID );
-		if ( $participant_id === false ) {
+		if ( false === $participant_id ) {
 			return;
 		}
 
 		// Get Participant.
 		$participant = $this->get_by_id( $participant_id );
-		if ( $participant === false ) {
+		if ( false === $participant ) {
 			return;
 		}
 
 		// Get Contact ID.
 		$contact_id = $participant['contact_id'];
-		if ( $contact_id === false ) {
+		if ( false === $contact_id ) {
 			return;
 		}
 

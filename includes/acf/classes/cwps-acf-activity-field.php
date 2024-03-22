@@ -158,13 +158,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 	public function value_validate( $valid, $value, $field, $input ) {
 
 		// Bail if it's not required and is empty.
-		if ( $field['required'] == '0' && empty( $value ) ) {
+		if ( 0 === (int) $field['required'] && empty( $value ) ) {
 			return $valid;
 		}
 
 		// Get the mapped Activity Field name if present.
 		$activity_field_name = $this->acf_loader->civicrm->activity->activity_field_name_get( $field );
-		if ( $activity_field_name === false ) {
+		if ( false === $activity_field_name ) {
 			return $valid;
 		}
 
@@ -271,7 +271,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 		}
 
 		// Bail if value is (string) 'null' which CiviCRM uses for some reason.
-		if ( $value == 'null' ) {
+		if ( 'null' === $value ) {
 			return '';
 		}
 
@@ -297,26 +297,26 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 				$acf_setting = get_field_object( $selector, $post_id );
 
 				// Test for Date Picker or Date & Time Picker.
-				if ( $acf_setting['type'] == 'date_picker' ) {
+				if ( 'date_picker' === $acf_setting['type'] ) {
 
 					// Activity edit passes a Y-m-d format, so test for that.
 					$datetime = DateTime::createFromFormat( 'Y-m-d', $value );
 
 					// Activity create passes a different format, so test for that.
-					if ( $datetime === false ) {
+					if ( false === $datetime ) {
 						$datetime = DateTime::createFromFormat( 'YmdHis', $value );
 					}
 
 					// Convert to ACF format.
 					$value = $datetime->format( 'Ymd' );
 
-				} elseif ( $acf_setting['type'] == 'date_time_picker' ) {
+				} elseif ( 'date_time_picker' === $acf_setting['type'] ) {
 
 					// Activity edit passes a YmdHis format, so test for that.
 					$datetime = DateTime::createFromFormat( 'YmdHis', $value );
 
 					// Activity API passes a different format, so test for that.
-					if ( $datetime === false ) {
+					if ( false === $datetime ) {
 						$datetime = DateTime::createFromFormat( 'Y-m-d H:i:s', $value );
 					}
 
@@ -353,7 +353,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 		// We only have a few to account for.
 
 		// Status ID.
-		if ( $name == 'status_id' ) {
+		if ( 'status_id' === $name ) {
 			$option_group = $this->plugin->civicrm->option_group_get( 'activity_status' );
 			if ( ! empty( $option_group ) ) {
 				$options = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
@@ -361,7 +361,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 		}
 
 		// Priority ID.
-		if ( $name == 'priority_id' ) {
+		if ( 'priority_id' === $name ) {
 			$option_group = $this->plugin->civicrm->option_group_get( 'priority' );
 			if ( ! empty( $option_group ) ) {
 				$options = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
@@ -369,7 +369,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 		}
 
 		// Engagement Level.
-		if ( $name == 'engagement_level' ) {
+		if ( 'engagement_level' === $name ) {
 			$option_group = $this->plugin->civicrm->option_group_get( 'engagement_index' );
 			if ( ! empty( $option_group ) ) {
 				$options = CRM_Core_OptionGroup::valuesByID( $option_group['id'] );
@@ -406,7 +406,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 		// Bail if this is not an Activity Field Group.
 		$is_activity_field_group = $this->civicrm->activity->is_activity_field_group( $field_group );
-		if ( $is_activity_field_group === false ) {
+		if ( false === $is_activity_field_group ) {
 			return $activity_fields;
 		}
 
@@ -459,7 +459,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 		$result = civicrm_api( 'Activity', 'getfield', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $field;
 		}
 
@@ -513,14 +513,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 		$result = civicrm_api( 'Activity', 'getfields', $params );
 
 		// Override return if we get some.
-		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
+		if ( empty( $result['is_error'] ) && ! empty( $result['values'] ) ) {
 
-			if ( $filter == 'none' ) {
+			if ( 'none' === $filter ) {
 
 				// Grab all Fields.
 				$fields = $result['values'];
 
-			} elseif ( $filter == 'public' ) {
+			} elseif ( 'public' === $filter ) {
 
 				// Skip all but those defined in our Activity Fields array.
 				$public_fields = [];
@@ -587,14 +587,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 		$result = civicrm_api( 'Activity', 'getfields', $params );
 
 		// Override return if we get some.
-		if ( $result['is_error'] == 0 && ! empty( $result['values'] ) ) {
+		if ( empty( $result['is_error'] ) && ! empty( $result['values'] ) ) {
 
-			if ( $filter == 'none' ) {
+			if ( 'none' === $filter ) {
 
 				// Grab all Fields.
 				$fields = $result['values'];
 
-			} elseif ( $filter == 'public' ) {
+			} elseif ( 'public' === $filter ) {
 
 				// Skip all but those defined in our Activity Fields array.
 				foreach ( $result['values'] as $key => $value ) {
@@ -711,7 +711,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 		// Get the mapped Activity Field name if present.
 		$activity_field_name = $this->civicrm->activity->activity_field_name_get( $field );
-		if ( $activity_field_name === false ) {
+		if ( false === $activity_field_name ) {
 			return $field;
 		}
 
@@ -750,7 +750,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 		// Get the mapped Activity Field name if present.
 		$activity_field_name = $this->civicrm->activity->activity_field_name_get( $field );
-		if ( $activity_field_name === false ) {
+		if ( false === $activity_field_name ) {
 			return $field;
 		}
 

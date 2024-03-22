@@ -156,7 +156,7 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 		$mapped = apply_filters( 'cwps/acf/query_field_group_mapped', $mapped, $field_group );
 
 		// Bail if this Field Group is not mapped.
-		if ( $mapped === false ) {
+		if ( false === $mapped ) {
 			return $field_group;
 		}
 
@@ -423,7 +423,7 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 			}
 
 			// Apply AND group to the OR group match.
-			if ( $and_group_match === true && $queried_entity_present === true ) {
+			if ( true === $and_group_match && true === $queried_entity_present ) {
 				$or_group_match = true;
 				break;
 			}

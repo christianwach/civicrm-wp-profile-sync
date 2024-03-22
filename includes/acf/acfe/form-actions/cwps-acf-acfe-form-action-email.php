@@ -269,7 +269,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 		$args['email'] = $this->form_email_save( $email );
 
 		// If we get an Email.
-		if ( $args['email'] !== false ) {
+		if ( false !== $args['email'] ) {
 
 			// Maybe save the Email ID if there is one.
 			if ( ! empty( $args['email']['id'] ) ) {
@@ -766,14 +766,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 			}
 
 			// Check Contact ID Field.
-			if ( $contact_id === false ) {
+			if ( false === $contact_id ) {
 				if ( ! empty( $contact_group_field[ $this->field_name . 'cid_' . $name ] ) ) {
 					$contact_id = $contact_group_field[ $this->field_name . 'cid_' . $name ];
 				}
 			}
 
 			// Check mapped Field.
-			if ( $contact_id === false ) {
+			if ( false === $contact_id ) {
 				if ( ! empty( $contact_group_field[ $this->field_name . 'map_' . $name ] ) ) {
 					$reference = [ $name => $contact_group_field[ $this->field_name . 'map_' . $name ] ];
 					$reference = acfe_form_map_vs_fields( $reference, $reference, $current_post_id, $form );
@@ -923,7 +923,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email extends CiviCRM_Profile_Sy
 		$result = $this->civicrm->email->email_send( $email_data );
 
 		// Bail on failure.
-		if ( $result === false ) {
+		if ( false === $result ) {
 			return $email;
 		}
 

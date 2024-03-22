@@ -149,7 +149,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Type {
 		$result = civicrm_api( 'ContactType', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $all;
 		}
 
@@ -203,7 +203,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Type {
 		$result = civicrm_api( 'ContactType', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $nested;
 		}
 
@@ -266,12 +266,12 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Type {
 		$contact_type_data = $this->get_data( $contact_type, $mode );
 
 		// Bail if we didn't get any.
-		if ( $contact_type_data === false ) {
+		if ( false === $contact_type_data ) {
 			return $types;
 		}
 
 		// Overwrite with name when passing in an ID.
-		if ( $mode == 'id' ) {
+		if ( 'id' === $mode ) {
 			$contact_type_name = $contact_type_data['name'];
 		} else {
 			$contact_type_name = $contact_type;
@@ -294,7 +294,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Type {
 			$result = civicrm_api( 'ContactType', 'getsingle', $params );
 
 			// Bail if there's an error.
-			if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+			if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 				return $types;
 			}
 
@@ -486,9 +486,9 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Type {
 		];
 
 		// Add param to query by.
-		if ( $mode == 'name' ) {
+		if ( 'name' === $mode ) {
 			$params['name'] = $contact_type;
-		} elseif ( $mode == 'id' ) {
+		} elseif ( 'id' === $mode ) {
 			$params['id'] = $contact_type;
 		}
 
@@ -496,7 +496,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Type {
 		$result = civicrm_api( 'ContactType', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $contact_type_data;
 		}
 

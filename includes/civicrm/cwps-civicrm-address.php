@@ -118,7 +118,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		$result = civicrm_api( 'Country', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $country;
 		}
 
@@ -165,7 +165,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		$result = civicrm_api( 'Country', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $country;
 		}
 
@@ -239,7 +239,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		$result = civicrm_api( 'StateProvince', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $state_provinces;
 		}
 
@@ -291,7 +291,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		$result = civicrm_api( 'StateProvince', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $state_province;
 		}
 
@@ -338,7 +338,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		$result = civicrm_api( 'StateProvince', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $state_province;
 		}
 
@@ -519,7 +519,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		$result = civicrm_api( 'Address', 'get', $params );
 
 		// Bail on failure.
-		if ( isset( $result['is_error'] ) && $result['is_error'] == '1' ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $shared;
 		}
 
@@ -567,7 +567,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		$result = civicrm_api( 'Address', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $address;
 		}
 
@@ -615,7 +615,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		$result = civicrm_api( 'Address', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $address;
 		}
 
@@ -661,7 +661,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		$result = civicrm_api( 'Address', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $addresses;
 		}
 
@@ -710,7 +710,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		$result = civicrm_api( 'Address', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $address;
 		}
 
@@ -790,7 +790,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		$result = civicrm_api( 'LocationType', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $location_type;
 		}
 
@@ -839,7 +839,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		$result = civicrm_api( 'LocationType', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $location_types;
 		}
 
@@ -938,7 +938,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		$result = civicrm_api( 'Address', 'create', $params );
 
 		// Log and bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -993,7 +993,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		$result = civicrm_api( 'Address', 'delete', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $success;
 		}
 
@@ -1003,7 +1003,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		}
 
 		// The result set should contain only one item.
-		$success = ( $result['values'] == '1' ) ? true : false;
+		$success = ( 1 === (int) $result['values'] ) ? true : false;
 
 		// --<
 		return $success;
@@ -1041,7 +1041,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		$existing_address = civicrm_api( 'Address', 'get', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $existing_address['is_error'] ) && $existing_address['is_error'] == 1 ) {
+		if ( ! empty( $existing_address['is_error'] ) && 1 === (int) $existing_address['is_error'] ) {
 			return $address;
 		}
 
@@ -1090,7 +1090,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		$result = civicrm_api( 'Address', 'getfield', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) && $result['is_error'] == 1 ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $field;
 		}
 

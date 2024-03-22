@@ -717,7 +717,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		$args['event'] = $this->form_event_save( $event, $custom_fields, $args['location'], $registration );
 
 		// If we get an Event.
-		if ( $args['event'] !== false ) {
+		if ( false !== $args['event'] ) {
 
 			// Post-process Custom Fields now that we have an Event.
 			$this->form_event_custom_post_process( $form, $current_post_id, $action, $args['event'] );
@@ -2150,7 +2150,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		foreach ( $this->settings_fields as $field ) {
 
 			// Skip Campaign Field if the CiviCampaign component is not active.
-			if ( $field['name'] === 'campaign_id' ) {
+			if ( 'campaign_id' === $field['name'] ) {
 				$campaign_active = $this->civicrm->is_component_enabled( 'CiviCampaign' );
 				if ( ! $campaign_active ) {
 					continue;
@@ -2161,7 +2161,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 			$setting_value = $this->form_setting_value_get( $field['name'], $form, $current_post_id, $action );
 
 			// Participant Listing Field needs special handling.
-			if ( $field['name'] === 'participant_listing_id' && $setting_value === 'disabled' ) {
+			if ( 'participant_listing_id' === $field['name'] && 'disabled' === $setting_value ) {
 				$setting_value = '';
 			}
 
@@ -2184,14 +2184,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 			}
 
 			// Check Contact ID Field.
-			if ( $contact_id === false ) {
+			if ( false === $contact_id ) {
 				if ( ! empty( $contact_group_field[ $this->field_name . 'cid_' . $field['name'] ] ) ) {
 					$contact_id = $contact_group_field[ $this->field_name . 'cid_' . $field['name'] ];
 				}
 			}
 
 			// Check mapped Field.
-			if ( $contact_id === false ) {
+			if ( false === $contact_id ) {
 				if ( ! empty( $contact_group_field[ $this->field_name . 'map_' . $field['name'] ] ) ) {
 					$reference = [ $field['name'] => $contact_group_field[ $this->field_name . 'map_' . $field['name'] ] ];
 					$reference = acfe_form_map_vs_fields( $reference, $reference, $current_post_id, $form );
@@ -2402,7 +2402,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		$result = $this->civicrm->event->create( $event_data );
 
 		// Bail on failure.
-		if ( $result === false ) {
+		if ( false === $result ) {
 			return $event;
 		}
 
@@ -2455,7 +2455,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 					$fields[ $code ] = $custom_group_field[ $this->field_name . 'map_' . $code ];
 
 					// Track any "File" Custom Fields.
-					if ( $custom_field['data_type'] === 'File' ) {
+					if ( 'File' === $custom_field['data_type'] ) {
 						$file_fields[ $code ] = $custom_field['id'];
 					}
 
@@ -2633,7 +2633,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		// Maybe add Address.
 		if ( ! empty( $address_data ) ) {
 			$address = $this->form_locblock_address_add( $address_data );
-			if ( $address !== false ) {
+			if ( false !== $address ) {
 				$locblock_data['address'] = $address;
 			}
 		}
@@ -2641,7 +2641,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		// Maybe add Email(s).
 		if ( ! empty( $email_data ) ) {
 			$emails = $this->form_locblock_email_add( $email_data );
-			if ( $emails !== false ) {
+			if ( false !== $emails ) {
 				foreach ( $emails as $index => $email ) {
 					if ( ! empty( $email ) ) {
 						$locblock_data[ $index ] = $email;
@@ -2653,7 +2653,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		// Maybe add Phone(s).
 		if ( ! empty( $phone_data ) ) {
 			$phones = $this->form_locblock_phone_add( $phone_data );
-			if ( $phones !== false ) {
+			if ( false !== $phones ) {
 				foreach ( $phones as $index => $phone ) {
 					if ( ! empty( $phone ) ) {
 						$locblock_data[ $index ] = $phone;
@@ -2782,7 +2782,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 		// Create the LocBlock.
 		$result = $this->civicrm->event_location->create( $locblock_data );
-		if ( $result === false ) {
+		if ( false === $result ) {
 			return $locblock;
 		}
 
@@ -3450,7 +3450,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		// Maybe create the Top Profile.
 		if ( ! empty( $data['custom_pre_id'] ) ) {
 			$result = $this->civicrm->event_registration->profile_create( $event, $data['custom_pre_id'] );
-			if ( $result !== false ) {
+			if ( false !== $result ) {
 				$profiles['top'] = $result;
 			}
 		}
@@ -3458,7 +3458,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		// Maybe create the Bottom Profile.
 		if ( ! empty( $data['custom_post_id'] ) ) {
 			$result = $this->civicrm->event_registration->profile_create( $event, $data['custom_post_id'] );
-			if ( $result !== false ) {
+			if ( false !== $result ) {
 				$profiles['bottom'] = $result;
 			}
 		}

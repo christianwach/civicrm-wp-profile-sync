@@ -160,7 +160,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	public function register_mapper_hooks() {
 
 		// Bail if already registered.
-		if ( $this->mapper_hooks === true ) {
+		if ( true === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -187,7 +187,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	public function unregister_mapper_hooks() {
 
 		// Bail if already unregistered.
-		if ( $this->mapper_hooks === false ) {
+		if ( false === $this->mapper_hooks ) {
 			return;
 		}
 
@@ -282,7 +282,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		$group_id = $this->term_meta_get( $tag->term_id );
 
 		// Cast failures as "None set".
-		if ( $group_id === false ) {
+		if ( false === $group_id ) {
 			$group_id = 0;
 		}
 
@@ -335,7 +335,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		$filtered = array_diff( $group_ids, $term_ids_all );
 
 		// Add existing Group if it exists.
-		if ( ! is_null( $group_id ) && $group_id !== 0 ) {
+		if ( ! is_null( $group_id ) && 0 !== $group_id ) {
 			$filtered[] = $group_id;
 		}
 
@@ -378,7 +378,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		$group_id = (int) sanitize_text_field( wp_unslash( $_POST['cwps-civicrm-group'] ) );
 
 		// Bail if Group ID is zero.
-		if ( $group_id == 0 ) {
+		if ( 0 === $group_id ) {
 			return;
 		}
 
@@ -451,11 +451,11 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		 * 1. No Group ID is set and none exists.
 		 * 2. A Group ID was set and is now being deleted.
 		 */
-		if ( $group_id == 0 ) {
+		if ( 0 === $group_id ) {
 
 			// Remove term meta if it exists.
 			$existing = $this->term_meta_get( $args['term_id'] );
-			if ( $existing !== false ) {
+			if ( false !== $existing ) {
 				$this->term_meta_delete( $args['term_id'] );
 
 				// TODO: Terms must be removed from Posts now.
@@ -537,7 +537,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 		// Log something if there's an error.
 		// phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
-		if ( $meta_id === false ) {
+		if ( false === $meta_id ) {
 
 			/*
 			 * This probably means that the term already has its term meta set.
@@ -602,7 +602,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		$meta_id = update_term_meta( $term_id, $this->term_meta_key, (int) $group_id );
 
 		// Return early on successful update.
-		if ( $meta_id === true ) {
+		if ( true === $meta_id ) {
 			return $meta_id;
 		}
 
@@ -612,8 +612,8 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		 * Note that this is also triggered when the value has not changed, so
 		 * we have to compare against the existing value as well.
 		 */
-		if ( $meta_id === false ) {
-			if ( $existing_id !== false && (int) $existing_id !== (int) $group_id ) {
+		if ( false === $meta_id ) {
+			if ( false !== $existing_id && (int) $existing_id !== (int) $group_id ) {
 				$e     = new \Exception();
 				$trace = $e->getTraceAsString();
 				$log   = [
@@ -1094,7 +1094,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		$group_ids_removed = [];
 		foreach ( $terms_removed as $term_id ) {
 			$group_id = $this->term_meta_get( $term_id );
-			if ( $group_id === false ) {
+			if ( false === $group_id ) {
 				continue;
 			}
 			$group_ids_removed[ $term_id ] = $group_id;
@@ -1104,7 +1104,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		$group_ids_added = [];
 		foreach ( $terms_added as $term_id ) {
 			$group_id = $this->term_meta_get( $term_id );
-			if ( $group_id === false ) {
+			if ( false === $group_id ) {
 				continue;
 			}
 			$group_ids_added[ $term_id ] = $group_id;
@@ -1116,7 +1116,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 				// If not already a member.
 				$is_member = $this->acf_loader->civicrm->group->group_contact_exists( $group_id, $args['contact_id'] );
-				if ( $is_member === false ) {
+				if ( false === $is_member ) {
 
 					// Add to the Group.
 					$this->acf_loader->civicrm->group->group_contact_create( $group_id, $args['contact_id'] );
@@ -1143,7 +1143,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 				// If already a member.
 				$is_member = $this->acf_loader->civicrm->group->group_contact_exists( $group_id, $args['contact_id'] );
-				if ( $is_member === true ) {
+				if ( true === $is_member ) {
 
 					// Remove from the Group.
 					$this->acf_loader->civicrm->group->group_contact_delete( $group_id, $args['contact_id'] );
@@ -1210,20 +1210,20 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 			// Grab Contact.
 			$contact = $this->plugin->civicrm->contact->get_by_id( $contact_id );
-			if ( $contact === false ) {
+			if ( false === $contact ) {
 				continue;
 			}
 
 			// Test if any of this Contact's Contact Types is mapped.
 			$post_types = $this->acf_loader->civicrm->contact->is_mapped( $contact, 'create' );
-			if ( $post_types !== false ) {
+			if ( false !== $post_types ) {
 
 				// Handle each Post Type in turn.
 				foreach ( $post_types as $post_type ) {
 
 					// Get the Post ID that this Contact is mapped to.
 					$post_id = $this->acf_loader->civicrm->contact->is_mapped_to_post( $contact, $post_type );
-					if ( $post_id === false ) {
+					if ( false === $post_id ) {
 						continue;
 					}
 
@@ -1252,7 +1252,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 					$term_ids_in_post = wp_list_pluck( $terms_in_post, 'term_id' );
 
 					// If the term(s) need to be added.
-					if ( $op === 'add' ) {
+					if ( 'add' === $op ) {
 
 						// If the Post does not have the term(s), add them.
 						foreach ( $term_ids_for_post as $term_id_for_post ) {
@@ -1264,7 +1264,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 					}
 
 					// If the term(s) need to be removed.
-					if ( $op === 'remove' ) {
+					if ( 'remove' === $op ) {
 
 						// Init final array.
 						$term_ids_final = array_diff( $term_ids_in_post, $term_ids_for_post );

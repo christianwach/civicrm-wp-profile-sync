@@ -403,7 +403,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 		$args['case'] = $this->form_case_save( $case, $custom_fields );
 
 		// If we get a Case.
-		if ( $args['case'] !== false ) {
+		if ( false !== $args['case'] ) {
 
 			// Post-process Custom Fields now that we have a Case.
 			$this->form_custom_post_process( $form, $current_post_id, $action, $args['case'] );
@@ -1036,14 +1036,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 			}
 
 			// Check Contact ID Field.
-			if ( $contact_id === false ) {
+			if ( false === $contact_id ) {
 				if ( ! empty( $contact_group_field[ $this->field_name . 'cid_' . $field['name'] ] ) ) {
 					$contact_id = $contact_group_field[ $this->field_name . 'cid_' . $field['name'] ];
 				}
 			}
 
 			// Check mapped Field.
-			if ( $contact_id === false ) {
+			if ( false === $contact_id ) {
 				if ( ! empty( $contact_group_field[ $this->field_name . 'map_' . $field['name'] ] ) ) {
 					$reference = [ $field['name'] => $contact_group_field[ $this->field_name . 'map_' . $field['name'] ] ];
 					$reference = acfe_form_map_vs_fields( $reference, $reference, $current_post_id, $form );
@@ -1165,7 +1165,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 		// When skipping, get the existing Case and return early if it exists.
 		if ( ! empty( $case_data['dismiss_if_exists'] ) ) {
 			$case = $this->civicrm->case->get_by_type_and_contact( $case_data['case_type_id'], $case_data['contact_id'] );
-			if ( $case !== false ) {
+			if ( false !== $case ) {
 
 				// Flag that creating the Case has been skipped.
 				$case['skipped'] = true;
@@ -1208,7 +1208,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 
 			// Add the Case Contact.
 			$result = $this->civicrm->case->contact_create( $params );
-			if ( $result === false ) {
+			if ( false === $result ) {
 				return $case;
 			}
 
@@ -1221,7 +1221,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 
 			// Let's create the Case.
 			$result = $this->civicrm->case->create( $case_data );
-			if ( $result === false ) {
+			if ( false === $result ) {
 				return $case;
 			}
 
@@ -1320,7 +1320,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 					$fields[ $code ] = $custom_group_field[ $this->field_name . 'map_' . $code ];
 
 					// Track any "File" Custom Fields.
-					if ( $custom_field['data_type'] === 'File' ) {
+					if ( 'File' === $custom_field['data_type'] ) {
 						$file_fields[ $code ] = $custom_field['id'];
 					}
 
