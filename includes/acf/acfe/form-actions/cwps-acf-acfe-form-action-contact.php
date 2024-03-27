@@ -291,6 +291,60 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 	public $relationship_custom_fields;
 
 	/**
+	 * Contact Types.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $contact_types;
+
+	/**
+	 * Contact Sub-Types.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $contact_sub_types;
+
+	/**
+	 * Default Website Type.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $website_type_default;
+
+	/**
+	 * Tags for Contacts.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $contact_tags;
+
+	/**
+	 * All CiviCRM Groups.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var array
+	 */
+	public $groups_all;
+
+	/**
+	 * Employer/Employee Relationship Type ID.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var integer
+	 */
+	public $employer_type_id;
+
+	/**
 	 * Public Contact Fields to add.
 	 *
 	 * These are not mapped for Post Type Sync, so need to be added.
@@ -363,7 +417,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Get the public Contact Fields from transient if possible.
-		if ( false !== $data && ! empty( $data['public_contact_fields'] ) ) {
+		if ( false !== $data && isset( $data['public_contact_fields'] ) ) {
 			$this->public_contact_fields = $data['public_contact_fields'];
 		} else {
 
@@ -387,7 +441,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Get the Custom Fields for all Contact Types from transient if possible.
-		if ( false !== $data && ! empty( $data['custom_fields'] ) ) {
+		if ( false !== $data && isset( $data['custom_fields'] ) ) {
 			$this->custom_fields = $data['custom_fields'];
 		} else {
 			$this->custom_fields        = $this->plugin->civicrm->custom_group->get_for_all_contact_types();
@@ -407,7 +461,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Get Location Types from transient if possible.
-		if ( false !== $data && ! empty( $data['location_types'] ) ) {
+		if ( false !== $data && isset( $data['location_types'] ) ) {
 			$this->location_types = $data['location_types'];
 		} else {
 			$this->location_types        = $this->plugin->civicrm->address->location_types_get();
@@ -424,7 +478,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Get the public Email Fields from transient if possible.
-		if ( false !== $data && ! empty( $data['email_fields'] ) ) {
+		if ( false !== $data && isset( $data['email_fields'] ) ) {
 			$this->email_fields = $data['email_fields'];
 		} else {
 			$this->email_fields        = $this->civicrm->email->civicrm_fields_get( 'public' );
@@ -440,7 +494,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		$this->mapping_field_filters_add( 'email_conditional' );
 
 		// Get Website Types from transient if possible.
-		if ( false !== $data && ! empty( $data['website_types'] ) ) {
+		if ( false !== $data && isset( $data['website_types'] ) ) {
 			$this->website_types = $data['website_types'];
 		} else {
 			$this->website_types        = $this->plugin->civicrm->website->types_options_get();
@@ -448,7 +502,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Get the public Website Fields from transient if possible.
-		if ( false !== $data && ! empty( $data['website_fields'] ) ) {
+		if ( false !== $data && isset( $data['website_fields'] ) ) {
 			$this->website_fields = $data['website_fields'];
 		} else {
 			$this->website_fields        = $this->civicrm->website->civicrm_fields_get( 'public' );
@@ -464,7 +518,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		$this->mapping_field_filters_add( 'website_conditional' );
 
 		// Get the public Address Fields from transient if possible.
-		if ( false !== $data && ! empty( $data['address_fields'] ) ) {
+		if ( false !== $data && isset( $data['address_fields'] ) ) {
 			$this->address_fields = $data['address_fields'];
 		} else {
 			$this->address_fields        = $this->civicrm->address->civicrm_fields_get( 'public' );
@@ -476,8 +530,13 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$this->mapping_field_filters_add( 'address_' . $address_field['name'] );
 		}
 
-		// Get the Custom Fields for all Addresses.
-		$this->address_custom_fields = $this->plugin->civicrm->custom_group->get_for_addresses();
+		// Get the Custom Fields for all Addresses from transient if possible.
+		if ( false !== $data && isset( $data['address_custom_fields'] ) ) {
+			$this->address_custom_fields = $data['address_custom_fields'];
+		} else {
+			$this->address_custom_fields        = $this->plugin->civicrm->custom_group->get_for_addresses();
+			$transient['address_custom_fields'] = $this->address_custom_fields;
+		}
 
 		// Populate Address mapping Fields.
 		foreach ( $this->address_custom_fields as $key => $custom_group ) {
@@ -492,7 +551,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		$this->mapping_field_filters_add( 'address_conditional' );
 
 		// Get Phone Types from transient if possible.
-		if ( false !== $data && ! empty( $data['phone_types'] ) ) {
+		if ( false !== $data && isset( $data['phone_types'] ) ) {
 			$this->phone_types = $data['phone_types'];
 		} else {
 			$this->phone_types        = $this->plugin->civicrm->phone->phone_types_get();
@@ -500,7 +559,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Get the public Phone Fields from transient if possible.
-		if ( false !== $data && ! empty( $data['phone_fields'] ) ) {
+		if ( false !== $data && isset( $data['phone_fields'] ) ) {
 			$this->phone_fields = $data['phone_fields'];
 		} else {
 			$this->phone_fields        = $this->civicrm->phone->civicrm_fields_get( 'public' );
@@ -516,7 +575,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		$this->mapping_field_filters_add( 'phone_conditional' );
 
 		// Get Instant Messenger Providers from transient if possible.
-		if ( false !== $data && ! empty( $data['im_providers'] ) ) {
+		if ( false !== $data && isset( $data['im_providers'] ) ) {
 			$this->im_providers = $data['im_providers'];
 		} else {
 			$this->im_providers        = $this->civicrm->im->im_providers_get();
@@ -524,7 +583,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Get the public Instant Messenger Fields from transient if possible.
-		if ( false !== $data && ! empty( $data['im_fields'] ) ) {
+		if ( false !== $data && isset( $data['im_fields'] ) ) {
 			$this->im_fields = $data['im_fields'];
 		} else {
 			$this->im_fields        = $this->civicrm->im->civicrm_fields_get( 'public' );
@@ -543,7 +602,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		$this->mapping_field_filters_add( 'group_conditional' );
 
 		// Get the Free Membership Types from transient if possible.
-		if ( false !== $data && ! empty( $data['membership_types'] ) ) {
+		if ( false !== $data && isset( $data['membership_types'] ) ) {
 			$this->membership_types = $data['membership_types'];
 		} else {
 			$this->membership_types        = $this->civicrm->membership->types_get_free();
@@ -554,7 +613,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		if ( ! empty( $this->membership_types ) ) {
 
 			// Get the public Membership Fields from transient if possible.
-			if ( false !== $data && ! empty( $data['membership_fields'] ) ) {
+			if ( false !== $data && isset( $data['membership_fields'] ) ) {
 				$this->membership_fields = $data['membership_fields'];
 			} else {
 				$this->membership_fields        = $this->civicrm->membership->civicrm_fields_get( 'public' );
@@ -572,7 +631,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Get the public Note Fields from transient if possible.
-		if ( false !== $data && ! empty( $data['note_fields'] ) ) {
+		if ( false !== $data && isset( $data['note_fields'] ) ) {
 			$this->note_fields = $data['note_fields'];
 		} else {
 			$this->note_fields        = $this->civicrm->note->civicrm_fields_get( 'public' );
@@ -588,7 +647,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		$this->mapping_field_filters_add( 'note_conditional' );
 
 		// Get the public Attachment Fields from transient if possible.
-		if ( false !== $data && ! empty( $data['attachment_fields'] ) ) {
+		if ( false !== $data && isset( $data['attachment_fields'] ) ) {
 			$this->attachment_fields = $data['attachment_fields'];
 		} else {
 			$this->attachment_fields        = $this->civicrm->attachment->civicrm_fields_get( 'public' );
@@ -608,7 +667,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		$this->mapping_field_filters_add( 'tag_conditional' );
 
 		// Get the public Relationship Fields from transient if possible.
-		if ( false !== $data && ! empty( $data['relationship_fields'] ) ) {
+		if ( false !== $data && isset( $data['relationship_fields'] ) ) {
 			$this->relationship_fields = $data['relationship_fields'];
 		} else {
 			$this->relationship_fields        = $this->civicrm->relationship->civicrm_fields_get( 'public' );
@@ -621,7 +680,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Get the choices for the Relationship Types from transient if possible.
-		if ( false !== $data && ! empty( $data['relationship_choices'] ) ) {
+		if ( false !== $data && isset( $data['relationship_choices'] ) ) {
 			$this->relationship_choices = $data['relationship_choices'];
 		} else {
 
@@ -659,7 +718,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		}
 
 		// Get the Custom Fields for all Relationship Types from transient if possible.
-		if ( false !== $data && ! empty( $data['relationship_custom_fields'] ) ) {
+		if ( false !== $data && isset( $data['relationship_custom_fields'] ) ) {
 			$this->relationship_custom_fields = $data['relationship_custom_fields'];
 		} else {
 			$this->relationship_custom_fields        = $this->plugin->civicrm->custom_group->get_for_relationships();
@@ -684,6 +743,56 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// Contact Conditional Field.
 		$this->mapping_field_filters_add( 'contact_conditional' );
+
+		// Finally, let's try and cache queries made in tabs.
+
+		// Get top-level Contact Types from transient if possible.
+		if ( false !== $data && isset( $data['contact_types'] ) ) {
+			$this->contact_types = $data['contact_types'];
+		} else {
+			$this->contact_types        = $this->civicrm->contact_type->choices_top_level_get();
+			$transient['contact_types'] = $this->contact_types;
+		}
+
+		// Get the Contact Sub-Types from transient if possible.
+		if ( false !== $data && isset( $data['contact_sub_types'] ) ) {
+			$this->contact_sub_types = $data['contact_sub_types'];
+		} else {
+			$this->contact_sub_types        = $this->civicrm->contact_type->choices_sub_types_get();
+			$transient['contact_sub_types'] = $this->contact_sub_types;
+		}
+
+		// Get the default Website Type from transient if possible.
+		if ( false !== $data && isset( $data['website_type_default'] ) ) {
+			$this->website_type_default = $data['website_type_default'];
+		} else {
+			$this->website_type_default        = $this->civicrm->option_value_default_get( 'website_type' );
+			$transient['website_type_default'] = $this->website_type_default;
+		}
+
+		// Get all Contact Tags from transient if possible.
+		if ( false !== $data && isset( $data['contact_tags'] ) ) {
+			$this->contact_tags = $data['contact_tags'];
+		} else {
+			$this->contact_tags        = $this->civicrm->tag->get_for_contacts();
+			$transient['contact_tags'] = $this->contact_tags;
+		}
+
+		// Get all CiviCRM Groups from transient if possible.
+		if ( false !== $data && isset( $data['groups_all'] ) ) {
+			$this->groups_all = $data['groups_all'];
+		} else {
+			$this->groups_all        = $this->civicrm->group->groups_get_all();
+			$transient['groups_all'] = $this->groups_all;
+		}
+
+		// Get the Employer/Employee Relationship Type from transient if possible.
+		if ( false !== $data && isset( $data['employer_type_id'] ) ) {
+			$this->employer_type_id = $data['employer_type_id'];
+		} else {
+			$this->employer_type_id        = $this->civicrm->relationship->type_id_employer_employee_get();
+			$transient['employer_type_id'] = $this->employer_type_id;
+		}
 
 		// Maybe store Fields in transient.
 		if ( false === $data && 1 === $acfe_transients ) {
@@ -1358,9 +1467,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			'ui_off_text'       => '',
 		];
 
-		// Add top-level Contact Types.
-		$contact_types = $this->civicrm->contact_type->choices_top_level_get();
-
 		// Define Field.
 		$contact_types_field = [
 			'key'               => $this->field_key . 'contact_types',
@@ -1383,11 +1489,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			'multiple'          => 0,
 			'ui'                => 0,
 			'return_format'     => 'value',
-			'choices'           => $contact_types,
+			'choices'           => $this->contact_types,
 		];
-
-		// Add Contact Sub-Types.
-		$contact_sub_types = $this->civicrm->contact_type->choices_sub_types_get();
 
 		// Define Field.
 		$contact_sub_types_field = [
@@ -1411,7 +1514,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			'multiple'          => 0,
 			'ui'                => 0,
 			'return_format'     => 'value',
-			'choices'           => $contact_sub_types,
+			'choices'           => $this->contact_sub_types,
 		];
 
 		// Get all Dedupe Rules.
@@ -1755,12 +1858,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			'endpoint'          => 0,
 		];
 
-		// Get top-level Contact Types.
-		$contact_types = $this->civicrm->contact_type->choices_top_level_get();
-
-		// Add Contact Sub-Types.
-		$contact_sub_types = $this->civicrm->contact_type->choices_sub_types_get();
-
 		// Add "Mapping" Fields.
 		foreach ( $this->custom_fields as $key => $custom_group ) {
 
@@ -1770,13 +1867,13 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			}
 
 			// Get the Contact Type ID.
-			$contact_type_id = array_search( $custom_group['extends'], $contact_types, true );
+			$contact_type_id = array_search( $custom_group['extends'], $this->contact_types, true );
 
 			// Get the Contact Sub-type IDs.
 			$contact_sub_type_ids = [];
 			if ( ! empty( $custom_group['extends_entity_column_value'] ) ) {
 				foreach ( $custom_group['extends_entity_column_value'] as $sub_type ) {
-					$contact_sub_type_ids[] = array_search( $sub_type, $contact_sub_types[ $custom_group['extends'] ], true );
+					$contact_sub_type_ids[] = array_search( $sub_type, $this->contact_sub_types[ $custom_group['extends'] ], true );
 				}
 			}
 
@@ -2100,7 +2197,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 		// Add Website Types choices and modify Field.
 		$website_type_field['choices']            = $this->website_types;
-		$website_type_field['default_value']      = $this->civicrm->option_value_default_get( 'website_type' );
+		$website_type_field['default_value']      = $this->website_type_default;
 		$website_type_field['search_placeholder'] = '';
 		$website_type_field['allow_null']         = 0;
 		$website_type_field['ui']                 = 0;
@@ -2897,10 +2994,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// Get Group Type "Mapping" Field.
 		$group_field = $this->mapping_field_get( $code, $label );
 
-		// Get all Groups from CiviCRM.
-		$groups_all = $this->civicrm->group->groups_get_all();
-		$choices    = [];
-		foreach ( $groups_all as $group ) {
+		// Build choices.
+		$choices = [];
+		foreach ( $this->groups_all as $group ) {
 			$choices[ $group['id'] ] = $group['title'];
 		}
 
@@ -3517,11 +3613,8 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// Init Sub-Fields.
 		$sub_fields = [];
 
-		// Get all Tags from CiviCRM.
-		$tags = $this->civicrm->tag->get_for_contacts();
-
 		$choices = [];
-		foreach ( $tags as $tag ) {
+		foreach ( $this->contact_tags as $tag ) {
 			$choices[ $tag['id'] ] = esc_html( $tag['name'] );
 		}
 
@@ -3762,8 +3855,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		];
 
 		// Check the Employer/Employee Relationship Type.
-		$employer_type_id = $this->civicrm->relationship->type_id_employer_employee_get();
-		if ( ! empty( $employer_type_id ) ) {
+		if ( ! empty( $this->employer_type_id ) ) {
 
 			// Define "Is Current Employee" setting Field.
 			$args = [
@@ -3774,7 +3866,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 						[
 							'field'    => $this->field_key . 'relationship_type',
 							'operator' => '==',
-							'value'    => $employer_type_id . '_ab',
+							'value'    => $this->employer_type_id . '_ab',
 						],
 					],
 				],
@@ -3797,7 +3889,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 						[
 							'field'    => $this->field_key . 'relationship_type',
 							'operator' => '==',
-							'value'    => $employer_type_id . '_ba',
+							'value'    => $this->employer_type_id . '_ba',
 						],
 					],
 				],

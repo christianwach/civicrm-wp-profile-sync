@@ -147,6 +147,51 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 	public $custom_field_ids;
 
 	/**
+	 * Participant Role choices.
+	 *
+	 * @since 0.6.6
+	 * @access public
+	 * @var array
+	 */
+	public $participant_role_choices;
+
+	/**
+	 * Participant Roles that count towards the total for the Event.
+	 *
+	 * @since 0.6.6
+	 * @access public
+	 * @var array
+	 */
+	public $participant_roles_counted;
+
+	/**
+	 * Participant Status choices.
+	 *
+	 * @since 0.6.6
+	 * @access public
+	 * @var array
+	 */
+	public $participant_status_ids;
+
+	/**
+	 * Campaign choices.
+	 *
+	 * @since 0.6.6
+	 * @access public
+	 * @var array
+	 */
+	public $campaign_choices;
+
+	/**
+	 * Event Type choices.
+	 *
+	 * @since 0.6.6
+	 * @access public
+	 * @var array
+	 */
+	public $event_type_choices;
+
+	/**
 	 * Data transient key.
 	 *
 	 * @since 0.6.6
@@ -282,7 +327,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 		}
 
 		// Get the public Participant Fields for all Participants from transient if possible.
-		if ( false !== $data && ! empty( $data['public_participant_fields'] ) ) {
+		if ( false !== $data && isset( $data['public_participant_fields'] ) ) {
 			$this->public_participant_fields = $data['public_participant_fields'];
 		} else {
 
@@ -307,19 +352,26 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 			}
 		}
 
+		// Get Fields for Contacts from transient if possible.
+		if ( false !== $data && isset( $data['fields_for_contacts'] ) ) {
+			$this->fields_for_contacts = $data['fields_for_contacts'];
+		} else {
+			foreach ( $this->contact_fields as $name => $field_type ) {
+				$field                       = $this->civicrm->participant_field->get_by_name( $name );
+				$this->fields_for_contacts[] = $field;
+			}
+			$transient['fields_for_contacts'] = $this->fields_for_contacts;
+		}
+
 		// Handle Contact Fields.
-		foreach ( $this->contact_fields as $name => $field_type ) {
+		foreach ( $this->fields_for_contacts as $field ) {
 
 			// Populate mapping Fields.
-			$field = $this->civicrm->participant_field->get_by_name( $name );
 			$this->mapping_field_filters_add( $field['name'] );
 
 			// Add Contact Action Reference Field to ACF Model.
 			$this->js_model_contact_reference_field_add( $this->field_name . 'ref_' . $field['name'] );
 
-			// Also build array of data for CiviCRM Fields.
-			$this->fields_for_contacts[] = $field;
-
 			/*
 			// Pre-load with "Generic" values.
 			$filter = 'acf/prepare_field/name=' . $this->field_name . 'map_' . $field['name'];
@@ -328,19 +380,26 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 
 		}
 
+		// Get Fields for Participants from transient if possible.
+		if ( false !== $data && isset( $data['fields_for_participants'] ) ) {
+			$this->fields_for_participants = $data['fields_for_participants'];
+		} else {
+			foreach ( $this->participant_fields as $name => $field_type ) {
+				$field                           = $this->civicrm->participant_field->get_by_name( $name );
+				$this->fields_for_participants[] = $field;
+			}
+			$transient['fields_for_participants'] = $this->fields_for_participants;
+		}
+
 		// Handle Participant Fields.
-		foreach ( $this->participant_fields as $name => $field_type ) {
+		foreach ( $this->fields_for_participants as $field ) {
 
 			// Populate mapping Fields.
-			$field = $this->civicrm->participant_field->get_by_name( $name );
 			$this->mapping_field_filters_add( $field['name'] );
 
 			// Add +articipant Action Reference Field to ACF Model.
 			$this->js_model_participant_reference_field_add( $this->field_name . 'ref_' . $field['name'] );
 
-			// Also build array of data for CiviCRM Fields.
-			$this->fields_for_participants[] = $field;
-
 			/*
 			// Pre-load with "Generic" values.
 			$filter = 'acf/prepare_field/name=' . $this->field_name . 'map_' . $field['name'];
@@ -349,15 +408,22 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 
 		}
 
+		// Get Fields for Events from transient if possible.
+		if ( false !== $data && isset( $data['fields_for_events'] ) ) {
+			$this->fields_for_events = $data['fields_for_events'];
+		} else {
+			foreach ( $this->event_fields as $name => $field_type ) {
+				$field                     = $this->civicrm->participant_field->get_by_name( $name );
+				$this->fields_for_events[] = $field;
+			}
+			$transient['fields_for_events'] = $this->fields_for_events;
+		}
+
 		// Handle Event Fields.
-		foreach ( $this->event_fields as $name => $field_type ) {
+		foreach ( $this->fields_for_events as $field ) {
 
 			// Populate mapping Fields.
-			$field = $this->civicrm->participant_field->get_by_name( $name );
 			$this->mapping_field_filters_add( $field['name'] );
-
-			// Also build array of data for CiviCRM Fields.
-			$this->fields_for_events[] = $field;
 
 			/*
 			// Pre-load with "Generic" values.
@@ -368,7 +434,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 		}
 
 		// Get the Custom Groups and Fields for all Participants from transient if possible.
-		if ( false !== $data && ! empty( $data['custom_fields'] ) ) {
+		if ( false !== $data && isset( $data['custom_fields'] ) ) {
 			$this->custom_fields = $data['custom_fields'];
 		} else {
 			$this->custom_fields        = $this->plugin->civicrm->custom_group->get_for_participants();
@@ -389,6 +455,50 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 
 		// Participant Conditional Field.
 		$this->mapping_field_filters_add( 'participant_conditional' );
+
+		// Finally, let's try and cache queries made in tabs.
+
+		// Get Participant Role choices from transient if possible.
+		if ( false !== $data && isset( $data['participant_role_choices'] ) ) {
+			$this->participant_role_choices = $data['participant_role_choices'];
+		} else {
+			$this->participant_role_choices        = $this->civicrm->participant_role->choices_get();
+			$transient['participant_role_choices'] = $this->participant_role_choices;
+		}
+
+		// Get Participant Roles that count towards the total for the Event from transient if possible.
+		if ( false !== $data && isset( $data['participant_roles_counted'] ) ) {
+			$this->participant_roles_counted = $data['participant_roles_counted'];
+		} else {
+			$this->participant_roles_counted        = $this->civicrm->participant_role->get_counted();
+			$transient['participant_roles_counted'] = $this->participant_roles_counted;
+		}
+
+		// Get Participant Status choices from transient if possible.
+		if ( false !== $data && isset( $data['participant_status_ids'] ) ) {
+			$this->participant_status_ids = $data['participant_status_ids'];
+		} else {
+			$this->participant_status_ids        = $this->civicrm->participant_field->options_get( 'status_id' );
+			$transient['participant_status_ids'] = $this->participant_status_ids;
+		}
+
+		// Get Campaign choices from transient if possible.
+		if ( $this->civicrm->is_component_enabled( 'CiviCampaign' ) ) {
+			if ( false !== $data && isset( $data['campaign_choices'] ) ) {
+				$this->campaign_choices = $data['campaign_choices'];
+			} else {
+				$this->campaign_choices        = $this->civicrm->campaign->choices_get();
+				$transient['campaign_choices'] = $this->campaign_choices;
+			}
+		}
+
+		// Get Event Type choices from transient if possible.
+		if ( false !== $data && isset( $data['event_type_choices'] ) ) {
+			$this->event_type_choices = $data['event_type_choices'];
+		} else {
+			$this->event_type_choices        = $this->acf_loader->civicrm->event->types_get_options();
+			$transient['event_type_choices'] = $this->event_type_choices;
+		}
 
 		// Maybe store Fields in transient.
 		if ( false === $data && 1 === $acfe_transients ) {
@@ -522,14 +632,13 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 			'multiple'          => 0,
 			'ui'                => 0,
 			'return_format'     => 'value',
-			'choices'           => $this->civicrm->participant_role->choices_get(),
+			'choices'           => $this->participant_role_choices,
 		];
 
 		// Get the Participant Roles that count towards the total for the Event.
-		$counted           = $this->civicrm->participant_role->get_counted();
 		$conditional_logic = [];
-		if ( ! empty( $counted ) ) {
-			foreach ( $counted as $role_id => $role_name ) {
+		if ( ! empty( $this->participant_roles_counted ) ) {
+			foreach ( $this->participant_roles_counted as $role_id => $role_name ) {
 				// Add an OR condition for each entry.
 				$conditional_logic[] = [
 					[
@@ -609,7 +718,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 			'multiple'          => 0,
 			'ui'                => 0,
 			'return_format'     => 'value',
-			'choices'           => $this->civicrm->participant_field->options_get( 'status_id' ),
+			'choices'           => $this->participant_status_ids,
 		];
 
 		// Init Fields.
@@ -645,7 +754,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 				'multiple'          => 0,
 				'ui'                => 0,
 				'return_format'     => 'value',
-				'choices'           => $this->civicrm->campaign->choices_get(),
+				'choices'           => $this->campaign_choices,
 			];
 
 		}
@@ -1184,7 +1293,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 					'data-instruction-placement' => 'field',
 				],
 				'default_value'     => '',
-				'choices'           => $this->acf_loader->civicrm->event->types_get_options(),
+				'choices'           => $this->event_type_choices,
 				'allow_null'        => 0,
 				'multiple'          => 0,
 				'ui'                => 0,
@@ -1821,11 +1930,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 		// Strip out empty Fields.
 		$participant_data = $this->form_data_prepare( $participant_data );
 
-		// Get the Participant Roles that count towards the total for the Event.
-		$counted = $this->civicrm->participant_role->get_counted();
-
-		// Make sure the keys are integers.
-		$counted_role_ids = array_map( 'intval', array_keys( $counted ) );
+		/*
+		 * Get the Participant Roles that count towards the total for the Event
+		 * and make sure the keys are integers.
+		 */
+		$counted_role_ids = array_map( 'intval', array_keys( $this->participant_roles_counted ) );
 
 		// If the Role is counted, perform the "Add anyway" check.
 		if ( in_array( (int) $participant_data['participant_role_id'], $counted_role_ids, true ) ) {

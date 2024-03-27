@@ -138,6 +138,33 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 	public $attachment_fields;
 
 	/**
+	 * Activity Type choices.
+	 *
+	 * @since 0.6.6
+	 * @access public
+	 * @var array
+	 */
+	public $activity_type_choices;
+
+	/**
+	 * Activity Status choices.
+	 *
+	 * @since 0.6.6
+	 * @access public
+	 * @var array
+	 */
+	public $activity_status_ids;
+
+	/**
+	 * Campaign choices.
+	 *
+	 * @since 0.6.6
+	 * @access public
+	 * @var array
+	 */
+	public $campaign_choices;
+
+	/**
 	 * Data transient key.
 	 *
 	 * @since 0.6.6
@@ -250,7 +277,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		}
 
 		// Get the public Activity Fields for all top level Activity Types from transient if possible.
-		if ( false !== $data && ! empty( $data['public_activity_fields'] ) ) {
+		if ( false !== $data && isset( $data['public_activity_fields'] ) ) {
 			$this->public_activity_fields = $data['public_activity_fields'];
 		} else {
 
@@ -273,18 +300,25 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 			}
 		}
 
+		// Get Fields for Contacts from transient if possible.
+		if ( false !== $data && isset( $data['fields_for_contacts'] ) ) {
+			$this->fields_for_contacts = $data['fields_for_contacts'];
+		} else {
+			foreach ( $this->contact_fields as $name => $field_type ) {
+				$field                       = $this->civicrm->activity_field->get_by_name( $name );
+				$this->fields_for_contacts[] = $field;
+			}
+			$transient['fields_for_contacts'] = $this->fields_for_contacts;
+		}
+
 		// Handle Contact Fields.
-		foreach ( $this->contact_fields as $name => $field_type ) {
+		foreach ( $this->fields_for_contacts as $field ) {
 
 			// Populate mapping Fields.
-			$field = $this->civicrm->activity_field->get_by_name( $name );
 			$this->mapping_field_filters_add( $field['name'] );
 
 			// Add Contact Action Reference Field to ACF Model.
 			$this->js_model_contact_reference_field_add( $this->field_name . 'ref_' . $field['name'] );
-
-			// Also build array of data for CiviCRM Fields.
-			$this->fields_for_contacts[] = $field;
 
 			/*
 			// Pre-load with "Generic" values.
@@ -295,7 +329,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		}
 
 		// Get the Custom Groups and Fields for all Activity Types from transient if possible.
-		if ( false !== $data && ! empty( $data['custom_fields'] ) ) {
+		if ( false !== $data && isset( $data['custom_fields'] ) ) {
 			$this->custom_fields = $data['custom_fields'];
 		} else {
 			$this->custom_fields        = $this->plugin->civicrm->custom_group->get_for_activities();
@@ -315,7 +349,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		}
 
 		// Get the public Attachment Fields from transient if possible.
-		if ( false !== $data && ! empty( $data['attachment_fields'] ) ) {
+		if ( false !== $data && isset( $data['attachment_fields'] ) ) {
 			$this->attachment_fields = $data['attachment_fields'];
 		} else {
 			$this->attachment_fields        = $this->civicrm->attachment->civicrm_fields_get( 'public' );
@@ -339,6 +373,34 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 
 		// Activity Conditional Field.
 		$this->mapping_field_filters_add( 'activity_conditional' );
+
+		// Finally, let's try and cache queries made in tabs.
+
+		// Get Activity Type choices from transient if possible.
+		if ( false !== $data && isset( $data['activity_type_choices'] ) ) {
+			$this->activity_type_choices = $data['activity_type_choices'];
+		} else {
+			$this->activity_type_choices        = $this->civicrm->activity_type->choices_get();
+			$transient['activity_type_choices'] = $this->activity_type_choices;
+		}
+
+		// Get Activity Status choices from transient if possible.
+		if ( false !== $data && isset( $data['activity_status_ids'] ) ) {
+			$this->activity_status_ids = $data['activity_status_ids'];
+		} else {
+			$this->activity_status_ids        = $this->civicrm->activity_field->options_get( 'status_id' );
+			$transient['activity_status_ids'] = $this->activity_status_ids;
+		}
+
+		// Get Campaign choices from transient if possible.
+		if ( $this->civicrm->is_component_enabled( 'CiviCampaign' ) ) {
+			if ( false !== $data && isset( $data['campaign_choices'] ) ) {
+				$this->campaign_choices = $data['campaign_choices'];
+			} else {
+				$this->campaign_choices        = $this->civicrm->campaign->choices_get();
+				$transient['campaign_choices'] = $this->campaign_choices;
+			}
+		}
 
 		// Maybe store Fields in transient.
 		if ( false === $data && 1 === $acfe_transients ) {
@@ -476,7 +538,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 			'multiple'          => 0,
 			'ui'                => 0,
 			'return_format'     => 'value',
-			'choices'           => $this->civicrm->activity_type->choices_get(),
+			'choices'           => $this->activity_type_choices,
 		];
 
 		// Define Status Field.
@@ -501,7 +563,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 			'multiple'          => 0,
 			'ui'                => 0,
 			'return_format'     => 'value',
-			'choices'           => $this->civicrm->activity_field->options_get( 'status_id' ),
+			'choices'           => $this->activity_status_ids,
 		];
 
 		// Init Fields.
@@ -535,7 +597,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 				'multiple'          => 0,
 				'ui'                => 0,
 				'return_format'     => 'value',
-				'choices'           => $this->civicrm->campaign->choices_get(),
+				'choices'           => $this->campaign_choices,
 			];
 
 		}

@@ -228,6 +228,59 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	public $custom_field_ids;
 
 	/**
+	 * Event Location choices.
+	 *
+	 * @since 0.6.6
+	 * @access public
+	 * @var array
+	 */
+	public $event_location_choices;
+
+	/**
+	 * Event Type choices.
+	 *
+	 * @since 0.6.6
+	 * @access public
+	 * @var array
+	 */
+	public $event_type_choices;
+
+	/**
+	 * Participant Role choices.
+	 *
+	 * @since 0.6.6
+	 * @access public
+	 * @var array
+	 */
+	public $participant_role_choices;
+
+	/**
+	 * Participant Listing choices.
+	 *
+	 * @since 0.6.6
+	 * @access public
+	 * @var array
+	 */
+	public $participant_listing_choices;
+
+	/**
+	 * Profile choices.
+	 *
+	 * @since 0.6.6
+	 * @access public
+	 * @var array
+	 */
+	public $profile_choices;
+
+	/**
+	 * Campaign choices.
+	 *
+	 * @since 0.6.6
+	 * @access public
+	 * @var array
+	 */
+	public $campaign_choices;
+	/**
 	 * Data transient key.
 	 *
 	 * @since 0.6.6
@@ -378,7 +431,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		}
 
 		// Get the public Event Fields from transient if possible.
-		if ( false !== $data && ! empty( $data['public_event_fields'] ) ) {
+		if ( false !== $data && isset( $data['public_event_fields'] ) ) {
 			$this->public_event_fields = $data['public_event_fields'];
 		} else {
 
@@ -397,7 +450,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		}
 
 		// Get the Event Settings Fields from transient if possible.
-		if ( false !== $data && ! empty( $data['settings_fields'] ) ) {
+		if ( false !== $data && isset( $data['settings_fields'] ) ) {
 			$this->settings_fields = $data['settings_fields'];
 		} else {
 			$this->settings_fields        = $this->civicrm->event_field->get_settings_fields( 'create' );
@@ -409,18 +462,25 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 			$this->mapping_field_filters_add( $field['name'] );
 		}
 
+		// Get Fields for Contacts from transient if possible.
+		if ( false !== $data && isset( $data['fields_for_contacts'] ) ) {
+			$this->fields_for_contacts = $data['fields_for_contacts'];
+		} else {
+			foreach ( $this->contact_fields as $name => $field_type ) {
+				$field                       = $this->civicrm->event_field->get_by_name( $name );
+				$this->fields_for_contacts[] = $field;
+			}
+			$transient['fields_for_contacts'] = $this->fields_for_contacts;
+		}
+
 		// Handle Contact Fields.
-		foreach ( $this->contact_fields as $name => $field_type ) {
+		foreach ( $this->fields_for_contacts as $field ) {
 
 			// Populate mapping Fields.
-			$field = $this->civicrm->event_field->get_by_name( $name );
 			$this->mapping_field_filters_add( $field['name'] );
 
 			// Add Contact Action Reference Field to ACF Model.
 			$this->js_model_contact_reference_field_add( $this->field_name . 'ref_' . $field['name'] );
-
-			// Also build array of data for CiviCRM Fields.
-			$this->fields_for_contacts[] = $field;
 
 			/*
 			// Pre-load with "Generic" values.
@@ -437,7 +497,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		$this->mapping_field_filters_add( 'existing_location' );
 
 		// Get the Event Location Address Fields from transient if possible.
-		if ( false !== $data && ! empty( $data['event_location_address_fields'] ) ) {
+		if ( false !== $data && isset( $data['event_location_address_fields'] ) ) {
 			$this->event_location_address_fields = $data['event_location_address_fields'];
 		} else {
 			$this->event_location_address_fields        = $this->civicrm->event_location->get_address_fields( 'create' );
@@ -452,7 +512,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		}
 
 		// Get the Custom Fields for all Addresses from transient if possible.
-		if ( false !== $data && ! empty( $data['address_custom_fields'] ) ) {
+		if ( false !== $data && isset( $data['address_custom_fields'] ) ) {
 			$this->address_custom_fields = $data['address_custom_fields'];
 		} else {
 			$this->address_custom_fields        = $this->plugin->civicrm->custom_group->get_for_addresses();
@@ -472,7 +532,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		$this->mapping_field_filters_add( 'address_conditional' );
 
 		// Get the Event Location Email Fields from transient if possible.
-		if ( false !== $data && ! empty( $data['event_location_email_fields'] ) ) {
+		if ( false !== $data && isset( $data['event_location_email_fields'] ) ) {
 			$this->event_location_email_fields = $data['event_location_email_fields'];
 		} else {
 			$this->event_location_email_fields        = $this->civicrm->event_location->get_email_fields( 'create' );
@@ -488,7 +548,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		$this->mapping_field_filters_add( 'email_fields_conditional' );
 
 		// Get the Event Location Phone Fields from transient if possible.
-		if ( false !== $data && ! empty( $data['event_location_phone_fields'] ) ) {
+		if ( false !== $data && isset( $data['event_location_phone_fields'] ) ) {
 			$this->event_location_phone_fields = $data['event_location_phone_fields'];
 		} else {
 			$this->event_location_phone_fields        = $this->civicrm->event_location->get_phone_fields( 'create' );
@@ -503,7 +563,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		}
 
 		// Get Phone Types from transient if possible.
-		if ( false !== $data && ! empty( $data['phone_types'] ) ) {
+		if ( false !== $data && isset( $data['phone_types'] ) ) {
 			$this->phone_types = $data['phone_types'];
 		} else {
 			$this->phone_types        = $this->plugin->civicrm->phone->phone_types_get();
@@ -516,7 +576,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		// ---------------------------------------------------------------------
 
 		// Get the Event Registration Fields from transient if possible.
-		if ( false !== $data && ! empty( $data['event_registration_fields'] ) ) {
+		if ( false !== $data && isset( $data['event_registration_fields'] ) ) {
 			$this->event_registration_fields = $data['event_registration_fields'];
 		} else {
 			$this->event_registration_fields        = $this->civicrm->event_registration->get_settings_fields();
@@ -531,7 +591,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		}
 
 		// Get the Event Registration Screen Fields from transient if possible.
-		if ( false !== $data && ! empty( $data['event_registration_screen_fields'] ) ) {
+		if ( false !== $data && isset( $data['event_registration_screen_fields'] ) ) {
 			$this->event_registration_screen_fields = $data['event_registration_screen_fields'];
 		} else {
 			$this->event_registration_screen_fields        = $this->civicrm->event_registration->get_register_screen_fields();
@@ -544,7 +604,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		}
 
 		// Get the Event Registration Confirmation Screen Fields from transient if possible.
-		if ( false !== $data && ! empty( $data['event_confirm_screen_fields'] ) ) {
+		if ( false !== $data && isset( $data['event_confirm_screen_fields'] ) ) {
 			$this->event_confirm_screen_fields = $data['event_confirm_screen_fields'];
 		} else {
 			$this->event_confirm_screen_fields        = $this->civicrm->event_registration->get_confirm_screen_fields();
@@ -559,7 +619,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		}
 
 		// Get the Event Registration Thank You Screen Fields from transient if possible.
-		if ( false !== $data && ! empty( $data['event_thankyou_screen_fields'] ) ) {
+		if ( false !== $data && isset( $data['event_thankyou_screen_fields'] ) ) {
 			$this->event_thankyou_screen_fields = $data['event_thankyou_screen_fields'];
 		} else {
 			$this->event_thankyou_screen_fields        = $this->civicrm->event_registration->get_thankyou_screen_fields();
@@ -572,7 +632,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		}
 
 		// Get the Event Registration Confirmation Email Fields from transient if possible.
-		if ( false !== $data && ! empty( $data['event_confirmation_email_fields'] ) ) {
+		if ( false !== $data && isset( $data['event_confirmation_email_fields'] ) ) {
 			$this->event_confirmation_email_fields = $data['event_confirmation_email_fields'];
 		} else {
 			$this->event_confirmation_email_fields        = $this->civicrm->event_registration->get_confirmation_email_fields();
@@ -596,7 +656,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		// ---------------------------------------------------------------------
 
 		// Get the Custom Groups and Fields from transient if possible.
-		if ( false !== $data && ! empty( $data['custom_fields'] ) ) {
+		if ( false !== $data && isset( $data['custom_fields'] ) ) {
 			$this->custom_fields = $data['custom_fields'];
 		} else {
 			$this->custom_fields        = $this->plugin->civicrm->custom_group->get_for_entity_type( 'Event', '', true );
@@ -617,6 +677,58 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 
 		// Event Conditional Field.
 		$this->mapping_field_filters_add( 'event_conditional' );
+
+		// Finally, let's try and cache queries made in tabs.
+
+		// Get Event Type choices from transient if possible.
+		if ( false !== $data && isset( $data['event_type_choices'] ) ) {
+			$this->event_type_choices = $data['event_type_choices'];
+		} else {
+			$this->event_type_choices        = $this->civicrm->event_type->choices_get();
+			$transient['event_type_choices'] = $this->event_type_choices;
+		}
+
+		// Get Event Location choices from transient if possible.
+		if ( false !== $data && isset( $data['event_location_choices'] ) ) {
+			$this->event_location_choices = $data['event_location_choices'];
+		} else {
+			$this->event_location_choices        = $this->civicrm->event_location->get_all();
+			$transient['event_location_choices'] = $this->event_location_choices;
+		}
+
+		// Get Participant Role choices from transient if possible.
+		if ( false !== $data && isset( $data['participant_role_choices'] ) ) {
+			$this->participant_role_choices = $data['participant_role_choices'];
+		} else {
+			$this->participant_role_choices        = $this->civicrm->participant_role->choices_get();
+			$transient['participant_role_choices'] = $this->participant_role_choices;
+		}
+
+		// Get Participant Listing choices from transient if possible.
+		if ( false !== $data && isset( $data['participant_listing_choices'] ) ) {
+			$this->participant_listing_choices = $data['participant_listing_choices'];
+		} else {
+			$this->participant_listing_choices        = $this->civicrm->event_field->options_get( 'participant_listing_id' );
+			$transient['participant_listing_choices'] = $this->participant_listing_choices;
+		}
+
+		// Get Profile choices from transient if possible.
+		if ( false !== $data && isset( $data['profile_choices'] ) ) {
+			$this->profile_choices = $data['profile_choices'];
+		} else {
+			$this->profile_choices        = $this->civicrm->event_registration->profiles_options_get();
+			$transient['profile_choices'] = $this->profile_choices;
+		}
+
+		// Get Campaign choices from transient if possible.
+		if ( $this->civicrm->is_component_enabled( 'CiviCampaign' ) ) {
+			if ( false !== $data && isset( $data['campaign_choices'] ) ) {
+				$this->campaign_choices = $data['campaign_choices'];
+			} else {
+				$this->campaign_choices        = $this->civicrm->campaign->choices_get();
+				$transient['campaign_choices'] = $this->campaign_choices;
+			}
+		}
 
 		// Maybe store Fields in transient.
 		if ( false === $data && 1 === $acfe_transients ) {
@@ -842,14 +954,14 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 			// Retrieve the choices.
 			switch ( $field['name'] ) {
 				case 'event_type_id':
-					$choices = $this->civicrm->event_type->choices_get();
+					$choices = $this->event_type_choices;
 					break;
 				case 'default_role_id':
-					$choices = $this->civicrm->participant_role->choices_get();
+					$choices = $this->participant_role_choices;
 					break;
 				case 'participant_listing_id':
 					$choices  = [ 'disabled' => __( 'Disabled', 'civicrm-wp-profile-sync' ) ];
-					$choices += $this->civicrm->event_field->options_get( 'participant_listing_id' );
+					$choices += $this->participant_listing_choices;
 					break;
 				case 'campaign_id':
 					// Skip Campaign Field if the CiviCampaign component is not active.
@@ -859,7 +971,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 					}
 					$choices  = [ 'none' => __( 'None', 'civicrm-wp-profile-sync' ) ];
 					$choices  = [ '' => __( 'Select', 'civicrm-wp-profile-sync' ) ];
-					$choices += $this->civicrm->campaign->choices_get();
+					$choices += $this->campaign_choices;
 					break;
 			}
 
@@ -1265,7 +1377,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 			'field_name'  => 'existing_location',
 			'field_title' => __( 'Existing Location', 'civicrm-wp-profile-sync' ),
 			'extra'       => __( 'You cannot map a new Location if you choose an existing one.', 'civicrm-wp-profile-sync' ),
-			'choices'     => $this->civicrm->event_location->get_all(),
+			'choices'     => $this->event_location_choices,
 			'lazy_load'   => 1,
 		];
 
@@ -1876,7 +1988,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		$args = [
 			'field_name'  => 'custom_pre_id',
 			'field_title' => __( 'Include Profile (top of page)', 'civicrm-wp-profile-sync' ),
-			'choices'     => $this->civicrm->event_registration->profiles_options_get(),
+			'choices'     => $this->profile_choices,
 		];
 
 		// Add "Include Profile Top" Group.
@@ -1886,7 +1998,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 		$args = [
 			'field_name'  => 'custom_post_id',
 			'field_title' => __( 'Include Profile (bottom of page)', 'civicrm-wp-profile-sync' ),
-			'choices'     => $this->civicrm->event_registration->profiles_options_get(),
+			'choices'     => $this->profile_choices,
 		];
 
 		// Add "Include Profile Bottom" Group.

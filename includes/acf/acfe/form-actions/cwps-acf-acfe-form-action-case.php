@@ -129,6 +129,51 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 	public $custom_field_ids;
 
 	/**
+	 * Case Type choices.
+	 *
+	 * @since 0.6.6
+	 * @access public
+	 * @var array
+	 */
+	public $case_type_choices;
+
+	/**
+	 * Default Case Status.
+	 *
+	 * @since 0.6.6
+	 * @access public
+	 * @var array
+	 */
+	public $case_status_default;
+
+	/**
+	 * Case Status choices.
+	 *
+	 * @since 0.6.6
+	 * @access public
+	 * @var array
+	 */
+	public $case_status_choices;
+
+	/**
+	 * Default Case Encounter Medium.
+	 *
+	 * @since 0.6.6
+	 * @access public
+	 * @var array
+	 */
+	public $case_encounter_medium;
+
+	/**
+	 * Case Encounter Medium choices.
+	 *
+	 * @since 0.6.6
+	 * @access public
+	 * @var array
+	 */
+	public $case_encounter_choices;
+
+	/**
 	 * Data transient key.
 	 *
 	 * @since 0.6.6
@@ -240,7 +285,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 		}
 
 		// Get the public Case Fields for all Case Types from transient if possible.
-		if ( false !== $data && ! empty( $data['public_case_fields'] ) ) {
+		if ( false !== $data && isset( $data['public_case_fields'] ) ) {
 			$this->public_case_fields = $data['public_case_fields'];
 		} else {
 
@@ -265,19 +310,25 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 			}
 		}
 
+		// Get Fields for Contacts from transient if possible.
+		if ( false !== $data && isset( $data['fields_for_contacts'] ) ) {
+			$this->fields_for_contacts = $data['fields_for_contacts'];
+		} else {
+			foreach ( $this->contact_fields as $name => $field_type ) {
+				$field                       = $this->civicrm->case_field->get_by_name( $name, 'create' );
+				$this->fields_for_contacts[] = $field;
+			}
+			$transient['fields_for_contacts'] = $this->fields_for_contacts;
+		}
+
 		// Handle Contact Fields.
-		foreach ( $this->contact_fields as $name => $field_type ) {
+		foreach ( $this->fields_for_contacts as $field ) {
 
 			// Populate mapping Fields.
-			$field = $this->civicrm->case_field->get_by_name( $name, 'create' );
-
 			$this->mapping_field_filters_add( $field['name'] );
 
 			// Add Contact Action Reference Field to ACF Model.
 			$this->js_model_contact_reference_field_add( $this->field_name . 'ref_' . $field['name'] );
-
-			// Also build array of data for CiviCRM Fields.
-			$this->fields_for_contacts[] = $field;
 
 			/*
 			// Pre-load with "Generic" values.
@@ -297,7 +348,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 		$this->fields_for_contacts[] = $field;
 
 		// Get the Custom Groups and Fields for all Case Types from transient if possible.
-		if ( false !== $data && ! empty( $data['custom_fields'] ) ) {
+		if ( false !== $data && isset( $data['custom_fields'] ) ) {
 			$this->custom_fields = $data['custom_fields'];
 		} else {
 			$this->custom_fields        = $this->plugin->civicrm->custom_group->get_for_cases();
@@ -318,6 +369,48 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 
 		// Case Conditional Field.
 		$this->mapping_field_filters_add( 'case_conditional' );
+
+		// Finally, let's try and cache queries made in tabs.
+
+		// Get Case Type choices from transient if possible.
+		if ( false !== $data && isset( $data['case_type_choices'] ) ) {
+			$this->case_type_choices = $data['case_type_choices'];
+		} else {
+			$this->case_type_choices        = $this->civicrm->case_type->choices_get();
+			$transient['case_type_choices'] = $this->case_type_choices;
+		}
+
+		// Get default Case Status from transient if possible.
+		if ( false !== $data && isset( $data['case_status_default'] ) ) {
+			$this->case_status_default = $data['case_status_default'];
+		} else {
+			$this->case_status_default        = $this->civicrm->option_value_default_get( 'case_status' );
+			$transient['case_status_default'] = $this->case_status_default;
+		}
+
+		// Get Case Status choices from transient if possible.
+		if ( false !== $data && isset( $data['case_status_choices'] ) ) {
+			$this->case_status_choices = $data['case_status_choices'];
+		} else {
+			$this->case_status_choices        = $this->civicrm->case_field->options_get( 'case_status_id' );
+			$transient['case_status_choices'] = $this->case_status_choices;
+		}
+
+		// Get default Case Encounter Medium from transient if possible.
+		if ( false !== $data && isset( $data['case_encounter_medium'] ) ) {
+			$this->case_encounter_medium = $data['case_encounter_medium'];
+		} else {
+			$this->case_encounter_medium        = $this->civicrm->option_value_default_get( 'encounter_medium' );
+			$transient['case_encounter_medium'] = $this->case_encounter_medium;
+		}
+
+		// Get Case Encounter Medium choices from transient if possible.
+		if ( false !== $data && isset( $data['case_encounter_choices'] ) ) {
+			$this->case_encounter_choices = $data['case_encounter_choices'];
+		} else {
+			$this->case_encounter_choices        = $this->civicrm->case_field->options_get( 'case_medium_id' );
+			$transient['case_encounter_choices'] = $this->case_encounter_choices;
+		}
 
 		// Maybe store Fields in transient.
 		if ( false === $data && 1 === $acfe_transients ) {
@@ -451,7 +544,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 			'multiple'          => 0,
 			'ui'                => 0,
 			'return_format'     => 'value',
-			'choices'           => $this->civicrm->case_type->choices_get(),
+			'choices'           => $this->case_type_choices,
 		];
 
 		// Define Case Status Field.
@@ -470,13 +563,13 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 				'data-instruction-placement' => 'field',
 			],
 			'acfe_permissions'  => '',
-			'default_value'     => $this->civicrm->option_value_default_get( 'case_status' ),
+			'default_value'     => $this->case_status_default,
 			'placeholder'       => '',
 			'allow_null'        => 0,
 			'multiple'          => 0,
 			'ui'                => 0,
 			'return_format'     => 'value',
-			'choices'           => $this->civicrm->case_field->options_get( 'case_status_id' ),
+			'choices'           => $this->case_status_choices,
 		];
 
 		// Define Case "Activity Medium" Field.
@@ -495,13 +588,13 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 				'data-instruction-placement' => 'field',
 			],
 			'acfe_permissions'  => '',
-			'default_value'     => $this->civicrm->option_value_default_get( 'encounter_medium' ),
+			'default_value'     => $this->case_encounter_medium,
 			'placeholder'       => '',
 			'allow_null'        => 0,
 			'multiple'          => 0,
 			'ui'                => 0,
 			'return_format'     => 'value',
-			'choices'           => $this->civicrm->case_field->options_get( 'case_medium_id' ),
+			'choices'           => $this->case_encounter_choices,
 		];
 
 		// Add Conditional Field.
@@ -887,9 +980,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 			'multi_expand'      => 1,
 			'endpoint'          => 0,
 		];
-
-		// Get top-level Case Types.
-		$case_types = $this->civicrm->case_type->choices_get();
 
 		// Add "Mapping" Fields.
 		foreach ( $this->custom_fields as $key => $custom_group ) {
