@@ -86,6 +86,11 @@ I'll say it again: test early, test often and - above all - test on a developmen
 
 == Changelog ==
 
+= 0.6.7 =
+
+* Improves caching for Form Actions
+* Improves performance in CiviCRM admin
+
 = 0.6.6 =
 
 * Implements a "Use cache" setting for Form Actions
