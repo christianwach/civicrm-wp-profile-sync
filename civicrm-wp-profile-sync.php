@@ -6,7 +6,7 @@
  * Description:       Keeps a WordPress User profile in sync with a CiviCRM Contact and integrates WordPress and CiviCRM Entities with data synced via Advanced Custom Fields.
  * Plugin URI:        https://github.com/christianwach/civicrm-wp-profile-sync
  * GitHub Plugin URI: https://github.com/christianwach/civicrm-wp-profile-sync
- * Version:           0.6.7
+ * Version:           0.6.8a
  * Author:            Christian Wach
  * Author URI:        https://haystack.co.uk
  * Text Domain:       civicrm-wp-profile-sync
@@ -20,7 +20,7 @@
 defined( 'ABSPATH' ) || exit;
 
 // Set plugin version here.
-define( 'CIVICRM_WP_PROFILE_SYNC_VERSION', '0.6.7' );
+define( 'CIVICRM_WP_PROFILE_SYNC_VERSION', '0.6.8a' );
 
 // Set our bulk operations flag here.
 if ( ! defined( 'CIVICRM_WP_PROFILE_SYNC_BULK' ) ) {
