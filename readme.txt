@@ -9,7 +9,7 @@ Stable tag: 0.6.7a
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Keeps a WordPress User profile in sync with a CiviCRM Contact and integrates WordPress and CiviCRM Entities with data synced via Advanced Custom Fields.
+Keeps a WordPress User profile in sync with a CiviCRM Contact and integrates WordPress and CiviCRM Entities when using Advanced Custom Fields.
 
 
 
