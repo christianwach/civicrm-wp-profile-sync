@@ -138,6 +138,15 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 	public $attachment_fields;
 
 	/**
+	 * Files to examine for possible deletion.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var integer
+	 */
+	public $file_fields_empty;
+
+	/**
 	 * Activity Type choices.
 	 *
 	 * @since 0.6.6

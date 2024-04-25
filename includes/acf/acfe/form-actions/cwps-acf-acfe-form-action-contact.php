@@ -345,6 +345,15 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 	public $employer_type_id;
 
 	/**
+	 * Files to examine for possible deletion.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var integer
+	 */
+	public $file_fields_empty;
+
+	/**
 	 * Public Contact Fields to add.
 	 *
 	 * These are not mapped for Post Type Sync, so need to be added.

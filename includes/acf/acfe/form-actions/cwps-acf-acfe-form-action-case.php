@@ -129,6 +129,15 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 	public $custom_field_ids;
 
 	/**
+	 * Files to examine for possible deletion.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var integer
+	 */
+	public $file_fields_empty;
+
+	/**
 	 * Case Type choices.
 	 *
 	 * @since 0.6.6

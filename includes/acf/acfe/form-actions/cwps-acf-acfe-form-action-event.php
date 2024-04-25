@@ -280,6 +280,16 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event extends CiviCRM_Profile_Sy
 	 * @var array
 	 */
 	public $campaign_choices;
+
+	/**
+	 * Files to examine for possible deletion.
+	 *
+	 * @since 0.5.4
+	 * @access public
+	 * @var integer
+	 */
+	public $file_fields_empty;
+
 	/**
 	 * Data transient key.
 	 *

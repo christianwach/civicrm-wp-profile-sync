@@ -201,6 +201,15 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 	public $transient_key = 'cwps_acf_acfe_form_action_participant';
 
 	/**
+	 * Files to examine for possible deletion.
+	 *
+	 * @since 0.5.2
+	 * @access public
+	 * @var integer
+	 */
+	public $file_fields_empty;
+
+	/**
 	 * Public Participant Fields to add.
 	 *
 	 * These are not mapped for Post Type Sync, so need to be added.
