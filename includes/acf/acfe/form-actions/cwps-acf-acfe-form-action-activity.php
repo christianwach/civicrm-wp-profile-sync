@@ -1870,6 +1870,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 			// Always delete the WordPress Attachment.
 			wp_delete_attachment( $attachment_id, true );
 
+			// Declare variable type.
+			if ( ! is_array( $attachments ) ) {
+				$attachments = [];
+			}
+
 			// Get the full Attachment data.
 			$attachments[] = $this->civicrm->attachment->get_by_id( $result['id'] );
 

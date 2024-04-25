@@ -5038,6 +5038,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				continue;
 			}
 
+			// Declare variable type.
+			if ( ! is_array( $emails ) ) {
+				$emails = [];
+			}
+
 			// Get the full Email data.
 			$emails[] = $this->civicrm->email->email_get_by_id( $result['id'] );
 
@@ -5518,6 +5523,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				continue;
 			}
 
+			// Declare variable type.
+			if ( ! is_array( $relationships ) ) {
+				$relationships = [];
+			}
+
 			// Get the full Relationship data.
 			$relationships[] = $this->civicrm->relationship->get_by_id( $result['id'] );
 
@@ -5978,6 +5988,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				continue;
 			}
 
+			// Declare variable type.
+			if ( ! is_array( $websites ) ) {
+				$websites = [];
+			}
+
 			// Get the full Website data.
 			$websites[] = $this->civicrm->website->website_get_by_id( $result['id'] );
 
@@ -6139,6 +6154,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				continue;
 			}
 
+			// Declare variable type.
+			if ( ! is_array( $addresses ) ) {
+				$addresses = [];
+			}
+
 			// Get the full Address data.
 			$addresses[] = $this->plugin->civicrm->address->address_get_by_id( $result['id'] );
 
@@ -6275,6 +6295,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			// Skip on failure.
 			if ( false === $result ) {
 				continue;
+			}
+
+			// Declare variable type.
+			if ( ! is_array( $phones ) ) {
+				$phones = [];
 			}
 
 			// Get the full Phone data.
@@ -6415,6 +6440,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			// Skip on failure.
 			if ( false === $result ) {
 				continue;
+			}
+
+			// Declare variable type.
+			if ( ! is_array( $ims ) ) {
+				$ims = [];
 			}
 
 			// Get the full Instant Messenger data.
@@ -6718,6 +6748,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 				continue;
 			}
 
+			// Declare variable type.
+			if ( ! is_array( $memberships ) ) {
+				$memberships = [];
+			}
+
 			// Add the full Membership data.
 			$memberships[] = $this->civicrm->membership->get_by_id( $result['id'] );
 
@@ -6850,6 +6885,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 			// Add Note "Attachment(s)".
 			$note_full->attachments = $this->form_note_attachments_save( $note_full, $note['attachments'] );
+
+			// Declare variable type.
+			if ( ! is_array( $notes ) ) {
+				$notes = [];
+			}
 
 			// Add the full Note data.
 			$notes[] = $note_full;
@@ -6989,6 +7029,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 
 			// Always delete the WordPress Attachment.
 			wp_delete_attachment( $attachment_id, true );
+
+			// Declare variable type.
+			if ( ! is_array( $attachments ) ) {
+				$attachments = [];
+			}
 
 			// Get the full Attachment data.
 			$attachments[] = $this->civicrm->attachment->get_by_id( $result['id'] );
