@@ -612,6 +612,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 		}
 
 		// Format the return as per "getlist".
+		$contact_data = [];
 		foreach ( $result['values'] as $value ) {
 			$data = [
 				'id'    => $value['id'],
@@ -623,6 +624,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 				}
 			}
 			$contact_data[] = $data;
+		}
+
+		// Cast as boolean if empty.
+		if ( empty( $contact_data ) ) {
+			$contact_data = false;
 		}
 
 		// --<
