@@ -236,6 +236,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Campaign {
 
 		// Build params.
 		$params = [
+			'version'    => 3,
 			'sequential' => 1,
 			'is_active'  => 1,
 			'status_id'  => [ 'NOT IN' => [ 'Completed', 'Cancelled' ] ],
@@ -246,10 +247,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Campaign {
 		];
 
 		// Call the CiviCRM API.
-		$result = civicrm_api3( 'Campaign', 'get', $params );
+		$result = civicrm_api( 'Campaign', 'get', $params );
 
 		// Return early if something went wrong.
-		if ( ! empty( $result['error'] ) ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [

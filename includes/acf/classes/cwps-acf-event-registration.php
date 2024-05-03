@@ -1178,7 +1178,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 		$result = civicrm_api( 'UFJoin', 'get', $params );
 
 		// Return early if we get an error.
-		if ( ! empty( $result['is_error'] ) ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $profile;
 		}
 
@@ -1246,7 +1246,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 		$result = civicrm_api( 'UFJoin', 'create', $params );
 
 		// Log and bail if there's an error.
-		if ( ! empty( $result['is_error'] ) ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [

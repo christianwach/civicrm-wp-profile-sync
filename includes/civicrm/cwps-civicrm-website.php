@@ -546,7 +546,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		$result = civicrm_api( 'Website', 'create', $params );
 
 		// Log and bail if there's an error.
-		if ( ! empty( $result['is_error'] ) ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -645,7 +645,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		$result = civicrm_api( 'Website', 'delete', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -753,7 +753,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Website {
 		$result = civicrm_api( 'Website', 'get', $params );
 
 		// Bail on failure.
-		if ( ! empty( $result['is_error'] ) ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			return $website;
 		}
 

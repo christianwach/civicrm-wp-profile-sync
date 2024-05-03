@@ -382,7 +382,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		$result = civicrm_api( 'Email', 'create', $params );
 
 		// Log and bail if there's an error.
-		if ( ! empty( $result['is_error'] ) ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
@@ -481,7 +481,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		$result = civicrm_api( 'Email', 'delete', $params );
 
 		// Bail if there's an error.
-		if ( ! empty( $result['is_error'] ) ) {
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
 			$e     = new Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
