@@ -449,7 +449,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field {
 		foreach ( $bp_fields_mapped as $bp_field ) {
 
 			// Skip if it isn't mapped to an edited Custom Field.
-			if ( ! in_array( $bp_field['custom_field_id'], $custom_fields, true ) ) {
+			if ( ! in_array( (int) $bp_field['custom_field_id'], $custom_fields, true ) ) {
 				continue;
 			}
 

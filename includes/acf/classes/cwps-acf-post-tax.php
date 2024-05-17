@@ -341,6 +341,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 		// Sanity check.
 		$filtered = array_unique( $filtered );
+		$filtered = array_map( 'intval', $filtered );
 
 		// Build Groups.
 		$groups = [];
@@ -1250,6 +1251,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 					// Get all the current terms for the Post.
 					$terms_in_post    = $this->terms_get_for_post( $post_id );
 					$term_ids_in_post = wp_list_pluck( $terms_in_post, 'term_id' );
+					$term_ids_in_post = array_map( 'intval', $term_ids_in_post );
 
 					// If the term(s) need to be added.
 					if ( 'add' === $op ) {

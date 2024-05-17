@@ -1156,11 +1156,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 				$existing = [];
 			}
 
+			// Make sure values are integers.
+			$existing = array_map( 'intval', $existing );
+
 			// Assign the correct Target Contact ID.
 			if ( 'ab' === $relationship_direction ) {
-				$target_contact_id = $relationship->contact_id_b;
+				$target_contact_id = (int) $relationship->contact_id_b;
 			} else {
-				$target_contact_id = $relationship->contact_id_a;
+				$target_contact_id = (int) $relationship->contact_id_a;
 			}
 
 			if ( 'delete' === $op ) {
