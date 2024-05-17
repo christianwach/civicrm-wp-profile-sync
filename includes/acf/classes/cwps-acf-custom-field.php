@@ -847,14 +847,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 				// Build a reference array for Custom Fields.
 				$custom_fields = [];
 				foreach ( $args['custom_fields'] as $key => $field ) {
-					$custom_fields[ $key ] = $field['custom_field_id'];
+					$custom_fields[ $key ] = (int) $field['custom_field_id'];
 				}
 
 				// Let's look at each ACF Field in turn.
 				foreach ( $acf_fields['custom'] as $selector => $custom_field_ref ) {
 
 					// Skip if it isn't mapped to a Custom Field.
-					if ( ! in_array( $custom_field_ref, $custom_fields, true ) ) {
+					if ( ! in_array( (int) $custom_field_ref, $custom_fields, true ) ) {
 						continue;
 					}
 
