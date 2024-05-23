@@ -1,6 +1,6 @@
 <?php
 /**
- * "Contact" ACFE Form Action Class.
+ * ACFE Form Action Base Class.
  *
  * Holds methods common to CiviCRM Profile Sync ACFE Form Action classes.
  *
@@ -166,10 +166,10 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 		 *
 		 * @since 0.5
 		 *
-		 * @param bool $prepare True by default so that the Form Action goes ahead.
-		 * @param array $form The array of Form data.
+		 * @param bool    $prepare True by default so that the Form Action goes ahead.
+		 * @param array   $form The array of Form data.
 		 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
-		 * @param string $action The customised name of the Form Action.
+		 * @param string  $action The customised name of the Form Action.
 		 */
 		$filter  = 'acfe/form/prepare/' . $this->action_name;
 		$prepare = apply_filters( $filter, $prepare, $form, $current_post_id, $action );
@@ -371,15 +371,21 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @since 0.5
 	 *
+	 * @param string $label The label for this section.
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_header() {
+	public function tab_mapping_header( $label = '' ) {
+
+		// Set a default label.
+		if ( empty( $label ) ) {
+			$label = __( 'Mapping', 'civicrm-wp-profile-sync' );
+		}
 
 		// "Mapping" Tab wrapper.
 		$mapping_tab = [
 			[
 				'key'               => $this->field_key . 'tab_load',
-				'label'             => __( 'Mapping', 'civicrm-wp-profile-sync' ),
+				'label'             => $label,
 				'name'              => '',
 				'type'              => 'tab',
 				'instructions'      => '',
