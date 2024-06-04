@@ -118,7 +118,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 
 		// Remove all other callbacks.
 		remove_action( 'civicrm_postSave_civicrm_setting', [ $this, 'sync_setting_override' ], 10 );
-		remove_action( 'cwps/wordpress/user_sync', [ $this, 'email_update' ], 10 );
+		remove_action( 'cwps/wordpress/user_sync', [ $this, 'primary_update' ], 10 );
 
 	}
 
