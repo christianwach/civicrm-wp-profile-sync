@@ -28,13 +28,13 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Ref extends acf_field {
 	public $plugin;
 
 	/**
-	 * ACF plugin version.
+	 * ACF Field API version.
 	 *
 	 * @since 0.6.9
 	 * @access public
 	 * @var string
 	 */
-	public $acf_version;
+	public $api_version;
 
 	/**
 	 * ACF Loader object.
@@ -147,15 +147,15 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Ref extends acf_field {
 	 * Sets up the Field Type.
 	 *
 	 * @since 0.5
-	 * @since 0.6.9 Added $version param.
+	 * @since 0.6.9 Added $api_version param.
 	 *
 	 * @param object $parent The parent object reference.
-	 * @param string $version The ACF plugin version.
+	 * @param string $api_version The ACF plugin version.
 	 */
-	public function __construct( $parent, $version ) {
+	public function __construct( $parent, $api_version ) {
 
-		// Store ACF plugin version.
-		$this->acf_version = $version;
+		// Store ACF Field API version.
+		$this->api_version = $api_version;
 
 		// Store references to objects.
 		$this->plugin     = $parent->acf_loader->plugin;
@@ -275,9 +275,31 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Ref extends acf_field {
 	 */
 	public function ajax_query() {
 
-		// Validate.
-		if ( ! acf_verify_ajax() ) {
-			die();
+		// Verify AJAX by version.
+		if ( version_compare( ACF_VERSION, '6.3.2', '<' ) ) {
+
+			// Validate the old way.
+			if ( ! acf_verify_ajax() ) {
+				die();
+			}
+
+		} else {
+
+			// Get validation params.
+			$nonce     = acf_request_arg( 'nonce', '' );
+			$field_key = acf_request_arg( 'field_key', '' );
+
+			// Back-compat for field settings.
+			if ( ! acf_is_field_key( $field_key ) ) {
+				$nonce     = '';
+				$field_key = '';
+			}
+
+			// Validate the new way.
+			if ( ! acf_verify_ajax( $nonce, $field_key ) ) {
+				die();
+			}
+
 		}
 
 		// Get choices.
