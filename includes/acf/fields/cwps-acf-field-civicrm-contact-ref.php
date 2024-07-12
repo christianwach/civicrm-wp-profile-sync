@@ -28,15 +28,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Ref extends acf_field {
 	public $plugin;
 
 	/**
-	 * ACF Field API version.
-	 *
-	 * @since 0.6.9
-	 * @access public
-	 * @var string
-	 */
-	public $api_version;
-
-	/**
 	 * ACF Loader object.
 	 *
 	 * @since 0.5
@@ -147,15 +138,10 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Ref extends acf_field {
 	 * Sets up the Field Type.
 	 *
 	 * @since 0.5
-	 * @since 0.6.9 Added $api_version param.
 	 *
 	 * @param object $parent The parent object reference.
-	 * @param string $api_version The ACF plugin version.
 	 */
-	public function __construct( $parent, $api_version ) {
-
-		// Store ACF Field API version.
-		$this->api_version = $api_version;
+	public function __construct( $parent ) {
 
 		// Store references to objects.
 		$this->plugin     = $parent->acf_loader->plugin;
