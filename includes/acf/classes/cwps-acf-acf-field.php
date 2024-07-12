@@ -904,4 +904,33 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 	}
 
+	/**
+	 * Returns a default Multiple Settings Field.
+	 *
+	 * @since 0.6.9
+	 *
+	 * @return array $field The Multiple Settings Field data array.
+	 */
+	public function field_setting_multiple_get() {
+
+		// Get Multiple Setting Field.
+		$field = [
+			'label'        => __( 'Select Multiple', 'civicrm-wp-profile-sync' ),
+			'instructions' => __( 'Allow content editors to select multiple values', 'civicrm-wp-profile-sync' ),
+			'type'         => 'true_false',
+			'name'         => 'multiple',
+			'ui'           => 1,
+		];
+
+		/**
+		 * Filter the default Placeholder Settings Field.
+		 *
+		 * @since 0.6.9
+		 *
+		 * @param array $field The default Placeholder Settings Field array.
+		 */
+		return apply_filters( 'cwps/acf/field/setting/multiple', $field );
+
+	}
+
 }
