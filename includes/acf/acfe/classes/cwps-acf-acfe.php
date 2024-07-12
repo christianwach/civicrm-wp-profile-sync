@@ -164,7 +164,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 	}
 
 	/**
-	 * Registers the Field Types for ACF5.
+	 * Registers the Field Types for ACF5+.
 	 *
 	 * @since 0.5
 	 *
@@ -178,9 +178,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/fields/cwps-acf-acfe-field-action-reference-participant.php';
 
 		// Init Reference Field Types.
-		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Contact_Action_Ref( $this );
-		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Case_Action_Ref( $this );
-		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Participant_Action_Ref( $this );
+		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Contact_Action_Ref( $this, $version );
+		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Case_Action_Ref( $this, $version );
+		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Participant_Action_Ref( $this, $version );
 
 		// Include Field Types.
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/fields/cwps-acf-acfe-field-address-county.php';
@@ -188,9 +188,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/fields/cwps-acf-acfe-field-address-country.php';
 
 		// Init Field Types.
-		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_County( $this );
-		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State( $this );
-		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_Country( $this );
+		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_County( $this, $version );
+		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State( $this, $version );
+		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_Country( $this, $version );
 
 	}
 

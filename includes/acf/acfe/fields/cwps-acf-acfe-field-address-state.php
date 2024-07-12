@@ -30,6 +30,15 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 	public $plugin;
 
 	/**
+	 * ACF plugin version.
+	 *
+	 * @since 0.6.9
+	 * @access public
+	 * @var string
+	 */
+	public $acf_version;
+
+	/**
 	 * ACF Loader object.
 	 *
 	 * @since 0.5
@@ -149,10 +158,15 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 	 * Sets up the Field Type.
 	 *
 	 * @since 0.5
+	 * @since 0.6.9 Added $version param.
 	 *
 	 * @param object $parent The parent object reference.
+	 * @param string $version The ACF plugin version.
 	 */
-	public function __construct( $parent ) {
+	public function __construct( $parent, $version ) {
+
+		// Store ACF plugin version.
+		$this->acf_version = $version;
 
 		// Store references to objects.
 		$this->plugin     = $parent->acf_loader->plugin;
