@@ -714,13 +714,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 				// Skip all but those defined in our Contact Fields arrays.
 				foreach ( $result['values'] as $key => $value ) {
 					if ( array_key_exists( $value['name'], $this->contact_fields_individual ) ) {
-						$fields[ $top_level['Individual'] ][] = $value;
+						if ( array_key_exists( 'Individual', $top_level ) ) {
+  							$fields[ $top_level['Individual'] ][] = $value;
+						}
 					}
 					if ( array_key_exists( $value['name'], $this->contact_fields_organization ) ) {
-						$fields[ $top_level['Organization'] ][] = $value;
+						if ( array_key_exists( 'Organization', $top_level ) ) {
+							$fields[ $top_level['Organization'] ][] = $value;
+						}
 					}
 					if ( array_key_exists( $value['name'], $this->contact_fields_household ) ) {
-						$fields[ $top_level['Household'] ][] = $value;
+						if ( array_key_exists( 'Household', $top_level ) ) {
+							$fields[ $top_level['Household'] ][] = $value;
+						}
 					}
 					if ( array_key_exists( $value['name'], $this->contact_fields_common ) ) {
 						$fields['common'][] = $value;
