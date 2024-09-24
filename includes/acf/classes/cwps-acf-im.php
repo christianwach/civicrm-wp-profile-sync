@@ -1084,6 +1084,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 			// Get existing Field value.
 			$existing = get_field( $selector, $post_id );
 
+			// Start afresh if Field Type has been changed.
+			if ( ! is_array( $existing ) ) {
+				$existing = [];
+			}
+
 			// Before applying edit, make some checks.
 			if ( 'edit' === $args['op'] ) {
 
