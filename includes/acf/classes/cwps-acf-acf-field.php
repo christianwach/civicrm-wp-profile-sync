@@ -596,6 +596,13 @@ class CiviCRM_Profile_Sync_ACF_Field {
 				$value = $this->textarea_value_get( $value, $settings );
 				break;
 
+			// Parse the value of a "Choice" Field.
+			case 'checkbox':
+			case 'radio':
+			case 'select':
+				$value = $this->choice_value_get( $value, $settings );
+				break;
+
 			// Other Field Types may require parsing - add them here.
 
 		}
@@ -741,6 +748,59 @@ class CiviCRM_Profile_Sync_ACF_Field {
 			// @see https://stackoverflow.com/a/2494762
 			$value = str_replace( "\r\n", '', $value );
 			$value = preg_replace( '/<br[^>]*>/i', "\n", $value );
+		}
+
+		// --<
+		return $value;
+
+	}
+
+	/**
+	 * Get the value of a "Choice" Field formatted for CiviCRM.
+	 *
+	 * @since 0.6.9
+	 *
+	 * @param array $value The existing Field value.
+	 * @param array $settings The ACF Field settings.
+	 * @return array $value The modified value for CiviCRM.
+	 */
+	public function choice_value_get( $value, $settings ) {
+
+		// The Field's "return format" determines how we need to format for CiviCRM.
+		if ( 'array' === $settings['return_format'] ) {
+
+			// Extract "value" of each item as flattened array.
+			$value = wp_list_pluck( $value, 'value' );
+
+		} elseif ( 'label' === $settings['return_format'] ) {
+
+			/*
+			 * There is a possible problem here when multiple items have the same
+			 * label but a different ID. ACF itself will register that both options
+			 * have been selected even if only one has been selected.
+			 *
+			 * I don't think there's much we can do in this situation except
+			 * assume that it's a configuration error and mirror what ACF does.
+			 */
+			$return = [];
+
+			// Get the possible choices from the Field settings.
+			$choices = $settings['choices'];
+
+			// Try to match label with value.
+			if ( is_array( $value ) && ! empty( $value ) ) {
+				foreach ( $value as $label ) {
+					foreach ( $choices as $key => $item ) {
+						if ( $label === $item ) {
+							$return[] = $key;
+						}
+					}
+				}
+			}
+
+			// Overwrite value.
+			$value = array_unique( $return );
+
 		}
 
 		// --<
