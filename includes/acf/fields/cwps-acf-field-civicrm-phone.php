@@ -1,8 +1,8 @@
 <?php
 /**
- * ACF "CiviCRM Phone Field" Class.
+ * ACF "CiviCRM Phone: Complete" Field Class.
  *
- * Provides a "CiviCRM Phone Field" Custom ACF Field in ACF 5+.
+ * Provides a "CiviCRM Phone: Complete" Custom ACF Field in ACF 5+.
  *
  * @package CiviCRM_WP_Profile_Sync
  * @since 0.4
@@ -12,9 +12,9 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * CiviCRM Profile Sync Custom ACF Field Type - CiviCRM Phone Field.
+ * CiviCRM Profile Sync Custom ACF Field Type - "CiviCRM Phone: Complete" Field.
  *
- * A class that encapsulates a "CiviCRM Phone Field" Custom ACF Field in ACF 5+.
+ * A class that encapsulates a "CiviCRM Phone: Complete" Custom ACF Field in ACF 5+.
  *
  * @since 0.4
  */

@@ -154,6 +154,8 @@ class CiviCRM_Profile_Sync_ACF_Field_Type {
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-address-state.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-address-country.php';
 
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-phone-single.php';
+
 		if ( $this->acf->is_pro() ) {
 			include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-address.php';
 			include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/fields/cwps-acf-field-civicrm-phone.php';
@@ -196,6 +198,9 @@ class CiviCRM_Profile_Sync_ACF_Field_Type {
 		$state = new CiviCRM_Profile_Sync_Custom_CiviCRM_Address_State_Field( $this );
 		acf_register_field_type( $state );
 		$country = new CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Country_Field( $this );
+
+		$phone_single = new CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Single( $this );
+		acf_register_field_type( $phone_single );
 
 		if ( $this->acf->is_pro() ) {
 			$address = new CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Field( $this );

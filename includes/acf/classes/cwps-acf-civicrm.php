@@ -345,6 +345,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	public $phone;
 
 	/**
+	 * CiviCRM Single Phone object.
+	 *
+	 * @since 0.6.9
+	 * @access public
+	 * @var object
+	 */
+	public $phone_single;
+
+	/**
 	 * CiviCRM Instant Messenger object.
 	 *
 	 * @since 0.4
@@ -474,6 +483,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-email.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-website.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-phone.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-phone-single.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-im.php';
 		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/classes/cwps-acf-contact-id.php';
 
@@ -531,6 +541,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 		$this->email         = new CiviCRM_Profile_Sync_ACF_CiviCRM_Email( $this );
 		$this->website       = new CiviCRM_Profile_Sync_ACF_CiviCRM_Website( $this );
 		$this->phone         = new CiviCRM_Profile_Sync_ACF_CiviCRM_Phone( $this );
+		$this->phone_single  = new CiviCRM_Profile_Sync_ACF_CiviCRM_Phone_Single( $this );
 		$this->im            = new CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger( $this );
 		$this->contact_id    = new CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_ID( $this );
 

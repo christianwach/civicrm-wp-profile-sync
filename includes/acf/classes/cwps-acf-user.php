@@ -856,8 +856,9 @@ class CiviCRM_Profile_Sync_ACF_User {
 		// Unregister WordPress hooks.
 		$this->unregister_mapper_wp_hooks();
 
-		// Run the routine, but with a User reference.
+		// Run the routines, but with a User reference.
 		$this->civicrm->phone->fields_update( $post_id, $phone, $acf_phone, $args );
+		$this->civicrm->phone_single->fields_update( $post_id, $phone );
 
 		// Re-register WordPress hooks.
 		$this->register_mapper_wp_hooks();
@@ -943,6 +944,11 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 		// Run the routine, but with a User reference.
 		$this->civicrm->phone->fields_update( $post_id, $phone, $acf_phone, $args );
+
+		// Single Phone just requires an empty number.
+		$phone->phone = '';
+		$phone->phone_numeric = '';
+		$this->civicrm->phone_single->fields_update( $post_id, $phone );
 
 		// Re-register WordPress hooks.
 		$this->register_mapper_wp_hooks();
