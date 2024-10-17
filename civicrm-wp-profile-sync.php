@@ -164,9 +164,6 @@ class CiviCRM_WP_Profile_Sync {
 			return;
 		}
 
-		// Use translation.
-		$this->translation();
-
 		// Include files.
 		$this->include_files();
 
@@ -182,23 +179,6 @@ class CiviCRM_WP_Profile_Sync {
 
 		// We're done.
 		$done = true;
-
-	}
-
-	/**
-	 * Enable translation.
-	 *
-	 * @since 0.1
-	 */
-	public function translation() {
-
-		// Load translations.
-		// phpcs:ignore WordPress.WP.DeprecatedParameters.Load_plugin_textdomainParam2Found
-		load_plugin_textdomain(
-			'civicrm-wp-profile-sync', // Unique name.
-			false, // Deprecated argument.
-			dirname( plugin_basename( CIVICRM_WP_PROFILE_SYNC_FILE ) ) . '/languages/' // Relative path to files.
-		);
 
 	}
 
