@@ -128,7 +128,7 @@ function cwps_get_phone_numbers( $selector, $post_id = null ) {
 		// Maybe add Extension.
 		if ( ! empty( $record['field_phone_extension'] ) ) {
 			$phone = sprintf(
-				/* translators: 1: The Phone record, 2: The Phone extension */
+				/* translators: 1: The Phone number, 2: The Phone extension */
 				__( '%1$s Ext. %2$s', 'civicrm-wp-profile-sync' ),
 				$phone,
 				(string) $record['field_phone_extension']
