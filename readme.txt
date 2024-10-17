@@ -86,6 +86,11 @@ I'll say it again: test early, test often and - above all - test on a developmen
 
 == Changelog ==
 
+= 0.6.9 =
+
+* Introduces "CiviCRM Phone: Single" ACF Field
+* Fixes ACF AJAX verification
+
 = 0.6.8 =
 
 * Fixes Custom Field sync from CiviCRM to ACF
