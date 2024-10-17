@@ -1,17 +1,17 @@
 # Copyright (C) 2024 Christian Wach
-# This file is distributed under the same license as the CiviCRM Profile Sync plugin.
+# This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: CiviCRM Profile Sync 0.6.8a\n"
+"Project-Id-Version: CiviCRM Profile Sync 0.6.9a\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/civicrm-wp-profile-sync\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-05-17T11:40:28+00:00\n"
+"POT-Creation-Date: 2024-10-17T10:26:55+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.10.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: civicrm-wp-profile-sync\n"
 
 #. Plugin Name of the plugin
@@ -195,7 +195,7 @@ msgstr ""
 
 #: assets/templates/buddypress/metaboxes/metabox-bp-field-content.php:123
 #: includes/acf/acfe/classes/cwps-acf-acfe-form.php:506
-#: includes/acf/classes/cwps-acf-acf-field.php:840
+#: includes/acf/classes/cwps-acf-acf-field.php:900
 #: includes/acf/classes/cwps-acf-activity.php:1228
 #: includes/acf/classes/cwps-acf-case.php:1451
 #: includes/acf/classes/cwps-acf-contact.php:1450
@@ -537,7 +537,7 @@ msgid "ACF Extended Settings"
 msgstr ""
 
 #: includes/acf/acfe/classes/cwps-acf-acfe-form.php:509
-#: includes/acf/classes/cwps-acf-acf-field.php:843
+#: includes/acf/classes/cwps-acf-acf-field.php:903
 #: includes/acf/classes/cwps-acf-activity.php:1231
 #: includes/acf/classes/cwps-acf-case.php:1454
 #: includes/acf/classes/cwps-acf-contact.php:1453
@@ -637,8 +637,8 @@ msgstr ""
 msgid "Select the State/Province"
 msgstr ""
 
-#: includes/acf/acfe/fields/cwps-acf-acfe-field-address-county.php:443
-#: includes/acf/acfe/fields/cwps-acf-acfe-field-address-state.php:448
+#: includes/acf/acfe/fields/cwps-acf-acfe-field-address-county.php:465
+#: includes/acf/acfe/fields/cwps-acf-acfe-field-address-state.php:470
 msgid "Top Level"
 msgstr ""
 
@@ -692,7 +692,7 @@ msgid "Select the Country"
 msgstr ""
 
 #. translators: %s: The Field title
-#: includes/acf/acfe/fields/cwps-acf-acfe-field-address-state.php:451
+#: includes/acf/acfe/fields/cwps-acf-acfe-field-address-state.php:473
 msgid "Inside: %s"
 msgstr ""
 
@@ -923,42 +923,42 @@ msgstr ""
 msgid "(Required) Name this action so it can be referenced."
 msgstr ""
 
-#: includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-base.php:382
+#: includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-base.php:381
 msgid "Mapping"
 msgstr ""
 
-#: includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-base.php:435
+#: includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-base.php:441
 msgid "Relationships"
 msgstr ""
 
-#: includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-base.php:505
+#: includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-base.php:511
 msgid "Default"
 msgstr ""
 
-#: includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-base.php:507
+#: includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-base.php:513
 msgid "Enter a custom value or template tag. (See \"Cheatsheet\" tab)"
 msgstr ""
 
 #. translators: %s: The name of the Field
-#: includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-base.php:673
+#: includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-base.php:679
 msgid "Use one Field to identify the %s setting."
 msgstr ""
 
 #. translators: 1: The default instructions, 2: Extra instructions.
-#: includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-base.php:681
+#: includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-base.php:687
 msgid "%1$s %2$s"
 msgstr ""
 
-#: includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-base.php:730
+#: includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-base.php:736
 msgid "Use Mapping Field"
 msgstr ""
 
-#: includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-base.php:748
+#: includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-base.php:754
 msgid "Choose a mapping for this Setting."
 msgstr ""
 
 #. translators: %s: The name of the Field
-#: includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-base.php:755
+#: includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-base.php:761
 msgid "Map %s"
 msgstr ""
 
@@ -1029,8 +1029,8 @@ msgid "CiviCRM Contact"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-contact.php:698
-#: includes/acf/classes/cwps-acf-user.php:2112
-#: includes/acf/fields/cwps-acf-field-civicrm-relationship.php:515
+#: includes/acf/classes/cwps-acf-user.php:2118
+#: includes/acf/fields/cwps-acf-field-civicrm-relationship.php:537
 msgid "All Contacts"
 msgstr ""
 
@@ -1135,7 +1135,7 @@ msgstr ""
 #: includes/acf/classes/cwps-acf-contact.php:1424
 #: includes/acf/classes/cwps-acf-contact.php:1618
 #: includes/acf/classes/cwps-acf-contact.php:1787
-#: includes/acf/classes/cwps-acf-user.php:1952
+#: includes/acf/classes/cwps-acf-user.php:1958
 #: includes/buddypress/cwps-bp-civicrm-contact-field.php:260
 msgid "Contact Fields"
 msgstr ""
@@ -1865,17 +1865,25 @@ msgstr ""
 msgid "Only two decimal places please."
 msgstr ""
 
-#: includes/acf/classes/cwps-acf-acf-field.php:889
+#: includes/acf/classes/cwps-acf-acf-field.php:949
 msgid "Placeholder Text"
 msgstr ""
 
-#: includes/acf/classes/cwps-acf-acf-field.php:890
+#: includes/acf/classes/cwps-acf-acf-field.php:950
 msgid "Appears within the input"
 msgstr ""
 
-#: includes/acf/classes/cwps-acf-acf-field.php:893
+#: includes/acf/classes/cwps-acf-acf-field.php:953
 msgctxt "verb"
 msgid "Select"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-acf-field.php:978
+msgid "Select Multiple"
+msgstr ""
+
+#: includes/acf/classes/cwps-acf-acf-field.php:979
+msgid "Allow content editors to select multiple values"
 msgstr ""
 
 #: includes/acf/classes/cwps-acf-activity.php:881
@@ -2103,7 +2111,7 @@ msgid "Contact Types"
 msgstr ""
 
 #: includes/acf/classes/cwps-acf-contact.php:2065
-#: includes/acf/classes/cwps-acf-user.php:2322
+#: includes/acf/classes/cwps-acf-user.php:2328
 #: includes/buddypress/cwps-bp-xprofile.php:216
 msgid "Contact"
 msgstr ""
@@ -2204,7 +2212,7 @@ msgstr ""
 msgid "Only CiviCRM can set the Location in this Field."
 msgstr ""
 
-#: includes/acf/classes/cwps-acf-im.php:1546
+#: includes/acf/classes/cwps-acf-im.php:1551
 msgid "Instant Messenger Fields"
 msgstr ""
 
@@ -2506,7 +2514,7 @@ msgstr ""
 msgid "A numeric ID must be present to update a Participant."
 msgstr ""
 
-#: includes/acf/classes/cwps-acf-phone.php:1204
+#: includes/acf/classes/cwps-acf-phone.php:1209
 #: includes/buddypress/cwps-bp-civicrm-phone.php:564
 msgid "Phone Fields"
 msgstr ""
@@ -2543,28 +2551,28 @@ msgid "Choose the CiviCRM Relationship that this ACF Field should sync with. (Op
 msgstr ""
 
 #. translators: %s: The Relationship label
-#: includes/acf/classes/cwps-acf-user.php:2127
-#: includes/acf/classes/cwps-acf-user.php:2158
-#: includes/acf/classes/cwps-acf-user.php:2168
-#: includes/acf/classes/cwps-acf-user.php:2183
-#: includes/acf/fields/cwps-acf-field-civicrm-relationship.php:530
-#: includes/acf/fields/cwps-acf-field-civicrm-relationship.php:568
-#: includes/acf/fields/cwps-acf-field-civicrm-relationship.php:579
-#: includes/acf/fields/cwps-acf-field-civicrm-relationship.php:596
+#: includes/acf/classes/cwps-acf-user.php:2133
+#: includes/acf/classes/cwps-acf-user.php:2164
+#: includes/acf/classes/cwps-acf-user.php:2174
+#: includes/acf/classes/cwps-acf-user.php:2189
+#: includes/acf/fields/cwps-acf-field-civicrm-relationship.php:552
+#: includes/acf/fields/cwps-acf-field-civicrm-relationship.php:590
+#: includes/acf/fields/cwps-acf-field-civicrm-relationship.php:601
+#: includes/acf/fields/cwps-acf-field-civicrm-relationship.php:618
 #: includes/cai/cwps-cai.php:1783
 #: includes/cai/cwps-cai.php:1793
 msgid "%s (A-B)"
 msgstr ""
 
 #. translators: %s: The Relationship label
-#: includes/acf/classes/cwps-acf-user.php:2139
-#: includes/acf/classes/cwps-acf-user.php:2200
-#: includes/acf/classes/cwps-acf-user.php:2210
-#: includes/acf/classes/cwps-acf-user.php:2225
-#: includes/acf/fields/cwps-acf-field-civicrm-relationship.php:542
-#: includes/acf/fields/cwps-acf-field-civicrm-relationship.php:617
-#: includes/acf/fields/cwps-acf-field-civicrm-relationship.php:628
-#: includes/acf/fields/cwps-acf-field-civicrm-relationship.php:645
+#: includes/acf/classes/cwps-acf-user.php:2145
+#: includes/acf/classes/cwps-acf-user.php:2206
+#: includes/acf/classes/cwps-acf-user.php:2216
+#: includes/acf/classes/cwps-acf-user.php:2231
+#: includes/acf/fields/cwps-acf-field-civicrm-relationship.php:564
+#: includes/acf/fields/cwps-acf-field-civicrm-relationship.php:639
+#: includes/acf/fields/cwps-acf-field-civicrm-relationship.php:650
+#: includes/acf/fields/cwps-acf-field-civicrm-relationship.php:667
 #: includes/cai/cwps-cai.php:1806
 #: includes/cai/cwps-cai.php:1816
 msgid "%s (B-A)"
@@ -2654,6 +2662,7 @@ msgstr ""
 #: includes/acf/fields/cwps-acf-field-civicrm-event.php:147
 #: includes/acf/fields/cwps-acf-field-civicrm-im.php:159
 #: includes/acf/fields/cwps-acf-field-civicrm-multiset.php:159
+#: includes/acf/fields/cwps-acf-field-civicrm-phone-single.php:159
 #: includes/acf/fields/cwps-acf-field-civicrm-phone.php:159
 #: includes/acf/fields/cwps-acf-field-civicrm-relationship.php:159
 msgid "CiviCRM Post Type Sync only"
@@ -2675,6 +2684,7 @@ msgstr ""
 #: includes/acf/fields/cwps-acf-field-civicrm-event.php:149
 #: includes/acf/fields/cwps-acf-field-civicrm-im.php:161
 #: includes/acf/fields/cwps-acf-field-civicrm-multiset.php:161
+#: includes/acf/fields/cwps-acf-field-civicrm-phone-single.php:161
 #: includes/acf/fields/cwps-acf-field-civicrm-phone.php:161
 #: includes/acf/fields/cwps-acf-field-civicrm-relationship.php:161
 #: includes/acf/fields/cwps-acf-field-civicrm-yes-no.php:166
@@ -2708,6 +2718,7 @@ msgstr ""
 #: includes/acf/fields/cwps-acf-field-civicrm-address-city.php:210
 #: includes/acf/fields/cwps-acf-field-civicrm-address-country.php:210
 #: includes/acf/fields/cwps-acf-field-civicrm-address-state.php:210
+#: includes/acf/fields/cwps-acf-field-civicrm-phone-single.php:208
 msgid "CiviCRM Location Type"
 msgstr ""
 
@@ -3002,6 +3013,30 @@ msgstr ""
 msgid "Add Record Set"
 msgstr ""
 
+#: includes/acf/fields/cwps-acf-field-civicrm-phone-single.php:155
+msgid "CiviCRM Phone: Single"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-phone-single.php:185
+msgid "CiviCRM Primary Phone"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-phone-single.php:188
+msgid "Sync with the CiviCRM Primary Phone."
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-phone-single.php:211
+msgid "Choose the Location Type of the CiviCRM Phone that this ACF Field should sync with."
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-phone-single.php:239
+msgid "CiviCRM Phone Type"
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-phone-single.php:242
+msgid "Choose the Phone Type of the CiviCRM Phone that this ACF Field should sync with."
+msgstr ""
+
 #: includes/acf/fields/cwps-acf-field-civicrm-phone.php:155
 msgid "CiviCRM Phone: Complete"
 msgstr ""
@@ -3044,7 +3079,6 @@ msgstr ""
 msgid "%1$s %2$s: %3$s"
 msgstr ""
 
-#. translators: 1: The Phone record, 2: The Phone extension
 #. translators: 1: The Phone number, 2: The Phone extension
 #: includes/acf/functions/cwps-acf-functions-cai.php:134
 #: includes/acf/functions/cwps-acf-functions-cai.php:220
