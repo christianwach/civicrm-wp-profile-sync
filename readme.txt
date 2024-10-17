@@ -3,7 +3,7 @@ Contributors: needle, cuny-academic-commons, kcristiano, tadpolecc
 Donate link: https://www.paypal.me/interactivist
 Tags: civicrm, buddypress, acf, profile, sync
 Requires at least: 4.9
-Tested up to: 6.5
+Tested up to: 6.6
 Requires PHP: 7.1
 Stable tag: 0.6.9a
 License: GPLv2 or later
