@@ -1,13 +1,13 @@
 === CiviCRM Profile Sync ===
-Contributors: needle, cuny-academic-commons, kcristiano, tadpolecc
-Donate link: https://www.paypal.me/interactivist
-Tags: civicrm, buddypress, acf, profile, sync
+Contributors:      needle, cuny-academic-commons, kcristiano, tadpolecc
+Donate link:       https://www.paypal.me/interactivist
+Tags:              civicrm, buddypress, acf, profile, sync
+Requires PHP:      7.4
 Requires at least: 4.9
-Tested up to: 6.6
-Requires PHP: 7.1
-Stable tag: 0.7.0a
-License: GPLv2 or later
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Tested up to:      6.6
+Stable tag:        0.7.0a
+License:           GPLv2 or later
+License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
 Keeps a WordPress User profile in sync with a CiviCRM Contact and integrates WordPress and CiviCRM Entities when using Advanced Custom Fields.
 
