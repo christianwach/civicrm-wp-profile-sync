@@ -225,6 +225,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 			'ui'                => 1,
 			'ajax'              => 1,
 			'ajax_action'       => 'cwps_get_country_field',
+			'nonce'             => wp_create_nonce( 'cwps_get_country_field' ),
 			'placeholder'       => __( 'Select the Country Field', 'civicrm-wp-profile-sync' ),
 			'default_value'     => 0,
 			'required'          => 0,
@@ -325,18 +326,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 
 		} else {
 
-			// Get validation params.
-			$nonce     = acf_request_arg( 'nonce', '' );
-			$field_key = acf_request_arg( 'field_key', '' );
-
-			// Back-compat for field settings.
-			if ( ! acf_is_field_key( $field_key ) ) {
-				$nonce     = '';
-				$field_key = '';
-			}
-
 			// Validate the new way.
-			if ( ! acf_verify_ajax( $nonce, $field_key ) ) {
+			$nonce = acf_request_arg( 'nonce', '' );
+			if ( ! acf_verify_ajax( $nonce, 'cwps_get_country_field' ) ) {
 				die();
 			}
 
@@ -463,15 +455,24 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 				continue;
 			}
 
-			// Add to choices.
+			// Get label.
 			$label = acf_maybe_get( $field, 'label', $field['name'] );
-			$title = acf_maybe_get( $container, 'label', $container['name'] );
+
+			// Get title from container if possible.
+			if ( ! empty( $container['name'] ) ) {
+				$title = acf_maybe_get( $container, 'label', $container['name'] );
+				if ( ! empty( $title ) ) {
+					/* translators: %s: The Field title */
+					$title = sprintf( __( 'Inside: %s', 'civicrm-wp-profile-sync' ), $title );
+				}
+			}
+
+			// Maybe set default title.
 			if ( empty( $title ) ) {
 				$title = __( 'Top Level', 'civicrm-wp-profile-sync' );
-			} else {
-				/* translators: %s: The Field title */
-				$title = sprintf( __( 'Inside: %s', 'civicrm-wp-profile-sync' ), $title );
 			}
+
+			// Add to choices.
 			$choices[ $title ][ $field['key'] ] = "{$label} ({$field['key']})";
 
 		}
