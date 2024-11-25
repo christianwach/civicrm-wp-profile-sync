@@ -178,7 +178,15 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 	 */
 	public function form_wrapper( $form, $post_id ) {
 
-		// Alter the default "Success Wrapper".
+		// Alter the default "Success Wrapper" in ACF Extended 0.9.x.
+		if ( ! empty( $form['success']['wrapper'] ) ) {
+			if ( '<div id="message" class="updated">%s</div>' === $form['success']['wrapper'] ) {
+				$form['success']['wrapper'] = '<div id="message" class="acfe-success">%s</div>';
+				return $form;
+			}
+		}
+
+		// Alter the default "Success Wrapper" in ACF Extended 0.8.x.
 		if ( '<div id="message" class="updated">%s</div>' === $form['html_updated_message'] ) {
 			$form['html_updated_message'] = '<div id="message" class="acfe-success">%s</div>';
 		}
