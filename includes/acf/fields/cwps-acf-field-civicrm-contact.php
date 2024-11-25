@@ -275,6 +275,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 		$field['allow_null']        = 1;
 		$field['required']          = 0;
 		$field['conditional_logic'] = 0;
+		$field['nonce']             = wp_create_nonce( $field['key'] );
 
 		// Maybe assign "multiple" property.
 		if ( ! isset( $field['multiple'] ) ) {

@@ -252,6 +252,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Relationship extends acf_field {
 		$field['ajax']       = 1;
 		$field['allow_null'] = 1;
 		$field['multiple']   = 1;
+		$field['nonce']      = wp_create_nonce( $field['key'] );
 
 		// Init choices array.
 		$field['choices'] = [];

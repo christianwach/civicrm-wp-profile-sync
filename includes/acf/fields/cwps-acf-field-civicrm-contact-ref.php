@@ -216,6 +216,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Ref extends acf_field {
 		$field['multiple']          = 0;
 		$field['required']          = 0;
 		$field['conditional_logic'] = 0;
+		$field['nonce']             = wp_create_nonce( $field['key'] );
 
 		// Init choices array.
 		$field['choices'] = [];
