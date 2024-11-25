@@ -123,6 +123,9 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 		 */
 		do_action( 'cwps/acf/acfe/loaded' );
 
+		// Okay, we're done.
+		$done = true;
+
 	}
 
 	/**
