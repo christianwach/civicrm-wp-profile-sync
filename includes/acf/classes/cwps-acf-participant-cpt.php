@@ -1833,6 +1833,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 */
 	public function field_group_add() {
 
+		// We do not need the ACF Fields in CiviCRM admin.
+		$civicrm_args = civi_wp()->get_request_args();
+		if ( is_admin() && ! empty( $civicrm_args['args'][0] ) && 'civicrm' === $civicrm_args['args'][0] ) {
+			return;
+		}
+
 		// Get the ACF Field definitions.
 		$register_date = $this->field_register_date_get();
 		$event         = $this->acf_loader->acf->field_type->event_group->get_field_definition();
@@ -1990,6 +1996,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	 * @return array|bool $field False if the Field must be hidden, the Field data otherwise.
 	 */
 	public function maybe_hide_field( $field ) {
+
+		// We do not need the ACF Fields in CiviCRM admin.
+		$civicrm_args = civi_wp()->get_request_args();
+		if ( is_admin() && ! empty( $civicrm_args['args'][0] ) && 'civicrm' === $civicrm_args['args'][0] ) {
+			return;
+		}
 
 		// Get the CiviCRM Custom Field ID.
 		$custom_field_id = $this->civicrm->custom_field->custom_field_id_get( $field );
