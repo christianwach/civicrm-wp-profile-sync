@@ -335,9 +335,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Ref extends acf_field {
 
 		// Load Field.
 		$field = acf_get_field( $options['field_key'] );
-		if ( ! $field ) {
-			return $response;
-		}
 
 		// Grab the Post ID.
 		$post_id = (int) $options['post_id'];
@@ -348,11 +345,23 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Ref extends acf_field {
 		// Strip slashes - search may be an integer.
 		$args['search'] = wp_unslash( (string) $options['s'] );
 
-		// Get the "CiviCRM Field" key.
-		$acf_field_key = $this->civicrm->acf_field_key_get();
-
 		// Default to any Contact Type.
 		$args['contact_type'] = '';
+
+		/*
+		// If this is a "standard" Field (i.e. not added in code) check Employer ID.
+		if ( ! empty( $field ) ) {
+
+			// Get the "CiviCRM Field" key.
+			$acf_field_key = $this->civicrm->acf_field_key_get();
+
+			// Restrict to target Contact Type if this Field is linked to Employer ID.
+			if ( ! empty( $field[ $acf_field_key ] ) && $field[ $acf_field_key ] === $this->civicrm->contact_field_prefix() . 'employer_id' ) {
+				$args['contact_type'] = 'Organization';
+			}
+
+		}
+		*/
 
 		/**
 		 * Maintain compatibility with the usual ACF filter schema.
@@ -364,8 +373,10 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Ref extends acf_field {
 		 * @param integer $post_id The numeric ID of the WordPress post.
 		 */
 		$args = apply_filters( 'acf/fields/' . $this->name . '/query', $args, $field, $post_id );
-		$args = apply_filters( 'acf/fields/' . $this->name . "/query/name={$field['_name']}", $args, $field, $post_id );
-		$args = apply_filters( 'acf/fields/' . $this->name . "/query/key={$field['key']}", $args, $field, $post_id );
+		if ( ! empty( $field ) ) {
+			$args = apply_filters( 'acf/fields/' . $this->name . "/query/name={$field['_name']}", $args, $field, $post_id );
+			$args = apply_filters( 'acf/fields/' . $this->name . "/query/key={$field['key']}", $args, $field, $post_id );
+		}
 
 		// Handle paging.
 		$offset = 0;

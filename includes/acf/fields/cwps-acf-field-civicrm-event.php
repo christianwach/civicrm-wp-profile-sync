@@ -348,14 +348,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Field extends acf_field {
 			return $response;
 		}
 
-		// Load Field.
-		$field = acf_get_field( $options['field_key'] );
-
-		// Bail if Field did not load.
-		if ( ! $field ) {
-			return $response;
-		}
-
 		// Grab the Post ID.
 		$post_id = (int) $options['post_id'];
 
@@ -365,8 +357,8 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Field extends acf_field {
 		// Strip slashes - search may be an integer.
 		$args['search'] = wp_unslash( (string) $options['s'] );
 
-		// Get the "CiviCRM Field" key.
-		$acf_field_key = $this->acf_loader->civicrm->acf_field_key_get();
+		// Try to load Field.
+		$field = acf_get_field( $options['field_key'] );
 
 		/**
 		 * Maintain compatibility with the usual ACF filter schema.
@@ -378,8 +370,10 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Field extends acf_field {
 		 * @param integer $post_id The numeric ID of the WordPress post.
 		 */
 		$args = apply_filters( 'acf/fields/' . $this->name . '/query', $args, $field, $post_id );
-		$args = apply_filters( 'acf/fields/' . $this->name . "/query/name={$field['_name']}", $args, $field, $post_id );
-		$args = apply_filters( 'acf/fields/' . $this->name . "/query/key={$field['key']}", $args, $field, $post_id );
+		if ( ! empty( $field ) ) {
+			$args = apply_filters( 'acf/fields/' . $this->name . "/query/name={$field['_name']}", $args, $field, $post_id );
+			$args = apply_filters( 'acf/fields/' . $this->name . "/query/key={$field['key']}", $args, $field, $post_id );
+		}
 
 		// Get Events.
 		$events = $this->acf_loader->civicrm->event->get_by_search_string( $args['search'] );
