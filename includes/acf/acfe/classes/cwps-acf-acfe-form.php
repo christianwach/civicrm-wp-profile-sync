@@ -105,9 +105,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 		// Include files.
 		$this->include_files();
 
-		// Register Location Types.
-		$this->register_location_types();
-
 		// Register hooks.
 		$this->register_hooks();
 
@@ -136,34 +133,86 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 		// Listen for queries from the ACF Field class.
 		add_filter( 'cwps/acf/query_settings_field', [ $this, 'query_settings_field' ], 200, 3 );
 
-		// Register ACFE Form Actions after ACFE does.
-		add_filter( 'acfe/include_form_actions', [ $this, 'register_form_actions' ], 20 );
-
-		// Add Form Actions Javascript.
-		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_form_action_scripts' ] );
+		// Register ACF Location Types.
+		add_action( 'acf/init', [ $this, 'register_location_types' ] );
 
 		/*
+		 * Check for legacy ACF Extended.
+		 *
+		 * The Form layer has been completely rewritten in ACF Extended version 0.9 and
+		 * so new code has had to be written for compatibility with the new architecture.
+		 */
+		$new_acfe_forms = version_compare( $this->acfe->acfe_version, '0.9', '>=' );
+
+		/**
+		 * Filters the check for legacy ACF Extended.
+		 *
+		 * @since 0.7.0
+		 *
+		 * @param bool $new_acfe_forms True if ACF Extended is greater than 0.9, false otherwise.
+		 */
+		$new_acfe_forms = apply_filters( 'cwps/acf/acfe/form/acfe_version_check', $new_acfe_forms );
+
+		// Register ACFE Form Actions.
+		if ( $new_acfe_forms ) {
+			add_action( 'acf/include_field_types', [ $this, 'register_form_actions_latest' ], 50 );
+		} else {
+			add_action( 'acfe/include_form_actions', [ $this, 'register_form_actions_legacy' ], 50 );
+		}
+
+		// Add Form Actions Javascript.
+		if ( $new_acfe_forms ) {
+			add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_form_action_scripts_latest' ] );
+		} else {
+			add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_form_action_scripts_legacy' ] );
+		}
+
 		// Clear Form Action Query Vars.
-		add_action( 'acfe/form/submit', [ $this, 'form_action_query_vars_clear' ] );
-		*/
+		if ( $new_acfe_forms ) {
+			add_action( 'acfe/form/submit_success', [ $this, 'form_action_query_vars_clear_latest' ], 1000 );
+		} else {
+			add_action( 'acfe/form/submit', [ $this, 'form_action_query_vars_clear_legacy' ] );
+		}
 
 		// Set a better Form Wrapper class.
-		add_filter( 'acfe/form/load', [ $this, 'form_wrapper' ], 10, 2 );
+		if ( $new_acfe_forms ) {
+			add_filter( 'acfe/form/load_form', [ $this, 'form_wrapper' ], 10 );
+		} else {
+			add_filter( 'acfe/form/load', [ $this, 'form_wrapper' ], 10, 2 );
+		}
 
 	}
 
 	/**
-	 * Clear the Form Action Query Vars.
+	 * Clear the Form Action Query Vars in ACFE 0.9.x+.
+	 *
+	 * This means we get a fresh set of Query Vars during the load process after
+	 * a Form has been submitted.
+	 *
+	 * @since 0.7.0
+	 */
+	public function form_action_query_vars_clear_latest() {
+
+		// Clear the array of Action results.
+		acf_set_form_data( 'acfe/form/actions', [] );
+
+	}
+
+	/**
+	 * Clear the Form Action Query Vars in ACFE 0.8.x.
 	 *
 	 * This means we get a fresh set of Query Vars during the load process after
 	 * a Form has been submitted.
 	 *
 	 * @since 0.5
+	 * @since 0.7.0 Renamed.
 	 */
-	public function form_action_query_vars_clear() {
+	public function form_action_query_vars_clear_legacy() {
 
+		/*
 		// Clear the array of Action results.
 		set_query_var( 'acfe_form_actions', [] );
+		*/
 
 	}
 
@@ -176,7 +225,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 	 * @param integer $post_id The numeric ID of the WordPress Post.
 	 * @return array $form The modified ACF Form data array.
 	 */
-	public function form_wrapper( $form, $post_id ) {
+	public function form_wrapper( $form, $post_id = 0 ) {
 
 		// Alter the default "Success Wrapper" in ACF Extended 0.9.x.
 		if ( ! empty( $form['success']['wrapper'] ) ) {
@@ -217,18 +266,61 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 	}
 
 	/**
-	 * Register Form Actions.
+	 * Register Form Actions for ACFE version 0.9.x.
+	 *
+	 * @since 0.7.0
+	 */
+	public function register_form_actions_latest() {
+
+		// Include Form Action base class.
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-base.php';
+
+		// Include Form Action classes.
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php';
+
+		// Register the Form Actions.
+		acfe_register_form_action_type( 'CWPS_ACF_ACFE_Form_Action_Contact' );
+		acfe_register_form_action_type( 'CWPS_ACF_ACFE_Form_Action_Activity' );
+
+		// Init Event Actions if the CiviEvent component is active.
+		$event_active = $this->plugin->civicrm->is_component_enabled( 'CiviEvent' );
+		if ( $event_active ) {
+			include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php';
+			acfe_register_form_action_type( 'CWPS_ACF_ACFE_Form_Action_Participant' );
+			include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php';
+			acfe_register_form_action_type( 'CWPS_ACF_ACFE_Form_Action_Event' );
+		}
+
+		// Init Case Action if the CiviCase component is active.
+		$case_active = $this->plugin->civicrm->is_component_enabled( 'CiviCase' );
+		if ( $case_active ) {
+			include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php';
+			acfe_register_form_action_type( 'CWPS_ACF_ACFE_Form_Action_Case' );
+		}
+
+		// Init Email Action if the "Email API" Extension is active.
+		$email_active = $this->plugin->civicrm->is_extension_enabled( 'org.civicoop.emailapi' );
+		if ( $email_active ) {
+			include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-email.php';
+			acfe_register_form_action_type( 'CWPS_ACF_ACFE_Form_Action_Email' );
+		}
+
+	}
+
+	/**
+	 * Register Form Actions for ACFE version 0.8.x.
 	 *
 	 * @since 0.5
 	 */
-	public function register_form_actions() {
+	public function register_form_actions_legacy() {
 
 		// Include Form Action base class.
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-base.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-base.php';
 
 		// Include Form Action classes.
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-contact.php';
-		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-activity.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php';
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-activity.php';
 
 		// Init Form Actions.
 		new CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact( $this );
@@ -237,34 +329,34 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 		// Init Event Actions if the CiviEvent component is active.
 		$event_active = $this->plugin->civicrm->is_component_enabled( 'CiviEvent' );
 		if ( $event_active ) {
-			include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-participant.php';
+			include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php';
 			new CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant( $this );
-			include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-event.php';
+			include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php';
 			new CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Event( $this );
 		}
 
 		// Init Case Action if the CiviCase component is active.
 		$case_active = $this->plugin->civicrm->is_component_enabled( 'CiviCase' );
 		if ( $case_active ) {
-			include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-case.php';
+			include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-case.php';
 			new CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case( $this );
 		}
 
 		// Init Email Action if the "Email API" Extension is active.
 		$email_active = $this->plugin->civicrm->is_extension_enabled( 'org.civicoop.emailapi' );
 		if ( $email_active ) {
-			include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/cwps-acf-acfe-form-action-email.php';
+			include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-email.php';
 			new CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Email( $this );
 		}
 
 	}
 
 	/**
-	 * Enqueue Form Action Javascript.
+	 * Enqueue Form Action Javascript for ACFE version 0.9.x.
 	 *
-	 * @since 0.5
+	 * @since 0.7.0
 	 */
-	public function enqueue_form_action_scripts() {
+	public function enqueue_form_action_scripts_latest() {
 
 		// Bail if the current screen is not an Edit ACFE Form screen.
 		$screen = get_current_screen();
@@ -278,7 +370,99 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form {
 		// Add JavaScript plus dependencies.
 		wp_enqueue_script(
 			'cwps-acfe-form-actions',
-			plugins_url( 'assets/js/acf/acfe/form-actions/cwps-form-action-model.js', CIVICRM_WP_PROFILE_SYNC_FILE ),
+			plugins_url( 'assets/js/acf/acfe/form-actions/acfe-0.9.x/cwps-form-action-model.js', CIVICRM_WP_PROFILE_SYNC_FILE ),
+			[ 'acf-extended' ],
+			CIVICRM_WP_PROFILE_SYNC_VERSION, // Version.
+			true
+		);
+
+		// Init the Contact Reference Field actions array.
+		$contact_action_refs = [
+			// Contact Actions must always be present.
+			'new_field/key=field_cwps_contact_action_name' => 'newContactActionAlias',
+			'remove_field/key=field_cwps_contact_action_name' => 'removeContactActionAlias',
+		];
+
+		/**
+		 * Query Form Action classes to build the Contact Reference Fields ACF Model actions array.
+		 *
+		 * @since 0.5
+		 *
+		 * @param array $contact_action_refs The ACF Model actions array to be populated.
+		 */
+		$contact_actions = apply_filters( 'cwps/acf/acfe/form_actions/reference_fields/contact', $contact_action_refs );
+
+		// Init the Case Reference Field actions array.
+		$case_action_refs = [
+			// Case Actions must always be present.
+			'new_field/key=field_cwps_case_action_name'    => 'newCaseActionAlias',
+			'remove_field/key=field_cwps_case_action_name' => 'removeCaseActionAlias',
+		];
+
+		/**
+		 * Query Form Action classes to build the Case Reference Fields ACF Model actions array.
+		 *
+		 * @since 0.5
+		 *
+		 * @param array $case_action_refs The ACF Model actions array to be populated.
+		 */
+		$case_actions = apply_filters( 'cwps/acf/acfe/form_actions/reference_fields/case', $case_action_refs );
+
+		// Init the Participant Reference Field actions array.
+		$participant_action_refs = [
+			// Participant Actions must always be present.
+			'new_field/key=field_cwps_participant_action_name' => 'newParticipantActionAlias',
+			'remove_field/key=field_cwps_participant_action_name' => 'removeParticipantActionAlias',
+		];
+
+		/**
+		 * Query Form Action classes to build the Participant Reference Fields ACF Model actions array.
+		 *
+		 * @since 0.5
+		 *
+		 * @param array $participant_action_refs The ACF Model actions array to be populated.
+		 */
+		$participant_actions = apply_filters( 'cwps/acf/acfe/form_actions/reference_fields/participant', $participant_action_refs );
+
+		// Build data array.
+		$vars = [
+			'localisation' => [],
+			'settings'     => [
+				'contact_actions_reference'     => $contact_actions,
+				'case_actions_reference'        => $case_actions,
+				'participant_actions_reference' => $participant_actions,
+			],
+		];
+
+		// Localize our script.
+		wp_localize_script(
+			'cwps-acfe-form-actions',
+			'CWPS_ACFE_Form_Action_Vars',
+			$vars
+		);
+
+	}
+
+	/**
+	 * Enqueue Form Action Javascript for ACFE version 0.9.x.
+	 *
+	 * @since 0.5
+	 */
+	public function enqueue_form_action_scripts_legacy() {
+
+		// Bail if the current screen is not an Edit ACFE Form screen.
+		$screen = get_current_screen();
+		if ( ! ( $screen instanceof WP_Screen ) ) {
+			return;
+		}
+		if ( 'post' !== $screen->base || 'acfe-form' !== $screen->id ) {
+			return;
+		}
+
+		// Add JavaScript plus dependencies.
+		wp_enqueue_script(
+			'cwps-acfe-form-actions',
+			plugins_url( 'assets/js/acf/acfe/form-actions/acfe-0.8.x/cwps-form-action-model.js', CIVICRM_WP_PROFILE_SYNC_FILE ),
 			[ 'acf-extended' ],
 			CIVICRM_WP_PROFILE_SYNC_VERSION, // Version.
 			true

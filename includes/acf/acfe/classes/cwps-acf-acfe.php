@@ -57,6 +57,15 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 	public $form;
 
 	/**
+	 * ACF Extended plugin version.
+	 *
+	 * @since 0.7.0
+	 * @access public
+	 * @var string
+	 */
+	public $acfe_version;
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 0.5
@@ -88,10 +97,13 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 		}
 
 		// Bail if the "ACF Extended" plugin isn't found.
-		if ( ! function_exists( 'acfe' ) ) {
+		if ( ! defined( 'ACFE_VERSION' ) ) {
 			$done = true;
 			return;
 		}
+
+		// Store ACF Extended version.
+		$this->acfe_version = ACFE_VERSION;
 
 		// Return early if ACF Extended Integration has been disabled.
 		$acf_enabled = (int) $this->plugin->admin->setting_get( 'acfe_integration_enabled', 1 );

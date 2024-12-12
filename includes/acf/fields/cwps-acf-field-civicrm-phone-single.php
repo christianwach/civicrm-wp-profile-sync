@@ -274,10 +274,10 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Single extends acf_field {
 	public function render_field( $field ) {
 
 		// Change Field into a simple text Field.
-		$field['type']       = 'text';
-		$field['prepend']    = '';
-		$field['append']     = '';
-		$field['step']       = '';
+		$field['type']    = 'text';
+		$field['prepend'] = '';
+		$field['append']  = '';
+		$field['step']    = '';
 
 		// Populate Field.
 		if ( ! empty( $field['value'] ) ) {
@@ -321,10 +321,12 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Single extends acf_field {
 	 */
 	public function load_value( $value, $post_id, $field ) {
 
-// 		// Assign Phone for this Field if empty.
-// 		if ( empty( $value ) ) {
-// 			$value = $this->get_phone( $value, $post_id, $field );
-// 		}
+		/*
+		// Assign Phone for this Field if empty.
+		if ( empty( $value ) ) {
+			$value = $this->get_phone( $value, $post_id, $field );
+		}
+		*/
 
 		// --<
 		return $value;
@@ -406,39 +408,41 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Single extends acf_field {
 			return $valid;
 		}
 
-// 		// Grab just the Primary values.
-// 		$primary_values = wp_list_pluck( $value, 'field_phone_primary' );
-//
-// 		// Sanitise array contents.
-// 		array_walk(
-// 			$primary_values,
-// 			function( &$item ) {
-// 				$item = (int) trim( $item );
-// 			}
-// 		);
-//
-// 		// Check that we have a Primary Number.
-// 		if ( ! in_array( 1, $primary_values, true ) ) {
-// 			$valid = __( 'Please select a Primary Number', 'civicrm-wp-profile-sync' );
-// 			return $valid;
-// 		}
-//
-// 		// Grab just the Phone Numbers.
-// 		$phones = wp_list_pluck( $value, 'field_phone_number' );
-//
-// 		// Sanitise array contents.
-// 		array_walk(
-// 			$phones,
-// 			function( &$item ) {
-// 				$item = (string) trim( $item );
-// 			}
-// 		);
-//
-// 		// Check that all Number Fields are populated.
-// 		if ( in_array( '', $phones, true ) ) {
-// 			$valid = __( 'Please enter a Phone Number', 'civicrm-wp-profile-sync' );
-// 			return $valid;
-// 		}
+		/*
+		// Grab just the Primary values.
+		$primary_values = wp_list_pluck( $value, 'field_phone_primary' );
+
+		// Sanitise array contents.
+		array_walk(
+			$primary_values,
+			function( &$item ) {
+				$item = (int) trim( $item );
+			}
+		);
+
+		// Check that we have a Primary Number.
+		if ( ! in_array( 1, $primary_values, true ) ) {
+			$valid = __( 'Please select a Primary Number', 'civicrm-wp-profile-sync' );
+			return $valid;
+		}
+
+		// Grab just the Phone Numbers.
+		$phones = wp_list_pluck( $value, 'field_phone_number' );
+
+		// Sanitise array contents.
+		array_walk(
+			$phones,
+			function( &$item ) {
+				$item = (string) trim( $item );
+			}
+		);
+
+		// Check that all Number Fields are populated.
+		if ( in_array( '', $phones, true ) ) {
+			$valid = __( 'Please enter a Phone Number', 'civicrm-wp-profile-sync' );
+			return $valid;
+		}
+		*/
 
 		// --<
 		return $valid;
@@ -455,21 +459,23 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Single extends acf_field {
 	 */
 	public function load_field( $field ) {
 
-// 		// Init Subfields.
-// 		$sub_fields = [];
-//
-// 		// Maybe append to Field.
-// 		if ( ! empty( $field['sub_fields'] ) ) {
-//
-// 			// Validate Field first.
-// 			foreach ( $field['sub_fields'] as $sub_field ) {
-// 				$sub_fields[] = acf_validate_field( $sub_field );
-// 			}
-//
-// 		}
-//
-// 		// Overwrite subfields.
-// 		$field['sub_fields'] = $sub_fields;
+		/*
+		// Init Subfields.
+		$sub_fields = [];
+
+		// Maybe append to Field.
+		if ( ! empty( $field['sub_fields'] ) ) {
+
+			// Validate Field first.
+			foreach ( $field['sub_fields'] as $sub_field ) {
+				$sub_fields[] = acf_validate_field( $sub_field );
+			}
+
+		}
+
+		// Overwrite subfields.
+		$field['sub_fields'] = $sub_fields;
+		*/
 
 		// --<
 		return $field;
