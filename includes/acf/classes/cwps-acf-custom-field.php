@@ -1308,6 +1308,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		// Get keyed array of settings.
 		$field['choices'] = $this->radio_choices_get( $custom_field_id );
 
+		// Custom Fields of type "Radio" can be null.
+		$field['allow_null'] = 1;
+
 		// --<
 		return $field;
 
