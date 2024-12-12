@@ -715,7 +715,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 				foreach ( $result['values'] as $key => $value ) {
 					if ( array_key_exists( $value['name'], $this->contact_fields_individual ) ) {
 						if ( array_key_exists( 'Individual', $top_level ) ) {
-  							$fields[ $top_level['Individual'] ][] = $value;
+							$fields[ $top_level['Individual'] ][] = $value;
 						}
 					}
 					if ( array_key_exists( $value['name'], $this->contact_fields_organization ) ) {

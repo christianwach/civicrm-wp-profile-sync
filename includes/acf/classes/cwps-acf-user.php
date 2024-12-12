@@ -946,7 +946,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 		$this->civicrm->phone->fields_update( $post_id, $phone, $acf_phone, $args );
 
 		// Single Phone just requires an empty number.
-		$phone->phone = '';
+		$phone->phone         = '';
 		$phone->phone_numeric = '';
 		$this->civicrm->phone_single->fields_update( $post_id, $phone );
 

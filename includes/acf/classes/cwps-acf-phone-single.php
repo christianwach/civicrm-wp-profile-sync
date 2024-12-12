@@ -112,7 +112,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone_Single extends CiviCRM_Profile_Sync
 		// Register hooks.
 		$this->register_hooks();
 
-
 		/**
 		 * Broadcast that this class is now loaded.
 		 *
@@ -926,7 +925,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone_Single extends CiviCRM_Profile_Sync
 			} else {
 				$acf_fields['phone_single'][ $field['name'] ] = [
 					'location_type_id' => $field['phone_location_type_id'],
-					'phone_type_id' => $field['phone_type_id'],
+					'phone_type_id'    => $field['phone_type_id'],
 				];
 			}
 		}
