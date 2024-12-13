@@ -221,7 +221,7 @@ class CWPS_ACF_ACFE_Form_Action_Email extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $form The array of Form data.
 	 * @param array $action The array of Action data.
 	 */
-	public function validation( $form, $action ) {
+	public function validate_action( $form, $action ) {
 
 		// Skip if the Contact Conditional Reference Field has a value.
 		$this->form_conditional_populate( [ 'action' => &$action ] );
@@ -236,11 +236,6 @@ class CWPS_ACF_ACFE_Form_Action_Email extends CWPS_ACF_ACFE_Form_Action_Base {
 		}
 
 		// TODO: Check other Email Entities.
-
-		/*
-		// Get some Form details.
-		//acfe_add_validation_error( $selector, $message );
-		*/
 
 	}
 
@@ -824,7 +819,7 @@ class CWPS_ACF_ACFE_Form_Action_Email extends CWPS_ACF_ACFE_Form_Action_Base {
 		 * We have a problem here because the ACFE Forms Actions query var has
 		 * not been populated yet since the "make" actions have not run.
 		 *
-		 * This means that "acfe_form_get_action()" cannot be queried to find
+		 * This means that "$this->get_action_output()" cannot be queried to find
 		 * the referenced Contact ID when using an "Action Reference" Field,
 		 * even though it will be populated later when the "make" actions run.
 		 *
@@ -838,7 +833,7 @@ class CWPS_ACF_ACFE_Form_Action_Email extends CWPS_ACF_ACFE_Form_Action_Base {
 			acfe_add_validation_error( '', sprintf(
 				// / * translators: %s The name of the Form Action * /
 				__( 'A Contact ID is required to send an Email in "%s".', 'civicrm-wp-profile-sync' ),
-				$action
+				$action['name']
 			) );
 			return false;
 		}
@@ -851,7 +846,7 @@ class CWPS_ACF_ACFE_Form_Action_Email extends CWPS_ACF_ACFE_Form_Action_Base {
 				sprintf(
 					/* translators: %s The name of the Form Action */
 					__( 'A Template ID is required to send an Email in "%s".', 'civicrm-wp-profile-sync' ),
-					$action
+					$action['name']
 				)
 			);
 			return false;

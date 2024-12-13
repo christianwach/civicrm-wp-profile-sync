@@ -694,7 +694,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array  $form The array of Form data.
 	 * @param string $action The customised name of the action.
 	 */
-	public function validation( $form, $action ) {
+	public function validate_action( $form, $action ) {
 
 		// Skip if the Contact Conditional Reference Field has a value.
 		$this->form_conditional_populate( [ 'action' => &$action ] );
@@ -2296,7 +2296,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 		 * We have a problem here because the ACFE Forms Actions query var has
 		 * not been populated yet since the "make" actions have not run.
 		 *
-		 * This means that "acfe_form_get_action()" cannot be queried to find
+		 * This means that "$this->get_action_output()" cannot be queried to find
 		 * the referenced Contact ID when using an "Action Reference" Field,
 		 * even though it will be populated later when the "make" actions run.
 		 *
@@ -2310,7 +2310,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 			acfe_add_validation_error( '', sprintf(
 				// / * translators: %s The name of the Form Action * /
 				__( 'A Contact ID is required to create an Event in "%s".', 'civicrm-wp-profile-sync' ),
-				$action
+				$action['name']
 			) );
 			return false;
 		}
@@ -2323,7 +2323,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 				sprintf(
 					/* translators: %s The name of the Form Action */
 					__( 'An Event Type ID is required to create an Event in "%s".', 'civicrm-wp-profile-sync' ),
-					$action
+					$action['name']
 				)
 			);
 			return false;
@@ -2336,7 +2336,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 				sprintf(
 					/* translators: %s The name of the Form Action */
 					__( 'A title is required to create an Event in "%s".', 'civicrm-wp-profile-sync' ),
-					$action
+					$action['name']
 				)
 			);
 			return false;
@@ -2349,7 +2349,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 				sprintf(
 					/* translators: %s The name of the Form Action */
 					__( 'A start date is required to create an Event in "%s".', 'civicrm-wp-profile-sync' ),
-					$action
+					$action['name']
 				)
 			);
 			return false;
@@ -2754,7 +2754,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 					sprintf(
 						/* translators: %s The name of the Form Action */
 						__( 'A Street Address is required in "%s".', 'civicrm-wp-profile-sync' ),
-						$action
+						$action['name']
 					)
 				);
 				return false;
@@ -2932,7 +2932,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 				sprintf(
 					/* translators: %s The name of the Form Action */
 					__( 'An invalid Email was found in "%s".', 'civicrm-wp-profile-sync' ),
-					$action
+					$action['name']
 				)
 			);
 			return false;
@@ -3118,7 +3118,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 				sprintf(
 					/* translators: %s The name of the Form Action */
 					__( 'A valid Phone Number is required in "%s".', 'civicrm-wp-profile-sync' ),
-					$action
+					$action['name']
 				)
 			);
 			return false;
@@ -3283,7 +3283,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 				sprintf(
 					/* translators: %s The name of the Form Action */
 					__( 'A Profile is required to enable Online Registration in "%s".', 'civicrm-wp-profile-sync' ),
-					$action
+					$action['name']
 				)
 			);
 			return false;
@@ -3553,7 +3553,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 				sprintf(
 					/* translators: %s The name of the Form Action */
 					__( 'A "From Name" is required to send a Confirmation Email in "%s".', 'civicrm-wp-profile-sync' ),
-					$action
+					$action['name']
 				)
 			);
 			return false;
@@ -3566,7 +3566,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 				sprintf(
 					/* translators: %s The name of the Form Action */
 					__( 'A "From Email" is required to send a Confirmation Email in "%s".', 'civicrm-wp-profile-sync' ),
-					$action
+					$action['name']
 				)
 			);
 			return false;

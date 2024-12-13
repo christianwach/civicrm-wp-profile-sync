@@ -534,7 +534,7 @@ class CWPS_ACF_ACFE_Form_Action_Participant extends CWPS_ACF_ACFE_Form_Action_Ba
 	 * @param array  $form The array of Form data.
 	 * @param string $action The customised name of the action.
 	 */
-	public function validation( $form, $action ) {
+	public function validate_action( $form, $action ) {
 
 		// Skip if the Contact Conditional Reference Field has a value.
 		$this->form_conditional_populate( [ 'action' => &$action ] );
@@ -1778,7 +1778,7 @@ class CWPS_ACF_ACFE_Form_Action_Participant extends CWPS_ACF_ACFE_Form_Action_Ba
 		 * We have a problem here because the ACFE Forms Actions query var has
 		 * not been populated yet since the "make" actions have not run.
 		 *
-		 * This means that "acfe_form_get_action()" cannot be queried to find
+		 * This means that "$this->get_action_output()" cannot be queried to find
 		 * the referenced Contact ID when using an "Action Reference" Field,
 		 * even though it will be populated later when the "make" actions run.
 		 *
@@ -1792,7 +1792,7 @@ class CWPS_ACF_ACFE_Form_Action_Participant extends CWPS_ACF_ACFE_Form_Action_Ba
 			acfe_add_validation_error( '', sprintf(
 				// / * translators: %s The name of the Form Action * /
 				__( 'A Contact ID is required to create a Participant in "%s".', 'civicrm-wp-profile-sync' ),
-				$action
+				$action['name']
 			) );
 			return false;
 		}
@@ -1805,7 +1805,7 @@ class CWPS_ACF_ACFE_Form_Action_Participant extends CWPS_ACF_ACFE_Form_Action_Ba
 				sprintf(
 					/* translators: %s The name of the Form Action */
 					__( 'An Event ID is required to create a Participant in "%s".', 'civicrm-wp-profile-sync' ),
-					$action
+					$action['name']
 				)
 			);
 			return false;
@@ -1818,7 +1818,7 @@ class CWPS_ACF_ACFE_Form_Action_Participant extends CWPS_ACF_ACFE_Form_Action_Ba
 				sprintf(
 					/* translators: %s The name of the Form Action */
 					__( 'A Participant Role ID is required to create a Participant in "%s".', 'civicrm-wp-profile-sync' ),
-					$action
+					$action['name']
 				)
 			);
 			return false;
@@ -1850,7 +1850,7 @@ class CWPS_ACF_ACFE_Form_Action_Participant extends CWPS_ACF_ACFE_Form_Action_Ba
 				sprintf(
 					/* translators: %s The name of the Form Action */
 					__( 'Could not check if the Event is full in "%s".', 'civicrm-wp-profile-sync' ),
-					$action
+					$action['name']
 				)
 			);
 			return false;
@@ -1875,7 +1875,7 @@ class CWPS_ACF_ACFE_Form_Action_Participant extends CWPS_ACF_ACFE_Form_Action_Ba
 			$message = sprintf(
 				/* translators: %s The name of the Form Action */
 				__( 'Cannot add Participant because the Event in "%s" is full.', 'civicrm-wp-profile-sync' ),
-				$action
+				$action['name']
 			);
 		}
 

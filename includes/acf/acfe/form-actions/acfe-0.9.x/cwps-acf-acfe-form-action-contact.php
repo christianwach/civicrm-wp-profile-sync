@@ -1208,7 +1208,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $form The array of Form data.
 	 * @param array $action The array of Action data.
 	 */
-	public function validation( $form, $action ) {
+	public function validate_action( $form, $action ) {
 
 		// Skip if the Contact Conditional Reference Field has a value.
 		$this->form_conditional_populate( [ 'action' => &$action ] );
@@ -4236,7 +4236,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 			sprintf(
 				/* translators: %s The name of the Form Action */
 				__( 'Not enough data to save a Contact in "%s".', 'civicrm-wp-profile-sync' ),
-				$action
+				$action['name']
 			)
 		);
 
