@@ -799,7 +799,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_action_append() {
+	protected function tab_action_append() {
 
 		// Configure Conditional Field.
 		$args = [
@@ -824,7 +824,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_add() {
+	protected function tab_mapping_add() {
 
 		// Get Tab Header.
 		$mapping_tab_header = $this->tab_mapping_header();
@@ -866,7 +866,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_accordion_settings_add() {
+	private function tab_mapping_accordion_settings_add() {
 
 		// Init return.
 		$fields = [];
@@ -1077,7 +1077,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_accordion_event_add() {
+	private function tab_mapping_accordion_event_add() {
 
 		// Init return.
 		$fields = [];
@@ -1141,7 +1141,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_accordion_custom_add() {
+	private function tab_mapping_accordion_custom_add() {
 
 		// Init return.
 		$fields = [];
@@ -1262,7 +1262,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_accordion_location_add() {
+	private function tab_mapping_accordion_location_add() {
 
 		// Init return.
 		$fields = [];
@@ -1719,7 +1719,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_accordion_registration_add() {
+	private function tab_mapping_accordion_registration_add() {
 
 		// Init return.
 		$fields = [];
@@ -2193,7 +2193,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param string $action The customised name of the action.
 	 * @return array $data The array of Event data.
 	 */
-	public function form_event_data( $form, $action ) {
+	private function form_event_data( $form, $action ) {
 
 		// Init data array.
 		$data = [];
@@ -2287,7 +2287,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param string $action The customised name of the action.
 	 * @return bool $valid True if the Event can be saved, false otherwise.
 	 */
-	public function form_event_validate( $form, $action ) {
+	private function form_event_validate( $form, $action ) {
 
 		// Get the Event.
 		$event = $this->form_event_data( $form, $action );
@@ -2371,7 +2371,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $registration The array of Registration data.
 	 * @return array $event The Event data array, or empty on failure.
 	 */
-	public function form_event_save( $event_data, $custom_data, $locblock_data, $registration ) {
+	private function form_event_save( $event_data, $custom_data, $locblock_data, $registration ) {
 
 		// Init return.
 		$event = [];
@@ -2453,7 +2453,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param string $action The customised name of the action.
 	 * @return array $data The array of LocBlock data.
 	 */
-	public function form_locblock_data( $form, $action ) {
+	private function form_locblock_data( $form, $action ) {
 
 		// Init return.
 		$data = [];
@@ -2524,7 +2524,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param string $action The customised name of the action.
 	 * @return bool $valid True if the LocBlock can be saved, false otherwise.
 	 */
-	public function form_locblock_validate( $form, $action ) {
+	private function form_locblock_validate( $form, $action ) {
 
 		// Get the Event LocBlock data.
 		$data = $this->form_locblock_data( $form, $action );
@@ -2587,7 +2587,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $locblock_data The array of LocBlock data.
 	 * @return array $data The array of LocBlock data, or empty on failure.
 	 */
-	public function form_locblock_save( $locblock_data ) {
+	private function form_locblock_save( $locblock_data ) {
 
 		// Init return.
 		$data = [];
@@ -2662,7 +2662,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param string $action The customised name of the action.
 	 * @return array $data The array of Address data.
 	 */
-	public function form_locblock_address_data( $form, $action ) {
+	private function form_locblock_address_data( $form, $action ) {
 
 		// Init data array.
 		$data = [];
@@ -2733,7 +2733,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param string $action The customised name of the action.
 	 * @return bool $valid True if the LocBlock Address can be saved, false otherwise.
 	 */
-	public function form_locblock_address_validate( $data, $action ) {
+	private function form_locblock_address_validate( $data, $action ) {
 
 		// Build Conditional Check args.
 		$args = [
@@ -2774,7 +2774,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $address_data The array of Address data.
 	 * @return array $addresses The array of Address data, or empty on failure.
 	 */
-	public function form_locblock_address_add( $address_data ) {
+	private function form_locblock_address_add( $address_data ) {
 
 		// Init return.
 		$address = [];
@@ -2829,7 +2829,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param string $action The customised name of the action.
 	 * @return array $data The array of Email data.
 	 */
-	public function form_locblock_email_data( $form, $action ) {
+	private function form_locblock_email_data( $form, $action ) {
 
 		// Init return.
 		$data = [
@@ -2907,7 +2907,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param string $action The customised name of the action.
 	 * @return bool $valid True if the LocBlock Address can be saved, false otherwise.
 	 */
-	public function form_locblock_email_validate( $data, $action ) {
+	private function form_locblock_email_validate( $data, $action ) {
 
 		// Skip it if there's no data.
 		if ( empty( $data ) ) {
@@ -2951,7 +2951,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $email_data The array of Email data.
 	 * @return array $emails The array of Emails, or empty on failure.
 	 */
-	public function form_locblock_email_add( $email_data ) {
+	private function form_locblock_email_add( $email_data ) {
 
 		// Init return.
 		$emails = [];
@@ -3008,7 +3008,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param string $action The customised name of the action.
 	 * @return array $data The array of Phone data.
 	 */
-	public function form_locblock_phone_data( $form, $action ) {
+	private function form_locblock_phone_data( $form, $action ) {
 
 		// Init return.
 		$data = [
@@ -3093,7 +3093,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param string $action The customised name of the action.
 	 * @return bool $valid True if the LocBlock Address can be saved, false otherwise.
 	 */
-	public function form_locblock_phone_validate( $data, $action ) {
+	private function form_locblock_phone_validate( $data, $action ) {
 
 		// Skip it if there's no data.
 		if ( empty( $data ) ) {
@@ -3137,7 +3137,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $phone_data The array of Phone data.
 	 * @return array $phones The array of Phones, or empty on failure.
 	 */
-	public function form_locblock_phone_add( $phone_data ) {
+	private function form_locblock_phone_add( $phone_data ) {
 
 		// Init return.
 		$phones = [];
@@ -3194,7 +3194,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param string $action The customised name of the action.
 	 * @return array $data The array of Registration data.
 	 */
-	public function form_registration_data( $form, $action ) {
+	private function form_registration_data( $form, $action ) {
 
 		// Init return.
 		$data = [];
@@ -3266,7 +3266,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param string $action The customised name of the action.
 	 * @return bool $valid True if the Event Registration can be enabled, false otherwise.
 	 */
-	public function form_registration_validate( $form, $action ) {
+	private function form_registration_validate( $form, $action ) {
 
 		// Get the Event Registration data.
 		$data = $this->form_registration_data( $form, $action );
@@ -3309,7 +3309,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $data The array of Registration data.
 	 * @return array $profiles The array of Profile data, or default on failure.
 	 */
-	public function form_registration_save( $event, $data ) {
+	private function form_registration_save( $event, $data ) {
 
 		// Init formatted return.
 		$profiles = [
@@ -3370,7 +3370,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param string $action The customised name of the action.
 	 * @return array $data The array of Settings data.
 	 */
-	public function form_registration_settings_data( $form, $action ) {
+	private function form_registration_settings_data( $form, $action ) {
 
 		// Init return.
 		$data = [];
@@ -3405,7 +3405,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param string $action The customised name of the action.
 	 * @return array $data The array of Registration Screen data.
 	 */
-	public function form_registration_screen_data( $form, $action ) {
+	private function form_registration_screen_data( $form, $action ) {
 
 		// Init return.
 		$data = [];
@@ -3443,7 +3443,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param string $action The customised name of the action.
 	 * @return array $data The array of Confirmation Screen data.
 	 */
-	public function form_registration_confirmation_screen_data( $form, $action ) {
+	private function form_registration_confirmation_screen_data( $form, $action ) {
 
 		// Init return.
 		$data = [];
@@ -3477,7 +3477,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param string $action The customised name of the action.
 	 * @return array $data The array of Thank You Screen data.
 	 */
-	public function form_registration_thankyou_screen_data( $form, $action ) {
+	private function form_registration_thankyou_screen_data( $form, $action ) {
 
 		// Init return.
 		$data = [];
@@ -3505,7 +3505,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param string $action The customised name of the action.
 	 * @return array $data The array of Confirmation Email data.
 	 */
-	public function form_registration_confirmation_email_data( $form, $action ) {
+	private function form_registration_confirmation_email_data( $form, $action ) {
 
 		// Init return.
 		$data = [];
@@ -3539,7 +3539,7 @@ class CWPS_ACF_ACFE_Form_Action_Event extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param string $action The customised name of the action.
 	 * @return bool $valid True if the Confirmation Email can be sent, false otherwise.
 	 */
-	public function form_registration_confirmation_email_validate( $data, $action ) {
+	private function form_registration_confirmation_email_validate( $data, $action ) {
 
 		// Skip if Confirmation Email is disabled.
 		if ( empty( $data['is_email_confirm'] ) ) {

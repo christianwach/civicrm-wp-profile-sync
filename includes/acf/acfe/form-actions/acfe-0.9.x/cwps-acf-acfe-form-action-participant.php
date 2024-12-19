@@ -621,7 +621,7 @@ class CWPS_ACF_ACFE_Form_Action_Participant extends CWPS_ACF_ACFE_Form_Action_Ba
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_action_append() {
+	protected function tab_action_append() {
 
 		// Define Field.
 		$participant_role_id_field = [
@@ -795,7 +795,7 @@ class CWPS_ACF_ACFE_Form_Action_Participant extends CWPS_ACF_ACFE_Form_Action_Ba
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_add() {
+	protected function tab_mapping_add() {
 
 		// Get Tab Header.
 		$mapping_tab_header = $this->tab_mapping_header();
@@ -837,7 +837,7 @@ class CWPS_ACF_ACFE_Form_Action_Participant extends CWPS_ACF_ACFE_Form_Action_Ba
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_accordion_contacts_add() {
+	private function tab_mapping_accordion_contacts_add() {
 
 		// Init return.
 		$fields = [];
@@ -1009,7 +1009,7 @@ class CWPS_ACF_ACFE_Form_Action_Participant extends CWPS_ACF_ACFE_Form_Action_Ba
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_accordion_participants_add() {
+	private function tab_mapping_accordion_participants_add() {
 
 		// Init return.
 		$fields = [];
@@ -1186,7 +1186,7 @@ class CWPS_ACF_ACFE_Form_Action_Participant extends CWPS_ACF_ACFE_Form_Action_Ba
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_accordion_event_add() {
+	private function tab_mapping_accordion_event_add() {
 
 		// Init return.
 		$fields = [];
@@ -1347,7 +1347,7 @@ class CWPS_ACF_ACFE_Form_Action_Participant extends CWPS_ACF_ACFE_Form_Action_Ba
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_accordion_participant_add() {
+	private function tab_mapping_accordion_participant_add() {
 
 		// Init return.
 		$fields = [];
@@ -1411,7 +1411,7 @@ class CWPS_ACF_ACFE_Form_Action_Participant extends CWPS_ACF_ACFE_Form_Action_Ba
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_accordion_custom_add() {
+	private function tab_mapping_accordion_custom_add() {
 
 		// Init return.
 		$fields = [];
@@ -1614,7 +1614,7 @@ class CWPS_ACF_ACFE_Form_Action_Participant extends CWPS_ACF_ACFE_Form_Action_Ba
 	 * @param string $action The customised name of the action.
 	 * @return array $data The array of Participant data.
 	 */
-	public function form_participant_data( $form, $action ) {
+	private function form_participant_data( $form, $action ) {
 
 		// Init data array.
 		$data = [];
@@ -1766,7 +1766,7 @@ class CWPS_ACF_ACFE_Form_Action_Participant extends CWPS_ACF_ACFE_Form_Action_Ba
 	 * @param string $action The customised name of the action.
 	 * @return bool $valid True if the Participant can be saved, false otherwise.
 	 */
-	public function form_participant_validate( $form, $action ) {
+	private function form_participant_validate( $form, $action ) {
 
 		// Get the Participant.
 		$participant = $this->form_participant_data( $form, $action );
@@ -1896,7 +1896,7 @@ class CWPS_ACF_ACFE_Form_Action_Participant extends CWPS_ACF_ACFE_Form_Action_Ba
 	 * @param array $custom_data The array of Custom Field data.
 	 * @return array $participant The Participant data array, or empty on failure.
 	 */
-	public function form_participant_save( $participant_data, $custom_data ) {
+	private function form_participant_save( $participant_data, $custom_data ) {
 
 		// Init return.
 		$participant = [];

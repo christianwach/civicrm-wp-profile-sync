@@ -536,7 +536,7 @@ class CWPS_ACF_ACFE_Form_Action_Activity extends CWPS_ACF_ACFE_Form_Action_Base 
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_action_append() {
+	protected function tab_action_append() {
 
 		// Define Field.
 		$activity_type_field = [
@@ -706,7 +706,7 @@ class CWPS_ACF_ACFE_Form_Action_Activity extends CWPS_ACF_ACFE_Form_Action_Base 
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_add() {
+	protected function tab_mapping_add() {
 
 		// Get Tab Header.
 		$mapping_tab_header = $this->tab_mapping_header();
@@ -744,7 +744,7 @@ class CWPS_ACF_ACFE_Form_Action_Activity extends CWPS_ACF_ACFE_Form_Action_Base 
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_accordion_contacts_add() {
+	private function tab_mapping_accordion_contacts_add() {
 
 		// Init return.
 		$fields = [];
@@ -916,7 +916,7 @@ class CWPS_ACF_ACFE_Form_Action_Activity extends CWPS_ACF_ACFE_Form_Action_Base 
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_accordion_activity_add() {
+	private function tab_mapping_accordion_activity_add() {
 
 		// Init return.
 		$fields = [];
@@ -980,7 +980,7 @@ class CWPS_ACF_ACFE_Form_Action_Activity extends CWPS_ACF_ACFE_Form_Action_Base 
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_accordion_custom_add() {
+	private function tab_mapping_accordion_custom_add() {
 
 		// Init return.
 		$fields = [];
@@ -1101,7 +1101,7 @@ class CWPS_ACF_ACFE_Form_Action_Activity extends CWPS_ACF_ACFE_Form_Action_Base 
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_accordion_attachment_add() {
+	private function tab_mapping_accordion_attachment_add() {
 
 		// Init return.
 		$fields = [];
@@ -1224,7 +1224,7 @@ class CWPS_ACF_ACFE_Form_Action_Activity extends CWPS_ACF_ACFE_Form_Action_Base 
 	 * @param string $action The customised name of the action.
 	 * @return array $data The array of Activity data.
 	 */
-	public function form_activity_data( $form, $action ) {
+	private function form_activity_data( $form, $action ) {
 
 		// Init data array.
 		$data = [];
@@ -1315,7 +1315,7 @@ class CWPS_ACF_ACFE_Form_Action_Activity extends CWPS_ACF_ACFE_Form_Action_Base 
 	 * @param string $action The customised name of the action.
 	 * @return bool $valid True if the Activity can be saved, false otherwise.
 	 */
-	public function form_activity_validate( $form, $action ) {
+	private function form_activity_validate( $form, $action ) {
 
 		// Get the Activity.
 		$activity = $this->form_activity_data( $form, $action );
@@ -1371,7 +1371,7 @@ class CWPS_ACF_ACFE_Form_Action_Activity extends CWPS_ACF_ACFE_Form_Action_Base 
 	 * @param array $custom_data The array of Custom Field data.
 	 * @return array $activity The Activity data array, or empty on failure.
 	 */
-	public function form_activity_save( $activity_data, $custom_data ) {
+	private function form_activity_save( $activity_data, $custom_data ) {
 
 		// Init return.
 		$activity = [];
@@ -1423,7 +1423,7 @@ class CWPS_ACF_ACFE_Form_Action_Activity extends CWPS_ACF_ACFE_Form_Action_Base 
 	 *
 	 * @param array $activity The array of Activity data.
 	 */
-	public function form_activity_notify( $activity ) {
+	private function form_activity_notify( $activity ) {
 
 		// Skip if there are no assignees.
 		if ( empty( $activity['assignee_contact_id'] ) ) {
@@ -1468,7 +1468,7 @@ class CWPS_ACF_ACFE_Form_Action_Activity extends CWPS_ACF_ACFE_Form_Action_Base 
 	 * @param array $field The array of Field data.
 	 * @return array $data The array of Attachment data.
 	 */
-	public function form_attachments_data( $form, $field ) {
+	private function form_attachments_data( $form, $field ) {
 
 		// Init return.
 		$data = [];
@@ -1536,7 +1536,7 @@ class CWPS_ACF_ACFE_Form_Action_Activity extends CWPS_ACF_ACFE_Form_Action_Base 
 	 * @param array $attachment_data The array of Attachment data.
 	 * @return array $attachments The array of Attachments, or empty on failure.
 	 */
-	public function form_attachments_save( $activity, $attachment_data ) {
+	private function form_attachments_save( $activity, $attachment_data ) {
 
 		// Init return.
 		$attachments = [];

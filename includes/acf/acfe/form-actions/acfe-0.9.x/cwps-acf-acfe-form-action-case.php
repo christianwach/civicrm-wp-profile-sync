@@ -530,7 +530,7 @@ class CWPS_ACF_ACFE_Form_Action_Case extends CWPS_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_action_append() {
+	protected function tab_action_append() {
 
 		// Define Case Type Field.
 		$case_type_field = [
@@ -694,7 +694,7 @@ class CWPS_ACF_ACFE_Form_Action_Case extends CWPS_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_add() {
+	protected function tab_mapping_add() {
 
 		// Get Tab Header.
 		$mapping_tab_header = $this->tab_mapping_header();
@@ -728,7 +728,7 @@ class CWPS_ACF_ACFE_Form_Action_Case extends CWPS_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_accordion_contacts_add() {
+	private function tab_mapping_accordion_contacts_add() {
 
 		// Init return.
 		$fields = [];
@@ -900,7 +900,7 @@ class CWPS_ACF_ACFE_Form_Action_Case extends CWPS_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_accordion_case_add() {
+	private function tab_mapping_accordion_case_add() {
 
 		// Init return.
 		$fields = [];
@@ -964,7 +964,7 @@ class CWPS_ACF_ACFE_Form_Action_Case extends CWPS_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_accordion_custom_add() {
+	private function tab_mapping_accordion_custom_add() {
 
 		// Init return.
 		$fields = [];
@@ -1089,7 +1089,7 @@ class CWPS_ACF_ACFE_Form_Action_Case extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param string $action The customised name of the action.
 	 * @return array $data The array of Case data.
 	 */
-	public function form_case_data( $form, $action ) {
+	private function form_case_data( $form, $action ) {
 
 		// Init data array.
 		$data = [];
@@ -1176,7 +1176,7 @@ class CWPS_ACF_ACFE_Form_Action_Case extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param string $action The customised name of the action.
 	 * @return bool $valid True if the Case can be saved, false otherwise.
 	 */
-	public function form_case_validate( $form, $action ) {
+	private function form_case_validate( $form, $action ) {
 
 		// Get the Case.
 		$case = $this->form_case_data( $form, $action );
@@ -1232,7 +1232,7 @@ class CWPS_ACF_ACFE_Form_Action_Case extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $custom_data The array of Custom Field data.
 	 * @return array|bool $case The Case data array, or false on failure.
 	 */
-	public function form_case_save( $case_data, $custom_data ) {
+	private function form_case_save( $case_data, $custom_data ) {
 
 		// Init return.
 		$case = false;

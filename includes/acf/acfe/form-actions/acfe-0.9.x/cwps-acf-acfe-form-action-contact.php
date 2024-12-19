@@ -1370,7 +1370,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $action The array of Action data.
 	 * @return bool True when auto-fill is enabled, false otherwise.
 	 */
-	public function action_is_autoload( $action ) {
+	private function action_is_autoload( $action ) {
 
 		// Check the Field to see if this Action is loading values.
 		$autoload_enabled = $action['settings']['autoload_enabled'];
@@ -1396,7 +1396,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $action The array of Action data.
 	 * @return bool True when autoupdate is enabled, false otherwise.
 	 */
-	public function action_is_autoupdate( $action ) {
+	private function action_is_autoupdate( $action ) {
 
 		// Check the Field to see if this Action is loading values.
 		$autoupdate_enabled = $action['settings']['autoupdate_enabled'];
@@ -1416,7 +1416,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $action The array of Action data.
 	 * @return bool True when this is the Submitting Contact Action, false otherwise.
 	 */
-	public function action_is_submitter( $action ) {
+	private function action_is_submitter( $action ) {
 
 		// Check the Field to see if this Action is the "Submitting Contact" Action.
 		$submitter_contact = $action['settings']['submitting_contact'];
@@ -1437,7 +1437,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_action_append() {
+	protected function tab_action_append() {
 
 		// Define "Submitting Contact" Field.
 		$submitting_contact_field = [
@@ -1610,7 +1610,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_add() {
+	protected function tab_mapping_add() {
 
 		// Get Tab Header.
 		$mapping_tab_header = $this->tab_mapping_header();
@@ -1744,7 +1744,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_accordion_contact_add() {
+	private function tab_mapping_accordion_contact_add() {
 
 		// Init return.
 		$fields = [];
@@ -1828,7 +1828,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_accordion_custom_add() {
+	private function tab_mapping_accordion_custom_add() {
 
 		// Init return.
 		$fields = [];
@@ -1968,7 +1968,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_accordion_email_add() {
+	private function tab_mapping_accordion_email_add() {
 
 		// Init return.
 		$fields = [];
@@ -2119,7 +2119,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_accordion_website_add() {
+	private function tab_mapping_accordion_website_add() {
 
 		// Init return.
 		$fields = [];
@@ -2264,7 +2264,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_accordion_address_add() {
+	private function tab_mapping_accordion_address_add() {
 
 		// Init return.
 		$fields = [];
@@ -2494,7 +2494,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_accordion_address_custom_add() {
+	private function tab_mapping_accordion_address_custom_add() {
 
 		// Init return.
 		$fields = [];
@@ -2594,7 +2594,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_accordion_phone_add() {
+	private function tab_mapping_accordion_phone_add() {
 
 		// Init return.
 		$fields = [];
@@ -2762,7 +2762,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_accordion_im_add() {
+	private function tab_mapping_accordion_im_add() {
 
 		// Init return.
 		$fields = [];
@@ -2930,7 +2930,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_accordion_group_add() {
+	private function tab_mapping_accordion_group_add() {
 
 		// Init return.
 		$fields = [];
@@ -3126,7 +3126,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_accordion_membership_add() {
+	private function tab_mapping_accordion_membership_add() {
 
 		// Init return.
 		$fields = [];
@@ -3304,7 +3304,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_accordion_note_add() {
+	private function tab_mapping_accordion_note_add() {
 
 		// Init return.
 		$fields = [];
@@ -3432,7 +3432,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_accordion_attachment_add() {
+	private function tab_mapping_accordion_attachment_add() {
 
 		// Init return.
 		$fields = [];
@@ -3551,7 +3551,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_mapping_accordion_tag_add() {
+	private function tab_mapping_accordion_tag_add() {
 
 		// Init return.
 		$fields = [];
@@ -3702,7 +3702,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_relationship_add() {
+	protected function tab_relationship_add() {
 
 		// Get Tab Header.
 		$relationship_tab_header = $this->tab_relationship_header();
@@ -3728,7 +3728,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_relationship_accordion_relationship_add() {
+	private function tab_relationship_accordion_relationship_add() {
 
 		// Init return.
 		$fields = [];
@@ -3969,7 +3969,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 *
 	 * @return array $fields The array of Fields for this section.
 	 */
-	public function tab_relationship_accordion_custom_add() {
+	private function tab_relationship_accordion_custom_add() {
 
 		// Init return.
 		$fields = [];
@@ -4119,7 +4119,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $action The array of Action data.
 	 * @return array $data The array of Contact data.
 	 */
-	public function form_contact_data( $form, $action ) {
+	private function form_contact_data( $form, $action ) {
 
 		// Init data array.
 		$data = [];
@@ -4166,7 +4166,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $action The array of Action data.
 	 * @return bool $valid True if the Contact can be saved, false otherwise.
 	 */
-	public function form_contact_validate( $form, $action ) {
+	private function form_contact_validate( $form, $action ) {
 
 		// Get the Contact.
 		$contact = $this->form_contact_data( $form, $action );
@@ -4255,7 +4255,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $custom_data The array of Custom Field data.
 	 * @return array $contact The Contact data array, or empty array on failure.
 	 */
-	public function form_contact_save( $contact_data, $email_data, $custom_data ) {
+	private function form_contact_save( $contact_data, $email_data, $custom_data ) {
 
 		// Init return.
 		$contact = [];
@@ -4409,7 +4409,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $action The array of Action data.
 	 * @return integer|bool $contact_id The numeric ID of the Contact, or false if not found.
 	 */
-	public function form_contact_id_get( $contact_data, $email_data, $action ) {
+	private function form_contact_id_get( $contact_data, $email_data, $action ) {
 
 		// Init return.
 		$contact_id = false;
@@ -4445,7 +4445,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $action The array of Action data.
 	 * @return integer|bool $contact_id The numeric ID of the Contact, or false if not found.
 	 */
-	public function form_contact_id_get_submitter( $action ) {
+	private function form_contact_id_get_submitter( $action ) {
 
 		// Init return.
 		$contact_id = false;
@@ -4484,7 +4484,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $contact_data The array of Contact data.
 	 * @return integer|bool $contact_id The numeric ID of the Contact, or false if not found.
 	 */
-	public function form_contact_id_get_from_field( $contact_data ) {
+	private function form_contact_id_get_from_field( $contact_data ) {
 
 		// Init return.
 		$contact_id = false;
@@ -4511,7 +4511,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $action The array of Action data.
 	 * @return integer|bool $contact_id The numeric ID of the Contact, or false if not found.
 	 */
-	public function form_contact_id_get_existing( $form, $action ) {
+	private function form_contact_id_get_existing( $form, $action ) {
 
 		// Init return.
 		$contact_id = false;
@@ -4547,7 +4547,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $action The array of Action data.
 	 * @return integer|bool $contact_id The numeric ID of the Contact, or false if not found.
 	 */
-	public function form_contact_id_get_related( $relationships, $action ) {
+	private function form_contact_id_get_related( $relationships, $action ) {
 
 		// Init return.
 		$contact_id = false;
@@ -4609,7 +4609,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $action The array of Action data.
 	 * @return integer|bool $contact_id The numeric ID of the Contact, or false if not found.
 	 */
-	public function form_contact_id_get_deduped( $contact_data, $email_data, $action ) {
+	private function form_contact_id_get_deduped( $contact_data, $email_data, $action ) {
 
 		// Init return.
 		$contact_id = false;
@@ -4659,7 +4659,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $action The array of Action data.
 	 * @return integer|bool $contact_id The numeric ID of the Contact, or false if not found.
 	 */
-	public function form_contact_id_get_from_tag( $form, $action ) {
+	private function form_contact_id_get_from_tag( $form, $action ) {
 
 		// Init return.
 		$contact_id = false;
@@ -4694,7 +4694,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $action The array of Action data.
 	 * @return array $data The array of Email data.
 	 */
-	public function form_email_data( $form, $action ) {
+	private function form_email_data( $form, $action ) {
 
 		// Init data array.
 		$data = [];
@@ -4762,7 +4762,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $email_data The array of Email data.
 	 * @return array $emails The array of Emails, or empty array on failure.
 	 */
-	public function form_email_save( $contact, $email_data ) {
+	private function form_email_save( $contact, $email_data ) {
 
 		// Init return.
 		$emails = [];
@@ -4830,7 +4830,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $email_data The array of Email data.
 	 * @return string|bool $email The Email Address, or false on failure.
 	 */
-	public function form_email_primary_get( $email_data ) {
+	private function form_email_primary_get( $email_data ) {
 
 		// Init return.
 		$email = false;
@@ -4892,7 +4892,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $action The array of Action data.
 	 * @return array $data The array of Relationship data.
 	 */
-	public function form_relationship_data( $form, $action ) {
+	private function form_relationship_data( $form, $action ) {
 
 		// Init return.
 		$data = [];
@@ -4984,7 +4984,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param integer $contact_id The numeric ID of the Contact if loaded.
 	 * @return array $relationship_parsed The array of parsed Relationship data.
 	 */
-	public function form_relationship_load( $action, $relationship_data, $contact_id = false ) {
+	private function form_relationship_load( $action, $relationship_data, $contact_id = false ) {
 
 		// Init parsed array.
 		$relationship_parsed = [];
@@ -5134,7 +5134,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $field The ACF Repeater Field for a Relationship.
 	 * @return array $relationships The array of Relationships, or empty on failure.
 	 */
-	public function form_relationships_get_related( $field ) {
+	private function form_relationships_get_related( $field ) {
 
 		// Init return.
 		$relationships = [
@@ -5218,7 +5218,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $relationship_data The array of parsed Relationship data.
 	 * @return array $relationships The array of Relationships, or empty array on failure.
 	 */
-	public function form_relationship_save( $contact, $relationship_data ) {
+	private function form_relationship_save( $contact, $relationship_data ) {
 
 		// Init return.
 		$relationships = [];
@@ -5281,7 +5281,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param string  $direction The direction of the Relationship.
 	 * @return integer $offset The Relationship offset.
 	 */
-	public function form_relationship_offset( $relationships, $type_id, $related_contact_id, $direction ) {
+	private function form_relationship_offset( $relationships, $type_id, $related_contact_id, $direction ) {
 
 		// Init as first.
 		$offset = 0;
@@ -5367,7 +5367,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param integer $contact_id The numeric ID of the Contact if loaded.
 	 * @return array $relationships_inverse The array of inverse Relationship data.
 	 */
-	public function form_relationship_inverse( $action, $relationship_data, $contact_id = false ) {
+	private function form_relationship_inverse( $action, $relationship_data, $contact_id = false ) {
 
 		// Init parsed array.
 		$relationships_inverse = [];
@@ -5478,7 +5478,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $relationship_data The array of Relationship data from the Action.
 	 * @return array $relationships The array of Relationships to save, or empty on failure.
 	 */
-	public function form_relationship_compare( $action, $contact, $relationships_parsed, $relationship_data ) {
+	private function form_relationship_compare( $action, $contact, $relationships_parsed, $relationship_data ) {
 
 		// Init return.
 		$relationships = [];
@@ -5581,7 +5581,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $field The array of ACF Repeater Field data for the Relationship.
 	 * @return array|bool $relationship_filled The array of filled Relationship data, or empty on failure.
 	 */
-	public function form_relationship_fill( $relationship, $field ) {
+	private function form_relationship_fill( $relationship, $field ) {
 
 		// Parse against the incoming data.
 		$relationship_filled = [];
@@ -5618,7 +5618,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $action The array of Action data.
 	 * @return array $data The array of Website data.
 	 */
-	public function form_website_data( $form, $action ) {
+	private function form_website_data( $form, $action ) {
 
 		// Init data array.
 		$data = [];
@@ -5686,7 +5686,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $website_data The array of Website data.
 	 * @return array $websites The array of Websites, or empty array on failure.
 	 */
-	public function form_website_save( $contact, $website_data ) {
+	private function form_website_save( $contact, $website_data ) {
 
 		// Init return.
 		$websites = [];
@@ -5752,7 +5752,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $action The array of Action data.
 	 * @return array $data The array of Address data.
 	 */
-	public function form_address_data( $form, $action ) {
+	private function form_address_data( $form, $action ) {
 
 		// Init data array.
 		$data = [];
@@ -5835,7 +5835,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $address_data The array of Address data.
 	 * @return array $addresses The array of Addresses, or empty array on failure.
 	 */
-	public function form_address_save( $contact, $address_data ) {
+	private function form_address_save( $contact, $address_data ) {
 
 		// Init return.
 		$addresses = [];
@@ -5903,7 +5903,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $action The array of Action data.
 	 * @return array $data The array of Phone data.
 	 */
-	public function form_phone_data( $form, $action ) {
+	private function form_phone_data( $form, $action ) {
 
 		// Init data array.
 		$data = [];
@@ -5974,7 +5974,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $phone_data The array of Phone data.
 	 * @return array $phones The array of Phones, or empty array on failure.
 	 */
-	public function form_phone_save( $contact, $phone_data ) {
+	private function form_phone_save( $contact, $phone_data ) {
 
 		// Init return.
 		$phones = [];
@@ -6056,7 +6056,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $action The array of Action data.
 	 * @return array $data The array of Instant Messenger data.
 	 */
-	public function form_im_data( $form, $action ) {
+	private function form_im_data( $form, $action ) {
 
 		// Init data array.
 		$data = [];
@@ -6127,7 +6127,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $im_data The array of Instant Messenger data.
 	 * @return array $ims The array of Instant Messengers, or empty array on failure.
 	 */
-	public function form_im_save( $contact, $im_data ) {
+	private function form_im_save( $contact, $im_data ) {
 
 		// Init return.
 		$ims = [];
@@ -6209,7 +6209,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $action The array of Action data.
 	 * @return array $data The array of Group data.
 	 */
-	public function form_group_data( $form, $action ) {
+	private function form_group_data( $form, $action ) {
 
 		// Init return.
 		$data = [];
@@ -6273,7 +6273,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $group_data The array of Group data.
 	 * @return array $groups The array of Groups, or empty array on failure.
 	 */
-	public function form_group_save( $contact, $group_data ) {
+	private function form_group_save( $contact, $group_data ) {
 
 		// Init return.
 		$groups = [];
@@ -6382,7 +6382,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $action The array of Action data.
 	 * @return array $data The array of Membership data.
 	 */
-	public function form_membership_data( $form, $action ) {
+	private function form_membership_data( $form, $action ) {
 
 		// Init return.
 		$data = [];
@@ -6443,7 +6443,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $membership_data The array of Membership data.
 	 * @return array $memberships The array of Memberships, or empty array on failure.
 	 */
-	public function form_membership_save( $contact, $membership_data ) {
+	private function form_membership_save( $contact, $membership_data ) {
 
 		// Init return.
 		$memberships = [];
@@ -6516,7 +6516,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $action The array of Action data.
 	 * @return array $data The array of Note data.
 	 */
-	public function form_note_data( $form, $action ) {
+	private function form_note_data( $form, $action ) {
 
 		// Init data array.
 		$data = [];
@@ -6588,7 +6588,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $note_data The array of Note data.
 	 * @return array $notes The array of Notes, or empty array on failure.
 	 */
-	public function form_note_save( $contact, $note_data ) {
+	private function form_note_save( $contact, $note_data ) {
 
 		// Init return.
 		$notes = [];
@@ -6661,7 +6661,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $field The array of Note Field data.
 	 * @return array $data The array of Attachment data.
 	 */
-	public function form_note_attachments_data( $form, $field ) {
+	private function form_note_attachments_data( $form, $field ) {
 
 		// Init return.
 		$data = [];
@@ -6729,7 +6729,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $attachment_data The array of Attachment data.
 	 * @return array $attachments The array of Attachments, or empty array on failure.
 	 */
-	public function form_note_attachments_save( $note, $attachment_data ) {
+	private function form_note_attachments_save( $note, $attachment_data ) {
 
 		// Init return.
 		$attachments = [];
@@ -6816,7 +6816,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $action The array of Action data.
 	 * @return array $data The array of Tag data.
 	 */
-	public function form_tag_data( $form, $action ) {
+	private function form_tag_data( $form, $action ) {
 
 		// Init data array.
 		$data = [];
@@ -6872,7 +6872,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 	 * @param array $tag_data The array of Tag data.
 	 * @return array $tags The array of Tags, or empty on failure.
 	 */
-	public function form_tag_save( $contact, $tag_data ) {
+	private function form_tag_save( $contact, $tag_data ) {
 
 		// Init return.
 		$tags = [];
