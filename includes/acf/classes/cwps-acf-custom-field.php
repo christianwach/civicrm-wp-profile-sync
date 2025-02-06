@@ -555,6 +555,79 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	// -------------------------------------------------------------------------
 
 	/**
+	 * Get the values for a given CiviCRM Event ID and set of Custom Fields.
+	 *
+	 * @since 0.7.0
+	 *
+	 * @param integer $case_id The numeric ID of the CiviCRM Event to query.
+	 * @param array   $custom_field_ids The Custom Field IDs to query.
+	 * @return array $case_data An array of Case data.
+	 */
+	public function values_get_by_event_id( $event_id, $custom_field_ids = [] ) {
+
+		// Init return.
+		$event_data = [];
+
+		// Bail if we have no Custom Field IDs.
+		if ( empty( $custom_field_ids ) ) {
+			return $event_data;
+		}
+
+		// Try and init CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return $event_data;
+		}
+
+		// Format codes.
+		$codes = [];
+		foreach ( $custom_field_ids as $custom_field_id ) {
+			$codes[] = 'custom_' . $custom_field_id;
+		}
+
+		// Define params to get queried Case.
+		$params = [
+			'version'    => 3,
+			'sequential' => 1,
+			'id'         => $event_id,
+			'return'     => $codes,
+			'options'    => [
+				'limit' => 0, // No limit.
+			],
+		];
+
+		// Call the API.
+		$result = civicrm_api( 'Event', 'get', $params );
+
+		// Bail if there's an error.
+		if ( ! empty( $result['is_error'] ) && 1 === (int) $result['is_error'] ) {
+			return $event_data;
+		}
+
+		// Bail if there are no results.
+		if ( empty( $result['values'] ) ) {
+			return $event_data;
+		}
+
+		// Overwrite return.
+		foreach ( $result['values'] as $item ) {
+			foreach ( $item as $key => $value ) {
+				if ( substr( $key, 0, 7 ) == 'custom_' ) {
+					$index               = (int) str_replace( 'custom_', '', $key );
+					$event_data[ $index ] = $value;
+				}
+			}
+		}
+
+		// Maybe filter here?
+
+		// --<
+		return $event_data;
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
 	 * Intercept when a Post has been updated from a Participant via the Mapper.
 	 *
 	 * Sync any associated ACF Fields mapped to Custom Fields.
