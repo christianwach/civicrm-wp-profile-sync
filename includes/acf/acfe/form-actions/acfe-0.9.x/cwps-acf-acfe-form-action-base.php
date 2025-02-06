@@ -904,23 +904,23 @@ class CWPS_ACF_ACFE_Form_Action_Base extends acfe_module_form_action {
 		switch ( $entity_type ) {
 
 			case 'activity':
-				$values = $this->plugin->civicrm->custom_field->values_get_by_activity_id( $entity['id'], $custom_field_ids );
+				$values = $this->civicrm->custom_field->values_get_by_activity_id( $entity['id'], $custom_field_ids );
 				break;
 
 			case 'case':
-				$values = $this->plugin->civicrm->custom_field->values_get_by_case_id( $entity['id'], $custom_field_ids );
+				$values = $this->civicrm->custom_field->values_get_by_case_id( $entity['id'], $custom_field_ids );
 				break;
 
 			case 'contact':
-				$values = $this->plugin->civicrm->custom_field->values_get_by_contact_id( $entity['id'], $custom_field_ids );
+				$values = $this->civicrm->custom_field->values_get_by_contact_id( $entity['id'], $custom_field_ids );
 				break;
 
 			case 'event':
-				$values = $this->plugin->civicrm->custom_field->values_get_by_event_id( $entity['id'], $custom_field_ids );
+				$values = $this->civicrm->custom_field->values_get_by_event_id( $entity['id'], $custom_field_ids );
 				break;
 
 			case 'participant':
-				$values = $this->plugin->civicrm->custom_field->values_get_by_participant_id( $entity['id'], $custom_field_ids );
+				$values = $this->civicrm->custom_field->values_get_by_participant_id( $entity['id'], $custom_field_ids );
 				break;
 
 		}
