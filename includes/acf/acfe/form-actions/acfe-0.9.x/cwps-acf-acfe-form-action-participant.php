@@ -1743,6 +1743,7 @@ class CWPS_ACF_ACFE_Form_Action_Participant extends CWPS_ACF_ACFE_Form_Action_Ba
 						// Set up the WordPress Post.
 						$post_id = acf_maybe_get_POST( 'post_id' );
 						global $post;
+						// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 						$post = get_post( $post_id );
 						setup_postdata( $post );
 						// Filter the ACF to return the actual Post ID.
@@ -2028,7 +2029,7 @@ class CWPS_ACF_ACFE_Form_Action_Participant extends CWPS_ACF_ACFE_Form_Action_Ba
 	public function form_validate_post_id( $preload, $post_id ) {
 
 		// Bail when not validating.
-		if ( $preload !== 'acfe/form/validation' ) {
+		if ( 'acfe/form/validation' !== $preload ) {
 			return $preload;
 		}
 
