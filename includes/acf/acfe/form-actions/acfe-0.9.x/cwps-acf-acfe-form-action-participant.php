@@ -1732,10 +1732,35 @@ class CWPS_ACF_ACFE_Form_Action_Participant extends CWPS_ACF_ACFE_Form_Action_Ba
 			// Check mapped Field.
 			if ( false === $event_id ) {
 				if ( ! empty( $event_group_field[ $field['name'] ] ) ) {
-					acfe_apply_tags( $event_group_field[ $field_name ], $this->context_save );
+
+					/*
+					 * When validating, ACF Extended won't get the Event ID from an ACF
+					 * Field because it filters the Post ID to be "acfe/form/validation".
+					 * We need to undo that here to allow template tags to function as
+					 * expected for this Field.
+					 */
+					if ( current_action() === 'acfe/form/validate_cwps_participant' ) {
+						// Set up the WordPress Post.
+						$post_id = acf_maybe_get_POST( 'post_id' );
+						global $post;
+						$post = get_post( $post_id );
+						setup_postdata( $post );
+						// Filter the ACF to return the actual Post ID.
+						add_filter( 'acf/pre_load_post_id', [ $this, 'form_validate_post_id' ], 100, 2 );
+					}
+
+					acfe_apply_tags( $event_group_field[ $field['name'] ], $this->context_save );
+
+					// Reset filter and Post if modified.
+					if ( current_action() === 'acfe/form/validate_cwps_participant' ) {
+						remove_filter( 'acf/pre_load_post_id', [ $this, 'form_validate_post_id' ], 100 );
+						wp_reset_postdata();
+					}
+
 					if ( ! empty( $event_group_field[ $field['name'] ] ) && is_numeric( $event_group_field[ $field['name'] ] ) ) {
 						$event_id = $event_group_field[ $field['name'] ];
 					}
+
 				}
 			}
 
@@ -1988,6 +2013,33 @@ class CWPS_ACF_ACFE_Form_Action_Participant extends CWPS_ACF_ACFE_Form_Action_Ba
 
 		// --<
 		return $participant;
+
+	}
+
+	/**
+	 * Short-circuits ACF's attempt to find the Post ID.
+	 *
+	 * @since 0.7.0
+	 *
+	 * @param integer $preload Null by default.
+	 * @param mixed   $post_id The requested Post ID, if supplied.
+	 * @return integer $preload The possbily modified Post ID.
+	 */
+	public function form_validate_post_id( $preload, $post_id ) {
+
+		// Bail when not validating.
+		if ( $preload !== 'acfe/form/validation' ) {
+			return $preload;
+		}
+
+		// Get the Post ID from submission data.
+		$post_id = acf_maybe_get_POST( 'post_id' );
+		if ( ! empty( $post_id ) ) {
+			$preload = (int) $post_id;
+		}
+
+		// --<
+		return $preload;
 
 	}
 
