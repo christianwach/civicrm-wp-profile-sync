@@ -1739,9 +1739,9 @@ class CWPS_ACF_ACFE_Form_Action_Participant extends CWPS_ACF_ACFE_Form_Action_Ba
 					 * We need to undo that here to allow template tags to function as
 					 * expected for this Field.
 					 */
-					if ( current_action() === 'acfe/form/validate_cwps_participant' ) {
+					if ( current_action() === 'acfe/form/validate_cwps_participant' || current_action() === 'acfe/form/make_cwps_participant' ) {
 						// Set up the WordPress Post.
-						$post_id = acf_maybe_get_POST( 'post_id' );
+						$post_id = acf_maybe_get_POST( '_acf_post_id' );
 						global $post;
 						// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 						$post = get_post( $post_id );
@@ -1750,14 +1750,16 @@ class CWPS_ACF_ACFE_Form_Action_Participant extends CWPS_ACF_ACFE_Form_Action_Ba
 						add_filter( 'acf/pre_load_post_id', [ $this, 'form_validate_post_id' ], 100, 2 );
 					}
 
+					// Apply tags now.
 					acfe_apply_tags( $event_group_field[ $field['name'] ], $this->context_save );
 
 					// Reset filter and Post if modified.
-					if ( current_action() === 'acfe/form/validate_cwps_participant' ) {
+					if ( current_action() === 'acfe/form/validate_cwps_participant' || current_action() === 'acfe/form/make_cwps_participant' ) {
 						remove_filter( 'acf/pre_load_post_id', [ $this, 'form_validate_post_id' ], 100 );
 						wp_reset_postdata();
 					}
 
+					// Maybe apply value.
 					if ( ! empty( $event_group_field[ $field['name'] ] ) && is_numeric( $event_group_field[ $field['name'] ] ) ) {
 						$event_id = $event_group_field[ $field['name'] ];
 					}
@@ -2028,15 +2030,12 @@ class CWPS_ACF_ACFE_Form_Action_Participant extends CWPS_ACF_ACFE_Form_Action_Ba
 	 */
 	public function form_validate_post_id( $preload, $post_id ) {
 
-		// Bail when not validating.
-		if ( 'acfe/form/validation' !== $preload ) {
-			return $preload;
-		}
-
-		// Get the Post ID from submission data.
-		$post_id = acf_maybe_get_POST( 'post_id' );
-		if ( ! empty( $post_id ) ) {
-			$preload = (int) $post_id;
+		// Maybe get the Post ID from submission data.
+		if ( 'acfe/form/validation' === $preload || 'acfe/form/submit' === $preload ) {
+			$post_id = acf_maybe_get_POST( '_acf_post_id' );
+			if ( ! empty( $post_id ) ) {
+				$preload = (int) $post_id;
+			}
 		}
 
 		// --<
