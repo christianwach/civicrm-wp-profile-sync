@@ -559,7 +559,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @since 0.7.0
 	 *
-	 * @param integer $case_id The numeric ID of the CiviCRM Event to query.
+	 * @param integer $event_id The numeric ID of the CiviCRM Event to query.
 	 * @param array   $custom_field_ids The Custom Field IDs to query.
 	 * @return array $case_data An array of Case data.
 	 */
