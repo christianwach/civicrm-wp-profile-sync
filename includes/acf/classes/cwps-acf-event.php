@@ -476,7 +476,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 			'option_group_id' => $option_group_id,
 			'version'         => 3,
 			'options'         => [
-				'sort' => 'weight ASC',
+				'limit' => 0,
+				'sort'  => 'weight ASC',
 			],
 		];
 

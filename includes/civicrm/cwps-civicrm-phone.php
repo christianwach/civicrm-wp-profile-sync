@@ -160,6 +160,9 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Phone {
 			'contact_id'       => $contact_id,
 			'location_type_id' => $location_type_id,
 			'phone_type_id'    => $phone_type_id,
+			'options'          => [
+				'limit' => 0, // No limit.
+			],
 		];
 
 		// Get Phone Record details via API.

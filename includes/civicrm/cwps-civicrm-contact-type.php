@@ -291,6 +291,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Type {
 			];
 
 			// Call the API.
+			// TODO: Perhaps use 'get' instead.
 			$result = civicrm_api( 'ContactType', 'getsingle', $params );
 
 			// Bail if there's an error.

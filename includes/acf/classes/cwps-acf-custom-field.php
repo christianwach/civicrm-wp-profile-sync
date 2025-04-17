@@ -612,7 +612,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		foreach ( $result['values'] as $item ) {
 			foreach ( $item as $key => $value ) {
 				if ( substr( $key, 0, 7 ) == 'custom_' ) {
-					$index               = (int) str_replace( 'custom_', '', $key );
+					$index                = (int) str_replace( 'custom_', '', $key );
 					$event_data[ $index ] = $value;
 				}
 			}

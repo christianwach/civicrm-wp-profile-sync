@@ -403,6 +403,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 			'contact_id'       => $contact_id,
 			'location_type_id' => $location_type_id,
 			'provider_id'      => $provider_id,
+			'options'          => [
+				'limit' => 0, // No limit.
+			],
 		];
 
 		// Get Instant Messenger Record details via API.

@@ -168,7 +168,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Membership {
 			'contact_id'  => $contact_id,
 			'active_only' => 1,
 			'options'     => [
-				'sort' => 'end_date ASC',
+				'limit' => 0,
+				'sort'  => 'end_date ASC',
 			],
 		];
 

@@ -655,6 +655,9 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Address {
 		$params = [
 			'version'    => 3,
 			'contact_id' => $contact_id,
+			'options'    => [
+				'limit' => 0, // No limit.
+			],
 		];
 
 		// Get Address details via API.
