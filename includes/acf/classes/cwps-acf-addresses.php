@@ -951,8 +951,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		// Let's look at each ACF Field in turn.
 		foreach ( $acf_fields['addresses'] as $selector => $address_field ) {
 
-			// Get existing Field value.
+			// Get the existing Field value.
 			$existing = get_field( $selector, $post_id );
+
+			// Cast as array when empty to avoid errors in newer PHP versions.
+			if ( empty( $existing ) ) {
+				$existing = [];
+			}
 
 			// Before applying edit, make some checks.
 			if ( 'edit' === $args['op'] ) {
