@@ -448,7 +448,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone_Single extends CiviCRM_Profile_Sync
 	public function contact_sync_to_post( $args ) {
 
 		// Get all Phone Records for this Contact.
-		$data = $this->phones_get_for_contact( $args['objectId'] );
+		$data = $this->plugin->civicrm->phone->phones_get_for_contact( $args['objectId'] );
 		if ( empty( $data ) ) {
 			return;
 		}
