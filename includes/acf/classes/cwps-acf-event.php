@@ -1016,6 +1016,72 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event {
 
 	}
 
+	/**
+	 * Check if this Field Group has been mapped to the Event Post Type.
+	 *
+	 * @since 0.7.0
+	 *
+	 * @param array $field_group The Field Group to check.
+	 * @return array|bool $is_event_field_group True if the Field Group has been mapped to the Event Post Type, or false otherwise.
+	 */
+	public function is_event_field_group( $field_group ) {
+
+		// Bail if there's no Field Group ID.
+		if ( empty( $field_group['ID'] ) ) {
+			return false;
+		}
+
+		// Only do this once per Field Group.
+		static $pseudocache;
+		if ( isset( $pseudocache[ $field_group['ID'] ] ) ) {
+			return $pseudocache[ $field_group['ID'] ];
+		}
+
+		// Init return.
+		$is_event_field_group = [];
+
+		// Bail if no Location Rules exist.
+		if ( ! empty( $field_group['location'] ) ) {
+
+			// Define params to test for Event Location.
+			$params = [
+				'post_type' => 'event',
+			];
+
+			/**
+			 * Filter the params to test for Event Location.
+			 *
+			 * @since 0.7.0
+			 *
+			 * @param array $params The array of params to test for Event Location.
+			 */
+			$params = apply_filters( 'cwps/acf/civicrm/event/is_field_group/params', $params );
+
+			// Do the check.
+			$is_visible = $this->acf_loader->acf->field_group->is_visible( $field_group, $params );
+
+			// If it is, then add to return array.
+			if ( $is_visible ) {
+				$is_event_field_group[] = $post_type;
+			}
+
+		}
+
+		// Cast as boolean on failure.
+		if ( empty( $is_event_field_group ) ) {
+			$is_event_field_group = false;
+		}
+
+		// Maybe add to pseudo-cache.
+		if ( ! isset( $pseudocache[ $field_group['ID'] ] ) ) {
+			$pseudocache[ $field_group['ID'] ] = $is_event_field_group;
+		}
+
+		// --<
+		return $is_event_field_group;
+
+	}
+
 	// -------------------------------------------------------------------------
 
 	/**
