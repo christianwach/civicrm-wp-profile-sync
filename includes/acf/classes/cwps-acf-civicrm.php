@@ -815,6 +815,20 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	}
 
 	/**
+	 * Get ACF Field setting prefix that distinguishes Event Fields from Custom Fields.
+	 *
+	 * @since 0.7.0
+	 *
+	 * @return string $event_field_prefix The prefix of the "CiviCRM Field" value.
+	 */
+	public function event_field_prefix() {
+
+		// --<
+		return $this->event->event_field_prefix;
+
+	}
+
+	/**
 	 * Get ACF Field setting prefix that distinguishes Participant Fields from Custom Fields.
 	 *
 	 * @since 0.5
