@@ -146,7 +146,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 	 */
 	public $confirmation_email_fields = [
 		'is_email_confirm'   => 'true_false',
-		'confirm_email_text' => 'textarea',
+		'confirm_email_text' => 'wysiwyg',
 		'confirm_from_name'  => 'text',
 		'confirm_from_email' => 'email',
 		'cc_confirm'         => 'email',
