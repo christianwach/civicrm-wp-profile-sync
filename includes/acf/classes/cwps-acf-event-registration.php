@@ -1069,9 +1069,20 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 		// Get keyed array of settings.
 		$field['choices'] = $this->options_get( $event_field_name );
 
-		// Set a default for "Dedupe Rule".
+		/*
+		 * Format array for "Dedupe Rule".
+		 *
+		 * The array of Dedupe Rule IDs is actually a sub-array for the key "Individual".
+		 * We extract it and prepend "CiviCRM Default" for clarity.
+		 */
 		if ( 'dedupe_rule_group_id' === $event_field_name ) {
-			$field['choices']       = [ '' => __( 'None', 'civicrm-wp-profile-sync' ) ] + $field['choices'];
+			if ( array_key_exists( 'Individual', $field['choices'] ) ) {
+				$choices          = array_pop( $field['choices'] );
+				$field['choices'] = [ '' => __( 'CiviCRM Default', 'civicrm-wp-profile-sync' ) ] + $choices;
+			} else {
+				// Retain previous logic just in case.
+				$field['choices'] = [ '' => __( 'CiviCRM Default', 'civicrm-wp-profile-sync' ) ] + $field['choices'];
+			}
 			$field['default_value'] = '';
 		}
 
