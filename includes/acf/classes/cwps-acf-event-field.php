@@ -204,26 +204,53 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 	 * Filters out the Campaign ID when the CiviCampaign Component is not active.
 	 *
 	 * @since 0.5.4
+	 *
+	 * @return array $public_fields The public Event Fields.
 	 */
 	public function public_fields_get() {
 
 		// Only do this once.
-		static $done;
-		if ( isset( $done ) ) {
-			return $done;
+		static $public_fields;
+		if ( isset( $public_fields ) ) {
+			return $public_fields;
 		}
 
 		// Grab the Event Fields array.
-		$done = $this->event_fields;
+		$public_fields = $this->event_fields;
 
 		// Remove Campaign Field if the CiviCampaign component is not active.
 		$campaign_active = $this->civicrm->is_component_enabled( 'CiviCampaign' );
 		if ( ! $campaign_active ) {
-			unset( $done['campaign_id'] );
+			unset( $public_fields['campaign_id'] );
 		}
 
 		// --<
-		return $done;
+		return $public_fields;
+
+	}
+
+	/**
+	 * Getter for the Event Settings Fields.
+	 *
+	 * @since 0.7.0
+	 *
+	 * @return array $settings_fields The public Event Fields.
+	 */
+	public function settings_fields_get() {
+
+		// Grab the Event Settings Fields array.
+		$settings_fields = $this->settings_fields;
+
+		// Remove Campaign Field if the CiviCampaign component is not active.
+		$campaign_active = $this->civicrm->is_component_enabled( 'CiviCampaign' );
+		if ( ! $campaign_active ) {
+			unset( $public_fields['campaign_id'] );
+		}
+
+		// TODO: Maybe filter here.
+
+		// --<
+		return $settings_fields;
 
 	}
 

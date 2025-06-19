@@ -166,28 +166,49 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Getter for the public Event Fields.
+	 * Getter for the public Event Location Fields.
 	 *
 	 * Filters out the Campaign ID when the CiviCampaign Component is not active.
 	 *
 	 * @since 0.5.4
+	 *
+	 * @return array $public_fields The public Event Fields.
 	 */
 	public function public_fields_get() {
 
 		// Only do this once.
-		static $done;
-		if ( isset( $done ) ) {
-			return $done;
+		static $public_fields;
+		if ( isset( $public_fields ) ) {
+			return $public_fields;
 		}
 
 		// Build array of all Fields.
-		$done  = $this->settings_fields;
-		$done += $this->address_fields;
-		$done += $this->email_fields;
-		$done += $this->phone_fields;
+		$public_fields  = $this->settings_fields;
+		$public_fields += $this->address_fields;
+		$public_fields += $this->email_fields;
+		$public_fields += $this->phone_fields;
 
 		// --<
-		return $done;
+		return $public_fields;
+
+	}
+
+	/**
+	 * Getter for the Event Location Settings Fields.
+	 *
+	 * @since 0.7.0
+	 *
+	 * @return array $settings_fields The public Event Fields.
+	 */
+	public function settings_fields_get() {
+
+		// Grab the Event Settings Fields array.
+		$settings_fields = $this->settings_fields;
+
+		// TODO: Maybe filter here.
+
+		// --<
+		return $settings_fields;
 
 	}
 

@@ -207,25 +207,27 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 	 * Getter for the public Event Registration Fields.
 	 *
 	 * @since 0.5.4
+	 *
+	 * @return array $public_fields The public Event Fields.
 	 */
 	public function public_fields_get() {
 
 		// Only do this once.
-		static $done;
-		if ( isset( $done ) ) {
-			return $done;
+		static $public_fields;
+		if ( isset( $public_fields ) ) {
+			return $public_fields;
 		}
 
 		// Build array of all Fields.
-		$done  = $this->settings_fields_get();
-		$done += $this->registration_screen_fields;
-		$done += $this->registration_screen_profiles;
-		$done += $this->confirm_screen_fields;
-		$done += $this->thankyou_screen_fields;
-		$done += $this->confirmation_email_fields;
+		$public_fields  = $this->settings_fields_get();
+		$public_fields += $this->registration_screen_fields;
+		$public_fields += $this->registration_screen_profiles;
+		$public_fields += $this->confirm_screen_fields;
+		$public_fields += $this->thankyou_screen_fields;
+		$public_fields += $this->confirmation_email_fields;
 
 		// --<
-		return $done;
+		return $public_fields;
 
 	}
 
