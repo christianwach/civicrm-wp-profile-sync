@@ -73,6 +73,7 @@ class CiviCRM_Profile_Sync_ACF_Field {
 		'wysiwyg',
 		'textarea',
 		'true_false',
+		'number',
 		'url',
 		'email',
 		'image',
@@ -360,8 +361,8 @@ class CiviCRM_Profile_Sync_ACF_Field {
 	 */
 	public function value_update( $selector, $value, $post_id ) {
 
-		// Protect against (string) 'null' which CiviCRM uses for some reason.
-		if ( 'null' === $value || 'NULL' === $value ) {
+		// Protect against null and (string) 'null' which CiviCRM uses for some reason.
+		if ( is_null( $value ) || 'null' === $value || 'NULL' === $value ) {
 			$value = '';
 		}
 

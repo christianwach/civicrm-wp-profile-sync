@@ -196,6 +196,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 		// add_filter( 'acf/validate_value/type=text', [ $this, 'value_validate' ], 10, 4 );
 
 		// Listen for queries from our ACF Field class.
+		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'number_settings_modify' ], 20, 2 );
 		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'select_settings_modify' ], 20, 2 );
 		add_filter( 'cwps/acf/field_group/field/pre_update', [ $this, 'text_settings_modify' ], 20, 2 );
 
@@ -1032,6 +1033,54 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 	}
 
 	// -------------------------------------------------------------------------
+
+	/**
+	 * Modify the Settings of an ACF "Number" Field.
+	 *
+	 * @since 0.7.0
+	 *
+	 * @param array $field The existing ACF Field data array.
+	 * @param array $field_group The ACF Field Group data array.
+	 * @return array $field The modified ACF Field data array.
+	 */
+	public function number_settings_modify( $field, $field_group ) {
+
+		// Bail early if not our Field Type.
+		if ( 'number' !== $field['type'] ) {
+			return $field;
+		}
+
+		// Skip if the CiviCRM Field key isn't there or isn't populated.
+		$key = $this->civicrm->acf_field_key_get();
+		if ( ! array_key_exists( $key, $field ) || empty( $field[ $key ] ) ) {
+			return $field;
+		}
+
+		// Get the mapped Event Field name if present.
+		$event_field_name = $this->civicrm->event->event_field_name_get( $field );
+		if ( false === $event_field_name ) {
+			return $field;
+		}
+
+		// Bail if not one of our Fields. Necessary because prefix is shared.
+		if ( ! array_key_exists( $event_field_name, $this->public_fields_get() ) ) {
+			return $field;
+		}
+
+		// Set a max for "Expiration Time" to be just below MySQL int(10).
+		if ( 'expiration_time' === $event_field_name ) {
+			$field['max'] = 999999990;
+		}
+
+		// Set a max for "Self-service Cancellation Time" to be just below MySQL int(11).
+		if ( 'selfcancelxfer_time' === $event_field_name ) {
+			$field['max'] = 9999999990;
+		}
+
+		// --<
+		return $field;
+
+	}
 
 	/**
 	 * Modify the Settings of an ACF "Select" Field.
