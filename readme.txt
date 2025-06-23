@@ -86,6 +86,11 @@ I'll say it again: test early, test often and - above all - test on a developmen
 
 == Changelog ==
 
+= 0.7.1 =
+
+* Refinements to Address Field
+* Sets default Location Type for Addresses
+
 = 0.7.0 =
 
 * Adds compatibility with ACF Extended 0.9.x Form Actions
