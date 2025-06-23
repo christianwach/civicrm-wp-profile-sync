@@ -180,9 +180,49 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Field extends acf_field {
 	 */
 	public function render_field_settings( $field ) {
 
+		// Only render Placeholder Setting Field here in ACF prior to version 6.
+		if ( version_compare( ACF_MAJOR_VERSION, '6', '>=' ) ) {
+			return;
+		}
+
+		// Get "CiviCRM Address ID" setting Field.
+		$setting = $this->field_address_id_settings_get();
+
+		// Now add it.
+		acf_render_field_setting( $field, $setting );
+
+	}
+
+	/**
+	 * Renders the Field Fettings used in the "Presentation" tab.
+	 *
+	 * @since 0.7.1
+	 *
+	 * @param array $field The field settings array.
+	 */
+	public function render_field_presentation_settings( $field ) {
+
+		// Get "CiviCRM Address ID" setting Field.
+		$setting = $this->field_address_id_settings_get();
+
+		// Now add it.
+		acf_render_field_setting( $field, $setting );
+
+	}
+
+	/**
+	 * Gets the Field Fettings for the "CiviCRM Address ID" Setting.
+	 *
+	 * @since 0.7.1
+	 *
+	 * @param array $field The field settings array.
+	 */
+	public function field_address_id_settings_get() {
+
 		// Define setting Field.
 		$setting = [
 			'label'         => __( 'CiviCRM Address ID', 'civicrm-wp-profile-sync' ),
+			'instructions'  => __( 'Show the CiviCRM Address ID. Useful for debugging.', 'civicrm-wp-profile-sync' ),
 			'name'          => 'show_address_id',
 			'type'          => 'true_false',
 			'ui'            => 1,
@@ -192,8 +232,8 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Field extends acf_field {
 			'required'      => 0,
 		];
 
-		// Now add it.
-		acf_render_field_setting( $field, $setting );
+		// --<
+		return $setting;
 
 	}
 
