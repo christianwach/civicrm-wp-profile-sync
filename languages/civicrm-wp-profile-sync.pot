@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: CiviCRM Profile Sync 0.7.0a\n"
+"Project-Id-Version: CiviCRM Profile Sync 0.7.1a\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/civicrm-wp-profile-sync\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-06-23T15:48:05+00:00\n"
+"POT-Creation-Date: 2025-06-23T21:29:08+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: civicrm-wp-profile-sync\n"
@@ -50,7 +50,7 @@ msgid "ID"
 msgstr ""
 
 #: assets/civicrm/custom_php/CRM/Contact/Form/Task/CreateWordPressUsers.php:27
-#: includes/acf/fields/cwps-acf-field-civicrm-phone.php:593
+#: includes/acf/fields/cwps-acf-field-civicrm-phone.php:602
 msgid "Type"
 msgstr ""
 
@@ -62,9 +62,9 @@ msgstr ""
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:1579
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:1993
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2101
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1565
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1979
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2085
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1567
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1981
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2087
 msgid "Email"
 msgstr ""
 
@@ -96,12 +96,12 @@ msgstr ""
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1816
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1881
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1894
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3872
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3895
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1299
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1755
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1820
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1833
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3874
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3897
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1301
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1757
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1822
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1835
 #: includes/acf/fields/cwps-acf-field-civicrm-yes-no.php:178
 msgid "No"
 msgstr ""
@@ -113,12 +113,12 @@ msgstr ""
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1815
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1880
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1893
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3871
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3894
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1298
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1754
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1819
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1832
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3873
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3896
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1300
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1756
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1821
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1834
 #: includes/acf/fields/cwps-acf-field-civicrm-yes-no.php:177
 msgid "Yes"
 msgstr ""
@@ -177,11 +177,11 @@ msgstr ""
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2349
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2677
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2848
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2035
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2331
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2678
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2846
-#: includes/acf/fields/cwps-acf-field-civicrm-address.php:496
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2037
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2333
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2680
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2848
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:545
 #: includes/acf/shortcodes/cwps-shortcode-address.php:210
 #: includes/acf/shortcodes/cwps-shortcode-city.php:211
 #: includes/acf/shortcodes/cwps-shortcode-im.php:212
@@ -193,21 +193,21 @@ msgstr ""
 #: assets/templates/buddypress/metaboxes/metabox-bp-field-content.php:63
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2659
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1688
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2661
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1628
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2663
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1630
 msgid "Phone Type"
 msgstr ""
 
 #: assets/templates/buddypress/metaboxes/metabox-bp-field-content.php:77
 #: assets/templates/wordpress/metaboxes/metabox-admin-settings-profile.php:61
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2202
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2186
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2188
 msgid "Website Type"
 msgstr ""
 
 #: assets/templates/buddypress/metaboxes/metabox-bp-field-content.php:91
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:1482
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1468
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1470
 #: includes/acf/fields/cwps-acf-field-civicrm-contact-existing-new.php:374
 msgid "Contact Type"
 msgstr ""
@@ -337,8 +337,8 @@ msgstr ""
 #: assets/templates/wordpress/pages/page-admin-settings.php:19
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1926
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1953
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1865
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1892
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1867
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1894
 #: includes/admin/cwps-admin.php:513
 #: includes/admin/cwps-admin.php:827
 msgid "Settings"
@@ -531,22 +531,22 @@ msgstr ""
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:1071
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:1106
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:1251
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:646
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:807
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:842
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:791
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:826
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:648
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:809
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:844
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:793
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:828
 #: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-email.php:430
 #: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-email.php:553
 #: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-email.php:588
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:915
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:968
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1003
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:900
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:935
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1072
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1107
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1252
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:917
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:970
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1005
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:902
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:937
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1074
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1109
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1254
 #: includes/acf/classes/cwps-acf-event-field.php:956
 #: includes/acf/classes/cwps-acf-event-location.php:1242
 #: includes/acf/classes/cwps-acf-event-registration.php:1140
@@ -665,7 +665,7 @@ msgid "Select the State/Province Field"
 msgstr ""
 
 #: includes/acf/acfe/fields/cwps-acf-acfe-field-address-county.php:252
-#: includes/acf/fields/cwps-acf-field-civicrm-address.php:757
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:806
 msgid "State/Province"
 msgstr ""
 
@@ -725,7 +725,7 @@ msgid "Select the Country Field"
 msgstr ""
 
 #: includes/acf/acfe/fields/cwps-acf-acfe-field-address-state.php:257
-#: includes/acf/fields/cwps-acf-field-civicrm-address.php:731
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:780
 msgid "Country"
 msgstr ""
 
@@ -748,27 +748,27 @@ msgid "CiviCRM Activity"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-activity.php:531
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:544
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:546
 msgid "Activity Type"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-activity.php:556
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:569
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:571
 msgid "Activity Status"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-activity.php:590
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3241
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:747
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:603
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3232
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:751
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:605
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3234
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:753
 msgid "Campaign"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-activity.php:620
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-email.php:420
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:633
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:635
 #: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-email.php:417
 #: includes/acf/classes/cwps-acf-case.php:1913
 msgid "Case"
@@ -776,18 +776,18 @@ msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-activity.php:623
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-email.php:423
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:636
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:638
 #: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-email.php:420
 msgid "Select a Case Action in this Form."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-activity.php:644
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:657
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:659
 msgid "Create Case Activity?"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-activity.php:647
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:660
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:662
 msgid "Create a Case Activity even if the Contact already has an existing Case of the selected Type. Useful when you want to add an Activity to a Case."
 msgstr ""
 
@@ -812,7 +812,7 @@ msgstr ""
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1706
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:773
 #: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-base.php:1295
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1540
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1542
 msgid "Conditional On"
 msgstr ""
 
@@ -834,30 +834,30 @@ msgstr ""
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1602
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1709
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:775
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:688
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:1176
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:612
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1592
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2067
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2212
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2411
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2710
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2878
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3074
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3217
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3377
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3507
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3648
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:806
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1377
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1542
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1647
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:777
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:690
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:1178
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:614
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1594
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2069
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2214
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2413
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2712
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2880
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3076
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3219
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3379
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3509
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3650
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:808
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1379
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1544
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1649
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:779
 msgid "Always add"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-activity.php:679
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:689
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:691
 msgid "To add the Activity only when a Form Field is populated (e.g. \"Subject\") link this to the Form Field. To add the Activity only when more complex conditions are met, link this to a Hidden Field with value \"1\" where the conditional logic of that Field shows it when the conditions are met."
 msgstr ""
 
@@ -867,12 +867,12 @@ msgstr ""
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-case.php:875
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:844
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:982
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:755
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:890
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:739
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:874
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:848
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:983
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:757
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:892
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:741
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:876
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:850
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:985
 msgid "Contact References"
 msgstr ""
 
@@ -882,11 +882,11 @@ msgstr ""
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-email.php:531
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:871
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:1226
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:782
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:766
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:784
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:768
 #: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-email.php:528
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:875
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1227
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:877
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1229
 msgid "Use one Field to identify the %s."
 msgstr ""
 
@@ -895,11 +895,11 @@ msgstr ""
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-email.php:544
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1023
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:884
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:795
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:779
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:797
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:781
 #: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-email.php:541
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:956
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:888
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:958
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:890
 msgid "CiviCRM Contact Action"
 msgstr ""
 
@@ -908,11 +908,11 @@ msgstr ""
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-email.php:547
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1026
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:887
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:798
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:782
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:800
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:784
 #: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-email.php:544
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:959
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:891
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:961
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:893
 msgid "Select a Contact Action in this Form."
 msgstr ""
 
@@ -921,11 +921,11 @@ msgstr ""
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-email.php:579
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1058
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:919
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:830
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:814
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:832
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:816
 #: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-email.php:576
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:991
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:923
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:993
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:925
 msgid "CiviCRM Contact ID"
 msgstr ""
 
@@ -934,11 +934,11 @@ msgstr ""
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-email.php:582
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1061
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:922
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:833
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:817
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:835
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:819
 #: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-email.php:579
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:994
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:926
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:996
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:928
 msgid "Select a CiviCRM Contact ID from the database."
 msgstr ""
 
@@ -947,11 +947,11 @@ msgstr ""
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-email.php:615
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1094
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:955
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:863
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:847
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:865
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:849
 #: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-email.php:612
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1024
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:956
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1026
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:958
 msgid "Custom Contact Reference"
 msgstr ""
 
@@ -960,18 +960,18 @@ msgstr ""
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-email.php:617
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1096
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:957
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:865
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:849
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:867
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:851
 #: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-email.php:614
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1026
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:958
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1028
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:960
 msgid "Define a custom Contact Reference."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-activity.php:917
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-activity.php:944
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:927
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:954
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:929
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:956
 #: includes/acf/classes/cwps-acf-activity.php:1202
 #: includes/acf/classes/cwps-acf-activity.php:1331
 #: includes/acf/classes/cwps-acf-activity.php:1459
@@ -992,67 +992,67 @@ msgstr ""
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1313
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:1421
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:1583
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:991
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:1075
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:975
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:1059
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1839
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1942
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2510
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2568
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3985
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:4089
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1152
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1236
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1422
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1584
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:993
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:1077
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:977
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:1061
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1841
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1944
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2512
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2570
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3987
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:4091
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1154
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1238
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1424
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1586
 msgid "Custom Fields"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-activity.php:1102
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3453
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:1112
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3443
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:1114
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3445
 msgid "Attachment(s)"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-activity.php:1122
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3473
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:1132
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3463
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:1134
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3465
 msgid "Attachment Actions"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-activity.php:1139
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3490
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:1149
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3480
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:1151
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3482
 msgid "Add Attachment action"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-activity.php:1150
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3501
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:1160
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3491
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:1162
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3493
 #: includes/acf/fields/cwps-acf-field-civicrm-attachment.php:609
 msgid "File"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-activity.php:1169
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:1177
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:1179
 msgid "To add the Attachment to the Activity only when conditions are met, link this to a Hidden Field with value \"1\" where the conditional logic of that Field shows it when the conditions are met."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-activity.php:1185
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3536
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:1194
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3525
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:1196
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3527
 msgid "Attachment"
 msgstr ""
 
 #. translators: %s The name of the Form Action
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-activity.php:1359
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:1353
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-activity.php:1355
 msgid "An Activity Type ID is required to create an Activity in \"%s\"."
 msgstr ""
 
@@ -1129,54 +1129,54 @@ msgid "CiviCRM Case"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-case.php:353
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:365
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:367
 msgid "Case Manager"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-case.php:537
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:538
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:540
 msgid "Case Type"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-case.php:562
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:563
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:565
 msgid "Case Status"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-case.php:587
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:588
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:590
 msgid "Activity Medium"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-case.php:615
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:613
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:615
 msgid "To add the Case only when a Form Field is populated (e.g. \"Subject\") link this to the Form Field. To add the Case only when more complex conditions are met, link this to a Hidden Field with value \"1\" where the conditional logic of that Field shows it when the conditions are met."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-case.php:620
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:622
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:624
 msgid "Skip creating the Case?"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-case.php:623
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:625
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:627
 msgid "Skip creating a Case if the Contact already has a Case of this Type. See \"Cheatsheet\" for how to reference the \"created\" and \"skipped\" variables in this action to make other Form Actions conditional on whether the Case is created or skipped."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-case.php:643
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:645
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:647
 msgid "Message"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-case.php:646
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:648
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:650
 msgid "Message to display on the Success Page if the Case of this Type already exists. See \"Cheatsheet\" for how to reference the \"dismiss_message\" variable in this action."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-case.php:912
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-case.php:939
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:911
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:938
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:913
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:940
 #: includes/acf/classes/cwps-acf-case.php:1425
 #: includes/acf/classes/cwps-acf-case.php:1554
 #: includes/acf/classes/cwps-acf-case.php:1682
@@ -1185,7 +1185,7 @@ msgstr ""
 
 #. translators: %s The name of the Form Action
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-case.php:1230
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:1214
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-case.php:1216
 msgid "A Case Type ID is required to create a Case in \"%s\"."
 msgstr ""
 
@@ -1201,50 +1201,50 @@ msgid "CiviCRM Contact"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:698
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:667
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:669
 #: includes/acf/classes/cwps-acf-user.php:2118
 #: includes/acf/fields/cwps-acf-field-civicrm-relationship.php:535
 msgid "All Contacts"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:1459
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1445
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1447
 msgid "Submitter"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:1462
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1448
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1450
 msgid "Is this Action for the Contact who is submitting the Form?"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:1507
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1493
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1495
 msgid "Contact Sub Type"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:1535
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1521
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1523
 msgid "Dedupe Rule"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:1549
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1535
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1537
 #: includes/acf/classes/cwps-acf-event-registration.php:1130
 #: includes/acf/classes/cwps-acf-event-registration.php:1133
 msgid "CiviCRM Default"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:1560
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1546
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1548
 msgid "Contact Entities"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:1580
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2146
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2248
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1566
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2130
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2230
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1568
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2132
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2232
 #: includes/buddypress/cwps-bp-xprofile.php:219
 msgid "Website"
 msgstr ""
@@ -1254,11 +1254,11 @@ msgstr ""
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2480
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1427
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1464
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1567
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2275
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2460
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1350
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1387
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1569
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2277
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2462
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1352
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1389
 #: includes/buddypress/cwps-bp-xprofile.php:217
 msgid "Address"
 msgstr ""
@@ -1266,9 +1266,9 @@ msgstr ""
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:1582
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2603
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2729
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1568
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2605
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2728
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1570
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2607
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2730
 #: includes/buddypress/cwps-bp-xprofile.php:218
 msgid "Phone"
 msgstr ""
@@ -1276,9 +1276,9 @@ msgstr ""
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:1583
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2774
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2900
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1569
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2773
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2896
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1571
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2775
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2898
 #: includes/acf/fields/cwps-acf-field-civicrm-im.php:478
 msgid "Instant Messenger"
 msgstr ""
@@ -1286,9 +1286,9 @@ msgstr ""
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:1584
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3324
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3408
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1570
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3315
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3398
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1572
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3317
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3400
 #: includes/acf/classes/cwps-acf-civicrm-note.php:372
 msgid "Note"
 msgstr ""
@@ -1296,9 +1296,9 @@ msgstr ""
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:1585
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3573
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3678
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1571
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3562
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3666
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1573
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3564
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3668
 msgid "Tag"
 msgstr ""
 
@@ -1306,46 +1306,46 @@ msgstr ""
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2945
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3001
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3099
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1572
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2941
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2997
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3092
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1574
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2943
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2999
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3094
 msgid "Group"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:1592
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3144
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3279
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1578
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3137
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3270
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1580
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3139
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3272
 msgid "Free Membership"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:1610
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1593
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1595
 msgid "To add the Contact only when a Form Field is populated (e.g. \"First Name\") link this to the Form Field. To add the Contact only when more complex conditions are met, link this to a Hidden Field with value \"1\" where the conditional logic of that Field shows it when the conditions are met."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:1636
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1622
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1624
 msgid "Auto-fill with data from CiviCRM"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:1661
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1647
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1649
 msgid "Update auto-filled Contact"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:1664
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1650
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1652
 msgid "When auto-filling, the loaded Contact will be edited. Disable to create a new Contact - or let Dedupe Rules find the Contact to be edited."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:1769
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:1816
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1755
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1802
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1757
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:1804
 #: includes/acf/classes/cwps-acf-contact.php:1424
 #: includes/acf/classes/cwps-acf-contact.php:1618
 #: includes/acf/classes/cwps-acf-contact.php:1787
@@ -1355,131 +1355,131 @@ msgid "Contact Fields"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2021
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2007
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2009
 msgid "Email Actions"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2038
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2024
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2026
 msgid "Add Email action"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2085
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2068
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2070
 msgid "To add the Email to the Contact only when conditions are met, link this to a Hidden Field with value \"1\" where the conditional logic of that Field shows it when the conditions are met."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2174
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2158
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2160
 msgid "Website Actions"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2191
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2175
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2177
 msgid "Add Website action"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2232
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2213
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2215
 msgid "To add the Website to the Contact only when conditions are met, link this to a Hidden Field with value \"1\" where the conditional logic of that Field shows it when the conditions are met."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2321
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2303
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2305
 msgid "Address Actions"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2338
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2320
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2322
 msgid "Add Address action"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2375
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2356
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2358
 msgid "Include empty Fields"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2378
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2359
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2361
 msgid "Enable this to include empty Fields in the data that is sent to CiviCRM. This will cause the value to be cleared."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2401
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2446
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2382
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2426
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2384
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2428
 #: includes/acf/classes/cwps-acf-address.php:319
 #: includes/buddypress/cwps-bp-civicrm-address.php:579
 msgid "Address Fields"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2433
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2412
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2414
 msgid "To add the Address to the Contact only when conditions are met, link this to a Hidden Field with value \"1\" where the conditional logic of that Field shows it when the conditions are met."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2631
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2633
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2635
 msgid "Phone Actions"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2648
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2650
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2652
 msgid "Add Phone action"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2713
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2711
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2713
 msgid "To add the Phone to the Contact only when conditions are met, link this to a Hidden Field with value \"1\" where the conditional logic of that Field shows it when the conditions are met."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2802
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2801
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2803
 msgid "Instant Messenger Actions"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2819
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2818
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2820
 msgid "Add Instant Messenger action"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2830
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2829
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2831
 msgid "Instant Messenger Type"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2884
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2879
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2881
 msgid "To add the Instant Messenger to the Contact only when conditions are met, link this to a Hidden Field with value \"1\" where the conditional logic of that Field shows it when the conditions are met."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2973
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2969
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2971
 msgid "Group Actions"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:2990
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2986
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2988
 msgid "Add Group action"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3025
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3020
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3022
 msgid "Add or Remove the Contact"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3032
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3027
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3029
 msgid "Add to Group"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3033
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3028
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3030
 msgid "Remove from Group"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3047
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3041
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3043
 msgid "Enable double opt-in?"
 msgstr ""
 
@@ -1488,132 +1488,132 @@ msgid "Always add or remove"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3083
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3075
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3077
 msgid "To add or remove the Contact to the Group only when conditions are met, link this to a Hidden Field with value \"1\" where the conditional logic of that Field shows it when the conditions are met."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3172
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3165
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3167
 msgid "Membership Actions"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3189
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3182
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3184
 msgid "Add Membership action"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3200
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3193
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3195
 msgid "Add Free Membership"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3228
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3218
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3220
 msgid "To add the Free Membership to the Contact only when conditions are met, link this to a Hidden Field with value \"1\" where the conditional logic of that Field shows it when the conditions are met."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3352
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3343
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3345
 msgid "Note Actions"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3369
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3360
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3362
 msgid "Add Note action"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3389
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3378
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3380
 msgid "To add the Note to the Contact only when conditions are met, link this to a Hidden Field with value \"1\" where the conditional logic of that Field shows it when the conditions are met."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3520
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3508
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3510
 msgid "To add the Attachment to the Note only when conditions are met, link this to a Hidden Field with value \"1\" where the conditional logic of that Field shows it when the conditions are met."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3601
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3590
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3592
 msgid "Tag Actions"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3618
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3607
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3609
 msgid "Add Tag action"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3633
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3622
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3624
 msgid "Add Tag(s) to Contact"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3662
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3649
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3651
 msgid "To add the Tag(s) to the Contact only when conditions are met, link this to a Hidden Field with value \"1\" where the conditional logic of that Field shows it when the conditions are met."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3751
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3739
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3741
 msgid "Relationship Actions"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3769
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3757
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3759
 msgid "Add Relationship action"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3779
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3767
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3769
 msgid "Related Contact"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3782
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3770
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3772
 msgid "Is this Contact related to another Contact?"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3801
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3789
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3791
 msgid "Not related"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3815
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3941
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3803
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3929
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3805
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3931
 msgid "Relationship Fields"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3837
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3825
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3827
 msgid "Relationship"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3840
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3828
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3830
 msgid "Select the relationship this Contact has with the related Contact"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3872
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3860
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3862
 msgid "Is Current Employee"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3886
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3909
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3874
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3897
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3876
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3899
 msgid "Use an ACF \"True/False\" Field to choose a mapping for this Setting."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:3895
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3883
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:3885
 msgid "Is Current Employer"
 msgstr ""
 
 #. translators: %s The name of the Form Action
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-contact.php:4265
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:4238
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:4240
 msgid "Not enough data to save a Contact in \"%s\"."
 msgstr ""
 
@@ -1756,258 +1756,258 @@ msgid "CiviCRM Event"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:877
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:807
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:809
 msgid "To add the Event only when a Form Field is populated (e.g. \"Title\") link this to the Form Field. To add the Event only when more complex conditions are met, link this to a Hidden Field with value \"1\" where the conditional logic of that Field shows it when the conditions are met."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:944
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1121
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:877
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1051
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:879
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1053
 msgid "Event Settings"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:973
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:906
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:908
 #: includes/acf/classes/cwps-acf-event-field.php:950
 msgid "Disabled"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:983
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:916
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:918
 msgid "Select"
 msgstr ""
 
 #. translators: %s: The name of the Field
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1010
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:943
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:945
 msgid "Use one Field to identify the %s. Defaults to logged-in Contact."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1158
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1185
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1088
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1115
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1090
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1117
 #: includes/acf/classes/cwps-acf-event.php:870
 msgid "Event Fields"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1350
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1273
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1275
 msgid "Event Location"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1372
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1295
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1297
 msgid "Show Location"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1373
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1296
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1298
 msgid "Disable to make the Location available to Event Administrators only."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1388
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1311
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1313
 msgid "Existing Location"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1389
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1312
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1314
 msgid "You cannot map a new Location if you choose an existing one."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1402
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1325
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1327
 msgid "New Location"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1456
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1378
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1380
 msgid "To add the Address to the Location only when conditions are met, link this to a Hidden Field with value \"1\" where the conditional logic of that Field shows it when the conditions are met."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1489
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1525
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1412
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1465
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1414
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1467
 msgid "Address Custom Fields"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1549
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1489
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1491
 msgid "Email Addresses"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1586
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1526
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1528
 msgid "Add Email"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1603
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1543
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1545
 msgid "To add the Email to the Location only when conditions are met, link this to a Hidden Field with value \"1\" where the conditional logic of that Field shows it when the conditions are met."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1617
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1557
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1559
 msgid "Emails"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1639
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1724
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1579
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1663
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1581
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1665
 msgid "Phone Numbers"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1676
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1616
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1618
 msgid "Add Phone"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1710
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1648
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1650
 msgid "To add the Phone to the Location only when conditions are met, link this to a Hidden Field with value \"1\" where the conditional logic of that Field shows it when the conditions are met."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1754
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1693
-#: includes/acf/fields/cwps-acf-field-civicrm-im.php:510
-#: includes/acf/fields/cwps-acf-field-civicrm-phone.php:567
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1695
+#: includes/acf/fields/cwps-acf-field-civicrm-im.php:519
+#: includes/acf/fields/cwps-acf-field-civicrm-phone.php:576
 msgid "Location"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1791
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:2224
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1730
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:2163
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1732
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:2165
 msgid "Event Registration"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1813
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1752
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1754
 msgid "Allow Online Registration"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1828
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1767
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1769
 msgid "Online Registration Configuration"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1858
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1904
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1797
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1843
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1799
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1845
 msgid "Enable Components"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1878
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1817
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1819
 msgid "Enable Confirmation Screen"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1891
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1830
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1832
 msgid "Send Confirmation Email"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:1975
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:2020
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1914
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1959
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1916
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1961
 msgid "Registration Screen"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:2000
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1939
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1941
 #: includes/acf/classes/cwps-acf-event.php:938
 msgid "Include Profile (top of page)"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:2010
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1949
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1951
 #: includes/acf/classes/cwps-acf-event.php:940
 msgid "Include Profile (bottom of page)"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:2042
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:2077
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1981
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:2016
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:1983
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:2018
 msgid "Confirmation Screen"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:2107
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:2132
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:2046
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:2071
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:2048
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:2073
 msgid "Thank You Screen"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:2154
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:2191
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:2093
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:2130
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:2095
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:2132
 msgid "Confirmation Email"
 msgstr ""
 
 #. translators: %s The name of the Form Action
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:2401
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:2325
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:2327
 msgid "An Event Type ID is required to create an Event in \"%s\"."
 msgstr ""
 
 #. translators: %s The name of the Form Action
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:2414
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:2338
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:2340
 msgid "A title is required to create an Event in \"%s\"."
 msgstr ""
 
 #. translators: %s The name of the Form Action
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:2427
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:2351
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:2353
 msgid "A start date is required to create an Event in \"%s\"."
 msgstr ""
 
 #. translators: %s The name of the Form Action
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:2995
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:2756
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:2758
 msgid "A Street Address is required in \"%s\"."
 msgstr ""
 
 #. translators: %s The name of the Form Action
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:3183
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:2934
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:2936
 msgid "An invalid Email was found in \"%s\"."
 msgstr ""
 
 #. translators: %s The name of the Form Action
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:3350
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:3120
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:3122
 msgid "A valid Phone Number is required in \"%s\"."
 msgstr ""
 
 #. translators: %s The name of the Form Action
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:3514
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:3285
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:3287
 msgid "A Profile is required to enable Online Registration in \"%s\"."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:3666
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:3391
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:3393
 msgid "Register Now"
 msgstr ""
 
 #. translators: %s The name of the Form Action
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:3804
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:3555
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:3557
 msgid "A \"From Name\" is required to send a Confirmation Email in \"%s\"."
 msgstr ""
 
 #. translators: %s The name of the Form Action
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-event.php:3817
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:3568
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-event.php:3570
 msgid "A \"From Email\" is required to send a Confirmation Email in \"%s\"."
 msgstr ""
 
@@ -2022,120 +2022,120 @@ msgid "CiviCRM Participant"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:625
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:629
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:631
 msgid "Participant Role"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:665
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:669
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:671
 msgid "Add when full?"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:668
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:672
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:674
 msgid "The selected Participant Role is included in the \"Max Number of Participants\" total. Choose whether the Participant should be added even when the \"Max Number\" has been reached."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:688
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:692
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:694
 msgid "Email receipt?"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:711
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:715
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:717
 msgid "Participant Status"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:777
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:778
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:780
 msgid "To add the Participant only when a Form Field is populated (e.g. \"Email\") link this to the Form Field. To add the Participant only when more complex conditions are met, link this to a Hidden Field with value \"1\" where the conditional logic of that Field shows it when the conditions are met."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:1019
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:1159
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1020
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1160
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1022
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1162
 msgid "Participant References"
 msgstr ""
 
 #. translators: %s: The Field title
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:1046
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1047
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1049
 msgid "If the Participant is not the Submitter, use one Field to identify the %s."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:1059
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1060
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1062
 msgid "CiviCRM Participant Action"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:1062
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1063
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1065
 msgid "Select a Participant Action in this Form."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:1094
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1095
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1097
 msgid "CiviCRM Participant ID"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:1097
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1098
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1100
 msgid "Select a CiviCRM Participant ID from the database."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:1132
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1133
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1135
 msgid "Custom Participant Reference"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:1134
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1135
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1137
 msgid "Define a custom Participant Reference."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:1196
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:1320
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1197
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1321
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1199
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1323
 msgid "Event References"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:1239
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1240
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1242
 msgid "CiviCRM Event ID"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:1242
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1243
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1245
 msgid "Select a CiviCRM Event ID from the database."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:1271
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1272
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1274
 msgid "Custom Event Reference"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:1273
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1274
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1276
 msgid "Define a custom Event Reference."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:1292
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1295
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1297
 #: includes/acf/fields/cwps-acf-field-civicrm-event-group.php:372
 msgid "Event Type"
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:1295
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1298
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1300
 msgid "Choose the Event Type to show its Custom Fields below."
 msgstr ""
 
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:1357
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:1384
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1358
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1385
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1360
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1387
 #: includes/acf/classes/cwps-acf-participant.php:1166
 #: includes/acf/classes/cwps-acf-participant.php:1295
 #: includes/acf/classes/cwps-acf-participant.php:1416
@@ -2144,31 +2144,31 @@ msgstr ""
 
 #. translators: %s The name of the Form Action
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:1821
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1835
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1837
 msgid "An Event ID is required to create a Participant in \"%s\"."
 msgstr ""
 
 #. translators: %s The name of the Form Action
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:1834
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1848
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1850
 msgid "A Participant Role ID is required to create a Participant in \"%s\"."
 msgstr ""
 
 #. translators: %s The name of the Form Action
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:1866
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1880
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1882
 msgid "Could not check if the Event is full in \"%s\"."
 msgstr ""
 
 #. translators: %s The title of the Event
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:1884
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1898
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1900
 msgid "Cannot add Participant because \"%s\" is full."
 msgstr ""
 
 #. translators: %s The name of the Form Action
 #: includes/acf/acfe/form-actions/acfe-0.8.x/cwps-acf-acfe-form-action-participant.php:1891
-#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1905
+#: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-participant.php:1907
 msgid "Cannot add Participant because the Event in \"%s\" is full."
 msgstr ""
 
@@ -2993,14 +2993,14 @@ msgid "Specific Location"
 msgstr ""
 
 #: includes/acf/compat/cwps-acf-geo-mashup.php:644
-#: includes/acf/fields/cwps-acf-field-civicrm-address.php:535
-#: includes/acf/fields/cwps-acf-field-civicrm-im.php:575
-#: includes/acf/fields/cwps-acf-field-civicrm-phone.php:632
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:584
+#: includes/acf/fields/cwps-acf-field-civicrm-im.php:584
+#: includes/acf/fields/cwps-acf-field-civicrm-phone.php:641
 msgid "Primary"
 msgstr ""
 
 #: includes/acf/compat/cwps-acf-geo-mashup.php:645
-#: includes/acf/fields/cwps-acf-field-civicrm-address.php:562
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:611
 msgid "Billing"
 msgstr ""
 
@@ -3088,28 +3088,28 @@ msgstr ""
 msgid "CiviCRM Address: City (Read Only)"
 msgstr ""
 
-#: includes/acf/fields/cwps-acf-field-civicrm-address-city.php:196
-#: includes/acf/fields/cwps-acf-field-civicrm-address-country.php:196
-#: includes/acf/fields/cwps-acf-field-civicrm-address-state.php:196
+#: includes/acf/fields/cwps-acf-field-civicrm-address-city.php:185
+#: includes/acf/fields/cwps-acf-field-civicrm-address-country.php:185
+#: includes/acf/fields/cwps-acf-field-civicrm-address-state.php:185
 msgid "CiviCRM Primary Address"
 msgstr ""
 
-#: includes/acf/fields/cwps-acf-field-civicrm-address-city.php:199
-#: includes/acf/fields/cwps-acf-field-civicrm-address-country.php:199
-#: includes/acf/fields/cwps-acf-field-civicrm-address-state.php:199
+#: includes/acf/fields/cwps-acf-field-civicrm-address-city.php:188
+#: includes/acf/fields/cwps-acf-field-civicrm-address-country.php:188
+#: includes/acf/fields/cwps-acf-field-civicrm-address-state.php:188
 msgid "Sync with the CiviCRM Primary Address."
 msgstr ""
 
-#: includes/acf/fields/cwps-acf-field-civicrm-address-city.php:210
-#: includes/acf/fields/cwps-acf-field-civicrm-address-country.php:210
-#: includes/acf/fields/cwps-acf-field-civicrm-address-state.php:210
-#: includes/acf/fields/cwps-acf-field-civicrm-phone-single.php:208
+#: includes/acf/fields/cwps-acf-field-civicrm-address-city.php:219
+#: includes/acf/fields/cwps-acf-field-civicrm-address-country.php:219
+#: includes/acf/fields/cwps-acf-field-civicrm-address-state.php:219
+#: includes/acf/fields/cwps-acf-field-civicrm-phone-single.php:217
 msgid "CiviCRM Location Type"
 msgstr ""
 
-#: includes/acf/fields/cwps-acf-field-civicrm-address-city.php:213
-#: includes/acf/fields/cwps-acf-field-civicrm-address-country.php:213
-#: includes/acf/fields/cwps-acf-field-civicrm-address-state.php:213
+#: includes/acf/fields/cwps-acf-field-civicrm-address-city.php:222
+#: includes/acf/fields/cwps-acf-field-civicrm-address-country.php:222
+#: includes/acf/fields/cwps-acf-field-civicrm-address-state.php:222
 msgid "Choose the Location Type of the CiviCRM Address that this ACF Field should sync with."
 msgstr ""
 
@@ -3125,94 +3125,98 @@ msgstr ""
 msgid "CiviCRM Address: Complete"
 msgstr ""
 
-#: includes/acf/fields/cwps-acf-field-civicrm-address.php:185
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:224
 msgid "CiviCRM Address ID"
 msgstr ""
 
-#: includes/acf/fields/cwps-acf-field-civicrm-address.php:189
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:225
+msgid "Show the CiviCRM Address ID. Useful for debugging."
+msgstr ""
+
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:229
 #: includes/acf/fields/cwps-acf-field-civicrm-attachment.php:244
 #: includes/acf/fields/cwps-acf-field-civicrm-im.php:189
 #: includes/acf/fields/cwps-acf-field-civicrm-phone.php:189
 msgid "Show"
 msgstr ""
 
-#: includes/acf/fields/cwps-acf-field-civicrm-address.php:190
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:230
 #: includes/acf/fields/cwps-acf-field-civicrm-attachment.php:245
 #: includes/acf/fields/cwps-acf-field-civicrm-im.php:190
 #: includes/acf/fields/cwps-acf-field-civicrm-phone.php:190
 msgid "Hide"
 msgstr ""
 
-#: includes/acf/fields/cwps-acf-field-civicrm-address.php:370
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:410
 msgid "Please select a Primary Address"
 msgstr ""
 
-#: includes/acf/fields/cwps-acf-field-civicrm-address.php:387
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:427
 msgid "You can only have one Address per Location Type"
 msgstr ""
 
-#: includes/acf/fields/cwps-acf-field-civicrm-address.php:469
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:509
 msgid "Add Address"
 msgstr ""
 
-#: includes/acf/fields/cwps-acf-field-civicrm-address.php:522
-#: includes/acf/fields/cwps-acf-field-civicrm-im.php:562
-#: includes/acf/fields/cwps-acf-field-civicrm-phone.php:619
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:571
+#: includes/acf/fields/cwps-acf-field-civicrm-im.php:571
+#: includes/acf/fields/cwps-acf-field-civicrm-phone.php:628
 msgid "Is Primary"
 msgstr ""
 
-#: includes/acf/fields/cwps-acf-field-civicrm-address.php:549
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:598
 msgid "Is Billing"
 msgstr ""
 
-#: includes/acf/fields/cwps-acf-field-civicrm-address.php:575
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:624
 msgid "Address Name"
 msgstr ""
 
-#: includes/acf/fields/cwps-acf-field-civicrm-address.php:597
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:646
 msgid "Street Address"
 msgstr ""
 
-#: includes/acf/fields/cwps-acf-field-civicrm-address.php:619
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:668
 msgid "Supplemental Address 1"
 msgstr ""
 
-#: includes/acf/fields/cwps-acf-field-civicrm-address.php:641
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:690
 msgid "Supplemental Address 2"
 msgstr ""
 
-#: includes/acf/fields/cwps-acf-field-civicrm-address.php:663
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:712
 msgid "Supplemental Address 3"
 msgstr ""
 
-#: includes/acf/fields/cwps-acf-field-civicrm-address.php:685
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:734
 msgid "City"
 msgstr ""
 
-#: includes/acf/fields/cwps-acf-field-civicrm-address.php:707
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:756
 msgid "Post Code"
 msgstr ""
 
-#: includes/acf/fields/cwps-acf-field-civicrm-address.php:782
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:831
 msgid "Latitude"
 msgstr ""
 
-#: includes/acf/fields/cwps-acf-field-civicrm-address.php:804
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:853
 msgid "Longitude"
 msgstr ""
 
-#: includes/acf/fields/cwps-acf-field-civicrm-address.php:826
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:875
 msgid "Override automatic geocoding"
 msgstr ""
 
-#: includes/acf/fields/cwps-acf-field-civicrm-address.php:839
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:888
 msgid "Override"
 msgstr ""
 
-#: includes/acf/fields/cwps-acf-field-civicrm-address.php:853
+#: includes/acf/fields/cwps-acf-field-civicrm-address.php:902
 #: includes/acf/fields/cwps-acf-field-civicrm-attachment.php:656
-#: includes/acf/fields/cwps-acf-field-civicrm-im.php:590
-#: includes/acf/fields/cwps-acf-field-civicrm-phone.php:647
+#: includes/acf/fields/cwps-acf-field-civicrm-im.php:599
+#: includes/acf/fields/cwps-acf-field-civicrm-phone.php:656
 msgid "CiviCRM ID"
 msgstr ""
 
@@ -3386,7 +3390,7 @@ msgstr ""
 msgid "Add Instant Messenger"
 msgstr ""
 
-#: includes/acf/fields/cwps-acf-field-civicrm-im.php:536
+#: includes/acf/fields/cwps-acf-field-civicrm-im.php:545
 msgid "Provider"
 msgstr ""
 
@@ -3410,15 +3414,15 @@ msgstr ""
 msgid "Sync with the CiviCRM Primary Phone."
 msgstr ""
 
-#: includes/acf/fields/cwps-acf-field-civicrm-phone-single.php:211
+#: includes/acf/fields/cwps-acf-field-civicrm-phone-single.php:220
 msgid "Choose the Location Type of the CiviCRM Phone that this ACF Field should sync with."
 msgstr ""
 
-#: includes/acf/fields/cwps-acf-field-civicrm-phone-single.php:239
+#: includes/acf/fields/cwps-acf-field-civicrm-phone-single.php:248
 msgid "CiviCRM Phone Type"
 msgstr ""
 
-#: includes/acf/fields/cwps-acf-field-civicrm-phone-single.php:242
+#: includes/acf/fields/cwps-acf-field-civicrm-phone-single.php:251
 msgid "Choose the Phone Type of the CiviCRM Phone that this ACF Field should sync with."
 msgstr ""
 
