@@ -237,7 +237,9 @@ class CWPS_ACF_ACFE_Form_Action_Case extends CWPS_ACF_ACFE_Form_Action_Base {
 
 		// Load Custom Fields.
 		foreach ( $this->custom_fields as $key => $custom_group ) {
-			$action[ 'custom_group_' . $custom_group['id'] ] = $action['case'][ 'custom_group_' . $custom_group['id'] ];
+			if ( array_key_exists( 'custom_group_' . $custom_group['id'], $action['case'] ) ) {
+				$action[ 'custom_group_' . $custom_group['id'] ] = $action['case'][ 'custom_group_' . $custom_group['id'] ];
+			}
 		}
 
 		// Load the Contacts.

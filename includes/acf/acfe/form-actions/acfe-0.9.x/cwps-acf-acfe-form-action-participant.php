@@ -291,7 +291,9 @@ class CWPS_ACF_ACFE_Form_Action_Participant extends CWPS_ACF_ACFE_Form_Action_Ba
 
 		// Load Custom Fields.
 		foreach ( $this->custom_fields as $key => $custom_group ) {
-			$action[ 'custom_group_' . $custom_group['id'] ] = $action['participant'][ 'custom_group_' . $custom_group['id'] ];
+			if ( array_key_exists( 'custom_group_' . $custom_group['id'], $action['participant'] ) ) {
+				$action[ 'custom_group_' . $custom_group['id'] ] = $action['participant'][ 'custom_group_' . $custom_group['id'] ];
+			}
 		}
 
 		// Load Campaign ID if the CiviCampaign component is active.
