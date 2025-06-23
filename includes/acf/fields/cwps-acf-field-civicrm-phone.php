@@ -561,6 +561,15 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Field extends acf_field {
 			$locations[ $location_type['id'] ] = esc_attr( $location_type['display_name'] );
 		}
 
+		// Get default Location Type.
+		$location_type_default = false;
+		foreach ( $location_types as $location_type ) {
+			if ( ! empty( $location_type['is_default'] ) ) {
+				$location_type_default = $location_type['id'];
+				break;
+			}
+		}
+
 		// Define Location Field.
 		$location = [
 			'key'               => 'field_phone_location',
@@ -577,7 +586,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Field extends acf_field {
 				'id'    => '',
 			],
 			'choices'           => $locations,
-			'default_value'     => false,
+			'default_value'     => $location_type_default,
 			'allow_null'        => 0,
 			'multiple'          => 0,
 			'ui'                => 0,

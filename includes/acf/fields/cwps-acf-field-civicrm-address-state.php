@@ -180,17 +180,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_State_Field extends acf_field 
 	 */
 	public function render_field_settings( $field ) {
 
-		// Get Locations.
-		$location_types = $this->plugin->civicrm->address->location_types_get();
-
-		// Init choices.
-		$choices = [];
-
-		// Build Location Types choices array for dropdown.
-		foreach ( $location_types as $location_type ) {
-			$choices[ $location_type['id'] ] = esc_attr( $location_type['display_name'] );
-		}
-
 		// Define Primary setting Field.
 		$primary = [
 			'label'         => __( 'CiviCRM Primary Address', 'civicrm-wp-profile-sync' ),
@@ -205,13 +194,33 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_State_Field extends acf_field 
 		// Now add it.
 		acf_render_field_setting( $field, $primary );
 
+		// Get Locations.
+		$location_types = $this->plugin->civicrm->address->location_types_get();
+
+		// Init choices.
+		$choices = [];
+
+		// Build Location Types choices array for dropdown.
+		foreach ( $location_types as $location_type ) {
+			$choices[ $location_type['id'] ] = esc_attr( $location_type['display_name'] );
+		}
+
+		// Get default Location Type.
+		$location_type_default = false;
+		foreach ( $location_types as $location_type ) {
+			if ( ! empty( $location_type['is_default'] ) ) {
+				$location_type_default = $location_type['id'];
+				break;
+			}
+		}
+
 		// Define Location Type setting Field.
 		$type = [
 			'label'             => __( 'CiviCRM Location Type', 'civicrm-wp-profile-sync' ),
 			'name'              => 'state_location_type_id',
 			'type'              => 'select',
 			'instructions'      => __( 'Choose the Location Type of the CiviCRM Address that this ACF Field should sync with.', 'civicrm-wp-profile-sync' ),
-			'default_value'     => '',
+			'default_value'     => $location_type_default,
 			'placeholder'       => '',
 			'allow_null'        => 0,
 			'multiple'          => 0,

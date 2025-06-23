@@ -203,13 +203,22 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Single extends acf_field {
 			$choices[ $location_type['id'] ] = esc_attr( $location_type['display_name'] );
 		}
 
+		// Get default Location Type.
+		$location_type_default = false;
+		foreach ( $location_types as $location_type ) {
+			if ( ! empty( $location_type['is_default'] ) ) {
+				$location_type_default = $location_type['id'];
+				break;
+			}
+		}
+
 		// Define Location Type setting Field.
 		$location_field = [
 			'label'             => __( 'CiviCRM Location Type', 'civicrm-wp-profile-sync' ),
 			'name'              => 'phone_location_type_id',
 			'type'              => 'select',
 			'instructions'      => __( 'Choose the Location Type of the CiviCRM Phone that this ACF Field should sync with.', 'civicrm-wp-profile-sync' ),
-			'default_value'     => '',
+			'default_value'     => $location_type_default,
 			'placeholder'       => '',
 			'allow_null'        => 0,
 			'multiple'          => 0,
