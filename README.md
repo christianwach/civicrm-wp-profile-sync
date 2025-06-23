@@ -41,7 +41,7 @@ Please refer to the [ACF Integration Documentation](/docs/ACF.md) for details.
 
 CiviCRM Profile Sync enables Forms to be built for the front-end of your website with the UI provided by the ACF Extended plugin. These Forms can send their data directly to CiviCRM in a similar (though more limited) way to Caldera Forms CiviCRM.
 
-Form building with ACF Extended is at an early stage of development and is currently limited to submitting data for Contacts, Participants, Activities and Cases. This does, however, provide enough functionality to build some fairly powerful and useful Forms.
+Form building with ACF Extended is currently limited to submitting data for Contacts, Participants, Activities and Cases. This does, however, provide enough functionality to build some fairly powerful and useful Forms.
 
 Please refer to the [ACFE Form-building Documentation](/docs/ACFE.md) for details.
 
