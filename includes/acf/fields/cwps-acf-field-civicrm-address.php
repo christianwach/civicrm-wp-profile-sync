@@ -211,11 +211,11 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Field extends acf_field {
 	}
 
 	/**
-	 * Gets the Field settings for the "CiviCRM Address ID" Setting.
+	 * Gets the definition for the "CiviCRM Address ID" Settings Field.
 	 *
 	 * @since 0.7.1
 	 *
-	 * @param array $field The field settings array.
+	 * @return array $field The Field settings array.
 	 */
 	public function field_address_id_settings_get() {
 
