@@ -86,6 +86,12 @@ I'll say it again: test early, test often and - above all - test on a developmen
 
 == Changelog ==
 
+= 0.7.0 =
+
+* Adds compatibility with ACF Extended 0.9.x Form Actions
+* Enables syncing of ACF "Number" Fields
+* Misc bug fixes and improvements
+
 = 0.6.9 =
 
 * Introduces "CiviCRM Phone: Single" ACF Field
