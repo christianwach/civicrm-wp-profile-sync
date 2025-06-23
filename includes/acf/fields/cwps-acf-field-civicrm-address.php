@@ -194,7 +194,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Field extends acf_field {
 	}
 
 	/**
-	 * Renders the Field Fettings used in the "Presentation" tab.
+	 * Renders the Field settings used in the "Presentation" tab.
 	 *
 	 * @since 0.7.1
 	 *
@@ -211,7 +211,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Field extends acf_field {
 	}
 
 	/**
-	 * Gets the Field Fettings for the "CiviCRM Address ID" Setting.
+	 * Gets the Field settings for the "CiviCRM Address ID" Setting.
 	 *
 	 * @since 0.7.1
 	 *

@@ -210,7 +210,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Field extends acf_field {
 	}
 
 	/**
-	 * Renders the Field Fettings used in the "Presentation" tab.
+	 * Renders the Field settings used in the "Presentation" tab.
 	 *
 	 * @since 0.6.6
 	 *

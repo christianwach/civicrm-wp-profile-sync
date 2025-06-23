@@ -293,7 +293,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Address_State extends acf_field {
 	}
 
 	/**
-	 * Renders the Field Fettings used in the "Presentation" tab.
+	 * Renders the Field settings used in the "Presentation" tab.
 	 *
 	 * @since 0.6.6
 	 *
