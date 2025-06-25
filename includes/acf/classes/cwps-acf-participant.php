@@ -277,7 +277,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Update a CiviCRM Participant when a WordPress Post is synced.
@@ -432,7 +432,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get "chunked" CiviCRM API Participant data.
@@ -556,7 +556,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Check whether a Participant's Participant Role is mapped to a Post Type.
@@ -718,7 +718,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the CiviCRM Participant data for a given ID.
@@ -781,7 +781,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Create a CiviCRM Participant for a given set of data.
@@ -920,7 +920,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Prepare the required CiviCRM Participant data from a set of ACF Fields.
@@ -1146,7 +1146,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Return the "CiviCRM Field" ACF Settings Field.
@@ -1247,7 +1247,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Returns the choices for a Setting Field from this Entity when found.
@@ -1662,7 +1662,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Check if a Field Group has been mapped to one or more Participant Post Types.
@@ -1744,7 +1744,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Add a link to action links on the Pages and Posts list tables.

@@ -480,7 +480,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Update the CiviCRM Contact when the ACF Fields on a WordPress User have been edited.
@@ -582,7 +582,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Update a WordPress User when a CiviCRM Contact has been edited.
@@ -625,7 +625,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Update an Email ACF Field on a User when a CiviCRM Contact has been edited.
@@ -664,7 +664,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * A CiviCRM Contact's Website is about to be edited.
@@ -822,7 +822,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Update Phone ACF Fields on a User when a CiviCRM Contact has been edited.
@@ -955,7 +955,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Update Instant Messenger ACF Fields on a User when a CiviCRM Contact has been edited.
@@ -1082,7 +1082,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Update a Relationship ACF Field on a User when a CiviCRM Contact has been edited.
@@ -1138,7 +1138,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Update Address ACF Fields on a User when a CiviCRM Contact has been edited.
@@ -1265,7 +1265,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * A CiviCRM Contact's Address is about to be edited.
@@ -1530,7 +1530,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Update City ACF Fields on a User when a CiviCRM Contact has been edited.
@@ -1650,7 +1650,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Update City ACF Fields on a User when a CiviCRM Contact has been edited.
@@ -1770,7 +1770,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Update a Contact ID ACF Field on a User when a CiviCRM Contact has been edited.
@@ -1809,7 +1809,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Update ACF Fields when a set of CiviCRM Custom Fields has been updated.
@@ -1833,7 +1833,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Listen for queries from the Field Group class.
@@ -2399,7 +2399,7 @@ class CiviCRM_Profile_Sync_ACF_User {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Filter the Contact data.

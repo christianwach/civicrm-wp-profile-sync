@@ -96,7 +96,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Type {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get all top-level CiviCRM Contact Types.
@@ -237,7 +237,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Type {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the CiviCRM Contact Type and Sub-type for a given Contact Type.
@@ -445,7 +445,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Type {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the CiviCRM Contact Type data for a given ID or name.

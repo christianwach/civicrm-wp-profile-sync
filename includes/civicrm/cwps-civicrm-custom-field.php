@@ -83,7 +83,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the CiviCRM Custom Field data for a given ID.
@@ -186,7 +186,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the values for a given CiviCRM Contact ID and set of Custom Fields.
@@ -259,7 +259,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the Custom Fields for a given CiviCRM Contact.

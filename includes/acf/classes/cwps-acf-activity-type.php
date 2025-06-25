@@ -87,7 +87,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the numeric ID of the "Activity Types" Option Group.
@@ -143,7 +143,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the data for an "Activity Type" by ID.
@@ -254,7 +254,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the number of Activities for a given CiviCRM Activity Type.
@@ -306,7 +306,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the Activity Type that is mapped to a Post Type.
@@ -335,7 +335,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Gets the CiviCRM Activity Types as choices for an ACF "Select" Field.
@@ -398,7 +398,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get all Activity Types.

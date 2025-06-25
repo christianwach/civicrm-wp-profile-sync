@@ -208,7 +208,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Intercept when a CiviCRM Phone Record has been updated.
@@ -376,7 +376,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Save Phone(s) when BuddyPress Profile Fields have been saved.
@@ -531,7 +531,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Returns the Phone Field choices for a Setting Field from when found.
@@ -612,7 +612,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the core Fields for a CiviCRM Phone Type.
@@ -695,7 +695,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the BuddyPress Field Type for a Phone Field.
@@ -746,7 +746,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Modify the Options of a special case BuddyPress "Checkbox" Field.

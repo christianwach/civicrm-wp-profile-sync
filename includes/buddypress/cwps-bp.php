@@ -264,7 +264,7 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Intercept BuddyPress's attempt to sync to WordPress User profile.

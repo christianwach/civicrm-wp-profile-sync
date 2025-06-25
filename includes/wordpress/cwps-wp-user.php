@@ -161,7 +161,7 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Updates a CiviCRM Contact when a WordPress User is edited.
@@ -294,7 +294,7 @@ class CiviCRM_WP_Profile_Sync_WordPress_User {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Update a WordPress User's "First Name" and "Last Name" Fields.

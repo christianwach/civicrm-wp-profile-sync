@@ -106,7 +106,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Fires when a BuddyPress xProfile "Profile Group" with mapped Fields has been updated.
@@ -223,7 +223,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Populate the BuddyPress xProfile Fields.
@@ -303,7 +303,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Listen for queries from the Custom Field class.

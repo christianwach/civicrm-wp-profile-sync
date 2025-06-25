@@ -163,7 +163,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Getter for the public Event Location Fields.
@@ -212,7 +212,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Validate the content of a Field.
@@ -257,7 +257,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the value of an Event Location Field, formatted for ACF.
@@ -342,7 +342,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the "select" options for a given CiviCRM Event Location Field.
@@ -374,7 +374,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Gets all Event Locations.
@@ -508,7 +508,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Create a CiviCRM Event Location for a given set of data.
@@ -606,7 +606,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the CiviCRM Event Location Fields for an ACF Field.
@@ -653,7 +653,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the Event Location Field options for a given Field ID.
@@ -1149,7 +1149,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the Fields for an ACF Field and mapped to a CiviCRM Event Type.
@@ -1199,7 +1199,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Modify the Settings of an ACF "Select" Field.

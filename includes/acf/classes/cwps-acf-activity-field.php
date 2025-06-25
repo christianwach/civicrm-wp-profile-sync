@@ -140,7 +140,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Validate the content of a Field.
@@ -185,7 +185,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Intercept when a Post has been updated from an Activity via the Mapper.
@@ -250,7 +250,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the value of an Activity Field, formatted for ACF.
@@ -335,7 +335,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the "select" options for a given CiviCRM Activity Field.
@@ -381,7 +381,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the CiviCRM Activity Fields for an ACF Field.
@@ -428,7 +428,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the Activity Field options for a given Field ID.
@@ -685,7 +685,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Modify the Settings of an ACF "Select" Field.
@@ -811,7 +811,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Maybe sync the Activity "Date" Fields to the ACF Fields on a WordPress Post.

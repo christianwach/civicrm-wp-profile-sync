@@ -199,7 +199,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Update a CiviCRM Contact when a WordPress Post is synced.
@@ -381,7 +381,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Getter method for the "Handled Fields" array.
@@ -408,7 +408,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Checks if there are valid checksum query params.
@@ -851,7 +851,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get "chunked" CiviCRM API Contact data for a given Contact Type ID.
@@ -911,7 +911,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Check whether any of a Contact's Contact Types is mapped to a Post Type.
@@ -1079,7 +1079,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Prepare the required CiviCRM Contact data from a WordPress Post.
@@ -1285,7 +1285,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Prepare the required CiviCRM Contact data from a set of ACF Fields.
@@ -1404,7 +1404,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Return the "CiviCRM Field" ACF Settings Field.
@@ -1505,7 +1505,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Check with CiviCRM that this Contact can be viewed.
@@ -1542,7 +1542,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Returns the choices for a Setting Field from this Entity when found.
@@ -2070,7 +2070,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Check if a Field Group has been mapped to one or more Contact Post Types.
@@ -2142,9 +2142,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 	// Retained methods to provide backwards compatibility.
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the CiviCRM Contact data for a given ID.

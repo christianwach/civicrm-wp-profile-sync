@@ -208,7 +208,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Fires when a CiviCRM Contact's Website is about to be edited.
@@ -616,7 +616,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Save Website(s) when BuddyPress Profile Fields have been saved.
@@ -733,7 +733,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Returns the Website Field choices for a Setting Field from when found.
@@ -815,7 +815,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the core Fields for a CiviCRM Website Type.
@@ -898,7 +898,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the BuddyPress Field Type for a Website Field.

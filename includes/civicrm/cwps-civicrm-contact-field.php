@@ -83,7 +83,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the Contact Field options for a given Field Name.

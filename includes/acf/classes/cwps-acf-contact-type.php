@@ -138,7 +138,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the number of Contacts who are of a CiviCRM Contact Type.
@@ -194,7 +194,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the Contact Type hierarchy that is mapped to a Post Type.
@@ -511,7 +511,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * When a CiviCRM Contact is about to be updated, get existing data.
@@ -575,9 +575,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 	// Retained methods to provide backwards compatibility.
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get all top-level CiviCRM Contact Types.

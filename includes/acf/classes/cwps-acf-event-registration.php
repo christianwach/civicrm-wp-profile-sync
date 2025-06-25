@@ -202,7 +202,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Getter for the public Event Registration Fields.
@@ -279,7 +279,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Validate the content of a Field.
@@ -324,7 +324,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the value of an Event Registration Field, formatted for ACF.
@@ -409,7 +409,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the "select" options for a given CiviCRM Event Registration Field.
@@ -446,7 +446,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the CiviCRM Event Registration Fields for an ACF Field.
@@ -493,7 +493,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the Event Registration Field options for a given Field ID.
@@ -982,7 +982,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the Fields for an ACF Field and mapped to a CiviCRM Event Type.
@@ -1032,7 +1032,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Modify the Settings of an ACF "Number" Field.
@@ -1192,7 +1192,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Checks if a CiviCRM Event has a Registration Profile.

@@ -35,7 +35,7 @@ class CiviCRM_Profile_Sync_ACF_Location_Type_Bypass extends ACF_Location {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Matches the provided rule against the screen args.

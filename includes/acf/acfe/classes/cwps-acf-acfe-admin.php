@@ -135,7 +135,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Admin {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Adds the default ACF Extended Forms Integration settings.
@@ -229,7 +229,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Admin {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Called when the Settings Page (or its parent) has been added.
@@ -283,7 +283,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Admin {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Gets the duration of the Form Action cache transient.

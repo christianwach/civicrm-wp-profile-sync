@@ -225,7 +225,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Returns the Contact Field choices for a Setting Field from when found.
@@ -425,7 +425,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the BuddyPress Field Type for a Contact Field.
@@ -460,7 +460,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the core Contact Fields for a CiviCRM Contact Type.
@@ -700,7 +700,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Modify the Options of a BuddyPress "Checkbox" Field.
@@ -869,7 +869,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Modify the Options of a special case BuddyPress "Checkbox" Field.

@@ -193,7 +193,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Intercept when a Post has been updated from a Contact via the Mapper.
@@ -275,7 +275,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the value of a Contact Field, formatted for ACF.
@@ -377,7 +377,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the "date format" for a given CiviCRM Contact Field.
@@ -412,7 +412,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the "select" options for a given CiviCRM Contact Field.
@@ -481,7 +481,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the CiviCRM Contact Fields for an ACF Field.
@@ -560,7 +560,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the core Fields for a CiviCRM Contact Type.
@@ -857,7 +857,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Modify the Settings of an ACF "Select" Field.

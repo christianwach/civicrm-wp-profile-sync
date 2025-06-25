@@ -221,7 +221,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Intercept when a CiviCRM Address Record has been updated.
@@ -406,7 +406,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Save Address(es) when BuddyPress Profile Fields have been saved.
@@ -546,7 +546,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Returns the Address Field choices for a Setting Field from when found.
@@ -627,7 +627,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the core Fields for a CiviCRM Address Type.
@@ -704,7 +704,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the BuddyPress Field Type for an Address Field.
@@ -755,7 +755,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the BuddyPress "selectbox" options for a given CiviCRM Contact Field.
@@ -804,7 +804,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Listen for queries from the Custom Field class.
@@ -866,7 +866,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Modify the Options of a BuddyPress "Select" Field.
@@ -930,7 +930,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Modify the Options of a special case BuddyPress "Checkbox" Field.

@@ -140,7 +140,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Validate the content of a Field.
@@ -185,7 +185,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Intercept when a Post has been updated from a Case via the Mapper.
@@ -250,7 +250,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the value of a Case Field, formatted for ACF.
@@ -335,7 +335,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the "select" options for a given CiviCRM Case Field.
@@ -375,7 +375,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the CiviCRM Case Fields for an ACF Field.
@@ -422,7 +422,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the Case Field options for a given Field ID.
@@ -697,7 +697,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Modify the Settings of an ACF "Select" Field.
@@ -836,7 +836,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Maybe sync the Case "Date" Fields to the ACF Fields on a WordPress Post.

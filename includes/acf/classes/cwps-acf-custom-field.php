@@ -228,7 +228,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Intercept when a Post has been updated from a Contact via the Mapper.
@@ -341,7 +341,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Intercept when a Post has been updated from an Activity via the Mapper.
@@ -479,7 +479,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the values for a given CiviCRM Case ID and set of Custom Fields.
@@ -552,7 +552,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the values for a given CiviCRM Event ID and set of Custom Fields.
@@ -625,7 +625,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Intercept when a Post has been updated from a Participant via the Mapper.
@@ -763,7 +763,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Callback for the CiviCRM Add/Edit Custom Field postSave hook.
@@ -831,7 +831,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Called when a set of CiviCRM Custom Fields is about to be updated.
@@ -964,7 +964,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the value of a Custom Field, formatted for ACF.
@@ -1058,7 +1058,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the CiviCRM Custom Fields for an ACF Field.
@@ -1113,7 +1113,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the mapped Custom Field ID if present.
@@ -1209,7 +1209,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Modify the Settings of an ACF "Select" Field.

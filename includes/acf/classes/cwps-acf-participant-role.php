@@ -87,7 +87,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the numeric ID of the "Participant Roles" Option Group.
@@ -143,7 +143,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the data for an "Participant Role" by ID.
@@ -254,7 +254,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the number of Participants for a given CiviCRM Participant Role.
@@ -303,7 +303,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the Participant Role that is mapped to a Post Type.
@@ -332,7 +332,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Gets the CiviCRM Participant Roles as choices for an ACF "Select" Field.
@@ -363,7 +363,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Get all Participant Roles.

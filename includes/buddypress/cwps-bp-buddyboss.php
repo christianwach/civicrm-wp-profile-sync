@@ -87,7 +87,7 @@ class CiviCRM_Profile_Sync_BP_BuddyBoss {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Trigger the sync process to populate the core BuddyBoss xProfile Fields.

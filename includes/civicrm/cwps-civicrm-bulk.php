@@ -95,7 +95,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Bulk {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Register directory that CiviCRM searches in for new PHP files.
@@ -168,7 +168,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Bulk {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Prevent recursion when a WordPress User is about to be bulk added.

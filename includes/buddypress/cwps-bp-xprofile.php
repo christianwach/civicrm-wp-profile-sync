@@ -375,7 +375,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Called when a BuddyPress xProfile "Profile Group" has been updated.
@@ -544,7 +544,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Update the value of a BuddyPress xProfile Field.
@@ -720,7 +720,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Filters the HTML output for an xProfile Field options checkbox button.
@@ -840,7 +840,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Filter the raw submitted Profile Field value.
@@ -932,7 +932,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Fires when the children of a BuddyPress xProfile Field are read.
@@ -1254,7 +1254,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Output a metabox below the xProfile Field Type metabox in the main column.
@@ -1604,7 +1604,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Gets all of our metadata for a BuddyPress xProfile Field.

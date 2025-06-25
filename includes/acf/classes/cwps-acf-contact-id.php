@@ -161,7 +161,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_ID extends CiviCRM_Profile_Sync_A
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Intercept when a Post has been updated from a Contact via the Mapper.
@@ -192,7 +192,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_ID extends CiviCRM_Profile_Sync_A
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Intercept when a CiviCRM Contact Record has been updated.
@@ -273,7 +273,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_ID extends CiviCRM_Profile_Sync_A
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Add any Contact ID Fields that are attached to a Post.
