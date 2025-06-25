@@ -21,11 +21,11 @@ defined( 'ABSPATH' ) || exit;
 class CiviCRM_WP_Profile_Sync_CAI {
 
 	/**
-	 * Plugin (calling) object.
+	 * Plugin object.
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync
 	 */
 	public $plugin;
 
@@ -34,7 +34,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object|bool
+	 * @var CiviCRM_ACF_Integration|bool
 	 */
 	public $cai = false;
 

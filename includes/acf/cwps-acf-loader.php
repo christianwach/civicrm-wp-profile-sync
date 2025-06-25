@@ -21,20 +21,29 @@ defined( 'ABSPATH' ) || exit;
 class CiviCRM_WP_Profile_Sync_ACF_Loader {
 
 	/**
-	 * Plugin (calling) object.
+	 * Plugin object.
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync
 	 */
 	public $plugin;
 
 	/**
-	 * Admin Utilities object.
+	 * Migration object.
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_Admin_Migrate
+	 */
+	public $migrate;
+
+	/**
+	 * Admin object.
+	 *
+	 * @since 0.4
+	 * @access public
+	 * @var CiviCRM_Profile_Sync_ACF_Admin
 	 */
 	public $admin;
 
@@ -43,7 +52,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM
 	 */
 	public $civicrm;
 
@@ -52,7 +61,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_Post_Type
 	 */
 	public $post_type;
 
@@ -61,7 +70,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_Post
 	 */
 	public $post;
 
@@ -70,7 +79,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_User
 	 */
 	public $user;
 
@@ -79,7 +88,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF
 	 */
 	public $acf;
 
@@ -88,7 +97,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_ACFE
 	 */
 	public $acfe;
 
@@ -97,7 +106,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_Mapping
 	 */
 	public $mapping;
 
@@ -106,7 +115,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_Mapper
 	 */
 	public $mapper;
 
@@ -115,7 +124,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Loader {
 	 *
 	 * @since 0.5.8
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync_ACF_Geo_Mashup
 	 */
 	public $geo_mashup;
 

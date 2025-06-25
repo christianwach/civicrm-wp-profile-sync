@@ -25,7 +25,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync
 	 */
 	public $plugin;
 
@@ -34,7 +34,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync_ACF_Loader
 	 */
 	public $acf_loader;
 
@@ -43,7 +43,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 	 *
 	 * @since 0.6.6
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_ACFE_Admin
 	 */
 	public $admin;
 
@@ -52,7 +52,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_ACFE_Form
 	 */
 	public $form;
 

@@ -25,7 +25,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync
 	 */
 	public $plugin;
 
@@ -34,7 +34,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync_BuddyPress
 	 */
 	public $bp_loader;
 
@@ -43,7 +43,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync_CiviCRM
 	 */
 	public $civicrm;
 
@@ -52,7 +52,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_BP_CiviCRM_Contact
 	 */
 	public $contact;
 
@@ -61,7 +61,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field
 	 */
 	public $contact_field;
 
@@ -70,7 +70,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_BP_CiviCRM_Custom_Field
 	 */
 	public $custom_field;
 
@@ -79,7 +79,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_BP_CiviCRM_Address
 	 */
 	public $address;
 
@@ -88,7 +88,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_BP_CiviCRM_Phone
 	 */
 	public $phone;
 
@@ -97,7 +97,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_BP_CiviCRM_Website
 	 */
 	public $website;
 

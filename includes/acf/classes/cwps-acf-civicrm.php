@@ -25,7 +25,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync
 	 */
 	public $plugin;
 
@@ -34,7 +34,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync_ACF_Loader
 	 */
 	public $acf_loader;
 
@@ -43,7 +43,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Type
 	 */
 	public $contact_type;
 
@@ -52,7 +52,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Contact
 	 */
 	public $contact;
 
@@ -61,7 +61,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field
 	 */
 	public $contact_field;
 
@@ -70,7 +70,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Type
 	 */
 	public $activity_type;
 
@@ -79,7 +79,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Activity
 	 */
 	public $activity;
 
@@ -88,7 +88,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Field
 	 */
 	public $activity_field;
 
@@ -97,7 +97,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments
 	 */
 	public $activity_attachments;
 
@@ -106,7 +106,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Type
 	 */
 	public $case_type;
 
@@ -115,7 +115,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Case
 	 */
 	public $case;
 
@@ -124,7 +124,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field
 	 */
 	public $case_field;
 
@@ -133,7 +133,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Type
 	 */
 	public $event_type;
 
@@ -142,7 +142,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Event
 	 */
 	public $event;
 
@@ -151,7 +151,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field
 	 */
 	public $event_field;
 
@@ -160,7 +160,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location
 	 */
 	public $event_location;
 
@@ -169,7 +169,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.5.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration
 	 */
 	public $event_registration;
 
@@ -178,7 +178,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Participant
 	 */
 	public $participant;
 
@@ -187,7 +187,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field
 	 */
 	public $participant_field;
 
@@ -196,7 +196,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Role
 	 */
 	public $participant_role;
 
@@ -205,7 +205,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field
 	 */
 	public $custom_field;
 
@@ -214,7 +214,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Group
 	 */
 	public $group;
 
@@ -223,7 +223,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Membership
 	 */
 	public $membership;
 
@@ -232,7 +232,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Note
 	 */
 	public $note;
 
@@ -241,7 +241,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.5.2
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment
 	 */
 	public $attachment;
 
@@ -250,7 +250,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Tag
 	 */
 	public $tag;
 
@@ -259,7 +259,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Campaign
 	 */
 	public $campaign;
 
@@ -268,7 +268,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Address
 	 */
 	public $address;
 
@@ -277,7 +277,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses
 	 */
 	public $addresses;
 
@@ -286,7 +286,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Address_City
 	 */
 	public $address_city;
 
@@ -295,7 +295,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State
 	 */
 	public $address_state;
 
@@ -304,7 +304,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map
 	 */
 	public $google_map;
 
@@ -313,7 +313,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship
 	 */
 	public $relationship;
 
@@ -322,7 +322,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Email
 	 */
 	public $email;
 
@@ -331,7 +331,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Website
 	 */
 	public $website;
 
@@ -340,7 +340,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Phone
 	 */
 	public $phone;
 
@@ -349,7 +349,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.6.9
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Phone_Single
 	 */
 	public $phone_single;
 
@@ -358,7 +358,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger
 	 */
 	public $im;
 
@@ -367,7 +367,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_ID
 	 */
 	public $contact_id;
 

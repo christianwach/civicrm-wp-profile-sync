@@ -25,7 +25,7 @@ class CiviCRM_Profile_Sync_ACF {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync
 	 */
 	public $plugin;
 
@@ -34,7 +34,7 @@ class CiviCRM_Profile_Sync_ACF {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync_ACF_Loader
 	 */
 	public $acf_loader;
 
@@ -43,7 +43,7 @@ class CiviCRM_Profile_Sync_ACF {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_Field_Type
 	 */
 	public $field_type;
 
@@ -52,7 +52,7 @@ class CiviCRM_Profile_Sync_ACF {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_Field_Group
 	 */
 	public $field_group;
 
@@ -61,7 +61,7 @@ class CiviCRM_Profile_Sync_ACF {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_Field
 	 */
 	public $field;
 
@@ -70,7 +70,7 @@ class CiviCRM_Profile_Sync_ACF {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_Blocks
 	 */
 	// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 	// public $blocks;

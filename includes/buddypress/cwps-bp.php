@@ -29,11 +29,11 @@ defined( 'ABSPATH' ) || exit;
 class CiviCRM_WP_Profile_Sync_BuddyPress {
 
 	/**
-	 * Plugin (calling) object.
+	 * Plugin object.
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync
 	 */
 	public $plugin;
 
@@ -42,7 +42,7 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var BuddyPress|bool
 	 */
 	public $bp = false;
 
@@ -60,7 +60,7 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_BP_BuddyBoss
 	 */
 	public $buddyboss;
 
@@ -69,7 +69,7 @@ class CiviCRM_WP_Profile_Sync_BuddyPress {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_BP_XProfile
 	 */
 	public $xprofile;
 

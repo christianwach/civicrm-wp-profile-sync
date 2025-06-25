@@ -23,7 +23,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Geo_Mashup {
 	 *
 	 * @since 0.5.8
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync
 	 */
 	public $plugin;
 
@@ -32,7 +32,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Geo_Mashup {
 	 *
 	 * @since 0.5.8
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync_ACF_Loader
 	 */
 	public $acf_loader;
 
@@ -41,7 +41,7 @@ class CiviCRM_WP_Profile_Sync_ACF_Geo_Mashup {
 	 *
 	 * @since 0.5.8
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_Profile_Sync_ACF_CiviCRM
 	 */
 	public $civicrm;
 

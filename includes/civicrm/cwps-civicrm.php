@@ -21,11 +21,11 @@ defined( 'ABSPATH' ) || exit;
 class CiviCRM_WP_Profile_Sync_CiviCRM {
 
 	/**
-	 * Plugin (calling) object.
+	 * Plugin object.
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync
 	 */
 	public $plugin;
 
@@ -34,7 +34,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Type
 	 */
 	public $contact_type;
 
@@ -43,7 +43,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync_CiviCRM_Contact
 	 */
 	public $contact;
 
@@ -52,7 +52,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Field
 	 */
 	public $contact_field;
 
@@ -61,7 +61,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field
 	 */
 	public $custom_field;
 
@@ -70,7 +70,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Group
 	 */
 	public $custom_group;
 
@@ -79,7 +79,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync_CiviCRM_Email
 	 */
 	public $email;
 
@@ -88,7 +88,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync_CiviCRM_Website
 	 */
 	public $website;
 
@@ -97,7 +97,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync_CiviCRM_Address
 	 */
 	public $address;
 
@@ -106,7 +106,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	 *
 	 * @since 0.5
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync_CiviCRM_Phone
 	 */
 	public $phone;
 
@@ -115,7 +115,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync_CiviCRM_Bulk
 	 */
 	public $bulk;
 

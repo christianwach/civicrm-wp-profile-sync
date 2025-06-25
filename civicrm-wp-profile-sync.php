@@ -76,7 +76,7 @@ class CiviCRM_WP_Profile_Sync {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync_Admin
 	 */
 	public $admin;
 
@@ -85,7 +85,7 @@ class CiviCRM_WP_Profile_Sync {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync_Mapper
 	 */
 	public $mapper;
 
@@ -94,7 +94,7 @@ class CiviCRM_WP_Profile_Sync {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync_WordPress
 	 */
 	public $wp;
 
@@ -103,7 +103,7 @@ class CiviCRM_WP_Profile_Sync {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync_CiviCRM
 	 */
 	public $civicrm;
 
@@ -112,7 +112,7 @@ class CiviCRM_WP_Profile_Sync {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync_BuddyPress
 	 */
 	public $bp;
 
@@ -121,7 +121,7 @@ class CiviCRM_WP_Profile_Sync {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync_ACF_Loader
 	 */
 	public $acf;
 
@@ -130,7 +130,7 @@ class CiviCRM_WP_Profile_Sync {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync_CAI
 	 */
 	public $cai;
 

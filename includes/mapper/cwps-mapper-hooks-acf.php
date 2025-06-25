@@ -24,11 +24,11 @@ defined( 'ABSPATH' ) || exit;
 class CiviCRM_WP_Profile_Sync_Mapper_Hooks_ACF {
 
 	/**
-	 * Plugin (calling) object.
+	 * Plugin object.
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync
 	 */
 	public $plugin;
 
@@ -37,7 +37,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_ACF {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync_Mapper
 	 */
 	public $mapper;
 
@@ -46,7 +46,7 @@ class CiviCRM_WP_Profile_Sync_Mapper_Hooks_ACF {
 	 *
 	 * @since 0.4
 	 * @access public
-	 * @var object
+	 * @var CiviCRM_WP_Profile_Sync_Mapper_Hooks
 	 */
 	public $hooks;
 
