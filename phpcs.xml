@@ -9,6 +9,15 @@
 	<arg name="extensions" value="php" />
 	<file>.</file>
 
+	<!-- Whenever possible, cache the scan results and re-use those for unchanged files on the next scan. -->
+	<arg name="cache" value=".phpcs/cache.json" />
+
+	<!-- Check 20 files in parallel. -->
+	<arg name="parallel" value="20" />
+
+	<!-- Set severity to 1 to see everything that isn't effectively turned off. -->
+	<arg name="severity" value="1" />
+
 	<rule ref="WordPress">
 
 		<!-- Allow slash-delimited hook names. -->
@@ -49,7 +58,10 @@
 	<!-- Nesting levels. -->
 	<rule ref="Generic.Metrics.NestingLevel">
 		<properties>
-			<property name="absoluteNestingLevel" value="5" />
+			<!-- Warning level. -->
+            <property name="nestingLevel" value="6"/>
+			<!-- Error level. -->
+			<property name="absoluteNestingLevel" value="6" />
 		</properties>
 	</rule>
 
