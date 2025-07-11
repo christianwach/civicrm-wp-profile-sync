@@ -1519,6 +1519,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		];
 
 		// Set up the Post Type called "Participant".
+		// phpcs:ignore WordPress.NamingConventions.ValidPostTypeSlug.NotStringLiteral
 		register_post_type( $this->post_type_name, $args );
 
 		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
