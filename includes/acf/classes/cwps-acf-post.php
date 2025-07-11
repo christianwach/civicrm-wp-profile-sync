@@ -2608,6 +2608,13 @@ class CiviCRM_Profile_Sync_ACF_Post {
 			}
 		}
 
+		// Do not sync if this Post is in the Trash.
+		if ( $should_be_synced ) {
+			if ( 'trash' === $post->post_status ) {
+				$should_be_synced = false;
+			}
+		}
+
 		// Do not sync if this is an autosave routine.
 		if ( $should_be_synced ) {
 			if ( wp_is_post_autosave( $post ) ) {
