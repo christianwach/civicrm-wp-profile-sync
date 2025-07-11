@@ -394,8 +394,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		// Intercept Contact updates in CiviCRM.
 		add_action( 'civicrm_pre', [ $this, 'contact_pre_create' ], 10, 4 );
 		add_action( 'civicrm_pre', [ $this, 'contact_pre_edit' ], 10, 4 );
+		add_action( 'civicrm_pre', [ $this, 'contact_pre_delete' ], 10, 4 );
 		add_action( 'civicrm_post', [ $this, 'contact_created' ], 10, 4 );
 		add_action( 'civicrm_post', [ $this, 'contact_edited' ], 10, 4 );
+		add_action( 'civicrm_post', [ $this, 'contact_deleted' ], 10, 4 );
 
 	}
 
@@ -642,8 +644,10 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		// Remove Contact update hooks.
 		remove_action( 'civicrm_pre', [ $this, 'contact_pre_create' ], 10 );
 		remove_action( 'civicrm_pre', [ $this, 'contact_pre_edit' ], 10 );
+		remove_action( 'civicrm_pre', [ $this, 'contact_pre_delete' ], 10 );
 		remove_action( 'civicrm_post', [ $this, 'contact_created' ], 10 );
 		remove_action( 'civicrm_post', [ $this, 'contact_edited' ], 10 );
+		remove_action( 'civicrm_post', [ $this, 'contact_deleted' ], 10 );
 
 	}
 
@@ -1246,6 +1250,55 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	}
 
 	/**
+	 * Intercept when a CiviCRM Contact is about to be deleted.
+	 *
+	 * @since 0.7.2
+	 *
+	 * @param string  $op The type of database operation.
+	 * @param string  $object_name The type of object.
+	 * @param integer $object_id The ID of the object.
+	 * @param object  $object_ref The object.
+	 */
+	public function contact_pre_delete( $op, $object_name, $object_id, $object_ref ) {
+
+		// Target our operation.
+		if ( 'delete' !== $op ) {
+			return;
+		}
+
+		// Bail if it's not a Contact.
+		if ( ! ( $object_ref instanceof CRM_Contact_DAO_Contact ) ) {
+			return;
+		}
+
+		// Bail if this is not a Contact.
+		$top_level_types = $this->plugin->civicrm->contact_type->types_get_top_level();
+		if ( ! in_array( $object_name, $top_level_types, true ) ) {
+			return;
+		}
+
+		// Let's make an array of the params.
+		$args = [
+			'op'         => $op,
+			'objectName' => $object_name,
+			'objectId'   => $object_id,
+		];
+
+		// Maybe cast objectRef as object.
+		$args['objectRef'] = is_object( $object_ref ) ? $object_ref : (object) $object_ref;
+
+		/**
+		 * Broadcast that a CiviCRM Contact is about to be deleted.
+		 *
+		 * @since 0.7.2
+		 *
+		 * @param array $args The array of CiviCRM params.
+		 */
+		do_action( 'cwps/acf/mapper/contact/delete/pre', $args );
+
+	}
+
+	/**
 	 * Create a WordPress Post when a CiviCRM Contact is created.
 	 *
 	 * @since 0.4
@@ -1377,6 +1430,55 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		 * @param array $args The array of CiviCRM params.
 		 */
 		do_action( 'cwps/acf/mapper/contact/edited', $args );
+
+	}
+
+	/**
+	 * Intercept when a CiviCRM Contact is deleted.
+	 *
+	 * @since 0.7.2
+	 *
+	 * @param string  $op The type of database operation.
+	 * @param string  $object_name The type of object.
+	 * @param integer $object_id The ID of the object.
+	 * @param object  $object_ref The object.
+	 */
+	public function contact_deleted( $op, $object_name, $object_id, $object_ref ) {
+
+		// Target our operation.
+		if ( 'delete' !== $op ) {
+			return;
+		}
+
+		// Bail if it's not a Contact.
+		if ( ! ( $object_ref instanceof CRM_Contact_DAO_Contact ) ) {
+			return;
+		}
+
+		// Bail if this is not a Contact.
+		$top_level_types = $this->plugin->civicrm->contact_type->types_get_top_level();
+		if ( ! in_array( $object_name, $top_level_types, true ) ) {
+			return;
+		}
+
+		// Let's make an array of the CiviCRM params.
+		$args = [
+			'op'         => $op,
+			'objectName' => $object_name,
+			'objectId'   => $object_id,
+		];
+
+		// Maybe cast objectRef as object.
+		$args['objectRef'] = is_object( $object_ref ) ? $object_ref : (object) $object_ref;
+
+		/**
+		 * Broadcast that a CiviCRM Contact has been deleted.
+		 *
+		 * @since 0.7.2
+		 *
+		 * @param array $args The array of CiviCRM params.
+		 */
+		do_action( 'cwps/acf/mapper/contact/deleted', $args );
 
 	}
 
