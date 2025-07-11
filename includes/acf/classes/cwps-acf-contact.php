@@ -1159,20 +1159,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 			$contact_data['household_name'] = $contact_data['display_name'];
 		}
 
-		// Set a status for the Contact depending on the Post status.
-		if ( 'trash' === $post->post_status ) {
-			$contact_data['is_deleted'] = 1;
-		} else {
-			/*
-			 * Skip when creating a Contact to avoid CiviRules bug.
-			 *
-			 * @see https://lab.civicrm.org/extensions/civirules/-/issues/172
-			 */
-			if ( ! empty( $contact['id'] ) ) {
-				$contact_data['is_deleted'] = 0;
-			}
-		}
-
 		/**
 		 * Filter the way that names are built.
 		 *
