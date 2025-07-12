@@ -489,6 +489,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		$term = get_term_by( 'id', $args['term_id'], $this->taxonomy_name );
 
 		// If "Is Active" is not set, then the Term is not active.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( ! isset( $_POST['cwps-participant-role-active'] ) ) {
 			$this->term_active_set( $term->term_id, false );
 		} else {
@@ -496,6 +497,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		}
 
 		// If "Counted" is not set, then the Term is not counted.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( ! isset( $_POST['cwps-participant-role-counted'] ) ) {
 			$this->term_counted_set( $term->term_id, false );
 		} else {
@@ -577,15 +579,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 			unset( $this->term_edited[ $new_term->term_id ] );
 		}
 
+		// Get action from POST array.
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$post_action = ! empty( $_POST['action'] ) ? sanitize_text_field( wp_unslash( $_POST['action'] ) ) : '';
+
 		// Is this an Inline Edit?
-		// phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
-		if ( ! empty( $_POST['action'] ) && 'inline-save-tax' === $_POST['action'] ) {
-
-			// There will be no change to "Is Active" or "Counted".
-
-		} else {
+		if ( 'inline-save-tax' !== $post_action ) {
 
 			// If "Is Active" is not set, then the Term is not active.
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( ! isset( $_POST['cwps-participant-role-active'] ) ) {
 				$this->term_active_set( $new_term->term_id, false );
 			} else {
@@ -593,6 +595,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 			}
 
 			// If "Counted" is not set, then the Term is not counted.
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( ! isset( $_POST['cwps-participant-role-counted'] ) ) {
 				$this->term_counted_set( $new_term->term_id, false );
 			} else {
@@ -609,9 +612,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 		// Rehook CiviCRM.
 		$this->register_civicrm_hooks();
-
-		// Clear property.
-		unset( $this->term_edited );
 
 	}
 
