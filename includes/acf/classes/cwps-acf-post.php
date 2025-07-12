@@ -893,7 +893,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 				 *
 				 * Instead, the Contact ID needs to be reverse synced to the Post.
 				 */
-				if ( 'post' === $entity['entity'] && $post_type == $entity['type'] ) {
+				if ( 'post' === $entity['entity'] && $post_type === $entity['type'] ) {
 
 					// Save correspondence and skip to next.
 					$this->contact_id_set( $entity['id'], $args['objectId'] );
@@ -963,7 +963,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 				$post_id = $this->acf_loader->civicrm->contact->is_mapped_to_post( $args['objectRef'], $post_type );
 
 				// Exclude "reverse" edits when a Post is the originator.
-				if ( 'post' === $entity['entity'] && $post_id == $entity['id'] ) {
+				if ( 'post' === $entity['entity'] && (int) $post_id === (int) $entity['id'] ) {
 					continue;
 				}
 
@@ -1430,7 +1430,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 				if ( 'any' === $post_type ) {
 					// Add if we want *all* Posts.
 					$posts[] = $found->ID;
-				} elseif ( $found->post_type == $post_type ) {
+				} elseif ( $found->post_type === $post_type ) {
 					// Grab what should be the only Post.
 					$posts[] = $found->ID;
 					break;
@@ -1572,7 +1572,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		 *
 		 * Instead, the Activity ID needs to be reverse synced to the Post.
 		 */
-		if ( 'post' === $entity['entity'] && $post_type == $entity['type'] ) {
+		if ( 'post' === $entity['entity'] && $post_type === $entity['type'] ) {
 
 			// Save correspondence and bail.
 			$this->activity_id_set( $entity['id'], $args['objectId'] );
@@ -1640,7 +1640,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		$post_id = $this->acf_loader->civicrm->activity->is_mapped_to_post( $args['objectRef'], $post_type );
 
 		// Exclude "reverse" edits when a Post is the originator.
-		if ( 'post' === $entity['entity'] && $post_id == $entity['id'] ) {
+		if ( 'post' === $entity['entity'] && (int) $post_id === (int) $entity['id'] ) {
 			return;
 		}
 
@@ -1927,7 +1927,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 				if ( 'any' === $post_type ) {
 					// Add if we want *all* Posts.
 					$posts[] = $found->ID;
-				} elseif ( $found->post_type == $post_type ) {
+				} elseif ( $found->post_type === $post_type ) {
 					// Grab what should be the only Post.
 					$posts[] = $found->ID;
 					break;
@@ -2074,7 +2074,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 			 *
 			 * Instead, the Participant ID needs to be reverse synced to the Post.
 			 */
-			if ( 'post' === $entity['entity'] && $post_type == $entity['type'] ) {
+			if ( 'post' === $entity['entity'] && $post_type === $entity['type'] ) {
 
 				// Save correspondence and skip.
 				$this->participant_id_set( $entity['id'], $args['objectId'] );
@@ -2147,7 +2147,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 			$post_id = $this->acf_loader->civicrm->participant->is_mapped_to_post( $args['objectRef'], $post_type );
 
 			// Exclude "reverse" edits when a Post is the originator.
-			if ( 'post' === $entity['entity'] && $post_id == $entity['id'] ) {
+			if ( 'post' === $entity['entity'] && (int) $post_id === (int) $entity['id'] ) {
 				continue;
 			}
 
@@ -2697,7 +2697,7 @@ class CiviCRM_Profile_Sync_ACF_Post {
 		}
 
 		// Bail if the Display Name and the Title match.
-		if ( $args['post']->post_title == $contact['display_name'] ) {
+		if ( $args['post']->post_title === $contact['display_name'] ) {
 			return;
 		}
 

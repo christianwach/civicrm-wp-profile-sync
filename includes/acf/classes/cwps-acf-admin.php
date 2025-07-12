@@ -2738,7 +2738,7 @@ class CiviCRM_Profile_Sync_ACF_Admin {
 		$option = '_cwps_acf_' . $key . '_offset';
 
 		// If the offset value doesn't exist.
-		if ( 'fgffgs' == get_option( $option, 'fgffgs' ) ) {
+		if ( 'fgffgs' === get_option( $option, 'fgffgs' ) ) {
 
 			// Start at the beginning.
 			$offset = 0;

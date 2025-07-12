@@ -779,7 +779,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 				}
 
 				// Exclude "reverse" edits when a Post is the originator.
-				if ( 'post' === $entity['entity'] && $post_id == $entity['id'] ) {
+				if ( 'post' === $entity['entity'] && (int) $post_id === (int) $entity['id'] ) {
 					continue;
 				}
 
@@ -890,7 +890,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 
 					// Overwrite array record.
 					foreach ( $existing as $key => $record ) {
-						if ( $phone->id == $record['field_phone_id'] ) {
+						if ( (int) $phone->id === (int) $record['field_phone_id'] ) {
 							$existing[ $key ] = $acf_phone;
 							break;
 						}
@@ -900,7 +900,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 				case 'delete':
 					// Remove array record.
 					foreach ( $existing as $key => $record ) {
-						if ( $phone->id == $record['field_phone_id'] ) {
+						if ( (int) $phone->id === (int) $record['field_phone_id'] ) {
 							unset( $existing[ $key ] );
 							break;
 						}
@@ -1195,7 +1195,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		$public_fields     = $this->civicrm_fields_get( 'public' );
 		$fields_for_entity = [];
 		foreach ( $public_fields as $key => $value ) {
-			if ( $field['type'] == $this->phone_fields[ $value['name'] ] ) {
+			if ( $field['type'] === $this->phone_fields[ $value['name'] ] ) {
 				$fields_for_entity[] = $value;
 			}
 		}

@@ -376,7 +376,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone_Single extends CiviCRM_Profile_Sync
 			$existing_data = array_pop( $primary_phone['values'] );
 
 			// Bail if it hasn't changed.
-			if ( $existing_data['phone'] == $value ) {
+			if ( $existing_data['phone'] === $value ) {
 				return $existing_data;
 			}
 
@@ -475,7 +475,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone_Single extends CiviCRM_Profile_Sync
 				}
 
 				// Skip if the Location Types don't match.
-				if ( $phone_field != $phone->location_type_id ) {
+				if ( (int) $phone_field !== (int) $phone->location_type_id ) {
 					continue;
 				}
 
@@ -834,7 +834,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone_Single extends CiviCRM_Profile_Sync
 				}
 
 				// Exclude "reverse" edits when a Post is the originator.
-				if ( 'post' === $entity['entity'] && $post_id == $entity['id'] ) {
+				if ( 'post' === $entity['entity'] && (int) $post_id === (int) $entity['id'] ) {
 					continue;
 				}
 

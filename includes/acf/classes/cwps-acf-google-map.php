@@ -1199,7 +1199,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 			}
 
 			// If this Field matches the current Location Type.
-			if ( $address->location_type_id == $address_field ) {
+			if ( (int) $address->location_type_id === (int) $address_field ) {
 
 				// Always update.
 				$fields_to_update[ $selector ] = [
@@ -1219,10 +1219,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 			// If this Field has CHANGED its Location Type.
 			if (
-				$address->location_type_id != $address_field &&
+				(int) $address->location_type_id !== (int) $address_field &&
 				isset( $previous->location_type_id ) &&
-				$previous->location_type_id != $address->location_type_id &&
-				$previous->location_type_id == $address_field
+				(int) $previous->location_type_id !== (int) $address->location_type_id &&
+				(int) $previous->location_type_id === (int) $address_field
 			) {
 
 				// Always clear the previous one.
@@ -1600,7 +1600,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 
 				// We need a Location Type so assign Location from the type of Address.
 				foreach ( $addresses as $address ) {
-					if ( $address->location_type_id == $field[ $key ] ) {
+					if ( (int) $address->location_type_id === (int) $field[ $key ] ) {
 						$location = $address;
 						break;
 					}

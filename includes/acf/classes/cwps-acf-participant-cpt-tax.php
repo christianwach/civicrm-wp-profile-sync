@@ -481,7 +481,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	public function term_created( $args ) {
 
 		// Only look for Terms in the Participant Role Taxonomy.
-		if ( $args['taxonomy'] != $this->taxonomy_name ) {
+		if ( $args['taxonomy'] !== $this->taxonomy_name ) {
 			return;
 		}
 
@@ -546,7 +546,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		}
 
 		// Check Taxonomy.
-		if ( $term->taxonomy != $this->taxonomy_name ) {
+		if ( $term->taxonomy !== $this->taxonomy_name ) {
 			return;
 		}
 
@@ -565,7 +565,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	public function term_edited( $args ) {
 
 		// Only look for Terms in the Participant Role Taxonomy.
-		if ( $args['taxonomy'] != $this->taxonomy_name ) {
+		if ( $args['taxonomy'] !== $this->taxonomy_name ) {
 			return;
 		}
 
@@ -641,7 +641,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		}
 
 		// Check Taxonomy.
-		if ( $term->taxonomy != $this->taxonomy_name ) {
+		if ( $term->taxonomy !== $this->taxonomy_name ) {
 			return;
 		}
 
@@ -665,7 +665,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	public function term_deleted( $args ) {
 
 		// Only look for Terms in the Participant Role Taxonomy.
-		if ( $args['taxonomy'] != $this->taxonomy_name ) {
+		if ( $args['taxonomy'] !== $this->taxonomy_name ) {
 			return;
 		}
 
@@ -909,7 +909,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	public function terms_dropdown_clear( $output, $parsed_args ) {
 
 		// Only clear Participant Role category.
-		if ( $parsed_args['taxonomy'] != $this->taxonomy_name ) {
+		if ( $parsed_args['taxonomy'] !== $this->taxonomy_name ) {
 			return $output;
 		}
 
@@ -933,7 +933,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 	public function term_default_checked( $args, $post_id ) {
 
 		// Only modify Participant Role category.
-		if ( $args['taxonomy'] != $this->taxonomy_name ) {
+		if ( $args['taxonomy'] !== $this->taxonomy_name ) {
 			return $args;
 		}
 
@@ -1316,7 +1316,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 
 		// Bail if it's not a CiviCRM Participant Role.
 		$opt_group_id = $this->civicrm->participant_role->option_group_id_get();
-		if ( false === $opt_group_id || $opt_group_id != $participant_role->option_group_id ) {
+		if ( false === $opt_group_id || (int) $opt_group_id !== (int) $participant_role->option_group_id ) {
 			return;
 		}
 
@@ -1831,7 +1831,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT_Tax {
 		}
 
 		// Bail if not our Taxonomy.
-		if ( $screen->taxonomy != $this->taxonomy_name ) {
+		if ( $screen->taxonomy !== $this->taxonomy_name ) {
 			return;
 		}
 

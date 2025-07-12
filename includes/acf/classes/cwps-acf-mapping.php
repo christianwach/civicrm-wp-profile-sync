@@ -657,7 +657,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		$activity_types_id = $this->acf_loader->civicrm->activity_type->option_group_id_get();
 
 		// Bail if not in Activity Types Option Group.
-		if ( $object_ref->option_group_id != $activity_types_id ) {
+		if ( (int) $object_ref->option_group_id !== (int) $activity_types_id ) {
 			return;
 		}
 
@@ -781,7 +781,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		}
 
 		// Is this a Participant Role form?
-		if ( $form->get( 'gName' ) != 'participant_role' ) {
+		if ( $form->get( 'gName' ) !== 'participant_role' ) {
 			return;
 		}
 
@@ -922,7 +922,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		$participant_roles_id = $this->acf_loader->civicrm->participant_role->option_group_id_get();
 
 		// Bail if not in Participant Roles Option Group.
-		if ( $object_ref->option_group_id != $participant_roles_id ) {
+		if ( (int) $object_ref->option_group_id !== (int) $participant_roles_id ) {
 			return;
 		}
 
@@ -1529,7 +1529,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	public function option_exists( $option_name ) {
 
 		// Test by getting option with unlikely default.
-		if ( $this->option_get( $option_name, 'fenfgehgefdfdjgrkj' ) == 'fenfgehgefdfdjgrkj' ) {
+		if ( $this->option_get( $option_name, 'fenfgehgefdfdjgrkj' ) === 'fenfgehgefdfdjgrkj' ) {
 			return false;
 		} else {
 			return true;

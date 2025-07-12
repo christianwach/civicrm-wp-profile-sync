@@ -359,7 +359,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_State_Field extends acf_field 
 
 				// Assign State/Province ID from the Address Location Type.
 				foreach ( $addresses as $address ) {
-					if ( $address->location_type_id == $field['state_location_type_id'] ) {
+					if ( (int) $address->location_type_id === (int) $field['state_location_type_id'] ) {
 						$state_id = (int) $address->state_province_id;
 						break;
 					}

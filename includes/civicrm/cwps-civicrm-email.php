@@ -667,7 +667,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		} else {
 
 			// Only update if the Email has changed.
-			if ( $primary_email->email != $user->user_email ) {
+			if ( $primary_email->email !== $user->user_email ) {
 
 				/*
 				 * Construct params to update the Email record.

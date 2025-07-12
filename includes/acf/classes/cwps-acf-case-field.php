@@ -531,7 +531,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 				// Skip all but those mapped to the type of ACF Field.
 				foreach ( $public_fields as $key => $value ) {
-					if ( $field_type == $this->case_fields[ $value['name'] ] ) {
+					if ( $field_type === $this->case_fields[ $value['name'] ] ) {
 						$fields[] = $value;
 					}
 				}
@@ -664,7 +664,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 
 		// Skip all but those mapped to the type of ACF Field.
 		foreach ( $this->case_fields as $key => $value ) {
-			if ( $type == $value ) {
+			if ( $type === $value ) {
 				$case_fields[ $key ] = $value;
 			}
 		}
@@ -820,7 +820,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case_Field {
 			// Override if we get the default.
 			$config = CRM_Core_Config::singleton();
 			// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
-			if ( $config->dateInputFormat == $format ) {
+			if ( $config->dateInputFormat === $format ) {
 				$format = '';
 			}
 

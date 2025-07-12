@@ -654,7 +654,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 			// Get the existing CiviCRM Attachment.
 			$civicrm_attachment = [];
 			foreach ( $current as $item ) {
-				if ( $item['id'] == $attachment_data['id'] ) {
+				if ( (int) $item['id'] === (int) $attachment_data['id'] ) {
 					$civicrm_attachment = $item;
 					break;
 				}
@@ -968,7 +968,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 		if ( false !== $post_id ) {
 
 			// Exclude "reverse" edits when a Post is the originator.
-			if ( 'post' === $entity['entity'] && $post_id == $entity['id'] ) {
+			if ( 'post' === $entity['entity'] && (int) $post_id === (int) $entity['id'] ) {
 				return;
 			}
 
@@ -1075,7 +1075,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 
 					// Overwrite array record.
 					foreach ( $existing as $key => $record ) {
-						if ( $attachment->id == $record['field_attachment_id'] ) {
+						if ( (int) $attachment->id === (int) $record['field_attachment_id'] ) {
 							$existing[ $key ] = $acf_attachment;
 							break;
 						}
@@ -1090,7 +1090,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 
 					// Remove array record.
 					foreach ( $existing as $key => $record ) {
-						if ( $attachment->id == $record['field_attachment_id'] ) {
+						if ( (int) $attachment->id === (int) $record['field_attachment_id'] ) {
 							unset( $existing[ $key ] );
 							break;
 						}

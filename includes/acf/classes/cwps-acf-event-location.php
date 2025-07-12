@@ -739,7 +739,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 				// Skip all but those mapped to the type of ACF Field.
 				$fields = [];
 				foreach ( $filtered as $key => $value ) {
-					if ( $field_type == $this->settings_fields[ $value['name'] ] ) {
+					if ( $field_type === $this->settings_fields[ $value['name'] ] ) {
 						$fields[] = $value;
 					}
 				}
@@ -787,7 +787,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 				// Skip all but those mapped to the type of ACF Field.
 				$filtered = [];
 				foreach ( $fields as $key => $value ) {
-					if ( $field_type == $this->address_fields[ $value['name'] ] ) {
+					if ( $field_type === $this->address_fields[ $value['name'] ] ) {
 						$filtered[] = $value;
 					}
 				}
@@ -838,7 +838,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 				// Skip all but those mapped to the type of ACF Field.
 				$filtered = [];
 				foreach ( $fields as $key => $value ) {
-					if ( $field_type == $this->email_fields[ $value['name'] ] ) {
+					if ( $field_type === $this->email_fields[ $value['name'] ] ) {
 						$filtered[] = $value;
 					}
 				}
@@ -889,7 +889,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 				// Skip all but those mapped to the type of ACF Field.
 				$filtered = [];
 				foreach ( $fields as $key => $value ) {
-					if ( $field_type == $this->phone_fields[ $value['name'] ] ) {
+					if ( $field_type === $this->phone_fields[ $value['name'] ] ) {
 						$filtered[] = $value;
 					}
 				}
@@ -1166,7 +1166,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Location {
 
 		// Skip all but those mapped to the type of ACF Field.
 		foreach ( $this->event_fields as $key => $value ) {
-			if ( $type == $value ) {
+			if ( $type === $value ) {
 				$event_fields[ $key ] = $value;
 			}
 		}

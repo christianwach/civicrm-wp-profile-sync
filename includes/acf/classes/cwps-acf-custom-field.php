@@ -257,7 +257,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		foreach ( $custom_field_ids as $selector => $custom_field_id ) {
 			foreach ( $custom_fields_for_contact as $label => $custom_fields_data ) {
 				foreach ( $custom_fields_data as $key => $custom_field_data ) {
-					if ( $custom_field_data['id'] == $custom_field_id ) {
+					if ( (int) $custom_field_data['id'] === (int) $custom_field_id ) {
 						$filtered[ $selector ] = $custom_field_data;
 						break;
 					}
@@ -369,7 +369,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		$filtered = [];
 		foreach ( $custom_field_ids as $selector => $custom_field_id ) {
 			foreach ( $custom_fields_for_activity as $key => $custom_field_data ) {
-				if ( $custom_field_data['id'] == $custom_field_id ) {
+				if ( (int) $custom_field_data['id'] === (int) $custom_field_id ) {
 					$filtered[ $selector ] = $custom_field_data;
 					break;
 				}
@@ -465,7 +465,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		// Overwrite return.
 		foreach ( $result['values'] as $item ) {
 			foreach ( $item as $key => $value ) {
-				if ( substr( $key, 0, 7 ) == 'custom_' ) {
+				if ( substr( $key, 0, 7 ) === 'custom_' ) {
 					$index                   = (int) str_replace( 'custom_', '', $key );
 					$activity_data[ $index ] = $value;
 				}
@@ -538,7 +538,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		// Overwrite return.
 		foreach ( $result['values'] as $item ) {
 			foreach ( $item as $key => $value ) {
-				if ( substr( $key, 0, 7 ) == 'custom_' ) {
+				if ( substr( $key, 0, 7 ) === 'custom_' ) {
 					$index               = (int) str_replace( 'custom_', '', $key );
 					$case_data[ $index ] = $value;
 				}
@@ -611,7 +611,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		// Overwrite return.
 		foreach ( $result['values'] as $item ) {
 			foreach ( $item as $key => $value ) {
-				if ( substr( $key, 0, 7 ) == 'custom_' ) {
+				if ( substr( $key, 0, 7 ) === 'custom_' ) {
 					$index                = (int) str_replace( 'custom_', '', $key );
 					$event_data[ $index ] = $value;
 				}
@@ -653,7 +653,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		$filtered = [];
 		foreach ( $custom_field_ids as $selector => $custom_field_id ) {
 			foreach ( $custom_fields_for_participant as $key => $custom_field_data ) {
-				if ( $custom_field_data['id'] == $custom_field_id ) {
+				if ( (int) $custom_field_data['id'] === (int) $custom_field_id ) {
 					$filtered[ $selector ] = $custom_field_data;
 					break;
 				}
@@ -749,7 +749,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 		// Overwrite return.
 		foreach ( $result['values'] as $item ) {
 			foreach ( $item as $key => $value ) {
-				if ( substr( $key, 0, 7 ) == 'custom_' ) {
+				if ( substr( $key, 0, 7 ) === 'custom_' ) {
 					$index                      = (int) str_replace( 'custom_', '', $key );
 					$participant_data[ $index ] = $value;
 				}

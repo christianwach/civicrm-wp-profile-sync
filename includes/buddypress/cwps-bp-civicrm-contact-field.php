@@ -536,7 +536,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 				// Skip all but those mapped to the type of BuddyPress Field.
 				foreach ( $public_fields as $key => $value ) {
-					if ( $field_type == $contact_fields[ $value['name'] ] ) {
+					if ( $field_type === $contact_fields[ $value['name'] ] ) {
 						$fields[] = $value;
 					}
 				}

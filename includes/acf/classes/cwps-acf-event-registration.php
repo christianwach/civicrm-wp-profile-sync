@@ -581,7 +581,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 				// Skip all but those mapped to the type of ACF Field.
 				$fields = [];
 				foreach ( $filtered as $key => $value ) {
-					if ( $field_type == $public_fields[ $value['name'] ] ) {
+					if ( $field_type === $public_fields[ $value['name'] ] ) {
 						$fields[] = $value;
 					}
 				}
@@ -602,7 +602,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 				// Skip all but those mapped to the type of ACF Field.
 				$fields = [];
 				foreach ( $filtered as $key => $value ) {
-					if ( $field_type == $settings_fields[ $value['name'] ] ) {
+					if ( $field_type === $settings_fields[ $value['name'] ] ) {
 						$fields[] = $value;
 					}
 				}
@@ -620,7 +620,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 				// Skip all but those mapped to the type of ACF Field.
 				$fields = [];
 				foreach ( $filtered as $key => $value ) {
-					if ( $field_type == $this->registration_screen_fields[ $value['name'] ] ) {
+					if ( $field_type === $this->registration_screen_fields[ $value['name'] ] ) {
 						$fields[] = $value;
 					}
 				}
@@ -638,7 +638,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 				// Skip all but those mapped to the type of ACF Field.
 				$fields = [];
 				foreach ( $filtered as $key => $value ) {
-					if ( $field_type == $this->confirm_screen_fields[ $value['name'] ] ) {
+					if ( $field_type === $this->confirm_screen_fields[ $value['name'] ] ) {
 						$fields[] = $value;
 					}
 				}
@@ -656,7 +656,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 				// Skip all but those mapped to the type of ACF Field.
 				$fields = [];
 				foreach ( $filtered as $key => $value ) {
-					if ( $field_type == $this->thankyou_screen_fields[ $value['name'] ] ) {
+					if ( $field_type === $this->thankyou_screen_fields[ $value['name'] ] ) {
 						$fields[] = $value;
 					}
 				}
@@ -674,7 +674,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 				// Skip all but those mapped to the type of ACF Field.
 				$fields = [];
 				foreach ( $filtered as $key => $value ) {
-					if ( $field_type == $this->confirmation_email_fields[ $value['name'] ] ) {
+					if ( $field_type === $this->confirmation_email_fields[ $value['name'] ] ) {
 						$fields[] = $value;
 					}
 				}
@@ -999,7 +999,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Registration {
 
 		// Skip all but those mapped to the type of ACF Field.
 		foreach ( $this->event_fields as $key => $value ) {
-			if ( $type == $value ) {
+			if ( $type === $value ) {
 				$event_fields[ $key ] = $value;
 			}
 		}

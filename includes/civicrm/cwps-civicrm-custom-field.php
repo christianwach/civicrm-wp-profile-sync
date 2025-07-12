@@ -245,7 +245,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Custom_Field {
 		// Overwrite return.
 		foreach ( $result['values'] as $item ) {
 			foreach ( $item as $key => $value ) {
-				if ( substr( $key, 0, 7 ) == 'custom_' ) {
+				if ( substr( $key, 0, 7 ) === 'custom_' ) {
 					$index                  = (int) str_replace( 'custom_', '', $key );
 					$contact_data[ $index ] = $value;
 				}

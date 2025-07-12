@@ -23,7 +23,7 @@
 				<?php $identifier = $prefix . '_' . $participant_post_type; ?>
 				<?php $stop = ''; ?>
 
-				<?php if ( 'fgffgs' == get_option( '_' . $identifier . '_offset', 'fgffgs' ) ) : ?>
+				<?php if ( 'fgffgs' === get_option( '_' . $identifier . '_offset', 'fgffgs' ) ) : ?>
 					<?php $button = __( 'Sync Now', 'civicrm-wp-profile-sync' ); ?>
 				<?php else : ?>
 					<?php $button = __( 'Continue Sync', 'civicrm-wp-profile-sync' ); ?>

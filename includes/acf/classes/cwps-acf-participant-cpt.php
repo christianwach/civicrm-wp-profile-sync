@@ -860,7 +860,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		 *
 		 * Instead, the Participant ID needs to be reverse synced to the Post.
 		 */
-		if ( 'post' === $entity['entity'] && $this->post_type_name == $entity['type'] ) {
+		if ( 'post' === $entity['entity'] && $this->post_type_name === $entity['type'] ) {
 
 			// Save correspondence and skip.
 			$this->acf_loader->post->participant_id_set( $entity['id'], $args['objectId'] );
@@ -933,7 +933,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		$entity = $this->acf_loader->mapper->entity_get();
 
 		// Exclude "reverse" edits when a Post is the originator.
-		if ( 'post' === $entity['entity'] && $post_id == $entity['id'] ) {
+		if ( 'post' === $entity['entity'] && (int) $post_id === (int) $entity['id'] ) {
 			return;
 		}
 
@@ -1370,10 +1370,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 			if ( $screen instanceof WP_Screen && 'post' !== $screen->base ) {
 				return;
 			}
-			if ( $screen->id != $this->post_type_name ) {
+			if ( $screen->id !== $this->post_type_name ) {
 				return;
 			}
-			if ( 'add' === $screen->id ) {
+			if ( 'add' === $screen->action ) {
 				return;
 			}
 		}
@@ -1760,7 +1760,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 	public function taxonomy_fix_metabox( $args, $post_id ) {
 
 		// If rendering metabox for our Taxonomy.
-		if ( isset( $args['taxonomy'] ) && $args['taxonomy'] == $this->taxonomy_name ) {
+		if ( isset( $args['taxonomy'] ) && $args['taxonomy'] === $this->taxonomy_name ) {
 
 			// Setting 'checked_ontop' to false seems to fix this.
 			$args['checked_ontop'] = false;
@@ -1800,7 +1800,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_CPT {
 		global $typenow;
 
 		// Bail if not our Post Type.
-		if ( $typenow != $this->post_type_name ) {
+		if ( $typenow !== $this->post_type_name ) {
 			return;
 		}
 

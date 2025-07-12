@@ -267,13 +267,13 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 
 			// Only "Phone" Fields with the matching Location Type.
 			$location_type_id = (int) $bp_field['field_meta']['entity_data']['location_type_id'];
-			if ( $phone->location_type_id != $location_type_id ) {
+			if ( (int) $phone->location_type_id !== (int) $location_type_id ) {
 				continue;
 			}
 
 			// Only "Phone" Fields with the matching Phone Type.
 			$phone_type_id = (int) $bp_field['field_meta']['entity_data']['phone_type_id'];
-			if ( $phone->phone_type_id != $phone_type_id ) {
+			if ( (int) $phone->phone_type_id !== (int) $phone_type_id ) {
 				continue;
 			}
 
@@ -675,7 +675,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Phone {
 							$fields[] = $value;
 						}
 					} else {
-						if ( $field_type == $this->phone_fields[ $value['name'] ] ) {
+						if ( $field_type === $this->phone_fields[ $value['name'] ] ) {
 							$fields[] = $value;
 						}
 					}

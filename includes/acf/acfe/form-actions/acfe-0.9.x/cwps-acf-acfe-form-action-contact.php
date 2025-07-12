@@ -4583,7 +4583,7 @@ class CWPS_ACF_ACFE_Form_Action_Contact extends CWPS_ACF_ACFE_Form_Action_Base {
 			if ( ! empty( $relationship['id'] ) ) {
 
 				// Use Contact ID that is NOT the related Contact.
-				if ( $related_contact['id'] === $relationship['contact_id_a'] ) {
+				if ( (int) $related_contact['id'] === (int) $relationship['contact_id_a'] ) {
 					$contact_id = $relationship['contact_id_b'];
 				} else {
 					$contact_id = $relationship['contact_id_a'];

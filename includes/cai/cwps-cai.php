@@ -712,7 +712,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		$phone_id = (int) $args['objectId'];
 
 		// Sanity check.
-		if ( $phone_id != $this->phone_pre->id ) {
+		if ( (int) $phone_id !== (int) $this->phone_pre->id ) {
 			return;
 		}
 
@@ -841,7 +841,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		$im_id = (int) $args['objectId'];
 
 		// Sanity check.
-		if ( $im_id != $this->im_pre->id ) {
+		if ( (int) $im_id !== (int) $this->im_pre->id ) {
 			return;
 		}
 
@@ -1026,7 +1026,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		$address_id = (int) $args['objectId'];
 
 		// Sanity check.
-		if ( $address_id != $this->address_pre->id ) {
+		if ( (int) $address_id !== (int) $this->address_pre->id ) {
 			return;
 		}
 
@@ -1393,7 +1393,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		$address_id = (int) $args['objectId'];
 
 		// Sanity check.
-		if ( $address_id != $this->city_address_pre->id ) {
+		if ( (int) $address_id !== (int) $this->city_address_pre->id ) {
 			return;
 		}
 
@@ -1515,7 +1515,7 @@ class CiviCRM_WP_Profile_Sync_CAI {
 		$address_id = (int) $args['objectId'];
 
 		// Sanity check.
-		if ( $address_id != $this->state_address_pre->id ) {
+		if ( (int) $address_id !== (int) $this->state_address_pre->id ) {
 			return;
 		}
 

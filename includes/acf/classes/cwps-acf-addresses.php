@@ -879,7 +879,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 				}
 
 				// Exclude "reverse" edits when a Post is the originator.
-				if ( 'post' === $entity['entity'] && $post_id == $entity['id'] ) {
+				if ( 'post' === $entity['entity'] && (int) $post_id === (int) $entity['id'] ) {
 
 					/**
 					 * Allow "reverse" edit to happen if another plugin has specifically
@@ -1012,7 +1012,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 
 					// Overwrite array record.
 					foreach ( $existing as $key => $record ) {
-						if ( $address->id == $record['field_address_id'] ) {
+						if ( (int) $address->id === (int) $record['field_address_id'] ) {
 							$existing[ $key ] = $acf_address;
 							break;
 						}
@@ -1022,7 +1022,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 				case 'delete':
 					// Remove array record.
 					foreach ( $existing as $key => $record ) {
-						if ( $address->id == $record['field_address_id'] ) {
+						if ( (int) $address->id === (int) $record['field_address_id'] ) {
 							unset( $existing[ $key ] );
 							break;
 						}

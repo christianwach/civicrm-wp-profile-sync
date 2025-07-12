@@ -923,7 +923,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 					case 'edit':
 						// Overwrite array record.
 						foreach ( $existing as $key => $record ) {
-							if ( $multiset->id == $record['field_multiset_id'] ) {
+							if ( (int) $multiset->id === (int) $record['field_multiset_id'] ) {
 								$existing[ $key ] = $acf_multiset;
 								break;
 							}
@@ -933,7 +933,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 					case 'delete':
 						// Remove array record.
 						foreach ( $existing as $key => $record ) {
-							if ( $multiset->id == $record['field_multiset_id'] ) {
+							if ( (int) $multiset->id === (int) $record['field_multiset_id'] ) {
 								unset( $existing[ $key ] );
 								break;
 							}

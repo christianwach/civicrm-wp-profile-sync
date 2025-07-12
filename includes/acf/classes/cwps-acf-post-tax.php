@@ -1242,7 +1242,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 					$terms_for_post = [];
 					foreach ( $term_ids_for_post as $term_id_for_post ) {
 						foreach ( $terms_for_group as $term_for_group ) {
-							if ( $term_for_group->term_id == $term_id_for_post ) {
+							if ( (int) $term_for_group->term_id === (int) $term_id_for_post ) {
 								$terms_for_post[ $term_for_group->term_id ] = $term_for_group;
 							}
 						}
@@ -1276,7 +1276,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 
 						foreach ( $term_ids_final as $term_id_final ) {
 							foreach ( $terms_in_post as $term_in_post ) {
-								if ( $term_in_post->term_id == $term_id_final ) {
+								if ( (int) $term_in_post->term_id === (int) $term_id_final ) {
 									$terms_in_post_new[] = $term_in_post;
 									continue;
 								}

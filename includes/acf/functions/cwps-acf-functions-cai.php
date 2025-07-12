@@ -299,7 +299,7 @@ function cacf_get_phone_records_by_type_ids( $selector, $location_type_id, $phon
 
 		// Try and find the Phone Records that match the Location Type ID.
 		foreach ( $records as $record ) {
-			if ( $record['field_phone_location'] == $location_type_id ) {
+			if ( (int) $record['field_phone_location'] === (int) $location_type_id ) {
 				$phones[] = $record;
 			}
 		}
@@ -311,7 +311,7 @@ function cacf_get_phone_records_by_type_ids( $selector, $location_type_id, $phon
 
 		// Try and find the Phone Records that match the Phone Type ID.
 		foreach ( $records as $record ) {
-			if ( $record['field_phone_type'] == $phone_type_id ) {
+			if ( (int) $record['field_phone_type'] === (int) $phone_type_id ) {
 				$phones[] = $record;
 			}
 		}
@@ -323,7 +323,7 @@ function cacf_get_phone_records_by_type_ids( $selector, $location_type_id, $phon
 
 		// Try and find the Phone Records that match both the Location and Phone Type IDs.
 		foreach ( $records as $record ) {
-			if ( $record['field_phone_location'] == $location_type_id && $record['field_phone_type'] == $phone_type_id ) {
+			if ( (int) $record['field_phone_location'] === (int) $location_type_id && (int) $record['field_phone_type'] === (int) $phone_type_id ) {
 				$phones[] = $record;
 			}
 		}
@@ -720,7 +720,7 @@ function cacf_get_im_records_by_type_ids( $selector, $location_type_id, $im_prov
 
 		// Try and find the Instant Messenger Records that match the Location Type ID.
 		foreach ( $records as $record ) {
-			if ( $record['field_im_location'] == $location_type_id ) {
+			if ( (int) $record['field_im_location'] === (int) $location_type_id ) {
 				$ims[] = $record;
 			}
 		}
@@ -732,7 +732,7 @@ function cacf_get_im_records_by_type_ids( $selector, $location_type_id, $im_prov
 
 		// Try and find the Instant Messenger Records that match the Provider ID.
 		foreach ( $records as $record ) {
-			if ( $record['field_im_provider'] == $im_provider_id ) {
+			if ( (int) $record['field_im_provider'] === (int) $im_provider_id ) {
 				$ims[] = $record;
 			}
 		}
@@ -744,7 +744,7 @@ function cacf_get_im_records_by_type_ids( $selector, $location_type_id, $im_prov
 
 		// Try and find the Instant Messenger Records that match both the Location and Provider IDs.
 		foreach ( $records as $record ) {
-			if ( $record['field_im_location'] == $location_type_id && $record['field_im_provider'] == $im_provider_id ) {
+			if ( (int) $record['field_im_location'] === (int) $location_type_id && (int) $record['field_im_provider'] === (int) $im_provider_id ) {
 				$ims[] = $record;
 			}
 		}
@@ -1173,7 +1173,7 @@ function cacf_get_address_records_by_type_id( $selector, $location_type_id, $pos
 
 		// Try and find the Address Records that match the Location Type ID.
 		foreach ( $records as $record ) {
-			if ( $record['field_address_location_type'] == $location_type_id ) {
+			if ( (int) $record['field_address_location_type'] === (int) $location_type_id ) {
 				$addresses[] = $record;
 			}
 		}

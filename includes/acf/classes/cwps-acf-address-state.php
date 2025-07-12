@@ -398,7 +398,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 				}
 
 				// Exclude "reverse" edits when a Post is the originator.
-				if ( 'post' === $entity['entity'] && $post_id == $entity['id'] ) {
+				if ( 'post' === $entity['entity'] && (int) $post_id === (int) $entity['id'] ) {
 					continue;
 				}
 
@@ -460,7 +460,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Address_State extends CiviCRM_Profile_Syn
 				} elseif ( is_int( $address_field ) ) {
 
 					// Assign State from the Address Location Type.
-					if ( $address->location_type_id == $address_field ) {
+					if ( (int) $address->location_type_id === (int) $address_field ) {
 						$state_id = (int) $address->state_province_id;
 					}
 

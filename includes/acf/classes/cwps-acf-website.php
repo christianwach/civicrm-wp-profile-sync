@@ -455,7 +455,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 				}
 
 				// Skip if it's not the right Website Type.
-				if ( $website_field != $website->website_type_id ) {
+				if ( (int) $website_field !== (int) $website->website_type_id ) {
 					continue;
 				}
 
@@ -681,7 +681,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 			}
 
 			// Skip if it's not the right Website Type.
-			if ( $website_field != $website->website_type_id ) {
+			if ( (int) $website_field !== (int) $website->website_type_id ) {
 				continue;
 			}
 
@@ -1038,7 +1038,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 		$public_fields     = $this->civicrm_fields_get( 'public' );
 		$fields_for_entity = [];
 		foreach ( $public_fields as $key => $value ) {
-			if ( $field['type'] == $this->website_fields[ $value['name'] ] ) {
+			if ( $field['type'] === $this->website_fields[ $value['name'] ] ) {
 				$fields_for_entity[] = $value;
 			}
 		}

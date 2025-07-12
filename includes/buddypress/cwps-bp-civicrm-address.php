@@ -298,7 +298,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 			// Only "Address" Fields with the matching Location Type.
 			$location_type_id = (int) $bp_field['field_meta']['entity_data']['location_type_id'];
-			if ( $address->location_type_id != $location_type_id ) {
+			if ( (int) $address->location_type_id !== (int) $location_type_id ) {
 				continue;
 			}
 
@@ -685,7 +685,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 
 				// Skip all but those mapped to the type of ACF Field.
 				foreach ( $public_fields as $key => $value ) {
-					if ( $field_type == $this->address_fields[ $value['name'] ] ) {
+					if ( $field_type === $this->address_fields[ $value['name'] ] ) {
 						$fields[] = $value;
 					}
 				}

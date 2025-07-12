@@ -447,7 +447,7 @@ class CiviCRM_WP_Profile_Sync {
 		}
 
 		// Bail if not hidden.
-		if ( $cau->multisite->setting_get( 'main_site_only', '0' ) == '0' ) {
+		if ( $cau->multisite->setting_get( 'main_site_only', '0' ) === '0' ) {
 			$civicrm_hidden = false;
 			return $civicrm_hidden;
 		}

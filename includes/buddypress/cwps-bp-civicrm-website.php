@@ -519,7 +519,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 
 			// Only "Website" Fields with the matching Website Type.
 			$website_type_id = (int) $bp_field['field_meta']['entity_data']['website_type_id'];
-			if ( $website->website_type_id != $website_type_id ) {
+			if ( (int) $website->website_type_id !== (int) $website_type_id ) {
 				continue;
 			}
 
@@ -878,7 +878,7 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Website {
 							$fields[] = $value;
 						}
 					} else {
-						if ( $field_type == $this->website_fields[ $value['name'] ] ) {
+						if ( $field_type === $this->website_fields[ $value['name'] ] ) {
 							$fields[] = $value;
 						}
 					}

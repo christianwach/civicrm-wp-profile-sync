@@ -1034,7 +1034,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 				}
 
 				// Exclude "reverse" edits when a Post is the originator.
-				if ( 'post' === $entity['entity'] && $post_id == $entity['id'] ) {
+				if ( 'post' === $entity['entity'] && (int) $post_id === (int) $entity['id'] ) {
 					continue;
 				}
 
@@ -1145,7 +1145,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 
 					// Overwrite array record.
 					foreach ( $existing as $key => $record ) {
-						if ( $im->id == $record['field_im_id'] ) {
+						if ( (int) $im->id === (int) $record['field_im_id'] ) {
 							$existing[ $key ] = $acf_im;
 							break;
 						}
@@ -1155,7 +1155,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 				case 'delete':
 					// Remove array record.
 					foreach ( $existing as $key => $record ) {
-						if ( $im->id == $record['field_im_id'] ) {
+						if ( (int) $im->id === (int) $record['field_im_id'] ) {
 							unset( $existing[ $key ] );
 							break;
 						}
@@ -1540,7 +1540,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		$public_fields     = $this->civicrm_fields_get( 'public' );
 		$fields_for_entity = [];
 		foreach ( $public_fields as $key => $value ) {
-			if ( $field['type'] == $this->im_fields[ $value['name'] ] ) {
+			if ( $field['type'] === $this->im_fields[ $value['name'] ] ) {
 				$fields_for_entity[] = $value;
 			}
 		}

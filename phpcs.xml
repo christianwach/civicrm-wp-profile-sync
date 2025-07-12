@@ -37,7 +37,6 @@
 		<exclude name="Squiz.Commenting.InlineComment.SpacingAfterAtFunctionEnd" />
 
 		<!-- Remove some checks to allow phpcbf to run in bulk mode. -->
-		<exclude name="WordPress.PHP.StrictComparisons.LooseComparison" />
 		<exclude name="WordPress.Security.NonceVerification.Missing" />
 		<exclude name="WordPress.Security.NonceVerification.Recommended" />
 

@@ -984,7 +984,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 		// Add in the CiviCRM values.
 		foreach ( $options as $id => $option ) {
 			foreach ( $children as $child ) {
-				if ( $child->name == $option ) {
+				if ( $child->name === $option ) {
 					$child->civicrm_value = $id;
 				}
 			}
@@ -1385,7 +1385,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 
 				// Assign top level Contact Type data.
 				foreach ( $contact_types as $contact_type ) {
-					if ( $contact_type['id'] == $contact_type_id ) {
+					if ( (int) $contact_type['id'] === (int) $contact_type_id ) {
 						$entity_type_data = $contact_type;
 					}
 				}
@@ -1396,7 +1396,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 						continue;
 					}
 					foreach ( $contact_type['children'] as $contact_subtype ) {
-						if ( $contact_subtype['id'] == $contact_type_id ) {
+						if ( (int) $contact_subtype['id'] === (int) $contact_type_id ) {
 							$entity_type_data = $contact_subtype;
 						}
 					}
@@ -1410,7 +1410,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 		if ( 'Address' === $entity_type || 'Phone' === $entity_type ) {
 			if ( ! empty( $location_types ) ) {
 				foreach ( $location_types as $location ) {
-					if ( $location['id'] == $location_type_id ) {
+					if ( (int) $location['id'] === (int) $location_type_id ) {
 						$entity_type_data['location_type'] = $location;
 					}
 				}
@@ -1421,7 +1421,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 		if ( 'Phone' === $entity_type ) {
 			if ( ! empty( $phone_types ) ) {
 				foreach ( $phone_types as $id => $label ) {
-					if ( $id == $phone_type_id ) {
+					if ( (int) $id === (int) $phone_type_id ) {
 						$entity_type_data['phone_type'] = [
 							'id'    => $id,
 							'label' => $label,
@@ -1435,7 +1435,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 		if ( 'Website' === $entity_type ) {
 			if ( ! empty( $website_types ) ) {
 				foreach ( $website_types as $id => $label ) {
-					if ( $id == $website_type_id ) {
+					if ( (int) $id === (int) $website_type_id ) {
 						$entity_type_data['website_type'] = [
 							'id'    => $id,
 							'label' => $label,

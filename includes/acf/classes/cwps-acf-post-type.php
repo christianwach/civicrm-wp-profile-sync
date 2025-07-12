@@ -157,7 +157,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 		if ( count( $post_types ) > 0 ) {
 			foreach ( $post_types as $post_type ) {
 				$used = in_array( $post_type->name, $used_post_types, true );
-				$mine = ( $post_type->name == $existing_post_type ) ? true : false;
+				$mine = ( $post_type->name === $existing_post_type ) ? true : false;
 				if ( ! $used || $mine ) {
 					$filtered[] = $post_type;
 				}
@@ -215,7 +215,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 		if ( count( $post_types ) > 0 ) {
 			foreach ( $post_types as $post_type ) {
 				$used = in_array( $post_type->name, $used_post_types, true );
-				$mine = ( $post_type->name == $existing_post_type ) ? true : false;
+				$mine = ( $post_type->name === $existing_post_type ) ? true : false;
 				if ( ! $used || $mine ) {
 					$filtered[] = $post_type;
 				}
@@ -273,7 +273,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 		if ( count( $post_types ) > 0 ) {
 			foreach ( $post_types as $post_type ) {
 				$used = in_array( $post_type->name, $used_post_types, true );
-				$mine = ( $post_type->name == $existing_post_type ) ? true : false;
+				$mine = ( $post_type->name === $existing_post_type ) ? true : false;
 				if ( ! $used || $mine ) {
 					$filtered[] = $post_type;
 				}
@@ -535,7 +535,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Type {
 		}
 
 		// Test for this Location Rule.
-		if ( $rule['param'] == $this->rule_name && ! empty( $params[ $this->rule_name ] ) ) {
+		if ( $rule['param'] === $this->rule_name && ! empty( $params[ $this->rule_name ] ) ) {
 			$supported = true;
 		}
 

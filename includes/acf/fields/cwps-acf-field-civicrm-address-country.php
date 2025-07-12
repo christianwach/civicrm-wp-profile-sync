@@ -359,7 +359,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Country_Field extends acf_fiel
 
 				// Assign Country ID from the Address Location Type.
 				foreach ( $addresses as $address ) {
-					if ( $address->location_type_id == $field['country_location_type_id'] ) {
+					if ( (int) $address->location_type_id === (int) $field['country_location_type_id'] ) {
 						$country_id = (int) $address->country_id;
 						break;
 					}

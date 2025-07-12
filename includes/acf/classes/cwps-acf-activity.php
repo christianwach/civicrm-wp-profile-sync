@@ -1430,7 +1430,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity {
 
 		// Prepend the ones that are needed in ACFE Forms (i.e. Subject and Details).
 		foreach ( $this->civicrm->activity_field->bypass_fields as $name => $field_type ) {
-			if ( $field_type == $field['type'] ) {
+			if ( $field_type === $field['type'] ) {
 				array_unshift( $fields_for_entity, $this->civicrm->activity_field->get_by_name( $name ) );
 			}
 		}

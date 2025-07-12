@@ -460,7 +460,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 				}
 
 				// Is there a match?
-				if ( $current_relationship['contact_id_a'] == $contact_id_a && $current_relationship['contact_id_b'] == $contact_id_b ) {
+				if ( (int) $current_relationship['contact_id_a'] === (int) $contact_id_a && (int) $current_relationship['contact_id_b'] === (int) $contact_id_b ) {
 
 					// Flag as "active match" if the Relationship is active.
 					if ( 1 === (int) $current_relationship['is_active'] ) {
@@ -1147,7 +1147,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Relationship extends CiviCRM_Profile_Sync
 			$relationship_direction = $relationship_data[1];
 
 			// Skip if this Relationship is not mapped to the Field.
-			if ( $relationship_type_id != $relationship->relationship_type_id ) {
+			if ( (int) $relationship_type_id !== (int) $relationship->relationship_type_id ) {
 				continue;
 			}
 
