@@ -1254,8 +1254,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field {
 
 		// Handle sideload errors.
 		if ( is_wp_error( $attachment_id ) ) {
-			global $wp_filesystem;
-			if ( WP_Filesystem( request_filesystem_credentials( '' ) ) ) {
+			$wp_filesystem = $this->plugin->wp->filesystem_init();
+			if ( $wp_filesystem ) {
 				$wp_filesystem->delete( $files['tmp_name'] );
 			}
 			return '';

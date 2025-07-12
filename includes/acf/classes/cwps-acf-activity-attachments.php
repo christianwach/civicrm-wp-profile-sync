@@ -488,8 +488,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 
 		// Handle sideload errors.
 		if ( is_wp_error( $attachment_id ) ) {
-			global $wp_filesystem;
-			if ( WP_Filesystem( request_filesystem_credentials( '' ) ) ) {
+			$wp_filesystem = $this->plugin->wp->filesystem_init();
+			if ( $wp_filesystem ) {
 				$wp_filesystem->delete( $files['tmp_name'] );
 			}
 			return '';
@@ -801,9 +801,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 		$attachment = $this->civicrm->attachment->create( $params );
 
 		// Always restore the backup File.
-		$original = $this->civicrm->attachment->file_copy( $backup, $filename );
-		global $wp_filesystem;
-		if ( WP_Filesystem( request_filesystem_credentials( '' ) ) ) {
+		$original      = $this->civicrm->attachment->file_copy( $backup, $filename );
+		$wp_filesystem = $this->plugin->wp->filesystem_init();
+		if ( $wp_filesystem ) {
 			$wp_filesystem->delete( $backup );
 		}
 
