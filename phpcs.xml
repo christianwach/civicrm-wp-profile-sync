@@ -36,8 +36,6 @@
 		<!-- Remove some checks to allow phpcbf to run in bulk mode. -->
 		<exclude name="WordPress.PHP.StrictComparisons.LooseComparison" />
 		<exclude name="Squiz.Commenting.InlineComment.SpacingAfterAtFunctionEnd" />
-		<exclude name="Generic.Metrics.NestingLevel.MaxExceeded" />
-		<exclude name="WordPress.PHP.NoSilencedErrors.Discouraged" />
 		<exclude name="WordPress.Security.NonceVerification.Missing" />
 		<exclude name="WordPress.Security.NonceVerification.Recommended" />
 
@@ -59,9 +57,9 @@
 	<rule ref="Generic.Metrics.NestingLevel">
 		<properties>
 			<!-- Warning level. -->
-            <property name="nestingLevel" value="6"/>
+            <property name="nestingLevel" value="7"/>
 			<!-- Error level. -->
-			<property name="absoluteNestingLevel" value="6" />
+			<property name="absoluteNestingLevel" value="8" />
 		</properties>
 	</rule>
 
