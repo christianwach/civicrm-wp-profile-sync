@@ -487,6 +487,27 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Field extends acf_field {
 	}
 
 	/**
+	 * Deletes any subfields after the Field has been deleted from the database.
+	 *
+	 * @since 0.7.2
+	 *
+	 * @param array $field The Field array holding all the Field options.
+	 */
+	public function delete_field( $field ) {
+
+		// Bail early if no subfields.
+		if ( empty( $field['sub_fields'] ) ) {
+			return;
+		}
+
+		// Delete any subfields.
+		foreach ( $field['sub_fields'] as $sub_field ) {
+			acf_delete_field( $sub_field['name'] );
+		}
+
+	}
+
+	/**
 	 * Modify the Field with defaults and Subfield definitions.
 	 *
 	 * @since 0.4
