@@ -392,30 +392,17 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set extends acf_field 
 	 */
 	public function load_field( $field ) {
 
-		// Modify the Field with defaults.
-		$field = $this->modify_field( $field );
+		// Cast min/max as integer.
+		$field['min'] = (int) $field['min'];
+		$field['max'] = (int) $field['max'];
 
-		// Get the actual Fields from the database.
-		$sub_fields = acf_get_fields( $field );
-
-		// Validate Fields first.
-		if ( ! empty( $sub_fields ) ) {
+		// Validate Subfields.
+		if ( ! empty( $field['sub_fields'] ) ) {
 			array_walk(
-				$sub_fields,
+				$field['sub_fields'],
 				function( &$item ) {
 					$item = acf_validate_field( $item );
 				}
-			);
-		}
-
-		// Apply same key as ACF which appears to prevent pagination.
-		if ( ! empty( $sub_fields ) ) {
-			$field['sub_fields'] = array_map(
-				function ( $sub_field ) use ( $field ) {
-					$sub_field['parent_repeater'] = $field['key'];
-					return $sub_field;
-				},
-				$sub_fields
 			);
 		}
 
@@ -434,13 +421,18 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set extends acf_field 
 	 */
 	public function update_field( $field ) {
 
-		// Modify the Field with our settings.
+		// Modify the Field with defaults.
 		$field = $this->modify_field( $field );
 
-		// Maybe add our Subfields.
-		if ( empty( $field['sub_fields'] ) ) {
-			$field['sub_fields'] = $this->sub_fields_get( $field );
+		// Delete any existing subfields to prevent duplication.
+		if ( ! empty( $field['sub_fields'] ) ) {
+			foreach ( $field['sub_fields'] as $sub_field ) {
+				acf_delete_field( $sub_field['name'] );
+			}
 		}
+
+		// Add our Subfields.
+		$field['sub_fields'] = $this->sub_fields_get( $field );
 
 		// --<
 		return $field;
@@ -498,7 +490,6 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set extends acf_field 
 		// Set sensible defaults.
 		$field['button_label'] = __( 'Add Record Set', 'civicrm-wp-profile-sync' );
 		$field['collapsed']    = '';
-		$field['prefix']       = '';
 
 		// Set wrapper class.
 		$field['wrapper']['class'] = 'civicrm_multiset';
@@ -511,7 +502,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set extends acf_field 
 	/**
 	 * Get the Subfield definitions.
 	 *
-	 * @since 0.4
+	 * @since 0.7.2
 	 *
 	 * @param array $field The Field array holding all the Field options.
 	 * @return array $sub_fields The subfield array.
