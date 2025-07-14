@@ -232,20 +232,17 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 	 */
 	public function load_field( $field ) {
 
-		// Modify the Field with defaults.
-		$field = $this->modify_field( $field );
+		// Init Subfields.
+		$sub_fields = [];
 
-		// Get the actual Fields from the database.
-		$sub_fields = acf_get_fields( $field );
+		// Maybe append to Field.
+		if ( ! empty( $field['sub_fields'] ) ) {
 
-		// Validate Fields first.
-		if ( ! empty( $sub_fields ) ) {
-			array_walk(
-				$sub_fields,
-				function( &$item ) {
-					$item = acf_validate_field( $item );
-				}
-			);
+			// Validate Field first.
+			foreach ( $field['sub_fields'] as $sub_field ) {
+				$sub_fields[] = acf_validate_field( $sub_field );
+			}
+
 		}
 
 		// Overwrite subfields.
@@ -269,10 +266,15 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 		// Modify the Field with our settings.
 		$field = $this->modify_field( $field );
 
-		// Maybe add our Subfields.
-		if ( empty( $field['sub_fields'] ) ) {
-			$field['sub_fields'] = $this->get_subfield_definitions();
+		// Delete any existing Subfields to prevent duplication.
+		if ( ! empty( $field['sub_fields'] ) ) {
+			foreach ( $field['sub_fields'] as $sub_field ) {
+				acf_delete_field( $sub_field['name'] );
+			}
 		}
+
+		// Add Subfields to Field.
+		$field['sub_fields'] = $this->get_subfield_definitions();
 
 		// --<
 		return $field;
