@@ -230,17 +230,20 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Group extends acf_field {
 	 */
 	public function load_field( $field ) {
 
-		// Init Subfields.
-		$sub_fields = [];
+		// Modify the Field with defaults.
+		$field = $this->modify_field( $field );
 
-		// Maybe append to Field.
-		if ( ! empty( $field['sub_fields'] ) ) {
+		// Get the actual Fields from the database.
+		$sub_fields = acf_get_fields( $field );
 
-			// Validate Field first.
-			foreach ( $field['sub_fields'] as $sub_field ) {
-				$sub_fields[] = acf_validate_field( $sub_field );
-			}
-
+		// Validate Fields first.
+		if ( ! empty( $sub_fields ) ) {
+			array_walk(
+				$sub_fields,
+				function( &$item ) {
+					$item = acf_validate_field( $item );
+				}
+			);
 		}
 
 		// Overwrite subfields.
@@ -264,8 +267,10 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Group extends acf_field {
 		// Modify the Field with our settings.
 		$field = $this->modify_field( $field );
 
-		// Add Subfields to Field.
-		$field['sub_fields'] = $this->get_subfield_definitions();
+		// Maybe add our Subfields.
+		if ( empty( $field['sub_fields'] ) ) {
+			$field['sub_fields'] = $this->get_subfield_definitions();
+		}
 
 		// --<
 		return $field;
@@ -294,12 +299,12 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Group extends acf_field {
 	}
 
 	/**
-	 * Modify the Field with defaults and Subfield definitions.
+	 * Modify the Field with defaults.
 	 *
 	 * @since 0.5
 	 *
 	 * @param array $field The Field array holding all the Field options.
-	 * @return array $subfields The subfield array.
+	 * @return array $field The modified Field array.
 	 */
 	public function modify_field( $field ) {
 

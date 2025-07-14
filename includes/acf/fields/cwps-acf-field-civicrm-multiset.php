@@ -392,25 +392,32 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set extends acf_field 
 	 */
 	public function load_field( $field ) {
 
-		// Cast min/max as integer.
-		$field['min'] = (int) $field['min'];
-		$field['max'] = (int) $field['max'];
+		// Modify the Field with defaults.
+		$field = $this->modify_field( $field );
 
-		// Init Subfields.
-		$sub_fields = [];
+		// Get the actual Fields from the database.
+		$sub_fields = acf_get_fields( $field );
 
-		// Maybe append to Field.
-		if ( ! empty( $field['sub_fields'] ) ) {
-
-			// Validate Field first.
-			foreach ( $field['sub_fields'] as $sub_field ) {
-				$sub_fields[] = acf_validate_field( $sub_field );
-			}
-
+		// Validate Fields first.
+		if ( ! empty( $sub_fields ) ) {
+			array_walk(
+				$sub_fields,
+				function( &$item ) {
+					$item = acf_validate_field( $item );
+				}
+			);
 		}
 
-		// Overwrite subfields.
-		$field['sub_fields'] = $sub_fields;
+		// Apply same key as ACF which appears to prevent pagination.
+		if ( ! empty( $sub_fields ) ) {
+			$field['sub_fields'] = array_map(
+				function ( $sub_field ) use ( $field ) {
+					$sub_field['parent_repeater'] = $field['key'];
+					return $sub_field;
+				},
+				$sub_fields
+			);
+		}
 
 		// --<
 		return $field;
@@ -430,29 +437,45 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set extends acf_field 
 		// Modify the Field with our settings.
 		$field = $this->modify_field( $field );
 
+		// Maybe add our Subfields.
+		if ( empty( $field['sub_fields'] ) ) {
+			$field['sub_fields'] = $this->sub_fields_get( $field );
+		}
+
 		// --<
 		return $field;
 
 	}
 
 	/**
-	 * This action is fired after a Field is deleted from the database.
+	 * Deletes any subfields after the Field has been deleted.
 	 *
 	 * @since 0.4
 	 *
 	 * @param array $field The Field array holding all the Field options.
+	 */
 	public function delete_field( $field ) {
 
+		// Bail early if no subfields.
+		if ( empty( $field['sub_fields'] ) ) {
+			return;
+		}
+
+		// Delete any subfields.
+		foreach ( $field['sub_fields'] as $sub_field ) {
+			acf_delete_field( $sub_field['name'] );
+		}
+
 	}
-	 */
+
 
 	/**
-	 * Modify the Field with defaults and Subfield definitions.
+	 * Modify the Field with defaults.
 	 *
 	 * @since 0.4
 	 *
 	 * @param array $field The Field array holding all the Field options.
-	 * @return array $subfields The subfield array.
+	 * @return array $field The modified Field array.
 	 */
 	public function modify_field( $field ) {
 
@@ -479,6 +502,21 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set extends acf_field 
 
 		// Set wrapper class.
 		$field['wrapper']['class'] = 'civicrm_multiset';
+
+		// --<
+		return $field;
+
+	}
+
+	/**
+	 * Get the Subfield definitions.
+	 *
+	 * @since 0.4
+	 *
+	 * @param array $field The Field array holding all the Field options.
+	 * @return array $sub_fields The subfield array.
+	 */
+	public function sub_fields_get( $field ) {
 
 		/*
 		// Define Multiple Record Set "Name" subfield.
@@ -619,11 +657,11 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Multiple_Record_Set extends acf_field 
 		];
 
 		// Add Subfields.
-		$field['sub_fields'] = [ $number, $location, $provider, $primary, $im_id ];
+		$sub_fields = [ $number, $location, $provider, $primary, $im_id ];
 		*/
 
 		// --<
-		return $field;
+		return $sub_fields;
 
 	}
 

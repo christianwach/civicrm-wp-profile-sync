@@ -443,25 +443,32 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Field extends acf_field {
 	 */
 	public function load_field( $field ) {
 
-		// Cast min/max as integer.
-		$field['min'] = (int) $field['min'];
-		$field['max'] = (int) $field['max'];
+		// Modify the Field with defaults.
+		$field = $this->modify_field( $field );
 
-		// Init Subfields.
-		$sub_fields = [];
+		// Get the actual Fields from the database.
+		$sub_fields = acf_get_fields( $field );
 
-		// Maybe append to Field.
-		if ( ! empty( $field['sub_fields'] ) ) {
-
-			// Validate Field first.
-			foreach ( $field['sub_fields'] as $sub_field ) {
-				$sub_fields[] = acf_validate_field( $sub_field );
-			}
-
+		// Validate Fields first.
+		if ( ! empty( $sub_fields ) ) {
+			array_walk(
+				$sub_fields,
+				function( &$item ) {
+					$item = acf_validate_field( $item );
+				}
+			);
 		}
 
-		// Overwrite subfields.
-		$field['sub_fields'] = $sub_fields;
+		// Apply same key as ACF which appears to prevent pagination.
+		if ( ! empty( $sub_fields ) ) {
+			$field['sub_fields'] = array_map(
+				function ( $sub_field ) use ( $field ) {
+					$sub_field['parent_repeater'] = $field['key'];
+					return $sub_field;
+				},
+				$sub_fields
+			);
+		}
 
 		// --<
 		return $field;
@@ -478,8 +485,13 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Field extends acf_field {
 	 */
 	public function update_field( $field ) {
 
-		// Modify the Field with our settings.
+		// Modify the Field with defaults.
 		$field = $this->modify_field( $field );
+
+		// Maybe add our Subfields.
+		if ( empty( $field['sub_fields'] ) ) {
+			$field['sub_fields'] = $this->sub_fields_get( $field );
+		}
 
 		// --<
 		return $field;
@@ -488,6 +500,11 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Field extends acf_field {
 
 	/**
 	 * Deletes any subfields after the Field has been deleted from the database.
+	 *
+	 * This is more complicated than it ought to be because previous versions of this
+	 * Field added an extra set of Sub-fields to the database every time that the
+	 * Field Group they were part of was saved. We need to remove them all to retain
+	 * the integrity of the Field Group.
 	 *
 	 * @since 0.7.2
 	 *
@@ -500,20 +517,84 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Field extends acf_field {
 			return;
 		}
 
-		// Delete any subfields.
-		foreach ( $field['sub_fields'] as $sub_field ) {
-			acf_delete_field( $sub_field['name'] );
+		// We need our list of subfields.
+		$sub_fields_data = $this->sub_fields_get( $field );
+
+		// Define common query args.
+		$args = [
+			'posts_per_page'         => -1,
+			'post_type'              => 'acf-field',
+			'orderby'                => 'menu_order',
+			'order'                  => 'ASC',
+			'suppress_filters'       => true, // DO NOT allow WPML to modify the query.
+			'cache_results'          => false,
+			'update_post_meta_cache' => false,
+			'update_post_term_cache' => false,
+			'post_status'            => [ 'publish', 'trash' ],
+		];
+
+		// Delete all the subfields.
+		foreach ( $sub_fields_data as $sub_field ) {
+
+			// Finalise query.
+			$args['name']        = $sub_field['key'];
+			$args['post_parent'] = $field['parent'];
+
+			// Skip to next if we don't get any results.
+			$acf_posts = get_posts( $args );
+			if ( empty( $acf_posts ) ) {
+				continue;
+			}
+
+			// Delete all the subfields with this name.
+			foreach ( $acf_posts as $acf_post ) {
+
+				// Get the Field data.
+				$acf_field = (array) acf_maybe_unserialize( $acf_post->post_content );
+
+				// Validate the Field.
+				$acf_field = acf_validate_field( $acf_field );
+
+				// Set input prefix.
+				$acf_field['prefix'] = 'acf';
+
+				/**
+				 * Filters the Field array after it has been loaded.
+				 *
+				 * @since ACF 5.0.0
+				 *
+				 * @param array $acf_field The ACF Field array.
+				 */
+				$acf_field = apply_filters( 'acf/load_field', $acf_field );
+
+				// Delete the Post.
+				wp_delete_post( $acf_post->ID, true );
+
+				// Flush Field cache.
+				acf_flush_field_cache( $acf_field );
+
+				/**
+				 * Fires immediately after a Field has been deleted.
+				 *
+				 * @since ACF 5.0.0
+				 *
+				 * @param array $acf_field The ACF Field array.
+				 */
+				do_action( 'acf/delete_field', $acf_field );
+
+			}
+
 		}
 
 	}
 
 	/**
-	 * Modify the Field with defaults and Subfield definitions.
+	 * Modify the Field with defaults.
 	 *
 	 * @since 0.4
 	 *
 	 * @param array $field The Field array holding all the Field options.
-	 * @return array $subfields The subfield array.
+	 * @return array $field The modified Field array.
 	 */
 	public function modify_field( $field ) {
 
@@ -533,6 +614,21 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Field extends acf_field {
 
 		// Set wrapper class.
 		$field['wrapper']['class'] = 'civicrm_address';
+
+		// --<
+		return $field;
+
+	}
+
+	/**
+	 * Get the Subfield definitions.
+	 *
+	 * @since 0.7.2
+	 *
+	 * @param array $field The Field array holding all the Field options.
+	 * @return array $sub_fields The subfield array.
+	 */
+	public function sub_fields_get( $field ) {
 
 		// Try and init CiviCRM.
 		if ( ! $this->civicrm->is_initialised() ) {
@@ -946,7 +1042,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Field extends acf_field {
 		$address_options = $this->plugin->civicrm->address->settings_get();
 
 		// Add Subfields.
-		$field['sub_fields'] = [
+		$sub_fields = [
 			$location,
 			$primary,
 			$billing,
@@ -954,76 +1050,76 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Address_Field extends acf_field {
 
 		// Maybe add Address Name.
 		if ( ! empty( $address_options['address_name'] ) ) {
-			$field['sub_fields'][] = $address_name;
+			$sub_fields[] = $address_name;
 		}
 
 		// Maybe add Street Address.
 		if ( ! empty( $address_options['street_address'] ) ) {
-			$field['sub_fields'][] = $street_address;
+			$sub_fields[] = $street_address;
 		}
 
 		// Maybe add Supplemental Address 1.
 		if ( ! empty( $address_options['supplemental_address_1'] ) ) {
-			$field['sub_fields'][] = $supplemental_address_1;
+			$sub_fields[] = $supplemental_address_1;
 		}
 
 		// Maybe add Supplemental Address 2.
 		if ( ! empty( $address_options['supplemental_address_2'] ) ) {
-			$field['sub_fields'][] = $supplemental_address_2;
+			$sub_fields[] = $supplemental_address_2;
 		}
 
 		// Maybe add Supplemental Address 3.
 		if ( ! empty( $address_options['supplemental_address_3'] ) ) {
-			$field['sub_fields'][] = $supplemental_address_3;
+			$sub_fields[] = $supplemental_address_3;
 		}
 
 		// Maybe add City.
 		if ( ! empty( $address_options['city'] ) ) {
-			$field['sub_fields'][] = $city;
+			$sub_fields[] = $city;
 		}
 
 		// Maybe add Post Code.
 		if ( ! empty( $address_options['postal_code'] ) ) {
-			$field['sub_fields'][] = $post_code;
+			$sub_fields[] = $post_code;
 		}
 
 		/*
 		// Maybe add Post Code Suffix.
 		if ( ! empty( $address_options['postal_code_suffix'] ) ) {
-			$field['sub_fields'][] = $post_code_suffix;
+			$sub_fields[] = $post_code_suffix;
 		}
 		*/
 
 		// Maybe add Country.
 		if ( ! empty( $address_options['country'] ) ) {
-			$field['sub_fields'][] = $country_id;
+			$sub_fields[] = $country_id;
 		}
 
 		// Maybe add State/Province.
 		if ( ! empty( $address_options['state_province'] ) ) {
-			$field['sub_fields'][] = $state_province_id;
+			$sub_fields[] = $state_province_id;
 		}
 
 		// Maybe add Latitude.
 		if ( ! empty( $address_options['geo_code_1'] ) ) {
-			$field['sub_fields'][] = $geo_code_1;
+			$sub_fields[] = $geo_code_1;
 		}
 
 		// Maybe add Longitude.
 		if ( ! empty( $address_options['geo_code_2'] ) ) {
-			$field['sub_fields'][] = $geo_code_2;
+			$sub_fields[] = $geo_code_2;
 		}
 
 		// Maybe add Geo Code Override.
 		if ( ! empty( $address_options['geo_code_1'] ) && ! empty( $address_options['geo_code_2'] ) ) {
-			$field['sub_fields'][] = $manual_geo_code;
+			$sub_fields[] = $manual_geo_code;
 		}
 
 		// Always add Address ID.
-		$field['sub_fields'][] = $address_id;
+		$sub_fields[] = $address_id;
 
 		// --<
-		return $field;
+		return $sub_fields;
 
 	}
 
