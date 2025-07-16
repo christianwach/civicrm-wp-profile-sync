@@ -149,15 +149,15 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Field {
 		// CiviCRM has handy methods for this.
 		$age_date = CRM_Utils_Date::customFormat( $date, '%Y%m%d' );
 		$age      = CRM_Utils_Date::calculateAge( $age_date );
-		$years    = CRM_Utils_Array::value( 'years', $age );
-		$months   = CRM_Utils_Array::value( 'months', $age );
+		$years    = $age['years'] ?? null;
+		$months   = $age['months'] ?? null;
 
 		// Maybe construct string from years.
 		if ( $years ) {
 			$age_string = sprintf(
 				/* translators: %d: The number of years */
 				_n( '%d year', '%d years', $years, 'civicrm-wp-profile-sync' ),
-				$years
+				(int) $years
 			);
 		}
 
@@ -166,7 +166,7 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Contact_Field {
 			$age_string = sprintf(
 				/* translators: %d: The number of months */
 				_n( '%d month', '%d months', $months, 'civicrm-wp-profile-sync' ),
-				$months
+				(int) $months
 			);
 		}
 
