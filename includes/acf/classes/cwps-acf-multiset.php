@@ -391,11 +391,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 	public function multisets_update( $values, $contact_id, $selector, $args = [] ) {
 
 		// Init return.
-		$multisets = false;
+		$multisets = [];
 
 		// Try and init CiviCRM.
 		if ( ! $this->civicrm->is_initialised() ) {
-			return $multisets;
+			return false;
 		}
 
 		// Get the current Multiple Record Sets.

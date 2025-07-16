@@ -554,11 +554,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 	public function ims_update( $values, $contact_id, $selector, $args = [] ) {
 
 		// Init return.
-		$ims = false;
+		$ims = [];
 
 		// Try and init CiviCRM.
 		if ( ! $this->civicrm->is_initialised() ) {
-			return $ims;
+			return false;
 		}
 
 		// Get the current Instant Messenger Records.

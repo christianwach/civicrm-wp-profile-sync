@@ -398,11 +398,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 	public function phones_update( $values, $contact_id, $selector, $args = [] ) {
 
 		// Init return.
-		$phones = false;
+		$phones = [];
 
 		// Try and init CiviCRM.
 		if ( ! $this->civicrm->is_initialised() ) {
-			return $phones;
+			return false;
 		}
 
 		// Get the current Phone Records.

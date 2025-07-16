@@ -468,11 +468,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 	public function addresses_update( $values, $contact_id, $selector, $args = [] ) {
 
 		// Init return.
-		$addresses = false;
+		$addresses = [];
 
 		// Try and init CiviCRM.
 		if ( ! $this->civicrm->is_initialised() ) {
-			return $addresses;
+			return false;
 		}
 
 		// Get the current Address Records.
