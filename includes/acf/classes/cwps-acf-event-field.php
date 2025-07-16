@@ -537,7 +537,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 			return $pseudocache[ $filter ][ $field_type ];
 		}
 
-		// Get all Event Location Fields.
+		// Get all Event Fields.
 		$fields = $this->data_get_by_action();
 
 		// Check for filter.
@@ -731,29 +731,6 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Event_Field {
 				$fields = [];
 				if ( ! empty( $filtered ) ) {
 					foreach ( $this->fee_fields as $key => $field_type ) {
-						foreach ( $filtered as $value ) {
-							if ( $value['name'] === $key ) {
-								$fields[] = $value;
-								break;
-							}
-						}
-					}
-				}
-
-			} elseif ( 'registration' === $filter ) {
-
-				// Skip all but those defined in our Online Registration Fields array.
-				$filtered = [];
-				foreach ( $fields as $key => $value ) {
-					if ( array_key_exists( $value['name'], $this->registration_fields ) ) {
-						$filtered[] = $value;
-					}
-				}
-
-				// Maybe order them by our Online Registration Fields array.
-				$fields = [];
-				if ( ! empty( $filtered ) ) {
-					foreach ( $this->registration_fields as $key => $field_type ) {
 						foreach ( $filtered as $value ) {
 							if ( $value['name'] === $key ) {
 								$fields[] = $value;
