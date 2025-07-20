@@ -563,14 +563,8 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 			$value = '';
 		}
 
-		// Do not trigger our filter.
-		remove_filter( 'bp_xprofile_set_field_data_pre_validate', [ $this, 'pre_validate' ], 10 );
-
 		// Pass through to BuddyPress.
 		$result = xprofile_set_field_data( $field_id, $user_id, $value );
-
-		// Reinstate our filter.
-		add_filter( 'bp_xprofile_set_field_data_pre_validate', [ $this, 'pre_validate' ], 10, 3 );
 
 		// --<
 		return $result;
