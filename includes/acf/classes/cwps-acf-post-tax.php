@@ -145,7 +145,7 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 		add_action( 'admin_init', [ $this, 'register_hooks_admin' ] );
 
 		// Listen for when a Post is about to be updated.
-		add_action( 'pre_post_update', [ $this, 'post_saved_pre' ], 10, 2 );
+		add_action( 'cwps/acf/mapper/post/saved/pre', [ $this, 'post_saved_pre' ], 10 );
 
 		// Listen for events that require Taxonomy updates.
 		add_action( 'cwps/acf/contact/post/saved', [ $this, 'post_saved' ], 10 );
@@ -1031,10 +1031,12 @@ class CiviCRM_Profile_Sync_ACF_Post_Tax {
 	 *
 	 * @since 0.4
 	 *
-	 * @param integer|string $post_id The ACF "Post ID".
-	 * @param array          $data The array of unslashed post data.
+	 * @param array $args The array of WordPress params.
 	 */
-	public function post_saved_pre( $post_id, $data ) {
+	public function post_saved_pre( $args ) {
+
+		// Get the Post ID.
+		$post_id = (int) $args['post_id'];
 
 		// Get the full Post.
 		$post = get_post( $post_id );
