@@ -230,6 +230,9 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 */
 	public function hooks_wordpress_post_add() {
 
+		// Intercept Post update in WordPress prior to save.
+		add_action( 'pre_post_update', [ $this, 'post_saved_pre' ], 20, 2 );
+
 		// Intercept Post update in WordPress super-early.
 		add_action( 'save_post', [ $this, 'post_saved' ], 1, 3 );
 
@@ -297,7 +300,8 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 */
 	public function hooks_wordpress_post_remove() {
 
-		// Remove Post update hook.
+		// Remove Post update callbacks.
+		remove_action( 'pre_post_update', [ $this, 'post_saved_pre' ], 20 );
 		remove_action( 'save_post', [ $this, 'post_saved' ], 1 );
 
 	}
@@ -310,7 +314,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function hooks_wordpress_acf_remove() {
 
 		// Remove ACF Fields callbacks.
-		remove_action( 'acf/save_post', [ $this, 'acf_fields_saved' ], 5 );
+		remove_action( 'acf/save_post', [ $this, 'acf_fields_saved_pre' ], 5 );
 		remove_action( 'acf/save_post', [ $this, 'acf_fields_saved' ], 20 );
 
 	}
@@ -3658,6 +3662,38 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	}
 
 	// -----------------------------------------------------------------------------------
+
+	/**
+	 * Intercept when a Post is about to be saved.
+	 *
+	 * @since 0.7.2
+	 *
+	 * @param integer $post_id The WordPress Post ID.
+	 * @param array   $data The array of unslashed post data.
+	 */
+	public function post_saved_pre( $post_id, $data ) {
+
+		// Bail if there was a Multisite switch.
+		if ( is_multisite() && ms_is_switched() ) {
+			return;
+		}
+
+		// Let's make an array of the params.
+		$args = [
+			'post_id' => $post_id,
+			'data'    => $data,
+		];
+
+		/**
+		 * Broadcast that a WordPress Post is about to be saved.
+		 *
+		 * @since 0.7.2
+		 *
+		 * @param array $args The array of WordPress params.
+		 */
+		do_action( 'cwps/acf/mapper/post/saved/pre', $args );
+
+	}
 
 	/**
 	 * Intercept the Post saved operation.
