@@ -86,6 +86,12 @@ I'll say it again: test early, test often and - above all - test on a developmen
 
 == Changelog ==
 
+= 0.7.2 =
+
+* No longer moves Contact to trash when Post is moved to trash
+* New schema for handling Post-Contact sync
+* Cleans up orphaned fields when custom repeater Fields are deleted from Field Group
+
 = 0.7.1 =
 
 * Refinements to Address Field
