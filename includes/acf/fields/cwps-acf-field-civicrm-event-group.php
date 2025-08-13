@@ -46,6 +46,15 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Group extends acf_field {
 	public $acf;
 
 	/**
+	 * ACF Field Type object.
+	 *
+	 * @since 0.5
+	 * @access public
+	 * @var CiviCRM_Profile_Sync_ACF_Field_Type
+	 */
+	public $acf_type;
+
+	/**
 	 * Field Type name.
 	 *
 	 * Single word, no spaces. Underscores allowed.
