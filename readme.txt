@@ -5,7 +5,7 @@ Tags:              civicrm, buddypress, acf, profile, sync
 Requires PHP:      7.4
 Requires at least: 4.9
 Tested up to:      6.8
-Stable tag:        0.7.2
+Stable tag:        0.7.3a
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
