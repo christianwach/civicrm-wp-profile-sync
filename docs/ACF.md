@@ -38,6 +38,35 @@ To link these together, in CiviCRM go to *Administer* &rarr; *Customize Data and
 
 From now on, each time you create a Contact of the Contact Type that you have linked, a new WordPress Post will be created. The "Display Name" of the Contact will become the WordPress Post Title. And - in the reverse direction - each time you create a WordPress Post which is of the Post Type you have linked to a Contact Type, a new Contact will be created with their "Display Name" set to the Title of the new Post.
 
+#### Policy for WordPress-to-CiviCRM sync
+
+The following sets out what happens when a WordPress Post is saved:
+
+1. A Post with `draft` Post Status: Sync to the Contact does not take place.
+2. A Post is deleted: Sync to the Contact does not take place and it is no longer soft-deleted.
+3. A Post with `pending` Post Status: The Contact will be synced as normal.
+
+The new `cwps/acf/post/should_be_synced` filter allows this policy to be modified.
+
+#### Policy for CiviCRM-to-WordPress sync
+
+The following sets out what happens when a CiviCRM Contact is deleted:
+
+1. Contact soft-deleted: the synced WordPress Post(s) are set to `pending` Post Status.
+2. Contact hard-deleted: the synced WordPress Post(s) are set to `draft` Post Status.
+
+Both these Post Statuses are "unpublished" which means that the synced Posts _should be_ removed from display on the front-end if the queries are done right, i.e. the theme only displays Posts that are published.
+
+In the case of soft-deleted Contacts, their synced Posts with status `pending` still sync back to the CiviCRM Contact because it _still exists_ though in an `is_deleted` state.
+
+In the case of hard-deleted Contacts, the meta value that linked them to their Contact is removed because the Contact no longer exists. Their synced Posts are given `draft` status which *does not* sync with CivICRM - again because the Contact no longer exists. Publishing one of these Posts again *will* create a new Contact, but I think that's to be expected. Trashing the Posts *will not* regenerate a Contact.
+
+The following filters can alter the synced WordPress Post(s) for the "soft-delete" and "hard-delete" events:
+
+* `cwps/acf/post/contact/update/args` alters the args that are passed to `wp_update_post()` so the `post_status` could be modified through it, for example when a Contact is soft-deleted.
+* `cwps/acf/post/unlinked` fires when a WordPress Post has been unlinked from a Contact that has had one or more Contact Types removed. It can be used to change the status of the Post to something other than `pending` or even to delete the Post entirely.
+* `cwps/acf/post/contact/delete/unlinked` fires when a WordPress Post has been unlinked from a Contact that has been hard-deleted. It can also be used to change the status of the Post to something other than `pending` or even to delete the Post entirely.
+
 ### CiviCRM Events and Event Organiser Events
 
 If you want to make the same kind of links between Events in WordPress and CiviCRM, this plugin is compatible with [CiviCRM Event Organiser](https://github.com/christianwach/civicrm-event-organiser) and enables integration of Custom Fields on CiviCRM Events with ACF Fields attached to the Event Organiser "Event" Post Type.
