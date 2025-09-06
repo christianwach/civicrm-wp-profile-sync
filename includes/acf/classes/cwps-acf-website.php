@@ -90,6 +90,16 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Website extends CiviCRM_Profile_Sync_ACF_
 	private $bridging_array = [];
 
 	/**
+	 * An array of previously edited Website Records for tracking changes
+	 * during the edit process in CiviCRM admin.
+	 *
+	 * @since 0.5.2
+	 * @access private
+	 * @var array
+	 */
+	private $previously_edited = [];
+
+	/**
 	 * Contact Fields which must be handled separately.
 	 *
 	 * @since 0.4
