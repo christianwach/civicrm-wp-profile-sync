@@ -46,6 +46,15 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	public $acf_loader;
 
 	/**
+	 * Bridging variable for the Contact ID.
+	 *
+	 * @since 0.4
+	 * @access private
+	 * @var int
+	 */
+	private $saved_contact_type_id;
+
+	/**
 	 * Sync mappings.
 	 *
 	 * Sync between CiviCRM Entity Types and WordPress Custom Post Types can
