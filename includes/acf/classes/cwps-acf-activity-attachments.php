@@ -1184,7 +1184,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 		}
 
 		// Skip filter if using WordPress File.
-		if ( (int) 1 === $field['file_link'] ) {
+		if ( 1 === (int) $field['file_link'] ) {
 			return $value;
 		}
 
@@ -1250,7 +1250,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 		}
 
 		// Skip filter if using WordPress File.
-		if ( (int) 1 === $field['file_link'] ) {
+		if ( 1 === (int) $field['file_link'] ) {
 			return;
 		}
 
