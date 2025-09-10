@@ -561,7 +561,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @param integer $event_id The numeric ID of the CiviCRM Event to query.
 	 * @param array   $custom_field_ids The Custom Field IDs to query.
-	 * @return array $case_data An array of Case data.
+	 * @return array $case_data An array of Event data.
 	 */
 	public function values_get_by_event_id( $event_id, $custom_field_ids = [] ) {
 
@@ -584,7 +584,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 			$codes[] = 'custom_' . $custom_field_id;
 		}
 
-		// Define params to get queried Case.
+		// Define params to get queried Event.
 		$params = [
 			'version'    => 3,
 			'sequential' => 1,
