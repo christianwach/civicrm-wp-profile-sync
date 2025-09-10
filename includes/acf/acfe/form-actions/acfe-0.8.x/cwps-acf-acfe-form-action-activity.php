@@ -240,7 +240,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Activity extends CiviCRM_Profile
 		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
 		$this->acfe       = $parent->acfe;
-		$this->form       = $parent;
 		$this->civicrm    = $this->acf_loader->civicrm;
 
 		// Label this Form Action.
