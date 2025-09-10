@@ -525,8 +525,8 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 	 */
 	public function attachments_update( $values, $activity_id, $selector, $args = [] ) {
 
-		// Init return.
-		$attachments = false;
+		// Init as array.
+		$attachments = [];
 
 		// Try and init CiviCRM.
 		if ( ! $this->civicrm->is_initialised() ) {
@@ -563,6 +563,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 				// Add to return array.
 				$attachments[] = $attachment;
 
+			}
+
+			// Cast as boolean when empty.
+			if ( empty( $attachments ) ) {
+				$attachments = false;
 			}
 
 			// No need to go any further.
@@ -760,6 +765,14 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 		foreach ( $actions['delete'] as $attachment_id ) {
 			$this->attachment_delete( $attachment_id, $activity_id, $selector, $args );
 		}
+
+		// Cast as boolean when empty.
+		if ( empty( $attachments ) ) {
+			$attachments = false;
+		}
+
+		// --<
+		return $attachments;
 
 	}
 
