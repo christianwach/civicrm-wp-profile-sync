@@ -48,15 +48,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 	public $acfe;
 
 	/**
-	 * ACFE Form object.
-	 *
-	 * @since 0.5
-	 * @access public
-	 * @var CiviCRM_Profile_Sync_ACF_ACFE_Form
-	 */
-	public $form;
-
-	/**
 	 * CiviCRM object.
 	 *
 	 * @since 0.5
@@ -290,7 +281,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 		$this->plugin     = $parent->acf_loader->plugin;
 		$this->acf_loader = $parent->acf_loader;
 		$this->acfe       = $parent->acfe;
-		$this->form       = $parent;
 		$this->civicrm    = $this->acf_loader->civicrm;
 
 		// Label this Form Action.

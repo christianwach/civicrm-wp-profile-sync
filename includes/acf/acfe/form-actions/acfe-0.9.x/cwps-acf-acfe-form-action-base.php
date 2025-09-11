@@ -48,15 +48,6 @@ class CWPS_ACF_ACFE_Form_Action_Base extends acfe_module_form_action {
 	public $acfe;
 
 	/**
-	 * ACFE Form object.
-	 *
-	 * @since 0.7.0
-	 * @access public
-	 * @var CiviCRM_Profile_Sync_ACF_ACFE_Form
-	 */
-	public $form;
-
-	/**
 	 * CiviCRM object.
 	 *
 	 * @since 0.7.0
