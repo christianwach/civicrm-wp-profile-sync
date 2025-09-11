@@ -216,7 +216,6 @@ class CWPS_ACF_ACFE_Form_Action_Participant extends CWPS_ACF_ACFE_Form_Action_Ba
 		$this->plugin     = civicrm_wp_profile_sync();
 		$this->acf_loader = $this->plugin->acf;
 		$this->acfe       = $this->acf_loader->acfe;
-		$this->form       = $this->acfe->form;
 		$this->civicrm    = $this->acf_loader->civicrm;
 
 		// Label this Form Action.

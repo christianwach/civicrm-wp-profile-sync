@@ -48,15 +48,6 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 	public $acfe;
 
 	/**
-	 * ACFE Form object.
-	 *
-	 * @since 0.5
-	 * @access public
-	 * @var CiviCRM_Profile_Sync_ACF_ACFE_Form
-	 */
-	public $form;
-
-	/**
 	 * CiviCRM object.
 	 *
 	 * @since 0.5
