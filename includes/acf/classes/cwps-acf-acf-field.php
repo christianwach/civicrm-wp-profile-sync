@@ -546,7 +546,6 @@ class CiviCRM_Profile_Sync_ACF_Field {
 
 					}
 
-
 				}
 				break;
 
