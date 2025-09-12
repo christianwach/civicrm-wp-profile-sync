@@ -1400,8 +1400,8 @@ class CiviCRM_Profile_Sync_ACF_Post {
 	 */
 	public function get_by_activity_id( $activity_id, $post_type = 'any' ) {
 
-		// Init as failed.
-		$posts = false;
+		// Init as array.
+		$posts = [];
 
 		// Bail if there's no Activity ID.
 		if ( empty( $activity_id ) ) {
@@ -1441,6 +1441,11 @@ class CiviCRM_Profile_Sync_ACF_Post {
 
 		// Reset Post data just in case.
 		wp_reset_postdata();
+
+		// Cast as boolean when empty.
+		if ( empty( $posts ) ) {
+			$posts = false;
+		}
 
 		// --<
 		return $posts;

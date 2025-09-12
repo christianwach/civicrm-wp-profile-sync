@@ -250,7 +250,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 			return;
 		}
 
-		// Intercept before a CiviCRM File/Attachment is deleted.
+		// Intercept before a CiviCRM File is deleted.
 		add_action( 'cwps/acf/mapper/attachment/delete/pre', [ $this, 'civicrm_file_pre_delete' ], 10 );
 
 		// Declare registered.
@@ -1584,23 +1584,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	// -----------------------------------------------------------------------------------
 
 	/**
-	 * Callback for the CiviCRM 'civi.dao.preDelete' hook.
-	 *
-	 * This is the only hook that fires when a File is deleted via the CiviCRM UI.
-	 * All other deletions are direct SQL queries.
-	 *
-	 * We can't use the Attachment API to search for an entry by ID during the
-	 * File deletion process because the "Entity File" has already been deleted.
-	 * We can use the File API, however *happy face*.
-	 *
-	 * I have opened an issue and PR that allows us to distinguish between Files
-	 * that are "Attachments" and Files that are uploaded to Custom Fields to be
-	 * distinguished from one another.
-	 *
-	 * With the patch in the GitHub PR, this method is able to delete
-	 *
-	 * @see https://lab.civicrm.org/dev/core/-/issues/3130
-	 * @see https://github.com/civicrm/civicrm-core/pull/22994
+	 * Called when a CiviCRM File is about to be deleted.
 	 *
 	 * @since 0.5.2
 	 *
@@ -1608,19 +1592,20 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 */
 	public function civicrm_file_pre_delete( $args ) {
 
-		// We have my patch if there is a CiviCRM Attachment.
+		// We have my patch (or later) if there is a CiviCRM Attachment.
 		if ( ! empty( $args['attachment'] ) ) {
 
 			// Bail if this is not a File attached to a Custom Field.
-			if ( strstr( $args['attachment']->entity_table, 'civicrm_value_' ) === false ) {
-				return;
+			$version = CRM_Utils_System::version();
+			if ( version_compare( $version, '6.3.0', '>=' ) ) {
+				if ( ! empty( $args['attachment']->entity_table ) ) {
+					return;
+				}
+			} else {
+				if ( strstr( $args['attachment']->entity_table, 'civicrm_value_' ) === false ) {
+					return;
+				}
 			}
-
-			/*
-			// Pass to separate method and skip.
-			$this->civicrm_attachment_pre_delete( $args );
-			return;
-			*/
 
 		}
 
@@ -1629,33 +1614,53 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 			return;
 		}
 
-		/*
-		 * What do we want to do now?
-		 *
-		 * When we have found our way to the WordPress Attachment:
-		 *
-		 * We could delete it, which would at least guarantee that all ACF Fields
-		 * that relate to it will refer to a non-existent Attachment.
-		 *
-		 * We could alter its metadata and trigger a change next time the ACF Field
-		 * or CiviCRM Field gets updated.
-		 *
-		 * Hmm...
-		 *
-		 * @see CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field::image_attachment_deleted()
-		 */
-
 		// Let's try and find a WordPress Attachment.
 		$attachment_id = $this->query_by_file( $args['objectRef']->uri, 'civicrm' );
 		if ( empty( $attachment_id ) ) {
 			return;
 		}
 
-		// Save metadata.
-		$data = [
-			'wordpress_file' => get_attached_file( $attachment_id, true ),
-			'civicrm_file'   => '',
-		];
+		// Init delete flag.
+		$delete = false;
+
+		/**
+		 * Filters the decision to delete the WordPress Attachment.
+		 *
+		 * Now that we have found our way to the WordPress Attachment:
+		 *
+		 * We can delete it, because this (at least) guarantees that all ACF Fields that
+		 * relate to it will refer to a non-existent Attachment.
+		 *
+		 * In practice, the sync process "blanks out" the linked ACF "File" Fields, so
+		 * that they no longer reference the WordPress Attachment.
+		 *
+		 * And since this callback only fires when there are no longer any CiviCRM
+		 * Entities making use of the File and the CiviCRM file on disk is being deleted,
+		 * we should be fairly safe to delete the corresponding WordPress Attachment.
+		 *
+		 * The biggest issue is when the WordPress Attachment has been used elsewhere
+		 * via the Media Library. There is no way of knowing.
+		 *
+		 * Add to this the fact that ACF itself doesn't delete the WordPress Attachment
+		 * when the File Field no longer references it.
+		 *
+		 * For now, do not delete the WordPress Attachment by default because of the
+		 * above reasons. Use this filter if you really want the WordPress Attachment
+		 * to be force-deleted.
+		 *
+		 * @see CiviCRM_Profile_Sync_ACF_CiviCRM_Contact_Field::image_attachment_deleted()
+		 *
+		 * @since 0.7.3
+		 *
+		 * @param bool $delete False by default, which does not delete the WordPress Attachment.
+		 * @param int  $attachment_id False by default, which does not delete the WordPress Attachment.
+		 */
+		$delete = apply_filters( 'cwps/acf/civicrm/attachment/file/delete', $delete, $attachment_id );
+
+		// Bail if false.
+		if ( ! $delete ) {
+			return;
+		}
 
 		// Force-delete the Attachment.
 		wp_delete_attachment( $attachment_id, true );
@@ -1675,7 +1680,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 	 */
 	public function civicrm_attachment_pre_delete( $args ) {
 
-		// Make sure we have an Entity Table.
+		/*
+		 * Make sure we have an Entity Table.
+		 *
+		 * No longer true for Custom Fields in CiviCRM 6.3.0+.
+		 *
+		 * @see https://github.com/civicrm/civicrm-core/pull/32319
+		 */
 		if ( empty( $args['attachment']->entity_table ) ) {
 			return;
 		}
@@ -1704,7 +1715,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Attachment {
 		 *
 		 * It looks at the moment as though its good enough just to delete the
 		 * WordPress Attachment - although my patch is needed so that deleting
-		 * CiviCRM Attachments on Activitiesn (for example) can also update the
+		 * CiviCRM Attachments on Activities (for example) can also update the
 		 * "CiviCRM Activity: Attachments" ACF Fields so they don't lose their
 		 * data integrity.
 		 */

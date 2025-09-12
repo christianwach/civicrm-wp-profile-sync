@@ -575,13 +575,15 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 */
 	public function hooks_civicrm_file_add() {
 
+		// Intercept EntityFile updates in CiviCRM.
+		add_action( 'civicrm_pre', [ $this, 'file_entity_pre_delete' ], 10, 4 );
+		add_action( 'civicrm_post', [ $this, 'file_entity_deleted' ], 10, 4 );
+
 		// Intercept File updates in CiviCRM.
-		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		// add_action( 'civicrm_pre', [ $this, 'file_pre_delete' ], 10, 4 );
+		add_action( 'civicrm_pre', [ $this, 'file_pre_delete' ], 10, 4 );
 		add_action( 'civicrm_post', [ $this, 'file_created' ], 10, 4 );
 		add_action( 'civicrm_post', [ $this, 'file_edited' ], 10, 4 );
-		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		// add_action( 'civicrm_post', [ $this, 'file_deleted' ], 10, 4 );
+		add_action( 'civicrm_post', [ $this, 'file_deleted' ], 10, 4 );
 
 	}
 
@@ -825,13 +827,15 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	 */
 	public function hooks_civicrm_file_remove() {
 
-		// Remove Instant Messenger update hooks.
-		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		// remove_action( 'civicrm_pre', [ $this, 'file_pre_delete' ], 10 );
+		// Remove EntityFile update hooks.
+		remove_action( 'civicrm_pre', [ $this, 'file_entity_pre_delete' ], 10 );
+		remove_action( 'civicrm_post', [ $this, 'file_entity_deleted' ], 10 );
+
+		// Remove File update hooks.
+		remove_action( 'civicrm_pre', [ $this, 'file_pre_delete' ], 10 );
 		remove_action( 'civicrm_post', [ $this, 'file_created' ], 10 );
 		remove_action( 'civicrm_post', [ $this, 'file_edited' ], 10 );
-		// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
-		// remove_action( 'civicrm_post', [ $this, 'file_deleted' ], 10 );
+		remove_action( 'civicrm_post', [ $this, 'file_deleted' ], 10 );
 
 	}
 
@@ -919,13 +923,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		);
 		*/
 
-		// Add callback for CiviCRM "preDelete" hook.
-		Civi::service( 'dispatcher' )->addListener(
-			'civi.dao.preDelete',
-			[ $this, 'file_pre_delete_listener' ],
-			-100 // Default priority.
-		);
-
 		// Declare registered.
 		$this->civicrm_listeners = true;
 
@@ -985,12 +982,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 			[ $this, 'listener_civicrm_deleted' ]
 		);
 		*/
-
-		// Remove callback for CiviCRM "preDelete" hook.
-		Civi::service( 'dispatcher' )->removeListener(
-			'civi.dao.preDelete',
-			[ $this, 'file_pre_delete_listener' ]
-		);
 
 		// Declare unregistered.
 		$this->civicrm_listeners = false;
@@ -3367,83 +3358,115 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	// -----------------------------------------------------------------------------------
 
 	/**
-	 * Intercept when a CiviCRM File is about to be deleted.
+	 * Intercept when a CiviCRM "EntityFile" is about to be deleted.
 	 *
-	 * @since 0.5.4
+	 * This means that the link between a File and a CiviCRM Entity (e.g. Contact) is
+	 * about to be deleted. The File itself will only be deleted when there are no more
+	 * "EntityFile" records for the File.
 	 *
-	 * @param object $event The event object.
-	 * @param string $hook The hook name.
+	 * @see self::file_pre_delete()
+	 * @see self::file_deleted()
+	 *
+	 * @since 0.7.3
+	 *
+	 * @param string  $op The type of database operation.
+	 * @param string  $object_name The type of object.
+	 * @param integer $object_id The ID of the object.
+	 * @param object  $object_ref The object.
 	 */
-	public function file_pre_delete_listener( $event, $hook ) {
+	public function file_entity_pre_delete( $op, $object_name, $object_id, $object_ref ) {
 
-		// Extract CiviCRM Entity Tag for this hook.
-		$entity_tag =& $event->object;
-
-		// Bail if this isn't the type of object we're after.
-		if ( ! ( $entity_tag instanceof CRM_Core_BAO_EntityTag ) ) {
+		// Bail if not the context we want.
+		if ( 'delete' !== $op ) {
 			return;
 		}
 
-		// Make sure we have an Entity Table.
-		if ( empty( $entity_tag->entity_table ) ) {
-			return;
-		}
-
-		// Bail if this doesn't refer to a "File".
-		if ( 'civicrm_file' !== $entity_tag->entity_table ) {
-			return;
-		}
-
-		// Bail if there's no Entity ID.
-		if ( empty( $entity_tag->entity_id ) ) {
-			return;
-		}
-
-		// The Entity ID happens to be the CiviCRM File ID.
-
-		// Get the CiviCRM File being deleted.
-		$civicrm_file = $this->acf_loader->civicrm->attachment->file_get_by_id( $entity_tag->entity_id );
-		if ( false === $civicrm_file ) {
+		// Bail if this is not an EntityFile.
+		if ( 'EntityFile' !== $object_name ) {
 			return;
 		}
 
 		// Let's make an array of the params.
 		$args = [
-			'op'         => 'delete',
-			'objectName' => 'File',
-			'objectId'   => (int) $entity_tag->entity_id,
+			'op'         => $op,
+			'objectName' => $object_name,
+			'objectId'   => $object_id,
+		];
+
+		// Maybe cast objectRef as array.
+		$args['objectRef'] = is_array( $object_ref ) ? $object_ref : (array) $object_ref;
+
+		/**
+		 * Fires when a CiviCRM "EntityFile" is about to be deleted.
+		 *
+		 * @since 0.7.3
+		 *
+		 * @param array $args The array of CiviCRM params.
+		 */
+		do_action( 'cwps/acf/mapper/file_entity/delete/pre', $args );
+
+		// Get the full Attachment.
+		$args['attachment'] = $this->acf_loader->civicrm->attachment->get_by_id( $object_id );
+
+		/**
+		 * Fires when a CiviCRM EntityFile is about to be deleted.
+		 *
+		 * This action is identical to `cwps/acf/mapper/file_entity/delete/pre` except
+		 * that it also contains the data from the CiviCRM Attachment API.
+		 *
+		 * @since 0.7.3
+		 *
+		 * @param array $args The array of CiviCRM params.
+		 */
+		do_action( 'cwps/acf/mapper/attachment_entity/delete/pre', $args );
+
+	}
+
+	/**
+	 * Intercept when a CiviCRM "EntityFile" has been deleted.
+	 *
+	 * @since 0.7.3
+	 *
+	 * @param string  $op The type of database operation.
+	 * @param string  $object_name The type of object.
+	 * @param integer $object_id The ID of the object.
+	 * @param object  $object_ref The object.
+	 */
+	public function file_entity_deleted( $op, $object_name, $object_id, $object_ref ) {
+
+		// Bail if not the context we want.
+		if ( 'delete' !== $op ) {
+			return;
+		}
+
+		// Bail if this is not an File.
+		if ( 'EntityFile' !== $object_name ) {
+			return;
+		}
+
+		// Let's make an array of the params.
+		$args = [
+			'op'         => $op,
+			'objectName' => $object_name,
+			'objectId'   => $object_id,
 		];
 
 		// Maybe cast objectRef as object.
-		$args['objectRef'] = is_object( $civicrm_file ) ? $civicrm_file : (object) $civicrm_file;
+		$args['objectRef'] = is_object( $object_ref ) ? $object_ref : (object) $object_ref;
 
 		/**
-		 * Broadcast that a CiviCRM File is about to be deleted.
+		 * Fires when a CiviCRM "EntityFile" has been deleted.
 		 *
-		 * @since 0.5.4
+		 * @since 0.7.3
 		 *
 		 * @param array $args The array of CiviCRM params.
 		 */
-		do_action( 'cwps/acf/mapper/file/delete/pre', $args );
-
-		// Get the full Attachment.
-		$args['attachment'] = $this->acf_loader->civicrm->attachment->get_by_id( $args['objectId'] );
-
-		/**
-		 * Broadcast that a CiviCRM Attachment is about to be deleted.
-		 *
-		 * @since 0.5.4
-		 *
-		 * @param array $args The array of CiviCRM params.
-		 */
-		do_action( 'cwps/acf/mapper/attachment/delete/pre', $args );
+		do_action( 'cwps/acf/mapper/file_entity/deleted', $args );
 
 	}
 
 	/**
 	 * Intercept when a CiviCRM File is about to be deleted.
-	 *
-	 * Unused: does not receive events when Attachments are deleted.
 	 *
 	 * @since 0.5.4
 	 *
@@ -3610,8 +3633,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	/**
 	 * Intercept when a CiviCRM File has been deleted.
 	 *
-	 * Unused: does not receive events when Attachments are deleted.
-	 *
 	 * @since 0.5.4
 	 *
 	 * @param string  $op The type of database operation.
@@ -3642,22 +3663,13 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		$args['objectRef'] = is_object( $object_ref ) ? $object_ref : (object) $object_ref;
 
 		/**
-		 * Broadcast that a CiviCRM File has been deleted.
+		 * Fires when a CiviCRM File has been deleted.
 		 *
 		 * @since 0.5.4
 		 *
 		 * @param array $args The array of CiviCRM params.
 		 */
 		do_action( 'cwps/acf/mapper/file/deleted', $args );
-
-		/**
-		 * Broadcast that a CiviCRM Attachment has been deleted.
-		 *
-		 * @since 0.5.4
-		 *
-		 * @param array $args The array of CiviCRM params.
-		 */
-		do_action( 'cwps/acf/mapper/attachment/deleted', $args );
 
 	}
 

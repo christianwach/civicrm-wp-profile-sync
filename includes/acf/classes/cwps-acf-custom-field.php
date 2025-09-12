@@ -561,7 +561,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 	 *
 	 * @param integer $event_id The numeric ID of the CiviCRM Event to query.
 	 * @param array   $custom_field_ids The Custom Field IDs to query.
-	 * @return array $case_data An array of Case data.
+	 * @return array $case_data An array of Event data.
 	 */
 	public function values_get_by_event_id( $event_id, $custom_field_ids = [] ) {
 
@@ -584,7 +584,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 			$codes[] = 'custom_' . $custom_field_id;
 		}
 
-		// Define params to get queried Case.
+		// Define params to get queried Event.
 		$params = [
 			'version'    => 3,
 			'sequential' => 1,
@@ -1001,32 +1001,44 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Custom_Field {
 
 			// Contact Reference Fields may return the Contact's "sort_name".
 			case 'ContactReference':
-				// Test for a numeric value.
-				// phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
+				// Test for a non-numeric value.
 				if ( ! is_numeric( $value ) ) {
 
-					/*
-					 * This definitely happens when Contact Reference Fields are
-					 * attached to Events - when retrieving the Event from the
-					 * CiviCRM API, the Custom Field values are helpfully added
-					 * to the returned data. However, the value in "custom_N" is
-					 * the Contact's "sort_name". The numeric ID is also returned,
-					 * but this is added under the key "custom_N_id" instead.
-					 */
+					// Convert if the value has the special CiviCRM array-like format.
+					if ( is_string( $value ) ) {
+						if ( false !== strpos( $value, CRM_Core_DAO::VALUE_SEPARATOR ) ) {
+							$value = CRM_Utils_Array::explodePadded( $value );
+						}
+					}
 
-					/*
-					$e = new \Exception();
-					$trace = $e->getTraceAsString();
-					$log = [
-						'method' => __METHOD__,
-						'value' => $value,
-						'field' => $field,
-						'selector' => $selector,
-						'post_id' => $post_id,
-						'backtrace' => $trace,
-					];
-					$this->plugin->log_error( $log );
-					*/
+					// Check if it's still a string.
+					// phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
+					if ( is_string( $value ) ) {
+
+						/*
+						 * This definitely happens when Contact Reference Fields are
+						 * attached to Events - when retrieving the Event from the
+						 * CiviCRM API, the Custom Field values are helpfully added
+						 * to the returned data. However, the value in "custom_N" can be
+						 * the Contact's "sort_name". The numeric ID is also returned,
+						 * but this is added under the key "custom_N_id" instead.
+						 */
+
+						/*
+						$e = new \Exception();
+						$trace = $e->getTraceAsString();
+						$log = [
+							'method' => __METHOD__,
+							'value' => $value,
+							'field' => $field,
+							'selector' => $selector,
+							'post_id' => $post_id,
+							'backtrace' => $trace,
+						];
+						$this->plugin->log_error( $log );
+						*/
+
+					}
 
 				}
 				break;
