@@ -839,7 +839,7 @@ class CWPS_ACF_ACFE_Form_Action_Email extends CWPS_ACF_ACFE_Form_Action_Base {
 		*/
 
 		// Reject the submission if the Template ID is missing.
-		if ( empty( $email['template_id'] ) ) {
+		if ( empty( $email['settings']['template_id'] ) ) {
 			acfe_add_validation_error(
 				'',
 				sprintf(
