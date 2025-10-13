@@ -267,7 +267,7 @@ class CWPS_ACF_ACFE_Form_Action_Email extends CWPS_ACF_ACFE_Form_Action_Base {
 		$email = $this->form_email_data( $form, $action );
 
 		// Check Conditional.
-		if ( $this->form_conditional_check( $action ) ) {
+		if ( $this->form_conditional_check( [ 'action' => $action ] ) ) {
 
 			// Send the Email with the data from the Form.
 			$result['email'] = $this->form_email_save( $email );
