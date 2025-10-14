@@ -4673,6 +4673,22 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 		// Init return.
 		$contact_id = false;
 
+		// Get the chosen Dedupe Rule.
+		$dedupe_rule_id = get_sub_field( $this->field_key . 'dedupe_rules' );
+
+		/*
+		 * We may have a Dedupe Rule that does not check the Email Address.
+		 *
+		 * NOTE: This cannot be the default unsupervised rule because we must have an
+		 * Email Address to use that rule.
+		 */
+		if ( empty( $email_data ) && ! empty( $dedupe_rule_id ) ) {
+			$contact_id = $this->civicrm->contact->get_by_dedupe_rule( $contact_data, $contact_data['contact_type'], $dedupe_rule_id );
+			if ( ! empty( $contact_id ) ) {
+				return $contact_id;
+			}
+		}
+
 		// Dedupe on each available Email.
 		foreach ( $email_data as $email ) {
 
@@ -4685,15 +4701,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Contact extends CiviCRM_Profile_
 			$dedupe          = $contact_data;
 			$dedupe['email'] = $email['email'];
 
-			// Get the chosen Dedupe Rule.
-			$dedupe_rule_id = get_sub_field( $this->field_key . 'dedupe_rules' );
-
 			// If a Dedupe Rule is selected, use it.
 			if ( ! empty( $dedupe_rule_id ) ) {
 				$contact_id = $this->civicrm->contact->get_by_dedupe_rule( $dedupe, $dedupe['contact_type'], $dedupe_rule_id );
 			} else {
 				// Use the default unsupervised rule.
-				// NOTE: We need the Email Address to use the default unsupervised rule.
 				$contact_id = $this->civicrm->contact->get_by_dedupe_unsupervised( $dedupe, $dedupe['contact_type'] );
 			}
 
