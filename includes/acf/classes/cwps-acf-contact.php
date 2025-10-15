@@ -851,6 +851,115 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 
 	}
 
+	/**
+	 * Gets the default Dedupe Rule name for a given Contact Type.
+	 *
+	 * @since 0.7.3
+	 *
+	 * @param integer $contact_type The name of the Contact Type, e.g. "Individual".
+	 * @return string|bool $dedupe_rule_name The name of the Dedupe Rule, or false on failure.
+	 */
+	public function dedupe_rule_default_get( $contact_type ) {
+
+		// Bail if we can't initialise CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return false;
+		}
+
+		try {
+
+			// Call the API.
+			$result = \Civi\Api4\DedupeRuleGroup::get( false )
+				->addWhere( 'contact_type', '=', $contact_type )
+				->addWhere( 'used', '=', 'Unsupervised' )
+				->addSelect( 'id', 'name' )
+				->execute();
+
+		} catch ( CRM_Core_Exception $e ) {
+			$log = [
+				'method'    => __METHOD__,
+				'error'     => $e->getMessage(),
+				'backtrace' => $e->getTraceAsString(),
+			];
+			$this->plugin->log_error( $log );
+			return false;
+		}
+
+		// Return if nothing found.
+		if ( 0 === $result->count() ) {
+			return false;
+		}
+
+		// The first result is what we're after.
+		$dedupe_rule = $result->first();
+
+		// Sanity check.
+		if ( empty( $dedupe_rule['name'] ) ) {
+			return false;
+		}
+
+		// Assign to return.
+		$dedupe_rule_name = $dedupe_rule['name'];
+
+		// --<
+		return $dedupe_rule_name;
+
+	}
+
+	/**
+	 * Gets the name of a Dedupe Rule for a given ID.
+	 *
+	 * @since 0.7.3
+	 *
+	 * @param integer $dedupe_rule_id The ID of the Dedupe Rule.
+	 * @return string|bool $dedupe_rule_name The name of the Dedupe Rule, or false on failure.
+	 */
+	public function dedupe_rule_name_get( $dedupe_rule_id ) {
+
+		// Bail if we can't initialise CiviCRM.
+		if ( ! $this->civicrm->is_initialised() ) {
+			return false;
+		}
+
+		try {
+
+			// Call the API.
+			$result = \Civi\Api4\DedupeRuleGroup::get( false )
+				->addWhere( 'id', '=', $dedupe_rule_id )
+				->addSelect( 'name' )
+				->execute();
+
+		} catch ( CRM_Core_Exception $e ) {
+			$log = [
+				'method'    => __METHOD__,
+				'error'     => $e->getMessage(),
+				'backtrace' => $e->getTraceAsString(),
+			];
+			$this->plugin->log_error( $log );
+			return false;
+		}
+
+		// Return if nothing found.
+		if ( 0 === $result->count() ) {
+			return false;
+		}
+
+		// The first result is what we're after.
+		$dedupe_rule = $result->first();
+
+		// Sanity check.
+		if ( empty( $dedupe_rule['name'] ) ) {
+			return false;
+		}
+
+		// Assign to return.
+		$dedupe_rule_name = $dedupe_rule['name'];
+
+		// --<
+		return $dedupe_rule_name;
+
+	}
+
 	// -----------------------------------------------------------------------------------
 
 	/**
