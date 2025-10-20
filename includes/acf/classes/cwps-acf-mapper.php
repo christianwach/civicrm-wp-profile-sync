@@ -562,9 +562,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function hooks_civicrm_group_contact_add() {
 
 		// Intercept Group Membership updates in CiviCRM.
-		add_action( 'civicrm_pre', [ $this, 'group_contacts_created' ], 10, 4 );
-		add_action( 'civicrm_pre', [ $this, 'group_contacts_deleted' ], 10, 4 );
-		add_action( 'civicrm_pre', [ $this, 'group_contacts_rejoined' ], 10, 4 );
+		add_action( 'civicrm_pre', [ $this, 'group_contacts_pre_create' ], 10, 4 );
+		add_action( 'civicrm_pre', [ $this, 'group_contacts_pre_edit' ], 10, 4 );
+		add_action( 'civicrm_pre', [ $this, 'group_contacts_pre_delete' ], 10, 4 );
+		add_action( 'civicrm_post', [ $this, 'group_contacts_created' ], 10, 4 );
+		add_action( 'civicrm_post', [ $this, 'group_contacts_edited' ], 10, 4 );
+		add_action( 'civicrm_post', [ $this, 'group_contacts_deleted' ], 10, 4 );
 
 	}
 
@@ -814,9 +817,12 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	public function hooks_civicrm_group_contact_remove() {
 
 		// Remove Group Membership update hooks.
-		remove_action( 'civicrm_pre', [ $this, 'group_contacts_created' ], 10 );
-		remove_action( 'civicrm_pre', [ $this, 'group_contacts_deleted' ], 10 );
-		remove_action( 'civicrm_pre', [ $this, 'group_contacts_rejoined' ], 10 );
+		remove_action( 'civicrm_pre', [ $this, 'group_contacts_pre_create' ], 10 );
+		remove_action( 'civicrm_pre', [ $this, 'group_contacts_pre_edit' ], 10 );
+		remove_action( 'civicrm_pre', [ $this, 'group_contacts_pre_delete' ], 10 );
+		remove_action( 'civicrm_post', [ $this, 'group_contacts_created' ], 10 );
+		remove_action( 'civicrm_post', [ $this, 'group_contacts_edited' ], 10 );
+		remove_action( 'civicrm_post', [ $this, 'group_contacts_deleted' ], 10 );
 
 	}
 
@@ -2695,14 +2701,315 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	// -----------------------------------------------------------------------------------
 
 	/**
-	 * Intercept when a CiviCRM Contact is added to a Group.
+	 * Called when a CiviCRM GroupContact is about to be created.
 	 *
-	 * @since 0.4
+	 * The CiviCRM admin UI calls API v3, which does not pass the GroupContact "status"
+	 * to this callback. It is now called regardless of whether the action is "Join" or
+	 * "Rejoin Group", but used to have `$op` set to `edit`.
+	 *
+	 * TODO: Check when this happened.
+	 *
+	 * API v3 can create a GroupContact with any "status", however the `$op` will be set
+	 * accordingly, e.g. `civicrm_api('GroupContact', 'create')` with status `Removed`
+	 * will not trigger this callback because, although it is a new GroupContact entry,
+	 * `$op` will be set to `delete`. Calling `civicrm_api('GroupContact', 'create')`
+	 * with status `Pending` will trigger this callback, however.
+	 *
+	 * API v4 can create a GroupContact with any "status", so it is not guaranteed that
+	 * a Contact is being added to a Group. For example, calling API v4 with
+	 * `civicrm_api4('GroupContact', 'create'`) where status `Removed` will still trigger
+	 * this callback, so we need to check the status before proceeding.
+	 *
+	 * @since 0.7.3
 	 *
 	 * @param string  $op The type of database operation.
 	 * @param string  $object_name The type of object.
 	 * @param integer $object_id The ID of the CiviCRM Group.
-	 * @param array   $object_ref The array of CiviCRM Contact IDs.
+	 * @param array   $object_ref The array of CiviCRM Contact IDs when the operation
+	 *                            is made by API v3, or the array of GroupContact data
+	 *                            when the operation is made by API v4.
+	 */
+	public function group_contacts_pre_create( $op, $object_name, $object_id, &$object_ref ) {
+
+		// Target our operation.
+		if ( 'create' !== $op ) {
+			return;
+		}
+
+		// Target our object type.
+		if ( 'GroupContact' !== $object_name ) {
+			return;
+		}
+
+		// Bail if there is no object reference.
+		if ( empty( $object_ref ) ) {
+			return;
+		}
+
+		/*
+		 * When making changes with API v4, callbacks to `civicrm_pre`:
+		 *
+		 * * Receive an empty value for $object_id
+		 * * Do not receive an array of Contact IDs - it is an array of GroupContact data.
+		 *
+		 * This means we need to check the status to handle this situation.
+		 */
+		if ( empty( $object_id ) && ! empty( $object_ref['contact_id'] ) ) {
+
+			// Grab Group ID and Contact ID.
+			$group_id    = (int) $object_ref['group_id'];
+			$contact_ids = [ (int) $object_ref['contact_id'] ];
+
+			// Maybe pass to pre-delete method.
+			if ( 'Removed' === $object_ref['status'] ) {
+				$this->group_contacts_pre_delete( 'delete', $object_name, $group_id, $contact_ids );
+				return;
+			}
+
+		} else {
+			$group_id    = (int) $object_id;
+			$contact_ids = $object_ref;
+		}
+
+		// Let's make an array of the params.
+		$args = [
+			'op'         => $op,
+			'objectName' => $object_name,
+			'objectId'   => $group_id,
+			'objectRef'  => $contact_ids,
+		];
+
+		// Maybe add status.
+		if ( ! empty( $object_ref['status'] ) ) {
+			$args['status'] = $object_ref['status'];
+		}
+
+		/**
+		 * Broadcast that Contacts are about to be added to a CiviCRM Group.
+		 *
+		 * @since 0.7.3
+		 *
+		 * @param array $args The array of CiviCRM params.
+		 */
+		do_action( 'cwps/acf/mapper/group/contacts/create/pre', $args );
+
+	}
+
+	/**
+	 * Called when a CiviCRM Contact is about to be edited.
+	 *
+	 * The CiviCRM admin UI uses `CRM.api3('group_contact', 'delete', params)` for all
+	 * operations on Contact Group membership. When "Rejoin Group" is clicked, the current
+	 * GroupContact entry is deleted and a new one is created, although `civicrm_pre` is
+	 * called with `$op = 'edit'`.
+	 *
+	 * @see https://github.com/civicrm/civicrm-core/blob/d60381ede22c3e80eac70981b3de51598b562b4d/templates/CRM/Contact/Page/View/GroupContact.tpl#L209
+	 *
+	 * @since 0.7.3
+	 *
+	 * @param string  $op The type of database operation.
+	 * @param string  $object_name The type of object.
+	 * @param integer $object_id The ID of the CiviCRM Group.
+	 * @param array   $object_ref The array of CiviCRM Contact IDs when the operation
+	 *                            is made by API v3, or the array of GroupContact data
+	 *                            when the operation is made by API v4.
+	 */
+	public function group_contacts_pre_edit( $op, $object_name, $object_id, &$object_ref ) {
+
+		// Target our operation.
+		if ( 'edit' !== $op ) {
+			return;
+		}
+
+		// Target our object type.
+		if ( 'GroupContact' !== $object_name ) {
+			return;
+		}
+
+		// Bail if there are no Contacts.
+		if ( empty( $object_ref ) ) {
+			return;
+		}
+
+		/*
+		 * When making changes with API v4, callbacks to `civicrm_pre`:
+		 *
+		 * * Receive a value for $object_id that is the GroupContact ID.
+		 * * Do not receive an array of Contact IDs - it is an array of GroupContact data.
+		 *
+		 * This requires a database query to populate values for parity with API v3.
+		 */
+		if ( ! empty( $object_ref['status'] ) ) {
+
+			// Get the existing GroupContact.
+			$group_contact = $this->acf_loader->civicrm->group->group_contact_get( $object_id );
+			if ( empty( $group_contact ) ) {
+				return;
+			}
+
+			// Populate variables to pass on.
+			$group_id    = $group_contact['group_id'];
+			$contact_ids = [ $group_contact['contact_id'] ];
+
+			// Maybe pass to pre-create method.
+			if ( in_array( $object_ref['status'], [ 'Added', 'Pending' ], true ) ) {
+				$this->group_contacts_pre_create( 'create', $object_name, $group_id, $contact_ids );
+				return;
+			}
+
+			// Maybe pass to pre-delete method.
+			if ( 'Removed' === $object_ref['status'] ) {
+				$this->group_contacts_pre_delete( 'delete', $object_name, $group_id, $contact_ids );
+				return;
+			}
+
+		} else {
+			$group_id    = $object_id;
+			$contact_ids = $object_ref;
+		}
+
+		// Let's make an array of the params.
+		$args = [
+			'op'         => $op,
+			'objectName' => $object_name,
+			'objectId'   => $group_id,
+			'objectRef'  => $contact_ids,
+		];
+
+		// Maybe add status.
+		if ( ! empty( $object_ref['status'] ) ) {
+			$args['status'] = $object_ref['status'];
+		}
+
+		/**
+		 * Broadcast that the Group Contacts are about to be edited.
+		 *
+		 * @since 0.7.3
+		 *
+		 * @param array $args The array of CiviCRM params.
+		 */
+		do_action( 'cwps/acf/mapper/group/contacts/edit/pre', $args );
+
+	}
+
+	/**
+	 * Acts when a CiviCRM Contact is about to be deleted (or removed) from a Group.
+	 *
+	 * The CiviCRM admin UI calls API v3, which does not pass the GroupContact "status"
+	 * to this callback. The GroupContact object could be deleted from the database or
+	 * the Contact could be removed from the Group. Fine either way for our purposes.
+	 *
+	 * * The Object ID is the Group ID
+	 * * The Object Ref is an array of Contact IDs that are affected.
+	 *
+	 * Note that this may be called twice - once when a Contact is removed from a Group
+	 * and again when the GroupContact database entry is deleted.
+	 *
+	 * API v4 only passes the ID of the GroupContact, but we can determine the Group ID
+	 * and Contact ID by doing a database query at this point. It might be better to use
+	 * `civicrm_post` to save the query, because that callback receives the object that
+	 * represents the deleted database entry which contains the Group ID and Contact ID.
+	 *
+	 * @since 0.7.3
+	 *
+	 * @param string  $op The type of database operation.
+	 * @param string  $object_name The type of object.
+	 * @param integer $object_id The ID of the CiviCRM Group.
+	 * @param array   $object_ref The array of CiviCRM Contact IDs when the operation
+	 *                            is made by API v3, or the array of GroupContact data
+	 *                            when the operation is made by API v4.
+	 */
+	public function group_contacts_pre_delete( $op, $object_name, $object_id, &$object_ref ) {
+
+		// Target our operation.
+		if ( 'delete' !== $op ) {
+			return;
+		}
+
+		// Target our object type.
+		if ( 'GroupContact' !== $object_name ) {
+			return;
+		}
+
+		// Bail if there are no Contacts.
+		if ( empty( $object_ref ) ) {
+			return;
+		}
+
+		/*
+		 * When making changes with API v4, callbacks to `civicrm_pre`:
+		 *
+		 * * Receive the GroupContact ID as $object_id
+		 * * Do not receive an array of Contact IDs - it is an array of GroupContact data.
+		 *
+		 * This requires a database query to populate values to retain parity with API v3.
+		 */
+		if ( ! empty( $object_ref['id'] ) ) {
+
+			// Get the existing GroupContact.
+			// TODO: Should we do this, or pass null to the action?
+			// Query does not return anything FFS.
+			$group_contact = $this->acf_loader->civicrm->group->group_contact_get( $object_id );
+			if ( empty( $group_contact ) ) {
+				return;
+			}
+
+			// Populate variables to pass on.
+			$group_id    = $group_contact['group_id'];
+			$contact_ids = [ $group_contact['contact_id'] ];
+
+		} else {
+			$group_id    = $object_id;
+			$contact_ids = $object_ref;
+		}
+
+		// Let's make an array of the params.
+		$args = [
+			'op'         => $op,
+			'objectName' => $object_name,
+			'objectId'   => $group_id,
+			'objectRef'  => $contact_ids,
+		];
+
+		/**
+		 * Broadcast that Contacts are about to be deleted from a CiviCRM Group.
+		 *
+		 * @since 0.7.3
+		 *
+		 * @param array $args The array of CiviCRM params.
+		 */
+		do_action( 'cwps/acf/mapper/group/contacts/delete/pre', $args );
+
+	}
+
+	/**
+	 * Called when a CiviCRM GroupContact has been created.
+	 *
+	 * The CiviCRM admin UI calls API v3, which does not pass the GroupContact "status"
+	 * to this callback. It is now called regardless of whether the action is "Join" or
+	 * "Rejoin Group", but used to have `$op` set to `edit`.
+	 *
+	 * TODO: Check when this happened.
+	 *
+	 * API v3 can create a GroupContact with any "status", however the `$op` will be set
+	 * accordingly, e.g. `civicrm_api('GroupContact', 'create')` with status `Removed`
+	 * will not trigger this callback because, although it is a new GroupContact entry,
+	 * `$op` will be set to `delete`. Calling `civicrm_api('GroupContact', 'create')`
+	 * with status `Pending` will trigger this callback however.
+	 *
+	 * API v4 can create a GroupContact with any "status", so it is not guaranteed that
+	 * a Contact is being added to a Group. For example, calling API v4 with
+	 * `civicrm_api4('GroupContact', 'create'`) where status `Removed` will still trigger
+	 * this callback, so we need to check the status before proceeding.
+	 *
+	 * @since 0.4
+	 *
+	 * @param string       $op The type of database operation.
+	 * @param string       $object_name The type of object.
+	 * @param integer      $object_id The ID of the CiviCRM Group.
+	 * @param array|object $object_ref The array of CiviCRM Contact IDs when the operation
+	 *                                 is made by API v3, or the GroupContact object
+	 *                                 when the operation is made by API v4.
 	 */
 	public function group_contacts_created( $op, $object_name, $object_id, &$object_ref ) {
 
@@ -2721,15 +3028,39 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 			return;
 		}
 
+		/*
+		 * When making changes with API v4, callbacks to `civicrm_post` do not receive
+		 * an array of Contact IDs - it is a GroupContact object.
+		 */
+		if ( ! is_array( $object_ref ) && $object_ref instanceof CRM_Contact_BAO_GroupContact ) {
+
+			// Grab Group ID and Contact ID.
+			$group_id    = (int) $object_ref->group_id;
+			$contact_ids = [ (int) $object_ref->contact_id ];
+
+			// Maybe pass to deleted method.
+			if ( 'Removed' === $object_ref->status ) {
+				$this->group_contacts_deleted( 'delete', $object_name, $group_id, $contact_ids );
+				return;
+			}
+
+		} else {
+			$group_id    = $object_id;
+			$contact_ids = $object_ref;
+		}
+
 		// Let's make an array of the params.
 		$args = [
 			'op'         => $op,
 			'objectName' => $object_name,
-			'objectId'   => $object_id,
+			'objectId'   => $group_id,
+			'objectRef'  => $contact_ids,
 		];
 
-		// Maybe cast objectRef as object.
-		$args['objectRef'] = is_object( $object_ref ) ? $object_ref : (object) $object_ref;
+		// Maybe add status.
+		if ( ! empty( $object_ref->status ) ) {
+			$args['status'] = $object_ref->status;
+		}
 
 		/**
 		 * Broadcast that Contacts have been added to a CiviCRM Group.
@@ -2743,14 +3074,116 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 	}
 
 	/**
+	 * Called when a CiviCRM GroupContact is edited.
+	 *
+	 * The CiviCRM admin UI uses `CRM.api3('group_contact', 'delete', params)` for all
+	 * operations on Contact Group membership. When "Rejoin Group" is clicked, the current
+	 * GroupContact entry is deleted and a new one is created, although `civicrm_post` is
+	 * called with `$op = 'edit'`. This used to be called when "Rejoin Group" is clicked
+	 * but changed at some point.
+	 *
+	 * @since 0.4
+	 * @since 0.7.3 Renamed.
+	 *
+	 * @param string       $op The type of database operation.
+	 * @param string       $object_name The type of object.
+	 * @param integer      $object_id The ID of the CiviCRM Group.
+	 * @param array|object $object_ref The array of CiviCRM Contact IDs when the operation
+	 *                                 is made by API v3, or the GroupContact object
+	 *                                 when the operation is made by API v4.
+	 */
+	public function group_contacts_edited( $op, $object_name, $object_id, &$object_ref ) {
+
+		// Target our operation.
+		if ( 'edit' !== $op ) {
+			return;
+		}
+
+		// Target our object type.
+		if ( 'GroupContact' !== $object_name ) {
+			return;
+		}
+
+		// Bail if there are no Contacts.
+		if ( empty( $object_ref ) ) {
+			return;
+		}
+
+		/*
+		 * When making changes with API v4, callbacks to `civicrm_post` do not receive
+		 * an array of Contact IDs - it is a GroupContact object.
+		 */
+		if ( ! is_array( $object_ref ) && $object_ref instanceof CRM_Contact_BAO_GroupContact ) {
+
+			// Populate variables to pass on.
+			$group_id    = (int) $object_ref->group_id;
+			$contact_ids = [ (int) $object_ref->contact_id ];
+
+			// Maybe pass to pre-create method.
+			if ( in_array( $object_ref->status, [ 'Added', 'Pending' ], true ) ) {
+				$this->group_contacts_created( 'create', $object_name, $group_id, $contact_ids );
+				return;
+			}
+
+			// Maybe pass to pre-delete method.
+			if ( 'Removed' === $object_ref->status ) {
+				$this->group_contacts_deleted( 'delete', $object_name, $group_id, $contact_ids );
+				return;
+			}
+
+		} else {
+			$group_id    = $object_id;
+			$contact_ids = $object_ref;
+		}
+
+		// Let's make an array of the params.
+		$args = [
+			'op'         => $op,
+			'objectName' => $object_name,
+			'objectId'   => $group_id,
+			'objectRef'  => $contact_ids,
+		];
+
+		// Maybe add status.
+		if ( ! empty( $object_ref->status ) ) {
+			$args['status'] = $object_ref->status;
+		}
+
+		/**
+		 * Broadcast that GroupContacts have been edited.
+		 *
+		 * @since 0.4
+		 * @since 0.7.3 Renamed.
+		 *
+		 * @param array $args The array of CiviCRM params.
+		 */
+		do_action( 'cwps/acf/mapper/group/contacts/edited', $args );
+
+	}
+
+	/**
 	 * Intercept when a CiviCRM Contact is deleted (or removed) from a Group.
+	 *
+	 * The CiviCRM admin UI calls API v3, which does not pass the GroupContact "status"
+	 * to this callback. The GroupContact object could be deleted from the database or
+	 * the Contact could be removed from the Group. Fine either way for our purposes.
+	 *
+	 * * The Object ID is the Group ID
+	 * * The Object Ref is an array of Contact IDs that are affected.
+	 *
+	 * API v3 calls also follow the above pattern.
+	 *
+	 * API v4 passes the ID of the GroupContact as `$object_id` and the full DAO object
+	 * that we can inspect for the Group ID and Contact ID.
 	 *
 	 * @since 0.4
 	 *
-	 * @param string  $op The type of database operation.
-	 * @param string  $object_name The type of object.
-	 * @param integer $object_id The ID of the CiviCRM Group.
-	 * @param array   $object_ref Array of CiviCRM Contact IDs.
+	 * @param string       $op The type of database operation.
+	 * @param string       $object_name The type of object.
+	 * @param integer      $object_id The ID of the CiviCRM Group.
+	 * @param array|object $object_ref The array of CiviCRM Contact IDs when the operation
+	 *                                 is made by API v3, or the GroupContact object
+	 *                                 when the operation is made by API v4.
 	 */
 	public function group_contacts_deleted( $op, $object_name, $object_id, &$object_ref ) {
 
@@ -2769,15 +3202,25 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 			return;
 		}
 
+		/*
+		 * When making changes with API v4, callbacks to `civicrm_post` do not receive
+		 * an array of Contact IDs - it is a GroupContact object.
+		 */
+		if ( ! is_array( $object_ref ) && $object_ref instanceof CRM_Contact_DAO_GroupContact ) {
+			$group_id    = (int) $object_ref->group_id;
+			$contact_ids = [ (int) $object_ref->contact_id ];
+		} else {
+			$group_id    = $object_id;
+			$contact_ids = $object_ref;
+		}
+
 		// Let's make an array of the params.
 		$args = [
 			'op'         => $op,
 			'objectName' => $object_name,
-			'objectId'   => $object_id,
+			'objectId'   => $group_id,
+			'objectRef'  => $contact_ids,
 		];
-
-		// Maybe cast objectRef as object.
-		$args['objectRef'] = is_object( $object_ref ) ? $object_ref : (object) $object_ref;
 
 		/**
 		 * Broadcast that Contacts have been deleted from a CiviCRM Group.
@@ -2787,58 +3230,6 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 		 * @param array $args The array of CiviCRM params.
 		 */
 		do_action( 'cwps/acf/mapper/group/contacts/deleted', $args );
-
-	}
-
-	/**
-	 * Intercept when a CiviCRM Contact is re-added to a Group.
-	 *
-	 * The issue here is that CiviCRM fires 'civicrm_pre' with $op = 'delete' regardless
-	 * of whether the Contact is being removed or deleted. If a Contact is later re-added
-	 * to the Group, then 'create' !== $op, so we need to intercept $op = 'edit'.
-	 *
-	 * @since 0.4
-	 *
-	 * @param string  $op The type of database operation.
-	 * @param string  $object_name The type of object.
-	 * @param integer $object_id The ID of the CiviCRM Group.
-	 * @param array   $object_ref Array of CiviCRM Contact IDs.
-	 */
-	public function group_contacts_rejoined( $op, $object_name, $object_id, &$object_ref ) {
-
-		// Target our operation.
-		if ( 'edit' !== $op ) {
-			return;
-		}
-
-		// Target our object type.
-		if ( 'GroupContact' !== $object_name ) {
-			return;
-		}
-
-		// Bail if there are no Contacts.
-		if ( empty( $object_ref ) ) {
-			return;
-		}
-
-		// Let's make an array of the params.
-		$args = [
-			'op'         => $op,
-			'objectName' => $object_name,
-			'objectId'   => $object_id,
-		];
-
-		// Maybe cast objectRef as object.
-		$args['objectRef'] = is_object( $object_ref ) ? $object_ref : (object) $object_ref;
-
-		/**
-		 * Broadcast that Contacts have rejoined a CiviCRM Group.
-		 *
-		 * @since 0.4
-		 *
-		 * @param array $args The array of CiviCRM params.
-		 */
-		do_action( 'cwps/acf/mapper/group/contacts/rejoined', $args );
 
 	}
 
