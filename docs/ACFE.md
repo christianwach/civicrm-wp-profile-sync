@@ -11,7 +11,7 @@ Please be aware that Form building with ACFE is at an early stage of development
 
 * Add unlimited Contacts on the same Form
 * Auto-populate Form if the Contact is logged in
-* Checksum support to auto-populate Form with URLs like `example.org/some-page/?cid={contact.contact_id}&{contact.checksum}`
+* Checksum support to auto-populate Form with URLs like `example.org/some-page/?cid={contact.contact_id}&cs={contact.checksum}`
 * Define Contact Type: Organization, Individual, Household, and Custom Contact Subtypes
 * Map data from Custom Fields
 * Add Relationships to each Contact
