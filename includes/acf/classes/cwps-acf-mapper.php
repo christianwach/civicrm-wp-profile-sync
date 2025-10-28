@@ -2761,7 +2761,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 			$contact_ids = [ (int) $object_ref['contact_id'] ];
 
 			// Maybe pass to pre-delete method.
-			if ( 'Removed' === $object_ref['status'] ) {
+			if ( in_array( $object_ref['status'], [ 'Removed', 'Deleted' ], true ) ) {
 				$this->group_contacts_pre_delete( 'delete', $object_name, $group_id, $contact_ids );
 				return;
 			}
@@ -2858,7 +2858,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 			}
 
 			// Maybe pass to pre-delete method.
-			if ( 'Removed' === $object_ref['status'] ) {
+			if ( in_array( $object_ref['status'], [ 'Removed', 'Deleted' ], true ) ) {
 				$this->group_contacts_pre_delete( 'delete', $object_name, $group_id, $contact_ids );
 				return;
 			}
@@ -3039,7 +3039,7 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 			$contact_ids = [ (int) $object_ref->contact_id ];
 
 			// Maybe pass to deleted method.
-			if ( 'Removed' === $object_ref->status ) {
+			if ( in_array( $object_ref->status, [ 'Removed', 'Deleted' ], true ) ) {
 				$this->group_contacts_deleted( 'delete', $object_name, $group_id, $contact_ids );
 				return;
 			}
@@ -3119,14 +3119,14 @@ class CiviCRM_Profile_Sync_ACF_Mapper {
 			$group_id    = (int) $object_ref->group_id;
 			$contact_ids = [ (int) $object_ref->contact_id ];
 
-			// Maybe pass to pre-create method.
+			// Maybe pass to created method.
 			if ( in_array( $object_ref->status, [ 'Added', 'Pending' ], true ) ) {
 				$this->group_contacts_created( 'create', $object_name, $group_id, $contact_ids );
 				return;
 			}
 
-			// Maybe pass to pre-delete method.
-			if ( 'Removed' === $object_ref->status ) {
+			// Maybe pass to deleted method.
+			if ( in_array( $object_ref->status, [ 'Removed', 'Deleted' ], true ) ) {
 				$this->group_contacts_deleted( 'delete', $object_name, $group_id, $contact_ids );
 				return;
 			}
