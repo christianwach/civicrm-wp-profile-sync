@@ -86,6 +86,12 @@ I'll say it again: test early, test often and - above all - test on a developmen
 
 == Changelog ==
 
+= 0.7.3 =
+
+* CiviCRM Email Form Action fixes
+* Fixes sync of Multi-select Contact Reference data
+* Fixes result of APIv3 and APIv4 operations in GroupContact callbacks
+
 = 0.7.2 =
 
 * No longer moves Contact to trash when Post is moved to trash
