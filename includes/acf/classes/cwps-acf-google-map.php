@@ -838,10 +838,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Google_Map extends CiviCRM_Profile_Sync_A
 		if ( empty( $address->is_billing ) ) {
 			$address->is_billing = '0';
 		}
-		if ( empty( $previous->is_primary ) ) {
+		if ( !empty( $previous ) && empty( $previous->is_primary ) ) {
 			$previous->is_primary = '0';
 		}
-		if ( empty( $previous->is_billing ) ) {
+		if ( !empty( $previous ) && empty( $previous->is_billing ) ) {
 			$previous->is_billing = '0';
 		}
 
