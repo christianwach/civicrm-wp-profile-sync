@@ -606,6 +606,20 @@ class CiviCRM_WP_Profile_Sync_CiviCRM_Email {
 		// Add User ID to args.
 		$args['user_id'] = $user_id;
 
+		// Get the WordPress user data.
+		$wp_userdata = get_userdata( $user_id );
+	
+		// Do not update WordPress if the email is already the same as the CiviCRM Primary Email.
+		if (
+			$wp_userdata &&
+			strcasecmp(
+				trim( $wp_userdata->user_email ),
+				trim( $primary_email->email )
+			) === 0
+		) {
+			return;
+		}
+
 		// Update the WordPress User's Email.
 		$this->plugin->wp->user->email_update( $args );
 
