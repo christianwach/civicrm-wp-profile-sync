@@ -36,20 +36,36 @@
 		<!-- Allow TODOs at end of methods. -->
 		<exclude name="Squiz.Commenting.InlineComment.SpacingAfterAtFunctionEnd" />
 
+		<!-- Allow tags for class properties. -->
+		<exclude name="Squiz.Commenting.VariableComment.SinceTagNotAllowed" />
+		<exclude name="Squiz.Commenting.VariableComment.AccessTagNotAllowed" />
+
+		<!-- Allow $parent params. -->
+		<exclude name="Universal.NamingConventions.NoReservedKeywordParameterNames.parentFound" />
+
 		<!-- Remove some checks to allow phpcbf to run in bulk mode. -->
 		<exclude name="WordPress.Security.NonceVerification.Missing" />
 		<exclude name="WordPress.Security.NonceVerification.Recommended" />
+		<exclude name="Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed" />
+		<exclude name="Generic.CodeAnalysis.UnusedFunctionParameter.Found" />
+		<exclude name="Universal.Operators.DisallowStandalonePostIncrementDecrement.PostIncrementFound" />
+
+		<!-- Allow certain stylistic choices. -->
+		<exclude name="PSR2.Classes.ClassDeclaration.CloseBraceAfterBody" />
+		<exclude name="PSR2.Methods.FunctionClosingBrace.SpacingBeforeClose" />
+		<exclude name="Universal.Files.SeparateFunctionsFromOO.Mixed" />
+		<exclude name="Universal.ControlStructures.DisallowLonelyIf.Found" />
 
 	</rule>
 
 	<rule ref="WordPress.WP.I18n">
 		<properties>
-			<property name="text_domain" type="array" value="civicrm-wp-profile-sync" />
+			<property name="text_domain" value="civicrm-wp-profile-sync" />
 		</properties>
 	</rule>
 
 	<!-- Enforce short array syntax. -->
-	<rule ref="Generic.Arrays.DisallowShortArraySyntax.Found">
+	<rule ref="Universal.Arrays.DisallowShortArraySyntax.Found">
 		<severity>0</severity>
 	</rule>
 	<rule ref="Generic.Arrays.DisallowLongArraySyntax.Found" />
