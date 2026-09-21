@@ -50,7 +50,7 @@
 	<p>
 		<?php
 
-		echo sprintf(
+		printf(
 			/* translators: 1: Opening anchor tag, 2: Closing anchor tag */
 			esc_html__( 'You can now go to your %1$sPlugins page%2$s and deactivate the CiviCRM ACF Integration plugin.', 'civicrm-wp-profile-sync' ),
 			'<a href="' . esc_url( admin_url( 'plugins.php' ) ) . '">',

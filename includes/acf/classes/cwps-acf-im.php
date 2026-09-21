@@ -637,7 +637,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 		// Sanitise array contents.
 		array_walk(
 			$acf_im_ids,
-			function( &$item ) {
+			function ( &$item ) {
 				$item = (int) trim( $item );
 			}
 		);
@@ -1106,7 +1106,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Instant_Messenger extends CiviCRM_Profile
 					// Sanitise array contents.
 					array_walk(
 						$acf_im_ids,
-						function( &$item ) {
+						function ( &$item ) {
 							$item = (int) trim( $item );
 						}
 					);

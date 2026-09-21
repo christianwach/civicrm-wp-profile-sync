@@ -249,7 +249,6 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Address {
 		$this->address_process( $address, $args );
 
 		// TODO: Handle shared Address.
-		return;
 
 		/*
 		// If this address is a "Master Address" then it will return "Shared Addresses".

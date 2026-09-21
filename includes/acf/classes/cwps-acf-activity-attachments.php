@@ -605,7 +605,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 		// Sanitise array contents.
 		array_walk(
 			$acf_attachment_ids,
-			function( &$item ) {
+			function ( &$item ) {
 				$item = (int) trim( $item );
 			}
 		);
@@ -1046,7 +1046,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Activity_Attachments {
 					// Sanitise array contents.
 					array_walk(
 						$acf_attachment_ids,
-						function( &$item ) {
+						function ( &$item ) {
 							$item = (int) trim( $item );
 						}
 					);

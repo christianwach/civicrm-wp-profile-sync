@@ -2216,7 +2216,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Participant extends CiviCRM_Prof
 		$custom_field_ids = array_keys( $this->file_fields_empty );
 		array_walk(
 			$custom_field_ids,
-			function( &$item ) {
+			function ( &$item ) {
 				$item = (int) trim( str_replace( 'custom_', '', $item ) );
 			}
 		);

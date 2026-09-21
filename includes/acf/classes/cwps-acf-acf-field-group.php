@@ -289,7 +289,7 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 		// Init Field Group ID.
 		$field_group_id = false;
 
-		return;
+		return false;
 
 		/*
 		// Get Field Group.
@@ -316,7 +316,7 @@ class CiviCRM_Profile_Sync_ACF_Field_Group {
 		// Init Field Group ID.
 		$field_group_id = false;
 
-		return;
+		return false;
 
 		/*
 		// Get Field Group.

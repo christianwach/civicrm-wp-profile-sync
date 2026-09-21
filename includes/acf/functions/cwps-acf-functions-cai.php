@@ -177,11 +177,11 @@ function cacf_get_phone_numbers( $selector, $post_id = null ) {
  * @param string         $selector The ACF Field selector.
  * @param integer        $location_type_id The numeric ID of the CiviCRM Phone Location Type.
  * @param integer        $phone_type_id The numeric ID of the CiviCRM Phone Type.
- * @param string         $return Return an HTML list or comma-delimited string. Default 'list'.
+ * @param string         $return_type Return an HTML list or comma-delimited string. Default 'list'.
  * @param integer|string $post_id The ACF "Post ID".
  * @return string $phone The formatted Phone Number.
  */
-function cacf_get_phone_numbers_by_type_ids( $selector, $location_type_id, $phone_type_id, $return = 'list', $post_id = null ) {
+function cacf_get_phone_numbers_by_type_ids( $selector, $location_type_id, $phone_type_id, $return_type = 'list', $post_id = null ) {
 
 	// Init return.
 	$phones = '';
@@ -234,7 +234,7 @@ function cacf_get_phone_numbers_by_type_ids( $selector, $location_type_id, $phon
 	}
 
 	// Format the return.
-	if ( 'list' === $return ) {
+	if ( 'list' === $return_type ) {
 
 		// Open the list.
 		$phones .= '<ul><li>';
@@ -608,11 +608,11 @@ function cacf_get_ims( $selector, $post_id = null ) {
  * @param string         $selector The ACF Field selector.
  * @param integer        $location_type_id The numeric ID of the CiviCRM Instant Messenger Location Type.
  * @param integer        $im_provider_id The numeric ID of the Instant Messenger Provider.
- * @param string         $return Return an HTML list or comma-delimited string. Default 'list'.
+ * @param string         $return_type Return an HTML list or comma-delimited string. Default 'list'.
  * @param integer|string $post_id The ACF "Post ID".
  * @return string $im The formatted Instant Messenger.
  */
-function cacf_get_ims_by_type_ids( $selector, $location_type_id, $im_provider_id, $return = 'list', $post_id = null ) {
+function cacf_get_ims_by_type_ids( $selector, $location_type_id, $im_provider_id, $return_type = 'list', $post_id = null ) {
 
 	// Init return.
 	$ims = '';
@@ -655,7 +655,7 @@ function cacf_get_ims_by_type_ids( $selector, $location_type_id, $im_provider_id
 	}
 
 	// Format the return.
-	if ( 'list' === $return ) {
+	if ( 'list' === $return_type ) {
 
 		// Open the list.
 		$ims .= '<ul><li>';
@@ -1468,11 +1468,11 @@ function cacf_get_cities( $selector, $post_id = null ) {
  *
  * @param string         $selector The ACF Field selector.
  * @param integer        $location_type_id The numeric ID of the CiviCRM Address Location Type.
- * @param string         $return Return an HTML list or comma-delimited string. Default 'list'.
+ * @param string         $return_type Return an HTML list or comma-delimited string. Default 'list'.
  * @param integer|string $post_id The ACF "Post ID".
  * @return string $city The formatted City.
  */
-function cacf_get_city_by_type_id( $selector, $location_type_id, $return = 'list', $post_id = null ) {
+function cacf_get_city_by_type_id( $selector, $location_type_id, $return_type = 'list', $post_id = null ) {
 
 	// Init return.
 	$city = '';
@@ -1674,11 +1674,11 @@ function cacf_get_states( $selector, $post_id = null ) {
  *
  * @param string         $selector The ACF Field selector.
  * @param integer        $location_type_id The numeric ID of the CiviCRM Address Location Type.
- * @param string         $return Return an HTML list or comma-delimited string. Default 'list'.
+ * @param string         $return_type Return an HTML list or comma-delimited string. Default 'list'.
  * @param integer|string $post_id The ACF "Post ID".
  * @return string $state The formatted State.
  */
-function cacf_get_state_by_type_id( $selector, $location_type_id, $return = 'list', $post_id = null ) {
+function cacf_get_state_by_type_id( $selector, $location_type_id, $return_type = 'list', $post_id = null ) {
 
 	// Init return.
 	$state = '';

@@ -444,9 +444,9 @@ class CiviCRM_Profile_Sync_BP_CiviCRM_Contact_Field {
 
 		// Combine different arrays.
 		$contact_fields = $this->contact_fields_individual +
-						  $this->contact_fields_organization +
-						  $this->contact_fields_household +
-						  $this->contact_fields_common;
+			$this->contact_fields_organization +
+			$this->contact_fields_household +
+			$this->contact_fields_common;
 
 		// phpcs:enable WordPress.WhiteSpace.PrecisionAlignment.Found
 

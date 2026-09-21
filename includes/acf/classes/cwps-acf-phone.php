@@ -481,7 +481,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 		// Sanitise array contents.
 		array_walk(
 			$acf_phone_ids,
-			function( &$item ) {
+			function ( &$item ) {
 				$item = (int) trim( $item );
 			}
 		);
@@ -851,7 +851,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Phone extends CiviCRM_Profile_Sync_ACF_Ci
 					// Sanitise array contents.
 					array_walk(
 						$acf_phone_ids,
-						function( &$item ) {
+						function ( &$item ) {
 							$item = (int) trim( $item );
 						}
 					);

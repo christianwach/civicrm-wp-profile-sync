@@ -76,7 +76,7 @@
 				<p class="description">
 					<?php
 
-					echo sprintf(
+					printf(
 						/* translators: 1: Opening anchor tag, 2: Closing anchor tag */
 						esc_html__( 'The CiviCRM Website Type that the WordPress User Profile Website syncs with. Tip: you can manage your %1$sWebsite Types in CiviCRM%2$s.', 'civicrm-wp-profile-sync' ),
 						'<a href="' . esc_url( $website_types_link ) . '">',

@@ -558,7 +558,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 		// Add to Javascript ACF Model.
 		add_filter(
 			'cwps/acf/acfe/form_actions/reference_fields/contact',
-			function( $actions ) use ( $field_name ) {
+			function ( $actions ) use ( $field_name ) {
 				$actions[ 'new_field/name=' . $field_name ] = 'newContactActionRefField';
 				return $actions;
 			}
@@ -578,7 +578,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 		// Add to Javascript ACF Model.
 		add_filter(
 			'cwps/acf/acfe/form_actions/reference_fields/case',
-			function( $actions ) use ( $field_name ) {
+			function ( $actions ) use ( $field_name ) {
 				$actions[ 'new_field/name=' . $field_name ] = 'newCaseActionRefField';
 				return $actions;
 			}
@@ -598,7 +598,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 		// Add to Javascript ACF Model.
 		add_filter(
 			'cwps/acf/acfe/form_actions/reference_fields/participant',
-			function( $actions ) use ( $field_name ) {
+			function ( $actions ) use ( $field_name ) {
 				$actions[ 'new_field/name=' . $field_name ] = 'newParticipantActionRefField';
 				return $actions;
 			}
@@ -643,7 +643,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Base {
 			if ( is_array( $value ) ) {
 				array_walk_recursive(
 					$value,
-					function( &$item ) {
+					function ( &$item ) {
 						if ( is_string( $item ) && ! is_numeric( $item ) ) {
 							$item = html_entity_decode( $item );
 						}

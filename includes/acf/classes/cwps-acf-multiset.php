@@ -474,7 +474,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 		// Sanitise array contents.
 		array_walk(
 			$acf_multiset_ids,
-			function( &$item ) {
+			function ( &$item ) {
 				$item = (int) trim( $item );
 			}
 		);
@@ -891,7 +891,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Multiple_Record_Set extends CiviCRM_Profi
 						// Sanitise array contents.
 						array_walk(
 							$acf_multiset_ids,
-							function( &$item ) {
+							function ( &$item ) {
 								$item = (int) trim( $item );
 							}
 						);

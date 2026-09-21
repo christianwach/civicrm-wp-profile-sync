@@ -551,7 +551,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 		// Sanitise array contents.
 		array_walk(
 			$acf_address_ids,
-			function( &$item ) {
+			function ( &$item ) {
 				$item = (int) trim( $item );
 			}
 		);
@@ -973,7 +973,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Addresses extends CiviCRM_Profile_Sync_AC
 					// Sanitise array contents.
 					array_walk(
 						$acf_address_ids,
-						function( &$item ) {
+						function ( &$item ) {
 							$item = (int) trim( $item );
 						}
 					);

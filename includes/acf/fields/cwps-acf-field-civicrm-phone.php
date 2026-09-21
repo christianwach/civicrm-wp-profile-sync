@@ -393,7 +393,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Field extends acf_field {
 		// Sanitise array contents.
 		array_walk(
 			$primary_values,
-			function( &$item ) {
+			function ( &$item ) {
 				$item = (int) trim( $item );
 			}
 		);
@@ -410,7 +410,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Field extends acf_field {
 		// Sanitise array contents.
 		array_walk(
 			$phones,
-			function( &$item ) {
+			function ( &$item ) {
 				$item = (string) trim( $item );
 			}
 		);
@@ -444,7 +444,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Phone_Field extends acf_field {
 		if ( ! empty( $field['sub_fields'] ) ) {
 			array_walk(
 				$field['sub_fields'],
-				function( &$item ) {
+				function ( &$item ) {
 					$item = acf_validate_field( $item );
 				}
 			);

@@ -562,7 +562,7 @@ class CWPS_ACF_ACFE_Form_Action_Base extends acfe_module_form_action {
 		// Add to Javascript ACF Model.
 		add_filter(
 			'cwps/acf/acfe/form_actions/reference_fields/contact',
-			function( $actions ) use ( $field_name ) {
+			function ( $actions ) use ( $field_name ) {
 				$actions[ 'new_field/name=' . $field_name ] = 'newContactActionRefField';
 				return $actions;
 			}
@@ -582,7 +582,7 @@ class CWPS_ACF_ACFE_Form_Action_Base extends acfe_module_form_action {
 		// Add to Javascript ACF Model.
 		add_filter(
 			'cwps/acf/acfe/form_actions/reference_fields/case',
-			function( $actions ) use ( $field_name ) {
+			function ( $actions ) use ( $field_name ) {
 				$actions[ 'new_field/name=' . $field_name ] = 'newCaseActionRefField';
 				return $actions;
 			}
@@ -602,7 +602,7 @@ class CWPS_ACF_ACFE_Form_Action_Base extends acfe_module_form_action {
 		// Add to Javascript ACF Model.
 		add_filter(
 			'cwps/acf/acfe/form_actions/reference_fields/participant',
-			function( $actions ) use ( $field_name ) {
+			function ( $actions ) use ( $field_name ) {
 				$actions[ 'new_field/name=' . $field_name ] = 'newParticipantActionRefField';
 				return $actions;
 			}
@@ -883,7 +883,7 @@ class CWPS_ACF_ACFE_Form_Action_Base extends acfe_module_form_action {
 		$custom_field_ids = array_keys( $this->file_fields_empty );
 		array_walk(
 			$custom_field_ids,
-			function( &$item ) {
+			function ( &$item ) {
 				$item = (int) trim( str_replace( 'custom_', '', $item ) );
 			}
 		);
@@ -1085,7 +1085,7 @@ class CWPS_ACF_ACFE_Form_Action_Base extends acfe_module_form_action {
 			if ( is_array( $value ) ) {
 				array_walk_recursive(
 					$value,
-					function( &$item ) {
+					function ( &$item ) {
 						if ( is_string( $item ) && ! is_numeric( $item ) ) {
 							$item = html_entity_decode( $item );
 						}
