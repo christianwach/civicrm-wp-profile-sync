@@ -1,15 +1,15 @@
-# Copyright (C) 2025 Christian Wach
+# Copyright (C) 2026 Christian Wach
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: CiviCRM Profile Sync 0.7.3a\n"
+"Project-Id-Version: CiviCRM Profile Sync 0.7.4a\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/civicrm-wp-profile-sync\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-11-13T16:01:46+00:00\n"
+"POT-Creation-Date: 2026-09-23T14:52:43+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: civicrm-wp-profile-sync\n"
@@ -1422,7 +1422,7 @@ msgstr ""
 #: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2385
 #: includes/acf/acfe/form-actions/acfe-0.9.x/cwps-acf-acfe-form-action-contact.php:2429
 #: includes/acf/classes/cwps-acf-address.php:319
-#: includes/buddypress/cwps-bp-civicrm-address.php:579
+#: includes/buddypress/cwps-bp-civicrm-address.php:578
 msgid "Address Fields"
 msgstr ""
 
@@ -3261,7 +3261,7 @@ msgid "Override"
 msgstr ""
 
 #: includes/acf/fields/cwps-acf-field-civicrm-address.php:1010
-#: includes/acf/fields/cwps-acf-field-civicrm-attachment.php:753
+#: includes/acf/fields/cwps-acf-field-civicrm-attachment.php:752
 #: includes/acf/fields/cwps-acf-field-civicrm-im.php:707
 #: includes/acf/fields/cwps-acf-field-civicrm-phone.php:764
 msgid "CiviCRM ID"
