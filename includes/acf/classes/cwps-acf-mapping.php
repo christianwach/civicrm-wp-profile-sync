@@ -1161,6 +1161,34 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	// -----------------------------------------------------------------------------------
 
 	/**
+	 * Get the array of Entity Type to Post Type mappings.
+	 *
+	 * @since 0.7.4
+	 *
+	 * @return string $mappings_key The mappings option key.
+	 */
+	public function mappings_key_get() {
+
+		// --<
+		return $this->mappings_key;
+
+	}
+
+	/**
+	 * Get the array of Entity Type to Post Type mappings.
+	 *
+	 * @since 0.7.4
+	 *
+	 * @return array $mappings The array of mappings.
+	 */
+	public function mappings_get() {
+
+		// --<
+		return $this->mappings;
+
+	}
+
+	/**
 	 * Get all Entity Type to Post Type mappings.
 	 *
 	 * @since 0.4
@@ -1440,6 +1468,20 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	// -----------------------------------------------------------------------------------
 
 	/**
+	 * Gets the mapped settings option key.
+	 *
+	 * @since 0.7.4
+	 *
+	 * @return string $settings_key The mapped settings option key.
+	 */
+	public function settings_key_get() {
+
+		// --<
+		return $this->settings_key;
+
+	}
+
+	/**
 	 * Get all mapped settings.
 	 *
 	 * @since 0.4
@@ -1462,6 +1504,21 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 		// Delete the settings option.
 		$this->option_delete( $this->settings_key );
+
+	}
+
+	/**
+	 * Checks whether a specified mapped setting exists.
+	 *
+	 * @since 0.7.4
+	 *
+	 * @param string $post_type The name of the Post Type.
+	 * @return bool Whether or not the mapped setting exists.
+	 */
+	public function setting_exists( $post_type ) {
+
+		// Get existence of setting in array.
+		return array_key_exists( $post_type, $this->settings );
 
 	}
 
@@ -1495,6 +1552,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 *
 	 * @param string $post_type The name of the Post Type.
 	 * @param array  $data The settings data for the Post Type.
+	 * @return bool True if the mapped settings were successfully added or updated.
 	 */
 	public function setting_update( $post_type, $data ) {
 
@@ -1502,7 +1560,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		$this->settings[ $post_type ] = $data;
 
 		// Update option.
-		$this->option_set( $this->settings_key, $this->settings );
+		return $this->option_set( $this->settings_key, $this->settings );
 
 	}
 
@@ -1512,6 +1570,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 * @since 0.4
 	 *
 	 * @param string $post_type The name of the Post Type.
+	 * @return bool True if the mapped settings were successfully deleted.
 	 */
 	public function setting_remove( $post_type ) {
 
@@ -1521,7 +1580,7 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 		}
 
 		// Update option.
-		$this->option_set( $this->settings_key, $this->settings );
+		return $this->option_set( $this->settings_key, $this->settings );
 
 	}
 

@@ -135,7 +135,7 @@ class CiviCRM_WP_Profile_Sync {
 	public $cai;
 
 	/**
-	 * Initialises this object.
+	 * Constructor.
 	 *
 	 * @since 0.1
 	 */
@@ -151,7 +151,7 @@ class CiviCRM_WP_Profile_Sync {
 	 *
 	 * @since 0.5
 	 */
-	public function initialise() {
+	private function initialise() {
 
 		// Only do this once.
 		static $done;
@@ -159,10 +159,13 @@ class CiviCRM_WP_Profile_Sync {
 			return;
 		}
 
-		// Include files.
-		$this->include_files();
+		// Maybe include WP-CLI command.
+		if ( defined( 'WP_CLI' ) && WP_CLI ) {
+			require CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/wp-cli/wp-cli-profilesync.php';
+		}
 
-		// Set up objects and references.
+		// Bootstrap plugin.
+		$this->include_files();
 		$this->setup_objects();
 
 		/**
@@ -182,7 +185,7 @@ class CiviCRM_WP_Profile_Sync {
 	 *
 	 * @since 0.4
 	 */
-	public function include_files() {
+	private function include_files() {
 
 		// Load our class files.
 		require CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/admin/cwps-admin.php';
@@ -200,7 +203,7 @@ class CiviCRM_WP_Profile_Sync {
 	 *
 	 * @since 0.4
 	 */
-	public function setup_objects() {
+	private function setup_objects() {
 
 		// Initialise objects.
 		$this->admin   = new CiviCRM_WP_Profile_Sync_Admin( $this );

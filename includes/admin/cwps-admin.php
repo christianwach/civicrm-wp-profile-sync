@@ -975,10 +975,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		check_admin_referer( 'cwps_settings_action', 'cwps_settings_nonce' );
 
 		// Get User Profile Website Type.
-		$website_type = ! empty( $_POST['cwps_website_type_select'] ) ?
-			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-			(int) trim( wp_unslash( $_POST['cwps_website_type_select'] ) ) :
-			0;
+		$website_type = ! empty( $_POST['cwps_website_type_select'] ) ? (int) sanitize_text_field( wp_unslash( $_POST['cwps_website_type_select'] ) ) : 0;
 
 		// Did we set a CiviCRM Website Type?
 		if ( 0 !== $website_type ) {
@@ -986,10 +983,7 @@ class CiviCRM_WP_Profile_Sync_Admin {
 		}
 
 		// Get User Profile Email Sync.
-		$email_sync = isset( $_POST['cwps_email_sync_select'] ) ?
-			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-			(int) trim( wp_unslash( $_POST['cwps_email_sync_select'] ) ) :
-			2;
+		$email_sync = isset( $_POST['cwps_email_sync_select'] ) ? (int) sanitize_text_field( wp_unslash( $_POST['cwps_email_sync_select'] ) ) : 2;
 
 		// Did we choose an Email Sync setting?
 		if ( 2 !== $email_sync ) {
@@ -1041,6 +1035,20 @@ class CiviCRM_WP_Profile_Sync_Admin {
 
 		// Save array as option.
 		return $this->option_set( 'cwps_settings', $this->settings );
+
+	}
+
+	/**
+	 * Gets the array of settings.
+	 *
+	 * @since 0.7.4
+	 *
+	 * @return array $settings The plugin settings array.
+	 */
+	public function settings_get() {
+
+		// --<
+		return $this->settings;
 
 	}
 
