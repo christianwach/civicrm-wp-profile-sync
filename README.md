@@ -7,7 +7,7 @@ CiviCRM Profile Sync
 **Requires PHP:** 7.4<br/>
 **Requires at least:** 4.9<br/>
 **Tested up to:** 7.1<br/>
-**Stable tag:** 0.7.4a<br/>
+**Stable tag:** 0.7.4<br/>
 **License:** GPLv2 or later<br/>
 **License URI:** https://www.gnu.org/licenses/gpl-2.0.html
 
