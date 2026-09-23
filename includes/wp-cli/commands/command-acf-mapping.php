@@ -394,7 +394,7 @@ class CiviCRM_WPPS_CLI_Command_ACF_Mapping extends CiviCRM_WPPS_CLI_Command {
 				case 'participant-role':
 				case 'participant-role-id':
 					// Assign Post Type to Participant Role ID.
-					$post_type = $mapper->participant_role_is_mapped( $entity_type_id );
+					$post_type = $mapper->mapping_for_participant_role_get( $entity_type_id );
 					if ( ! empty( $post_type ) ) {
 						$mapper->mapping_for_participant_role_update( $entity_type_id, $value );
 					} else {
@@ -435,6 +435,7 @@ class CiviCRM_WPPS_CLI_Command_ACF_Mapping extends CiviCRM_WPPS_CLI_Command {
 						if ( $this->contact_type_exists( $value ) ) {
 							// And that it has not already been mapped.
 							if ( ! $this->contact_type_is_mapped( $value ) ) {
+								$mapper->mapping_for_contact_type_remove( $entity_type_id );
 								$mapper->mapping_for_contact_type_update( $value, $type );
 							} else {
 								WP_CLI::error( "Contact Type '{$entity_type_id}' is already mapped." );
@@ -456,6 +457,7 @@ class CiviCRM_WPPS_CLI_Command_ACF_Mapping extends CiviCRM_WPPS_CLI_Command {
 						if ( $this->activity_type_exists( $value ) ) {
 							// And that it has not already been mapped.
 							if ( ! $this->activity_type_is_mapped( $value ) ) {
+								$mapper->mapping_for_activity_type_remove( $entity_type_id );
 								$mapper->mapping_for_activity_type_update( $value, $type );
 							} else {
 								WP_CLI::error( "Activity Type '{$value}' is already mapped." );
@@ -477,6 +479,7 @@ class CiviCRM_WPPS_CLI_Command_ACF_Mapping extends CiviCRM_WPPS_CLI_Command {
 						if ( $this->participant_role_exists( $value ) ) {
 							// And that it has not already been mapped.
 							if ( ! $this->participant_role_is_mapped( $value ) ) {
+								$mapper->mapping_for_participant_role_remove( $entity_type_id );
 								$mapper->mapping_for_participant_role_update( $value, $type );
 							} else {
 								WP_CLI::error( "Participant Role '{$value}' is already mapped." );
@@ -493,7 +496,7 @@ class CiviCRM_WPPS_CLI_Command_ACF_Mapping extends CiviCRM_WPPS_CLI_Command {
 			}
 
 			if ( false !== $entity_type_id ) {
-				WP_CLI::success( "Updated the mapping for Post Type '{$type}' to Entity Type ID '{$entity_type_id}'." );
+				WP_CLI::success( "Updated the mapping for Post Type '{$type}' to Entity Type ID '{$value}'." );
 			} else {
 				WP_CLI::error( "Could not find the mapping for Post Type '{$type}'. Is it mapped?" );
 			}
@@ -859,7 +862,7 @@ class CiviCRM_WPPS_CLI_Command_ACF_Mapping extends CiviCRM_WPPS_CLI_Command {
 				->addChain(
 					'activity_types',
 					\Civi\Api4\OptionValue::get( false )
-						->addSelect( 'id' )
+						->addSelect( 'value' )
 						->addWhere( 'option_group_id', '=', '$id' )
 				)
 				->execute();
@@ -884,7 +887,7 @@ class CiviCRM_WPPS_CLI_Command_ACF_Mapping extends CiviCRM_WPPS_CLI_Command {
 		}
 
 		// Extract IDs from the Option Values.
-		$activity_types    = array_column( $values['activity_types'], 'id' );
+		$activity_types    = array_column( $values['activity_types'], 'value' );
 		$activity_type_ids = array_map( 'intval', $activity_types );
 
 		// True if found.
@@ -941,7 +944,7 @@ class CiviCRM_WPPS_CLI_Command_ACF_Mapping extends CiviCRM_WPPS_CLI_Command {
 				->addChain(
 					'participant_roles',
 					\Civi\Api4\OptionValue::get( false )
-						->addSelect( 'id' )
+						->addSelect( 'value' )
 						->addWhere( 'option_group_id', '=', '$id' )
 				)
 				->execute();
@@ -966,7 +969,7 @@ class CiviCRM_WPPS_CLI_Command_ACF_Mapping extends CiviCRM_WPPS_CLI_Command {
 		}
 
 		// Extract IDs from the Option Values.
-		$participant_roles    = array_column( $values['participant_roles'], 'id' );
+		$participant_roles    = array_column( $values['participant_roles'], 'value' );
 		$participant_role_ids = array_map( 'intval', $participant_roles );
 
 		// True if found.
