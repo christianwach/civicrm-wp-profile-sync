@@ -86,6 +86,10 @@ I'll say it again: test early, test often and - above all - test on a developmen
 
 == Changelog ==
 
+= 0.7.5 =
+
+* Fix ACF mapping update WP-CLI command
+
 = 0.7.4 =
 
 * Introduces basic WP-CLI commands
