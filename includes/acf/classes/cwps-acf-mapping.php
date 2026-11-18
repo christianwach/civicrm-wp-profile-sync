@@ -55,6 +55,18 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	private $saved_contact_type_id;
 
 	/**
+	 * Bridging variable for the Activity Type ID.
+	 *
+	 * Stores the Option Value "value" between the postSave and postProcess
+	 * callbacks when an Activity Type is created or edited.
+	 *
+	 * @since 0.4
+	 * @access private
+	 * @var int
+	 */
+	private $saved_activity_type_id;
+
+	/**
 	 * Sync mappings.
 	 *
 	 * Sync between CiviCRM Entity Types and WordPress Custom Post Types can
