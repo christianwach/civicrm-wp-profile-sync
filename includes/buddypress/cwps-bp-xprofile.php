@@ -126,7 +126,7 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 	 * are called "class names" because they are used to construct actual class
 	 * names to call their methods as well as being the "object" of API calls.
 	 *
-	 * Populated in constructor to allow translation of labels.
+	 * Populated on the "init" hook to allow translation of labels.
 	 *
 	 * @since 0.5
 	 * @access public
@@ -211,14 +211,6 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 		$this->bp_loader = $bp_loader;
 		$this->civicrm   = $bp_loader->plugin->civicrm;
 
-		// Build Entity Type labels and enable translation.
-		$this->entity_types = [
-			'Contact' => __( 'Contact', 'civicrm-wp-profile-sync' ),
-			'Address' => __( 'Address', 'civicrm-wp-profile-sync' ),
-			'Phone'   => __( 'Phone', 'civicrm-wp-profile-sync' ),
-			'Website' => __( 'Website', 'civicrm-wp-profile-sync' ),
-		];
-
 		// Init when the BuddyPress object is loaded.
 		add_action( 'cwps/buddypress/loaded', [ $this, 'initialise' ] );
 
@@ -294,6 +286,9 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 	 */
 	public function register_hooks() {
 
+		// Enable translation of labels.
+		add_action( 'init', [ $this, 'labels_build' ] );
+
 		// Modify the xProfile Field display and its User values.
 
 		// Filter the output of an xProfile Field.
@@ -328,6 +323,23 @@ class CiviCRM_Profile_Sync_BP_XProfile {
 
 		// Always register Mapper hooks.
 		$this->register_mapper_hooks();
+
+	}
+
+	/**
+	 * Builds Entity Type labels and enable translation.
+	 *
+	 * @since 0.7.6
+	 */
+	public function labels_build() {
+
+		// Build Entity Type labels and enable translation.
+		$this->entity_types = [
+			'Contact' => __( 'Contact', 'civicrm-wp-profile-sync' ),
+			'Address' => __( 'Address', 'civicrm-wp-profile-sync' ),
+			'Phone'   => __( 'Phone', 'civicrm-wp-profile-sync' ),
+			'Website' => __( 'Website', 'civicrm-wp-profile-sync' ),
+		];
 
 	}
 
