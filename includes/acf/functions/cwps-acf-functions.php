@@ -105,6 +105,9 @@ function cwps_get_phone_numbers( $selector, $post_id = null ) {
 		$locations[ $location_type['id'] ] = esc_html( $location_type['display_name'] );
 	}
 
+	// Init filtered array.
+	$filtered = [];
+
 	// Get Phone Types.
 	$phone_types = $cwps->plugin->civicrm->phone->phone_types_get();
 
@@ -175,11 +178,11 @@ function cwps_get_phone_numbers( $selector, $post_id = null ) {
  * @param string         $selector The ACF Field selector.
  * @param integer        $location_type_id The numeric ID of the CiviCRM Phone Location Type.
  * @param integer        $phone_type_id The numeric ID of the CiviCRM Phone Type.
- * @param string         $return Return an HTML list or comma-delimited string. Default 'list'.
+ * @param string         $return_type Return an HTML list or comma-delimited string. Default 'list'.
  * @param integer|string $post_id The ACF "Post ID".
  * @return string $phone The formatted Phone Number.
  */
-function cwps_get_phone_numbers_by_type_ids( $selector, $location_type_id, $phone_type_id, $return = 'list', $post_id = null ) {
+function cwps_get_phone_numbers_by_type_ids( $selector, $location_type_id, $phone_type_id, $return_type = 'list', $post_id = null ) {
 
 	// Init return.
 	$phones = '';
@@ -232,7 +235,7 @@ function cwps_get_phone_numbers_by_type_ids( $selector, $location_type_id, $phon
 	}
 
 	// Format the return.
-	if ( 'list' === $return ) {
+	if ( 'list' === $return_type ) {
 
 		// Open the list.
 		$phones .= '<ul><li>';
@@ -550,6 +553,9 @@ function cwps_get_ims( $selector, $post_id = null ) {
 	// Get Instant Messenger Providers.
 	$im_providers = $cwps->civicrm->im->im_providers_get();
 
+	// Init filtered array.
+	$filtered = [];
+
 	// Format them.
 	foreach ( $records as $record ) {
 
@@ -607,11 +613,11 @@ function cwps_get_ims( $selector, $post_id = null ) {
  * @param string         $selector The ACF Field selector.
  * @param integer        $location_type_id The numeric ID of the CiviCRM Instant Messenger Location Type.
  * @param integer        $im_provider_id The numeric ID of the Instant Messenger Provider.
- * @param string         $return Return an HTML list or comma-delimited string. Default 'list'.
+ * @param string         $return_type Return an HTML list or comma-delimited string. Default 'list'.
  * @param integer|string $post_id The ACF "Post ID".
  * @return string $im The formatted Instant Messenger.
  */
-function cwps_get_ims_by_type_ids( $selector, $location_type_id, $im_provider_id, $return = 'list', $post_id = null ) {
+function cwps_get_ims_by_type_ids( $selector, $location_type_id, $im_provider_id, $return_type = 'list', $post_id = null ) {
 
 	// Init return.
 	$ims = '';
@@ -654,7 +660,7 @@ function cwps_get_ims_by_type_ids( $selector, $location_type_id, $im_provider_id
 	}
 
 	// Format the return.
-	if ( 'list' === $return ) {
+	if ( 'list' === $return_type ) {
 
 		// Open the list.
 		$ims .= '<ul><li>';
@@ -969,6 +975,9 @@ function cwps_get_addresses( $selector, $post_id = null ) {
 	foreach ( $location_types as $location_type ) {
 		$locations[ $location_type['id'] ] = esc_html( $location_type['display_name'] );
 	}
+
+	// Init filtered array.
+	$filtered = [];
 
 	// Format them.
 	foreach ( $records as $record ) {
@@ -1412,6 +1421,9 @@ function cwps_get_cities( $selector, $post_id = null ) {
 		$locations[ $location_type['id'] ] = esc_html( $location_type['display_name'] );
 	}
 
+	// Init filtered array.
+	$filtered = [];
+
 	// Format them.
 	foreach ( $records as $record ) {
 
@@ -1467,11 +1479,11 @@ function cwps_get_cities( $selector, $post_id = null ) {
  *
  * @param string         $selector The ACF Field selector.
  * @param integer        $location_type_id The numeric ID of the CiviCRM Address Location Type.
- * @param string         $return Return an HTML list or comma-delimited string. Default 'list'.
+ * @param string         $return_type Return an HTML list or comma-delimited string. Default 'list'.
  * @param integer|string $post_id The ACF "Post ID".
  * @return string $city The formatted City.
  */
-function cwps_get_city_by_type_id( $selector, $location_type_id, $return = 'list', $post_id = null ) {
+function cwps_get_city_by_type_id( $selector, $location_type_id, $return_type = 'list', $post_id = null ) {
 
 	// Init return.
 	$city = '';
@@ -1618,6 +1630,9 @@ function cwps_get_states( $selector, $post_id = null ) {
 	// Get States/Provinces.
 	$state_provinces = $cwps->plugin->civicrm->address->state_provinces_get();
 
+	// Init filtered array.
+	$filtered = [];
+
 	// Format them.
 	foreach ( $records as $record ) {
 
@@ -1673,11 +1688,11 @@ function cwps_get_states( $selector, $post_id = null ) {
  *
  * @param string         $selector The ACF Field selector.
  * @param integer        $location_type_id The numeric ID of the CiviCRM Address Location Type.
- * @param string         $return Return an HTML list or comma-delimited string. Default 'list'.
+ * @param string         $return_type Return an HTML list or comma-delimited string. Default 'list'.
  * @param integer|string $post_id The ACF "Post ID".
  * @return string $state The formatted State.
  */
-function cwps_get_state_by_type_id( $selector, $location_type_id, $return = 'list', $post_id = null ) {
+function cwps_get_state_by_type_id( $selector, $location_type_id, $return_type = 'list', $post_id = null ) {
 
 	// Init return.
 	$state = '';
@@ -1807,11 +1822,11 @@ function cwps_get_primary_state( $selector, $post_id = null ) {
  * @param string         $selector The ACF Field selector.
  * @param string         $fields The comma-delimited CiviCRM Contact Fields to display.
  * @param string         $separator The separator between the comma-delimited CiviCRM Contact Fields.
- * @param string         $return Return an HTML list or comma-delimited string. Default 'list'.
+ * @param string         $return_type Return an HTML list or comma-delimited string. Default 'list'.
  * @param integer|string $post_id The ACF "Post ID".
  * @return string $contacts The formatted Contacts.
  */
-function cwps_get_contacts( $selector, $fields, $separator = '|', $return = 'list', $post_id = null ) {
+function cwps_get_contacts( $selector, $fields, $separator = '|', $return_type = 'list', $post_id = null ) {
 
 	// Init return.
 	$contacts = '';
@@ -1872,7 +1887,7 @@ function cwps_get_contacts( $selector, $fields, $separator = '|', $return = 'lis
 	}
 
 	// Format the return.
-	if ( 'list' === $return ) {
+	if ( 'list' === $return_type ) {
 
 		// Open the list.
 		$contacts .= '<ul><li>';
