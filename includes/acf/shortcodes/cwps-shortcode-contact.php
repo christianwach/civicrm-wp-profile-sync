@@ -244,7 +244,7 @@ class CiviCRM_Profile_Sync_ACF_Shortcode_Contact {
 			'label'         => esc_html__( 'CiviCRM Contact', 'civicrm-wp-profile-sync' ),
 
 			// Icon.
-			'listItemImage' => 'dashicons-phone',
+			'listItemImage' => 'dashicons-admin-users',
 
 			// Limit to synced CPTs only?
 			// phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
