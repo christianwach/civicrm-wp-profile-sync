@@ -1626,13 +1626,13 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 	 * @since 0.4
 	 *
 	 * @param string $option_name The name of the option.
-	 * @param string $default The default value of the option if it has no value.
+	 * @param string $default_value The default value of the option if it has no value.
 	 * @return mixed $value the value of the option.
 	 */
-	public function option_get( $option_name, $default = false ) {
+	public function option_get( $option_name, $default_value = false ) {
 
 		// Get option.
-		$value = get_option( $option_name, $default );
+		$value = get_option( $option_name, $default_value );
 
 		// --<
 		return $value;

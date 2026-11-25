@@ -255,23 +255,23 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		if ( false === $case_id ) {
 
 			// No - create a Case.
-			$case = $this->create_from_post( $post );
+			$civicrm_case = $this->create_from_post( $post );
 
 			// Store Case ID if successful.
-			if ( false !== $case ) {
-				$this->acf_loader->post->case_id_set( $post->ID, $case['id'] );
+			if ( false !== $civicrm_case ) {
+				$this->acf_loader->post->case_id_set( $post->ID, $civicrm_case['id'] );
 			}
 
 		} else {
 
 			// Yes - update the Case.
-			$case = $this->update_from_post( $post, $case_id );
+			$civicrm_case = $this->update_from_post( $post, $case_id );
 
 		}
 
 		// Add our data to the params.
-		$args['case']    = $case;
-		$args['case_id'] = $case['id'];
+		$args['case']    = $civicrm_case;
+		$args['case_id'] = $civicrm_case['id'];
 
 		/**
 		 * Broadcast that a Case has been updated.
@@ -361,11 +361,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		// $fields = get_fields( $post->ID, false );
 
 		// Update the Case with this data.
-		$case = $this->update_from_fields( $case_id, $fields, $post->ID );
+		$civicrm_case = $this->update_from_fields( $case_id, $fields, $post->ID );
 
 		// Add our data to the params.
 		$args['case_id'] = $case_id;
-		$args['case']    = $case;
+		$args['case']    = $civicrm_case;
 		$args['post']    = $post;
 		$args['fields']  = $fields;
 
@@ -456,27 +456,27 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array|obj $case The Case data.
+	 * @param array|obj $civicrm_case The Case data.
 	 * @param string    $create_post Create a mapped Post if missing. Either 'create' or 'skip'.
 	 * @return string|bool $is_mapped The Post Type if the Case is mapped, false otherwise.
 	 */
-	public function is_mapped( $case, $create_post = 'skip' ) {
+	public function is_mapped( $civicrm_case, $create_post = 'skip' ) {
 
 		// Init return.
 		$is_mapped = false;
 
 		// Maybe cast Case data as object.
-		if ( is_array( $case ) ) {
-			$case = (object) $case;
+		if ( is_array( $civicrm_case ) ) {
+			$civicrm_case = (object) $civicrm_case;
 		}
 
 		// Skip if there is no Case Type.
-		if ( empty( $case->case_type_id ) ) {
+		if ( empty( $civicrm_case->case_type_id ) ) {
 			return $is_mapped;
 		}
 
 		// Get the Post Type mapped to this Case Type.
-		$post_type = $this->civicrm->case_type->is_mapped_to_post_type( $case->case_type_id );
+		$post_type = $this->civicrm->case_type->is_mapped_to_post_type( $civicrm_case->case_type_id );
 
 		// Skip if this Case Type is not mapped.
 		if ( false === $post_type ) {
@@ -484,12 +484,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		}
 
 		// Bail if there's no Case ID.
-		if ( empty( $case->id ) ) {
+		if ( empty( $civicrm_case->id ) ) {
 			return $is_mapped;
 		}
 
 		// Get the associated Post ID.
-		$post_id = $this->acf_loader->post->get_by_case_id( $case->id, $post_type );
+		$post_id = $this->acf_loader->post->get_by_case_id( $civicrm_case->id, $post_type );
 
 		// Create the Post if it's missing.
 		if ( false === $post_id && 'create' === $create_post ) {
@@ -498,7 +498,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 			if ( ! doing_action( 'cwps/acf/post/case/sync' ) ) {
 
 				// Get full Case data.
-				$case_data = $this->get_by_id( $case->id );
+				$case_data = $this->get_by_id( $civicrm_case->id );
 
 				// Remove WordPress callbacks to prevent recursion.
 				$this->acf_loader->mapper->hooks_wordpress_remove();
@@ -536,11 +536,11 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array|obj $case The Case data.
+	 * @param array|obj $civicrm_case The Case data.
 	 * @param string    $post_type The WordPress Post Type.
 	 * @return integer|bool $is_mapped The ID of the WordPress Post if the Case is mapped, false otherwise.
 	 */
-	public function is_mapped_to_post( $case, $post_type = 'any' ) {
+	public function is_mapped_to_post( $civicrm_case, $post_type = 'any' ) {
 
 		// TODO: Query Posts with Post meta instead? Or pseudo-cache?
 
@@ -548,19 +548,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$is_mapped = false;
 
 		// Maybe cast Case data as object.
-		if ( is_array( $case ) ) {
-			$case = (object) $case;
+		if ( is_array( $civicrm_case ) ) {
+			$civicrm_case = (object) $civicrm_case;
 		}
 
 		// Bail if this Case's Case Type is not mapped.
-		$post_type = $this->is_mapped( $case );
+		$post_type = $this->is_mapped( $civicrm_case );
 		if ( false === $post_type ) {
 			return false;
 		}
 
 		// Grab Case ID.
-		if ( isset( $case->id ) ) {
-			$case_id = $case->id;
+		if ( isset( $civicrm_case->id ) ) {
+			$case_id = $civicrm_case->id;
 		}
 
 		// Bail if no Case ID is found.
@@ -863,10 +863,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $case The CiviCRM Case data.
+	 * @param array $civicrm_case The CiviCRM Case data.
 	 * @return array|bool $case_data The array Case data from the CiviCRM API, or false on failure.
 	 */
-	public function create( $case ) {
+	public function create( $civicrm_case ) {
 
 		// Init as failure.
 		$case_data = false;
@@ -879,7 +879,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		// Build params to create Case.
 		$params = [
 			'version' => 3,
-		] + $case;
+		] + $civicrm_case;
 
 		/*
 		 * Minimum array to create a Case:
@@ -943,19 +943,19 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 	 *
 	 * @since 0.5
 	 *
-	 * @param array $case The CiviCRM Case data.
+	 * @param array $civicrm_case The CiviCRM Case data.
 	 * @return array|bool $case_data The array Case data from the CiviCRM API, or false on failure.
 	 */
-	public function update( $case ) {
+	public function update( $civicrm_case ) {
 
 		// Log and bail if there's no Case ID.
-		if ( empty( $case['id'] ) ) {
+		if ( empty( $civicrm_case['id'] ) ) {
 			$e     = new \Exception();
 			$trace = $e->getTraceAsString();
 			$log   = [
 				'method'    => __METHOD__,
 				'message'   => __( 'A numeric ID must be present to update a Case.', 'civicrm-wp-profile-sync' ),
-				'case'      => $case,
+				'case'      => $civicrm_case,
 				'backtrace' => $trace,
 			];
 			$this->plugin->log_error( $log );
@@ -963,7 +963,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		}
 
 		// Pass through.
-		return $this->create( $case );
+		return $this->create( $civicrm_case );
 
 	}
 
@@ -972,28 +972,28 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 	 *
 	 * @since 0.5
 	 *
-	 * @param object $case The CiviCRM Case data object.
-	 * @return object $case The backfilled CiviCRM Case data.
+	 * @param object $civicrm_case The CiviCRM Case data object.
+	 * @return object $civicrm_case The backfilled CiviCRM Case data.
 	 */
-	public function backfill( $case ) {
+	public function backfill( $civicrm_case ) {
 
 		// Get the full Case data.
-		$case_full = $this->get_by_id( $case->id );
+		$case_full = $this->get_by_id( $civicrm_case->id );
 
 		// Bail on failure.
 		if ( false === $case_full ) {
-			return $case;
+			return $civicrm_case;
 		}
 
 		// Fill out missing Case data.
 		foreach ( $case_full as $key => $item ) {
-			if ( empty( $case->$key ) && ! empty( $item ) ) {
-				$case->$key = $item;
+			if ( empty( $civicrm_case->$key ) && ! empty( $item ) ) {
+				$civicrm_case->$key = $item;
 			}
 		}
 
 		// --<
-		return $case;
+		return $civicrm_case;
 
 	}
 
@@ -1060,9 +1060,9 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 	 * @since 0.5
 	 *
 	 * @param array $case_data The CiviCRM Case data from the Form.
-	 * @param array $case The full CiviCRM Case data.
+	 * @param array $civicrm_case The full CiviCRM Case data.
 	 */
-	public function manager_add( $case_data, $case ) {
+	public function manager_add( $case_data, $civicrm_case ) {
 
 		// Bail if there is no Manager ID.
 		if ( empty( $case_data['manager_id'] ) || ! is_numeric( $case_data['manager_id'] ) ) {
@@ -1070,12 +1070,12 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		}
 
 		// Bail if there is something wrong with the Case.
-		if ( empty( $case['id'] ) ) {
+		if ( empty( $civicrm_case['id'] ) ) {
 			return;
 		}
 
 		// Get the Case Type data.
-		$case_type = $this->civicrm->case_type->get_by_id( $case['case_type_id'] );
+		$case_type = $this->civicrm->case_type->get_by_id( $civicrm_case['case_type_id'] );
 
 		// Bail if we don't get a Case Type.
 		if ( false === $case_type ) {
@@ -1117,7 +1117,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		// Query for the existing Relationship.
 		$query = [
 			'relationship_type_id' => $relationship_type['id'],
-			'case_id'              => $case['id'],
+			'case_id'              => $civicrm_case['id'],
 			'is_active'            => 1,
 		];
 
@@ -1129,7 +1129,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 			'contact_id_a'         => $case_data['contact_id'],
 			'contact_id_b'         => $case_data['manager_id'],
 			'relationship_type_id' => $relationship_type['id'],
-			'case_id'              => $case['id'],
+			'case_id'              => $civicrm_case['id'],
 			'start_date'           => gmdate( 'YmdHis', strtotime( 'now' ) ),
 		];
 
@@ -1232,7 +1232,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 	 * @since 0.5
 	 *
 	 * @param WP_Post $post The WordPress Post object.
-	 * @return array|bool $case The CiviCRM Case data, or false on failure.
+	 * @return array|bool $civicrm_case The CiviCRM Case data, or false on failure.
 	 */
 	public function create_from_post( $post ) {
 
@@ -1240,10 +1240,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$case_data = $this->prepare_from_post( $post );
 
 		// Create the Case.
-		$case = $this->create( $case_data );
+		$civicrm_case = $this->create( $case_data );
 
 		// --<
-		return $case;
+		return $civicrm_case;
 
 	}
 
@@ -1259,7 +1259,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 	 *
 	 * @param WP_Post $post The WordPress Post object.
 	 * @param integer $existing_id The numeric ID of the Case.
-	 * @return array|bool $case The CiviCRM Case data, or false on failure.
+	 * @return array|bool $civicrm_case The CiviCRM Case data, or false on failure.
 	 */
 	public function update_from_post( $post, $existing_id ) {
 
@@ -1267,10 +1267,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$case_data = $this->prepare_from_post( $post, $existing_id );
 
 		// Update the Case.
-		$case = $this->update( $case_data );
+		$civicrm_case = $this->update( $case_data );
 
 		// --<
-		return $case;
+		return $civicrm_case;
 
 	}
 
@@ -1387,7 +1387,7 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 	 * @param integer $case_id The numeric ID of the Case.
 	 * @param array   $fields The ACF Field data.
 	 * @param integer $post_id The numeric ID of the WordPress Post.
-	 * @return array|bool $case The CiviCRM Case data, or false on failure.
+	 * @return array|bool $civicrm_case The CiviCRM Case data, or false on failure.
 	 */
 	public function update_from_fields( $case_id, $fields, $post_id = null ) {
 
@@ -1398,10 +1398,10 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		$case_data['id'] = $case_id;
 
 		// Update the Case.
-		$case = $this->update( $case_data );
+		$civicrm_case = $this->update( $case_data );
 
 		// --<
-		return $case;
+		return $civicrm_case;
 
 	}
 
@@ -1841,13 +1841,13 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Case {
 		}
 
 		// Grab Case.
-		$case = $this->get_by_id( $case_id );
-		if ( false === $case ) {
+		$civicrm_case = $this->get_by_id( $case_id );
+		if ( false === $civicrm_case ) {
 			return $post_ids;
 		}
 
 		// Bail if this Case's Case Type is not mapped.
-		$post_type = $this->is_mapped( $case, 'create' );
+		$post_type = $this->is_mapped( $civicrm_case, 'create' );
 		if ( false === $post_type ) {
 			return $post_ids;
 		}

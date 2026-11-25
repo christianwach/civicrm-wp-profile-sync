@@ -488,11 +488,11 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 		];
 
 		// Populate Case, Email, Relationship and Custom Field data arrays.
-		$case          = $this->form_case_data( $form, $current_post_id, $action );
+		$civicrm_case  = $this->form_case_data( $form, $current_post_id, $action );
 		$custom_fields = $this->form_custom_data( $form, $current_post_id, $action );
 
 		// Save the Case with the data from the Form.
-		$args['case'] = $this->form_case_save( $case, $custom_fields );
+		$args['case'] = $this->form_case_save( $civicrm_case, $custom_fields );
 
 		// If we get a Case.
 		if ( false !== $args['case'] ) {
@@ -1177,12 +1177,12 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 	public function form_case_validate( $form, $current_post_id, $action ) {
 
 		// Get the Case.
-		$case = $this->form_case_data( $form, $current_post_id, $action );
+		$civicrm_case = $this->form_case_data( $form, $current_post_id, $action );
 
 		// Skip if the Case Conditional Reference Field has a value.
-		if ( ! empty( $case['case_conditional_ref'] ) ) {
+		if ( ! empty( $civicrm_case['case_conditional_ref'] ) ) {
 			// And the Case Conditional Field has no value.
-			if ( empty( $case['case_conditional'] ) ) {
+			if ( empty( $civicrm_case['case_conditional'] ) ) {
 				return true;
 			}
 		}
@@ -1201,7 +1201,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 
 		/*
 		// Reject the submission if there is no Contact ID.
-		if ( empty( $case['contact_id'] ) ) {
+		if ( empty( $civicrm_case['contact_id'] ) ) {
 			acfe_add_validation_error( '', sprintf(
 				// / * translators: %s The name of the Form Action * /
 				__( 'A Contact ID is required to create a Case in "%s".', 'civicrm-wp-profile-sync' ),
@@ -1212,7 +1212,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 		*/
 
 		// Reject the submission if the Case Type ID is missing.
-		if ( empty( $case['case_type_id'] ) ) {
+		if ( empty( $civicrm_case['case_type_id'] ) ) {
 			acfe_add_validation_error(
 				'',
 				sprintf(
@@ -1236,36 +1236,36 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 	 *
 	 * @param array $case_data The array of Case data.
 	 * @param array $custom_data The array of Custom Field data.
-	 * @return array|bool $case The Case data array, or false on failure.
+	 * @return array|bool $civicrm_case The Case data array, or false on failure.
 	 */
 	public function form_case_save( $case_data, $custom_data ) {
 
 		// Init return.
-		$case = false;
+		$civicrm_case = false;
 
 		// Skip if the Case Conditional Reference Field has a value.
 		if ( ! empty( $case_data['case_conditional_ref'] ) ) {
 			// And the Case Conditional Field has no value.
 			if ( empty( $case_data['case_conditional'] ) ) {
-				return $case;
+				return $civicrm_case;
 			}
 		}
 
 		// When skipping, get the existing Case and return early if it exists.
 		if ( ! empty( $case_data['dismiss_if_exists'] ) ) {
-			$case = $this->civicrm->case->get_by_type_and_contact( $case_data['case_type_id'], $case_data['contact_id'] );
-			if ( false !== $case ) {
+			$civicrm_case = $this->civicrm->case->get_by_type_and_contact( $case_data['case_type_id'], $case_data['contact_id'] );
+			if ( false !== $civicrm_case ) {
 
 				// Flag that creating the Case has been skipped.
-				$case['skipped'] = true;
+				$civicrm_case['skipped'] = true;
 
 				// Flag that the Case was not created.
-				$case['created'] = false;
+				$civicrm_case['created'] = false;
 
 				// Add "Dismissed Message" in case it's used on Success Page.
-				$case['dismiss_message'] = $case_data['dismiss_message'];
+				$civicrm_case['dismiss_message'] = $case_data['dismiss_message'];
 
-				return $case;
+				return $civicrm_case;
 
 			}
 		}
@@ -1298,7 +1298,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 			// Add the Case Contact.
 			$result = $this->civicrm->case->contact_create( $params );
 			if ( false === $result ) {
-				return $case;
+				return $civicrm_case;
 			}
 
 			// Start result afresh for query below.
@@ -1311,28 +1311,28 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 			// Let's create the Case.
 			$result = $this->civicrm->case->create( $case_data );
 			if ( false === $result ) {
-				return $case;
+				return $civicrm_case;
 			}
 
 		}
 
 		// Get the full Case data.
-		$case = $this->civicrm->case->get_by_id( $result['id'] );
+		$civicrm_case = $this->civicrm->case->get_by_id( $result['id'] );
 
 		// Flag that creating the Case has not been skipped.
-		$case['skipped'] = false;
+		$civicrm_case['skipped'] = false;
 
 		// Flag that the Case was created.
-		$case['created'] = true;
+		$civicrm_case['created'] = true;
 
 		// Add empty "Dismissed Message" in case it's used on Success Page.
-		$case['dismiss_message'] = '';
+		$civicrm_case['dismiss_message'] = '';
 
 		// Assign the Case Manager if defined.
-		$this->civicrm->case->manager_add( $case_data, $case );
+		$this->civicrm->case->manager_add( $case_data, $civicrm_case );
 
 		// --<
-		return $case;
+		return $civicrm_case;
 
 	}
 
@@ -1488,10 +1488,10 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 	 * @param array   $form The array of Form data.
 	 * @param integer $current_post_id The ID of the Post from which the Form has been submitted.
 	 * @param string  $action The customised name of the action.
-	 * @param array   $case The array of Case data.
+	 * @param array   $civicrm_case The array of Case data.
 	 * @return array $data The array of Custom Fields data.
 	 */
-	public function form_custom_post_process( $form, $current_post_id, $action, $case ) {
+	public function form_custom_post_process( $form, $current_post_id, $action, $civicrm_case ) {
 
 		// Bail if we have no post-process array.
 		if ( empty( $this->file_fields_empty ) ) {
@@ -1499,7 +1499,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 		}
 
 		// Bail if we have no Case ID.
-		if ( empty( $case['id'] ) ) {
+		if ( empty( $civicrm_case['id'] ) ) {
 			return;
 		}
 
@@ -1513,7 +1513,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 		);
 
 		// Get the corresponding values.
-		$values = $this->civicrm->custom_field->values_get_by_case_id( $case['id'], $custom_field_ids );
+		$values = $this->civicrm->custom_field->values_get_by_case_id( $civicrm_case['id'], $custom_field_ids );
 		if ( empty( $values ) ) {
 			return;
 		}
@@ -1536,7 +1536,7 @@ class CiviCRM_Profile_Sync_ACF_ACFE_Form_Action_Case extends CiviCRM_Profile_Syn
 
 			// Build args.
 			$args = [
-				'entity_id'       => $case['id'],
+				'entity_id'       => $civicrm_case['id'],
 				'custom_field_id' => $custom_field_id,
 			];
 
