@@ -88,6 +88,15 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	public $do_not_sync;
 
 	/**
+	 * Shortcode object.
+	 *
+	 * @since 0.7.6
+	 * @access public
+	 * @var CiviCRM_Profile_Sync_ACF_Shortcode_Contact
+	 */
+	public $shortcode;
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 0.4
@@ -113,8 +122,45 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Contact {
 	 */
 	public function initialise() {
 
+		// Include files.
+		$this->include_files();
+
+		// Set up objects and references.
+		$this->setup_objects();
+
 		// Register hooks.
 		$this->register_hooks();
+
+		/**
+		 * Broadcast that this class is now loaded.
+		 *
+		 * @since 0.7.6
+		 */
+		do_action( 'cwps/acf/civicrm/contact/loaded' );
+
+	}
+
+	/**
+	 * Include files.
+	 *
+	 * @since 0.7.6
+	 */
+	public function include_files() {
+
+		// Include Shortcode class file.
+		include CIVICRM_WP_PROFILE_SYNC_PATH . 'includes/acf/shortcodes/cwps-shortcode-contact.php';
+
+	}
+
+	/**
+	 * Set up the child objects.
+	 *
+	 * @since 0.7.6
+	 */
+	public function setup_objects() {
+
+		// Init Contact Shortcode object.
+		$this->shortcode = new CiviCRM_Profile_Sync_ACF_Shortcode_Contact( $this );
 
 	}
 

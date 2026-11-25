@@ -1794,3 +1794,171 @@ function cwps_get_primary_state( $selector, $post_id = null ) {
 	return $state;
 
 }
+
+// -----------------------------------------------------------------------------
+
+/**
+ * Get the Contacts from a given ACF Field.
+ *
+ * If you are calling this from outside The Loop, pass a Post ID as well.
+ *
+ * @since 0.7.6
+ *
+ * @param string         $selector The ACF Field selector.
+ * @param string         $fields The comma-delimited CiviCRM Contact Fields to display.
+ * @param string         $separator The separator between the comma-delimited CiviCRM Contact Fields.
+ * @param string         $return Return an HTML list or comma-delimited string. Default 'list'.
+ * @param integer|string $post_id The ACF "Post ID".
+ * @return string $contacts The formatted Contacts.
+ */
+function cwps_get_contacts( $selector, $fields, $separator = '|', $return = 'list', $post_id = null ) {
+
+	// Init return.
+	$contacts = '';
+
+	// Get the Contact IDs from the ACF Field.
+	$contact_ids = cwps_get_contact_records( $selector, $post_id );
+	if ( empty( $contact_ids ) ) {
+		return $contacts;
+	}
+
+	// There may be a single record.
+	if ( ! is_array( $contact_ids ) && is_numeric( $contact_ids ) ) {
+		$contact_ids = [ $contact_ids ];
+	}
+
+	// Convert comma-delimited string to array.
+	if ( ! is_array( $fields ) ) {
+		$fields = wp_parse_list( $fields );
+	}
+
+	// Maybe pad the separator.
+	if ( ' ' !== $separator ) {
+		$separator = ' ' . $separator . ' ';
+	}
+
+	// Init filtered array.
+	$filtered = [];
+
+	// Get Contact Records.
+	$contact_records = civicrm_wp_profile_sync()->civicrm->contact->get_by_ids( $contact_ids );
+	if ( empty( $contact_records ) ) {
+		return $contacts;
+	}
+
+	// Format them.
+	foreach ( $contact_records as $record ) {
+
+		// Skip if all requested fields are empty.
+		$display_fields = [];
+		foreach ( $fields as $field ) {
+			if ( empty( $record[ $field ] ) ) {
+				continue;
+			}
+			$display_fields[] = $record[ $field ];
+		}
+
+		// Build string from Display Fields.
+		$contact = implode( $separator, $display_fields );
+
+		// Add to filtered array.
+		$filtered[] = esc_html( $contact );
+
+	}
+
+	// Sanity check.
+	if ( empty( $filtered ) ) {
+		return $contacts;
+	}
+
+	// Format the return.
+	if ( 'list' === $return ) {
+
+		// Open the list.
+		$contacts .= '<ul><li>';
+
+		// Format the list.
+		$contacts .= implode( '</li><li>', $filtered );
+
+		// Close the list.
+		$contacts .= '</li></ul>';
+
+	} else {
+
+		// Format the string.
+		$contacts .= implode( ', ', $filtered );
+
+	}
+
+	/**
+	 * Allow the Contacts to be filtered.
+	 *
+	 * @since 0.7.6
+	 *
+	 * @param string $contacts The existing Contacts.
+	 * @param string $selector The ACF Field selector.
+	 * @param integer|string $post_id The ACF "Post ID".
+	 */
+	$contacts = apply_filters( 'cwps/theme/contacts/get', $contacts, $selector, $post_id );
+
+	// --<
+	return $contacts;
+
+}
+
+/**
+ * Get the Contact Records from a given ACF Field.
+ *
+ * If you are calling this from outside The Loop, pass a Post ID as well.
+ *
+ * @since 0.7.6
+ *
+ * @param string         $selector The ACF Field selector.
+ * @param integer|string $post_id The ACF "Post ID".
+ * @return array $records The array of Contact Record data.
+ */
+function cwps_get_contact_records( $selector, $post_id = null ) {
+
+	// Init return.
+	$records = [];
+
+	// Try the global if no Post ID.
+	if ( empty( $post_id ) ) {
+		global $post;
+		if ( ! ( $post instanceof WP_Post ) ) {
+			return $records;
+		}
+		$post_id = $post->ID;
+	}
+
+	// Get Field settings.
+	$acf_settings = get_field_object( $selector, $post_id );
+
+	// Bail if we don't get any settings.
+	if ( empty( $acf_settings ) ) {
+		return $records;
+	}
+
+	// Bail if it's not a CiviCRM Contact Field.
+	if ( 'civicrm_contact' !== $acf_settings['type'] ) {
+		return $records;
+	}
+
+	// Get Field value.
+	$records = get_field( $selector, $post_id );
+
+	/**
+	 * Allow the Contact Records to be filtered.
+	 *
+	 * @since 0.7.6
+	 *
+	 * @param array $records The existing Contact Record data.
+	 * @param string $selector The ACF Field selector.
+	 * @param integer|string $post_id The ACF "Post ID".
+	 */
+	$records = apply_filters( 'cwps/theme/contact_records/get', $records, $selector, $post_id );
+
+	// --<
+	return $records;
+
+}
