@@ -122,12 +122,6 @@ class CiviCRM_Profile_Sync_ACF_Field_Type {
 			return;
 		}
 
-		// We do not need the ACF Fields in CiviCRM admin.
-		$civicrm_args = civi_wp()->get_request_args();
-		if ( is_admin() && ! empty( $civicrm_args['args'][0] ) && 'civicrm' === $civicrm_args['args'][0] ) {
-			return;
-		}
-
 		// Include files.
 		$this->include_field_types( $api_version );
 
