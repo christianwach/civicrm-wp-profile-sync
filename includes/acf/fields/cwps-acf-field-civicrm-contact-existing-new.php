@@ -376,6 +376,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Contact_Existing_New extends acf_field
 			'required'                        => 1,
 			'layout'                          => 'block',
 			'field_cacf_civicrm_custom_field' => 'caiparticipant_contact_id',
+			'field_cacf_type'                 => $this->name,
 		];
 
 		// Add the Sub-fields.

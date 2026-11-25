@@ -272,19 +272,18 @@ class CiviCRM_Profile_Sync_ACF_CiviCRM_Participant_Field {
 			$acf_setting = get_field_object( $selector, $post_id );
 
 			/*
-			 * Override type.
+			 * Determine type.
 			 *
-			 * This works because we define the Local Field "name" value as the
-			 * same as its "type" value when composing the Field Group for the
-			 * built-in Participant CPT.
-			 *
-			 * When the Field is added to a Field Group via the UI, the Field
-			 * Object is populated. This is not the case when added via code to
-			 * a Local Field Group.
-			 *
-			 * TODO: Try and find out why this is.
+			 * This works by attempting to read a custom property on the Field that is
+			 * the custom ACF Field Type (we use the "group" Field Type and modify it).
+			 * Falls back to the actual Field Type or the selector as a last resort.
 			 */
-			$type = isset( $acf_setting['type'] ) ? $acf_setting['type'] : $selector;
+			$type = $selector;
+			if ( isset( $acf_setting['field_cacf_type'] ) ) {
+				$type = $acf_setting['field_cacf_type'];
+			} elseif ( isset( $acf_setting['type'] ) ) {
+				$type = $acf_setting['type'];
+			}
 
 		}
 

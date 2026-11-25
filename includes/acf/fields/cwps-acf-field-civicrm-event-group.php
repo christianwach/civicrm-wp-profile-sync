@@ -374,6 +374,7 @@ class CiviCRM_Profile_Sync_Custom_CiviCRM_Event_Group extends acf_field {
 			'required'                        => 1,
 			'layout'                          => 'block',
 			'field_cacf_civicrm_custom_field' => 'caiparticipant_event_id',
+			'field_cacf_type'                 => $this->name,
 		];
 
 		// Add the Sub-fields.
