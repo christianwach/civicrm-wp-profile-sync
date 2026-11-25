@@ -1137,6 +1137,9 @@ class CiviCRM_Profile_Sync_ACF_Mapping {
 
 		// Get current setting data.
 		$data = $this->setting_get( 'participant' );
+		if ( false === $data ) {
+			$data = [];
+		}
 
 		// Grab previous value for comparison below.
 		$previous = empty( $data['enabled'] ) ? 0 : 1;
